@@ -58,7 +58,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/apps/Silent-Circle_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app1",
+          link: "/apps/silent-circle",
           description: t("apps.items.silentCircle.description", {
             defaultValue:
               "Silent Circle es una aplicación de mensajería segura.",
@@ -68,7 +68,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.armadillo.title", { defaultValue: "Armadillo" }),
           image:
             "/images/mega-menu/apps/Armadillo_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app2",
+          link: "/apps/armadillo",
           description: t("apps.items.armadillo.description", {
             defaultValue: "Armadillo es una aplicación de mensajería segura.",
           }),
@@ -77,7 +77,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.vaultChat.title", { defaultValue: "VaultChat" }),
           image:
             "/images/mega-menu/apps/VaultChat_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app3",
+          link: "/apps/vault-chat",
           description: t("apps.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
@@ -86,7 +86,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.nordVpn.title", { defaultValue: "Nord VPN" }),
           image:
             "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app4",
+          link: "/apps/nord-vpn",
           description: t("apps.items.nordVpn.description", {
             defaultValue: "NORD VPN es una aplicación de mensajería segura.",
           }),
@@ -95,7 +95,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.salt.title", { defaultValue: "Salt" }),
           image:
             "/images/mega-menu/apps/Salt_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app5",
+          link: "/apps/salt",
           description: t("apps.items.salt.description", {
             defaultValue: "Salt es una aplicación de mensajería segura.",
           }),
@@ -104,20 +104,9 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.vnclagoon.title", { defaultValue: "VNClagoon" }),
           image:
             "/images/mega-menu/apps/VNC-lagoon_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app6",
+          link: "/apps/vnc-lagoon",
           description: t("apps.items.vnclagoon.description", {
             defaultValue: "VNClagoon es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("apps.items.threemaWork.title", {
-            defaultValue: "ThreemaWork",
-          }),
-          image:
-            "/images/mega-menu/apps/Threema-Work_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app7",
-          description: t("apps.items.threemaWork.description", {
-            defaultValue: "ThreemaWork es una aplicación de mensajería segura.",
           }),
         },
         {

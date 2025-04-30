@@ -216,6 +216,55 @@ export const routing = defineRouting({
       it: "/elyon",
       pt: "/elyon"
     },
+    "/apps/armadillo":{
+      en: "/apps/armadillo",
+      es: "/apps/armadillo",
+      fr: "/apps/armadillo",
+      it: "/apps/armadillo",
+      pt: "/apps/armadillo"
+    },
+    "/apps/nord-vpn":{
+      en: "/apps/nord-vpn",
+      es: "/apps/nord-vpn",
+      fr: "/apps/nord-vpn",
+      it: "/apps/nord-vpn",
+      pt: "/apps/nord-vpn"
+    },
+    "/apps/salt":{
+      en: "/apps/salt",
+      es: "/apps/salt",
+      fr: "/apps/salt",
+      it: "/apps/salt",
+      pt: "/apps/salt"
+    },
+    "/apps/silent-circle":{
+      en: "/apps/silent-circle",
+      es: "/apps/silent-circle",
+      fr: "/apps/silent-circle",
+      it: "/apps/silent-circle",
+      pt: "/apps/silent-circle"
+    },
+    "/apps/threema":{
+      en: "/apps/threema",
+      es: "/apps/threema",
+      fr: "/apps/threema",
+      it: "/apps/threema",
+      pt: "/apps/threema"
+    },
+    "/apps/vault-chat":{
+      en: "/apps/vault-chat",
+      es: "/apps/vault-chat",
+      fr: "/apps/vault-chat",
+      it: "/apps/vault-chat",
+      pt: "/apps/vault-chat"
+    },
+    "/apps/vnc-lagoon":{
+      en: "/apps/vnc-lagoon",
+      es: "/apps/vnc-lagoon",
+      fr: "/apps/vnc-lagoon",
+      it: "/apps/vnc-lagoon",
+      pt: "/apps/vnc-lagoon"
+    },
   },
 });
 
