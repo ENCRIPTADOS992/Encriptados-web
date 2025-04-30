@@ -1,0 +1,1100 @@
+{
+  "WhereToFindUs": {
+    "banner": {
+      "titleEasyToBuyLicense": "It has never been so easy to buy your encrypted license.",
+      "moreThanTitle": "More than",
+      "pointsOfPay": "payment points",
+      "forYou": "for you"
+    },
+    "whereCards": {
+      "title": "Wherever you are, there will be a crypto ATM ready to buy products from",
+      "titleEncrypted": "Encrypted",
+      "paymentPoint": {
+        "title": "Payment Points",
+        "description": "Places where you can quickly buy your crypto licenses"
+      },
+      "countriesAvailable": {
+        "title": "Available Countries",
+        "description": "The widest coverage available for you"
+      }
+    },
+    "findATM": {
+      "title": "Find a Crypto ATM near you",
+      "results": "Results",
+      "showPoints": "View locations"
+    },
+    "howToBuy": {
+      "howToBuyTitle": "How to buy",
+      "orderTitle": "Place your order",
+      "depositATMTitle": "Deposit via ATM",
+      "reciveYourPurchase": "Receive your purchase"
+    }
+  },
+  "AmbassadorsPage": {
+    "banner": {
+      "joinUsTitle": "Join our",
+      "programTitle": "program",
+      "ofTitle": "of",
+      "ambassadorsTitle": "ambassadors",
+      "showBenefits": "See Benefits"
+    },
+    "partnerCards": {
+      "title": "What type of partner would you like to be?",
+      "promotor": {
+        "promotorTitle": "Promoter",
+        "encryptedTag": "Encrypted",
+        "description": "Are you a blogger, YouTuber, Influencer, or do you have a voice in the world of cybersecurity and secure communications? Become an ally of Encrypted and earn great rewards for promoting our products and services!",
+        "benefits": "Benefits:",
+        "benefit1": "Attractive commissions in cash or products",
+        "benefit2": "Direct relationship with Encrypted",
+        "benefit3": "Exclusive access to launches, news, and content from Encrypted",
+        "sendRequest": "Submit Promoter Request"
+      },
+      "distributor": {
+        "distributorTitle": "Distributor",
+        "encryptedTag": "Encrypted",
+        "description": "If you own a store or business, or if you have contacts who need phones, apps, SIM cards, or encrypted equipment, get in touch with us! You can become a distributor of our products.",
+        "benefits": "Benefits:",
+        "benefit1": "Special prices on all our products",
+        "benefit2": "Direct access to support and training",
+        "benefit3": "Promotional materials, advertising, and digital content",
+        "sendRequest": "Submit Distributor Request"
+      }
+    }
+  },
+  "AboutUsPage": {
+    "banner": {
+      "title": "About Us",
+      "description": "Protecting your privacy in every connection."
+    },
+    "aboutUs": {
+      "title": "Who we are",
+      "description": "We are specialists in secure communication equipment and software, such as phones, applications, and SIM cards. We aim to bring digital security closer to anyone or any company looking to protect their information and privacy. We work with the most secure and recognized systems around the world, which have been tested for years and proven to be impenetrable."
+    },
+    "cards": {
+      "communicationCard": {
+        "title": "Secure communication without borders",
+        "description": "We have an extensive network of resellers and distributors in North America, South America, and Europe that bring Encriptados' solutions to those who need them, so more people can benefit from the advantages of secure communications."
+      },
+      "privacyCard": {
+        "title": "We take your privacy seriously",
+        "description": "We are always at the forefront of new technologies to offer you fully impenetrable and easy-to-use encrypted communications. We help corporations, businesses, government institutions, celebrities, lawyers, travelers, and individuals who want to improve their cybersecurity."
+      },
+      "informationCard": {
+        "title": "Your personal information will never reach third parties",
+        "description": "With Encriptados, you'll have a private network provider that ensures your security and guarantees greater privacy by preventing your information from being manipulated, shared, or sold."
+      }
+    }
+  },
+  "LoginPage": {
+    "inputErrors": {
+      "moreThanSixteenNumbers": "The account number must be exactly 16 characters long."
+    },
+    "welcomeSection": {
+      "titleGenerate": "Generate a random account with a unique access code",
+      "subtitleGenerate": "Manage everything without involving your personal data.",
+      "welcome": "Welcome",
+      "writeYourAccountPlaceholder": "Enter your account number",
+      "errorMessageWriteAccount": "The account number must be exactly 16 characters",
+      "forgotPassword": "I forgot my account number",
+      "generateAccountNumber": "Generate account number",
+      "login": "Log in",
+      "errorLogin": "Error during login",
+      "succesfullyLogin": "Login successful",
+      "errorWhileLogin": "Error during login:",
+      "withAccesCode": "with a unique access code"
+    },
+    "generatedSection": {
+      "accountNumber": {
+        "yourNewAccountNumber": "Your new account number",
+        "title": "Manage everything without involving your personal data.",
+        "getNumberAccountTitle": "Get an account number",
+        "generateAccountNumber": "Generate new account number",
+        "generating": "Generating...",
+        "goBack": "Go back",
+        "copy": "Copy",
+        "download": "Download",
+        "login": "Log in",
+        "copyNumberSuccesfully": "Account number copied successfully",
+        "errorMessage": "Error during login",
+        "errorMessageNumberAccount": "Error generating account number",
+        "loginSuccesfuly": "Login successful",
+        "succesfulyGenerateAccount": "Successfully generating account number"
+      }
+    }
+  },
+  "HeaderMenu": {
+    "languages": {
+      "es": "Spanish",
+      "pt": "Portuguese",
+      "it": "Italian",
+      "fr": "French",
+      "en": "English"
+    },
+    "menuItems": {
+      "simShop": "SIM Shop",
+      "products": {
+        "title": "Products",
+        "sims": "SIMS",
+        "aplications": "Applications",
+        "phones": "Phones"
+      },
+      "others": {
+        "title": "Others",
+        "distributors": "Distributors",
+        "blog": "Blog",
+        "securityTest": "Security Test",
+        "offers": "Offers"
+      },
+      "us": {
+      "title": "Us",
+      "aboutUs": "About Us",
+      "ambassadors": "Be an Ambassador",
+      "locations": "Where We Are"
+    }
+    }
+  },
+  "FooterMenu": {
+    "downloadApp": "Download the app for your mobile device here:",
+    "simEsims": {
+      "encryptedSim": "Encrypted SIM",
+      "physicSim": "Physical SIM",
+      "globalSim": "Global SIM"
+    },
+    "encryptedSims": {
+      "title": "Encrypted Apps"
+    },
+    "phoneEncrypted": {
+      "title": "Encrypted Systems"
+    },
+    "securePay": {
+      "title": "Secure Payment"
+    },
+    "copyRight": "Copyright © 2024 All rights reserved.",
+    "termsAndConditions": "Terms and Conditions",
+    "dataProcesing": "Data Policy and Processing"
+  },
+  "DeliveryPage": {
+    "unnecessaryWaits": "Avoid unnecessary waits",
+    "fastDeliveryBannerTitle": "With Fast Delivery, receive your encrypted phone in the shortest time possible",
+    "fastDeliveryBannerSubtitle": "Find a nearby pickup point",
+    "fastDeliveryLocation": "View Delivery Locations",
+    "encriptedProductsTitle": "Encrypted Products",
+    "deliveryPointsTitle": "Find our fast delivery points",
+    "deliveryPointsDescription": "Use the interactive map to find our selected pickup points closest to your location",
+    "chatTelegram": "Chat on Telegram",
+    "howDoesFastDeliveryTitle": "How does Fast Delivery of Encrypted work?",
+    "howDoesFastDeliveryOptions": {
+      "deliveyPoint": {
+        "title": "Select a delivery point",
+        "description": "Check the nearest location where you would like to pick up your encrypted phone"
+      },
+      "contactUsOnTelegram": {
+        "title": "Contact us on Telegram",
+        "description": "Contact us through our Telegram channel and coordinate the purchase of your encrypted phone"
+      },
+      "pickUpYourPhone": {
+        "title": "Pick up your encrypted phone",
+        "description": "Once the delivery is coordinated, pick up your encrypted phone and enjoy secure communications"
+      }
+    },
+    "renatiTitle": "Encrypted Cell Phone Renati",
+    "buyNow": "Buy Now",
+    "encryptedPhone": "Encrypted Phone",
+    "saveMoney": "Save up to",
+    "downloadApp": "Download the App for iOS & Android and buy your SIM now",
+    "scanQR": "Or scan the QR code with your camera",
+    "titleFAQS": "Frequently Asked Questions",
+    "faqs": {
+      "immediateDelivery": {
+        "title": "What is Fast Delivery of Encrypted Devices?",
+        "content": "Delivery of Encrypted Devices is a specialized service that allows you to enjoy your encrypted SIM or device in less than 48 hours."
+      },
+      "whereDelivery": {
+        "title": "What products can I buy with Fast Delivery?",
+        "content": "You can obtain any of the selected encrypted cell phone brands on our website."
+      },
+      "costDelivery": {
+        "title": "What is the cost of Fast Delivery of Encrypted Devices?",
+        "content": "The cost of Fast Delivery of Encrypted Devices varies according to your location; you just need to message us on Telegram, and we will assist you with the prices and arrangements so you can get your product as soon as possible."
+      }
+    }
+  },
+  "EncryptedSimPage": {
+    "connectAllWorldTitle": "Connect worldwide",
+    "totalSecurityTitle": "with complete security in your communications",
+    "addYourSimSubtitle": "Get your SIM/eSIM with mobile data and enjoy total anonymity in calls, filters, IMSI changes, and more",
+    "coverageTitle": "Coverage in over 200 countries",
+    "coverageDescription": "Check the cost of a gigabyte by country and the recommended profile, so you can optimize your data usage at the best price",
+    "encryptedTitleButon": "Encrypted SIM Card",
+    "encryptedTitle": "The Encrypted SIM provides you with the highest security and anonymity anywhere in the world",
+    "encryptedDescription": "Security and privacy in your communications, make anonymous and untraceable calls, and protect yourself against IMSI Catchers",
+
+    "CardSim": {
+      "headerTitle": "Data Top-Up",
+      "availableCountries": "+200 countries available",
+      "lteSpeed": "5G LTE",
+      "featuresList": [
+        "Instantly added data",
+        "Untraceable and anonymous",
+        "Protected against IMSI CATCHERS",
+        "No cutoff dates"
+      ],
+      "priceRange": "25 - 500 USD",
+      "rating": "5/5",
+      "buyNow": "Buy Now"
+    },
+
+    "commonFeatures": {
+      "dataMobile": "Mobile data",
+      "speed": "4/5G LTE speed",
+      "appAvailable": "App available on iOS and Android",
+      "privacyAnonymity": "Privacy and anonymity",
+      "substituteNumber": "Substitute number",
+      "callback": "Callback",
+      "voiceFilters": "Voice filters",
+      "encryptedCommunications": "Encrypted communications",
+      "replaceIMSI": "Replace your IMSI",
+      "globalHighSpeed": "Global High-Speed Connection",
+      "unlimitedDataPlans": "Unlimited data plans",
+      "ultraFastConnection": "Ultra-fast 5G connection",
+      "easyToUseApp": "Easy-to-use application"
+    },
+    "products": {
+      "data": {
+        "title": "Buy your mobile data plan and communicate with total privacy",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "Instantly added data",
+          "Untraceable and anonymous",
+          "Protected against IMSI CATCHERS",
+          "No cutoff dates"
+        ],
+        "priceRange": "25 - 500 USD",
+        "headerTitle": "Data Top-Up"
+      },
+      "minutes": {
+        "title": "Buy MINUTES for anonymous and untraceable calls",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "Instantly added call balance",
+          "Anonymous and untraceable calls",
+          "Filters to alter voice tone",
+          "Substitute number",
+          "Callback"
+        ],
+        "priceRange": "110 - 360 USD",
+        "headerTitle": "Minutes Top-Up"
+      },
+      "imsi": {
+        "title": "Buy IMSI changes equivalent to replacing your SIM with a new one",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "*Only applies to PHYSICAL SIM CARD",
+          "Privacy and Anonymity",
+          "Avoid tracking or location attempts",
+          "Erase all traces"
+        ],
+        "priceRange": "5 - 50 USD",
+        "headerTitle": "IMSI Change Top-Up"
+      },
+      "esim": {
+        "title": "Purchase your eSIM and enhance your security instantly",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "Receive it instantly",
+          "Privacy and Anonymity",
+          "Encrypted communications",
+          "Untraceable eSIM"
+        ],
+        "priceRange": "10 USD",
+        "headerTitle": "Virtual eSIM"
+      },
+      "sim": {
+        "title": "Buy your SIM card and receive it anywhere in the world",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "Receive it anywhere in the world",
+          "Privacy and Anonymity",
+          "Encrypted communications",
+          "Untraceable SIM with IMSI changes"
+        ],
+        "priceRange": "10 USD",
+        "headerTitle": "Physical SIM"
+      }
+    },
+
+    "improveYourSecurity": {
+      "titleImproveYourSecurity": "Enhance your security with these features",
+      "untraceable": {
+        "title": "Untraceable",
+        "description": "Communicate from anywhere while being completely anonymous and untraceable"
+      },
+      "anonymity": {
+        "title": "Anonymity",
+        "description": "Billing and shipping information is not linked to the chip, so it is completely anonymous"
+      },
+      "changeMSI": {
+        "title": "IMSI Change",
+        "description": "The IMSI change replaces the identity of your SIM with a new one. It is equivalent to changing the SIM for a new one"
+      },
+      "subtituteNumber": {
+        "title": "Substitute Number",
+        "description": "Generate a random number for each call that will appear on the recipient's caller ID"
+      },
+      "voiceFilter": {
+        "title": "Voice filters",
+        "description": "Use 7 different voice filters for greater anonymity in your calls"
+      },
+
+      "callback": {
+        "title": "Callback",
+        "description": "Generate a random number for each call that will appear in the recipient's identifier"
+      },
+      "plans": {
+        "title": "Plans without a cut-off date",
+        "description": "No contracts or cut-off dates. Enjoy the flexibility of plans without expiration dates and complete control over your data"
+      },
+      "geolocalization": {
+        "title": "Encrypted geolocation",
+        "description": "Protect your location at all times with advanced encryption that ensures you cannot be tracked or located"
+      },
+      "globalCoverage": {
+        "title": "Global coverage",
+        "description": "Connect from anywhere in the world with total coverage and without compromising your security"
+      },
+      "maskMSI": {
+        "title": "Mask the IMSI",
+        "description": "Hide your IMSI to avoid interception or fake antennas like IMSI Catchers"
+      },
+
+      "providerPrivateRed": {
+        "title": "Private network provider",
+        "description": "We are a private MVNO with complete discretion in the use of your personal data"
+      },
+      "withOutNumber": {
+        "title": "Without a phone number",
+        "description": "For greater security and anonymity, this SIM does not have a phone number"
+      }
+    },
+    "ourObjetiveTitle": "Our goal is to provide you with total protection",
+    "ourObjetiveDescription": " Having the International Encrypted SIM card means having a private network provider that will ensure your security while preventing your information from being manipulated, shared, or sold",
+    "comunicationTitle": "Communicate from anywhere in the world with the peace of mind of being safe and anonymous",
+    "secureAndEasyToUse": "Safe and easy to use!",
+    "secureAndEasyToUseDescription": "It activates instantly online and guarantees total privacy and protection for your data. You can easily recharge it from wherever you are",
+    "payOnlyForWhatYouUseTitle": "Pay only for what you use",
+    "payOnlyForWhatYouUseDescription": "As long as you are using the Encrypted SIM Card, your balance never expires, regardless of how long it takes you to use it",
+    "payOnlySecondCard": "Your plan has no cut-off date",
+    "whyCallWithEncryptedSIM": {
+      "title": "Why call with the Encrypted SIM?",
+      "card1": "We do not store call history",
+      "card2": "Anonymity in calls through tools: ID substitution, Callback, and Voice Filter",
+      "card3": "The SIM generates a random substitute number for each call for increased anonymity"
+    },
+
+    "coverageMoreThan200CountriesTitle": "Coverage in over 200 countries",
+    "coverageMoreThan200CountriesDescription": "Secure communication without borders",
+    "downloadAppTitle": "Download the app for iOS & Android",
+    "downloadAppDescription": "Download the app for iOS & Android"
+  },
+
+  "MayaData": {
+    "anonymSim": "Anonymous eSIM",
+    "monthPackage": "with monthly plans and unlimited data",
+    "viewAllSims": "View all SIMs",
+    "payMore": "Pay less, consume more",
+    "whereUseSim": "Where will you use your SIM?",
+    "connectInternet": "Connect to the Internet with your SIM in over 200 countries. Enjoy secure internet with complete privacy",
+    "allBenefits": {
+      "title": "All these benefits for you",
+      "connectionTitle": "5G LTE connections",
+      "connectionDescription": "Connect to high-speed mobile networks like 5G and LTE, ensuring a fast and efficient connection",
+      "avoidHighRoamingTitle": "Avoid high roaming costs",
+      "avoidHighRoamingDescription": "Avoid high spending on roaming services and keep track of your data",
+      "connectInstanlyTitle": "Connect instantly",
+      "connectInstanlyDescription": "Choose your region, select the plan that best fits your needs, and connect instantly",
+      "globalReachTitle": "Global Reach",
+      "globalReachDescription": "Communicate effortlessly and anonymously in over 200 countries with easy connectivity and affordability",
+      "totalAnonymityTitle": "Total anonymity",
+      "totalAnonymityDescription": "Communicate with total anonymity from 200 countries around the world",
+      "unlimitedDataTitle": "Unlimited data",
+      "unlimitedDataDescription": "Find unlimited plans so that gigabytes are not a problem. Stay connected"
+    },
+
+    "howItWorks": {
+      "title": "Here's how it works",
+      "chooseRegionTitle": "Choose the region where you want to use your",
+      "chooseRegionSpecialWord": "eSIM",
+      "chooseRegionDescription": "Choose one of our destinations or regions where you can use our eSIM",
+      "choosePlanTitle": "Select your",
+      "choosePlanSpecialWord": "data plan",
+      "choosePlanTitle2": "and make the purchase",
+      "choosePlanDescription": "Choose the plan that best fits your needs; we have plans for one month, three months, or six months",
+      "activateSimTitle": "Activate your eSIM and enjoy your",
+      "activateSimSpecialWord": "mobile data",
+      "activateSimDescription": "Activate your eSIM easily and quickly, and start enjoying global communications with anonymity"
+    }
+  },
+  "BneSimPage": {
+    "headline": "Connect anywhere",
+    "headline1": "in the world",
+    "headline2": "with total anonymity",
+    "subheadline": "Your data won’t expire, no matter how long",
+    "subheadline2": "you take to use it",
+    "whyChooseSim": "Why choose our SIM?",
+    "anonTitle": "No data logs, anonymity guaranteed!",
+    "anonDescription": "Data that is not stored cannot be leaked or revealed. It’s part of our philosophy not to collect personal information or logs of our customers.",
+    "OurSimCard": {
+      "title": "No roaming charges",
+      "description": "Our SIM lets you connect to a local operator and avoid high roaming fees",
+      "title2": "Connect with just a few clicks",
+      "description2": "Activate your SIM easily, and your data will be ready to use in more than 200 countries",
+      "title3": "Flexible plans",
+      "description3": "Choose from various data plans based on your needs and take as long as you want to use your resources",
+      "title4": "Instant activation",
+      "description4": "Get your SIM from anywhere in the world and activate it instantly with ease and total anonymity"
+    },
+    "PromoBanner": {
+      "title": "No cutoff dates or expiring plans!",
+      "description": "Take as long as you want to use your SIM or eSIM resources. There are no cutoff dates or data expiration."
+    },
+    "BannerAnonymous": {
+      "title": "Your purchase is anonymous",
+      "description": "Enjoy complete anonymity when purchasing your SIM or eSIM, we do not store any trace or personal information"
+    },
+    "OurBneCard": {
+      "title": "Choose a data plan for your SIM or eSIM",
+      "description": "Select your region and choose the plan that best fits your needs and budget",
+      "title2": "Buy it, load it, and connect from anywhere",
+      "description2": "Purchase your SIM, load your plan, and activate anonymous communications from anywhere in the world",
+      "title3": "Enjoy your data plan with no cutoff dates",
+      "description3": "Your plan will activate instantly. Take as long as you want to use it."
+    },
+    "FaqsBne": {
+      "title": "Frequently Asked Questions",
+      "faqs": {
+        "whatIsBne": {
+          "title": "What is BNE SIM?",
+          "content": "BNE SIM is an international SIM card that allows you to connect to the internet in over 200 countries with complete anonymity and no cutoff dates"
+        },
+        "howToActivate": {
+          "title": "How do I activate my BNE SIM?",
+          "content": "Activate your SIM easily and quickly. Just insert it into your device and follow the activation instructions"
+        },
+        "howToBuy": {
+          "title": "How do I buy a BNE SIM?",
+          "content": "Buy your SIM on our website, select your data plan, and have it delivered to your home or anywhere in the world"
+        }
+      }
+    },
+    "QRBanner": {
+      "title": "Download the App for iOS & Android and buy your SIM now",
+      "description": "Or scan the QR code with your camera"
+    }
+  },
+
+  "DashboardPage": {
+    "menuDashboard": {
+      "header": {
+        "supportChat": "Support Chat",
+        "myAccount": "My Account",
+        "logOut": "Log out",
+        "limitedAccount": "UNLIMITED TIME ACCOUNT"
+      },
+      "items": {
+        "mySimConsume": "My SIM data usage",
+        "myActivities": "My activities",
+        "store": "Store",
+        "myPurchases": "My purchases",
+        "accountAdmin": "Manage accounts",
+        "userConfig": "Settings"
+      }
+    }
+  },
+  "OurProductsPage": {
+    "banner": {
+      "title": "Manage multiple SIMs with our",
+      "subtitle": "Encrypted App",
+      "titleNewConnectWith": "Connect worldwide with",
+      "titleNewTotalSecurity": "total security",
+      "titleNewInComunication": "in your communications",
+      "descriptionNew": "Protect yourself from cybercriminals and keep your personal information safe",
+      "newButtonBuy": "Buy eSim",
+      "buttonAppEncriptados": "Encrypted Apps"
+    },
+    "filterProducts": {
+      "title": "Our products",
+      "categoryTitle": "Category",
+      "sim": "Sim",
+      "apps": "Apps",
+      "software": "Software",
+      "osTitle": "Operating systems",
+      "licenseTitle": "License duration",
+      "selectPlacerholder": "Select",
+      "searchPlaceholder": "Search"
+    }
+  },
+
+  "DistributorsPage": {
+    "banner": {
+      "becomeOurAllyBannerTitle": "Become our business ally and sell our products",
+      "becomeOurAllyBannerDescription": "Become a distributor of our products: eSIMs, Apps, and encrypted phones, and earn profits",
+      "sendRequest": "Send Request"
+    },
+    "toBeADistributor": {
+      "title": "What does it mean to be a distributor of Encriptados?",
+      "description": "If you are an individual or organization with an audience interested in encrypted communication tools, you can partner with us to distribute our products to them"
+    },
+    "knowsBenefits": {
+      "title": "Discover the benefits",
+      "subtitle": "Why encrypted communication systems?"
+    },
+    "benefitsCards": {
+      "card1": {
+        "title": "Protection Against Advanced Threats",
+        "description": "Digital threats evolve every day. Our encryption technology keeps your data safe from increasingly sophisticated cyber attacks."
+      },
+      "card2": {
+        "title": "Security for Everyone",
+        "description": "From individuals to governments, everyone is at risk. With our encryption, we protect the information of individuals, businesses, and organizations from constant attacks."
+      },
+      "card3": {
+        "title": "Cost Reduction in Cybersecurity",
+        "description": "Digital threats evolve every day. Our encryption technology keeps your data safe from increasingly sophisticated cyber attacks."
+      },
+      "card4": {
+        "title": "Trust in Every Interaction",
+        "description": "Secure your transactions and communications with encryption that protects data end-to-end, providing the peace of mind of a safe environment."
+      }
+    },
+    "beEncryptedDistributor": {
+      "title": "What does it mean to be a distributor of Encriptados?",
+      "description": "To be a distributor of Encriptados requires a high level of caution, discretion, and responsibility in data usage to provide the highest level of security to our users."
+    },
+    "ourProducts": {
+      "title": "Our products",
+      "subtitle": "Discover our products",
+      "seeProducts": "See products",
+      "cards": {
+        "card1": "Encrypted SIMs",
+        "card2": "Secure messaging applications",
+        "card3": "Security systems"
+      }
+    },
+    "bannerJoinUs": "Join us now as an ally and generate income with our products",
+    "modal": {
+      "becomeDistributor": "Become a distributor",
+      "descriptionDistributor": "Sell the best encrypted communication products",
+      "requestDistributor": "Distributor request",
+      "inputName": "Enter your name or nickname",
+      "inputEmail": "Email address",
+      "inputContact": "Contact chat (Signal, Telegram, Threema)",
+      "inputStore": "Do you have a physical store? Where is it located?",
+      "inputCity": {
+        "placeholder": "Choose a city"
+      },
+      "inputExperience": "Do you have experience using or selling encrypted systems? Tell us",
+      "sendRequest": "Send request"
+    }
+  },
+  "EncryptedTestPage": {
+    "banner": {
+      "securityTestTitle": "Security Test",
+      "securityTestDescription": "Discover your security level with these tools"
+    },
+    "initTest": "Start Test",
+    "tryOurPhoneSecure": {
+      "title": "Test How Secure Your Phone Is",
+      "description": "Strengthen your digital security like never before."
+    },
+    "tryPassowordSecure": {
+      "title": "Test How Secure Your Password Is",
+      "description": "Enter a password and discover its security level"
+    }
+  },
+  "passwordTest": {
+    "verificationTitle": "Password Strength Checker",
+    "verificationSubtitle": "Verifications",
+    "statsSubtitle": "Statistics",
+    "passwordInputLabel": "Enter your password",
+    "passwordInputPlaceholder": "Enter your password",
+    "strengthLabel": "Strength: ",
+    "verifications": {
+      "length": "At least 12 characters",
+      "uppercase": "Contains uppercase letters",
+      "lowercase": "Contains lowercase letters",
+      "number": "Contains numbers",
+      "special": "Contains special characters",
+      "noCommon": "Not a common password"
+    },
+    "stats": {
+      "length": "Total length",
+      "uppercase": "Uppercase letters",
+      "lowercase": "Lowercase letters",
+      "numbers": "Numbers",
+      "special": "Special characters"
+    },
+    "improvementTips": "Improvement tips:",
+    "improvementMessages": {
+      "length": "Increase the length to at least 12 characters",
+      "uppercase": "Add uppercase letters",
+      "lowercase": "Add lowercase letters",
+      "number": "Include numbers",
+      "special": "Include special characters",
+      "noCommon": "Avoid using common passwords"
+    },
+    "strengthCategories": {
+      "veryWeak": "Very Weak",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong",
+      "veryStrong": "Very Strong",
+      "excellent": "Excellent"
+    },
+    "strengthScore": "Score",
+    "commonPasswords": {
+      "123456": "123456",
+      "password": "password",
+      "qwerty": "qwerty",
+      "admin": "admin",
+      "letmein": "letmein",
+      "welcome": "welcome"
+    }
+  },
+  "phoneTest": {
+    "backToTests": "Back to the tests",
+    "startservices": "Start using some encrypted services.",
+    "solutions": "We invite you to use our encrypted solutions.",
+    "complement": "You can complement it with an additional layer of protection.",
+    "protectTop": "You have high protection for your communications and devices",
+    "finalScore": "Your score is:",
+    "correctAnswer": "Correct answer",
+    "incorrectAnswer": "Incorrect answer",
+    "title": "Test your phone's security",
+    "answer": "Question",
+    "of": "of",
+    "question1": {
+      "titleQuestion": "What type of password or unlock method do you use?",
+      "answer1": "Alphanumeric with 6 or more characters.",
+      "answer2": "PIN or pattern with 6 characters",
+      "answer3": "PIN or pattern with 8 or more characters"
+    },
+    "question2": {
+      "titleQuestion": "Is your smartphone updated with the latest operating system?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question3": {
+      "titleQuestion": "Do you have an antivirus installed?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question4": {
+      "titleQuestion": "Do you use a VPN to connect to the Internet?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question5": {
+      "titleQuestion": "Do you perform regular backups?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question6": {
+      "titleQuestion": "Do you have access passwords for sensitive apps (Bank, Wallets)?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question7": {
+      "titleQuestion": "Do you delete applications you no longer use?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question8": {
+      "titleQuestion": "Do you review the privacy permissions granted to apps?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question9": {
+      "titleQuestion": "Do you frequently connect to public WiFi networks?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question10": {
+      "titleQuestion": "Do you use a conventional or alternative mobile operator?",
+      "answer1": "Conventional",
+      "answer2": "Alternative"
+    },
+    "question11": {
+      "titleQuestion": "Do you separate personal and work communications?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question12": {
+      "titleQuestion": "Do you use conventional messaging apps to share sensitive information?",
+      "answer1": "Yes",
+      "answer2": "No"
+    },
+    "question13": {
+      "titleQuestion": "Is your phone and data plan registered in your name?",
+      "answer1": "Yes",
+      "answer2": "No"
+    }
+  },
+  "OffersPage": {
+    "exclusiveOffersTitle": "Exclusive Offers",
+    "menu": {
+      "sims": "SIMS",
+      "apps": "Applications",
+      "system": "Systems"
+    },
+    "discoverSimTitle": "Discover Encriptados.io SIM Cards",
+    "discoverSimDescription": "Designed to protect your privacy on every call. No registration required, our SIMs ensure secure and anonymous communication, ideal for those who value discretion and security.",
+    "cards": {
+      "card1": {
+        "title": "IMSI Changes",
+        "description": "Our SIM does not issue an IMSI, protecting the origin of the connection."
+      },
+      "card2": {
+        "title": "Substitute Numbers",
+        "description": "Encrypted SIMs generate a random number for each call, enhancing privacy and preventing tracking."
+      },
+      "card3": {
+        "title": "Lifetime Plans",
+        "description": "There is no time limit to use the resources of your plan."
+      },
+      "card4": {
+        "title": "Global Reach",
+        "description": "The Encriptados SIM works in over 200 countries with ease of connection and affordability."
+      },
+      "card5": {
+        "title": "Maximum Security",
+        "description": "Your geolocation data will be encrypted."
+      },
+      "card6": {
+        "title": "Multiple Devices",
+        "description": "Our international chip works on any device: IOS, Android, Windows, or BlackBerry."
+      }
+    }
+  },
+  "BlogPage": {
+    "ourBlogTitleBanner": "Our Blog",
+    "ourBlogDescriptionBanner": "Learn about encrypted security",
+    "menu": {
+      "techTitle": "Technology",
+      "ventureTitle": "Entrepreneurship",
+      "eCommerceTitle": "E-Commerce",
+      "marketingTitle": "Marketing",
+      "toolsTitle": "Tools",
+      "publicityTitle": "Advertising"
+    },
+    "downloadAppTitle": "Download the App for iOS & Android",
+    "downloadAppSubtitle": "Or scan the QR code with your camera",
+    "saveTitle": "Save up to 50% on mobile fees",
+    "saveDescription": "Register your email and receive a welcome discount",
+    "saveInputPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "optimizeBanner": {
+      "title": "Optimize customer experience in your online store with advanced technology"
+    },
+    "writeBy": "Written by:",
+    "share": "Share:",
+    "talkWithSupport": "Chat now with an Encriptados advisor directly on Telegram",
+    "goTelegram": "Go to Telegram",
+    "articleTitle": "Related Articles"
+  },
+
+  "productsCategories": {
+    "sims": {
+      "title": "SIMS",
+      "description": "Discover our eSIM/SIM",
+      "items": {
+        "encryptedSim": {
+          "title": "Encrypted SIM",
+          "description": "Learn how the Encrypted SIM works"
+        },
+        "iraSim": {
+          "title": "IRA SIM",
+          "description": "Learn how the IRA SIM works"
+        },
+        "timSim": {
+          "title": "TIM SIM",
+          "description": "Learn how the TIM SIM works"
+        }
+      }
+    },
+    "test":{
+      "title": "test",
+      "description":"Esta es una pagina de prueba"
+
+    },
+    "apps": {
+      "title": "Applications",
+      "description": "Amazing products, applications, and systems with end-to-end encryption",
+      "items": {
+        "silentCircle": {
+          "title": "Silent Circle",
+          "description": "Silent Circle is a secure messaging app."
+        },
+        "armadillo": {
+          "title": "Armadillo",
+          "description": "Armadillo is a secure messaging app."
+        },
+        "vaultChat": {
+          "title": "VaultChat",
+          "description": "VaultChat is a secure messaging app."
+        },
+        "nordVpn": {
+          "title": "Nord VPN",
+          "description": "Nord VPN is a secure messaging app."
+        },
+        "salt": {
+          "title": "Salt",
+          "description": "Salt is a secure messaging app."
+        },
+        "vnclagoon": {
+          "title": "VNClagoon",
+          "description": "VNClagoon is a secure messaging app."
+        },
+        "threemaWork": {
+          "title": "ThreemaWork",
+          "description": "ThreemaWork is a secure messaging app."
+        },
+        "threema": {
+          "title": "Threema",
+          "description": "Threema is a secure messaging app."
+        },
+        "secureCrypt": {
+          "title": "SecureCrypt",
+          "description": "SecureCrypt is a secure messaging app."
+        },
+        "elyon": {
+          "title": "Elyon",
+          "description": "Elyon is a secure messaging app."
+        }
+      }
+    },
+    "systems": {
+      "title": "Systems",
+      "description": "Data encryption systems",
+      "items": {
+        "secureMdmIphone": {
+          "title": "Secure MDM iPhone",
+          "description": "Secure MDM iPhone is a secure messaging app."
+        },
+        "secureMdmAndroid": {
+          "title": "Secure MDM Android",
+          "description": "Secure MDM Android is a secure messaging app."
+        },
+        "cryptcom": {
+          "title": "Cryptcom",
+          "description": "Cryptcom is a secure messaging app."
+        },
+        "renati": {
+          "title": "Renati",
+          "description": "Renati is a secure messaging app."
+        },
+        "ultraX": {
+          "title": "Ultra X",
+          "description": "Ultra X is a secure messaging app."
+        },
+        "chatMail": {
+          "title": "ChatMail",
+          "description": "ChatMail is a secure messaging app."
+        },
+        "decSecure": {
+          "title": "DEC Secure",
+          "description": "DEC Secure is a secure messaging app."
+        },
+        "totalSec": {
+          "title": "Total Sec",
+          "description": "Total Sec is a secure messaging app."
+        },
+        "armadillo": {
+          "title": "Armadillo",
+          "description": "Armadillo is a secure messaging app."
+        },
+        "vaultChat": {
+          "title": "VaultChat",
+          "description": "VaultChat is a secure messaging app."
+        },
+        "t2Communicator": {
+          "title": "T2 Communicator",
+          "description": "T2 Communicator is a secure messaging app."
+        },
+        "intactPhone": {
+          "title": "Intact Phone",
+          "description": "Intact Phone is a secure messaging app."
+        }
+      }
+    }
+  },
+  "othersCategories": {
+    "distributors": {
+      "title": "Distributors",
+      "description": "Become a distributor of our products"
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Latest news and updates"
+    },
+    "securityTest": {
+      "title": "Security Test",
+      "description": "How secure are your devices?"
+    },
+    "offers": {
+      "title": "Offers",
+      "description": "Discover our offers"
+    }
+  },
+    "usCategories": {
+    "aboutUs": {
+      "title": "About Us",
+      "description": "Learn more about our mission and values."
+    },
+    "ambassadors": {
+      "title": "Be an Ambassador",
+      "description": "Join our ambassador program."
+    },
+    "locations": {
+      "title": "Where We Are",
+      "description": "Discover our locations around the world."
+    }
+  },
+  "menuMobile": {
+    "openMenu": "Open menu",
+    "login": "Log in",
+    "store": {
+      "label": "Store",
+      "new": "New"
+    },
+    "deliveries":{
+      "label": "Deliveries"
+    },
+    "categories": {
+      "products": "Products",
+      "others": "Others",
+      "us": "Us"
+    },
+    "aboutUs": "About us",
+    "suggestions": {
+      "question": "Did you see something wrong?",
+      "link": "send us a suggestion here"
+    }
+  },
+  "encryptedHeader": {
+    "menu": {
+      "products": "Products",
+      "others": "Others",
+      "us": "Us",
+      "store": {
+        "label": "Store",
+        "new": "New"
+      },
+      "deliveries":"Deliveries",
+      "aboutUs": "About Us",
+      "login": "Log In",
+      "notAvailable": "Not Available",
+      "noItemsAvailable": "No items available"
+    }
+  },
+  "megaMenu": {
+    "categories": "Categories",
+    "preview": "Preview",
+    "seeMore": "See more",
+    "category": "Category"
+  },
+  "RechargeSim": {
+    "errorInput": "Must be a valid phone number with at least 6 digits."
+  },
+  "ThreemaPage": {
+    "product": {
+      "title": "Threema App",
+      "description": "Communicate securely with one of the world’s most secure messaging applications",
+      "features": {
+        "endToEndEncryption": "End-to-end encryption",
+        "chatHiding": "Chat hiding with PIN",
+        "privateCalls": "Private calls"
+      },
+      "license": {
+        "twelveMonths": "12-month license"
+      },
+      "pricePrefix": "From",
+      "price": "180$ USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Chat support"
+      }
+    },
+    "features": {
+      "sectionTitle": "Main Features",
+      "chat": {
+        "title": "Chat",
+        "description": "Our chat complies with all privacy laws; providing your team with an easy-to-use alternative, separating personal and professional communication."
+      },
+      "confidentiality": {
+        "title": "Confidentiality",
+        "description": "Confidential chats can be hidden and protected by creating passwords using a PIN or fingerprint."
+      },
+      "groupChat": {
+        "title": "Group Chat",
+        "description": "Send any file format to your chat partners. Access hardware features like mobile camera, microphone, data, network status, GPS sensors, and more."
+      },
+      "agreementFeatures": {
+        "title": "Agreement Features",
+        "description": "VNCmeet, as part of VNCtalk, allows you to start video calls with external guest users who do not need a VNCtalk subscription."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "We comply with established regulations",
+          "description": "Threema Work complies with the European General Data Protection Regulation (GDPR); we also comply with the Swiss Federal Data Protection Act (DSG)."
+        },
+        {
+          "title": "We are certified",
+          "description": "Threema operates its own servers in ISO 27001 certified data centers."
+        },
+        {
+          "title": "App with greater user reach",
+          "description": "In app stores, Threema receives excellent reviews and ratings. On Google Play Store, it holds 4.5 / 5 stars, approximately 45,000 votes."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Threema, the world’s best-selling encrypted application"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "Encrypted SIM Card",
+          "description": "Protect yourself from cybercriminals and keep your personal information secure",
+          "buttonText": "Buy",
+          "secondButtonText": "More information"
+        },
+        {
+          "title": "Encrypted E-SIM Data or Minutes Plans",
+          "description": "Subtitle element copy",
+          "buttonText": "Learn more"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "questions": [
+        {
+          "question": "What is the Threema application for?",
+          "answer": "Threema is a secure messaging app that protects your privacy and allows you to send encrypted messages, make voice calls, and share files."
+        },
+        {
+          "question": "How does the Threema application work?",
+          "answer": "Threema uses end-to-end encryption to ensure that only the sender and receiver can read the messages. It does not require a phone number or email for registration."
+        },
+        {
+          "question": "How good is the security and privacy of the Threema application?",
+          "answer": "Threema is recognized for its high level of security and data protection. It does not collect personal information and its servers are located in Switzerland."
+        }
+      ]
+    }
+  }
+
+}
