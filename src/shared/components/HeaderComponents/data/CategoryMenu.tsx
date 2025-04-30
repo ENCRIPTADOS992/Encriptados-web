@@ -124,7 +124,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.threema.title", { defaultValue: "Threema" }),
           image:
             "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app8",
+          link: "/threema",
           description: t("apps.items.threema.description", {
             defaultValue: "Threema es una aplicación de mensajería segura.",
           }),
