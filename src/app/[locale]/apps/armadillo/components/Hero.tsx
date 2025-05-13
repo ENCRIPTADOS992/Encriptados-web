@@ -5,16 +5,25 @@ const Hero = () => {
     <>
       <div className='block md:hidden'>
         <Image
-          src='/images/apps/armadillo/hero-mobile.webp'
+          src='/images/apps/armadillo/hero-mobile.jpg'
           alt='armadillo'
           width={414}
           height={174}
           className='w-full h-auto'
         />
       </div>
-      <div className='hidden md:block'>
+      <div className='hidden md:block lg:hidden'>
         <Image
-          src='/images/apps/armadillo/hero-desktop.webp'
+          src='/images/apps/armadillo/hero-tablet.jpg'
+          alt='armadillo'
+          width={1440}
+          height={284}
+          className='w-full h-auto'
+        />
+      </div>
+      <div className='hidden lg:block'>
+        <Image
+          src='/images/apps/armadillo/hero-desktop.jpg'
           alt='armadillo'
           width={1440}
           height={284}
