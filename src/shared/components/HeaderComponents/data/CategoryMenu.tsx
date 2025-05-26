@@ -207,7 +207,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system6",
+          link: "/apps/chat-mail",
           description: t("systems.items.chatMail.description", {
             defaultValue: "ChatMail es una aplicación de mensajería segura.",
           }),
@@ -218,7 +218,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system7",
+          link: "/apps/dec-secure",
           description: t("systems.items.decSecure.description", {
             defaultValue: "DEC Secure es una aplicación de mensajería segura.",
           }),
@@ -240,7 +240,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system9",
+          link: "/apps/armadillo-v2",
           description: t("systems.items.armadillo.description", {
             defaultValue: "Armadillo es una aplicación de mensajería segura.",
           }),
@@ -251,7 +251,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system10",
+          link: "/apps/vault-chat-v2",
           description: t("systems.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
@@ -262,7 +262,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/T2Comunnicator_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system11",
+          link: "/apps/t2-communicator",
           description: t("systems.items.t2Communicator.description", {
             defaultValue:
               "T2 Communicator es una aplicación de mensajería segura.",
@@ -274,7 +274,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/IntacPhone_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system12",
+          link: "/apps/intact-phone",
           description: t("systems.items.intactPhone.description", {
             defaultValue:
               "Intact Phone es una aplicación de mensajería segura.",

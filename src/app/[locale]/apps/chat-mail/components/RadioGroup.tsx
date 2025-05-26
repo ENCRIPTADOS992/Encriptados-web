@@ -1,28 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTransition } from 'react';
 
 interface CustomRadioGroupProps {
   options: { label: string; value: string }[];
-  flexDirection?: 'row' | 'column';
+  initialSelected: string;
   className?: string;
 }
 
 export default function CustomRadioGroup({
+  initialSelected,
   options,
-  className,
-  flexDirection
+  className
 }: CustomRadioGroupProps) {
-  const [selected, setSelected] = useState(options[0].value);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+
+  const selected = searchParams.get('plan') || initialSelected;
+
+  const handleChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('plan', value);
+
+    startTransition(() => {
+      router.push(`?${params.toString()}`, { scroll: false });
+    });
+  };
 
   return (
-    <div
-      className={`flex gap-[18px] ${
-        flexDirection === 'column'
-          ? 'flex-col items-start'
-          : 'flex-row items-center'
-      } ${className}`}
-    >
+    <div className={`flex gap-[18px] items-center ${className}`}>
       {options.map((option) => (
         <label key={option.value} className='flex items-center cursor-pointer'>
           <input
@@ -30,8 +38,9 @@ export default function CustomRadioGroup({
             name='customRadio'
             value={option.value}
             checked={selected === option.value}
-            onChange={() => setSelected(option.value)}
+            onChange={() => handleChange(option.value)}
             className='sr-only'
+            disabled={isPending}
           />
           <div
             className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors

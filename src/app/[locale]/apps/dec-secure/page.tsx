@@ -1,0 +1,231 @@
+import ShoppingCart from '@/shared/svgs/ShoppingCart';
+import SupportContact from '@/shared/svgs/SupportContact';
+import { Check, CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
+import Accordion from '../shared/Accordion';
+import Button from '../shared/Button';
+import CardDetails from '../shared/CardDetails';
+import SimCardGroup from '../shared/SimCardGroup';
+import Hero from './components/Hero';
+import CustomRadioGroup from './components/RadioGroup';
+import { details } from './consts/details';
+import { plans } from './consts/plans';
+import { characteristics } from './consts/characteristics';
+import DetailsElement from './components/DetailsElement';
+
+const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
+  const selected = searchParams.plan || plans[0].value;
+
+  return (
+    <div>
+      <Hero />
+      <main className='p-5 bg-white tracking-wide md:flex md:flex-row-reverse md:justify-center md:items-center md:gap-20 md:py-16 md:bg-white'>
+        <div className='mx-auto mb-[50px] md:mt-9 md:w-2/4 lg:w-2/5 md:mx-0 xl:w-[37%]'>
+          {selected === plans[0]?.value && (
+            <Image
+              src='/images/apps/dec-secure/banner-3-months.jpg'
+              alt='dec secure banner'
+              width={813}
+              height={601}
+              priority
+              className='w-full'
+            />
+          )}
+          {selected === plans[1]?.value && (
+            <Image
+              src='/images/apps/dec-secure/banner-6-months.jpg'
+              alt='dec secure banner'
+              width={813}
+              height={601}
+              priority
+              className='w-full'
+            />
+          )}
+        </div>
+        <div className='md:w-2/4 lg:w-2/5 xl:w-1/3'>
+          <b className='block text-2xl mb-3 text-[#131313] md:text-[28px]'>
+            DEC Secure
+          </b>
+          <p className='text-sm'>
+            DEC Secure ofrece total tranquilidad cuando se trata de la
+            privacidad y seguridad de la información en tu dispositivo móvil.{' '}
+          </p>
+          <ol className='my-4'>
+            <li className='flex items-center gap-2'>
+              <Check width={28} height={28} color='#1C1B1F' />
+              <p>VPN sin clic</p>
+            </li>
+            <li className='flex items-center gap-2'>
+              <Check width={28} height={28} color='#1C1B1F' />
+              <p>Bloqueo y borrado remoto</p>
+            </li>
+            <li className='flex items-center gap-2'>
+              <Check width={28} height={28} color='#1C1B1F' />
+              <p>Mensajes y llamadas cifradas</p>
+            </li>
+          </ol>
+          <CustomRadioGroup
+            options={plans}
+            initialSelected={selected}
+            className='flex-wrap'
+          />
+
+          <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
+          <p className='text-xs'>Desde</p>
+          <b className='text-2xl'>349$ USD</b>
+          <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
+            <Button type='primary' className='md:w-full md:justify-center'>
+              <p className='font-medium text-base'>Comprar ahora</p>
+              <ShoppingCart color='white' height={20} width={20} />
+            </Button>
+            <Button type='alternative' className='md:w-full md:justify-center'>
+              <p className='font-medium'>Chat soporte</p>
+              <SupportContact width={20} height={18} color='#00516b' />
+            </Button>
+          </div>
+        </div>
+      </main>
+
+      <section className='lg:bg-[#F4F8FA] lg:px-[52px] xl:px-[84px] lg:py-[74px] overflow-hidden'>
+        <div className='relative flex flex-col px-5 pt-20 bg-black lg:rounded-[44px] lg:flex-row-reverse lg:items-start lg:pt-[65px] lg:pb-[118px] xl:pl-9 xl:pr-[108px] xl:gap-3'>
+          <div className='absolute z-0 h-[450px] w-[450px] bg-[#3fd3ff] rounded-[24px] left-[20%] top-[12%] blur-[114px] lg:left-auto lg:top-[35%] right-[13%] lg:h-[225px] lg:w:[225px]'></div>
+          <div className='z-10 flex flex-col lg:w-11/12 xl:w-[53%]'>
+            <b className='text-2xl text-center text-white mb-[28px] md:text-left md:text-[32px] lg:mb-11'>
+              Te mantenemos conectado de forma segura y privada
+            </b>
+            <ol className='flex flex-col gap-1 mb-[30px] lg:grid md:grid-cols-2 md:gap-[14px] md:mx-auto'>
+              {details.map((item, idx) => (
+                <CardDetails
+                  title={item.title}
+                  description={item.description}
+                  descriptionClassName='xl:text-base'
+                  key={idx}
+                  icon={
+                    <CheckCircle2
+                      color='#6ADDFF'
+                      width={28}
+                      height={28}
+                      className='min-w-[20px] min-h-[20px]'
+                    />
+                  }
+                  className='h-max px-6 pt-6 pb-[34px] lg:h-full'
+                />
+              ))}
+            </ol>
+          </div>
+          <picture className='relative h-[350px] overflow-hidden flex justify-center lg:h-auto lg:w-[44%] xl:px-14'>
+            <Image
+              src='/images/apps/dec-secure/vpn-active.png'
+              alt='dec-secure details'
+              width={541}
+              height={807}
+              className='absolute top-0 w-[335px] lg:relative lg:top-auto lg:w-full'
+            />
+          </picture>
+        </div>
+      </section>
+
+      <section className='flex flex-col items-center pt-11 px-5 bg-white md:pt-8 md:pb-0 lg:pl-24 lg:pr-20 lg:pt-11 lg:grid lg:grid-cols-2 lg:gap-x-4'>
+        <div className='text-lg leading-tight mb-8 lg:ml-24 lg:text-[20px]'>
+          <h4 className='text-[28px] leading-[41px] font-bold mb-[14px]'>
+            La seguridad de tus datos es nuestra máxima prioridad
+          </h4>
+
+          <b>
+            Gestión de aplicaciones móviles
+            <br />
+            Biblioteca de aplicaciones privadas administradas para proporcionar
+            aplicaciones al dispositivo sin una conexión a nubes públicas.
+            <br />
+            <br />
+            Aplicaciones lista blanca
+            <br />
+            Lista blanca completa de aplicaciones para detener la descarga, o
+            implementación de aplicaciones espías o inapropiadas.
+            <br />
+            <br />
+            Solo aplicaciones aprobadas
+            <br />
+            Nuestro equipo ha examinado de forma independiente cada aplicación
+            de la biblioteca para validar los criterios de seguridad y
+            privacidad.
+          </b>
+        </div>
+        <picture className='w-full relative h-[395px] overflow-hidden flex justify-center lg:h-auto lg:w-auto xl:px-[66px]'>
+          <Image
+            src='/images/apps/dec-secure/details.png'
+            alt='dec-secure chat'
+            width={350}
+            height={656}
+            className='absolute top-0 w-[330px] lg:relative lg:top-auto'
+          />
+        </picture>
+      </section>
+      <section className='py-11 px-5 bg-[#F4F8FA] md:pt-8 lg:bg-white md:pb-16 lg:px-20 '>
+        <div className='md:grid md:grid-cols-2 gap-4'>
+          {characteristics.map((item, idx) => (
+            <DetailsElement
+              key={idx}
+              title={item.title}
+              description={item.description}
+              imageAlt={item.imageAlt}
+              imageSrc={item.imageSrc}
+              imageWidth={item.imageWidth}
+              imageHeight={item.imageHeight}
+              imageCenter={item.imageCenter}
+              background={item.background}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className='h-[158px] md:h-auto md:max-h-[320px]'>
+        <Image
+          src='/images/apps/dec-secure/banner.png'
+          alt='dec secure comunicaciones diseñadas para la privacidad'
+          width={1800}
+          height={400}
+          className='h-full object-cover object-right max-h-[320px]'
+        />
+      </section>
+
+      <section className='pt-8 pb-[60px] bg-[#F4F8FA] md:pb-0'>
+        <div className='flex flex-col text-center mx-5 gap-8 mb-[60px] lg:flex-row md:items-center md:justify-end md:mb-[60px] md:py-24 md:pl-20 md:w-[95%] md:leading-tight md:text-left md:gap-14'>
+          <b className='text-[24px] lg:text-[44px] md:w-11/12'>
+            Cómo Proteger mi Celular de Malware y Hackers para evitar
+            Intervenciones 2023
+          </b>
+          <Image
+            src='/images/apps/dec-secure/youtube.png'
+            alt='dec secure youtube'
+            width={627}
+            height={346}
+            className='w-full lg:w-full rounded-[14px]'
+          />
+        </div>
+        <SimCardGroup />
+        <section className='mt-14 py-10 px-5 bg-white'>
+          <b className='block mx-auto mb-11 text-center text-2xl md:text-[34px]'>
+            Preguntas frecuentas
+          </b>
+          <div className='flex flex-col gap-4 md:w-3/4 md:mx-auto'>
+            <Accordion
+              title='¿Qué es y para qué sirve el celular IntactPhone?'
+              content='Intactphone es un celular cifrado de grado militar con un hardware y software fuertes. No solo protege el dispositivo de ataques cibernéticos o brechas de seguridad sino contra situaciones ambientales como agua, caídas o golpes.'
+            />
+            <Accordion
+              title='¿IntactPhone, cuál es el precio?'
+              content='El precio del celular Intactphone varía de acuerdo a su modelo y licencia. Se puede adquirir en Encriptados.io desde un valor aproximado de $1000 USD.'
+            />
+            <Accordion
+              title='¿IntactPhone, quién lo fabrica?'
+              content='CommuniTake, la casa madre de Intact, manufactura completamente el dispositivo. Desde el hardware hasta el sistema operativo. Esto buscando prevenir la sustitución de código por parte de malintencionados y las brechas de información. Conócelo.'
+            />
+          </div>
+        </section>
+      </section>
+    </div>
+  );
+};
+
+export default Page;
