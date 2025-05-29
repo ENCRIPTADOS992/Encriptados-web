@@ -8,7 +8,14 @@ const ListOfProducts = () => {
   const { watch } = useFormContext();
   const selectedOption = watch("selectedOption");
   console.log("[ListOfProducts] Watching selectedOption:", selectedOption);
-  const { data, isFetching } = useGetProducts(watch("selectedOption"));
+
+  const { data, isFetching } = useGetProducts(selectedOption);
+
+  React.useEffect(() => {
+  console.log("[ListOfProducts] useEffect - selectedOption cambió:", selectedOption);
+}, [selectedOption]);
+
+
 
   if (isFetching) {
     return (

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import FilterProductsBar from "./components/FilterProductsBar/FilterProductsBar";
 import CardOurProducts from "./components/CardOurProducts";
 import BannerActivate from "./components/BannerActivate";
@@ -18,6 +18,11 @@ import BannerOurProducts from "./components/BannerOurProducts";
 
 const OurProductsPage = () => {
   const t = useTranslations("OurProductsPage");
+
+  useEffect(() => {
+    console.log("[OurProductsPage] Página montada correctamente ✅");
+  }, []);
+
   return (
     <>
         <BasicFormProvider
@@ -29,6 +34,7 @@ const OurProductsPage = () => {
             encriptadosprovider: "all",
           }}
         >
+
         <div className="block md:hidden">
           <BannerOurProductsMobile />
         </div>
