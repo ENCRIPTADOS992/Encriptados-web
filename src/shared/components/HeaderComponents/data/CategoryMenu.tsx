@@ -23,15 +23,15 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Conoce cómo funciona la SIM Encriptada",
           }),
         },
-        {
-          title: t("sims.items.iraSim.title", { defaultValue: "SIM IRA" }),
-          link: "/ira-sim",
-          image:
-            "/images/mega-menu/sims/ira_sim_encriptados_preview_menu_web.jpg",
-          description: t("sims.items.iraSim.description", {
-            defaultValue: "Conoce cómo funciona la SIM IRA",
-          }),
-        },
+        // {
+        //   title: t("sims.items.iraSim.title", { defaultValue: "SIM IRA" }),
+        //   link: "/ira-sim",
+        //   image:
+        //     "/images/mega-menu/sims/ira_sim_encriptados_preview_menu_web.jpg",
+        //   description: t("sims.items.iraSim.description", {
+        //     defaultValue: "Conoce cómo funciona la SIM IRA",
+        //   }),
+        // },
         {
           title: t("sims.items.timSim.title", { defaultValue: "SIM TIM" }),
           link: "/tim-sim",

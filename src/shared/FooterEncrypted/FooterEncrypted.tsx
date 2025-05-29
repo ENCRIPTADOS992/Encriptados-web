@@ -34,10 +34,10 @@ export default function FooterEncrypted() {
   const sections = [
     {
       title: "SIM - eSIMs",
-      items: [t("simEsims.encryptedSim"), "SIM IRA", "SIM TIM"],
+      items: [t("simEsims.encryptedSim"), "SIM TIM"],
     },
     {
-      title: t("encryptedSims.title"),
+      // title: t("encryptedSims.title"),
       items: [
         "Silent phone",
         "VncLagon",
@@ -47,13 +47,11 @@ export default function FooterEncrypted() {
         "VaultChat",
         "Armadillo",
         "SecureCrypt",
-        "Elon",
       ],
     },
     {
       title: t("phoneEncrypted.title"),
       items: [
-        "SecureCrypt",
         "Armadillo",
         "UltraX",
         "Intact",
@@ -64,7 +62,6 @@ export default function FooterEncrypted() {
         "Secure MDM iphone",
         "Secure MDM Android",
         "VaultChat",
-        "T2 Comunicador",
       ],
     },
   ];

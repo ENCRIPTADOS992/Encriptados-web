@@ -151,14 +151,14 @@ export default function EncryptedHeader() {
                
 
               {/* Ingresar */}
-              <Link
+              {/* <Link
                 href="/login"
                 prefetch
                 className="px-4 ml-14 py-2 text-sm text-[#1C1B1F] bg-[#E3F8FF] hover:bg-gray-100 rounded-xl transition-colors flex items-center gap-2"
               >
                 <WorldIcon color="#1C1B1F" />
                 {t("menu.login")}
-              </Link>
+              </Link> */}
             </div>
           </nav>
         </div>

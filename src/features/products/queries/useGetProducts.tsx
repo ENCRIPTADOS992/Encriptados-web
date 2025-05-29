@@ -1,13 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllProducts } from "../services";
+import { fetchProductsByCategory } from "@/services/wordpress"; 
 
-type ProductType = "app" | "sim" | "phone";
-
-export const useGetProducts = (productType: ProductType) => {
-  const query = useQuery({
-    queryKey: ["products", productType], // Construye la queryKey dinámicamente
-    queryFn: () => getAllProducts(productType), // Pasa el parámetro al servicio
+export const useGetProducts = (categoryId: number) => {
+  return useQuery({
+    queryKey: ["products", categoryId],
+    queryFn: () => fetchProductsByCategory(categoryId),
+    enabled: !!categoryId,
   });
-
-  return query;
 };

@@ -13,49 +13,60 @@ import { useTranslations } from "next-intl";
 import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 
-type IconKeys = "sim" | "app" | "mobile";
+const ICON_COLOR_SELECTED = "#0AAEE1";
+const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
-interface IconProps {
-  height?: any;
-  width?: any;
-  color?: any;
-}
+const FILTER_OPTIONS = [
+  {
+    key: "sim",
+    label: "SIM",
+    catId: 40,
+    Icon: SimProductsBarIcon,
+  },
+  {
+    key: "app",
+    label: "Aplicaciones",
+    catId: 38,
+    Icon: AplicationsProductsBarIcon,
+  },
+  {
+    key: "mobile",
+    label: "Sistemas",
+    catId: 35,
+    Icon: PhoneProductsBarIcon,
+  },
+] as const;
 
-const icons: Record<IconKeys, React.FC<IconProps>> = {
-  sim: SimProductsBarIcon,
-  app: AplicationsProductsBarIcon,
-  mobile: PhoneProductsBarIcon,
-};
 
 export default function FilterProductsBar() {
   const t = useTranslations("OurProductsPage");
-  const { getValues } = useFormContext();
-  const selected = getValues("selectedOption") as IconKeys;
+  const { getValues } = useFormContext<{ selectedOption: number }>();
+  const selectedCat = getValues("selectedOption");
+  console.log("[FilterProductsBar] selectedOption (cat ID):", selectedCat);
 
-  const ICON_COLOR_SELECTED = "#0AAEE1";
-  const ICON_COLOR_UNSELECTED = "#7E7E7E";
-  const items = Object.keys(icons).map((key) => {
-    const iconKey = key as IconKeys;
-    return {
-      value: iconKey,
-      label:
-        iconKey === "app"
-          ? t("filterProducts.apps")
-          : iconKey === "mobile"
-          ? "Sistemas"
-          : key.charAt(0).toUpperCase() + key.slice(1),
-      icon: React.createElement(icons[iconKey], {
-        color:
-          selected === iconKey ? ICON_COLOR_SELECTED : ICON_COLOR_UNSELECTED,
-      }),
-    };
-  });
 
-  const selectedSubfilter = {
-    app: <FilterAppWithLicense />,
-    sim: <FilterProviderServices />,
-    mobile: <FilterAppWithLicense />,
-  };
+    const items = FILTER_OPTIONS.map(({ key, label, catId, Icon }) => ({
+    value: String(catId),
+    label:
+      key === "app"
+        ? t("filterProducts.apps")
+        : key === "mobile"
+        ? "Sistemas"
+        : label,
+    icon: <Icon color={selectedCat === catId ? ICON_COLOR_SELECTED : ICON_COLOR_UNSELECTED} />,
+  }));
+
+
+ let SubFilterComponent: React.ReactNode = null;
+  switch (selectedCat) {
+    case 40: // SIM
+      SubFilterComponent = <FilterProviderServices />;
+      break;
+    case 38: // Aplicaciones
+    case 35: // Sistemas
+      SubFilterComponent = <FilterAppWithLicense />;
+      break;
+  }
 
   return (
     <div className="bg-white rounded-xl p-5 md:p-7 w-full max-w-7xl mx-auto ">
@@ -69,7 +80,7 @@ export default function FilterProductsBar() {
               <ListOfFiltersButton items={items} name="selectedOption" />
             </div>
 
-            {selectedSubfilter[selected]}
+            {SubFilterComponent}
           </div>
         </div>
 

@@ -6,6 +6,8 @@ import { useFormContext } from "react-hook-form";
 
 const ListOfProducts = () => {
   const { watch } = useFormContext();
+  const selectedOption = watch("selectedOption");
+  console.log("[ListOfProducts] Watching selectedOption:", selectedOption);
   const { data, isFetching } = useGetProducts(watch("selectedOption"));
 
   if (isFetching) {
