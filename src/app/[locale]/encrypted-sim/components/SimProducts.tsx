@@ -222,43 +222,54 @@ const SimProductsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      {data?.map((card, index) => (
-        <div
-          key={index}
-          className="
-            bg-custom-linear 
-            sm:!bg-transparent 
-            shadow-lg 
-            sm:shadow-none 
-            gap-6 
-            flex flex-col 
-            sm:flex-row                       
-            my-0 
-            rounded-3xl 
-            sm:p-0
-            ls:p-0
-            p-4
-            py-10
-            sm:py-0
-            ls:py-0
-          "
-        >
-          <CardDescription
+      {data?.map((card, index) => {
+        // ← Aquí extraemos las props correctas de tu tipo Product
+        const productName = card.name;
+        const productDescription = card.description;
+        // Tomamos la primera imagen, si existe
+        const productImage = card.images?.[0]?.src ?? "";
+        const productPrice = card.price;
+        // Si tu hook realmente devuelve `advantages`, sino quita esta línea
+        const productAdvantages = (card as any).advantages ?? [];
+
+        return (
+          <div
+            key={index}
+            className="
+              bg-custom-linear 
+              sm:!bg-transparent 
+              shadow-lg 
+              sm:shadow-none 
+              gap-6 
+              flex flex-col 
+              sm:flex-row                       
+              my-0 
+              rounded-3xl 
+              sm:p-0
+              ls:p-0
+              p-4
+              py-10
+              sm:py-0
+              ls:py-0
+            "
+          >
+            <CardDescription
               logoSrc={LogoSvg1}
-              title={card?.title}
-              description={card?.description}
-              features={card?.features ?? []}
+              title={productName}
+              description={productDescription}
+              // features={card.featured ?? []}
             />
 
-          <CardSim
-            productImage={card?.image}
-            advantages={card.advantages}
-            priceRange={card.price}
-            headerIcon={""}
-            headerTitle={card.title}
-          />
-        </div>
-      ))}
+            <CardSim
+              productImage={productImage}
+              advantages={productAdvantages}
+              priceRange={productPrice}
+              headerIcon={""}
+              headerTitle={productName}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };
