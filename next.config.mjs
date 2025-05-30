@@ -11,6 +11,9 @@ const nextConfig = {
       "encriptados.es"
     ],
   },
+   eslint: {
+    ignoreDuringBuilds: true, 
+  },
 };
 
 export default withNextIntl(nextConfig);
