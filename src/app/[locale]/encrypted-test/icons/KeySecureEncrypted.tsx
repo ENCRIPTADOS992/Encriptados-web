@@ -53,8 +53,8 @@ const KeySecureEncrypted = () => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(533.096 667.726) rotate(-131.424) scale(889.159 67429.4)"
           >
-            <stop offset="0.211607" stop-color="#35CDFB" />
-            <stop offset="1" stop-color="#00FFB3" />
+            <stop offset="0.211607" stopColor="#35CDFB" />
+            <stop offset="1" stopColor="#00FFB3" />
           </radialGradient>
           <linearGradient
             id="paint1_linear_0_1"
@@ -65,7 +65,7 @@ const KeySecureEncrypted = () => {
             gradientUnits="userSpaceOnUse"
           >
             <stop offset="0.525" />
-            <stop offset="1" stop-color="#002F21" />
+            <stop offset="1" stopColor="#002F21" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_0_1"
@@ -75,8 +75,8 @@ const KeySecureEncrypted = () => {
             y2="425"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#35CDFB" />
-            <stop offset="1" stop-color="#00FFB3" />
+            <stop stopColor="#35CDFB" />
+            <stop offset="1" stopColor="#00FFB3" />
           </linearGradient>
         </defs>
       </svg>

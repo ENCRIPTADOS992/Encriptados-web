@@ -63,13 +63,12 @@ const BannerOurProductsMobile = () => {
           <Image
             src={BannerBackground}
             alt="Banner background"
-            objectFit="cover"
             className="translate-y-5"
-            objectPosition="top"
             width={375}
             height={350}
             quality={100}
             priority
+            style={{ objectFit: "cover", objectPosition: "top" }}
           />
         </div>
       </div>

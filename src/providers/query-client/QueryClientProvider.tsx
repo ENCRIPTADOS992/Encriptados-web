@@ -3,7 +3,7 @@
 
 // We can not useState or useRef in a server component, which is why we are
 // extracting this part out into it's own file with 'use client' on top
-
+import React, { useState } from "react";
 import {
   QueryClient,
   QueryClientProvider as QueryClientProviderBase,
@@ -25,15 +25,16 @@ export const makeQueryClient = () => {
 export const QueryClientProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const queryClient = new QueryClient({
+  const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
         gcTime: 0,
-        staleTime: 0, // Siempre fuerza la refetch
-        refetchOnWindowFocus: false, // Opcional: fuerza el refetch al enfocar la ventana
+        staleTime: 0,
+        refetchOnWindowFocus: false,
+        refetchOnMount: true,
       },
     },
-  });
+   }));
 
   return (
     <QueryClientProviderBase client={queryClient}>

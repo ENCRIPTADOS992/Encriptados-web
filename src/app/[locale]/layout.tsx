@@ -9,6 +9,7 @@ import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
 import { QueryClientProvider } from "@/providers/query-client/QueryClientProvider";
 import { ToastProvider } from "@/shared/context/ToastContext";
+import { InitAuthClient } from "@/shared/InitAuthClient";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -33,15 +34,16 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToastProvider>
-          <QueryClientProvider>
-            <NextIntlClientProvider messages={messages}>
-              <CurrentHeader />
-              {children}
-              <FooterEncrypted />
-            </NextIntlClientProvider>
-          </QueryClientProvider>
-        </ToastProvider>
+        <InitAuthClient />
+          <ToastProvider>
+            <QueryClientProvider>
+              <NextIntlClientProvider messages={messages}>
+                <CurrentHeader />
+                {children}
+                <FooterEncrypted />
+              </NextIntlClientProvider>
+            </QueryClientProvider>
+          </ToastProvider>
       </body>
     </html>
   );

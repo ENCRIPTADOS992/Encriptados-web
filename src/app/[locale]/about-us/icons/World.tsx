@@ -22,8 +22,8 @@ const World = () => {
           y2="0.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#151515" />
-          <stop offset="1" stop-color="#001D25" />
+          <stop stopColor="#151515" />
+          <stop offset="1" stopColor="#001D25" />
         </linearGradient>
       </defs>
     </svg>

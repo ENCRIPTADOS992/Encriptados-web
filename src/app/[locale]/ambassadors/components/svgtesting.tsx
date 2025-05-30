@@ -14,21 +14,21 @@ const SvgTesting = () => {
         cy="1076"
         r="1075.75"
         stroke="url(#paint0_linear_0_1)"
-        stroke-width="0.5"
+        strokeWidth="0.5"
       />
       <circle
         cx="720"
         cy="1076"
         r="804.757"
         stroke="url(#paint1_linear_0_1)"
-        stroke-width="0.5"
+        strokeWidth="0.5"
       />
       <circle
         cx="720"
         cy="1076"
         r="593.75"
         stroke="url(#paint2_linear_0_1)"
-        stroke-width="0.5"
+        strokeWidth="0.5"
       />
       <defs>
         <linearGradient
@@ -39,8 +39,8 @@ const SvgTesting = () => {
           y2="2152"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.5" stop-color="#6ADDFF" />
-          <stop offset="0.9" stop-color="#A8EBFF" />
+          <stop offset="0.5" stopColor="#6ADDFF" />
+          <stop offset="0.9" stopColor="#A8EBFF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_0_1"
@@ -50,8 +50,8 @@ const SvgTesting = () => {
           y2="1881.01"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.5" stop-color="#6ADDFF" />
-          <stop offset="0.9" stop-color="#A8EBFF" />
+          <stop offset="0.5" stopColor="#6ADDFF" />
+          <stop offset="0.9" stopColor="#A8EBFF" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_0_1"
@@ -61,8 +61,8 @@ const SvgTesting = () => {
           y2="1670"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.5" stop-color="#6ADDFF" />
-          <stop offset="0.9" stop-color="#A8EBFF" />
+          <stop offset="0.5" stopColor="#6ADDFF" />
+          <stop offset="0.9" stopColor="#A8EBFF" />
         </linearGradient>
       </defs>
     </svg>

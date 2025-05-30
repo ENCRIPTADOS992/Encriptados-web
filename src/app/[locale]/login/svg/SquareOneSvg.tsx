@@ -19,8 +19,8 @@ const SquareOneSvg = () => {
           y2="35"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#01FFC2" />
-          <stop offset="1" stop-color="#9BFFE7" />
+          <stop stopColor="#01FFC2" />
+          <stop offset="1" stopColor="#9BFFE7" />
         </linearGradient>
       </defs>
     </svg>

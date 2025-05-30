@@ -12,8 +12,8 @@ const BannerCoverage = () => {
       <Image
         src={FloatSimCard}
         alt="image"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: "cover" }}
         className="z-0"
       />
       <div className="absolute inset-0 bg-black opacity-35 z-10" />{" "}

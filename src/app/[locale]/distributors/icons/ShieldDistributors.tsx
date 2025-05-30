@@ -22,8 +22,8 @@ const ShieldDistributors = () => {
           y2="19"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.39" stop-color="#35CDFB" />
-          <stop offset="1" stop-color="#00FFB3" />
+          <stop offset="0.39" stopColor="#35CDFB" />
+          <stop offset="1" stopColor="#00FFB3" />
         </linearGradient>
       </defs>
     </svg>

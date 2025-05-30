@@ -22,8 +22,8 @@ const Security = () => {
           y2="45.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#45D4FF" />
-          <stop offset="0.9" stop-color="#A8EBFF" />
+          <stop stopColor="#45D4FF" />
+          <stop offset="0.9" stopColor="#A8EBFF" />
         </linearGradient>
       </defs>
     </svg>

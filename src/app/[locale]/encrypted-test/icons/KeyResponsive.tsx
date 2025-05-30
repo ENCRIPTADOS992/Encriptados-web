@@ -22,8 +22,8 @@ const KeyResponsive = () => {
           y2="52"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#35CDFB" />
-          <stop offset="1" stop-color="#00FFB3" />
+          <stop stopColor="#35CDFB" />
+          <stop offset="1" stopColor="#00FFB3" />
         </linearGradient>
       </defs>
     </svg>

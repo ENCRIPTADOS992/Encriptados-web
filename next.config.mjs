@@ -5,7 +5,11 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["encriptados.io", "encriptados.nyc3.cdn.digitaloceanspaces.com"], // Add your hostname here
+    domains: [
+      "encriptados.io", 
+      "encriptados.nyc3.cdn.digitaloceanspaces.com",
+      "encriptados.es"
+    ],
   },
 };
 

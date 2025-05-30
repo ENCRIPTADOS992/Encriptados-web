@@ -2,11 +2,11 @@ import axiosInstance from "../../../config/axionsInstance";
 import { Allproducts, Product } from "./types/AllProductsResponse";
 
 export const getAllProducts = async (
-  category: "app" | "sim" | "phone"
+  categoryId: number
 ): Promise<Allproducts> => {
   try {
     const response = await axiosInstance.get(
-      `/products/?lang=en&category=${category}`
+      `/wc/v3/products?category=${categoryId}`
     );
     return response.data;
   } catch (error) {

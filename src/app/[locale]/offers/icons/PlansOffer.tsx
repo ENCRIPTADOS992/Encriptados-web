@@ -22,8 +22,8 @@ const PlansOffer = () => {
           y2="56.3334"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.235" stop-color="#08BAF0" />
-          <stop offset="0.85" stop-color="#1CD2A5" />
+          <stop offset="0.235" stopColor="#08BAF0" />
+          <stop offset="0.85" stopColor="#1CD2A5" />
         </linearGradient>
       </defs>
     </svg>

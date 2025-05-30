@@ -25,8 +25,8 @@ const BannerOurProducts = () => {
         src={BannerBackground}
         className="bg-[#060606]"
         alt="Banner background"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: "cover" }}
         quality={100}
         priority
       />
