@@ -1,9 +1,9 @@
 import CardDescription from "./CardDescription";
 import CardSim from "./CardSim";
 import LogoSvg1 from "/public/images/encrypted-sim/icons/encriptados_logo.svg";
-import CharacteristicDatasSvg from "/public/images/encrypted-sim/icons/characteristic-data.svg";
-import CharacteristicSpeedSvg from "/public/images/encrypted-sim/icons/characteristic-speed.svg";
-import CharacteristicAppSvg from "/public/images/encrypted-sim/icons/characteristic-app.svg";
+// import CharacteristicDatasSvg from "/public/images/encrypted-sim/icons/characteristic-data.svg";
+// import CharacteristicSpeedSvg from "/public/images/encrypted-sim/icons/characteristic-speed.svg";
+// import CharacteristicAppSvg from "/public/images/encrypted-sim/icons/characteristic-app.svg";
 // import CharacteristicAnonimitySvg from "/public/images/encrypted-sim/icons/characteristic-anonymity.svg";
 // import CharacteristicReplaceSvg from "/public/images/encrypted-sim/icons/characteristic-replace.svg";
 // import CharacteristicVoiceSvg from "/public/images/encrypted-sim/icons/characteristic-voice.svg";
