@@ -17,12 +17,12 @@ import LogoSvg1 from "/public/images/encrypted-sim/icons/encriptados_logo.svg";
 // import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";
 // import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
 // import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
-import { useTranslations } from "next-intl";
+// import { useTranslations } from "next-intl";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 
 const SimProductsPage: React.FC = () => {
   const { data } = useGetProducts(40);
-  const t = useTranslations();
+  // const t = useTranslations();
 
   // const commonFeatures = [
   //   {
