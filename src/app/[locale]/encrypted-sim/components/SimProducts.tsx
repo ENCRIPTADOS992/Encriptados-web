@@ -4,19 +4,19 @@ import LogoSvg1 from "/public/images/encrypted-sim/icons/encriptados_logo.svg";
 import CharacteristicDatasSvg from "/public/images/encrypted-sim/icons/characteristic-data.svg";
 import CharacteristicSpeedSvg from "/public/images/encrypted-sim/icons/characteristic-speed.svg";
 import CharacteristicAppSvg from "/public/images/encrypted-sim/icons/characteristic-app.svg";
-import CharacteristicAnonimitySvg from "/public/images/encrypted-sim/icons/characteristic-anonymity.svg";
-import CharacteristicReplaceSvg from "/public/images/encrypted-sim/icons/characteristic-replace.svg";
-import CharacteristicVoiceSvg from "/public/images/encrypted-sim/icons/characteristic-voice.svg";
-import CharacteristicComunicationsSvg from "/public/images/encrypted-sim/icons/characteristic-communications.svg";
-import CharacteristicTopUpSvg from "/public/images/encrypted-sim/icons/characteristic-top-up.svg";
-import EncryptedSimData from "/public/images/encrypted-sim/Encrypted_sim_card.png";
-import EncryptedSimImsi from "/public/images/encrypted-sim/Encrypted_sim_card_IMSI.png";
-import EncryptedSimMinutes from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.png";
-import EncriptedEsim from "/public/images/encrypted-sim/Encrypted_sim_card_eSIM.png";
-import IcomImsiSvg from "/public/images/encrypted-sim/icons/icon-imsi.svg";
-import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";
-import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
-import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
+// import CharacteristicAnonimitySvg from "/public/images/encrypted-sim/icons/characteristic-anonymity.svg";
+// import CharacteristicReplaceSvg from "/public/images/encrypted-sim/icons/characteristic-replace.svg";
+// import CharacteristicVoiceSvg from "/public/images/encrypted-sim/icons/characteristic-voice.svg";
+// import CharacteristicComunicationsSvg from "/public/images/encrypted-sim/icons/characteristic-communications.svg";
+// import CharacteristicTopUpSvg from "/public/images/encrypted-sim/icons/characteristic-top-up.svg";
+// import EncryptedSimData from "/public/images/encrypted-sim/Encrypted_sim_card.png";
+// import EncryptedSimImsi from "/public/images/encrypted-sim/Encrypted_sim_card_IMSI.png";
+// import EncryptedSimMinutes from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.png";
+// import EncriptedEsim from "/public/images/encrypted-sim/Encrypted_sim_card_eSIM.png";
+// import IcomImsiSvg from "/public/images/encrypted-sim/icons/icon-imsi.svg";
+// import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";
+// import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
+// import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
 import { useTranslations } from "next-intl";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 
@@ -24,23 +24,23 @@ const SimProductsPage: React.FC = () => {
   const { data } = useGetProducts(40);
   const t = useTranslations();
 
-  const commonFeatures = [
-    {
-      icon: CharacteristicDatasSvg,
-      alt: t("commonFeatures.dataMobile"),
-      description: t("commonFeatures.dataMobile"),
-    },
-    {
-      icon: CharacteristicSpeedSvg,
-      alt: t("commonFeatures.speed"),
-      description: t("commonFeatures.speed"),
-    },
-    {
-      icon: CharacteristicAppSvg,
-      alt: t("commonFeatures.appAvailable"),
-      description: t("commonFeatures.appAvailable"),
-    },
-  ];
+  // const commonFeatures = [
+  //   {
+  //     icon: CharacteristicDatasSvg,
+  //     alt: t("commonFeatures.dataMobile"),
+  //     description: t("commonFeatures.dataMobile"),
+  //   },
+  //   {
+  //     icon: CharacteristicSpeedSvg,
+  //     alt: t("commonFeatures.speed"),
+  //     description: t("commonFeatures.speed"),
+  //   },
+  //   {
+  //     icon: CharacteristicAppSvg,
+  //     alt: t("commonFeatures.appAvailable"),
+  //     description: t("commonFeatures.appAvailable"),
+  //   },
+  // ];
 
   // const cardData = [
   //   {
