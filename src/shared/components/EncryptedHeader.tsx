@@ -13,7 +13,6 @@ import {
   useTranslatedOthersCategories,
   useTranslatedUsCategories
 } from "./HeaderComponents/data/CategoryMenu";
-import WorldIcon from "../svgs/WorldIcon";
 import { useTranslations } from "next-intl";
 
 export default function EncryptedHeader() {
