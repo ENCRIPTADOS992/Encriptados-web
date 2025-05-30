@@ -10,7 +10,7 @@ const CardProductBanner = () => {
     <div className="flex-col flex items-center justify-center h-full">
       <div className="w-full h-full flex flex-col items-center bg-[#222222] rounded-3xl">
         <div className="w-full  rounded-3xl  flex justify-center items-center mb-4">
-          <Image
+          {/* <Image
             src={currentProduct?.image || ""}
             alt="Banner Circle"
             objectFit="cover" // Ajusta la imagen para que cubra todo el contenedor
@@ -18,7 +18,7 @@ const CardProductBanner = () => {
             height={200}
             className="-translate-y-7"
             priority
-          />
+          /> */}
         </div>
       </div>
       {/* <div className="flex justify-center w-[500px]">

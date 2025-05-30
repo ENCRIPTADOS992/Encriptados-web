@@ -34,7 +34,6 @@ export type Product = {
   backorders_allowed: boolean;
   backordered: boolean;
   weight: string;
-  advantages:string;
   dimensions: {
     length: string;
     width: string;

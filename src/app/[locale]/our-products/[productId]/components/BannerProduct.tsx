@@ -6,7 +6,7 @@ export default function BannerProduct() {
 
   return (
     <div className="relative w-full h-[150px]  md:h-[359px] bg-gray-200">
-      {currentProduct?.banner_mobile && (
+      {/* {currentProduct?.banner_mobile && (
         <Image
           src={currentProduct.banner_mobile}
           alt="Product Banner for Mobile"
@@ -15,9 +15,9 @@ export default function BannerProduct() {
           className="block md:hidden object-cover"
           quality={100}
         />
-      )}
+      )} */}
 
-      {currentProduct?.banner && (
+      {/* {currentProduct?.banner && (
         <Image
           src={currentProduct.banner}
           alt="Product Banner for Desktop"
@@ -26,7 +26,7 @@ export default function BannerProduct() {
           sizes="100vw"
           className="hidden md:block object-cover"
         />
-      )}
+      )} */}
     </div>
   );
 }

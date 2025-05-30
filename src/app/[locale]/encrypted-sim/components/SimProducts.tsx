@@ -262,7 +262,7 @@ const SimProductsPage: React.FC = () => {
 
             <CardSim
               productImage={productImage}
-              advantages={productAdvantages}
+              // advantages={productAdvantages}
               priceRange={productPrice}
               headerIcon={""}
               headerTitle={productName}

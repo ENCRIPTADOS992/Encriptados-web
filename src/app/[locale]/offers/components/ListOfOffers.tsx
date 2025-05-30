@@ -128,14 +128,14 @@ const ListOfOffers = () => {
               priceRange={card.priceRange}
               headerIcon={card.headerIcon}
               headerTitle={card.headerTitle}
-              advantages={[
-                {
-                  content: "Prueba ventajas",
-                  title: "Prueba ventajas",
-                  image: "",
-                  id: 2,
-                },
-              ]}
+              // advantages={[
+              //   {
+              //     content: "Prueba ventajas",
+              //     title: "Prueba ventajas",
+              //     image: "",
+              //     id: 2,
+              //   },
+              // ]}
             />
           ))}
         </div>

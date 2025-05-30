@@ -9,7 +9,7 @@ import { Advantage } from "@/features/products/types/AllProductsResponse";
 
 interface CardSimProps {
   productImage: any;
-  advantages: Advantage[];
+  // advantages: Advantage[];
   priceRange: string;
   headerIcon: string;
   headerTitle: string;
@@ -17,7 +17,7 @@ interface CardSimProps {
 
 const CardSim: React.FC<CardSimProps> = ({
   productImage,
-  advantages,
+  // advantages,
   priceRange,
   headerTitle,
 }) => {
@@ -59,12 +59,12 @@ const CardSim: React.FC<CardSimProps> = ({
         </div>
 
         <ul className="space-y-0">
-          {advantages?.map((item, index) => (
+          {/* {advantages?.map((item, index) => (
             <li key={index} className="flex items-center text-sm gap-1">
               <Image src={CheckSvg} alt="Icon" className="w-4 h-4" />
               {item?.title}
             </li>
-          ))}
+          ))} */}
         </ul>
         <hr className="my-4" />
         <div className="p-0">

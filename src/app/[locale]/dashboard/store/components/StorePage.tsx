@@ -127,7 +127,7 @@ const StorePage = () => {
             priceRange={card.priceRange}
             headerIcon={card.headerIcon}
             headerTitle={card.headerTitle}
-            advantages={[]}
+            // advantages={[]}
           />
         ))}
       </div>
