@@ -1816,6 +1816,35 @@
         "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
       }
     },
+    "systemFeatures": {
+      "title": "System Security Features",
+      "items": {
+        "noUpdates": {
+          "title": "Renati strengthens all aspects of the device",
+          "text": "including the core architecture against any type of hardware or digital attacks."
+        },
+        "antiSurveillance": {
+          "title": "OTA updates",
+          "text": "Renati enables fast and secure wireless updates via WiFi, providing the latest security at top speed."
+        },
+        "gripTest": {
+          "title": "On boot, Renati verifies integrity and authenticity",
+          "text": "of all executable code, ensuring the device is secure."
+        },
+        "sos": {
+          "title": "Custom devices",
+          "text": "and infrastructure enhancements mean your data is secure."
+        },
+        "encryptedVault": {
+          "title": "Custom kernel:",
+          "text": "Renati strengthens every aspect of the device, including its foundational architecture."
+        },
+        "appMasking": {
+          "title": "Verified Android boot:",
+          "text": "At startup, Renati checks the integrity and authenticity of all executable code to ensure the device's security."
+        }
+      }
+    },
     "securityStandards": {
       "cards": [
         {

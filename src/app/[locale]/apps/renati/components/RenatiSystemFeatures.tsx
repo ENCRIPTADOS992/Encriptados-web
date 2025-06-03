@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { CheckCircle } from "lucide-react";
 
 const RenatiSystemFeatures = () => {
-  const t = useTranslations("RenatiPage.systemFeatures");
+  const t = useTranslations("RenatiPage.systemFeatures") as any;
 
   const features = [
     "noUpdates",
