@@ -1003,6 +1003,474 @@
   "RechargeSim": {
     "errorInput": "Debe ser un número de teléfono válido con al menos 6 dígitos."
   },
+  "appsShared": {
+    "encryptedSim": {
+      "title": "SIM Card encriptada",
+      "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+      "button": "Comprar",
+      "link": "Más información"
+    },
+    "simDataPlans": {
+      "title": "E-SIM Encriptada Planes datos o minutos",
+      "description": "Lorem Ipsum Dolor met",
+      "button": "Ver más"
+    }
+  },
+  "silentCircle": {
+    "description": "Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento",
+    "details": [
+      "Llamadas cifradas",
+      "Sin permisos de ubicación",
+      "Mensajes temporizados"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Características principales",
+      "elements": [
+        {
+          "title": "Mensajes con autodestrucción",
+          "description": "Los mensajes se eliminan de los dispositivos automaticamente de envío y recepción después de un «tiempo de grabación». Tú puedes elegir este tiempo: De un minuto a 90 días."
+        },
+        {
+          "title": "Notas de voz encriptadas",
+          "description": "Notas de voz con la capacidad de grabar y proporcionar una alternativa segura al correo de voz. "
+        },
+        {
+          "title": "Mensajes seguros",
+          "description": "El cifrado asegura que solo el dispositivo receptor pueda interpretar las comunicaciones desde el momento de presionar \"ENVIAR\". El remitente puede verificar si el mensaje fue recibido y leído."
+        },
+        {
+          "title": "Archivos y documentos",
+          "description": "Uso compartido de archivos cifrados… envía hasta 100 MB de forma segura. \nMensajería grupal… Envía archivos y mensajes a grupos de usuarios sin problemas"
+        }
+      ]
+    },
+    "benefits": [
+      "Construido sobre un protocolo fundamentalmente diferente",
+      "Sin política de puerta trasera",
+      "Diseño Privado",
+      "Administración de usuarios",
+      "Todos tus datos protegidos",
+      "Tecnología patentada de grado militar"
+    ],
+    "coverage": {
+      "title": "Cobertura en más de 200 paises",
+      "description": "Comunicación segura y sin fronteras"
+    },
+    "faq": [
+      "¿Qué tan segura es la aplicación Silent Phone - Silent Circle?",
+      "¿En qué celular puedo instalar la aplicación Silent Phone de Silent Circle?",
+      "¿En qué celular puedo instalar la aplicación Silent Circle?"
+    ]
+  },
+  "armadillo": {
+    "description": "Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad",
+    "details": [
+      "Borrado remoto y automatizado",
+      "Alertas de posibles impostores",
+      "Llamadas encriptadas"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Características principales",
+      "elements": [
+        {
+          "title": "Chats Encriptados",
+          "description": "Armadillo Chat utiliza cifrado de extremo a extremo, por lo que sus mensajes son ilegibles incluso si el servidor está comprometido."
+        },
+        {
+          "title": "Borrado Remoto y Automatizado",
+          "description": "Configure automáticamente temporizadores de autodestrucción, borre de forma remota mensajes individuales o conversaciones completas"
+        },
+        {
+          "title": "Comunicaciones Cifradas",
+          "description": "Puede comunicarse con mensajes de texto, imágenes, archivos, chats grupales o videollamadas de forma segura."
+        },
+        {
+          "title": "Verifica la identidad de tus contactos",
+          "description": "Puede utilizar varios métodos para verificar las identidades de sus amigos: escanear un código QR, hacer una pregunta, verificación de Wi-Fi o verificación de texto."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Acceso sencillo a la cuenta",
+        "description": "Active o renueve su cuenta de Armadillo Chat para asegurarse de tener el software, las comunicaciones y el soporte más seguros."
+      },
+      {
+        "title": "Soporte 24/7",
+        "description": "También puede hablar directamente con nuestros expertos en seguridad móvil a través de Armadillo Chat sobre sus preocupaciones de seguridad."
+      },
+      {
+        "title": "Interfaz sencilla",
+        "description": "Armadillo Chat no solo es una aplicación completamente segura, también es muy fácil de usar."
+      },
+      {
+        "title": "Privacidad y seguridad",
+        "description": "Armadillo Chat es una aplicación de mensajería instantánea de alta seguridad. Con actualizaciones constantes nos aseguramos que todas tus comunicaciones sean privadas y que estén fuera del alcance de cualquier tercero malintencionado."
+      },
+      {
+        "title": "Alertas sobre posibles impostores",
+        "description": "Armadillo Chat le advierte automáticamente sobre posibles impostores en su lista de contactos y otros dispositivos conectados a su cuenta. En el modo de alta seguridad, también le advertirá sobre cualquier amigo que no haya verificado."
+      },
+      {
+        "title": "Notificaciones Push",
+        "description": "Armadillo Chat no solo es una aplicación completamente segura, también es muy fácil de usar."
+      }
+    ],
+    "information": "Armadillo Chat. Aplicación de mensajería instantánea de alta seguridad",
+    "faq": [
+      "¿Cómo funciona Armadillo Chat?",
+      "¿En qué celular puedo instalar Armadillo Chat?",
+      "¿Por qué usar Armadillo Chat?"
+    ]
+  },
+  "valutChat": {
+    "description": "Plataforma de comunicación cifrada optimizada con cifrado multicapa de alta gama.",
+    "details": [
+      "Verificaciones de usuario",
+      "Mensajes autodestructivos",
+      "Chats encriptados",
+      "Chat encriptado"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Características principales",
+      "elements": [
+        {
+          "title": "Chats Encriptados",
+          "description": "Comunicación rápida y encriptada internamente con otros usuarios de VaultChat. Envía y recibe imágenes y notas de voz y realiza chats grupales."
+        },
+        {
+          "title": "Chat Cifrado",
+          "description": "Hemos implementado OMEMO / ECC / AES256 en nuestro popular sistema de chat. ¡Ningún mensaje puede ser leído en nuestro servidor por nadie en ningún momento! Tenemos la mejor encriptación y no almacenamos datos. ¡Todas las imágenes y notas de voz también están encriptadas!"
+        },
+        {
+          "title": "Mensajes Autodestructivos",
+          "description": "Los mensajes que se autodestruyen tienen prioridad sobre todo. Configura tu temporizador para destruir todos los mensajes cuando se acabe el tiempo"
+        },
+        {
+          "title": "Listas de difusión",
+          "description": "Con la función de lista de difusión, puedes enviar un mensaje cifrado a varios de tus contactos a la vez. Las listas de difusión son listas guardadas de destinatarios de mensajes a los que puede enviar mensajes de difusión repetidamente sin tener que seleccionarlos cada vez."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Notificaciones privadas",
+        "description": "Mantén la confidencialidad de los tiempos y recuentos de llegada de los mensajes eligiendo que las notificaciones push se originen en nuestros servidores"
+      },
+      {
+        "title": "Características de última generación",
+        "description": "VaultChat está repleto de funciones y seguridad. Ofrecemos productos de última generación para su uso."
+      },
+      {
+        "title": "Monitoreo 24/7",
+        "description": "El monitoreo de seguridad de la infraestructura brinda protección a la red con medidas preventivas para denegar el acceso no autorizado y la actividad maliciosa."
+      },
+      {
+        "title": "Datos Cifrados en Reposo",
+        "description": "Todos los datos almacenados en VaultChat se cifran mediante una base de datos cifrada personalizada con AES-256."
+      },
+      {
+        "title": "Protección de Contraseña",
+        "description": "Nuestra protección con contraseña requerida mantiene tus datos en VaultChat cifrados y protegidos, incluso si tu dispositivo está desbloqueado. Varios intentos incorrectos borrarán todos los datos."
+      },
+      {
+        "title": "Cifrado Multicapa",
+        "description": "Las comunicaciones entrantes y salientes se cifran de extremo a extremo y se transmiten a través de una red cifrada. Todos los datos almacenados en el dispositivo están protegidos y encriptados."
+      }
+    ],
+    "information": "Vault Chat, aplicación para comunicaciones encriptadas y privadas",
+    "faq": [
+      "¿Qué es VaultChat?",
+      "¿Cuál es la diferencia de VaultChat con VaultSecure?",
+      "¿Qué ventajas se obtienen al usar VaultChat?"
+    ]
+  },
+  "nordVpn": {
+    "description": "Obtén acceso remoto simple y seguro de la marca de VPN más confiable del mundo.",
+    "details": [
+      "Conexión segura con un solo clic",
+      "Interruptor de muerte",
+      "Pasarelas privadas"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Caractéristiques principales",
+      "elements": [
+        "Conexiones segura",
+        "Pasarelas privadas",
+        "Pasarelas compartidas",
+        "Conexión Automática",
+        "Gestión de equipo",
+        "Conexión Encriptada"
+      ]
+    },
+    "scope": {
+      "title": "Alcance contenido en 33 países",
+      "description": "Conéctate a miles de servidores compartidos en 33 países de todo el mundo. Elige entre más de 20 ubicaciones de servidores dedicados."
+    },
+    "benefits": [
+      {
+        "title": "Autenticación de terceros",
+        "description": "Conéctese a los equipos de NordVPN Teams con sus credenciales comerciales existentes. Nuestras soluciones VPN para pequeñas empresas y grandes corporaciones ofrecen autenticación de terceros con Azure AD, Google y Okta."
+      },
+      {
+        "title": "Un clic para proteger cualquier dispositivo",
+        "description": "Solo se necesita un clic para cifrar todo el tráfico de datos en su dispositivo. Haga clic en cualquier puerta de enlace para conectarse o habilitar la función de conexión automática."
+      },
+      {
+        "title": "Interruptor de muerte",
+        "description": "No se arriesgue a exponer ninguno de sus datos habilitando la función Kill Switch. Corta automáticamente todo el tráfico de Internet en su dispositivo si la conexión al servidor se interrumpe incluso por un segundo."
+      },
+      {
+        "title": "Datos Cifrados en Reposo",
+        "description": "Todos los datos almacenados en VaultChat se cifran mediante una base de datos cifrada personalizada con AES-256."
+      },
+      {
+        "title": "Protección de Contraseña",
+        "description": "Nuestra protección con contraseña requerida mantiene tus datos en VaultChat cifrados y protegidos, incluso si tu dispositivo está desbloqueado. Varios intentos incorrectos borrarán todos los datos."
+      },
+      {
+        "title": "Cifrado Multicapa",
+        "description": "Las comunicaciones entrantes y salientes se cifran de extremo a extremo y se transmiten a través de una red cifrada. Todos los datos almacenados en el dispositivo están protegidos y encriptados."
+      }
+    ],
+    "functionalities": [
+      {
+        "title": "Acceso remoto",
+        "description": "Acceda cómodamente a los recursos de la empresa sobre la marcha. Ya sea que esté trabajando desde casa, en un espacio de trabajo compartido o en una conferencia, una VPN le permite acceder a todos los datos comerciales de forma segura."
+      },
+      {
+        "title": "Contenido internacional, cifrado de vanguardia",
+        "description": "Investigue y supervise los mercados extranjeros conectándose a servidores seguros disponibles en 33 países. \n\nProteja los datos de sus dispositivos con un solo clic. NordVPN Teams cifra todo el tráfico de Internet con el cifrado AES de 256 bits utilizado por los principales expertos en seguridad de todo el mundo."
+      }
+    ],
+    "information": "NordVPN una de las mejores opciones del mercado",
+    "faq": [
+      "¿Qué es una VPN?",
+      "¿Por qué es importante tener una VPN?",
+      "¿Cómo funciona NordVPN?"
+    ]
+  },
+  "salt": {
+    "description": "Mantén seguras tus comunicaciones más sensibles con el mejor blindaje ",
+    "details": [
+      "Mensajería segura",
+      "Protección de captura de pantalla",
+      "Llamadas de voz seguras"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Características principales",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "Nuestra solución a medida ofrece a los usuarios mensajería privada y segura en tiempo real y funcionalidad de chat grupal a sus contactos de Salt."
+        },
+        {
+          "title": "Autodestrucción de mensajes",
+          "description": "Nuestra funcionalidad de autodestrucción permite a los usuarios borrar información de su dispositivo y de todos los dispositivos de los destinatarios, ya sea manualmente o mediante una configuración de temporizador."
+        },
+        {
+          "title": "Difusión de mensajes",
+          "description": "Envíe alertas en vivo de manera eficiente o comparta mensajes, imágenes y documentos con grandes grupos de usuarios dentro de una organización"
+        },
+        {
+          "title": "Protección de captura de pantalla",
+          "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Habilitación del trabajo remoto seguro",
+        "description": "Muchas organizaciones de alto perfil en todo el mundo han implementado Salt para garantizar el más alto nivel de seguridad en las comunicaciones mientras trabajan de forma remota."
+      },
+      {
+        "title": "Cifrado agnóstico",
+        "description": "Salt utiliza los últimos y mejores protocolos de encriptación para garantizar que ofrecemos a los clientes el más alto nivel de encriptación dentro de nuestra plataforma."
+      },
+      {
+        "title": "Transparencia de las pruebas de seguridad",
+        "description": "Salt es una tecnología abierta y confiable que es verificada de manera rigurosa y rutinaria por partes independientes."
+      },
+      {
+        "title": "Privacidad y seguridad",
+        "description": "Armadillo Chat es una aplicación de mensajería instantánea de alta seguridad. Con actualizaciones constantes nos aseguramos que todas tus comunicaciones sean privadas y que estén fuera del alcance de cualquier tercero malintencionado."
+      },
+      {
+        "title": "Alertas sobre posibles impostores",
+        "description": "Armadillo Chat le advierte automáticamente sobre posibles impostores en su lista de contactos y otros dispositivos conectados a su cuenta. En el modo de alta seguridad, también le advertirá sobre cualquier amigo que no haya verificado."
+      },
+      {
+        "title": "Notificaciones Push",
+        "description": "Armadillo Chat no solo es una aplicación completamente segura, también es muy fácil de usar."
+      }
+    ],
+    "information": "Diferencias entre una Aplicación Encriptada y Whatsapp",
+    "faq": [
+      "¿Cómo funciona Salt?",
+      "¿Qué tan segura es la aplicación Salt?",
+      "¿Por qué mi empresa debería tener una aplicación como Salt?"
+    ]
+  },
+  "vnc": {
+    "description": "Cifrado de extremo a extremo para la máxima privacidad y secreto en sus comunicaciones.",
+    "details": [
+      "Videoconferencias seguras",
+      "Edición colaborativa de documentos",
+      "Mensajería segura"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Características principales",
+      "elements": [
+        {
+          "title": "Chat de texto",
+          "description": "Chat individual o grupal  todo lo que necesita es un navegador."
+        },
+        {
+          "title": "Audio y Videoconferencia",
+          "description": "Perfecta calidad de audio e imagen. ¡Te sorprenderá este tipo de realidad virtual! Ahorre gastos de viaje y póngase en contacto con su equipo con un solo clic"
+        },
+        {
+          "title": "Transferencia de archivos entre usuarios",
+          "description": "Envíe cualquier formato de archivo a sus socios de chat. Accesos a funciones de hardware como cámara móvil, micrófono, datos, estado de la red, sensores como GPS, etc. "
+        },
+        {
+          "title": "Llamadas y videollamadas",
+          "description": "VNCmeet, como parte de VNCtalk, le permite iniciar videollamadas con usuarios invitados externos, que no necesitan una suscripción a VNCtalk. "
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Cifrado",
+        "description": "Cifrado de extremo a extremo para la máxima privacidad y secreto en sus comunicaciones."
+      },
+      {
+        "title": "Funciona en dispositivos móviles",
+        "description": "No es necesario utilizar una laptop portátil o de escritorio. VNCtalk se ejecuta en cualquier navegador y como una aplicación."
+      },
+      {
+        "title": "Pizarras blancas",
+        "description": "Colabora en pizarras blancas con imágenes, formas y texto."
+      },
+      {
+        "title": "VNCtalk también es un producto OEM.",
+        "description": "Eso significa que los socios pueden agregar su logotipo, CD / CI y al mismo tiempo modificar la interfaz desde una perspectiva de UX (experiencia de usuario)."
+      },
+      {
+        "title": "VNCtalk, no tiene publicidad",
+        "description": "y está equipada con una serie de características interesantes como: pantalla compartida, colaboración de documentos en VNCpads y muchas más."
+      },
+      {
+        "title": "VNCtalk es escalable",
+        "description": "hasta una gran cantidad de usuarios. Simplemente mejore el ancho de banda, agregue más instancias y listo."
+      }
+    ],
+    "functionalities": [
+      {
+        "title": "Aplicación Web VNC Talk",
+        "description": "VNCtalk Web Client le permite acceder a todas las funciones de comunicación profesional de VNCtalk, como chat, conferencias de audio y video, en el mismo navegador estándar que VNCmail o VNCproject. Por lo tanto, ingresa a todo su espacio de trabajo con su navegador, sin tener que iniciar aplicaciones separadas para cada actividad que le gustaría realizar. VNCtalk Web Client se ejecuta en cualquier navegador estándar en Windows, MacOS y Linux."
+      },
+      {
+        "title": "Aplicación de escritorio VNC Talk",
+        "description": "VNCtalk Desktop Client le permite ejecutar VNCtalk como una aplicación separada en su PC de escritorio, en Windows, Mac y Linux. Especialmente cuando se trabaja con muchas pestañas abiertas del navegador, resulta útil tener puntos de acceso separados para sus chats, videoconferencias y VNCpads. Y, por supuesto, tiene todas las funciones de VNCtalk disponibles en cualquiera de nuestros clientes frontend."
+      }
+    ],
+    "information": "Cuál es el sistema ideal para ti? Quieres seguir usando tu celular personal?",
+    "faq": [
+      "¿Qué es VNC?",
+      "¿Cómo funciona VNC Lagoon?",
+      "¿Qué compatibilidad tiene VNC Lagoon?"
+    ]
+  },
+  "threema": {
+    "description": "Threema.Work ofrece todas las características que se esperan de un mensajero profesional de negocios",
+    "details": [
+      "Chats grupales de hasta 100 personas",
+      "Llamadas cifradas",
+      "Encuestas privadas en el chat"
+    ],
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "supportChat": "Chat soporte"
+    },
+    "characteristics": {
+      "title": "Características principales",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "Nuestro chat cumple con todas las leyes de privacidad; brinda a tu equipo una alternativa fácil de usar, separandando la comunicación personal y profesional."
+        },
+        {
+          "title": "Audio y Videoconferencia",
+          "description": "Perfecta calidad de audio e imagen. ¡Te sorprenderá este tipo de realidad virtual! Ahorre gastos de viaje y póngase en contacto con su equipo con un solo clic"
+        },
+        {
+          "title": "Transferencia de archivos entre usuarios",
+          "description": "Envíe cualquier formato de archivo a sus socios de chat. Accesos a funciones de hardware como cámara móvil, micrófono, datos, estado de la red, sensores como GPS, etc. "
+        },
+        {
+          "title": "Llamadas y videollamadas",
+          "description": "VNCmeet, como parte de VNCtalk, le permite iniciar videollamadas con usuarios invitados externos, que no necesitan una suscripción a VNCtalk. "
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Cumplimos con los reglamentos establecidos",
+        "description": "Threema Work cumple con el Reglamento General Europeo de Protección de Datos (GDPR); además cumplimos la Ley Federal de Protección de Datos."
+      },
+      {
+        "title": "Estamos certificados",
+        "description": "Threema administra sus propios servidores en centros de datos certificados por ISO 27001."
+      },
+      {
+        "title": "Las mejores calificaciones y comentarios",
+        "description": "Aplicación con mas alcance en numero de usuarios."
+      },
+      {
+        "title": "Aplicación del año",
+        "description": "Threema Work se puede utilizar sin proporcionar información de identificación personal (como un número de teléfono o una dirección de correo electrónico) y sin otorgar acceso a la libreta de direcciones."
+      },
+      {
+        "title": "Aplicación iOS más vendida",
+        "description": "En 2015, Google Play hizo un reconocimiento a Threema colocándolo en la prestigiosa lista de las mejores aplicaciones de Android."
+      },
+      {
+        "title": "Aplicación iOS más vendida",
+        "description": "Durante dos años consecutivos (2014 y 2015),Threema fue la aplicación iOS más vendida en Alemania."
+      }
+    ],
+    "information": "Threema.Work la aplicación de mensajería para organizaciones más segura y fácil de usar",
+    "faq": [
+      "¿Qué es VNC?",
+      "¿Cómo funciona VNC Lagoon?",
+      "¿Qué compatibilidad tiene VNC Lagoon?"
+    ]
+  },
   "ThreemaPage": {
     "product": {
       "title": "Threema App",
@@ -1092,5 +1560,438 @@
         }
       ]
     }
+  },
+  "CryptcomPage": {
+    "product": {
+      "title": "Cryptcom",
+      "description": "Turn your smartphone into a highly secure communications device.",
+      "features": {
+        "endToEndEncryption": "Automatic IMEI changer",
+        "chatHiding": "Encrypted cloud vault",
+        "privateCalls": "Application masking"
+      },
+      "license": {
+        "threeMonths": "3 Months",
+        "sixMonths": "12 Months"
+      },
+      "pricePrefix": "From",
+      "price": "729$ USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Support chat"
+      }
+    },
+    "benefits": {
+      "title": "Turn your phone or tablet into a fully secure device",
+      "features": {
+        "hiddenApps": {
+          "title": "Hidden security applications",
+          "text": "The device appears as a normal Android phone."
+        },
+        "manipulationProtection": {
+          "title": "Tamper-proof wipe function",
+          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
+        },
+        "nfcBlocking": {
+          "title": "High-level encryption ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalent to more than 15,360-bit RSA."
+        },
+        "anonymity": {
+          "title": "No fixed server locations",
+          "text": "Servers are destroyed every 24 hours after data is transferred to one without leaving a trace."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Main Features",
+      "chat": {
+        "title": "Chat",
+        "description": "Encrypted chats: Send text, images, voice notes, and videos securely and encrypted."
+      },
+      "confidentiality": {
+        "title": "Encrypted Chat",
+        "description": "With the option of zero-knowledge anonymous groups, users won't be able to view or retrieve contact information of group members."
+      },
+      "groupChat": {
+        "title": "Secure Messaging",
+        "description": "Combined messaging, encrypted chat and email. Hybrid encrypted chats in live view with read and delivered indicators, delete/edit features, and text translation."
+      },
+      "agreementFeatures": {
+        "title": "Masked Chat",
+        "description": "Text turns into unreadable masked font when the device is idle."
+      }
+    },
+    "systemFeatures": {
+      "title": "System Security Features",
+      "items": {
+        "noUpdates": {
+          "title": "Automatic updates cannot be performed",
+          "text": "For increased security, automatic updates are not allowed."
+        },
+        "antiSurveillance": {
+          "title": "Anti-Surveillance Technology with automatic IMEI changer.",
+          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
+        },
+        "gripTest": {
+          "title": "Grip test",
+          "text": "Applications will lock and hide if the device is shaken or grabbed."
+        },
+        "sos": {
+          "title": "SOS Coercion Notification",
+          "text": "Reverse PIN entry alerts emergency contacts of the situation and deletes the messages."
+        },
+        "encryptedVault": {
+          "title": "Encrypted Vault",
+          "text": "For encrypted storage of images, videos, notes, and voice files."
+        },
+        "appMasking": {
+          "title": "Application Masking",
+          "text": "Masks your app’s interface to resemble WhatsApp or other popular apps."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "Cryptcom – The operating system that will make your phone unhackable"
+    },
+    "simOptionsCryptcom": {
+      "cards": [
+        {
+          "title": "Encrypted SIM Card",
+          "description": "Protect yourself from cybercriminals and keep your personal data safe",
+          "buttonText": "Buy",
+          "secondButtonText": "More info"
+        },
+        {
+          "title": "Encrypted E-SIM – Data or voice plans",
+          "description": "Subtitle element copy",
+          "buttonText": "See more"
+        }
+      ]
+    },
+    "faq":{
+      "title": "Preguntas frecuentes",
+      "questions": [
+        {
+          "question": "¿Para qué sirve la aplicación Threema?",
+          "answer": "Threema es una aplicación de mensajería segura que protege tu privacidad y permite enviar mensajes cifrados, realizar llamadas de voz y compartir archivos."
+        },
+        {
+          "question": "¿Cómo funciona la aplicación Threema?",
+          "answer": "Threema utiliza cifrado de extremo a extremo para asegurar que solo el remitente y el receptor puedan leer los mensajes. No requiere número de teléfono ni correo para registrarse."
+        },
+        {
+          "question": "¿Qué tal es la seguridad y privacidad de la aplicación Threema?",
+          "answer": "Threema es reconocida por su alto nivel de seguridad y protección de datos. No recopila información personal y sus servidores están ubicados en Suiza."
+        }
+      ]
+    }
+  },
+  "ElyonPage": {
+    "product": {
+      "title": "Elyon",
+      "description": "Protección y seguridad avanzada para todas tus comunicaciones",
+      "features": {
+        "endToEndEncryption": "Mensajería autodestructiva",
+        "chatHiding": "Cambiador de voz",
+        "privateCalls": "Baúl para archivos sensibles"
+      },
+      "license": {
+        "twelveMonths": "Licencia 3 meses",
+        "sixMonths": "Licencia 6 meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "550$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "features": {
+      "sectionTitle": "Características principales",
+      "chat": {
+        "title": "Chats Cifrados",
+        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
+      },
+      "confidentiality": {
+        "title": "Abracadabra",
+        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
+      },
+      "groupChat": {
+        "title": "Chats Anónimos Grupales",
+        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
+      },
+      "agreementFeatures": {
+        "title": "Protección de captura de pantalla",
+        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "Borrado Remoto",
+          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
+        },
+        {
+          "title": "Chats grupales anónimos",
+          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
+        },
+        {
+          "title": "Bóveda Segura",
+          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Subtitle element copy",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+   "faq": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "question": "¿Cómo se encripta un teléfono Cryptcom?",
+          "answer": "La encriptación se realiza mediante un proceso especializado que transforma tu dispositivo en uno altamente seguro con software y hardware modificados."
+        },
+        {
+          "question": "¿Qué funcionalidades obtengo al encriptar mi teléfono con Cryptcom?",
+          "answer": "Obtendrás acceso a herramientas como mensajería segura, bóveda encriptada, cambio automático de IMEI y funciones avanzadas de protección."
+        },
+        {
+          "question": "¿Cómo funciona el borrado remoto en un teléfono encriptado como Cryptcom?",
+          "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina todos los datos del dispositivo para evitar accesos no autorizados."
+        }
+      ]
+    }
+  },
+   "RenatiPage": {
+    "product": {
+      "title": "Renati",
+      "description": "Protégete con un sistema operativo móvil seguro y creado para comunicaciones encriptadas.",
+      "features": {
+        "endToEndEncryption": "Sin servicios de geolocalización. Bluetooth o NFC",
+        "chatHiding": "Bloc de notas encriptado",
+        "privateCalls": "Conversaciones encriptadas"
+      },
+      "license": {
+        "threeMonths": "3 Meses",
+        "sixMonths": "3 Meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "650$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "features": {
+      "sectionTitle": "Características principales",
+      "chat": {
+        "title": "Chats Cifrados",
+        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
+      },
+      "confidentiality": {
+        "title": "Abracadabra",
+        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
+      },
+      "groupChat": {
+        "title": "Chats Anónimos Grupales",
+        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
+      },
+      "agreementFeatures": {
+        "title": "Protección de captura de pantalla",
+        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "Borrado Remoto",
+          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
+        },
+        {
+          "title": "Chats grupales anónimos",
+          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
+        },
+        {
+          "title": "Bóveda Segura",
+          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Subtitle element copy",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "questions": [
+        {
+          "question": "¿En qué dispositivo puedo instalar la app Elyon?",
+          "answer": "La app Elyon está disponible para dispositivos Android e iOS."
+        },
+        {
+          "question": "¿Cuál es el costo de la app Elyon?",
+          "answer": "El costo de la app Elyon varía según la licencia seleccionada. Puedes consultar los precios actualizados en nuestra página oficial."
+        },
+        {
+          "question": "¿Pueden espiarme si uso la app Elyon?",
+          "answer": "No, Elyon protege tu privacidad mediante cifrado de extremo a extremo y políticas estrictas de seguridad."
+        }
+      ]
+    }
+  },
+  "UltraxPage": {
+    "product": {
+      "title": "Ultrax",
+      "description": "Protégete con un sistema operativo móvil seguro y creado para comunicaciones encriptadas.",
+      "features": {
+        "endToEndEncryption": "Sin servicios de geolocalización. Bluetooth o NFC",
+        "chatHiding": "Bloc de notas encriptado",
+        "privateCalls": "Conversaciones encriptadas"
+      },
+      "license": {
+        "threeMonths": "3 Meses",
+        "sixMonths": "3 Meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "650$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "benefits": {
+      "title": "Vuelve tu celular o tablet un dispositivo totalmente seguro",
+      "features": {
+        "hiddenApps": {
+          "title": "Aplicaciones de seguridad ocultas",
+          "text": "El dispositivo parece un teléfono Android normal."
+        },
+        "manipulationProtection": {
+          "title": "Función de limpieza a prueba de manipulaciones",
+          "text": "Los criterios de manipulación e inactividad establecidos por el usuario harán que el dispositivo se borre."
+        },
+        "nfcBlocking": {
+          "title": "Cifrado de alto nivel ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalente a más de 15 360 bits RSA."
+        },
+        "anonymity": {
+          "title": "Sin ubicaciones fijas de servidores",
+          "text": "Los servidores se destruyen cada 24 horas después de la transferencia a uno sin dejar rastro."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Características principales",
+      "versatility": {
+        "title": "Versatilidad",
+        "description": "Puedes mantener seguras las comunicaciones profesionales e incorporar aplicaciones estándar para hablar con tu familia."
+      },
+      "innovation": {
+        "title": "Innovación",
+        "description": "Control absoluto de nuevas tecnologías. La tecnología a tu servicio y no al revés, para obtener el mayor control en protección y privacidad."
+      },
+      "protection": {
+        "title": "Protección",
+        "description": "Habla por teléfono con total tranquilidad, guarda y custodia la información confidencial y las bases de datos con total confianza."
+      },
+      "os": {
+        "title": "Sistema Operativo Xecret OS",
+        "description": "Es una solución patentada que bloquea cualquier intrusión y cualquier intercambio de información no autorizado."
+      }
+    },
+    "systemFeatures": {
+      "title": "Funciones De Seguridad Del Sistema",
+      "items": {
+        "wallet": {
+          "title": "Wallet",
+          "text": "Billetera digital para almacenar y operar con criptomoneda de forma totalmente segura."
+        },
+        "firewall": {
+          "title": "Firewall totalmente controlado.",
+          "text": "Con todos los permisos asignados a cada aplicación de forma independiente (Acceso a datos, WI FI, GPS, etc.)"
+        },
+        "imsiCatcher": {
+          "title": "Detector de Imsi-catcher",
+          "text": "Con este detector puedes saber si alguien está tratando de triangular tu ubicación o interceptar alguna de tus comunicaciones."
+        },
+        "extremePrivacy": {
+          "title": "Privacidad extrema",
+          "text": "Nos aseguramos de que nuestros usuarios sean los únicos que conozcan y utilicen su identidad como prefieran."
+        },
+        "secureCalls": {
+          "title": "Llamadas seguras",
+          "text": "Realiza llamadas y videollamadas 100% Seguras sin que la señal pase por ningún Servidor. Comunícate tranquilo y confiado."
+        },
+        "trust": {
+          "title": "Confianza",
+          "text": "Nuestros sistemas personalizados garantizan a cada empresa, organización o institución su propia protección y privacidad."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "¿Cómo encriptar tu celular para que nadie pueda espiarte?"
+    },
+    "simOptionsUltrax": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Subtitle element copy",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "items": [
+        {
+          "question": "¿Cómo se hace la encriptación de un celular?",
+          "answer": "La encriptación se realiza mediante un proceso especializado que convierte tu dispositivo en uno altamente seguro, con software y hardware modificados."
+        },
+        {
+          "question": "¿Qué funcionalidades voy a tener al encriptar mi celular?",
+          "answer": "Tendrás acceso a herramientas como mensajería segura, bóveda cifrada, cambios automáticos de IMEI y funciones avanzadas de protección."
+        },
+        {
+          "question": "¿Cómo funciona el borrado remoto en un celular encriptado?",
+          "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina toda la información del dispositivo para evitar el acceso no autorizado."
+        }
+      ]
+    }
   }
+
 }

@@ -178,7 +178,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system3",
+          link: "/apps/cryptcom",
           description: t("systems.items.cryptcom.description", {
             defaultValue: "Cryptcom es una aplicación de mensajería segura.",
           }),
@@ -187,7 +187,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("systems.items.renati.title", { defaultValue: "Renati" }),
           image:
             "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system4",
+          link: "/apps/renati",
           description: t("systems.items.renati.description", {
             defaultValue: "Renati es una aplicación de mensajería segura.",
           }),
@@ -196,7 +196,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("systems.items.ultraX.title", { defaultValue: "Ultra X" }),
           image:
             "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system5",
+          link: "/apps/ultrax",
           description: t("systems.items.ultraX.description", {
             defaultValue: "Ultra X es una aplicación de mensajería segura.",
           }),

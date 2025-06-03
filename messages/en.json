@@ -1006,6 +1006,1256 @@
   "RechargeSim": {
     "errorInput": "Must be a valid phone number with at least 6 digits."
   },
+   "appsShared": {
+    "encryptedSim": {
+      "title": "Encrypted SIM Card",
+      "description": "Protect yourself from cybercriminals and keep your personal information secure",
+      "button": "Buy",
+      "link": "More information"
+    },
+    "simDataPlans": {
+      "title": "Encrypted E-SIM Data or Minute Plans",
+      "description": "Lorem Ipsum Dolor met",
+      "button": "See more"
+    }
+  },
+  "silentCircle": {
+    "description": "It is an app designed by the best minds in mobile technology, focused on keeping your data secure at all times.",
+    "details": ["Encrypted calls", "No location permissions", "Timed messages"],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main features",
+      "elements": [
+        {
+          "title": "Self-destructing messages",
+          "description": "Messages are automatically deleted from sending and receiving devices after a «recording time». You can choose this time: From one minute to 90 days."
+        },
+        {
+          "title": "Encrypted voice notes",
+          "description": "Voice notes with the ability to record and provide a secure alternative to voicemail."
+        },
+        {
+          "title": "Secure messages",
+          "description": "Encryption ensures that only the receiving device can interpret communications from the moment you press \"SEND\". The sender can verify if the message was received and read."
+        },
+        {
+          "title": "Files and documents",
+          "description": "Encrypted file sharing… securely send up to 100 MB. \nGroup messaging… Seamlessly send files and messages to groups of users"
+        }
+      ]
+    },
+    "benefits": [
+      "Built on a fundamentally different protocol",
+      "No backdoor policy",
+      "Private Design",
+      "User administration",
+      "All your data protected",
+      "Military-grade patented technology"
+    ],
+    "coverage": {
+      "title": "Coverage in more than 200 countries",
+      "description": "Secure and borderless communication"
+    },
+    "faq": [
+      "How secure is the Silent Phone - Silent Circle application?",
+      "On which cell phones can I install the Silent Phone application from Silent Circle?",
+      "On which cell phone can I install the Silent Circle application?"
+    ]
+  },
+  "armadillo": {
+    "description": "Highly secure instant messaging application that respects your privacy",
+    "details": [
+      "Remote and automated deletion",
+      "Alerts of potential imposters",
+      "Encrypted calls"
+    ],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main features",
+      "elements": [
+        {
+          "title": "Encrypted Chats",
+          "description": "Armadillo Chat uses end-to-end encryption, so your messages are unreadable even if the server is compromised."
+        },
+        {
+          "title": "Remote and Automated Deletion",
+          "description": "Automatically configure self-destruct timers, remotely delete individual messages or entire conversations"
+        },
+        {
+          "title": "Encrypted Communications",
+          "description": "You can communicate with text messages, images, files, group chats or video calls securely."
+        },
+        {
+          "title": "Verify the identity of your contacts",
+          "description": "You can use various methods to verify your friends' identities: scan a QR code, ask a question, Wi-Fi verification, or text verification."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Easy account access",
+        "description": "Activate or renew your Armadillo Chat account to ensure you have the most secure software, communications, and support."
+      },
+      {
+        "title": "24/7 Support",
+        "description": "You can also speak directly with our mobile security experts via Armadillo Chat about your security concerns."
+      },
+      {
+        "title": "Simple interface",
+        "description": "Armadillo Chat is not only a completely secure application, it is also very easy to use."
+      },
+      {
+        "title": "Privacy and security",
+        "description": "Armadillo Chat is a highly secure instant messaging application. With constant updates, we ensure that all your communications are private and out of reach of any malicious third parties."
+      },
+      {
+        "title": "Alerts about potential imposters",
+        "description": "Armadillo Chat automatically warns you about potential imposters in your contact list and other devices connected to your account. In high-security mode, it will also warn you about any unverified friends."
+      },
+      {
+        "title": "Push Notifications",
+        "description": "Armadillo Chat is not only a completely secure application, it is also very easy to use."
+      }
+    ],
+    "information": "Armadillo Chat. Highly secure instant messaging application",
+    "faq": [
+      "How does Armadillo Chat work?",
+      "On which cell phones can I install Armadillo Chat?",
+      "Why use Armadillo Chat?"
+    ]
+  },
+  "valutChat": {
+    "description": "Optimized encrypted communication platform with high-end multi-layer encryption.",
+    "details": [
+      "User verifications",
+      "Self-destructing messages",
+      "Encrypted chats",
+      "Encrypted chat"
+    ],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main features",
+      "elements": [
+        {
+          "title": "Encrypted Chats",
+          "description": "Communicate quickly and internally encrypted with other VaultChat users. Send and receive images and voice notes and conduct group chats."
+        },
+        {
+          "title": "Encrypted Chat",
+          "description": "We have implemented OMEMO / ECC / AES256 in our popular chat system. No message can be read on our server by anyone at any time! We have the best encryption and do not store data. All images and voice notes are also encrypted!"
+        },
+        {
+          "title": "Self-Destructing Messages",
+          "description": "Self-destructing messages take precedence over everything. Set your timer to destroy all messages when the time runs out."
+        },
+        {
+          "title": "Broadcast Lists",
+          "description": "With the broadcast list feature, you can send an encrypted message to multiple of your contacts at once. Broadcast lists are saved lists of message recipients to whom you can repeatedly send broadcast messages without having to select them each time."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Private Notifications",
+        "description": "Maintain the confidentiality of message arrival times and counts by choosing push notifications to originate from our servers."
+      },
+      {
+        "title": "State-of-the-art features",
+        "description": "VaultChat is packed with features and security. We offer state-of-the-art products for your use."
+      },
+      {
+        "title": "24/7 Monitoring",
+        "description": "Infrastructure security monitoring provides network protection with preventative measures to deny unauthorized access and malicious activity."
+      },
+      {
+        "title": "Encrypted Data at Rest",
+        "description": "All data stored in VaultChat is encrypted using a custom encrypted database with AES-256."
+      },
+      {
+        "title": "Password Protection",
+        "description": "Our required password protection keeps your data in VaultChat encrypted and protected, even if your device is unlocked. Multiple incorrect attempts will erase all data."
+      },
+      {
+        "title": "Multi-Layer Encryption",
+        "description": "Incoming and outgoing communications are end-to-end encrypted and transmitted over an encrypted network. All data stored on the device is protected and encrypted."
+      }
+    ],
+    "information": "Vault Chat, application for encrypted and private communications",
+    "faq": [
+      "What is VaultChat?",
+      "What is the difference between VaultChat and VaultSecure?",
+      "What are the advantages of using VaultChat?"
+    ]
+  },
+  "nordVpn": {
+    "description": "Get simple and secure remote access from the world's most trusted VPN brand.",
+    "details": [
+      "Secure one-click connection",
+      "Kill Switch",
+      "Private gateways"
+    ],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main features",
+      "elements": [
+        "Secure connections",
+        "Private gateways",
+        "Shared gateways",
+        "Automatic connection",
+        "Team management",
+        "Encrypted connection"
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Third-party authentication",
+        "description": "Connect to NordVPN Teams with your existing business credentials. Our VPN solutions for small businesses and large corporations offer third-party authentication with Azure AD, Google, and Okta."
+      },
+      {
+        "title": "One click to secure any device",
+        "description": "It takes just one click to encrypt all data traffic on your device. Click on any gateway to connect or enable the auto-connect feature."
+      },
+      {
+        "title": "Kill Switch",
+        "description": "Don't risk exposing any of your data by enabling the Kill Switch feature. It automatically cuts off all internet traffic on your device if the connection to the server drops even for a second."
+      },
+      {
+        "title": "Encrypted Data at Rest",
+        "description": "All data stored in VaultChat is encrypted using a custom encrypted database with AES-256."
+      },
+      {
+        "title": "Password Protection",
+        "description": "Our required password protection keeps your data in VaultChat encrypted and protected, even if your device is unlocked. Multiple incorrect attempts will erase all data."
+      },
+      {
+        "title": "Multi-Layer Encryption",
+        "description": "Incoming and outgoing communications are end-to-end encrypted and transmitted over an encrypted network. All data stored on the device is protected and encrypted."
+      }
+    ],
+    "information": "NordVPN one of the best options on the market",
+    "faq": [
+      "What is a VPN?",
+      "Why is it important to have a VPN?",
+      "How does NordVPN work?"
+    ]
+  },
+  "salt": {
+    "description": "Keep your most sensitive communications secure with the best shielding",
+    "details": [
+      "Secure messaging",
+      "Screenshot protection",
+      "Secure voice calls"
+    ],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main features",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "Our tailored solution offers users private and secure real-time messaging and group chat functionality to their Salt contacts."
+        },
+        {
+          "title": "Message self-destruction",
+          "description": "Our self-destruct functionality allows users to erase information from their device and all recipients' devices, either manually or via a timer setting."
+        },
+        {
+          "title": "Message broadcasting",
+          "description": "Efficiently send live alerts or share messages, images, and documents with large groups of users within an organization"
+        },
+        {
+          "title": "Screenshot protection",
+          "description": "For added internal security, administrators can restrict users' ability to take screenshots. If screenshots are taken, users will receive a notification."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Secure remote work enablement",
+        "description": "Many high-profile organizations worldwide have implemented Salt to ensure the highest level of security in communications while working remotely."
+      },
+      {
+        "title": "Agnostic encryption",
+        "description": "Salt uses the latest and best encryption protocols to ensure we offer customers the highest level of encryption within our platform."
+      },
+      {
+        "title": "Security testing transparency",
+        "description": "Salt is an open and trusted technology that is rigorously and routinely verified by independent parties."
+      },
+      {
+        "title": "Privacy and security",
+        "description": "Armadillo Chat is a highly secure instant messaging application. With constant updates, we ensure that all your communications are private and out of reach of any malicious third parties."
+      },
+      {
+        "title": "Alerts about potential imposters",
+        "description": "Armadillo Chat automatically warns you about potential imposters in your contact list and other devices connected to your account. In high-security mode, it will also warn you about any unverified friends."
+      },
+      {
+        "title": "Push Notifications",
+        "description": "Armadillo Chat is not only a completely secure application, it is also very easy to use."
+      }
+    ],
+    "information": "Differences between an Encrypted Application and Whatsapp",
+    "faq": [
+      "How does Salt work?",
+      "How secure is the Salt application?",
+      "Why should my company have an application like Salt?"
+    ]
+  },
+  "vnc": {
+    "description": "End-to-end encryption for maximum privacy and secrecy in your communications.",
+    "details": [
+      "Secure video conferencing",
+      "Collaborative document editing",
+      "Secure messaging"
+    ],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main characteristics",
+      "elements": [
+        {
+          "title": "Text chat",
+          "description": "Individual or group chat, all you need is a browser."
+        },
+        {
+          "title": "Audio and Video Conference",
+          "description": "Perfect audio and image quality. You will be surprised by this type of virtual reality! Save travel expenses and contact your team with a single click."
+        },
+        {
+          "title": "File transfer between users",
+          "description": "Send any file format to your chat partners. Access to hardware features such as mobile camera, microphone, data, network status, sensors such as GPS, etc."
+        },
+        {
+          "title": "Calls and video calls",
+          "description": "VNCmeet, as part of VNCtalk, allows you to initiate video calls with external invited users, who do not need a VNCtalk subscription."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "Encryption",
+        "description": "End-to-end encryption for maximum privacy and secrecy in your communications."
+      },
+      {
+        "title": "Works on mobile devices",
+        "description": "No need to use a portable or desktop laptop. VNCtalk runs on any browser and as an application."
+      },
+      {
+        "title": "Whiteboards",
+        "description": "Collaborate on whiteboards with images, shapes, and text."
+      },
+      {
+        "title": "VNCtalk is also an OEM product.",
+        "description": "That means partners can add their logo, CD / CI and at the same time modify the interface from a UX (user experience) perspective."
+      },
+      {
+        "title": "VNCtalk has no advertising",
+        "description": "and is equipped with a number of interesting features such as: screen sharing, document collaboration in VNCpads and many more."
+      },
+      {
+        "title": "VNCtalk is scalable",
+        "description": "up to a large number of users. Simply improve the bandwidth, add more instances and you're done."
+      }
+    ],
+    "functionalities": [
+      {
+        "title": "VNC Talk Web Application",
+        "description": "VNCtalk Web Client allows you to access all VNCtalk professional communication features, such as chat, audio and video conferencing, in the same standard browser as VNCmail or VNCproject. Therefore, you enter your entire workspace with your browser, without having to launch separate applications for each activity you would like to perform. VNCtalk Web Client runs on any standard browser on Windows, MacOS and Linux."
+      },
+      {
+        "title": "VNC Talk Desktop Application",
+        "description": "VNCtalk Desktop Client allows you to run VNCtalk as a separate application on your desktop PC, on Windows, Mac and Linux. Especially when working with many open browser tabs, it is useful to have separate access points for your chats, video conferences and VNCpads. And, of course, you have all VNCtalk features available in any of our frontend clients."
+      }
+    ],
+    "information": "What is the ideal system for you? Do you want to continue using your personal cell phone?",
+    "faq": [
+      "What is VNC?",
+      "How does VNC Lagoon work?",
+      "What compatibility does VNC Lagoon have?"
+    ]
+  },
+  "threema": {
+    "description": "Threema.Work offers all the features expected of a professional business messenger",
+    "details": [
+      "Group chats with up to 100 people",
+      "Encrypted calls",
+      "Private polls in the chat"
+    ],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "characteristics": {
+      "title": "Main features",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "Our chat complies with all privacy laws; it provides your team with an easy-to-use alternative, separating personal and professional communication."
+        },
+        {
+          "title": "Audio and Video Conferencing",
+          "description": "Perfect audio and image quality. You will be surprised by this type of virtual reality! Save travel expenses and contact your team with a single click."
+        },
+        {
+          "title": "File transfer between users",
+          "description": "Send any file format to your chat partners. Access to hardware functions such as mobile camera, microphone, data, network status, sensors like GPS, etc."
+        },
+        {
+          "title": "Calls and video calls",
+          "description": "VNCmeet, as part of VNCtalk, allows you to initiate video calls with external guest users, who do not need a VNCtalk subscription."
+        }
+      ]
+    },
+    "benefits": [
+      {
+        "title": "We comply with established regulations",
+        "description": "Threema Work complies with the European General Data Protection Regulation (GDPR); we also comply with the Federal Data Protection Act."
+      },
+      {
+        "title": "We are certified",
+        "description": "Threema manages its own servers in ISO 27001 certified data centers."
+      },
+      {
+        "title": "Top ratings and reviews",
+        "description": "Application with the widest reach in terms of number of users."
+      },
+      {
+        "title": "App of the year",
+        "description": "Threema Work can be used without providing personally identifiable information (such as a phone number or email address) and without granting access to the address book."
+      },
+      {
+        "title": "Best-selling iOS app",
+        "description": "In 2015, Google Play recognized Threema by placing it on the prestigious list of the best Android apps."
+      },
+      {
+        "title": "Best-selling iOS app",
+        "description": "For two consecutive years (2014 and 2015), Threema was the best-selling iOS app in Germany."
+      }
+    ],
+    "faq": {
+      "title":"Frequently Asked Questions",
+      "items": [
+        {
+          "question": "What is the Threema application for?",
+          "answer": "Threema is a secure messaging app that protects your privacy and allows you to send encrypted messages, make voice calls, and share files."
+        },
+        {
+          "question": "How does the Threema application work?",
+          "answer": "Threema uses end-to-end encryption to ensure that only the sender and receiver can read the messages. It does not require a phone number or email for registration."
+        },
+        {
+          "question": "How good is the security and privacy of the Threema application?",
+          "answer": "Threema is recognized for its high level of security and data protection. It does not collect personal information and its servers are located in Switzerland."
+        }
+      ]
+    }
+  },
+  "SecureMdmPage": {
+    "product": {
+      "title": "SECURE MDM ANDROID",
+      "description": "Shield your Samsung or Pixel device with the highest level of security.",
+      "features": {
+        "endToEndEncryption": "USB access blocking",
+        "chatHiding": "Emergency remote wipe",
+        "privateCalls": "Secure and private messaging"
+      },
+      "license": {
+        "threeMonths": "3 Months",
+        "sixMonths": "6 Months"
+      },
+      "pricePrefix": "From",
+      "price": "729$ USD"
+    }
+  },
+  "CryptcomPage": {
+    "product": {
+      "title": "Cryptcom",
+      "description": "Turn your smartphone into a highly secure communications device.",
+      "features": {
+        "endToEndEncryption": "Automatic IMEI changer",
+        "chatHiding": "Encrypted cloud vault",
+        "privateCalls": "Application masking"
+      },
+      "license": {
+        "threeMonths": "3 Months",
+        "sixMonths": "12 Months"
+      },
+      "pricePrefix": "From",
+      "price": "729$ USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Support chat"
+      }
+    },
+    "benefits": {
+      "title": "Turn your phone or tablet into a fully secure device",
+      "features": {
+        "hiddenApps": {
+          "title": "Hidden security applications",
+          "text": "The device appears as a normal Android phone."
+        },
+        "manipulationProtection": {
+          "title": "Tamper-proof wipe function",
+          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
+        },
+        "nfcBlocking": {
+          "title": "High-level encryption ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalent to more than 15,360-bit RSA."
+        },
+        "anonymity": {
+          "title": "No fixed server locations",
+          "text": "Servers are destroyed every 24 hours after data is transferred to one without leaving a trace."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Main Features",
+      "chat": {
+        "title": "Chat",
+        "description": "Encrypted chats: Send text, images, voice notes, and videos securely and encrypted."
+      },
+      "confidentiality": {
+        "title": "Encrypted Chat",
+        "description": "With the option of zero-knowledge anonymous groups, users won't be able to view or retrieve contact information of group members."
+      },
+      "groupChat": {
+        "title": "Secure Messaging",
+        "description": "Combined messaging, encrypted chat and email. Hybrid encrypted chats in live view with read and delivered indicators, delete/edit features, and text translation."
+      },
+      "agreementFeatures": {
+        "title": "Masked Chat",
+        "description": "Text turns into unreadable masked font when the device is idle."
+      }
+    },
+    "systemFeatures": {
+      "title": "System Security Features",
+      "items": {
+        "noUpdates": {
+          "title": "Automatic updates cannot be performed",
+          "text": "For increased security, automatic updates are not allowed."
+        },
+        "antiSurveillance": {
+          "title": "Anti-Surveillance Technology with automatic IMEI changer.",
+          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
+        },
+        "gripTest": {
+          "title": "Grip test",
+          "text": "Applications will lock and hide if the device is shaken or grabbed."
+        },
+        "sos": {
+          "title": "SOS Coercion Notification",
+          "text": "Reverse PIN entry alerts emergency contacts of the situation and deletes the messages."
+        },
+        "encryptedVault": {
+          "title": "Encrypted Vault",
+          "text": "For encrypted storage of images, videos, notes, and voice files."
+        },
+        "appMasking": {
+          "title": "Application Masking",
+          "text": "Masks your app’s interface to resemble WhatsApp or other popular apps."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "Cryptcom – The operating system that will make your phone unhackable"
+    },
+    "simOptionsCryptcom": {
+      "cards": [
+        {
+          "title": "Encrypted SIM Card",
+          "description": "Protect yourself from cybercriminals and keep your personal data safe",
+          "buttonText": "Buy",
+          "secondButtonText": "More info"
+        },
+        {
+          "title": "Encrypted E-SIM – Data or voice plans",
+          "description": "Subtitle element copy",
+          "buttonText": "See more"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "How is a Cryptcom phone encrypted?",
+          "answer": "Encryption is performed through a specialized process that transforms your device into a highly secure one with modified software and hardware."
+        },
+        {
+          "question": "What functionalities will I get by encrypting my phone with Cryptcom?",
+          "answer": "You will gain access to tools such as secure messaging, encrypted vault, automatic IMEI switching, and advanced protection features."
+        },
+        {
+          "question": "How does remote wipe work on an encrypted phone like Cryptcom?",
+          "answer": "You can activate remote wipe in case of loss or theft. The system erases all data on the device to prevent unauthorized access."
+        }
+      ]
+    }
+  },
+  "RenatiPage": {
+    "product": {
+      "title": "Renati",
+      "description": "Protect yourself with a secure mobile operating system designed for encrypted communications.",
+      "features": {
+        "endToEndEncryption": "No geolocation, Bluetooth, or NFC services",
+        "chatHiding": "Encrypted notepad",
+        "privateCalls": "Encrypted conversations"
+      },
+      "license": {
+        "threeMonths": "3 Months",
+        "sixMonths": "3 Months"
+      },
+      "pricePrefix": "From",
+      "price": "650$ USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Chat support"
+      }
+    },
+    "benefits": {
+      "title": "Turn your phone or tablet into a fully secure device",
+      "features": {
+        "hiddenApps": {
+          "title": "Hidden security apps",
+          "text": "The device appears as a regular Android phone."
+        },
+        "manipulationProtection": {
+          "title": "Tamper-proof wipe function",
+          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
+        },
+        "nfcBlocking": {
+          "title": "High-level encryption ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalent to more than 15,360 bits RSA."
+        },
+        "anonymity": {
+          "title": "No fixed server locations",
+          "text": "Servers are destroyed every 24 hours after transferring to a new one without leaving traces."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Key features",
+      "chat": {
+        "title": "Chat",
+        "description": "Encrypted chats: Send text, images, voice notes, and videos securely and privately."
+      },
+      "confidentiality": {
+        "title": "Encrypted Chat",
+        "description": "With zero-knowledge anonymous group options, users cannot view or retrieve contact information of group members."
+      },
+      "groupChat": {
+        "title": "Secure messaging",
+        "description": "Combined encrypted messaging, chat, and email. Hybrid encrypted chats with real-time chat view, read and delivery notifications, message delete/edit features, and text translation."
+      },
+      "agreementFeatures": {
+        "title": "Masked chat",
+        "description": "Text becomes unreadable masked font when the device is idle."
+      }
+    },
+    "systemFeatures": {
+      "title": "System Security Features",
+      "items": {
+        "noUpdates": {
+          "title": "Renati strengthens all aspects of the device",
+          "text": "including the core architecture against any type of hardware or digital attacks."
+        },
+        "antiSurveillance": {
+          "title": "OTA updates",
+          "text": "Renati enables fast and secure wireless updates via WiFi, providing the latest security at top speed."
+        },
+        "gripTest": {
+          "title": "On boot, Renati verifies integrity and authenticity",
+          "text": "of all executable code, ensuring the device is secure."
+        },
+        "sos": {
+          "title": "Custom devices",
+          "text": "and infrastructure enhancements mean your data is secure."
+        },
+        "encryptedVault": {
+          "title": "Custom kernel:",
+          "text": "Renati strengthens every aspect of the device, including its foundational architecture."
+        },
+        "appMasking": {
+          "title": "Verified Android boot:",
+          "text": "At startup, Renati checks the integrity and authenticity of all executable code to ensure the device's security."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "Shield your phone, prevent hacks, and protect your communications"
+    },
+    "simOptionsRenati": {
+      "cards": [
+        {
+          "title": "Encrypted SIM Card",
+          "description": "Protect yourself from cybercriminals and keep your personal information secure",
+          "buttonText": "Buy",
+          "secondButtonText": "Learn more"
+        },
+        {
+          "title": "Encrypted E-SIM with data or voice plans",
+          "description": "Subtitle element copy",
+          "buttonText": "See more"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "question": "What is an OS?",
+          "answer": "An operating system (OS) is the software that manages the device's hardware and software, enabling its operation."
+        },
+        {
+          "question": "Why should I install Renati on my phone?",
+          "answer": "Renati offers advanced security, privacy, and performance features that protect your data and enhance your mobile experience."
+        },
+        {
+          "question": "How is Renati installed on my phone?",
+          "answer": "Renati is installed through a technical process assisted by our specialists to ensure compatibility and security."
+        }
+      ]
+    }
+  },
+  "UltraxPage": {
+    "product": {
+      "title": "Ultrax",
+      "description": "Protect yourself with a secure mobile operating system designed for encrypted communications.",
+      "features": {
+        "endToEndEncryption": "No geolocation, Bluetooth, or NFC services",
+        "chatHiding": "Encrypted notes",
+        "privateCalls": "Encrypted conversations"
+      },
+      "license": {
+        "threeMonths": "3 Months",
+        "sixMonths": "3 Months"
+      },
+      "pricePrefix": "From",
+      "price": "650$ USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Support chat"
+      }
+    },
+    "benefits": {
+      "title": "Turn your phone or tablet into a completely secure device",
+      "features": {
+        "hiddenApps": {
+          "title": "Hidden security apps",
+          "text": "The device looks like a normal Android phone."
+        },
+        "manipulationProtection": {
+          "title": "Tamper-proof wipe function",
+          "text": "User-defined tampering or inactivity will trigger a device wipe."
+        },
+        "nfcBlocking": {
+          "title": "High-level encryption ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalent to over 15,360-bit RSA encryption."
+        },
+        "anonymity": {
+          "title": "No fixed server locations",
+          "text": "Servers are destroyed every 24 hours after being transferred to another without leaving a trace."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Key features",
+      "versatility": {
+        "title": "Versatility",
+        "description": "Keep professional communications secure while using standard apps to connect with family."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Complete control over new technologies. Technology serving your protection and privacy needs—not the other way around."
+      },
+      "protection": {
+        "title": "Protection",
+        "description": "Make calls with peace of mind and safely store and manage confidential data and databases."
+      },
+      "os": {
+        "title": "Xecret OS Operating System",
+        "description": "A patented solution that blocks any intrusion and any unauthorized information exchange."
+      }
+    },
+    "systemFeatures": {
+      "title": "System Security Features",
+      "items": {
+        "wallet": {
+          "title": "Wallet",
+          "text": "A digital wallet to store and manage cryptocurrencies with complete security."
+        },
+        "firewall": {
+          "title": "Fully controlled firewall",
+          "text": "With all permissions assigned independently to each app (data access, Wi-Fi, GPS, etc.)"
+        },
+        "imsiCatcher": {
+          "title": "IMSI catcher detector",
+          "text": "This detector alerts you if someone tries to triangulate your location or intercept communications."
+        },
+        "extremePrivacy": {
+          "title": "Extreme privacy",
+          "text": "We ensure our users are the only ones who know and use their identity as they prefer."
+        },
+        "secureCalls": {
+          "title": "Secure calls",
+          "text": "Make 100% secure calls and video calls with no signal going through any server. Communicate with peace of mind."
+        },
+        "trust": {
+          "title": "Trust",
+          "text": "Our custom systems guarantee each company, organization, or institution its own protection and privacy."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "How to encrypt your phone so no one can spy on you?"
+    },
+    "simOptionsUltrax": {
+      "cards": [
+        {
+          "title": "Encrypted SIM card",
+          "description": "Protect yourself from cybercriminals and keep your personal information safe",
+          "buttonText": "Buy",
+          "secondButtonText": "More info"
+        },
+        {
+          "title": "Encrypted E-SIM with data or voice plans",
+          "description": "Subtitle element copy",
+          "buttonText": "See more"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "question": "How is a phone encrypted?",
+          "answer": "Encryption is done through a specialized process that transforms your device into a highly secure one, with modified hardware and software."
+        },
+        {
+          "question": "What features will I have after encrypting my phone?",
+          "answer": "You’ll get tools like secure messaging, encrypted vault, automatic IMEI changes, and advanced protection features."
+        },
+        {
+          "question": "How does remote wipe work on an encrypted phone?",
+          "answer": "You can trigger a remote wipe in case of loss or theft. The system deletes all device data to prevent unauthorized access."
+        }
+      ]
+    }
+  },
+  "chatmail": {
+    "description": "Encrypted communications with an easy-to-use interface",
+    "details": [
+      "Encrypted picture and voice messaging",
+      "Unified interface",
+      "Encrypted group chats"
+    ],
+    "plans": ["3-Month License", "6-Month License"],
+    "buttons": {
+      "buyNow": "Buy Now",
+      "supportChat": "Chat support"
+    },
+    "benefits": {
+      "title": "Our devices feature exclusive programs and applications",
+      "elements": [
+        {
+          "title": "Private Key Security",
+          "description": "If your private keys fall into the wrong hands, your personal information and security are at risk. Don't worry! You have full control of your private keys"
+        },
+        {
+          "title": "Integrated multi-layer encryption",
+          "description": "Our user interface detects internal and external users to default to the most secure encryption protocol available."
+        },
+        {
+          "title": "Unified User Interface",
+          "description": "We've completely simplified the user experience by developing the most advanced, intuitive, and powerful encryption software. You no longer have to switch between apps."
+        },
+        {
+          "title": "Keys never leave the device",
+          "description": "Private keys are randomly created on the device to be as strong as possible. Your private key never leaves your device."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Key Features",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "You can keep professional communications secure and incorporate standard apps to talk to your family."
+        },
+        {
+          "title": "Chat",
+          "description": "Absolute control of new technologies. Technology at your service, not the other way around, for maximum control over protection and privacy."
+        },
+        {
+          "title": "Chat",
+          "description": "Talk on the phone with complete peace of mind, store and safeguard confidential information and databases with complete confidence."
+        },
+        {
+          "title": "Chat",
+          "description": "It's a patented solution that blocks any intrusion and any unauthorized exchange of information."
+        }
+      ]
+    },
+    "information": "Chatmail. Secure your cell phone, prevent hacking, and protect your communications",
+    "faq": [
+      "Is it difficult to use an encrypted cell phone like ChatMail?",
+      "How do encrypted chats work in ChatMail?",
+      "Can an encrypted cell phone be hacked?"
+    ]
+  },
+  "armadillo-v2": {
+    "description": "An ultra-secure, attack-proof, and easy-to-use device.",
+    "details": [
+      "Encrypted voice and video calls",
+      "Intuitive interface",
+      "Encrypted chats with remote wipe"
+    ],
+    "plans": ["6-month license", "12-month license", "Phone + 6-month license"],
+    "buttons": {
+      "buyNow": "Buy now",
+      "supportChat": "Support chat"
+    },
+    "benefits": {
+      "title": "Our devices feature exclusive programs and applications",
+      "elements": [
+        {
+          "title": "Storage encryption",
+          "description": "The Armadillo phone not only features state-of-the-art security protocols, it also has a sophisticated password system that ensures maximum security."
+        },
+        {
+          "title": "Memory Protection",
+          "description": "With Armadillo Phone, you don't have to worry about a thing. The phone's memory is reinforced with cutting-edge software and hardware specifically designed for protection."
+        },
+        {
+          "title": "Interface",
+          "description": "We've completely simplified the user experience by developing the most advanced, intuitive, and powerful encryption software. You no longer have to switch between apps."
+        },
+        {
+          "title": "Security Levels",
+          "description": "The security level can be set to three different levels: high, medium, and low. Each level can be customized and assigned the policies the user desires."
+        },
+        {
+          "title": "Remote Wipe",
+          "description": "You can perform a remote wipe of your phone by contacting us if it has been lost, stolen, or seized."
+        },
+        {
+          "title": "Applications",
+          "description": "A proactive defense. Our applications constantly monitor activity around them and alert users to potential threats, preventing attacks before they happen."
+        }
+      ]
+    },
+    "characteristic": {
+      "title": "Chat",
+      "items": [
+        {
+          "title": "Email:",
+          "description": "Secure with PGP-N encryption."
+        },
+        {
+          "title": "Decentralized:",
+          "description": "Don't let third parties control your data. Protect yourself with the included communications network, or use your own. We can provide private servers, completely under your control. PGP-encrypted email: Email uses random subjects; uses an encrypted connection for the keyserver and mail server; requires 4096-bit PGP keys."
+        }
+      ]
+    },
+    "information": "Secure Phones and Encrypted Cell Phones You Don't Know About: How to Get One?",
+    "faq": [
+      "What is the Armadillo Phone encryption cell phone?",
+      "Where to buy an Armadillo Phone encryption cell phone?",
+      "What is the OMEMO encryption used by Armadillo Phone?"
+    ]
+  },
+  "vaultchat": {
+    "description": "Fully encrypted servers and communication. All built on a modern interface.",
+    "details": [
+      "Encrypted Messaging",
+      "Decentralized Private Network",
+      "Private Email and Calls"
+    ],
+    "plans": ["6-month License", "12-month License", "Phone + 6-month License"],
+    "buttons": {
+      "buyNow": "Buy Now",
+      "supportChat": "Chat Support"
+    },
+    "benefits": {
+      "title": "Our devices come with exclusive programs and apps",
+      "elements": [
+        {
+          "title": "Private Network",
+          "description": "We use multiple networks for our platforms. All our servers are installed separately and are not tied to a device, account, or app."
+        },
+        {
+          "title": "Protection",
+          "description": "All devices are protected against brute force and cannot be hacked. If necessary, we can remotely wipe your device."
+        },
+        {
+          "title": "Encryption",
+          "description": "We use the highest encryption for each feature. These cannot be deciphered without your keys and passwords. You control your privacy."
+        },
+        {
+          "title": "On-Device Encryption Keys",
+          "description": "Your encryption keys for email, chat, and calls are generated on your device. These keys never leave the device and can be regenerated at any time."
+        },
+        {
+          "title": "Device Security Manager",
+          "description": "All devices are monitored by our security system. There is no possible way to hack, penetrate, or send malware or viruses. If necessary, we can remotely wipe a device and leave no trace."
+        },
+        {
+          "title": "Release and Updates",
+          "description": "We update and improve our products, and we continue to release new updates regularly."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Key Features",
+      "elements": [
+        {
+          "title": "Encrypted Emails",
+          "description": "PGP Email for communicating with other providers. All emails are not stored on our server, and the encryption keys are generated on your device. You have complete control."
+        },
+        {
+          "title": "PGP Email",
+          "description": "PGP Mail is one of the most widely used encrypted communication methods. We've built this app so that you also control your keys. Messages are stored on your device, not on the server. You can delete them at any time, and they're gone forever."
+        },
+        {
+          "title": "Encrypted Calls",
+          "description": "Call your contacts securely within VaultChat. No interference or traces of the phone call. We use the highest possible encryption to keep your conversations private."
+        },
+        {
+          "title": "Encrypted Calls",
+          "description": "We use the highest possible encryption, the ZRTP protocol implemented with our additional authentication and AES. We've built a platform and independent gateways to keep your conversations private."
+        }
+      ]
+    },
+    "information": "VaultChat: App for encrypted and private communications",
+    "faq": [
+      "How does encrypted chat work on the VaultChat encrypted cell phone?",
+      "What is PGP mail used by the VaultChat encrypted cell phone?",
+      "How long do I need to renew my VaultChat license?"
+    ]
+  },
+  "t2-communicator": {
+    "description": "An encrypted cell phone with blockchain technology for secure communications",
+    "details": [
+      "Secure Operating System",
+      "Blockchain Apps",
+      "Remote Wipe & Panic Button"
+    ],
+    "plans": ["Encrypted Cell Phone", "3-Month License", "6-Month License"],
+    "buttons": {
+      "buyNow": "Buy Now",
+      "supportChat": "Support Chat"
+    },
+    "benefits": {
+      "title": "Our devices feature exclusive programs and applications",
+      "elements": [
+        {
+          "title": "Hardware - Reliable Mobile Devices",
+          "description": "Encrypted mobile devices designed, assembled, and tested to ensure integrity. Optimal operation with the operating system, rigorous manufacturing procedures."
+        },
+        {
+          "title": "Secure Operating System",
+          "description": "Operating system with unbreakable cybersecurity technology, security patches updated against emerging threats, and an intuitive user interface. Full disk encryption."
+        },
+        {
+          "title": "Multiple layers of security for military-grade protection",
+          "description": "We continually develop additional layers of security, making information theft virtually impossible."
+        },
+        {
+          "title": "Secure all communication",
+          "description": "Communication is encrypted and protected from user to user and is transmitted through our decentralized network. All data stored on devices is protected."
+        },
+        {
+          "title": "Blockchain Applications",
+          "description": "Ensures that our users' communication remains private and secure."
+        },
+        {
+          "title": "Encrypted Work Apps",
+          "description": "To ensure our users' communication is private and out of reach."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Key Features",
+      "elements": [
+        {
+          "title": "Mail",
+          "description": "PGP Email for communicating with other providers. All emails are not stored on our server, and the encryption keys are generated on your device. You have complete control."
+        },
+        {
+          "title": "Mail",
+          "description": "PGP Mail is one of the most widely used encrypted communication methods. We've built this app so that you also control your keys. Messages are stored on your device, not on the server. You can delete them at any time, and they're gone forever."
+        },
+        {
+          "title": "Mail",
+          "description": "Securely call your contacts within Vaultchat. No interference or traces of the phone call. We use the highest possible encryption to keep your conversations private."
+        },
+        {
+          "title": "Mail",
+          "description": "We use the highest possible encryption, the ZRTP protocol implemented with our additional authentication and AES. We've built a platform and independent gateways to keep your conversations private."
+        }
+      ]
+    },
+    "information": "Encrypted Cell Phone: 5 Reasons to Get One",
+    "faq": [
+      "How is a cell phone encrypted?",
+      "What features will I get when I encrypt my cell phone?",
+      "How does remote wiping work on an encrypted cell phone?"
+    ]
+  },
+  "intact-phone": {
+    "description": "Complete security from hardware to operating system for secure communications.",
+    "details": [
+      "Secure voice calls",
+      "Encrypted messaging",
+      "Send protected attachments"
+    ],
+    "plans": [
+      "12-month license",
+      "IntactPhone BOND Cellular (12 Months)",
+      "IntactPhone ARCANE Cellular (12 Months)"
+    ],
+    "buttons": {
+      "buyNow": "Buy Now",
+      "supportChat": "Support Chat"
+    },
+    "benefits": {
+      "title": "CommuniTake, Intact's parent company, builds all the hardware and software",
+      "elements": [
+        {
+          "title": "Security",
+          "description": "Eliminates all security gaps."
+        },
+        {
+          "title": "Control",
+          "description": "Controls facilitate the management of central intelligence and advanced security."
+        },
+        {
+          "title": "Cyberattacks",
+          "description": "Minimizes cyberattacks."
+        },
+        {
+          "title": "Alerts",
+          "description": "Prevents attacks through alert detection."
+        },
+        {
+          "title": "Trusted Hardware",
+          "description": "Works only with trusted hardware and official drivers, ensuring security at all times."
+        },
+        {
+          "title": "Stable Connection",
+          "description": "Ensures a stable connection at all times on operational devices."
+        }
+      ]
+    },
+    "information": "How to Protect My Cell Phone from Malware and Hackers to Avoid Interventions 2023",
+    "faq": [
+      "What is the IntactPhone and what is it for?",
+      "IntactPhone, what is the price?",
+      "IntactPhone, who makes it?"
+    ]
+  },
+  "dec-secure": {
+    "description": "DEC Secure offers complete peace of mind when it comes to the privacy and security of the information on your mobile device.",
+    "details": [
+      "Zero-Click VPN",
+      "Remote Lock & Wipe",
+      "Encrypted Messages and Calls"
+    ],
+    "plans": ["3-Month License", "6-Month License"],
+    "buttons": {
+      "buyNow": "Buy Now",
+      "supportChat": "Support Chat"
+    },
+    "benefits": {
+      "title": "We keep you connected securely and privately",
+      "elements": [
+        {
+          "title": "Hardware - Reliable Mobile Devices",
+          "description": "Encrypted mobile devices designed, assembled, and tested for integrity. Works optimally with the operating system."
+        },
+        {
+          "title": "Secure Operating System",
+          "description": "Operating system with unbreakable cybersecurity technology, security patches updated against emerging threats, and an intuitive user interface. Full-disk encryption."
+        },
+        {
+          "title": "Multiple layers of security for military-grade protection",
+          "description": "We continually develop additional layers of security, making information theft virtually impossible."
+        },
+        {
+          "title": "Click-free VPN",
+          "description": "Automatically connects with automated authentication, preventing you from sending or receiving unprotected data."
+        },
+        {
+          "title": "Network Security",
+          "description": "A sophisticated network security and threat detection and response program thwarts the efforts of cyberattackers."
+        },
+        {
+          "title": "Firewall Control",
+          "description": "Prevents all unauthenticated and unencrypted connections, eliminating the possibility of inappropriate exposure."
+        }
+      ]
+    },
+    "characteristic": {
+      "title": "The security of your data is our top priority",
+      "information": [
+        {
+          "title": "Mobile App Management",
+          "description": "Managed private app library for delivering apps to the device without a connection to public clouds."
+        },
+        {
+          "title": "Whitelisted Apps",
+          "description": "Comprehensive app whitelist to prevent the download or deployment of spyware or inappropriate apps."
+        },
+        {
+          "title": "Approved Apps Only",
+          "description": "Our team has independently reviewed each app in the library to validate security and privacy criteria."
+        }
+      ]
+    },
+    "characteristics": {
+      "elements": [
+        {
+          "title": "Always-On VPN",
+          "description": "Secure Call will not work if a secure VPN connection cannot be established, ensuring your communications are never sent exposed."
+        },
+        {
+          "title": "Dedicated Container",
+          "description": "Secure Call requires installation within a dedicated container, protecting your data and app usage from inappropriate spying. \n\nThe dedicated Secure Call contact list is inaccessible from outside the app, keeping your Secure Call contacts private and discreet."
+        },
+        {
+          "title": "DEC Secure Call",
+          "description": "DEC Secure Call gives you everything you expect in a secure communications app, including always-on AES-256 encryption; one-on-one and group voice calls, video calls, and messaging. Your communications are 100% private; we cannot listen to your calls or read your messages under any circumstances, and nothing is stored on our servers."
+        },
+        {
+          "title": "Conference and Group Calls",
+          "description": "Fully encrypted multi-party voice and video calls for up to 10 participants allow you to use a single platform for all your secure communications."
+        }
+      ]
+    },
+    "information": "How to Protect My Cell Phone from Malware and Hackers to Prevent Interventions 2023",
+    "faq": [
+      "What is the IntactPhone and what is it for?",
+      "What is the IntactPhone price?",
+      "Who makes it?"
+    ]
+  },
   "ThreemaPage": {
     "product": {
       "title": "Threema App",
