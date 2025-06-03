@@ -1,11 +1,11 @@
 import { useGetProductById } from "@/features/products/queries/useGetProductById";
-import { Product } from "@/features/products/types/AllProductsResponse";
+import { ProductById } from "@/features/products/types/AllProductsResponse";
 import { useParams } from "next/navigation";
 import React, { createContext, useContext, ReactNode } from "react";
 
 // Define la estructura del contexto
 interface ProductByIdContextValue {
-  currentProduct: Product | null; // Se devuelve solo 'data' de tipo Product o null
+  currentProduct: ProductById["data"] | null;
 }
 
 // Contexto con el valor inicial
