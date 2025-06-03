@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const RenatiSims = () => {
-  const t = useTranslations("RenatiPage.simOptions");
+  const t = useTranslations("RenatiPage.simOptionsRenati");
 
   const cards = t.raw("cards") as {
     title: string;
