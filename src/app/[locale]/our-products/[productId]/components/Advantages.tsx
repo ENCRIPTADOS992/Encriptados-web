@@ -8,7 +8,7 @@ import { useProductById } from "../context/ProductByIdContext";
 export default function Advantages() {
   const shieldImage = "/images/our-products/shield.png";
   const { currentProduct } = useProductById();
-  // const advantages = currentProduct?.advantages;
+  const advantages = currentProduct?.advantages;
 
   const [activeCards, setActiveCards] = useState(new Set());
 
@@ -28,7 +28,7 @@ export default function Advantages() {
     <div className="bg-black p-6 w-full">
       <div className="bg-black w-full lg:w-7/12 mx-auto mt-24 mb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* {advantages?.map((advantage, index) => (
+          {advantages?.map((advantage, index) => (
             <div key={index} className="relative">
               <motion.div
                 className="flex justify-center flex-col cursor-pointer gap-3 bg-zinc-900/50 rounded-lg p-6 mx-auto w-full hover:bg-zinc-900/70 transition-colors min-h-[100px]"
@@ -66,7 +66,7 @@ export default function Advantages() {
                 </AnimatePresence>
               </motion.div>
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>

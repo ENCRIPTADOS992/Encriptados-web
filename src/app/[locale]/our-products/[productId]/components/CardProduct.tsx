@@ -7,24 +7,30 @@ import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useProductById } from "../context/ProductByIdContext";
 
 export default function CardProduct() {
-  const [selectedPlan, setSelectedPlan] = useState<number>(); // Estado inicial sin selección
-
   const { currentProduct } = useProductById();
+
+    if (!currentProduct) {
+    return <p className="text-center py-4">Producto no encontrado.</p>;
+  }
+  const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+  const precioAMostrar = currentProduct.on_sale
+    ? currentProduct.sale_price
+    : currentProduct.price;
 
   return (
     <div className="w-full rounded-lg overflow-hidden flex flex-col">
       <div className="space-y-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-          {/* {currentProduct?.title} */}
+          {currentProduct?.name}
         </h2>
         <p className="text-sm text-gray-600">{currentProduct?.description}</p>
         <div className="space-y-3">
-          {/* {currentProduct?.advantages.map((feature, key) => (
+          {currentProduct?.advantages.map((feature, key) => (
             <div key={key} className="flex items-center gap-2">
               <CheckProductIcon />
-              <span className="text-sm text-gray-700">{feature.title}</span>
+              <span className="text-sm text-gray-700">{feature.name}</span>
             </div>
-          ))} */}
+          ))}
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
@@ -65,14 +71,9 @@ export default function CardProduct() {
         <div className="space-y-2 flex-col flex">
           <hr className="border-t border-1 border-[#D9D9D9]" />
           <p className="text-sm text-gray-500">Desde</p>
-          <p className="text-xl md:text-2xl font-bold text-gray-800 pb-2">
-            {/* {selectedPlan
-              ? currentProduct?.variants.find(
-                  (variant) => variant.id === selectedPlan
-                )?.price
-              : currentProduct?.price} */}
-            $ USD
-          </p>
+         <p className="text-xl md:text-2xl font-bold text-gray-800 pb-2">
+          {precioAMostrar} $ USD
+        </p>
         </div>
       </div>
 

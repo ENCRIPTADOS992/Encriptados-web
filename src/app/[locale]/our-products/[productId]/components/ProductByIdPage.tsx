@@ -6,14 +6,11 @@ import Features from "./Features";
 import Advantages from "./Advantages";
 import BannerCoverage from "@/shared/BannerCoverage";
 import { useQuery } from "@tanstack/react-query";
-
 import Accordion from "@/shared/components/Accordion";
 import { useTranslations } from "next-intl";
-
-import { PRODUCT_BY_ID_QUERY_KEY } from "@/features/products/constants/queryProductsKeys";
 import Loader from "@/shared/components/Loader";
 import BannerProduct from "./BannerProduct";
-
+import { useProductById } from "../context/ProductByIdContext";
 import BannerConnect from "@/app/[locale]/encrypted-sim/components/BannerConnect";
 import { ProductById } from "@/features/products/types/AllProductsResponse";
 import CustomShapeProduct from "./CustomShapeProduct";
@@ -30,14 +27,9 @@ import WhyCallSim from "@/app/[locale]/encrypted-sim/components/WhyCallSim/WhyCa
 
 const ProductByIdPage = () => {
   const e = useTranslations("EncryptedSimPage");
+  const { currentProduct } = useProductById();
 
-  const { isPending, data } = useQuery({
-    queryKey: PRODUCT_BY_ID_QUERY_KEY,
-  });
-
-  const productData = data as ProductById;
-
-  if (isPending) {
+if (currentProduct === null) {
     return (
       <div className="flex items-center justify-center w-screen h-screen bg-gray-100">
         <Loader />
@@ -52,10 +44,12 @@ const ProductByIdPage = () => {
     "Recarga de Datos",
   ];
 
+  const isSimProduct =
+    titlesOfSims.some((title) => title === currentProduct.name);
+
   return (
     <>
-      {productData?.data?.title &&
-      titlesOfSims.some((title) => title === productData.data.title) ? (
+       {isSimProduct ? (
         <>
           <div className="bg-black h-[300px]">
             <CustomShapeProduct />
@@ -96,8 +90,7 @@ const ProductByIdPage = () => {
         <BannerProduct />
       )}
       {/* Condicion  solo para sims, compara los titulos de las sims al renderizar los componentes */}
-      {productData?.data?.title &&
-      titlesOfSims.some((title) => title === productData.data.title) ? (
+       {isSimProduct ? (
         <>
           <div className="flex flex-col-reverse md:flex-row justify-center w-10/12 mx-auto gap-8 md:gap-12 mt-8 md:mt-16">
             <div className="w-full md:w-5/12">
@@ -182,7 +175,12 @@ const ProductByIdPage = () => {
             <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5  font-bold text-[#333333]">
               Preguntas frecuentes
             </h1>
-            <Accordion items={productData?.data?.faqs} />
+            <Accordion
+              items={currentProduct.faqs.map((faq) => ({
+                title: faq.name,
+                content: faq.description,
+              }))}
+            />
           </div>
         </>
       )}

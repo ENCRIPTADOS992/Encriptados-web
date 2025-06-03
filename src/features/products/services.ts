@@ -13,7 +13,7 @@ export const getAllProducts = async (
     }>(`${WP_API_BASE}/encriptados/v1/products/by-category-language`, {
       params: {
         category_id: categoryId,
-        lang: "en",
+        lang: "es",
       },
     });
     const rawProducts = response.data.products;
