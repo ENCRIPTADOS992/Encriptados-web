@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { CheckCircle } from "lucide-react";
 
 const UltraxSystemFeatures = () => {
-  const t = useTranslations("UltraxPage.systemFeatures");
+  const t = useTranslations("UltraxPage.systemFeatures") as any;;
 
   const features = [
     "wallet",
