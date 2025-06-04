@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import BannerConnect from "./BannerConnect";
 import EncryptedSimBanner from "./EncryptedSimBanner";
@@ -14,6 +15,8 @@ import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import ListOfPlans from "./ListOfPlans";
 import { ListOfProductsData } from "../constants/ListOfProductsData";
 import SearchInput from "@/shared/components/SearchInput";
+import StorePage from "../../dashboard/store/components/StorePage";
+import FixedSimProducts from "./FixedSimProducts";
 
 const EncryptedSim = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -57,9 +60,9 @@ const EncryptedSim = () => {
             </BasicFormProvider>
           </div>
         </div>
-
         <div className="max-w-[1100px] mx-auto p-4 ">
-          <SimProductsPage />
+          {/* <SimProductsPage /> */}
+          <FixedSimProducts />
         </div>
 
         <div className="justify-center flex bg-cyan-gradient flex-col items-center mt-6">
