@@ -15,9 +15,11 @@ import ListOfProducts from "./components/ListOfProducts";
 import { useTranslations } from "next-intl";
 import BannerOurProductsMobile from "./components/BannerOurProductsMobile";
 import BannerOurProducts from "./components/BannerOurProducts";
+import { useProductFilters } from "@/features/products/hooks/useProductFilters";
 
 const OurProductsPage = () => {
   const t = useTranslations("OurProductsPage");
+  const { filters, updateFilters } = useProductFilters();
 
   useEffect(() => {
     console.log("[OurProductsPage] Página montada correctamente ✅");
@@ -25,15 +27,7 @@ const OurProductsPage = () => {
 
   return (
     <>
-        <BasicFormProvider
-          defaultValue={{
-            selectedOption: 40,
-            provider: "encriptados",
-            os: "all",
-            license: "all",
-            encriptadosprovider: "all",
-          }}
-        >
+        <BasicFormProvider defaultValue={filters}>
 
         <div className="block md:hidden">
           <BannerOurProductsMobile />
@@ -49,7 +43,7 @@ const OurProductsPage = () => {
           </h1>
 
           <div id="#buysimappsection">
-            <FilterProductsBar />
+            <FilterProductsBar filters={filters} updateFilters={updateFilters} />
 
             <ListOfProducts />
           </div>

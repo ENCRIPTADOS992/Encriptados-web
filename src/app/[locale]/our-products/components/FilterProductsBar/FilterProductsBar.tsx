@@ -6,6 +6,7 @@ import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
 import { useFormContext } from "react-hook-form";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
 import SearchProduct from "./SearchProduct";
 import { useTranslations } from "next-intl";
@@ -17,32 +18,19 @@ const ICON_COLOR_SELECTED = "#0AAEE1";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
 const FILTER_OPTIONS = [
-  {
-    key: "sim",
-    label: "SIM",
-    catId: 40,
-    Icon: SimProductsBarIcon,
-  },
-  {
-    key: "app",
-    label: "Aplicaciones",
-    catId: 38,
-    Icon: AplicationsProductsBarIcon,
-  },
-  {
-    key: "mobile",
-    label: "Sistemas",
-    catId: 35,
-    Icon: PhoneProductsBarIcon,
-  },
+  { key: "sim", label: "SIM", catId: 40, Icon: SimProductsBarIcon },
+  { key: "app", label: "Aplicaciones", catId: 38, Icon: AplicationsProductsBarIcon },
+  { key: "mobile", label: "Sistemas", catId: 35, Icon: PhoneProductsBarIcon },
 ] as const;
 
+interface FilterProductsBarProps {
+  filters: ProductFilters;
+  updateFilters: (newFilters: Partial<ProductFilters>) => void;
+}
 
-export default function FilterProductsBar() {
+export default function FilterProductsBar({ filters, updateFilters }: FilterProductsBarProps) {
   const t = useTranslations("OurProductsPage");
-  const { getValues } = useFormContext<{ selectedOption: number }>();
-  const selectedCat = getValues("selectedOption");
-  console.log("[FilterProductsBar] selectedOption (cat ID):", selectedCat);
+  const selectedCat = parseInt(filters.selectedOption, 10);
 
 
     const items = FILTER_OPTIONS.map(({ key, label, catId, Icon }) => ({
@@ -59,12 +47,12 @@ export default function FilterProductsBar() {
 
  let SubFilterComponent: React.ReactNode = null;
   switch (selectedCat) {
-    case 40: // SIM
-      SubFilterComponent = <FilterProviderServices />;
+    case 40:
+      SubFilterComponent = <FilterProviderServices filters={filters} updateFilters={updateFilters} />;
       break;
-    case 38: // Aplicaciones
-    case 35: // Sistemas
-      SubFilterComponent = <FilterAppWithLicense />;
+    case 38:
+    case 35:
+      SubFilterComponent = <FilterAppWithLicense filters={filters} updateFilters={updateFilters} />;
       break;
   }
 
@@ -77,7 +65,12 @@ export default function FilterProductsBar() {
               <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
               </h1>
-              <ListOfFiltersButton items={items} name="selectedOption" />
+              <ListOfFiltersButton
+                items={items}
+                value={filters.selectedOption}
+                onChange={(value) => updateFilters({ selectedOption: value })}
+              />
+
             </div>
 
             {SubFilterComponent}

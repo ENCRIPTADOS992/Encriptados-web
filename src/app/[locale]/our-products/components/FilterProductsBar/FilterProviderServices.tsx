@@ -5,13 +5,18 @@ import { useFormContext } from "react-hook-form";
 import EncryptedSimIcon from "./simicons/EncryptedSimIcon";
 import IraSimIcon from "./simicons/IraSimIcon";
 import TimSimIcon from "./simicons/TimSimIcon";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
-const FilterAppWithLicense = () => {
+interface FilterAppWithLicenseProps {
+  filters: ProductFilters;
+  updateFilters: (newFilters: Partial<ProductFilters>) => void;
+}
+
+const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, updateFilters }) => {
   type ProviderType = "encriptados" | "ira" | "tim" | undefined;
 
-  const { watch } = useFormContext();
+  const currentProvider = filters.provider as ProviderType;
 
-  const currentProvider = watch("provider") as ProviderType;
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
       <>

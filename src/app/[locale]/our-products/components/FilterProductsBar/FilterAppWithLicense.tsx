@@ -1,8 +1,15 @@
 import React from "react";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
 import { useTranslations } from "next-intl";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
-const FilterAppWithLicense = () => {
+
+interface FilterAppWithLicenseProps {
+  filters: ProductFilters;
+  updateFilters: (newFilters: Partial<ProductFilters>) => void;
+}
+
+const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, updateFilters }) => {
   const t = useTranslations("OurProductsPage");
   return (
     <>
