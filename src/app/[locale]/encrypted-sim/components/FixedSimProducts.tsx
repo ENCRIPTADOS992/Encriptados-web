@@ -25,19 +25,21 @@ import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg"
 import IcomImsiSvg from "/public/images/encrypted-sim/icons/icon-imsi.svg";
 import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
 
+import type { StaticImageData } from "next/image";
+
 interface FixedCard {
-  logoSrc: string;
+  logoSrc: StaticImageData;
   title: string;
   description: string;
   features: {
-    icon: string;
+    icon: StaticImageData;
     alt: string;
     description: string;
   }[];
-  productImage: string;
+  productImage: StaticImageData;
   featuresCardSim: string[];
   priceLabel: string;
-  headerIcon: string;
+  headerIcon: StaticImageData;
   headerTitle: string;
 }
 

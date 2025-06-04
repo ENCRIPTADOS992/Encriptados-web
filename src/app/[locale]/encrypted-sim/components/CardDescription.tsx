@@ -1,12 +1,13 @@
 // src/app/[locale]/encrypted-sim/components/CardDescription.tsx
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 
 interface CardDescriptionProps {
-  logoSrc: string;
+  logoSrc: StaticImageData;
   title: string;
   description: string;
   features: {
-    icon: string;
+    icon: StaticImageData;
     alt: string;
     description: string;
   }[];
