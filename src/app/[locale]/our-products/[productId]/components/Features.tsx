@@ -43,17 +43,17 @@ const Features = () => {
                 >
                   <img
                     src={feature.image ? feature.image : ""}
-                    alt={feature.title}
+                    alt={feature.name}
                     className="absolute top-0 left-0 w-full h-full object-contain p-4"
                   />
                 </div>
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-black mb-2 text-lg md:text-xl text-center">
-                  {feature.title}
+                  {feature.name}
                 </h3>
                 <p className="text-sm text-[#101010] font-extralight text-center">
-                  {feature.content}
+                  {feature.description}
                 </p>
               </div>
             </div>
