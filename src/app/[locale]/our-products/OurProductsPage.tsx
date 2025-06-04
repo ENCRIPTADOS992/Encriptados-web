@@ -45,7 +45,7 @@ const OurProductsPage = () => {
           <div id="#buysimappsection">
             <FilterProductsBar filters={filters} updateFilters={updateFilters} />
 
-            <ListOfProducts />
+            <ListOfProducts filters={filters} />
           </div>
 
           <div className="rounded-xl w-full max-w-7xl mx-auto mt-16 ">

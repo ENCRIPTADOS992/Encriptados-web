@@ -6,23 +6,28 @@ import Loader from "@/shared/components/Loader";
 import { useFormContext } from "react-hook-form";
 import { useGetProducts } from "@/features/products/queries/useGetProducts"; 
 import { Product } from "@/features/products/types/AllProductsResponse";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
-const ListOfProducts = () => {
-  const { watch } = useFormContext();
-  const selectedOption = watch("selectedOption");
-  console.log("[ListOfProducts] Watching selectedOption:", selectedOption);
 
+interface ListOfProductsProps {
+  filters: ProductFilters;
+}
+
+const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
+  const selectedOption = parseInt(filters.selectedOption, 10);
   const { data, isFetching, isError } = useGetProducts(selectedOption);
 
+
   useEffect(() => {
-      console.log("[ListOfProducts] useEffect - selectedOption cambió:", selectedOption);
-    }, [selectedOption]);
+    console.log("[ListOfProducts] useEffect - selectedOption cambió:", selectedOption);
+  }, [selectedOption]);
 
   useEffect(() => {
     if (data) {
       console.log("Productos recibidos desde react-query:", data);
     }
   }, [data]);
+
 
   if (isFetching) {
     return (

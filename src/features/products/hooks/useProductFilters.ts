@@ -1,9 +1,11 @@
 // src/features/products/hooks/useProductFilters.ts
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
 export const useProductFilters = () => {
   const params = useSearchParams();
+  const pathname = usePathname();
   const router = useRouter();
 
   const filters = {
@@ -14,18 +16,29 @@ export const useProductFilters = () => {
     encriptadosprovider: params.get('encriptadosprovider') || 'all',
   };
 
-  const updateFilters = (newFilters: Partial<typeof filters>) => {
-    const updated = new URLSearchParams(params.toString());
+const updateFilters = (newFilters: Partial<ProductFilters>) => {    
+  const updated = new URLSearchParams(params.toString());
+  const entries = Object.entries(newFilters);
 
-    Object.entries(newFilters).forEach(([key, value]) => {
-      if (value) {
-        updated.set(key, value);
-      } else {
-        updated.delete(key);
-      }
-    });
+   entries.forEach(([key, value]) => {
+    if (value) {
+      updated.set(key, value);
+    } else {
+      updated.delete(key);
+    }
+  });
+  if ("selectedOption" in newFilters) {
+      updated.delete("provider");
+      updated.delete("os");
+      updated.delete("license");
+      updated.delete("encriptadosprovider");
+      updated.delete("iraprovider");
+      updated.delete("iracountry");
+      updated.delete("timprovider");
+      updated.delete("timcountry");
+    }
 
-    router.replace(`?${updated.toString()}`);
+    router.replace(`${pathname}?${updated.toString()}`, { scroll: false });
   };
 
   return { filters, updateFilters };
