@@ -1545,5 +1545,410 @@
         }
       ]
     }
+  },
+   "chatmail": {
+    "description": "Communications chiffrées avec une interface facile à utiliser",
+    "details": [
+      "Messages chiffrés avec images et voix",
+      "Interface unifiée",
+      "Chats de groupe chiffrés"
+    ],
+    "plans": ["Licence 3 Mois", "Licence 6 Mois"],
+    "buttons": {
+      "buyNow": "Acheter maintenant",
+      "supportChat": "Chat d'assistance"
+    },
+    "benefits": {
+      "title": "Nos appareils disposent de programmes et d'applications exclusifs",
+      "elements": [
+        {
+          "title": "Sécurité de la clé privée",
+          "description": "Si vos clés privées tombent entre de mauvaises mains, vos informations personnelles et votre sécurité sont en danger. Ne vous inquiétez pas ! Vous avez un contrôle total sur vos clés privées."
+        },
+        {
+          "title": "Chiffrement multicouche intégré",
+          "description": "Notre interface utilisateur détecte les utilisateurs internes et externes pour définir par défaut le protocole de chiffrement le plus sécurisé disponible."
+        },
+        {
+          "title": "Interface utilisateur unifiée",
+          "description": "Nous avons complètement simplifié l'expérience utilisateur en développant le logiciel chiffré le plus avancé, intuitif et puissant. Vous n'avez plus besoin de basculer entre les applications."
+        },
+        {
+          "title": "Les clés ne quittent pas l'appareil",
+          "description": "Les clés privées sont créées aléatoirement sur l'appareil pour être aussi fortes que possible. Votre clé privée ne quitte jamais votre appareil."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Caractéristiques principales",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "Vous pouvez sécuriser les communications professionnelles et intégrer des applications standard pour parler avec votre famille."
+        },
+        {
+          "title": "Chat",
+          "description": "Contrôle absolu des nouvelles technologies. La technologie à votre service et non l'inverse, pour obtenir le plus grand contrôle en matière de protection et de confidentialité."
+        },
+        {
+          "title": "Chat",
+          "description": "Parlez au téléphone en toute tranquillité, sauvegardez et protégez les informations confidentielles et les bases de données en toute confiance."
+        },
+        {
+          "title": "Chat",
+          "description": "C'est une solution brevetée qui bloque toute intrusion et tout échange d'informations non autorisé."
+        }
+      ]
+    },
+    "information": "Chatmail. Sécurisez votre mobile, évitez les piratages et protégez vos communications",
+    "faq": [
+      "Est-il difficile d'utiliser un téléphone portable chiffré comme ChatMail ?",
+      "Comment fonctionnent les chats chiffrés dans ChatMail ?",
+      "Un téléphone portable chiffré peut-il être piraté ?"
+    ]
+  },
+  "armadillo-v2": {
+    "description": "Un appareil ultra-sécurisé, à l'épreuve des attaques et facile à utiliser.",
+    "details": [
+      "Appels et appels vidéo chiffrés",
+      "Interface intuitive",
+      "Chats chiffrés avec effacement à distance"
+    ],
+    "plans": [
+      "Licence 6 mois",
+      "Licence 12 mois",
+      "Téléphone + Licence de 6 Mois"
+    ],
+    "buttons": {
+      "buyNow": "Acheter maintenant",
+      "supportChat": "Chat d'assistance"
+    },
+    "benefits": {
+      "title": "Nos appareils disposent de programmes et d'applications exclusifs",
+      "elements": [
+        {
+          "title": "Chiffrement du stockage",
+          "description": "Le téléphone Armadillo dispose non seulement de protocoles de sécurité de dernière technologie, mais aussi d'un système sophistiqué de mots de passe qui assurent une sécurité maximale."
+        },
+        {
+          "title": "Protection de la mémoire",
+          "description": "Avec Armadillo Phone, vous n'avez à vous soucier de rien. La mémoire du téléphone est renforcée par un logiciel de dernière génération et du matériel spécialement conçu pour la protection."
+        },
+        {
+          "title": "Interface",
+          "description": "Nous avons complètement simplifié l'expérience utilisateur en développant le logiciel chiffré le plus avancé, intuitif et puissant. Vous n'avez plus besoin de basculer entre les applications."
+        },
+        {
+          "title": "Niveaux de Sécurité",
+          "description": "Le niveau de sécurité peut être ajusté sur trois niveaux différents : élevé, moyen et bas. Chacun des niveaux peut être personnalisé et se voir attribuer les politiques souhaitées par l'utilisateur."
+        },
+        {
+          "title": "Effacement à distance",
+          "description": "Un effacement à distance du téléphone peut être effectué en nous contactant, en cas de perte, de vol ou de saisie."
+        },
+        {
+          "title": "Applications",
+          "description": "Une défense proactive. Nos applications surveillent constamment l'activité environnante et alertent l'utilisateur des dangers potentiels, prévenant ainsi les attaques avant qu'elles ne se produisent."
+        }
+      ]
+    },
+    "characteristic": {
+      "title": "Chat",
+      "items": [
+        {
+          "title": "Courrier électronique :",
+          "description": "Sécurisé avec chiffrement PGP-N."
+        },
+        {
+          "title": "Décentralisé :",
+          "description": "Ne permettez pas à des tiers de contrôler vos données. Protégez-vous avec le réseau de communications inclus, ou utilisez le vôtre. Nous pouvons vous fournir des serveurs privés, entièrement sous votre contrôle. \n\nCourrier électronique PGP chiffré : le courrier électronique utilise des objets aléatoires ; utilise une connexion chiffrée pour le serveur de clés et le serveur de messagerie ; nécessite des clés PGP de 4096 bits."
+        }
+      ]
+    },
+    "information": "Téléphones Sécurisés et Mobiles Chiffrés que Vous Ne Connaissez Pas. Comment en Obtenir Un ?",
+    "faq": [
+      "Qu'est-ce que le mobile chiffré Armadillo Phone ?",
+      "Où acheter le mobile chiffré Armadillo Phone ?",
+      "Qu'est-ce que le chiffrement OMEMO utilisé par Armadillo Phone ?"
+    ]
+  },
+  "vaultchat": {
+    "description": "Communication et serveurs entièrement chiffrés. Tout est développé dans une interface moderne.",
+    "details": [
+      "Messagerie chiffrée",
+      "Réseau privé décentralisé",
+      "Emails et appels privés"
+    ],
+    "plans": [
+      "Licence 6 mois",
+      "Licence 12 mois",
+      "Téléphone + 6 mois de licence"
+    ],
+    "buttons": {
+      "buyNow": "Acheter maintenant",
+      "supportChat": "Chat support"
+    },
+    "benefits": {
+      "title": "Nos appareils disposent de programmes et d'applications exclusifs",
+      "elements": [
+        {
+          "title": "Réseau privé",
+          "description": "Nous utilisons plusieurs réseaux pour nos plateformes. Tous nos serveurs sont installés séparément et ne sont liés à aucun appareil, compte ou application."
+        },
+        {
+          "title": "Protection",
+          "description": "Tous les appareils sont protégés contre les attaques par force brute et ne peuvent pas être piratés. Si nécessaire, nous pouvons effacer votre appareil à distance."
+        },
+        {
+          "title": "Chiffrement",
+          "description": "Nous utilisons le plus haut niveau de chiffrement pour chaque fonction. Ces données ne peuvent pas être déchiffrées sans les clés et mots de passe. Vous contrôlez votre vie privée."
+        },
+        {
+          "title": "Clés de chiffrement sur l'appareil",
+          "description": "Vos clés de chiffrement pour les emails, les chats et les appels sont générées sur votre appareil. Ces clés ne quittent jamais l’appareil et peuvent être régénérées à tout moment."
+        },
+        {
+          "title": "Gestionnaire de sécurité de l'appareil",
+          "description": "Tous les appareils sont surveillés par notre système de sécurité. Il est impossible de pirater, pénétrer ou envoyer des malwares ou virus. Si nécessaire, nous pouvons effacer un appareil à distance sans laisser de trace."
+        },
+        {
+          "title": "Lancements et mises à jour",
+          "description": "Nous mettons à jour et améliorons nos produits, et continuons de publier de nouvelles mises à jour régulièrement."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Caractéristiques principales",
+      "elements": [
+        {
+          "title": "Emails chiffrés",
+          "description": "Email PGP pour communiquer avec d'autres fournisseurs. Tous les emails ne sont pas stockés sur notre serveur et les clés sont générées sur votre appareil. Vous avez le contrôle total."
+        },
+        {
+          "title": "Email PGP",
+          "description": "PGP est l'une des méthodes de communication chiffrées les plus utilisées. Nous avons conçu cette application pour que vous contrôliez également vos clés. Les messages sont stockés sur l'appareil, pas sur le serveur. Vous pouvez les supprimer à tout moment et ils disparaîtront à jamais."
+        },
+        {
+          "title": "Appels chiffrés",
+          "description": "Passez des appels sécurisés via Vaultchat à vos contacts. Sans interférence ni trace de l’appel. Nous utilisons le plus haut niveau de chiffrement pour garder vos conversations privées."
+        },
+        {
+          "title": "Appels chiffrés",
+          "description": "Nous utilisons le chiffrement le plus élevé possible, le protocole ZRTP avec notre authentification supplémentaire et AES. \n\nNous avons conçu une plateforme et des passerelles indépendantes pour préserver la confidentialité de vos conversations."
+        }
+      ]
+    },
+    "information": "VaultChat : application pour communications privées et chiffrées",
+    "faq": [
+      "Comment fonctionne le chat chiffré sur le téléphone VaultChat ?",
+      "Qu'est-ce que l'email PGP utilisé par le téléphone VaultChat ?",
+      "Combien de temps dure la licence VaultChat ?"
+    ]
+  },
+  "t2-communicator": {
+    "description": "Un téléphone crypté avec technologie blockchain pour des communications sécurisées",
+    "details": [
+      "Système d'exploitation sécurisé",
+      "Applications blockchain",
+      "Suppression à distance et bouton panique"
+    ],
+    "plans": ["Téléphone crypté", "Licence 3 mois", "Licence 6 mois"],
+    "buttons": {
+      "buyNow": "Acheter maintenant",
+      "supportChat": "Chat support"
+    },
+    "benefits": {
+      "title": "Nos appareils disposent de programmes et d'applications exclusifs",
+      "elements": [
+        {
+          "title": "Matériel - Appareils mobiles fiables",
+          "description": "Appareils mobiles cryptés conçus, assemblés et testés pour garantir leur intégrité. Fonctionnement optimal avec le système d'exploitation, procédures de fabrication rigoureuses."
+        },
+        {
+          "title": "Système d'exploitation sécurisé",
+          "description": "Système d'exploitation avec technologie de cybersécurité indéchiffrable, correctifs de sécurité, mis à jour contre les menaces émergentes et interface utilisateur intuitive. Chiffrement complet du disque."
+        },
+        {
+          "title": "Multiples couches de sécurité pour une protection de niveau militaire",
+          "description": "Nous développons continuellement des couches supplémentaires de sécurité, rendant le vol d'informations pratiquement impossible."
+        },
+        {
+          "title": "Sécurise toute la communication",
+          "description": "La communication est chiffrée et protégée d'utilisateur à utilisateur et est transmise via notre réseau décentralisé. Toutes les données stockées sur les appareils sont protégées."
+        },
+        {
+          "title": "Applications Blockchain",
+          "description": "Garantit que la communication de nos utilisateurs est privée et hors de portée."
+        },
+        {
+          "title": "Applications de travail cryptées",
+          "description": "Pour garantir que la communication de nos utilisateurs est privée et hors de portée."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Caractéristiques principales",
+      "elements": [
+        {
+          "title": "Mail",
+          "description": "Email PGP pour communiquer avec d'autres fournisseurs. Tous les courriels ne sont pas stockés sur notre serveur et les clés de chiffrement sont générées sur votre appareil. Vous avez le contrôle total."
+        },
+        {
+          "title": "Mail",
+          "description": "Le courrier PGP est l'une des méthodes de communication chiffrées les plus utilisées. Nous avons construit cette application de manière à ce que vous contrôliez également vos clés. Les messages sont stockés sur l'appareil et non sur le serveur. Vous pouvez les supprimer à tout moment et ils disparaîtront pour toujours."
+        },
+        {
+          "title": "Mail",
+          "description": "Appelez en toute sécurité vos contacts via Vaultchat. Sans interférences ni traces de l'appel téléphonique. Nous utilisons le chiffrement le plus élevé possible pour garder vos conversations privées."
+        },
+        {
+          "title": "Mail",
+          "description": "Nous utilisons le chiffrement le plus élevé possible, le protocole ZRTP mis en œuvre avec notre authentification supplémentaire et AES.\n\nNous avons construit une plateforme et des passerelles indépendantes pour garder vos conversations privées."
+        }
+      ]
+    },
+    "information": "Téléphone crypté 5 raisons d'en avoir un",
+    "faq": [
+      "Comment se fait le chiffrement d'un téléphone portable ?",
+      "Quelles fonctionnalités vais-je avoir en cryptant mon téléphone portable ?",
+      "Comment fonctionne la suppression à distance sur un téléphone crypté ?"
+    ]
+  },
+  "intact-phone": {
+    "description": "Sécurité complète du matériel au système d'exploitation pour des communications sécurisées.",
+    "details": [
+      "Appels vocaux sécurisés",
+      "Messagerie cryptée",
+      "Envoi de pièces jointes protégées"
+    ],
+    "plans": [
+      "Licence 12 mois",
+      "IntactPhone BOND Cellulaire (12 Mois)",
+      "IntactPhone ARCANE Cellulaire (12 Mois)"
+    ],
+    "buttons": {
+      "buyNow": "Acheter maintenant",
+      "supportChat": "Chat support"
+    },
+    "benefits": {
+      "title": "CommuniTake, la société mère d'Intact, construit tout le matériel et les logiciels",
+      "elements": [
+        {
+          "title": "Sécurité",
+          "description": "Élimine toutes les failles de sécurité."
+        },
+        {
+          "title": "Contrôle",
+          "description": "Les contrôles facilitent la gestion de l'intelligence centrale et de la sécurité avancée."
+        },
+        {
+          "title": "Cyberattaques",
+          "description": "Minimise les cyberattaques."
+        },
+        {
+          "title": "Alertes",
+          "description": "Prévient les attaques grâce à la détection d'alertes."
+        },
+        {
+          "title": "Matériel fiable",
+          "description": "Fonctionne uniquement avec du matériel fiable et des pilotes officiels, garantissant une sécurité à tout moment."
+        },
+        {
+          "title": "Connexion stable",
+          "description": "Assure une connexion stable à tout moment sur les appareils opérationnels."
+        }
+      ]
+    },
+    "information": "Comment protéger mon téléphone portable des logiciels malveillants et des pirates pour éviter les interventions en 2023",
+    "faq": [
+      "Qu'est-ce que le téléphone IntactPhone et à quoi sert-il ?",
+      "IntactPhone, quel est le prix ?",
+      "IntactPhone, qui le fabrique ?"
+    ]
+  },
+  "dec-secure": {
+    "description": "DEC Secure offre une tranquillité d'esprit totale en matière de confidentialité et de sécurité des informations sur votre appareil mobile.",
+    "details": [
+      "VPN sans clic",
+      "Verrouillage et effacement à distance",
+      "Messages et appels chiffrés"
+    ],
+    "plans": ["Licence 3 mois", "Licence 6 mois"],
+    "buttons": {
+      "buyNow": "Acheter maintenant",
+      "supportChat": "Chat support"
+    },
+    "benefits": {
+      "title": "Nous vous maintenons connecté de manière sécurisée et privée",
+      "elements": [
+        {
+          "title": "Matériel - Appareils mobiles fiables",
+          "description": "Appareils mobiles cryptés conçus, assemblés et testés pour garantir leur intégrité. Fonctionnement optimal avec le système d'exploitation."
+        },
+        {
+          "title": "Système d'exploitation Sécurisé",
+          "description": "Système d'exploitation avec technologie de cybersécurité indéchiffrable, correctifs de sécurité, mis à jour contre les menaces émergentes et interface utilisateur intuitive. Chiffrement complet du disque."
+        },
+        {
+          "title": "Multiples couches de sécurité pour une protection de niveau militaire",
+          "description": "Nous développons continuellement des couches de sécurité supplémentaires, rendant le vol d'informations pratiquement impossible."
+        },
+        {
+          "title": "VPN sans clic",
+          "description": "Se connecte automatiquement avec l'authentification automatisée, ne vous permettant pas d'envoyer ou de recevoir des données sans protection."
+        },
+        {
+          "title": "Sécurité du réseau",
+          "description": "Un programme sophistiqué de sécurité réseau et de détection et réponse aux menaces déjoue les efforts des cyberattaquants."
+        },
+        {
+          "title": "Contrôle du pare-feu",
+          "description": "Empêche toutes les connexions non authentifiées et non chiffrées, éliminant la possibilité d'une exposition inappropriée."
+        }
+      ]
+    },
+    "characteristic": {
+      "title": "La sécurité de vos données est notre priorité absolue",
+      "information": [
+        {
+          "title": "Gestion des applications mobiles",
+          "description": "Bibliothèque d'applications privées gérées pour fournir des applications à l'appareil sans connexion aux clouds publics."
+        },
+        {
+          "title": "Applications sur liste blanche",
+          "description": "Liste blanche complète d'applications pour empêcher le téléchargement ou le déploiement d'applications espionnes ou inappropriées."
+        },
+        {
+          "title": "Seules les applications approuvées",
+          "description": "Notre équipe a examiné de manière indépendante chaque application de la bibliothèque pour valider les critères de sécurité et de confidentialité."
+        }
+      ]
+    },
+    "characteristics": {
+      "elements": [
+        {
+          "title": "VPN Toujours Actif",
+          "description": "Secure Call ne fonctionnera pas si une connexion VPN sécurisée ne peut être établie, garantissant que vos communications ne sont jamais envoyées exposées."
+        },
+        {
+          "title": "Conteneur Dédié",
+          "description": "L'installation de Secure Call est requise dans un conteneur dédié, protégeant les données et l'utilisation de l'application contre l'espionnage inapproprié. \n\nLa liste de contacts dédiée de Secure Call est inaccessible depuis l'extérieur de l'application, ce qui maintient vos contacts Secure Call privés et discrets."
+        },
+        {
+          "title": "DEC Secure Call",
+          "description": "DEC Secure Call vous offre tout ce que vous attendez d'une application de communications sécurisées, y compris le chiffrement AES-256 toujours actif ; appels vocaux individuels et de groupe, appels vidéo et messagerie. \n\nVos communications sont 100% privées, nous ne pouvons pas écouter vos appels ni lire vos messages en aucune circonstance, et rien n'est stocké sur nos serveurs."
+        },
+        {
+          "title": "Conférence et appels de groupe",
+          "description": "Les appels vidéo et vocaux multiples entièrement cryptés jusqu'à 10 participants vous permettent d'utiliser une plateforme unique pour toutes vos communications sécurisées."
+        }
+      ]
+    },
+    "information": "Comment protéger mon téléphone portable des logiciels malveillants et des pirates pour éviter les interventions en 2023",
+    "faq": [
+      "Qu'est-ce que le téléphone IntactPhone et à quoi sert-il ?",
+      "IntactPhone, quel est le prix ?",
+      "IntactPhone, qui le fabrique ?"
+    ]
   }
 }

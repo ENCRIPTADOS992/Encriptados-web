@@ -15,7 +15,13 @@
 //     <div className="flex items-center gap-4 mb-4">
 //       {image && (
 //         <div className="relative h-16 w-16 overflow-hidden rounded-lg border border-gray-700">
-//           <Image src={image} alt={title} fill style={{ objectFit: "cover" }} />
+//           <Image
+            //   src={image}
+            //   alt={title ?? ""}
+            //   fill
+            //   style={{ objectFit: "cover" }}
+            // />
+
 //         </div>
 //       )}
 //       <div className="flex flex-col">

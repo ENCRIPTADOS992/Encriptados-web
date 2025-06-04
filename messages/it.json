@@ -1544,5 +1544,410 @@
         }
       ]
     }
+  },
+  "chatmail": {
+    "description": "Comunicazioni crittografate con un'interfaccia facile da usare",
+    "details": [
+      "Messaggi crittografati con immagini e voce",
+      "Interfaccia unificata",
+      "Chat di gruppo crittografate"
+    ],
+    "plans": ["Licenza 3 Mesi", "Licenza 6 Mesi"],
+    "buttons": {
+      "buyNow": "Compra ora",
+      "supportChat": "Chat di supporto"
+    },
+    "benefits": {
+      "title": "I nostri dispositivi dispongono di programmi e applicazioni esclusivi",
+      "elements": [
+        {
+          "title": "Sicurezza della chiave privata",
+          "description": "Nel caso in cui le tue chiavi private finiscano nelle mani sbagliate, le tue informazioni personali e la tua sicurezza sono a rischio. Non preoccuparti! Hai il controllo totale delle tue chiavi private."
+        },
+        {
+          "title": "Crittografia integrata multistrato",
+          "description": "La nostra interfaccia utente rileva gli utenti interni ed esterni, per impostare in modo predefinito il protocollo di crittografia più sicuro disponibile."
+        },
+        {
+          "title": "Interfaccia utente unificata",
+          "description": "Abbiamo completamente semplificato l'esperienza utente sviluppando il software crittografato più avanzato, intuitivo e potente. Non devi più passare da un'applicazione all'altra."
+        },
+        {
+          "title": "Le chiavi non lasciano il dispositivo",
+          "description": "Le chiavi private vengono create casualmente sul dispositivo per renderle il più forti possibile. La tua chiave privata non lascia mai il tuo dispositivo."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Caratteristiche principali",
+      "elements": [
+        {
+          "title": "Chat",
+          "description": "Puoi mantenere sicure le comunicazioni professionali e integrare applicazioni standard per parlare con la tua famiglia."
+        },
+        {
+          "title": "Chat",
+          "description": "Controllo assoluto delle nuove tecnologie. La tecnologia al tuo servizio e non viceversa, per ottenere il massimo controllo in termini di protezione e privacy."
+        },
+        {
+          "title": "Chat",
+          "description": "Parla al telefono in tutta tranquillità, salva e custodisci le informazioni riservate e i database con totale fiducia."
+        },
+        {
+          "title": "Chat",
+          "description": "È una soluzione brevettata che blocca qualsiasi intrusione e qualsiasi scambio di informazioni non autorizzato."
+        }
+      ]
+    },
+    "information": "Chatmail. Proteggi il tuo cellulare, evita hack e proteggi le tue comunicazioni",
+    "faq": [
+      "È difficile usare un cellulare crittografato come ChatMail?",
+      "Come funzionano le chat crittografate in ChatMail?",
+      "Si può hackerare un cellulare crittografato?"
+    ]
+  },
+  "armadillo-v2": {
+    "description": "Un dispositivo ultra sicuro, a prova di attacchi e facile da usare.",
+    "details": [
+      "Chiamate e videochiamate crittografate",
+      "Interfaccia intuitiva",
+      "Chat crittografate con cancellazione remota"
+    ],
+    "plans": [
+      "Licenza 6 mesi",
+      "Licenza 12 mesi",
+      "Telefono + Licenza di 6 Mesi"
+    ],
+    "buttons": {
+      "buyNow": "Compra ora",
+      "supportChat": "Chat di supporto"
+    },
+    "benefits": {
+      "title": "I nostri dispositivi dispongono di programmi e applicazioni esclusivi",
+      "elements": [
+        {
+          "title": "Crittografia dell'archiviazione",
+          "description": "Il telefono Armadillo non solo dispone di protocolli di sicurezza di ultima tecnologia, ma ha anche un sofisticato sistema di password che garantiscono la massima sicurezza."
+        },
+        {
+          "title": "Protezione della memoria",
+          "description": "Con Armadillo Phone non devi preoccuparti di nulla. La memoria del telefono è rinforzata con software di ultima generazione e hardware appositamente progettato per la protezione."
+        },
+        {
+          "title": "Interfaccia",
+          "description": "Abbiamo completamente semplificato l'esperienza utente sviluppando il software crittografato più avanzato, intuitivo e potente. Non devi più passare da un'applicazione all'altra."
+        },
+        {
+          "title": "Livelli di Sicurezza",
+          "description": "Il livello di sicurezza può essere regolato su tre livelli diversi: alto, medio e basso. Ciascuno dei livelli può essere personalizzato e assegnargli le politiche desiderate dall'utente."
+        },
+        {
+          "title": "Cancellazione remota",
+          "description": "È possibile effettuare una cancellazione remota del telefono contattandoci, in caso di smarrimento, furto o sequestro."
+        },
+        {
+          "title": "Applicazioni",
+          "description": "Una difesa proattiva. Le nostre applicazioni monitorano costantemente l'attività circostante e avvisano l'utente di possibili pericoli, prevenendo così gli attacchi prima che si verifichino."
+        }
+      ]
+    },
+    "characteristic": {
+      "title": "Chat",
+      "items": [
+        {
+          "title": "Posta elettronica:",
+          "description": "Protetto con crittografia PGP-N."
+        },
+        {
+          "title": "Decentralizzato:",
+          "description": "Non permettere a terzi di controllare i tuoi dati. Proteggiti con la rete di comunicazioni inclusa o usa la tua. Possiamo fornirti server privati, completamente sotto il tuo controllo. \n\nPosta elettronica PGP crittografata: la posta elettronica utilizza oggetti casuali; utilizza una connessione crittografata per il server delle chiavi e il server di posta; richiede chiavi PGP a 4096 bit."
+        }
+      ]
+    },
+    "information": "Telefoni Sicuri e Cellulari Crittografati Che Non Conosci. Come Averne Uno?",
+    "faq": [
+      "Cos'è il cellulare crittografato Armadillo Phone?",
+      "Dove acquistare il cellulare crittografato Armadillo Phone?",
+      "Cos'è la crittografia OMEMO utilizzata da Armadillo Phone?"
+    ]
+  },
+  "vaultchat": {
+    "description": "Comunicazione e server completamente crittografati. Tutto sviluppato in un'interfaccia moderna.",
+    "details": [
+      "Messaggistica crittografata",
+      "Rete privata decentralizzata",
+      "Email e chiamate private"
+    ],
+    "plans": [
+      "Licenza 6 mesi",
+      "Licenza 12 mesi",
+      "Telefono + 6 mesi di licenza"
+    ],
+    "buttons": {
+      "buyNow": "Acquista ora",
+      "supportChat": "Chat di supporto"
+    },
+    "benefits": {
+      "title": "I nostri dispositivi hanno programmi e app esclusive",
+      "elements": [
+        {
+          "title": "Rete privata",
+          "description": "Usiamo diverse reti per le nostre piattaforme. Tutti i nostri server sono installati separatamente e non sono collegati ad alcun dispositivo, account o applicazione."
+        },
+        {
+          "title": "Protezione",
+          "description": "Tutti i dispositivi sono protetti contro gli attacchi brute-force e non possono essere violati. Se necessario, possiamo cancellare il tuo dispositivo da remoto."
+        },
+        {
+          "title": "Crittografia",
+          "description": "Per ogni funzione utilizziamo la crittografia più elevata. Non possono essere decifrate senza chiavi e password. Tu controlli la tua privacy."
+        },
+        {
+          "title": "Chiavi di crittografia sul dispositivo",
+          "description": "Le chiavi per email, chat e chiamate sono generate direttamente sul tuo dispositivo. Non lasciano mai il dispositivo e possono essere rigenerate in qualsiasi momento."
+        },
+        {
+          "title": "Gestore di sicurezza del dispositivo",
+          "description": "Tutti i dispositivi sono monitorati dal nostro sistema di sicurezza. È impossibile hackerarli, penetrarli o inviare malware o virus. Se necessario, possiamo cancellare un dispositivo a distanza senza lasciare traccia."
+        },
+        {
+          "title": "Rilascio e aggiornamenti",
+          "description": "Aggiorniamo e miglioriamo costantemente i nostri prodotti, con nuovi aggiornamenti rilasciati regolarmente."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Caratteristiche principali",
+      "elements": [
+        {
+          "title": "Email crittografate",
+          "description": "Email PGP per comunicare con altri provider. Nessuna email viene archiviata sui nostri server e le chiavi vengono generate sul tuo dispositivo. Hai il pieno controllo."
+        },
+        {
+          "title": "Email PGP",
+          "description": "La posta PGP è uno dei metodi di comunicazione crittografati più diffusi. Abbiamo costruito questa app per permetterti di controllare le tue chiavi. I messaggi sono archiviati sul dispositivo, non sul server. Puoi eliminarli in qualsiasi momento e spariranno per sempre."
+        },
+        {
+          "title": "Chiamate crittografate",
+          "description": "Chiama in modo sicuro i tuoi contatti tramite Vaultchat. Nessuna interferenza o traccia della chiamata. Utilizziamo la crittografia più elevata per mantenere private le conversazioni."
+        },
+        {
+          "title": "Chiamate crittografate",
+          "description": "Usiamo la crittografia più sicura possibile: protocollo ZRTP con autenticazione aggiuntiva e AES. \n\nAbbiamo costruito una piattaforma e dei gateway indipendenti per mantenere le tue conversazioni private."
+        }
+      ]
+    },
+    "information": "VaultChat: App per comunicazioni private e crittografate",
+    "faq": [
+      "Come funziona la chat crittografata su VaultChat?",
+      "Cos'è l'email PGP utilizzata da VaultChat?",
+      "Ogni quanto devo rinnovare la mia licenza VaultChat?"
+    ]
+  },
+  "t2-communicator": {
+    "description": "Un telefono criptato con tecnologia blockchain per comunicazioni sicure",
+    "details": [
+      "Sistema operativo sicuro",
+      "Applicazioni blockchain",
+      "Cancellazione remota e pulsante di panico"
+    ],
+    "plans": ["Telefono Criptato", "Licenza 3 mesi", "Licenza 6 mesi"],
+    "buttons": {
+      "buyNow": "Acquista ora",
+      "supportChat": "Chat di supporto"
+    },
+    "benefits": {
+      "title": "I nostri dispositivi dispongono di programmi e applicazioni esclusive",
+      "elements": [
+        {
+          "title": "Hardware - Dispositivi mobili affidabili",
+          "description": "Dispositivi mobili criptati progettati, assemblati e testati per garantire la loro integrità. Funzionamento ottimale con il sistema operativo, procedure di produzione rigorose."
+        },
+        {
+          "title": "Sistema operativo sicuro",
+          "description": "Sistema operativo con tecnologia di cybersicurezza indecifrabile, patch di sicurezza, aggiornato contro le minacce emergenti e interfaccia utente intuitiva. Crittografia completa del disco."
+        },
+        {
+          "title": "Molteplici livelli di sicurezza per una protezione di grado militare",
+          "description": "Sviluppiamo continuamente ulteriori livelli di sicurezza, rendendo praticamente impossibile il furto di informazioni."
+        },
+        {
+          "title": "Garantisce tutta la comunicazione",
+          "description": "La comunicazione è crittografata e protetta da utente a utente e viene trasmessa attraverso la nostra rete decentralizzata. Tutti i dati memorizzati sui dispositivi sono protetti."
+        },
+        {
+          "title": "Applicazioni Blockchain",
+          "description": "Garantisce che la comunicazione dei nostri utenti sia privata e fuori portata."
+        },
+        {
+          "title": "Applicazioni di lavoro criptate",
+          "description": "Per garantire che la comunicazione dei nostri utenti sia privata e fuori portata."
+        }
+      ]
+    },
+    "characteristics": {
+      "title": "Caratteristiche principali",
+      "elements": [
+        {
+          "title": "Mail",
+          "description": "Email PGP per comunicare con altri fornitori. Tutte le email non sono memorizzate sul nostro server e le chiavi di crittografia sono generate sul tuo dispositivo. Hai il controllo totale."
+        },
+        {
+          "title": "Mail",
+          "description": "La posta PGP è uno dei metodi di comunicazione crittografati più utilizzati. Abbiamo costruito questa applicazione in modo che tu controlli anche le tue chiavi. I messaggi sono memorizzati sul dispositivo e non sul server. Puoi eliminarli in qualsiasi momento e scompariranno per sempre."
+        },
+        {
+          "title": "Mail",
+          "description": "Chiama in modo sicuro i tuoi contatti tramite Vaultchat. Senza interferenze né tracce della chiamata telefonica. Utilizziamo la crittografia più elevata possibile per mantenere private le tue conversazioni."
+        },
+        {
+          "title": "Mail",
+          "description": "Utilizziamo la crittografia più elevata possibile, il protocollo ZRTP implementato con la nostra autenticazione aggiuntiva e AES.\n\nAbbiamo costruito una piattaforma e gateway indipendenti per mantenere private le tue conversazioni."
+        }
+      ]
+    },
+    "information": "Telefono Criptato 5 motivi per averne uno",
+    "faq": [
+      "Come si effettua la crittografia di un telefono cellulare?",
+      "Quali funzionalità avrò criptando il mio telefono cellulare?",
+      "Come funziona la cancellazione remota su un telefono criptato?"
+    ]
+  },
+  "intact-phone": {
+    "description": "Sicurezza completa dall'hardware al sistema operativo per comunicazioni sicure.",
+    "details": [
+      "Chiamate vocali sicure",
+      "Messaggistica crittografata",
+      "Invio di allegati protetti"
+    ],
+    "plans": [
+      "Licenza 12 mesi",
+      "IntactPhone BOND Cellulare (12 Mesi)",
+      "IntactPhone ARCANE Cellulare (12 Mesi)"
+    ],
+    "buttons": {
+      "buyNow": "Acquista ora",
+      "supportChat": "Chat di supporto"
+    },
+    "benefits": {
+      "title": "CommuniTake, la casa madre di Intact, costruisce tutto l'hardware e il software",
+      "elements": [
+        {
+          "title": "Sicurezza",
+          "description": "Elimina tutte le violazioni della sicurezza."
+        },
+        {
+          "title": "Controllo",
+          "description": "I controlli facilitano la gestione dell'intelligenza centrale e della sicurezza avanzata."
+        },
+        {
+          "title": "Attacchi informatici",
+          "description": "Minimizza gli attacchi informatici."
+        },
+        {
+          "title": "Avvisi",
+          "description": "Previene gli attacchi tramite il rilevamento degli avvisi."
+        },
+        {
+          "title": "Hardware affidabile",
+          "description": "Funziona solo con hardware affidabile e driver ufficiali, garantendo sicurezza in ogni momento."
+        },
+        {
+          "title": "Connessione stabile",
+          "description": "Assicura una connessione stabile in ogni momento sui dispositivi operativi."
+        }
+      ]
+    },
+    "information": "Come proteggere il mio cellulare da malware e hacker per evitare interventi nel 2023",
+    "faq": [
+      "Cos'è e a cosa serve il cellulare IntactPhone?",
+      "IntactPhone, qual è il prezzo?",
+      "IntactPhone, chi lo produce?"
+    ]
+  },
+  "dec-secure": {
+    "description": "DEC Secure offre totale tranquillità quando si tratta della privacy e sicurezza delle informazioni sul tuo dispositivo mobile.",
+    "details": [
+      "VPN senza clic",
+      "Blocco e cancellazione remota",
+      "Messaggi e chiamate crittografate"
+    ],
+    "plans": ["Licenza 3 mesi", "Licenza 6 mesi"],
+    "buttons": {
+      "buyNow": "Acquista ora",
+      "supportChat": "Chat di supporto"
+    },
+    "benefits": {
+      "title": "Ti manteniamo connesso in modo sicuro e privato",
+      "elements": [
+        {
+          "title": "Hardware - Dispositivi mobili affidabili",
+          "description": "Dispositivi mobili crittografati progettati, assemblati e testati per garantire la loro integrità. Funzionamento ottimale con il sistema operativo."
+        },
+        {
+          "title": "Sistema operativo Sicuro",
+          "description": "Sistema operativo con tecnologia di sicurezza informatica indecifrabile, patch di sicurezza, aggiornate contro le minacce emergenti e interfaccia utente intuitiva. Crittografia completa del disco."
+        },
+        {
+          "title": "Molteplici strati di sicurezza per una protezione di grado militare",
+          "description": "Sviluppiamo continuamente strati aggiuntivi di sicurezza, rendendo il furto di informazioni praticamente impossibile."
+        },
+        {
+          "title": "VPN senza clic",
+          "description": "Si connette automaticamente con l'autenticazione automatizzata, non permettendoti di inviare o ricevere dati senza protezione."
+        },
+        {
+          "title": "Sicurezza della rete",
+          "description": "Un sofisticato programma di sicurezza di rete e rilevamento e risposta alle minacce sventa gli sforzi dei cybercriminali."
+        },
+        {
+          "title": "Controllo del firewall",
+          "description": "Impedisce tutte le connessioni non autenticate e non crittografate, eliminando la possibilità di un'esposizione inappropriata."
+        }
+      ]
+    },
+    "characteristic": {
+      "title": "La sicurezza dei tuoi dati è la nostra massima priorità",
+      "information": [
+        {
+          "title": "Gestione delle applicazioni mobili",
+          "description": "Libreria di applicazioni private gestite per fornire applicazioni al dispositivo senza una connessione a cloud pubblici."
+        },
+        {
+          "title": "Applicazioni in whitelist",
+          "description": "Whitelist completa di applicazioni per bloccare il download o l'implementazione di applicazioni spia o inappropriate."
+        },
+        {
+          "title": "Solo applicazioni approvate",
+          "description": "Il nostro team ha esaminato in modo indipendente ogni applicazione della libreria per convalidare i criteri di sicurezza e privacy."
+        }
+      ]
+    },
+    "characteristics": {
+      "elements": [
+        {
+          "title": "VPN Sempre Attiva",
+          "description": "Secure Call non funzionerà se non è possibile stabilire una connessione VPN sicura, garantendo che le tue comunicazioni non vengano mai inviate esposte."
+        },
+        {
+          "title": "Contenitore Dedicato",
+          "description": "L'installazione di Secure Call è richiesta all'interno di un contenitore dedicato, proteggendo i dati e l'uso dell'applicazione dallo spionaggio inappropriato. \n\nL'elenco dei contatti di Secure Call dedicato è inaccessibile dall'esterno dell'applicazione, mantenendo i tuoi contatti Secure Call privati e discreti."
+        },
+        {
+          "title": "DEC Secure Call",
+          "description": "DEC Secure Call ti offre tutto ciò che ti aspetti da un'applicazione di comunicazioni sicure, inclusa la crittografia AES-256 sempre attiva; chiamate vocali individuali e di gruppo, videochiamate e messaggistica. \n\nLe tue comunicazioni sono private al 100%, non possiamo ascoltare le tue chiamate o leggere i tuoi messaggi in nessuna circostanza, e nulla viene memorizzato sui nostri server."
+        },
+        {
+          "title": "Conferenza e chiamate di gruppo",
+          "description": "Le chiamate video e vocali multiple completamente crittografate fino a 10 partecipanti ti consentono di utilizzare un'unica piattaforma per tutte le tue comunicazioni sicure."
+        }
+      ]
+    },
+    "information": "Come proteggere il mio cellulare da malware e hacker per evitare interventi nel 2023",
+    "faq": [
+      "Cos'è e a cosa serve il cellulare IntactPhone?",
+      "IntactPhone, qual è il prezzo?",
+      "IntactPhone, chi lo produce?"
+    ]
   }
 }
