@@ -8,12 +8,15 @@ import WifiSvg from "/public/images/encrypted-sim/icons/wifi_tethering.svg";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
 import StarSvg from "/public/images/encrypted-sim/icons/star_half2.svg";
 import LocalMallSvg from "/public/images/encrypted-sim/icons/local_mall.svg";
+import type { StaticImageData } from "next/image";
+
+type ImageType = StaticImageData;
 
 interface CardSimProps {
-  productImage: string;    // URL (o import) de la imagen de la SIM
+  productImage: ImageType;    // URL (o import) de la imagen de la SIM
   features: string[];      // ← aquí va tu array de “featuresCardSim”
   priceRange: string;
-  headerIcon: string;      // (opcional, lo dejamos por si en el futuro lo quieres usar)
+  headerIcon: ImageType;      // (opcional, lo dejamos por si en el futuro lo quieres usar)
   headerTitle: string;
 }
 
