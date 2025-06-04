@@ -1561,6 +1561,181 @@
       ]
     }
   },
+  "ElyonPage": {
+    "product": {
+      "title": "Elyon",
+      "description": "Protección y seguridad avanzada para todas tus comunicaciones",
+      "features": {
+        "endToEndEncryption": "Mensajería autodestructiva",
+        "chatHiding": "Cambiador de voz",
+        "privateCalls": "Baúl para archivos sensibles"
+      },
+      "license": {
+        "twelveMonths": "Licencia 3 meses",
+        "sixMonths": "Licencia 6 meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "550$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "features": {
+      "sectionTitle": "Características principales",
+      "chat": {
+        "title": "Chats Cifrados",
+        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
+      },
+      "confidentiality": {
+        "title": "Abracadabra",
+        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
+      },
+      "groupChat": {
+        "title": "Chats Anónimos Grupales",
+        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
+      },
+      "agreementFeatures": {
+        "title": "Protección de captura de pantalla",
+        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "Borrado Remoto",
+          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
+        },
+        {
+          "title": "Chats grupales anónimos",
+          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
+        },
+        {
+          "title": "Bóveda Segura",
+          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Subtitle element copy",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+   "faq": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "question": "¿Cómo se encripta un teléfono Cryptcom?",
+          "answer": "La encriptación se realiza mediante un proceso especializado que transforma tu dispositivo en uno altamente seguro con software y hardware modificados."
+        },
+        {
+          "question": "¿Qué funcionalidades obtengo al encriptar mi teléfono con Cryptcom?",
+          "answer": "Obtendrás acceso a herramientas como mensajería segura, bóveda encriptada, cambio automático de IMEI y funciones avanzadas de protección."
+        },
+        {
+          "question": "¿Cómo funciona el borrado remoto en un teléfono encriptado como Cryptcom?",
+          "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina todos los datos del dispositivo para evitar accesos no autorizados."
+        }
+      ]
+    }
+  },
+  "SecureMdmPage": {
+    "product": {
+      "title": "SECURE MDM ANDROID",
+      "description": "Blinda con el mayor grado de seguridad tu dispositivo Samsung o Pixel.",
+      "features": {
+        "endToEndEncryption": "Bloqueo de acceso por USB",
+        "chatHiding": "Borrado remoto de emergencia",
+        "privateCalls": "Mensajería segura y privada"
+      },
+      "license": {
+        "threeMonths": "3 Meses",
+        "sixMonths": "6 Meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "729$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "benefits": {
+      "title": "Vuelve tu celular o tablet un dispositivo totalmente seguro",
+      "features": {
+        "hiddenApps": {
+          "title": "Aplicaciones de seguridad ocultas",
+          "text": "El dispositivo parece un teléfono Android normal."
+        },
+        "manipulationProtection": {
+          "title": "Función de limpieza a prueba de manipulaciones",
+          "text": "Los criterios de manipulación e inactividad establecidos por el usuario harán que el dispositivo se borre."
+        },
+        "nfcBlocking": {
+          "title": "Bloqueo de redes NFC",
+          "text": "Bloqueo de redes inalámbricas bluetooth y NFC para evitar posibles accesos."
+        },
+        "anonymity": {
+          "title": "Anonimato",
+          "text": "Protege la información y aplicaciones en su dispositivo de intrusos. Usa apps de chat cifradas, correo y billeteras crypto con total seguridad."
+        }
+      }
+    },
+    "setup": {
+      "tag": "Fácil y rápido para ti",
+      "step1": "Configuración en menos de 5 minutos",
+      "step2": "Sincroniza la SIM + App en un solo lugar",
+      "step3": "Blinda tu información en todo tu dispositivo",
+      "step4": "Manten tu anonimato al no usar servicios de google"
+    },
+    "videoSection": {
+      "title": "¿Cómo encriptar tu celular para que nadie pueda espiarte?"
+    },
+    "simOptionsSecureMdm": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Descubre más"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Lorem Ipsum Dolor met",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "items": [
+        {
+          "question": "¿Qué es un MDM?",
+          "answer": "Un MDM (Mobile Device Management) es una solución que permite administrar, monitorear y asegurar dispositivos móviles como smartphones o tablets dentro de una organización."
+        },
+        {
+          "question": "¿El MDM tiene acceso a ubicación y otros datos del dispositivo?",
+          "answer": "Sí, un MDM puede tener acceso a datos como la ubicación, uso de apps, red utilizada y otros parámetros del dispositivo, dependiendo de las políticas configuradas."
+        },
+        {
+          "question": "¿Qué ventajas hay en usar un MDM?",
+          "answer": "Las principales ventajas incluyen mayor seguridad, control remoto, protección contra pérdida de datos, y cumplimiento de políticas corporativas en los dispositivos."
+        }
+      ]
+    }
+  },
   "CryptcomPage": {
     "product": {
       "title": "Cryptcom",
@@ -1668,116 +1843,25 @@
         }
       ]
     },
-    "faq":{
-      "title": "Preguntas frecuentes",
-      "questions": [
-        {
-          "question": "¿Para qué sirve la aplicación Threema?",
-          "answer": "Threema es una aplicación de mensajería segura que protege tu privacidad y permite enviar mensajes cifrados, realizar llamadas de voz y compartir archivos."
-        },
-        {
-          "question": "¿Cómo funciona la aplicación Threema?",
-          "answer": "Threema utiliza cifrado de extremo a extremo para asegurar que solo el remitente y el receptor puedan leer los mensajes. No requiere número de teléfono ni correo para registrarse."
-        },
-        {
-          "question": "¿Qué tal es la seguridad y privacidad de la aplicación Threema?",
-          "answer": "Threema es reconocida por su alto nivel de seguridad y protección de datos. No recopila información personal y sus servidores están ubicados en Suiza."
-        }
-      ]
-    }
-  },
-  "ElyonPage": {
-    "product": {
-      "title": "Elyon",
-      "description": "Protección y seguridad avanzada para todas tus comunicaciones",
-      "features": {
-        "endToEndEncryption": "Mensajería autodestructiva",
-        "chatHiding": "Cambiador de voz",
-        "privateCalls": "Baúl para archivos sensibles"
-      },
-      "license": {
-        "twelveMonths": "Licencia 3 meses",
-        "sixMonths": "Licencia 6 meses"
-      },
-      "pricePrefix": "Desde",
-      "price": "550$ USD",
-      "buttons": {
-        "buyNow": "Comprar ahora",
-        "chatSupport": "Chat soporte"
-      }
-    },
-    "features": {
-      "sectionTitle": "Características principales",
-      "chat": {
-        "title": "Chats Cifrados",
-        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
-      },
-      "confidentiality": {
-        "title": "Abracadabra",
-        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
-      },
-      "groupChat": {
-        "title": "Chats Anónimos Grupales",
-        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
-      },
-      "agreementFeatures": {
-        "title": "Protección de captura de pantalla",
-        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
-      }
-    },
-    "securityStandards": {
-      "cards": [
-        {
-          "title": "Borrado Remoto",
-          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
-        },
-        {
-          "title": "Chats grupales anónimos",
-          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
-        },
-        {
-          "title": "Bóveda Segura",
-          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
-        }
-      ]
-    },
-    "videoSection": {
-      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
-    },
-    "simOptions": {
-      "cards": [
-        {
-          "title": "SIM Card encriptada",
-          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          "buttonText": "Comprar",
-          "secondButtonText": "Más información"
-        },
-        {
-          "title": "E-SIM Encriptada Planes datos o minutos",
-          "description": "Subtitle element copy",
-          "buttonText": "Ver más"
-        }
-      ]
-    },
-   "faq": {
-      "title": "Preguntas Frecuentes",
+    "faq": {
+      "title": "Frequently Asked Questions",
       "items": [
         {
-          "question": "¿Cómo se encripta un teléfono Cryptcom?",
-          "answer": "La encriptación se realiza mediante un proceso especializado que transforma tu dispositivo en uno altamente seguro con software y hardware modificados."
+          "question": "How is a Cryptcom phone encrypted?",
+          "answer": "Encryption is performed through a specialized process that transforms your device into a highly secure one with modified software and hardware."
         },
         {
-          "question": "¿Qué funcionalidades obtengo al encriptar mi teléfono con Cryptcom?",
-          "answer": "Obtendrás acceso a herramientas como mensajería segura, bóveda encriptada, cambio automático de IMEI y funciones avanzadas de protección."
+          "question": "What functionalities will I get by encrypting my phone with Cryptcom?",
+          "answer": "You will gain access to tools such as secure messaging, encrypted vault, automatic IMEI switching, and advanced protection features."
         },
         {
-          "question": "¿Cómo funciona el borrado remoto en un teléfono encriptado como Cryptcom?",
-          "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina todos los datos del dispositivo para evitar accesos no autorizados."
+          "question": "How does remote wipe work on an encrypted phone like Cryptcom?",
+          "answer": "You can activate remote wipe in case of loss or theft. The system erases all data on the device to prevent unauthorized access."
         }
       ]
     }
   },
-   "RenatiPage": {
+  "RenatiPage": {
     "product": {
       "title": "Renati",
       "description": "Protégete con un sistema operativo móvil seguro y creado para comunicaciones encriptadas.",
@@ -1797,72 +1881,77 @@
         "chatSupport": "Chat soporte"
       }
     },
+    "benefits": {
+      "title": "Vuelve tu celular o tablet un dispositivo totalmente seguro",
+      "features": {
+        "hiddenApps": {
+          "title": "Aplicaciones de seguridad ocultas",
+          "text": "El dispositivo parece un teléfono Android normal."
+        },
+        "manipulationProtection": {
+          "title": "Función de limpieza a prueba de manipulaciones",
+          "text": "Los criterios de manipulación e inactividad establecidos por el usuario harán que el dispositivo se borre."
+        },
+        "nfcBlocking": {
+          "title": "Cifrado de alto nivel ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalente a más de 15 360 bits RSA."
+        },
+        "anonymity": {
+          "title": "Sin ubicaciones fijas de servidores",
+          "text": "Los servidores se destruyen cada 24 horas después de la transferencia a uno sin dejar rastro."
+        }
+      }
+    },
     "features": {
       "sectionTitle": "Características principales",
       "chat": {
-        "title": "Chats Cifrados",
-        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
+        "title": "Chat",
+        "description": "Chats cifrados: Envía texto, imágenes, notas de voz y videos de forma segura y encriptada."
       },
       "confidentiality": {
-        "title": "Abracadabra",
-        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
+        "title": "Chat Cifrado",
+        "description": "Con la opción de grupos anónimos de conocimiento cero, los usuarios no podrán ver ni recuperar la información de contacto de los miembros del grupo."
       },
       "groupChat": {
-        "title": "Chats Anónimos Grupales",
-        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
+        "title": "Mensajería segura",
+        "description": "Mensajería combinada y chat y correo electrónico cifrados Chats cifrados híbridos en la vista de chat en vivo con marcas de verificación de notificación entregada y leída, funciones de eliminación y edición de mensajes, traducción de texto."
       },
       "agreementFeatures": {
-        "title": "Protección de captura de pantalla",
-        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
+        "title": "Chat enmascarado",
+        "description": "El texto se convierte en una fuente enmascarada ilegible cuando el dispositivo está inactivo."
       }
     },
     "systemFeatures": {
-      "title": "System Security Features",
+      "title": "Funciones De Seguridad Del Sistema",
       "items": {
         "noUpdates": {
-          "title": "Renati strengthens all aspects of the device",
-          "text": "including the core architecture against any type of hardware or digital attacks."
+          "title": "Renati refuerza todos los aspectos del dispositivo",
+          "text": "hasta fortalecer la arquitectura fundamental de cualquier tipo de hardware o ataques digitales."
         },
         "antiSurveillance": {
-          "title": "OTA updates",
-          "text": "Renati enables fast and secure wireless updates via WiFi, providing the latest security at top speed."
+          "title": "Actualizaciones OTA",
+          "text": "Renati permite actualizaciones inalámbricas rápidas y seguras en WiFi, brindando la última seguridad disponible a la más alta velocidad."
         },
         "gripTest": {
-          "title": "On boot, Renati verifies integrity and authenticity",
-          "text": "of all executable code, ensuring the device is secure."
+          "title": "Al iniciar, Renati verifica la integridad y la autenticidad",
+          "text": "de todo el código ejecutable, lo que garantiza que el dispositivo."
         },
         "sos": {
-          "title": "Custom devices",
-          "text": "and infrastructure enhancements mean your data is secure."
+          "title": "Los dispositivos personalizados",
+          "text": "y las mejoras en la infraestructura significan que sus datos están seguros."
         },
         "encryptedVault": {
-          "title": "Custom kernel:",
-          "text": "Renati strengthens every aspect of the device, including its foundational architecture."
+          "title": "Kernel personalizado:",
+          "text": "Renati refuerza todos los aspectos del dispositivo, hasta fortalecer la arquitectura fundamental."
         },
         "appMasking": {
-          "title": "Verified Android boot:",
-          "text": "At startup, Renati checks the integrity and authenticity of all executable code to ensure the device's security."
+          "title": "Arranque verificado de Android:",
+          "text": "Al iniciar, Renati verifica la integridad y autenticidad de todo el código ejecutable, asegurando que el dispositivo."
         }
       }
     },
-    "securityStandards": {
-      "cards": [
-        {
-          "title": "Borrado Remoto",
-          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
-        },
-        {
-          "title": "Chats grupales anónimos",
-          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
-        },
-        {
-          "title": "Bóveda Segura",
-          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
-        }
-      ]
-    },
     "videoSection": {
-      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+      "title": "Blinda tu celular, evita hackeos y protege tus comunicaciones"
     },
     "simOptionsRenati": {
       "cards": [
@@ -1881,18 +1970,18 @@
     },
     "faq": {
       "title": "Preguntas frecuentes",
-      "questions": [
+      "items": [
         {
-          "question": "¿En qué dispositivo puedo instalar la app Elyon?",
-          "answer": "La app Elyon está disponible para dispositivos Android e iOS."
+          "question": "¿Qué es un OS?",
+          "answer": "Un sistema operativo (OS) es el software que gestiona el hardware y software del dispositivo, permitiendo su funcionamiento."
         },
         {
-          "question": "¿Cuál es el costo de la app Elyon?",
-          "answer": "El costo de la app Elyon varía según la licencia seleccionada. Puedes consultar los precios actualizados en nuestra página oficial."
+          "question": "¿Por qué instalar Renati en mi teléfono?",
+          "answer": "Renati ofrece funciones avanzadas de seguridad, privacidad y rendimiento que protegen tus datos y mejoran la experiencia móvil."
         },
         {
-          "question": "¿Pueden espiarme si uso la app Elyon?",
-          "answer": "No, Elyon protege tu privacidad mediante cifrado de extremo a extremo y políticas estrictas de seguridad."
+          "question": "¿Cómo se instala Renati en mi celular?",
+          "answer": "La instalación de Renati se realiza a través de un proceso técnico asistido por nuestros especialistas para garantizar compatibilidad y seguridad."
         }
       ]
     }
@@ -2022,5 +2111,4 @@
       ]
     }
   }
-
 }

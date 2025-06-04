@@ -1085,6 +1085,464 @@
         }
       ]
     }
+  },
+  "SecureMdmPage": {
+    "product": {
+      "title": "SECURE MDM ANDROID",
+      "description": "Proteggi il tuo dispositivo Samsung o Pixel con il massimo livello di sicurezza.",
+      "features": {
+        "endToEndEncryption": "Blocco dell’accesso tramite USB",
+        "chatHiding": "Cancellazione remota d’emergenza",
+        "privateCalls": "Messaggistica sicura e privata"
+      },
+      "license": {
+        "threeMonths": "3 Mesi",
+        "sixMonths": "6 Mesi"
+      },
+      "pricePrefix": "A partire da",
+      "price": "729$ USD",
+      "buttons": {
+        "buyNow": "Acquista ora",
+        "chatSupport": "Supporto chat"
+      }
+    },
+    "benefits": {
+      "title": "Rendi il tuo telefono o tablet un dispositivo completamente sicuro",
+      "features": {
+        "hiddenApps": {
+          "title": "Applicazioni di sicurezza nascoste",
+          "text": "Il dispositivo appare come un normale telefono Android."
+        },
+        "manipulationProtection": {
+          "title": "Funzione di cancellazione contro la manomissione",
+          "text": "I criteri di manomissione e inattività stabiliti dall’utente faranno cancellare il dispositivo."
+        },
+        "nfcBlocking": {
+          "title": "Blocco delle reti NFC",
+          "text": "Blocco delle reti wireless Bluetooth e NFC per evitare accessi non autorizzati."
+        },
+        "anonymity": {
+          "title": "Anonimato",
+          "text": "Proteggi le tue informazioni e applicazioni da accessi non autorizzati. Usa app di messaggistica crittografate, email e portafogli crypto in totale sicurezza."
+        }
+      }
+    },
+    "setup": {
+      "tag": "Facile e veloce per te",
+      "step1": "Configurazione in meno di 5 minuti",
+      "step2": "Sincronizza SIM + App in un unico posto",
+      "step3": "Proteggi le tue informazioni su tutto il dispositivo",
+      "step4": "Mantieni l’anonimato senza usare i servizi Google"
+    },
+    "videoSection": {
+      "title": "Come criptare il tuo cellulare per evitare di essere spiato?"
+    },
+    "simOptionsSecureMdm": {
+      "cards": [
+        {
+          "title": "SIM Card criptata",
+          "description": "Proteggiti dai criminali informatici e mantieni al sicuro le tue informazioni personali",
+          "buttonText": "Acquista",
+          "secondButtonText": "Scopri di più"
+        },
+        {
+          "title": "E-SIM Criptata con piani dati o minuti",
+          "description": "Lorem Ipsum Dolor met",
+          "buttonText": "Vedi di più"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "items": [
+        {
+          "question": "Cos’è un MDM?",
+          "answer": "Un MDM (Mobile Device Management) è una soluzione che consente di gestire, monitorare e proteggere i dispositivi mobili come smartphone o tablet all'interno di un'organizzazione."
+        },
+        {
+          "question": "L'MDM ha accesso alla posizione e ad altri dati del dispositivo?",
+          "answer": "Sì, un MDM può accedere a dati come posizione, utilizzo delle app, rete utilizzata e altri parametri del dispositivo, in base alle politiche configurate."
+        },
+        {
+          "question": "Quali sono i vantaggi dell'utilizzo di un MDM?",
+          "answer": "I principali vantaggi includono maggiore sicurezza, controllo remoto, protezione contro la perdita di dati e conformità alle politiche aziendali sui dispositivi."
+        }
+      ]
+    }
+  },
+  "CryptcomPage": {
+    "product": {
+      "title": "Cryptcom",
+      "description": "Trasforma il tuo smartphone in un dispositivo di comunicazione altamente sicuro.",
+      "features": {
+        "endToEndEncryption": "Cambiamento automatico dell'IMEI",
+        "chatHiding": "Cassaforte criptata nel cloud",
+        "privateCalls": "Mascheramento delle applicazioni"
+      },
+      "license": {
+        "threeMonths": "3 Mesi",
+        "sixMonths": "12 Mesi"
+      },
+      "pricePrefix": "Da",
+      "price": "729$ USD",
+      "buttons": {
+        "buyNow": "Acquista ora",
+        "chatSupport": "Supporto chat"
+      }
+    },
+    "benefits": {
+      "title": "Rendi il tuo telefono o tablet un dispositivo totalmente sicuro",
+      "features": {
+        "hiddenApps": {
+          "title": "Applicazioni di sicurezza nascoste",
+          "text": "Il dispositivo appare come un normale telefono Android."
+        },
+        "manipulationProtection": {
+          "title": "Funzione di cancellazione contro la manomissione",
+          "text": "I criteri di manomissione e inattività impostati dall'utente faranno cancellare il dispositivo."
+        },
+        "nfcBlocking": {
+          "title": "Crittografia avanzata ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalente a oltre 15.360 bit RSA."
+        },
+        "anonymity": {
+          "title": "Nessuna posizione fissa dei server",
+          "text": "I server vengono distrutti ogni 24 ore dopo il trasferimento senza lasciare traccia."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Caratteristiche principali",
+      "chat": {
+        "title": "Chat",
+        "description": "Chat criptate: Invia testi, immagini, note vocali e video in modo sicuro e cifrato."
+      },
+      "confidentiality": {
+        "title": "Chat Criptata",
+        "description": "Con l'opzione di gruppi anonimi a conoscenza zero, gli utenti non potranno vedere né recuperare le informazioni di contatto dei membri."
+      },
+      "groupChat": {
+        "title": "Messaggistica sicura",
+        "description": "Messaggistica combinata e chat/email criptate. Chat ibride con spunte di lettura/consegna, funzioni di modifica/eliminazione, traduzione dei messaggi."
+      },
+      "agreementFeatures": {
+        "title": "Chat mascherata",
+        "description": "Il testo viene trasformato in un font illeggibile quando il dispositivo è inattivo."
+      }
+    },
+    "systemFeatures": {
+      "title": "Funzionalità di sicurezza del sistema",
+      "items": {
+        "noUpdates": {
+          "title": "Gli aggiornamenti automatici non sono possibili",
+          "text": "Per una maggiore sicurezza, non è possibile eseguire aggiornamenti automatici."
+        },
+        "antiSurveillance": {
+          "title": "Tecnologia anti-sorveglianza con cambio automatico dell'IMEI",
+          "text": "I criteri di manomissione e inattività impostati dall'utente causano la cancellazione del dispositivo."
+        },
+        "gripTest": {
+          "title": "Test di presa",
+          "text": "Le applicazioni si bloccano e si nascondono se il dispositivo viene scosso o afferrato."
+        },
+        "sos": {
+          "title": "Notifica di coercizione SOS",
+          "text": "L'inserimento del PIN inverso avvisa i contatti di emergenza e cancella i messaggi."
+        },
+        "encryptedVault": {
+          "title": "Cassaforte criptata",
+          "text": "Per l'archiviazione sicura di immagini, video, note e file audio."
+        },
+        "appMasking": {
+          "title": "Mascheramento delle applicazioni",
+          "text": "Maschera l'interfaccia della tua app per farla sembrare WhatsApp o altre app popolari."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "Cryptcom: Il sistema operativo che renderà il tuo telefono inaccessibile agli hacker"
+    },
+    "simOptionsCryptcom": {
+      "cards": [
+        {
+          "title": "SIM Card criptata",
+          "description": "Proteggiti dai criminali informatici e mantieni al sicuro le tue informazioni personali",
+          "buttonText": "Acquista",
+          "secondButtonText": "Maggiori informazioni"
+        },
+        {
+          "title": "E-SIM criptata – Piani dati o minuti",
+          "description": "Copia dell’elemento sottotitolo",
+          "buttonText": "Scopri di più"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "items": [
+        {
+          "question": "Come viene crittografato un telefono Cryptcom?",
+          "answer": "La crittografia viene effettuata tramite un processo specializzato che trasforma il dispositivo in uno altamente sicuro, con software e hardware modificati."
+        },
+        {
+          "question": "Quali funzionalità avrò crittografando il mio telefono con Cryptcom?",
+          "answer": "Avrai accesso a strumenti come chat sicure, cassaforte criptata, cambio automatico dell'IMEI e funzioni avanzate di protezione."
+        },
+        {
+          "question": "Come funziona la cancellazione remota su un dispositivo Cryptcom?",
+          "answer": "Puoi attivare la cancellazione remota in caso di smarrimento o furto. Il sistema eliminerà tutte le informazioni dal dispositivo per impedirne l’accesso non autorizzato."
+        }
+      ]
+    }
+  },
+  "RenatiPage": {
+    "product": {
+      "title": "Renati",
+      "description": "Proteggiti con un sistema operativo mobile sicuro progettato per comunicazioni criptate.",
+      "features": {
+        "endToEndEncryption": "Nessun servizio di geolocalizzazione, Bluetooth o NFC",
+        "chatHiding": "Blocco note criptato",
+        "privateCalls": "Conversazioni criptate"
+      },
+      "license": {
+        "threeMonths": "3 Mesi",
+        "sixMonths": "3 Mesi"
+      },
+      "pricePrefix": "A partire da",
+      "price": "650$ USD",
+      "buttons": {
+        "buyNow": "Acquista ora",
+        "chatSupport": "Supporto chat"
+      }
+    },
+    "benefits": {
+      "title": "Trasforma il tuo cellulare o tablet in un dispositivo completamente sicuro",
+      "features": {
+        "hiddenApps": {
+          "title": "App di sicurezza nascoste",
+          "text": "Il dispositivo sembra un normale telefono Android."
+        },
+        "manipulationProtection": {
+          "title": "Funzione di pulizia anti-manomissione",
+          "text": "I criteri di inattività e manipolazione impostati dall'utente causeranno la cancellazione del dispositivo."
+        },
+        "nfcBlocking": {
+          "title": "Crittografia di alto livello ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalente a più di 15.360 bit RSA."
+        },
+        "anonymity": {
+          "title": "Nessuna posizione fissa dei server",
+          "text": "I server vengono distrutti ogni 24 ore dopo il trasferimento, senza lasciare traccia."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Caratteristiche principali",
+      "chat": {
+        "title": "Chat",
+        "description": "Chat crittografate: invia testo, immagini, note vocali e video in modo sicuro e criptato."
+      },
+      "confidentiality": {
+        "title": "Chat Crittografata",
+        "description": "Con l'opzione di gruppi anonimi a conoscenza zero, gli utenti non possono visualizzare né recuperare i dati di contatto dei membri."
+      },
+      "groupChat": {
+        "title": "Messaggistica sicura",
+        "description": "Messaggistica combinata e chat e-mail criptate, chat ibrida con conferma di consegna e lettura, modifica/eliminazione messaggi, traduzione testo."
+      },
+      "agreementFeatures": {
+        "title": "Chat mascherata",
+        "description": "Il testo viene trasformato in un font illeggibile quando il dispositivo è inattivo."
+      }
+    },
+    "systemFeatures": {
+      "title": "Funzioni di Sicurezza del Sistema",
+      "items": {
+        "noUpdates": {
+          "title": "Renati rafforza ogni aspetto del dispositivo",
+          "text": "fino a migliorare l’architettura fondamentale contro qualsiasi tipo di attacco hardware o digitale."
+        },
+        "antiSurveillance": {
+          "title": "Aggiornamenti OTA",
+          "text": "Renati consente aggiornamenti wireless rapidi e sicuri via WiFi per garantire la massima sicurezza."
+        },
+        "gripTest": {
+          "title": "All'avvio, Renati verifica l'integrità e l'autenticità",
+          "text": "di tutto il codice eseguibile, assicurando che il dispositivo sia sicuro."
+        },
+        "sos": {
+          "title": "Dispositivi personalizzati",
+          "text": "e infrastrutture potenziate significano che i tuoi dati sono protetti."
+        },
+        "encryptedVault": {
+          "title": "Kernel personalizzato:",
+          "text": "Renati migliora ogni livello del dispositivo fino alla sua architettura di base."
+        },
+        "appMasking": {
+          "title": "Avvio verificato Android:",
+          "text": "All'avvio, Renati verifica l'integrità e l’autenticità del codice eseguibile, garantendo la sicurezza del dispositivo."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "Proteggi il tuo telefono, evita attacchi e proteggi le tue comunicazioni"
+    },
+    "simOptionsRenati": {
+      "cards": [
+        {
+          "title": "SIM Card criptata",
+          "description": "Proteggiti dai cybercriminali e mantieni al sicuro i tuoi dati personali",
+          "buttonText": "Acquista",
+          "secondButtonText": "Scopri di più"
+        },
+        {
+          "title": "E-SIM Criptata Piani dati o minuti",
+          "description": "Sottotitolo segnaposto",
+          "buttonText": "Vedi di più"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "items": [
+        {
+          "question": "Cos'è un OS?",
+          "answer": "Un sistema operativo (OS) è il software che gestisce l'hardware e il software del dispositivo, permettendone il funzionamento."
+        },
+        {
+          "question": "Perché installare Renati sul mio telefono?",
+          "answer": "Renati offre funzionalità avanzate di sicurezza, privacy e prestazioni che proteggono i tuoi dati e migliorano l'esperienza utente."
+        },
+        {
+          "question": "Come si installa Renati sul mio cellulare?",
+          "answer": "L'installazione di Renati viene eseguita tramite un processo tecnico assistito dai nostri specialisti per garantirne compatibilità e sicurezza."
+        }
+      ]
+    }
+  },
+  "UltraxPage": {
+    "product": {
+      "title": "Ultrax",
+      "description": "Proteggiti con un sistema operativo mobile sicuro progettato per comunicazioni criptate.",
+      "features": {
+        "endToEndEncryption": "Nessun servizio di geolocalizzazione, Bluetooth o NFC",
+        "chatHiding": "Blocco note criptato",
+        "privateCalls": "Conversazioni criptate"
+      },
+      "license": {
+        "threeMonths": "3 Mesi",
+        "sixMonths": "3 Mesi"
+      },
+      "pricePrefix": "A partire da",
+      "price": "650$ USD",
+      "buttons": {
+        "buyNow": "Acquista ora",
+        "chatSupport": "Supporto chat"
+      }
+    },
+    "benefits": {
+      "title": "Rendi il tuo telefono o tablet un dispositivo completamente sicuro",
+      "features": {
+        "hiddenApps": {
+          "title": "App di sicurezza nascoste",
+          "text": "Il dispositivo sembra un normale telefono Android."
+        },
+        "manipulationProtection": {
+          "title": "Funzione di pulizia anti-manomissione",
+          "text": "I criteri di manipolazione e inattività definiti dall’utente causeranno la cancellazione del dispositivo."
+        },
+        "nfcBlocking": {
+          "title": "Crittografia avanzata ECC, OMEMO, AES-256, XMPP",
+          "text": "Equivalente a oltre 15.360 bit RSA."
+        },
+        "anonymity": {
+          "title": "Nessuna posizione fissa dei server",
+          "text": "I server vengono distrutti ogni 24 ore dopo il trasferimento, senza lasciare traccia."
+        }
+      }
+    },
+    "features": {
+      "sectionTitle": "Funzionalità principali",
+      "versatility": {
+        "title": "Versatilità",
+        "description": "Puoi proteggere le comunicazioni professionali e utilizzare anche app standard per parlare con la tua famiglia."
+      },
+      "innovation": {
+        "title": "Innovazione",
+        "description": "Controllo assoluto delle nuove tecnologie. La tecnologia è al tuo servizio per offrire il massimo della protezione e della privacy."
+      },
+      "protection": {
+        "title": "Protezione",
+        "description": "Parla al telefono in tutta tranquillità, archivia e proteggi informazioni riservate e database con sicurezza."
+      },
+      "os": {
+        "title": "Sistema operativo Xecret OS",
+        "description": "È una soluzione brevettata che blocca qualsiasi intrusione o scambio di informazioni non autorizzato."
+      }
+    },
+    "systemFeatures": {
+      "title": "Funzionalità di sicurezza del sistema",
+      "items": {
+        "wallet": {
+          "title": "Portafoglio",
+          "text": "Portafoglio digitale per conservare e gestire criptovalute in modo completamente sicuro."
+        },
+        "firewall": {
+          "title": "Firewall completamente controllato",
+          "text": "Con autorizzazioni assegnate a ciascuna app in modo indipendente (accesso ai dati, Wi-Fi, GPS, ecc.)."
+        },
+        "imsiCatcher": {
+          "title": "Rilevatore IMSI-catcher",
+          "text": "Con questo rilevatore puoi sapere se qualcuno sta tentando di triangolare la tua posizione o intercettare le tue comunicazioni."
+        },
+        "extremePrivacy": {
+          "title": "Privacy estrema",
+          "text": "Ci assicuriamo che solo i nostri utenti conoscano e utilizzino la propria identità come preferiscono."
+        },
+        "secureCalls": {
+          "title": "Chiamate sicure",
+          "text": "Effettua chiamate e videochiamate 100% sicure senza che il segnale passi da alcun server. Comunica con serenità e fiducia."
+        },
+        "trust": {
+          "title": "Fiducia",
+          "text": "I nostri sistemi personalizzati garantiscono a ogni azienda, organizzazione o istituzione la propria protezione e privacy."
+        }
+      }
+    },
+    "videoSection": {
+      "title": "Come criptare il tuo cellulare per impedire che qualcuno ti spii?"
+    },
+    "simOptionsUltrax": {
+      "cards": [
+        {
+          "title": "SIM Card criptata",
+          "description": "Proteggiti dai criminali informatici e mantieni al sicuro le tue informazioni personali",
+          "buttonText": "Acquista",
+          "secondButtonText": "Scopri di più"
+        },
+        {
+          "title": "E-SIM criptata con piani dati o minuti",
+          "description": "Copia dell’elemento sottotitolo",
+          "buttonText": "Vedi di più"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "items": [
+        {
+          "question": "Come si cripta un cellulare?",
+          "answer": "La crittografia viene eseguita tramite un processo specializzato che trasforma il tuo dispositivo in uno altamente sicuro, con modifiche software e hardware."
+        },
+        {
+          "question": "Quali funzionalità avrò criptando il mio telefono?",
+          "answer": "Avrai accesso a strumenti come messaggistica sicura, vault criptato, cambi automatici dell’IMEI e funzionalità avanzate di protezione."
+        },
+        {
+          "question": "Come funziona la cancellazione remota su un cellulare criptato?",
+          "answer": "Puoi attivare la cancellazione remota in caso di perdita o furto. Il sistema elimina tutte le informazioni per prevenire accessi non autorizzati."
+        }
+      ]
+    }
   }
-
 }
