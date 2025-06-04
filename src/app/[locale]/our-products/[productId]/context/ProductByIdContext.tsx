@@ -7,7 +7,6 @@ import { useParams } from "next/navigation";
 import React, { createContext, useContext, ReactNode } from "react";
 import { useProductFilters } from "@/features/products/hooks/useProductFilters";
 
-// Define la estructura del contexto
 interface ProductByIdContextValue {
   currentProduct: Product | null;
 }
