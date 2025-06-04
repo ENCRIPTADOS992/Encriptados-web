@@ -10,6 +10,8 @@ import CurrentHeader from "@/shared/CurrentHeader";
 import { QueryClientProvider } from "@/providers/query-client/QueryClientProvider";
 import { ToastProvider } from "@/shared/context/ToastContext";
 import { InitAuthClient } from "@/shared/InitAuthClient";
+import { ModalPaymentProvider } from "@/providers/ModalPaymentProvider";
+// import ModalPaymentController from "@/shared/components/ModalPayment/ModalPaymentController";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -35,15 +37,18 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <InitAuthClient />
-          <ToastProvider>
-            <QueryClientProvider>
-              <NextIntlClientProvider messages={messages}>
-                <CurrentHeader />
+        <ToastProvider>
+          <QueryClientProvider>
+            <NextIntlClientProvider messages={messages}>
+              <CurrentHeader />
+              {/* <ModalPaymentProvider> */}
                 {children}
-                <FooterEncrypted />
-              </NextIntlClientProvider>
-            </QueryClientProvider>
-          </ToastProvider>
+                {/* <ModalPaymentController /> */}
+              {/* </ModalPaymentProvider> */}
+              <FooterEncrypted />
+            </NextIntlClientProvider>
+          </QueryClientProvider>
+        </ToastProvider>
       </body>
     </html>
   );
