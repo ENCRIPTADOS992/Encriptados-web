@@ -46,7 +46,7 @@ export default function Advantages() {
                     />
                   </div>
                   <p className="text-white text-base font-sm">
-                    {advantage.title}
+                    {advantage.name}
                   </p>
                 </div>
                 <AnimatePresence>
@@ -59,7 +59,7 @@ export default function Advantages() {
                       className="overflow-hidden"
                     >
                       <p className="text-white text-sm mt-2">
-                        {advantage.content}
+                        {advantage.description}
                       </p>
                     </motion.div>
                   )}

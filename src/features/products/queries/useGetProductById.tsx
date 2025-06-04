@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../services";
 import { Product } from "@/features/products/types/AllProductsResponse";
-
+import { useLocale } from "next-intl";
 
 // export const useGetProductById = (id: string) => {
 //   const query = useQuery({
@@ -16,6 +16,8 @@ export function useGetProductByIdUpdate(
   productId: string,
   categoryId: number
 ) {
+  const locale = useLocale();
+  
   return useQuery<
     Product [], 
     Error,            
@@ -24,7 +26,7 @@ export function useGetProductByIdUpdate(
   >({
     queryKey: ["allProducts", categoryId],
     queryFn: async () => {
-      const arr = await getAllProducts(categoryId);
+      const arr = await getAllProducts(categoryId, locale); 
       console.log("📦 getAllProducts devolvió:", arr);
       return arr;
     },

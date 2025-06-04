@@ -4,7 +4,8 @@ import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
 const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
 
 export const getAllProducts = async (
-  categoryId: number
+  categoryId: number,
+  lang: string
 ): Promise<Allproducts> => {
   try {
     const response = await axios.get<{
@@ -13,7 +14,7 @@ export const getAllProducts = async (
     }>(`${WP_API_BASE}/encriptados/v1/products/by-category-language`, {
       params: {
         category_id: categoryId,
-        lang: "es",
+        lang: lang,
       },
     });
     const rawProducts = response.data.products;
@@ -23,6 +24,7 @@ export const getAllProducts = async (
     throw error;
   }
 };
+
 
 type ResponseProduct = {
   data: Product;

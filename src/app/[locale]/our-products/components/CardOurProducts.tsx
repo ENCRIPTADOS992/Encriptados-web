@@ -2,8 +2,14 @@
 import SimMinutosDatos from "../../../../../public/images/our-products/sim-minutos-datos.png";
 import EsimMinutosDatos from "../../../../../public/images/our-products/esim-minutos-datos.png";
 import CardSimEsim from "./svgs/CardSimEsim";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
-const CardOurProducts: React.FC = () => {
+interface CardOurProductsProps {
+  filters: ProductFilters;
+}
+
+const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
+
   return (
     <div className=" mt-5 mb-12 flex flex-col md:flex-row gap-x-4 gap-0 justify-center gap-y-4">
       <CardSimEsim
@@ -17,8 +23,8 @@ const CardOurProducts: React.FC = () => {
         showMoreInfo={true}
         buyText="Comprar"
         moreInfoText="Descubre más"
-        buyUrl="/comprar"
-        moreInfoUrl="/mas-informacion"
+        buyUrl={`/comprar?selectedOption=${filters.selectedOption}`}
+        moreInfoUrl={`/mas-informacion?selectedOption=${filters.selectedOption}`}
         onBuyClick={() => console.log("Comprar")}
         onMoreInfoClick={() => console.log("Más información")}
       />
@@ -34,8 +40,8 @@ const CardOurProducts: React.FC = () => {
         showMoreInfo={false}
         buyText="Ver Más"
         moreInfoText="Descubre más"
-        buyUrl="/comprar"
-        moreInfoUrl="/mas-informacion"
+       buyUrl={`/comprar?selectedOption=${filters.selectedOption}`}
+        moreInfoUrl={`/mas-informacion?selectedOption=${filters.selectedOption}`}
         onBuyClick={() => console.log("Comprar")}
         onMoreInfoClick={() => console.log()}
       />
