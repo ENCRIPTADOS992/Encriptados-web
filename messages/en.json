@@ -1481,7 +1481,74 @@
         "sixMonths": "6 Months"
       },
       "pricePrefix": "From",
-      "price": "729$ USD"
+      "price": "729$ USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Chat support"
+      }
+    },
+    "benefits": {
+      "title": "Turn your phone or tablet into a fully secure device",
+      "features": {
+        "hiddenApps": {
+          "title": "Hidden security apps",
+          "text": "The device appears to be a regular Android phone."
+        },
+        "manipulationProtection": {
+          "title": "Tamper-proof wipe function",
+          "text": "Tamper and inactivity triggers set by the user will wipe the device."
+        },
+        "nfcBlocking": {
+          "title": "NFC network blocking",
+          "text": "Blocks Bluetooth and NFC wireless networks to prevent unauthorized access."
+        },
+        "anonymity": {
+          "title": "Anonymity",
+          "text": "Protects your data and apps from intruders. Use encrypted chat apps, email, and crypto wallets with full security."
+        }
+      }
+    },
+    "setup": {
+      "tag": "Fast and easy for you",
+      "step1": "Setup in less than 5 minutes",
+      "step2": "Sync SIM + App in one place",
+      "step3": "Shield your data across your entire device",
+      "step4": "Stay anonymous by not using Google services"
+    },
+    "videoSection": {
+      "title": "How to encrypt your phone so no one can spy on you?"
+    },
+    "simOptionsSecureMdm": {
+      "cards": [
+        {
+          "title": "Encrypted SIM Card",
+          "description": "Protect yourself from cybercriminals and keep your personal information secure",
+          "buttonText": "Buy",
+          "secondButtonText": "Learn more"
+        },
+        {
+          "title": "Encrypted E-SIM with data or minute plans",
+          "description": "Lorem Ipsum Dolor met",
+          "buttonText": "See more"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "What is an MDM?",
+          "answer": "An MDM (Mobile Device Management) is a solution that allows you to manage, monitor, and secure mobile devices such as smartphones or tablets within an organization."
+        },
+        {
+          "question": "Does MDM have access to location and other device data?",
+          "answer": "Yes, an MDM can access data such as location, app usage, network used, and other device parameters, depending on the configured policies."
+        },
+        {
+          "question": "What are the advantages of using an MDM?",
+          "answer": "Key advantages include enhanced security, remote control, data loss protection, and compliance with corporate policies on devices."
+        }
+      ]
     }
   },
   "CryptcomPage": {
@@ -1734,7 +1801,7 @@
       ]
     }
   },
-  "UltraxPage": {
+   "UltraxPage": {
     "product": {
       "title": "Ultrax",
       "description": "Protect yourself with a secure mobile operating system designed for encrypted communications.",
