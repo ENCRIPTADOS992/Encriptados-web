@@ -13,10 +13,10 @@ import type { StaticImageData } from "next/image";
 type ImageType = StaticImageData;
 
 interface CardSimProps {
-  productImage: ImageType;    // URL (o import) de la imagen de la SIM
+  productImage: string | ImageType;    // URL (o import) de la imagen de la SIM
   features: string[];      // ← aquí va tu array de “featuresCardSim”
   priceRange: string;
-  headerIcon: ImageType;      // (opcional, lo dejamos por si en el futuro lo quieres usar)
+  headerIcon: string | ImageType;      // (opcional, lo dejamos por si en el futuro lo quieres usar)
   headerTitle: string;
 }
 

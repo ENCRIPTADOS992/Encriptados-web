@@ -7,7 +7,7 @@ import OurObjetive from "./OurObjetive";
 import BannerSecure from "./BannerSecure";
 import PayForUse from "./PayForUse";
 import WhyCallSim from "./WhyCallSim/WhyCallSim";
-import SimProductsPage from "./SimProducts";
+// import SimProductsPage from "./SimProducts";
 import CustomShapeDivider from "./CustomShapeDivider";
 import BannerCoverage from "@/shared/BannerCoverage";
 
