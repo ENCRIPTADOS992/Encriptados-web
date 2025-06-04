@@ -67,6 +67,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               priceRange={`${product.price}$`}
               headerIcon={""}
               headerTitle={product.name}
+              filters={filters}
             />
           ))}
         </div>

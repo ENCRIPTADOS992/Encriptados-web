@@ -5,6 +5,7 @@ import StarSvg from "/public/images/encrypted-sim/icons/star_half2.svg";
 
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
 import { useRouter } from "next/navigation";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 
 interface CardSimProps {
   productImage: string; // Ahora es una URL de tipo string
@@ -14,6 +15,7 @@ interface CardSimProps {
   headerTitle: string;
   priceDiscount: string;
   id: number;
+  filters: ProductFilters;
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -22,6 +24,7 @@ const CardProduct: React.FC<CardSimProps> = ({
   priceRange,
   id,
   headerTitle,
+  filters,
 }) => {
   const router = useRouter();
 
@@ -91,7 +94,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
               <h1
                 onClick={() => {
-                  router.push(`our-products/${id}`);
+                  router.push(`our-products/${id}?selectedOption=${filters.selectedOption}`);
                 }}
                 className="cursor-pointer text-[14px]"
               >

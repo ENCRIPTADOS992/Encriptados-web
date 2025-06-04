@@ -5,6 +5,7 @@ import { useGetProductByIdUpdate } from "@/features/products/queries/useGetProdu
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { useParams } from "next/navigation";
 import React, { createContext, useContext, ReactNode } from "react";
+import { useProductFilters } from "@/features/products/hooks/useProductFilters";
 
 // Define la estructura del contexto
 interface ProductByIdContextValue {
@@ -34,11 +35,16 @@ export const ProductByIdProvider: React.FC<ProductByIdProviderProps> = ({
   children,
 }) => {
   const params = useParams();
+  const { filters } = useProductFilters(); 
   const productId = params.productId as string;
+  const selectedOption = parseInt(filters.selectedOption, 10);
+
+
   console.log("🚀 productId desde URL:", productId);
-  // Llamada al hook para obtener el producto por ID
-const { data: currentProduct, isLoading, isError } = useGetProductByIdUpdate(
-    productId,40);
+  console.log("🚀 selectedOption desde filtros:", selectedOption);
+
+  const { data: currentProduct, isLoading, isError } = useGetProductByIdUpdate(productId, selectedOption);
+
 
   return (
     <ProductByIdContext.Provider 

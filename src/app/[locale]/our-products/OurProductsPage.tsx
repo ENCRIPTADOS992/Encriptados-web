@@ -50,7 +50,7 @@ const OurProductsPage = () => {
 
           <div className="rounded-xl w-full max-w-7xl mx-auto mt-16 ">
             <div className="flex flex-col  justify-between">
-              <CardOurProducts />
+            <CardOurProducts filters={filters} />
             </div>
           </div>
         </div>
