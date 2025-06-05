@@ -6,6 +6,7 @@ import StarSvg from "/public/images/encrypted-sim/icons/star_half2.svg";
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
 import { useRouter } from "next/navigation";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
+import { getProductLink } from "@/shared/utils/productRouteResolver";
 
 interface CardSimProps {
   productImage: string; // Ahora es una URL de tipo string
@@ -94,7 +95,12 @@ const CardProduct: React.FC<CardSimProps> = ({
 
               <h1
                 onClick={() => {
-                  router.push(`our-products/${id}?selectedOption=${filters.selectedOption}`);
+                  const url = getProductLink(headerTitle, Number(filters.selectedOption));
+                  if (url) {
+                    router.push(url);
+                  } else {
+                    console.warn("Ruta no encontrada para:", headerTitle);
+                  }
                 }}
                 className="cursor-pointer text-[14px]"
               >
