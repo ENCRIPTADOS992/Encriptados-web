@@ -1,15 +1,23 @@
 "use client";
+
 import SimMinutosDatos from "../../../../../public/images/our-products/sim-minutos-datos.png";
 import EsimMinutosDatos from "../../../../../public/images/our-products/esim-minutos-datos.png";
 import CardSimEsim from "./svgs/CardSimEsim";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 interface CardOurProductsProps {
   filters: ProductFilters;
 }
 
 const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
+  const { openModal } = useModalPayment();
 
+  const handleBuyClick = () => {
+    console.log("🛒 [CardOurProducts] onBuyClick disparado — llamando openModal({ productid: '503', languageCode: 'es' })");
+    openModal({ productid: "503", languageCode: "es" });
+  };
+  
   return (
     <div className=" mt-5 mb-12 flex flex-col md:flex-row gap-x-4 gap-0 justify-center gap-y-4">
       <CardSimEsim
@@ -23,9 +31,11 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         showMoreInfo={true}
         buyText="Comprar"
         moreInfoText="Descubre más"
-        buyUrl={`/comprar?selectedOption=${filters.selectedOption}`}
+        onBuyClick={() => {
+          console.log("🛒 onBuyClick: abriendo modal");
+          openModal({ productid: "503", languageCode: "es" });
+        }}
         moreInfoUrl={`/mas-informacion?selectedOption=${filters.selectedOption}`}
-        onBuyClick={() => console.log("Comprar")}
         onMoreInfoClick={() => console.log("Más información")}
       />
 
@@ -40,9 +50,11 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         showMoreInfo={false}
         buyText="Ver Más"
         moreInfoText="Descubre más"
-       buyUrl={`/comprar?selectedOption=${filters.selectedOption}`}
+        onBuyClick={() => {
+          console.log("🛒 onBuyClick: abriendo modal");
+          openModal({ productid: "503", languageCode: "es" });
+        }}
         moreInfoUrl={`/mas-informacion?selectedOption=${filters.selectedOption}`}
-        onBuyClick={() => console.log("Comprar")}
         onMoreInfoClick={() => console.log()}
       />
     </div>

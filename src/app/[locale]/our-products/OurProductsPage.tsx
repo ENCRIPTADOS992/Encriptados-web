@@ -16,14 +16,22 @@ import { useTranslations } from "next-intl";
 import BannerOurProductsMobile from "./components/BannerOurProductsMobile";
 import BannerOurProducts from "./components/BannerOurProducts";
 import { useProductFilters } from "@/features/products/hooks/useProductFilters";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 const OurProductsPage = () => {
+    const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
 
   useEffect(() => {
     console.log("[OurProductsPage] Página montada correctamente ✅");
   }, []);
+
+     const handleTestClick = () => {
+    console.log("▶️ [Página] handleTestClick: openModal({productid:'TEST',languageCode:'es'})");
+    openModal({ productid: "502", languageCode: "es" });
+  };
+
 
   return (
     <>
@@ -41,7 +49,13 @@ const OurProductsPage = () => {
           <h1 className="bg-gradient-to-r text-3xl justify-center font-bold mt-[75px]  flex items-center from-[#000000] to-[#35CDFB] bg-clip-text text-transparent mb-7 text-center">
             {t("filterProducts.title")}
           </h1>
-
+          <button
+           type="button"
+            onClick={handleTestClick}
+            className="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            ▶️ Prueba Abrir Modal
+          </button>
           <div id="#buysimappsection">
             <FilterProductsBar filters={filters} updateFilters={updateFilters} />
 

@@ -1,18 +1,20 @@
 // // src/shared/components/ModalPayment/ModalPaymentController.tsx
-// "use client";
+"use client";
 
-// import React from "react";
-// import { useModalPayment } from "@/providers/ModalPaymentProvider";
-// import ModalPaymentWrapper from "./ModalPaymentWrapper";
-// import ModalPaymentView from "./ModalPaymentView";
+import React from "react";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import ModalPayment from "./ModalPayment";
+import ModalPaymentView from "./ModalPaymentView";
 
-// const ModalPaymentController = () => {
-//   const { isOpen, closeModal, params } = useModalPayment();
-//   return (
-//     <ModalPaymentWrapper visible={isOpen} onClose={closeModal}>
-//       <ModalPaymentView />
-//     </ModalPaymentWrapper>
-//   );
-// };
+const ModalPaymentController = () => {
+  const { isModalOpen, closeModal, params } = useModalPayment();
+    console.log("isModalOpen:", isModalOpen);
 
-// export default ModalPaymentController;
+  return (
+    <ModalPayment visible={isModalOpen} onClose={closeModal}>
+      <ModalPaymentView />
+    </ModalPayment>
+  );
+};
+
+export default ModalPaymentController;

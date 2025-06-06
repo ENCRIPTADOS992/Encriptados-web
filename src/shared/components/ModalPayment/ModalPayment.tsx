@@ -1,38 +1,27 @@
 // // src/components/ModalPayment/ModalPayment.tsx
-// import { Fragment, ReactNode } from "react";
-// import { Dialog, Transition } from "@headlessui/react";
-// import styles from "./ModalPayment.module.css";
+import React from "react";
 
-// type Props = {
-//   onClose?: () => void;
-//   visible?: boolean;
-//   children?: ReactNode;
-// };
+type Props = {
+  onClose?: () => void;
+  visible?: boolean;
+  children?: React.ReactNode;
+};
 
-// const ModalPayment = ({ onClose = () => {}, visible = false, children }: Props) => {
-//   return (
-//     <Transition.Root show={visible} as={Fragment}>
-//       <Dialog as="div" className={styles.dialogWrapper} onClose={onClose}>
-//         <div className={styles.backdrop} aria-hidden="true" />
+const ModalPayment: React.FC<Props> = ({
+  onClose = () => {},
+  visible = false,
+  children,
+}) => {
+    if (!visible) return null;
 
-//         <div className={styles.container}>
-//           <Transition.Child
-//             as={Fragment}
-//             enter="transition ease-out duration-300 transform"
-//             enterFrom="opacity-0 scale-95"
-//             enterTo="opacity-100 scale-100"
-//             leave="transition ease-in duration-200 transform"
-//             leaveFrom="opacity-100 scale-100"
-//             leaveTo="opacity-0 scale-95"
-//           >
-//             <Dialog.Panel className={styles.modalPanel}>
-//               {children}
-//             </Dialog.Panel>
-//           </Transition.Child>
-//         </div>
-//       </Dialog>
-//     </Transition.Root>
-//   );
-// };
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+      <div className="relative bg-white rounded-2xl p-4 w-full max-w-md">
+        <button onClick={onClose} className="absolute top-2 right-2 text-black">X</button>
+        {children}
+      </div>
+    </div>
+  );
+};
 
-// export default ModalPayment;
+export default ModalPayment;

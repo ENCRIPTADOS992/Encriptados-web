@@ -1,7 +1,7 @@
-import React from "react";
+// src/app/[locale]/our-products/page.tsx
 
-const page = () => {
-  return <h1></h1>;
-};
+import OurProductsPageClient from "./components/OurProductsPageClient";
 
-export default page;
+export default function OurProductsPage() {
+  return <OurProductsPageClient />;
+}

@@ -7,6 +7,7 @@ import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
 import { useRouter } from "next/navigation";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 interface CardSimProps {
   productImage: string; // Ahora es una URL de tipo string
@@ -28,6 +29,14 @@ const CardProduct: React.FC<CardSimProps> = ({
   filters,
 }) => {
   const router = useRouter();
+  const { openModal } = useModalPayment();
+
+  console.log(`📝 [CardProduct] render para producto “${headerTitle}” (ID=${id})`);
+
+  const handleBuy = () => {
+    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`);
+    openModal({ productid: id.toString(), languageCode: "es" });
+  };
 
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
@@ -86,7 +95,11 @@ const CardProduct: React.FC<CardSimProps> = ({
               </div>
             </div>
             <div className="flex items-center justify-between gap-x-2 ">
-              <button className="bg-black rounded-full text-white px-3 py-2">
+              <button
+                onClick={handleBuy}
+                type="button"
+                className="bg-black rounded-full text-white px-3 py-2"
+              >
                 <div className="flex items-center justify-center gap-x-2 px-2">
                   Comprar
                   <LocalMallSvgNew />
