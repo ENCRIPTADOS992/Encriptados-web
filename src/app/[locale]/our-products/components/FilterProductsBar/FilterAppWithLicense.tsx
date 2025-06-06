@@ -15,16 +15,20 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
     <>
       <div className="w-full lg:w-auto">
         <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
-          {t("filterProducts.osTitle")}
+          {t("filterProducts.software")}
         </h1>
-        <MenuDropdownProductBar
-          name="os"
-          options={[
-            { label: "TODO", value: "all" },
-            { label: "Secure Cryptra", value: "Secure Crypt" },
-            { label: "Other Option", value: "Other Option" },
-          ]}
-        />
+      <MenuDropdownProductBar
+        name="os"
+        options={[
+          { label: "TODO", value: "all" },
+          { label: "Secure Cryptra", value: "Secure Crypt" },
+          { label: "Other Option", value: "Other Option" },
+        ]}
+        onChangeExternal={(value) => {
+          console.log("[FilterAppWithLicense] Cambio de OS:", value);
+          updateFilters({ os: value });
+        }}
+      />
       </div>
       <div className="w-full lg:w-auto lg:ml-4">
         <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
@@ -34,23 +38,15 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
           name="license"
           options={[
             { label: "TODO", value: "all" },
-            {
-              label: "1 mes",
-              value: "1month",
-            },
-            {
-              label: "6 meses",
-              value: "6month",
-            },
-            {
-              label: "9 meses",
-              value: "9month",
-            },
-            {
-              label: "12 meses",
-              value: "12month",
-            },
+            { label: "1 mes", value: "1month" },
+            { label: "6 meses", value: "6month" },
+            { label: "9 meses", value: "9month" },
+            { label: "12 meses", value: "12month" },
           ]}
+          onChangeExternal={(value) => {
+            console.log("[FilterAppWithLicense] Cambio de License:", value);
+            updateFilters({ license: value });
+          }}
         />
       </div>
     </>

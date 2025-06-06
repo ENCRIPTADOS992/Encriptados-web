@@ -14,11 +14,13 @@ interface Option {
 interface MenuDropdownProductBarProps {
   options: Option[];
   name: string;
+  onChangeExternal?: (value: string) => void; 
 }
 
 const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
   options,
   name,
+  onChangeExternal,
 }) => {
   const { control, watch } = useFormContext();
   const selectedItem = watch(name);
@@ -59,7 +61,13 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
           {options.map((item, index) => (
             <MenuItem
               key={index}
-              onClick={() => onChange(item.value)} // Actualiza el valor al seleccionar
+              onClick={() => {
+                onChange(item.value);  
+                if (onChangeExternal) {
+                  console.log(`[MenuDropdownProductBar] onChangeExternal ejecutado con: ${item.value}`);
+                  onChangeExternal(item.value);
+                }
+              }}
               className={`flex items-center hover:bg-[#E3F8FF] transition duration-150 ease-in-out bg-[#FAFAFA] m-4 rounded-xl ${
                 selectedItem === item.value ? "bg-cyan-50" : ""
               }`}

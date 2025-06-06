@@ -14,9 +14,12 @@ export const useProductFilters = () => {
     os: params.get('os') || 'all',
     license: params.get('license') || 'all',
     encriptadosprovider: params.get('encriptadosprovider') || 'all',
+    timprovider: params.get('timprovider') || 'all',
+
   };
 
-const updateFilters = (newFilters: Partial<ProductFilters>) => {    
+const updateFilters = (newFilters: Partial<ProductFilters>) => {  
+  console.log("[useProductFilters] updateFilters llamado con:", newFilters);  
   const updated = new URLSearchParams(params.toString());
   const entries = Object.entries(newFilters);
 
@@ -37,7 +40,7 @@ const updateFilters = (newFilters: Partial<ProductFilters>) => {
       updated.delete("timprovider");
       updated.delete("timcountry");
     }
-
+    console.log("[useProductFilters] URL actualizada:", updated.toString());
     router.replace(`${pathname}?${updated.toString()}`, { scroll: false });
   };
 

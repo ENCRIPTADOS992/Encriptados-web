@@ -4,4 +4,5 @@ export interface ProductFilters {
   os: string;
   license: string;
   encriptadosprovider: string;
+  timprovider: string;
 }

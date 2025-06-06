@@ -13,7 +13,7 @@ interface FilterAppWithLicenseProps {
 }
 
 const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, updateFilters }) => {
-  type ProviderType = "encriptados" | "ira" | "tim" | undefined;
+  type ProviderType = "encriptados" | "tim" | undefined;
 
   const currentProvider = filters.provider as ProviderType;
 
@@ -31,37 +31,11 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             { label: "Recarga Minutos", value: "minuterecharge" },
             { label: "Recarga IMSI", value: "imsi" },
           ]}
+          onChangeExternal={(value) => {
+            console.log("[FilterAppWithLicense] Cambio de encriptadosprovider:", value);
+            updateFilters({ encriptadosprovider: value });
+          }}
         />
-      </>
-    ),
-    ira: (
-      <>
-        <div className="flex items-center justify-center gap-4">
-          <div className="w-full ">
-            <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
-              Servicios
-            </h1>
-            <div className="w-full">
-              <MenuDropdownProductBar
-                name="iraprovider"
-                options={[
-                  { label: "Sim Física", value: "physicsimira" },
-                  { label: "eSim + Datos", value: "esimplusdataira" },
-                  { label: "Recarga Datos", value: "datarechargeira" },
-                ]}
-              />
-            </div>
-          </div>
-          <div className="w-full ">
-            <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
-              Región y país
-            </h1>
-            <MenuDropdownProductBar
-              name="iracountry"
-              options={[{ label: "Colombia", value: "col" }]}
-            />
-          </div>
-        </div>
       </>
     ),
     tim: (
@@ -75,18 +49,13 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
               name="timprovider"
               options={[
                 { label: "Sim Física", value: "physicsimtim" },
-                { label: "eSim + Datos", value: "esimplusdatatim" },
-                { label: "Recarga Datos", value: "datarechargetim" },
+                { label: "Recarga + eSIM", value: "esimplusdatatim" },
+                { label: "Recarga", value: "datarechargetim" },
               ]}
-            />
-          </div>
-          <div className="w-full ">
-            <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
-              Región y país
-            </h1>
-            <MenuDropdownProductBar
-              name="timcountry"
-              options={[{ label: "Colombia", value: "col" }]}
+              onChangeExternal={(value) => {
+                console.log("[FilterAppWithLicense] Cambio de timprovider:", value);
+                updateFilters({ timprovider: value });
+              }}
             />
           </div>
         </div>
@@ -101,20 +70,16 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
         <MenuDropdownProductBar
           name="provider"
           options={[
-            {
-              label: "TODO",
-              value: "all",
-              icon: "",
-            },
-            {
-              label: " ",
-              value: "encriptados",
-              icon: <EncryptedSimIcon />,
-            },
-            { label: " ", value: "ira", icon: <IraSimIcon /> },
+            { label: "TODO", value: "all", icon: "" },
+            { label: " ", value: "encriptados", icon: <EncryptedSimIcon /> },
             { label: " ", value: "tim", icon: <TimSimIcon /> },
           ]}
+           onChangeExternal={(value) => {
+            console.log("[FilterAppWithLicense] Cambio de provider:", value);
+            updateFilters({ provider: value });
+  }}
         />
+
       </div>
       <div className="w-full lg:w-auto lg:ml-4">
         {currentProvider && optionByProvider[currentProvider]}

@@ -19,7 +19,7 @@ import { useProductFilters } from "@/features/products/hooks/useProductFilters";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 const OurProductsPage = () => {
-    const { openModal } = useModalPayment();
+  const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
 
@@ -27,12 +27,10 @@ const OurProductsPage = () => {
     console.log("[OurProductsPage] Página montada correctamente ✅");
   }, []);
 
-     const handleTestClick = () => {
-    console.log("▶️ [Página] handleTestClick: openModal({productid:'TEST',languageCode:'es'})");
-    openModal({ productid: "502", languageCode: "es" });
-  };
-
-
+    useEffect(() => {
+    console.log("[OurProductsPage] Current filters:", filters);
+  }, [filters]);
+  
   return (
     <>
         <BasicFormProvider defaultValue={filters}>

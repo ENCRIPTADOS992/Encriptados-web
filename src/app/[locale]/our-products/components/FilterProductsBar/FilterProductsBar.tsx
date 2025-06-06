@@ -68,8 +68,12 @@ export default function FilterProductsBar({ filters, updateFilters }: FilterProd
               <ListOfFiltersButton
                 items={items}
                 value={filters.selectedOption}
-                onChange={(value) => updateFilters({ selectedOption: value })}
+                onChange={(value) => {
+                  console.log("[FilterProductsBar] Cambio de categoría:", value);
+                  updateFilters({ selectedOption: value });
+                }}
               />
+
 
             </div>
 

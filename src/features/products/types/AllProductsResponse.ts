@@ -4,6 +4,12 @@ export type Product = {
   id: number;
   name: string;
   description: string;
+  activation: string;
+  type_product: string;
+  provider: string;
+  licensetime: string;
+  shipping: string;
+  brand: string;
   sku: string;
   price: string;
   on_sale: boolean;
@@ -31,8 +37,6 @@ export type Product = {
     description: string;
     image: string;
   }[];
-  activation: string;
-  type_product: string;
 };
 
 
