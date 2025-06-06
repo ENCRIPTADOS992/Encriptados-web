@@ -1,4 +1,3 @@
-// src/shared/components/ModalPayment/PaymentOption.tsx
 "use client";
 
 import React from "react";
@@ -21,18 +20,16 @@ const PaymentOption: React.FC<Props> = ({ option, activeOption, setActiveOption 
   return (
     <button
       onClick={() => setActiveOption(option.value)}
-      className={`
-        flex flex-col items-center justify-center
-        gap-1 rounded-lg border 
-        ${isActive ? "border-primary bg-primary" : "border-gray-700 bg-gray-700"} 
-        px-4 py-3 hover:border-primary hover:bg-gray-600 transition
-        w-20
-      `}
+      className={`w-full rounded-lg px-4 py-3 border text-center transition
+        ${isActive ? "bg-primary border-primary text-white" : "bg-[#f6f9fb] border-gray-200 text-gray-700"}
+        hover:border-primary hover:bg-blue-50`}
     >
-      <div className="h-8 w-8">
-        <option.icon className={isActive ? "text-white" : "text-gray-300"} />
+      <div className="flex flex-col items-center justify-center gap-2">
+        <option.icon
+          className={`w-6 h-6 ${isActive ? "text-white" : "text-gray-600"}`}
+        />
+        <span className="text-xs font-medium">{option.label}</span>
       </div>
-      <p className={`text-xs ${isActive ? "text-white" : "text-gray-300"}`}>{option.label}</p>
     </button>
   );
 };

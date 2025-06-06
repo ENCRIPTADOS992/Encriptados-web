@@ -1,4 +1,3 @@
-// src/shared/components/ModalPayment/EditableDividerSection.tsx
 "use client";
 
 import React, { ReactNode } from "react";
@@ -10,9 +9,9 @@ interface Props {
 
 const EditableDividerSection: React.FC<Props> = ({ label, children }) => {
   return (
-    <div className="mb-3">
-      <p className="mb-1 text-sm text-gray-300">{label}</p>
-      <div className="flex items-center gap-2">{children}</div>
+    <div className="flex items-center justify-between py-1.5 mt-0 border-b border-gray-200">
+      <label className="text-xs text-black-700 w-1/3">{label}</label>
+      <div className="w-2/3 flex items-center gap-1 mt-0">{children}</div>
     </div>
   );
 };

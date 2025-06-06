@@ -1,4 +1,3 @@
-// src/shared/components/ModalPayment/FormPaymentInput.tsx
 "use client";
 
 import React from "react";
@@ -11,7 +10,13 @@ interface Props {
   width?: string;
 }
 
-const FormPaymentInput: React.FC<Props> = ({ placeholder, value, handleChange, handleBlur, width = "100%" }) => {
+const FormPaymentInput: React.FC<Props> = ({
+  placeholder,
+  value,
+  handleChange,
+  handleBlur,
+  width = "100%",
+}) => {
   return (
     <input
       type="text"
@@ -20,7 +25,8 @@ const FormPaymentInput: React.FC<Props> = ({ placeholder, value, handleChange, h
       onChange={handleChange}
       onBlur={handleBlur}
       style={{ width }}
-      className="rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-sm text-white placeholder-gray-400 focus:border-primary focus:outline-none"
+      className="rounded-md border border-gray-300 bg-[#f6f9fb] px-3 py-1.5 text-xs text-gray-800 placeholder-gray-500 leading-tight focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+
     />
   );
 };

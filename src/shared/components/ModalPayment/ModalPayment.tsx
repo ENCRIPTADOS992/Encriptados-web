@@ -1,4 +1,3 @@
-// // src/components/ModalPayment/ModalPayment.tsx
 import React from "react";
 
 type Props = {
@@ -12,12 +11,11 @@ const ModalPayment: React.FC<Props> = ({
   visible = false,
   children,
 }) => {
-    if (!visible) return null;
+  if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-      <div className="relative bg-white rounded-2xl p-4 w-full max-w-md">
-        <button onClick={onClose} className="absolute top-2 right-2 text-black">X</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-lg p-6">
         {children}
       </div>
     </div>
