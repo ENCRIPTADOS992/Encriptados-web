@@ -7,7 +7,7 @@ interface Props {
   placeholder?: string;
   value?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleBlur: () => void;
+  handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   width?: string;
 }
 
