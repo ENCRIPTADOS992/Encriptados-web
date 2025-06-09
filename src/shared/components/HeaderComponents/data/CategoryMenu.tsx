@@ -166,7 +166,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/SecureMDM-android_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system2",
+          link: "/apps/secure-mdm-android",
           description: t("systems.items.secureMdmAndroid.description", {
             defaultValue:
               "Secure MDM Android es una aplicación de mensajería segura.",

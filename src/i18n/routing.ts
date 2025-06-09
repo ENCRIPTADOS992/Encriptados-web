@@ -202,6 +202,13 @@ export const routing = defineRouting({
       it: "/test-crittografato/[typeOfTest]",
       pt: "/teste-encriptado/[typeOfTest]",
     },
+    "secure-mdm-android": {
+      en: "/secure-mdm-android",
+      es: "/secure-mdm-android",
+      fr: "/secure-mdm-android",
+      it: "/secure-mdm-android",
+      pt: "/secure-mdm-android"
+    },
     "/threema": {
       en: "/threema",
       es: "/threema",
