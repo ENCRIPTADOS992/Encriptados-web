@@ -1561,97 +1561,6 @@
       ]
     }
   },
-  "ElyonPage": {
-    "product": {
-      "title": "Elyon",
-      "description": "Protección y seguridad avanzada para todas tus comunicaciones",
-      "features": {
-        "endToEndEncryption": "Mensajería autodestructiva",
-        "chatHiding": "Cambiador de voz",
-        "privateCalls": "Baúl para archivos sensibles"
-      },
-      "license": {
-        "twelveMonths": "Licencia 3 meses",
-        "sixMonths": "Licencia 6 meses"
-      },
-      "pricePrefix": "Desde",
-      "price": "550$ USD",
-      "buttons": {
-        "buyNow": "Comprar ahora",
-        "chatSupport": "Chat soporte"
-      }
-    },
-    "features": {
-      "sectionTitle": "Características principales",
-      "chat": {
-        "title": "Chats Cifrados",
-        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
-      },
-      "confidentiality": {
-        "title": "Abracadabra",
-        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
-      },
-      "groupChat": {
-        "title": "Chats Anónimos Grupales",
-        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
-      },
-      "agreementFeatures": {
-        "title": "Protección de captura de pantalla",
-        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
-      }
-    },
-    "securityStandards": {
-      "cards": [
-        {
-          "title": "Borrado Remoto",
-          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
-        },
-        {
-          "title": "Chats grupales anónimos",
-          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
-        },
-        {
-          "title": "Bóveda Segura",
-          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
-        }
-      ]
-    },
-    "videoSection": {
-      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
-    },
-    "simOptions": {
-      "cards": [
-        {
-          "title": "SIM Card encriptada",
-          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          "buttonText": "Comprar",
-          "secondButtonText": "Más información"
-        },
-        {
-          "title": "E-SIM Encriptada Planes datos o minutos",
-          "description": "Subtitle element copy",
-          "buttonText": "Ver más"
-        }
-      ]
-    },
-   "faq": {
-      "title": "Preguntas Frecuentes",
-      "items": [
-        {
-          "question": "¿Cómo se encripta un teléfono Cryptcom?",
-          "answer": "La encriptación se realiza mediante un proceso especializado que transforma tu dispositivo en uno altamente seguro con software y hardware modificados."
-        },
-        {
-          "question": "¿Qué funcionalidades obtengo al encriptar mi teléfono con Cryptcom?",
-          "answer": "Obtendrás acceso a herramientas como mensajería segura, bóveda encriptada, cambio automático de IMEI y funciones avanzadas de protección."
-        },
-        {
-          "question": "¿Cómo funciona el borrado remoto en un teléfono encriptado como Cryptcom?",
-          "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina todos los datos del dispositivo para evitar accesos no autorizados."
-        }
-      ]
-    }
-  },
   "SecureMdmPage": {
     "product": {
       "title": "SECURE MDM ANDROID",
@@ -2107,6 +2016,173 @@
         {
           "question": "¿Cómo funciona el borrado remoto en un celular encriptado?",
           "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina toda la información del dispositivo para evitar el acceso no autorizado."
+        }
+      ]
+    }
+  },
+  "ElyonPage": {
+    "product": {
+      "title": "Elyon",
+      "description": "Protección y seguridad avanzada para todas tus comunicaciones",
+      "features": {
+        "endToEndEncryption": "Mensajería autodestructiva",
+        "chatHiding": "Cambiador de voz",
+        "privateCalls": "Baúl para archivos sensibles"
+      },
+      "license": {
+        "twelveMonths": "Licencia 3 meses",
+        "sixMonths": "Licencia 6 meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "550$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "features": {
+      "sectionTitle": "Características principales",
+      "chat": {
+        "title": "Chats Cifrados",
+        "description": "Los mensajes, archivos y llamadas dentro de Elyon están encriptados de extremo a extremo. Nadie podrá acceder a los mensajes, incluido Elyon."
+      },
+      "confidentiality": {
+        "title": "Abracadabra",
+        "description": "Esta función protegerá sus conversaciones de personas que miren la pantalla de su teléfono, el texto se cambiará a un valor generado aleatoriamente. Puedes revertirlo en cualquier momento tocando la varita mágica."
+      },
+      "groupChat": {
+        "title": "Chats Anónimos Grupales",
+        "description": "Los grupos estarán protegidos y todos los mensajes enviados y recibidos serán totalmente anónimos."
+      },
+      "agreementFeatures": {
+        "title": "Protección de captura de pantalla",
+        "description": "Para mayor seguridad interna, los administradores pueden restringir la capacidad de los usuarios para tomar capturas de pantalla. Si se toman capturas de pantalla, los usuarios recibirán una notificación."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "Borrado Remoto",
+          "description": "El borrado remoto borra permanentemente todo el contenido de la aplicación en segundos, sin dejar posibilidad de recuperación externa."
+        },
+        {
+          "title": "Chats grupales anónimos",
+          "description": "Los chats grupales anónimos con apodos aleatorios brindan una excelente seguridad al garantizar el anonimato total de los usuarios."
+        },
+        {
+          "title": "Bóveda Segura",
+          "description": "Proteja sus imágenes y notas con el impenetrable cifrado AES256 en una bóveda segura para una máxima protección de datos."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Subtitle element copy",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+   "faq": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "question": "¿Cómo se encripta un teléfono Cryptcom?",
+          "answer": "La encriptación se realiza mediante un proceso especializado que transforma tu dispositivo en uno altamente seguro con software y hardware modificados."
+        },
+        {
+          "question": "¿Qué funcionalidades obtengo al encriptar mi teléfono con Cryptcom?",
+          "answer": "Obtendrás acceso a herramientas como mensajería segura, bóveda encriptada, cambio automático de IMEI y funciones avanzadas de protección."
+        },
+        {
+          "question": "¿Cómo funciona el borrado remoto en un teléfono encriptado como Cryptcom?",
+          "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema elimina todos los datos del dispositivo para evitar accesos no autorizados."
+        }
+      ]
+    }
+  },
+  "SecurePage": {
+    "product": {
+      "title": "SECURE MDM IPHONE",
+      "description": "Blinda con el mayor grado de seguridad tu iPhone",
+      "features": {
+        "endToEndEncryption": "Mensajería segura",
+        "chatHiding": "Mail Cifrado",
+        "privateCalls": "Borrado remoto"
+      },
+      "license": {
+        "sixMonths": "6 Meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "600$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "benefits": {
+      "title": "Beneficios de MDM iPhone",
+      "features": {
+        "endToEndEncryption": "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
+        "chatHiding": "Incrementa la seguridad del dispositivo usando nuestra Sim Card Encriptados",
+        "privateCalls": "Correo electrónico seguro y noticias en cualquier parte del mundo. Notificaciones Push.",
+        "extra": "Restringimos el uso e instalación de aplicaciones o softwares que puedan comprometer la seguridad del dispositivo."
+      },
+      "mobileTitle": "Vuelve tu celular o tablet un dispositivo totalmente seguro",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "Aplicaciones de seguridad ocultas",
+        "hiddenAppsText": "El dispositivo parece un teléfono Android normal.",
+        "manipulationProtectionTitle": "Función de limpieza a prueba de manipulaciones",
+        "manipulationProtectionText": "Los criterios de manipulación harán que el dispositivo se borre.",
+        "nfcBlockingTitle": "Bloqueo de redes NFC",
+        "nfcBlockingText": "Bloquea redes inalámbricas, bluetooth y NFC para evitar accesos.",
+        "anonymityTitle": "Anonimato",
+        "anonymityText": "Protege la información y aplicaciones en segundo plano."
+      }
+    },
+    
+    "videoSection": {
+      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Subtitle element copy",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "questions": [
+        {
+          "question": "¿En qué dispositivo puedo instalar la app Elyon?",
+          "answer": "La app Elyon está disponible para dispositivos Android e iOS."
+        },
+        {
+          "question": "¿Cuál es el costo de la app Elyon?",
+          "answer": "El costo de la app Elyon varía según la licencia seleccionada. Puedes consultar los precios actualizados en nuestra página oficial."
+        },
+        {
+          "question": "¿Pueden espiarme si uso la app Elyon?",
+          "answer": "No, Elyon protege tu privacidad mediante cifrado de extremo a extremo y políticas estrictas de seguridad."
         }
       ]
     }

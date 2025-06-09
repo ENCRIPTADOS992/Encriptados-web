@@ -1949,5 +1949,171 @@
       "IntactPhone, qual è il prezzo?",
       "IntactPhone, chi lo produce?"
     ]
+  },
+  "ElyonPage": {
+    "product": {
+      "title": "Elyon",
+      "description": "Protezione e sicurezza avanzata per tutte le tue comunicazioni",
+      "features": {
+        "endToEndEncryption": "Messaggistica autodistruttiva",
+        "chatHiding": "Modificatore vocale",
+        "privateCalls": "Cassaforte per file sensibili"
+      },
+      "license": {
+        "twelveMonths": "Licenza di 3 mesi",
+        "sixMonths": "Licenza di 6 mesi"
+      },
+      "pricePrefix": "A partire da",
+      "price": "550$ USD",
+      "buttons": {
+        "buyNow": "Acquista ora",
+        "chatSupport": "Supporto via chat"
+      }
+    },
+    "features": {
+      "sectionTitle": "Funzionalità principali",
+      "chat": {
+        "title": "Chat crittografate",
+        "description": "Messaggi, file e chiamate in Elyon sono crittografati end-to-end. Nessuno può accedere ai tuoi messaggi, nemmeno Elyon."
+      },
+      "confidentiality": {
+        "title": "Abracadabra",
+        "description": "Questa funzione protegge le tue conversazioni da occhi indiscreti trasformando il testo in valori casuali. Puoi ripristinarlo in qualsiasi momento toccando la bacchetta magica."
+      },
+      "groupChat": {
+        "title": "Chat di gruppo anonime",
+        "description": "I gruppi sono protetti e tutti i messaggi inviati e ricevuti rimarranno completamente anonimi."
+      },
+      "agreementFeatures": {
+        "title": "Protezione da screenshot",
+        "description": "Per una maggiore sicurezza interna, gli amministratori possono limitare la possibilità degli utenti di fare screenshot. Se viene effettuato uno screenshot, l’utente riceverà una notifica."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "Cancellazione remota",
+          "description": "La cancellazione remota elimina in modo permanente tutti i contenuti dell’app in pochi secondi, senza possibilità di recupero."
+        },
+        {
+          "title": "Chat di gruppo anonime",
+          "description": "Le chat di gruppo anonime con nickname casuali garantiscono una sicurezza eccellente e l’anonimato totale degli utenti."
+        },
+        {
+          "title": "Cassaforte sicura",
+          "description": "Proteggi immagini e note con la crittografia AES256 in una cassaforte sicura per la massima protezione dei dati."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Elyon, l’app per comunicazioni private e crittografate"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "Scheda SIM crittografata",
+          "description": "Proteggiti dai criminali informatici e mantieni al sicuro i tuoi dati personali",
+          "buttonText": "Acquista",
+          "secondButtonText": "Maggiori informazioni"
+        },
+        {
+          "title": "E-SIM crittografata – Piani dati o minuti",
+          "description": "Testo segnaposto sottotitolo",
+          "buttonText": "Scopri di più"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "items": [
+        {
+          "question": "Come viene crittografato un telefono Elyon?",
+          "answer": "La crittografia avviene tramite un processo specializzato che trasforma il dispositivo in un sistema altamente sicuro con modifiche a livello software e hardware."
+        },
+        {
+          "question": "Quali funzionalità ottengo crittografando il mio telefono con Elyon?",
+          "answer": "Avrai accesso a strumenti come messaggistica sicura, cassaforte crittografata, cambio automatico dell’IMEI e funzionalità avanzate di protezione."
+        },
+        {
+          "question": "Come funziona la cancellazione remota su un telefono crittografato come Elyon?",
+          "answer": "Puoi attivare la cancellazione remota in caso di smarrimento o furto. Il sistema elimina tutti i dati dal dispositivo per impedire accessi non autorizzati."
+        }
+      ]
+    }
+  },
+  "SecurePage": {
+    "product": {
+      "title": "SECURE MDM IPHONE",
+      "description": "Proteggi il tuo iPhone con il massimo livello di sicurezza",
+      "features": {
+        "endToEndEncryption": "Messaggistica sicura",
+        "chatHiding": "Email criptata",
+        "privateCalls": "Cancellazione da remoto"
+      },
+      "license": {
+        "sixMonths": "6 Mesi"
+      },
+      "pricePrefix": "A partire da",
+      "price": "600$ USD",
+      "buttons": {
+        "buyNow": "Acquista ora",
+        "chatSupport": "Supporto via chat"
+      }
+    },
+    "benefits": {
+      "title": "Vantaggi di MDM per iPhone",
+      "features": {
+        "endToEndEncryption": "Blocco delle reti wireless per prevenire accessi o attacchi non autorizzati.",
+        "chatHiding": "Aumenta la sicurezza del dispositivo con la nostra SIM criptata.",
+        "privateCalls": "Email sicura e notizie in tutto il mondo. Notifiche push.",
+        "extra": "Limitiamo l'uso e l'installazione di app o software che possono compromettere la sicurezza del dispositivo."
+      },
+      "mobileTitle": "Trasforma il tuo telefono o tablet in un dispositivo completamente sicuro",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "App di sicurezza nascoste",
+        "hiddenAppsText": "Il dispositivo appare come un normale telefono Android.",
+        "manipulationProtectionTitle": "Funzione di cancellazione anti-manomissione",
+        "manipulationProtectionText": "Criteri di manomissione attivano la cancellazione dei dati.",
+        "nfcBlockingTitle": "Blocco delle reti NFC",
+        "nfcBlockingText": "Blocca reti wireless, Bluetooth e NFC per prevenire accessi.",
+        "anonymityTitle": "Anonimato",
+        "anonymityText": "Protegge dati e app in background."
+      }
+    },
+    "videoSection": {
+      "title": "Elyon, l'app per comunicazioni private e criptate"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM criptata",
+          "description": "Proteggiti dai cybercriminali e mantieni i tuoi dati personali al sicuro",
+          "buttonText": "Acquista",
+          "secondButtonText": "Più informazioni"
+        },
+        {
+          "title": "E-SIM criptata – Piani dati o minuti",
+          "description": "Testo segnaposto del sottotitolo",
+          "buttonText": "Scopri di più"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "questions": [
+        {
+          "question": "Su quale dispositivo posso installare l'app Elyon?",
+          "answer": "L'app Elyon è disponibile per dispositivi Android e iOS."
+        },
+        {
+          "question": "Quanto costa l'app Elyon?",
+          "answer": "Il prezzo varia a seconda della licenza scelta. Puoi controllare i prezzi aggiornati sul nostro sito ufficiale."
+        },
+        {
+          "question": "Possono spiarmi se uso l'app Elyon?",
+          "answer": "No. Elyon protegge la tua privacy con crittografia end-to-end e politiche di sicurezza rigorose."
+        }
+      ]
+    }
   }
 }

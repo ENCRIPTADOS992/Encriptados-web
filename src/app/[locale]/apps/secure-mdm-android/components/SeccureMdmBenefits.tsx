@@ -104,7 +104,7 @@ const SeccureMdmBenefits = () => {
 							width={324}
 							height={397}
 							className="object-contain"
-						/>Add commentMore actions
+						/>
 					</div>
 				</div>
 

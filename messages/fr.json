@@ -1950,5 +1950,172 @@
       "IntactPhone, quel est le prix ?",
       "IntactPhone, qui le fabrique ?"
     ]
+  },
+  "ElyonPage": {
+    "product": {
+      "title": "Elyon",
+      "description": "Protection et sécurité avancées pour toutes vos communications",
+      "features": {
+        "endToEndEncryption": "Messagerie autodestructrice",
+        "chatHiding": "Modificateur de voix",
+        "privateCalls": "Coffre-fort pour fichiers sensibles"
+      },
+      "license": {
+        "twelveMonths": "Licence 3 mois",
+        "sixMonths": "Licence 6 mois"
+      },
+      "pricePrefix": "À partir de",
+      "price": "550$ USD",
+      "buttons": {
+        "buyNow": "Acheter maintenant",
+        "chatSupport": "Assistance par chat"
+      }
+    },
+    "features": {
+      "sectionTitle": "Fonctionnalités principales",
+      "chat": {
+        "title": "Chats chiffrés",
+        "description": "Les messages, fichiers et appels dans Elyon sont chiffrés de bout en bout. Personne ne peut accéder aux messages, pas même Elyon."
+      },
+      "confidentiality": {
+        "title": "Abracadabra",
+        "description": "Cette fonction protège vos conversations des regards indiscrets en remplaçant le texte par des valeurs générées aléatoirement. Vous pouvez revenir au texte normal à tout moment en appuyant sur la baguette magique."
+      },
+      "groupChat": {
+        "title": "Chats de groupe anonymes",
+        "description": "Les groupes sont protégés et tous les messages envoyés ou reçus resteront totalement anonymes."
+      },
+      "agreementFeatures": {
+        "title": "Protection contre les captures d’écran",
+        "description": "Pour renforcer la sécurité interne, les administrateurs peuvent restreindre la possibilité de prendre des captures d’écran. Si une capture est effectuée, une notification sera envoyée à l’utilisateur."
+      }
+    },
+    "securityStandards": {
+      "cards": [
+        {
+          "title": "Effacement à distance",
+          "description": "L'effacement à distance supprime définitivement tout le contenu de l'application en quelques secondes, sans possibilité de récupération externe."
+        },
+        {
+          "title": "Chats de groupe anonymes",
+          "description": "Les chats de groupe anonymes avec pseudonymes aléatoires garantissent une excellente sécurité en assurant l’anonymat total des utilisateurs."
+        },
+        {
+          "title": "Coffre-fort sécurisé",
+          "description": "Protégez vos images et notes avec un chiffrement AES256 impénétrable dans un coffre-fort sécurisé pour une protection maximale des données."
+        }
+      ]
+    },
+    "videoSection": {
+      "title": "Elyon, application pour des communications chiffrées et privées"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "Carte SIM chiffrée",
+          "description": "Protégez-vous contre les cybercriminels et gardez vos informations personnelles en sécurité",
+          "buttonText": "Acheter",
+          "secondButtonText": "En savoir plus"
+        },
+        {
+          "title": "E-SIM chiffrée – Forfaits données ou minutes",
+          "description": "Copie de l'élément de sous-titre",
+          "buttonText": "Voir plus"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": [
+        {
+          "question": "Comment un téléphone Elyon est-il chiffré ?",
+          "answer": "Le chiffrement s’effectue par un processus spécialisé qui transforme votre appareil en un dispositif hautement sécurisé avec des modifications logicielles et matérielles."
+        },
+        {
+          "question": "Quelles fonctionnalités obtient-on en chiffrant son téléphone avec Elyon ?",
+          "answer": "Vous aurez accès à des outils tels que la messagerie sécurisée, un coffre-fort chiffré, un changement automatique d’IMEI et des fonctionnalités de protection avancées."
+        },
+        {
+          "question": "Comment fonctionne l'effacement à distance sur un téléphone chiffré comme Elyon ?",
+          "answer": "Vous pouvez activer l'effacement à distance en cas de perte ou de vol. Le système supprime toutes les données de l'appareil afin d'empêcher tout accès non autorisé."
+        }
+      ]
+    }
+  },
+  "SecurePage": {
+    "product": {
+      "title": "SECURE MDM IPHONE",
+      "description": "Protégez votre iPhone avec le plus haut niveau de sécurité",
+      "features": {
+        "endToEndEncryption": "Messagerie sécurisée",
+        "chatHiding": "E-mail chiffré",
+        "privateCalls": "Effacement à distance"
+      },
+      "license": {
+        "sixMonths": "6 Mois"
+      },
+      "pricePrefix": "À partir de",
+      "price": "600$ USD",
+      "buttons": {
+        "buyNow": "Acheter maintenant",
+        "chatSupport": "Support par chat"
+      }
+    },
+    "benefits": {
+      "title": "Avantages de MDM iPhone",
+      "features": {
+        "endToEndEncryption": "Blocage des réseaux sans fil pour prévenir les accès non autorisés ou les attaques.",
+        "chatHiding": "Renforce la sécurité de l'appareil grâce à notre carte SIM cryptée.",
+        "privateCalls": "E-mail sécurisé et actualités dans le monde entier. Notifications push.",
+        "extra": "Nous limitons l'installation et l'utilisation d'applications ou de logiciels pouvant compromettre la sécurité de l'appareil."
+      },
+      "mobileTitle": "Transformez votre téléphone ou tablette en un appareil totalement sécurisé",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "Applications de sécurité cachées",
+        "hiddenAppsText": "L'appareil ressemble à un téléphone Android classique.",
+        "manipulationProtectionTitle": "Fonction d'effacement anti-manipulation",
+        "manipulationProtectionText": "Les tentatives de manipulation déclenchent un effacement des données.",
+        "nfcBlockingTitle": "Blocage des réseaux NFC",
+        "nfcBlockingText": "Bloque les connexions sans fil, Bluetooth et NFC pour empêcher les accès.",
+        "anonymityTitle": "Anonymat",
+        "anonymityText": "Protège les informations et les applications en arrière-plan."
+      }
+    },
+    "videoSection": {
+      "title": "Elyon, l’application pour des communications privées et chiffrées"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "Carte SIM chiffrée",
+          "description": "Protégez-vous des cybercriminels et sécurisez vos informations personnelles",
+          "buttonText": "Acheter",
+          "secondButtonText": "Plus d'infos"
+        },
+        {
+          "title": "E-SIM chiffrée – Forfaits données ou minutes",
+          "description": "Texte de l'élément de sous-titre",
+          "buttonText": "Voir plus"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "questions": [
+        {
+          "question": "Sur quel appareil puis-je installer l'application Elyon ?",
+          "answer": "L'application Elyon est disponible pour les appareils Android et iOS."
+        },
+        {
+          "question": "Quel est le coût de l'application Elyon ?",
+          "answer": "Le coût dépend de la licence choisie. Consultez les prix à jour sur notre site officiel."
+        },
+        {
+          "question": "Peut-on m'espionner si j'utilise l'application Elyon ?",
+          "answer": "Non. Elyon protège votre vie privée grâce au chiffrement de bout en bout et à des politiques de sécurité strictes."
+        }
+      ]
+    }
   }
+
 }
