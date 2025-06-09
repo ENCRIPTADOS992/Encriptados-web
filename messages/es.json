@@ -1737,129 +1737,129 @@
     }
   },
   "CryptcomPage": {
-    "product": {
-      "title": "Cryptcom",
-      "description": "Turn your smartphone into a highly secure communications device.",
-      "features": {
-        "endToEndEncryption": "Automatic IMEI changer",
-        "chatHiding": "Encrypted cloud vault",
-        "privateCalls": "Application masking"
-      },
-      "license": {
-        "threeMonths": "3 Months",
-        "sixMonths": "12 Months"
-      },
-      "pricePrefix": "From",
-      "price": "729$ USD",
-      "buttons": {
-        "buyNow": "Buy now",
-        "chatSupport": "Support chat"
-      }
-    },
-    "benefits": {
-      "title": "Turn your phone or tablet into a fully secure device",
-      "features": {
-        "hiddenApps": {
-          "title": "Hidden security applications",
-          "text": "The device appears as a normal Android phone."
-        },
-        "manipulationProtection": {
-          "title": "Tamper-proof wipe function",
-          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
-        },
-        "nfcBlocking": {
-          "title": "High-level encryption ECC, OMEMO, AES-256, XMPP",
-          "text": "Equivalent to more than 15,360-bit RSA."
-        },
-        "anonymity": {
-          "title": "No fixed server locations",
-          "text": "Servers are destroyed every 24 hours after data is transferred to one without leaving a trace."
-        }
-      }
-    },
+  "product": {
+    "title": "Cryptcom",
+    "description": "Convierte tu smartphone en un dispositivo de comunicaciones altamente seguro.",
     "features": {
-      "sectionTitle": "Main Features",
-      "chat": {
-        "title": "Chat",
-        "description": "Encrypted chats: Send text, images, voice notes, and videos securely and encrypted."
-      },
-      "confidentiality": {
-        "title": "Encrypted Chat",
-        "description": "With the option of zero-knowledge anonymous groups, users won't be able to view or retrieve contact information of group members."
-      },
-      "groupChat": {
-        "title": "Secure Messaging",
-        "description": "Combined messaging, encrypted chat and email. Hybrid encrypted chats in live view with read and delivered indicators, delete/edit features, and text translation."
-      },
-      "agreementFeatures": {
-        "title": "Masked Chat",
-        "description": "Text turns into unreadable masked font when the device is idle."
-      }
+      "endToEndEncryption": "Cambiador automático de IMEI",
+      "chatHiding": "Bóveda en la nube cifrada",
+      "privateCalls": "Enmascaramiento de aplicaciones"
     },
-    "systemFeatures": {
-      "title": "System Security Features",
-      "items": {
-        "noUpdates": {
-          "title": "Automatic updates cannot be performed",
-          "text": "For increased security, automatic updates are not allowed."
-        },
-        "antiSurveillance": {
-          "title": "Anti-Surveillance Technology with automatic IMEI changer.",
-          "text": "Tampering and inactivity criteria set by the user will cause the device to wipe itself."
-        },
-        "gripTest": {
-          "title": "Grip test",
-          "text": "Applications will lock and hide if the device is shaken or grabbed."
-        },
-        "sos": {
-          "title": "SOS Coercion Notification",
-          "text": "Reverse PIN entry alerts emergency contacts of the situation and deletes the messages."
-        },
-        "encryptedVault": {
-          "title": "Encrypted Vault",
-          "text": "For encrypted storage of images, videos, notes, and voice files."
-        },
-        "appMasking": {
-          "title": "Application Masking",
-          "text": "Masks your app’s interface to resemble WhatsApp or other popular apps."
-        }
-      }
+    "license": {
+      "threeMonths": "3 Meses",
+      "sixMonths": "12 Meses"
     },
-    "videoSection": {
-      "title": "Cryptcom – The operating system that will make your phone unhackable"
-    },
-    "simOptionsCryptcom": {
-      "cards": [
-        {
-          "title": "Encrypted SIM Card",
-          "description": "Protect yourself from cybercriminals and keep your personal data safe",
-          "buttonText": "Buy",
-          "secondButtonText": "More info"
-        },
-        {
-          "title": "Encrypted E-SIM – Data or voice plans",
-          "description": "Subtitle element copy",
-          "buttonText": "See more"
-        }
-      ]
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "items": [
-        {
-          "question": "How is a Cryptcom phone encrypted?",
-          "answer": "Encryption is performed through a specialized process that transforms your device into a highly secure one with modified software and hardware."
-        },
-        {
-          "question": "What functionalities will I get by encrypting my phone with Cryptcom?",
-          "answer": "You will gain access to tools such as secure messaging, encrypted vault, automatic IMEI switching, and advanced protection features."
-        },
-        {
-          "question": "How does remote wipe work on an encrypted phone like Cryptcom?",
-          "answer": "You can activate remote wipe in case of loss or theft. The system erases all data on the device to prevent unauthorized access."
-        }
-      ]
+    "pricePrefix": "Desde",
+    "price": "729$ USD",
+    "buttons": {
+      "buyNow": "Comprar ahora",
+      "chatSupport": "Chat de soporte"
     }
+  },
+  "benefits": {
+    "title": "Convierte tu teléfono o tablet en un dispositivo totalmente seguro",
+    "features": {
+      "hiddenApps": {
+        "title": "Aplicaciones de seguridad ocultas",
+        "text": "El dispositivo aparenta ser un teléfono Android normal."
+      },
+      "manipulationProtection": {
+        "title": "Función de borrado a prueba de manipulaciones",
+        "text": "Los criterios de manipulación e inactividad definidos por el usuario harán que el dispositivo se borre automáticamente."
+      },
+      "nfcBlocking": {
+        "title": "Cifrado de alto nivel ECC, OMEMO, AES-256, XMPP",
+        "text": "Equivalente a más de 15,360 bits de RSA."
+      },
+      "anonymity": {
+        "title": "Sin ubicaciones de servidor fijas",
+        "text": "Los servidores se destruyen cada 24 horas después de transferir los datos a otro servidor sin dejar rastros."
+      }
+    }
+  },
+  "features": {
+    "sectionTitle": "Características principales",
+    "chat": {
+      "title": "Chat",
+      "description": "Chats cifrados: Envía textos, imágenes, notas de voz y videos de forma segura y encriptada."
+    },
+    "confidentiality": {
+      "title": "Chat cifrado",
+      "description": "Con la opción de grupos anónimos de conocimiento cero, los usuarios no podrán ver ni recuperar la información de contacto de los miembros del grupo."
+    },
+    "groupChat": {
+      "title": "Mensajería segura",
+      "description": "Mensajería combinada, chat cifrado y correo electrónico. Chats híbridos cifrados en vista en vivo con indicadores de lectura y entrega, funciones de eliminación/edición y traducción de texto."
+    },
+    "agreementFeatures": {
+      "title": "Chat enmascarado",
+      "description": "El texto se transforma en una fuente ilegible cuando el dispositivo está inactivo."
+    }
+  },
+  "systemFeatures": {
+    "title": "Funciones de seguridad del sistema",
+    "items": {
+      "noUpdates": {
+        "title": "No se pueden realizar actualizaciones automáticas",
+        "text": "Para mayor seguridad, no se permiten actualizaciones automáticas."
+      },
+      "antiSurveillance": {
+        "title": "Tecnología anti-vigilancia con cambiador automático de IMEI.",
+        "text": "Los criterios de manipulación e inactividad definidos por el usuario harán que el dispositivo se borre automáticamente."
+      },
+      "gripTest": {
+        "title": "Prueba de agarre",
+        "text": "Las aplicaciones se bloquearán y ocultarán si el dispositivo es sacudido o agarrado."
+      },
+      "sos": {
+        "title": "Notificación de coacción SOS",
+        "text": "La introducción inversa del PIN alerta a los contactos de emergencia de la situación y elimina los mensajes."
+      },
+      "encryptedVault": {
+        "title": "Bóveda cifrada",
+        "text": "Para el almacenamiento cifrado de imágenes, videos, notas y archivos de voz."
+      },
+      "appMasking": {
+        "title": "Enmascaramiento de aplicaciones",
+        "text": "Oculta la interfaz de la aplicación para que parezca WhatsApp u otras apps populares."
+      }
+    }
+  },
+  "videoSection": {
+    "title": "Cryptcom – El sistema operativo que hará tu teléfono invulnerable"
+  },
+  "simOptionsCryptcom": {
+    "cards": [
+      {
+        "title": "Tarjeta SIM cifrada",
+        "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+        "buttonText": "Comprar",
+        "secondButtonText": "Más información"
+      },
+      {
+        "title": "E-SIM cifrada – Planes de datos o voz",
+        "description": "Texto de ejemplo de subtítulo",
+        "buttonText": "Ver más"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Cómo se cifra un teléfono Cryptcom?",
+        "answer": "El cifrado se realiza mediante un proceso especializado que transforma tu dispositivo en uno altamente seguro con modificaciones tanto en software como en hardware."
+      },
+      {
+        "question": "¿Qué funcionalidades obtendré al cifrar mi teléfono con Cryptcom?",
+        "answer": "Tendrás acceso a herramientas como mensajería segura, bóveda cifrada, cambio automático de IMEI y funciones avanzadas de protección."
+      },
+      {
+        "question": "¿Cómo funciona el borrado remoto en un teléfono cifrado como Cryptcom?",
+        "answer": "Puedes activar el borrado remoto en caso de pérdida o robo. El sistema borra todos los datos del dispositivo para evitar accesos no autorizados."
+      }
+    ]
+  }
   },
   "RenatiPage": {
     "product": {

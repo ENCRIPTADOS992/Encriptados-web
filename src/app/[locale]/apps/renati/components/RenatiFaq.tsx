@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react";
 const RenatiFaq = () => {
   const t = useTranslations("RenatiPage.faq");
 
-	const faqs = t.raw("questions") as { question: string; answer: string }[];
+	const faqs = t.raw("items") as { question: string; answer: string }[];
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 

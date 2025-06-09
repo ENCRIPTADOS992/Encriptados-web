@@ -31,10 +31,21 @@ const ModalPaymentView: React.FC = () => {
   const { closeModal, params } = useModalPayment();
   const { productid } = params as { productid?: string; languageCode?: string };
 
-  const { data: product, isLoading } = useQuery<Product>({
-    queryKey: ["productById", productid],
-    enabled: !!productid,
-  });
+  console.log("ModalPaymentView -> params:", params);
+  console.log("ModalPaymentView -> productid:", productid);
+
+const { data: product, isLoading, error } = useQuery<Product>({
+  queryKey: ["productById", productid],
+  // queryFn: () => getProductById(productid!),
+  enabled: !!productid,
+});
+
+
+  if (error) {
+    console.error("Error al obtener el producto:", error);
+  }
+
+  console.log("ModalPaymentView -> product data:", product);
 
   const [quantity, setQuantity] = useState(1);
   const totalPrice = (Number(product?.price) || 0) * quantity;
@@ -74,7 +85,8 @@ const ModalPaymentView: React.FC = () => {
       </div>
     );
   }
-
+  console.log("Imagen:", product?.images?.[0]?.src);
+  console.log("Precio:", product?.price);
   return (
     <div className="space-y-1 w-full">
       <div className="flex items-center justify-between">
