@@ -31,28 +31,28 @@ const PayWithCrypto: React.FC<Props> = ({ productId, closeModal, languageCode, e
 
   // Polling interval
   useEffect(() => {
-  if (!data?.order_id) return;
-
-    // Aquí window.setInterval infiere correctamente un `number`
-    const intervalId = window.setInterval(async () => {
-      try {
-        const res = await fetch('/api/cripto/check-order', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pedidoId: data.order_id }),
-        });
-        const json = await res.json();
-        if (json.status) {
-          window.clearInterval(intervalId);
-          window.location.href = data.return_url;
+    let interval: ReturnType<typeof setInterval>;
+    if (data && data.order_id) {
+      interval = window.setInterval(async () => {
+        try {
+          const res = await fetch('/api/cripto/check-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pedidoId: data.order_id }),
+          });
+          const json = await res.json();
+          if (json.status) {
+            window.clearInterval(interval);
+            window.location.href = data.return_url;
+          }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (err) {
-        console.error(err);
-      }
-    }, 5000);
-
-    // Al desmontar o cambiar data, limpia el intervalo
-    return () => window.clearInterval(intervalId);
+      }, 5000);
+    }
+    return () => {
+      if (interval) window.clearInterval(interval);
+    };
   }, [data]);
 
   const handleGenerate = async () => {

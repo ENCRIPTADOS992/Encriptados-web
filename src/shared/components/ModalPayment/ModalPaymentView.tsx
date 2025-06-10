@@ -163,23 +163,35 @@ const ModalPaymentView: React.FC = () => {
 
       {/* Datos de compra */}
       {activePaymentOption === null && (
+  <Formik
+    innerRef={formikRef}
+    initialValues={initialFormValues}
+    validationSchema={paymentValidationSchema}
+    onSubmit={(values) => {
+      setUserEmail(values.email);
+      setPaymentActiveOption(PAYMENTS_METHODS.CREDIT_CARD); // o cambia dinámicamente si deseas
+    }}
+  >
+    {(formik) => (
+      <form onSubmit={formik.handleSubmit}>
+        {/* Datos de compra */}
         <div className="w-full bg-white rounded-xl p-4 mt-1 shadow">
           <h3 className="text-sm font-medium text-gray-700 mb-3">Datos de compra</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormPaymentInput
               name="email"
               placeholder="Ingresa tu Email"
-              handleChange={formikRef.current?.handleChange ?? (() => {})}
-              handleBlur={formikRef.current?.handleBlur ?? (() => {})}
-              value={formikRef.current?.values.email || ""}
+              handleChange={formik.handleChange}
+              handleBlur={formik.handleBlur}
+              value={formik.values.email}
               width="100%"
             />
             <FormPaymentInput
               name="telegramId"
               placeholder="ID telegram (opcional)"
-              handleChange={formikRef.current?.handleChange ?? (() => {})}
-              handleBlur={formikRef.current?.handleBlur ?? (() => {})}
-              value={formikRef.current?.values.telegramId || ""}
+              handleChange={formik.handleChange}
+              handleBlur={formik.handleBlur}
+              value={formik.values.telegramId ?? ""}
               width="100%"
             />
           </div>
@@ -189,15 +201,42 @@ const ModalPaymentView: React.FC = () => {
               name="termsAccepted"
               type="checkbox"
               className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
-              checked={formikRef.current?.values.termsAccepted}
-              onChange={formikRef.current?.handleChange}
+              checked={formik.values.termsAccepted}
+              onChange={formik.handleChange}
             />
             <label htmlFor="termsAccepted" className="text-xs text-gray-800">
               Acepto términos y condiciones de la compra
             </label>
           </div>
         </div>
-      )}
+
+        {/* Métodos de pago */}
+        <div className="pt-4">
+          <h3 className="text-sm font-semibold text-gray-600 mb-2">Métodos de pago</h3>
+          <div className="grid grid-cols-2 gap-4 w-full">
+            {paymentOptions.map((option, index) => (
+              <button
+                key={index}
+                type="submit"
+                onClick={() => setPaymentActiveOption(option.value)}
+                className={`border rounded p-2 ${
+                  activePaymentOption === option.value ? "border-primary" : "border-gray-300"
+                }`}
+              >
+                <PaymentOption
+                  option={option}
+                  activeOption={activePaymentOption}
+                  setActiveOption={() => {}} // Ya lo hace el botón
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      </form>
+    )}
+  </Formik>
+)}
+
 
       {/* <<— NEW: Render paymentComponent full width below Datos de compra */}
       {activePaymentOption !== null && (
