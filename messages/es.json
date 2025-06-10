@@ -769,7 +769,7 @@
     "menu": {
       "sims": "SIMS",
       "apps": "Aplicaciones",
-      "system": "Sistemas"
+      "system": "Software"
     },
     "discoverSimTitle": "Descubre las SIM cards de Encriptados.io",
     "discoverSimDescription": "Diseñadas para proteger tu privacidad en cada llamada. Sin necesidad de registro, nuestras SIMs garantizan una comunicación segura y anónima, ideal para quienes valoran la discreción y la seguridad",
@@ -872,7 +872,7 @@
       }
     },
     "systems": {
-      "title": "Sistemas",
+      "title": "Software",
       "description": "Sistemas de encriptación de datos",
       "items": {
         "secureMdmIphone": {

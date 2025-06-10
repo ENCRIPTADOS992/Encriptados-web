@@ -20,7 +20,7 @@ const ICON_COLOR_UNSELECTED = "#7E7E7E";
 const FILTER_OPTIONS = [
   { key: "sim", label: "SIM", catId: 40, Icon: SimProductsBarIcon },
   { key: "app", label: "Aplicaciones", catId: 38, Icon: AplicationsProductsBarIcon },
-  { key: "mobile", label: "Sistemas", catId: 35, Icon: PhoneProductsBarIcon },
+  { key: "mobile", label: "Software", catId: 35, Icon: PhoneProductsBarIcon },
 ] as const;
 
 interface FilterProductsBarProps {
@@ -39,7 +39,7 @@ export default function FilterProductsBar({ filters, updateFilters }: FilterProd
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-        ? "Sistemas"
+        ? "Software"
         : label,
     icon: <Icon color={selectedCat === catId ? ICON_COLOR_SELECTED : ICON_COLOR_UNSELECTED} />,
   }));
