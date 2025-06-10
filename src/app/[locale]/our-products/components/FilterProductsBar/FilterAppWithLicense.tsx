@@ -44,8 +44,8 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
           options={[
             { label: "TODO", value: "all" },
             { label: "1 mes", value: "1" },
+            { label: "3 meses", value: "3"},
             { label: "6 meses", value: "6" },
-            { label: "9 meses", value: "9" },
             { label: "12 meses", value: "12" },
           ]}
           onChangeExternal={(value) => {
