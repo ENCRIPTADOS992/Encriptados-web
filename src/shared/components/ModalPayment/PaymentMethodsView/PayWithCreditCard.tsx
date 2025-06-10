@@ -7,7 +7,7 @@ import FormPaymentInput from "../FormPaymentInput";
 
 interface Props {
   closeModal: () => void;
-  email: string;
+  email?: string;
   productId: string;
   languageCode: string;
 }

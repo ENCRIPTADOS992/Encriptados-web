@@ -8,7 +8,7 @@ interface Props {
   productId: string;
   closeModal: () => void;
   languageCode: string;
-  email: string;
+  email?: string;
 }
 
 interface CryptoResponse {
@@ -19,7 +19,7 @@ interface CryptoResponse {
   qrcode_url: string;
   currency: string;
   amount: number;
-  timeout: number; // seconds
+  timeout: number;
   message?: string;
 }
 
@@ -29,7 +29,6 @@ const PayWithCrypto: React.FC<Props> = ({ productId, closeModal, languageCode, e
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Polling interval
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (data && data.order_id) {
