@@ -31,18 +31,14 @@ type ResponseProduct = {
 };
 
 export const getProductById = async (
-  productId: string
+  productId: string,
+  lang: string = "es"
 ): Promise<ProductById> => {
   try {
-    const response = await axios.get<ProductById>(
-      `${WP_API_BASE}/encriptados/v1/products/by-id`,
-      {
-        params: {
-          product_id: productId,
-          lang: "en",
-        },
-      }
-    );
+    const url = `${WP_API_BASE}/encriptados/v1/products/${encodeURIComponent(productId)}`;
+    const response = await axios.get<ProductById>(url, {
+      params: { lang },
+    });
     return response.data;
   } catch (error) {
     console.error("Error en getProductById:", error);

@@ -8,9 +8,10 @@ interface Props {
   productId: string;
   closeModal: () => void;
   languageCode: string;
+  email: string;
 }
 
-const PayWithCrypto: React.FC<Props> = ({ productId, closeModal, languageCode }) => {
+const PayWithCrypto: React.FC<Props> = ({ productId, closeModal, languageCode, email }) => {
   return (
     <div className="mt-4 flex flex-col gap-6">
       {/* Header */}
@@ -25,7 +26,7 @@ const PayWithCrypto: React.FC<Props> = ({ productId, closeModal, languageCode })
 
       {/* Texto descriptivo */}
       <p className="text-gray-700 dark:text-gray-300 text-sm">
-        Elige tu criptomoneda preferida y escanea el QR para completar el pago. Producto:{" "}
+        Usuario: <span className="font-medium">{email}</span>. Elige tu criptomoneda preferida y escanea el QR para completar el pago. Producto:{" "}
         <span className="font-medium">{productId}</span> (idioma: <span className="font-medium">{languageCode}</span>).
       </p>
 

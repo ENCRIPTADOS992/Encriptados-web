@@ -8,9 +8,10 @@ interface Props {
   productId: string;
   closeModal: () => void;
   languageCode: string;
+  email: string;
 }
 
-const PayWithCreditCard: React.FC<Props> = ({ productId, closeModal, languageCode }) => {
+const PayWithCreditCard: React.FC<Props> = ({ productId, closeModal, languageCode, email }) => {
   return (
     <div className="mt-4 flex flex-col gap-6">
       {/* Header */}
@@ -25,7 +26,7 @@ const PayWithCreditCard: React.FC<Props> = ({ productId, closeModal, languageCod
 
       {/* Texto explicativo */}
       <p className="text-gray-700 dark:text-gray-300 text-sm">
-        Ingresa los datos de tu tarjeta y completa el proceso de pago. Producto:{" "}
+        Usuario: <span className="font-medium">{email}</span>. Ingresa los datos de tu tarjeta y completa el proceso de pago. Producto:{" "}
         <span className="font-medium">{productId}</span> (idioma: <span className="font-medium">{languageCode}</span>).
       </p>
 

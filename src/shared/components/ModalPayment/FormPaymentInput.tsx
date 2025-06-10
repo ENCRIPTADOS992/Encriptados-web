@@ -3,23 +3,29 @@
 import React from "react";
 
 interface Props {
+  name?: string;
   placeholder?: string;
   value?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   width?: string;
+  type?: string;
 }
 
 const FormPaymentInput: React.FC<Props> = ({
+  name,
   placeholder,
   value,
   handleChange,
   handleBlur,
   width = "100%",
+  type = "text",
 }) => {
   return (
     <input
-      type="text"
+      id={name}
+      name={name}               
+      type={type}
       placeholder={placeholder}
       value={value}
       onChange={handleChange}

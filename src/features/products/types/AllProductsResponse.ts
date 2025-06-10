@@ -41,49 +41,46 @@ export type Product = {
 
 
 
-export type ProductById = {
-  data: {
-    id: number;
-    title: string;
-    price: string;
-    regular_price: string;
-    sale_price: string;
-    category_id: number;
-    category: string;
-    description: string;
-    image: string;
-    image_mobile: string | null;
-    banner: string;
-    banner_mobile: string | null;
-    currency: string;
-    generaltitle: string;
-    generaldescription: string;
-    faqs: FAQ[];
-    advantages: Advantage[];
-    features: Feature[];
-    variants: Variant[];
-  };
-};
-
-export type FAQ = {
+export interface ProductById {
   id: number;
-  title: string;
-  content: string;
-};
+  name: string;
+  description: string;
+  activation: string;
+  type_product: string;
+  provider: string;
+  licensetime: string;    
+  shipping: string;
+  brand: string;
+  sku: string;
+  price: string;             
+  on_sale: boolean;
+  sale_price: string;
+  stock_quantity: number | null;
+  category: CategoryInfo;
+  purchase_note: string;
+  images: ProductImage[];
+  faqs: FAQ[];
+  advantages: Advantage[];
+  features: Feature[];
 
-export type Advantage = {
-  id: number;
-  title: string;
-  content: string;
+}
+
+export interface FAQ {
+  name: string;
+  description: string;
+}
+
+export interface Advantage {
+  name: string;
+  description: string;
   image: string;
-};
+}
 
-export type Feature = {
-  id: number;
-  title: string;
-  content: string;
-  image: string | null;
-};
+export interface Feature {
+  name: string;
+  description: string;
+  image: string;
+}
 
 export type Variant = {
   id: number;
@@ -94,3 +91,12 @@ export type Variant = {
   regular_price: string;
   sale_price: string;
 };
+
+export interface CategoryInfo {
+  id: number;
+  name: string;
+}
+
+export interface ProductImage {
+  src: string;
+}
