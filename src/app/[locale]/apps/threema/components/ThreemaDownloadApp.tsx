@@ -18,7 +18,7 @@ const ThreemaDownloadApp = () => {
               rel="noopener noreferrer"
             >
               <Image
-                src="/images/threema/appStore-logo.png"
+                src="/images/apps/threema/appStore-logo.png"
                 alt="Descargar en App Store"
                 width={150}
                 height={50}
@@ -31,7 +31,7 @@ const ThreemaDownloadApp = () => {
               rel="noopener noreferrer"
             >
               <Image
-                src="/images/threema/googleStore-logo.png"
+                src="/images/apps/threema/googleStore-logo.png"
                 alt="Descargar en Google Play"
                 width={150}
                 height={50}
@@ -46,7 +46,7 @@ const ThreemaDownloadApp = () => {
 
         <div className="flex justify-center">
           <Image
-            src="/images/threema/phone-15.png"
+            src="/images/apps/threema/phone-15.png"
             alt="QR Code para descargar la app"
             width={433}
 						height={476}

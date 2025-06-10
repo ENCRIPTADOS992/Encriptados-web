@@ -14,8 +14,8 @@ const ElyonSimOptions = () => {
   }[];
 
   const images = [
-    "/images/elyon/SIM-Card-encriptada.png",
-    "/images/elyon/E-SIM-Card-encriptada.png"
+    "/images/apps/elyon/SIM-Card-encriptada.png",
+    "/images/apps/elyon/E-SIM-Card-encriptada.png"
   ];
 
   return (

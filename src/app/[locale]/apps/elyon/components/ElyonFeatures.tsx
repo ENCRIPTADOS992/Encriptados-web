@@ -4,10 +4,10 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const features = [
-  { image: "/images/elyon/chat-cifrados.png" },
-  { image: "/images/elyon/abracadabra.png" },
-  { image: "/images/elyon/chat-grupales.png" },
-  { image: "/images/elyon/funciones-proteccion-captura-pantalla.png" },
+  { image: "/images/apps/elyon/chat-cifrados.png" },
+  { image: "/images/apps/elyon/abracadabra.png" },
+  { image: "/images/apps/elyon/chat-grupales.png" },
+  { image: "/images/apps/elyon/funciones-proteccion-captura-pantalla.png" },
 ];
 
 const ElyonFeatures = () => {

@@ -14,8 +14,8 @@ const ThreemaSimOptions = () => {
   }[];
 
   const images = [
-    "/images/threema/SIM-Card-encriptada.png",
-    "/images/threema/E-SIM-Card-encriptada.png"
+    "/images/apps/threema/SIM-Card-encriptada.png",
+    "/images/apps/threema/E-SIM-Card-encriptada.png"
   ];
 
   return (

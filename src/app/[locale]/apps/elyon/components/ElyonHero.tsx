@@ -8,7 +8,7 @@ const ElyonHero = () => {
 			{/* Desktop */}
 			<div className="hidden lg:block w-full aspect-[1440/284] relative">
 				<Image
-					src="/images/elyon/elyon-banner-desktop.png"
+					src="/images/apps/elyon/elyon-banner-desktop.png"
 					alt="elyon Desktop Banner"
 					fill
 					className="object-contain"
@@ -19,7 +19,7 @@ const ElyonHero = () => {
 			{/* Mobile */}
 			<div className="block lg:hidden w-full h-[239px] relative">
 				<Image
-					src="/images/elyon/elyon-banner-mobile.png"
+					src="/images/apps/elyon/elyon-banner-mobile.png"
 					alt="elyon Mobile Banner"
 					fill
 					className="object-cover"

@@ -8,7 +8,7 @@ const ThreemaHero = () => {
       {/* Desktop */}
       <div className="hidden lg:block w-full aspect-[1440/284] relative">
         <Image
-          src="/images/threema/threema-banner-desktop.png"
+          src="/images/apps/threema/threema-banner-desktop.png"
           alt="threema Desktop Banner"
           fill
           className="object-contain"
@@ -19,7 +19,7 @@ const ThreemaHero = () => {
 			{/* Mobile */}
 			<div className="block lg:hidden w-full h-[239px] relative">
 				<Image
-					src="/images/threema/threema-banner-mobile.png"
+					src="/images/apps/threema/threema-banner-mobile.png"
 					alt="threema Mobile Banner"
 					fill
 					className="object-cover"

@@ -5,7 +5,7 @@ const Hero = () => {
     <>
       <div className='block md:hidden'>
         <Image
-          src='/images/apps/threema/hero-mobile.jpg'
+          src='/images/apps/threema-work/hero-mobile.jpg'
           alt='threema'
           width={414}
           height={174}
@@ -14,7 +14,7 @@ const Hero = () => {
       </div>
       <div className='hidden md:block lg:hidden'>
         <Image
-          src='/images/apps/threema/hero-tablet.jpg'
+          src='/images/apps/threema-work/hero-tablet.jpg'
           alt='threema'
           width={1440}
           height={284}
@@ -23,7 +23,7 @@ const Hero = () => {
       </div>
       <div className='hidden lg:block'>
         <Image
-          src='/images/apps/threema/hero-desktop.jpg'
+          src='/images/apps/threema-work/hero-desktop.jpg'
           alt='threema'
           width={1440}
           height={284}

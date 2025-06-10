@@ -258,6 +258,13 @@ export const routing = defineRouting({
       it: "/apps/threema",
       pt: "/apps/threema"
     },
+    "/apps/threema-work":{
+      en: "/apps/threema-work",
+      es: "/apps/threema-work",
+      fr: "/apps/threema-work",
+      it: "/apps/threema-work",
+      pt: "/apps/threema-work"
+    },
     "/apps/vault-chat":{
       en: "/apps/vault-chat",
       es: "/apps/vault-chat",

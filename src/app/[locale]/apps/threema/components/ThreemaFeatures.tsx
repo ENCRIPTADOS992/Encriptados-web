@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const features = [
-  { image: "/images/threema/chat-privado.png" },
-  { image: "/images/threema/confidencialidad.png" },
-  { image: "/images/threema/chat-grupal.png" },
-  { image: "/images/threema/funciones-acuerdo.png" },
+  { image: "/images/apps/threema/chat-privado.png" },
+  { image: "/images/apps/threema/confidencialidad.png" },
+  { image: "/images/apps/threema/chat-grupal.png" },
+  { image: "/images/apps/threema/funciones-acuerdo.png" },
 ];
 
 const ThreemaFeatures = () => {

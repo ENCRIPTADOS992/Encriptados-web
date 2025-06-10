@@ -52,6 +52,18 @@ export function useTranslatedProductsCategories(): any {
       link: "/aplicaciones",
       image: "/images/mega-menu/aplicaciones.jpeg",
       items: [
+         {
+          title: t("apps.items.threemaWork.title", {
+            defaultValue: "Threema Work",
+          }),
+          image:
+            "/images/mega-menu/apps/Threema-Work_Apps_Encriptados_preview_menu_web.jpg",
+          link: "/apps/threema-work",
+          description: t("apps.items.threemaWork.description", {
+            defaultValue:
+              "Threema Work es una aplicación de mensajería segura.",
+          }),
+        },
         {
           title: t("apps.items.silentCircle.title", {
             defaultValue: "Silent Circle",
@@ -113,7 +125,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.threema.title", { defaultValue: "Threema" }),
           image:
             "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/threema",
+          link: "/apps/threema",
           description: t("apps.items.threema.description", {
             defaultValue: "Threema es una aplicación de mensajería segura.",
           }),
@@ -133,7 +145,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("apps.items.elyon.title", { defaultValue: "Elyon" }),
           image:
             "/images/mega-menu/apps/Eylon_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app10",
+          link: "/apps/elyon",
           description: t("apps.items.elyon.description", {
             defaultValue: "Elyon es una aplicación de mensajería segura.",
           }),

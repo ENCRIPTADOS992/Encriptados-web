@@ -11,7 +11,7 @@ const ElyonProduct = () => {
       {/* mobile */}
       <div className="block lg:hidden mb-6 flex justify-center">
         <Image
-          src="/images/elyon/phone-elyon-app.svg"
+          src="/images/apps/elyon/phone-elyon-app.svg"
           alt="Elyon Mobile"
           width={250}
           height={300}
@@ -69,7 +69,7 @@ const ElyonProduct = () => {
         {/* Imagen desktop */}
         <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center">
           <Image
-            src="/images/elyon/phone-elyon-app.svg"
+            src="/images/apps/elyon/phone-elyon-app.svg"
             alt="Elyon Desktop"
             width={520}
             height={329}
@@ -78,7 +78,7 @@ const ElyonProduct = () => {
           {/* imgs de descarga solo en desktop */}
           <div className="flex gap-4 mt-6">
             <Image
-              src="/images/elyon/apple-google-download-app.svg"
+              src="/images/apps/elyon/apple-google-download-app.svg"
               alt="App Store"
               width={520}
               height={51}

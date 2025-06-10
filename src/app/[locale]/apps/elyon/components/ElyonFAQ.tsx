@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react";
 const ElyonFAQ = () => {
   const t = useTranslations("ElyonPage.faq");
 
-  const faqs = t.raw("questions") as {
+  const faqs = t.raw("items") as {
     question: string;
     answer: string;
   }[];

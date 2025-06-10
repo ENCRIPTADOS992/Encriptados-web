@@ -11,7 +11,7 @@ const ThreemaProduct = () => {
       {/* mobile */}
       <div className="block lg:hidden mb-6 flex justify-center">
         <Image
-          src="/images/threema/phone-threema-app.svg"
+          src="/images/apps/threema/phone-threema-app.svg"
           alt="Threema Mobile"
           width={250}
           height={300}
@@ -69,7 +69,7 @@ const ThreemaProduct = () => {
         {/* Imagen desktop */}
         <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center">
           <Image
-            src="/images/threema/phone-threema-app.svg"
+            src="/images/apps/threema/phone-threema-app.svg"
             alt="Threema Desktop"
             width={520}
             height={329}
@@ -78,7 +78,7 @@ const ThreemaProduct = () => {
           {/* imgs de descarga solo en desktop */}
           <div className="flex gap-4 mt-6">
             <Image
-              src="/images/threema/apple-google-download-app.svg"
+              src="/images/apps/threema/apple-google-download-app.svg"
               alt="App Store"
               width={520}
               height={51}

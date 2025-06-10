@@ -18,7 +18,7 @@ const ElyonDownloadApp = () => {
               rel="noopener noreferrer"
             >
               <Image
-                src="/images/elyon/appStore-logo.png"
+                src="/images/apps/elyon/appStore-logo.png"
                 alt="Descargar en App Store"
                 width={150}
                 height={50}
@@ -31,7 +31,7 @@ const ElyonDownloadApp = () => {
               rel="noopener noreferrer"
             >
               <Image
-                src="/images/elyon/googleStore-logo.png"
+                src="/images/apps/elyon/googleStore-logo.png"
                 alt="Descargar en Google Play"
                 width={150}
                 height={50}
@@ -46,7 +46,7 @@ const ElyonDownloadApp = () => {
 
         <div className="flex justify-center">
           <Image
-            src="/images/elyon/phone-15.png"
+            src="/images/apps/elyon/phone-15.png"
             alt="QR Code para descargar la app"
             width={433}
             height={476}
