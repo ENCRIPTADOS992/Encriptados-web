@@ -13,6 +13,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.0",
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.3.1",
     "@svgr/webpack": "^8.1.0",
     "@szhsin/react-menu": "^4.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
