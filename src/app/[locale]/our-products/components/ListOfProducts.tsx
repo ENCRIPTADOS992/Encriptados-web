@@ -25,12 +25,6 @@ const serviceMap: Record<string, string> = {
   datarechargetim: "Recarga"
 };
 
-const licenseMap: Record<string, string> = {
-  "1month": "1",
-  "6month": "6",
-  "9month": "9",
-  "12month": "12"
-};
 
 const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const selectedOption = parseInt(filters.selectedOption, 10);
@@ -89,18 +83,23 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   }
 
   if ((selectedOption === 38 || selectedOption === 35) && filters.os && filters.os !== "all") {
-    console.log("[FILTRO] Aplicando filtro OS: Armadillo");
-    filteredProducts = filteredProducts.filter(product =>
-      product.name.toLowerCase().includes("armadillo")
-    );
+    const osFilter = filters.os.trim().toLowerCase();
+    console.log("[FILTRO] Aplicando filtro OS:", filters.os);
+    filteredProducts = filteredProducts.filter(product => {
+      const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
+      return brandNormalized === osFilter;
+    });
   }
 
-  // Filtro License (licensetime)
-  if ((selectedOption === 38 || selectedOption === 35) && filters.license && filters.license !== "all") {
-    const licenseValue = licenseMap[filters.license];
-    console.log("[FILTRO] Aplicando filtro License:", licenseValue);
-    filteredProducts = filteredProducts.filter(product => product.licensetime === licenseValue);
-  }
+   if ((selectedOption === 38 || selectedOption === 35) && filters.license && filters.license !== "all") {
+    console.log("[ListOfProducts] Antes de filtro Licencia, count:", filteredProducts.length);
+    filteredProducts = filteredProducts.filter(product => {
+      console.log("  producto:", product.name, "licensetime:", product.licensetime);
+      return String(product.licensetime) === String(filters.license);
+    });
+    console.log("[ListOfProducts] Después de filtro Licencia, count:", filteredProducts.length);
+      }
+      
   const productCount = filteredProducts.length;
 
   return (

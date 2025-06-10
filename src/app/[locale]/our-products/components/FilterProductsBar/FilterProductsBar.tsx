@@ -14,6 +14,8 @@ import { useTranslations } from "next-intl";
 import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 
+import { Product } from "@/features/products/types/AllProductsResponse";
+
 const ICON_COLOR_SELECTED = "#0AAEE1";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
@@ -26,9 +28,10 @@ const FILTER_OPTIONS = [
 interface FilterProductsBarProps {
   filters: ProductFilters;
   updateFilters: (newFilters: Partial<ProductFilters>) => void;
+  products?: Product[];
 }
 
-export default function FilterProductsBar({ filters, updateFilters }: FilterProductsBarProps) {
+export default function FilterProductsBar({ filters, updateFilters, products  }: FilterProductsBarProps) {
   const t = useTranslations("OurProductsPage");
   const selectedCat = parseInt(filters.selectedOption, 10);
 
@@ -52,7 +55,7 @@ export default function FilterProductsBar({ filters, updateFilters }: FilterProd
       break;
     case 38:
     case 35:
-      SubFilterComponent = <FilterAppWithLicense filters={filters} updateFilters={updateFilters} />;
+      SubFilterComponent = <FilterAppWithLicense filters={filters} updateFilters={updateFilters} products={products} />;
       break;
   }
 

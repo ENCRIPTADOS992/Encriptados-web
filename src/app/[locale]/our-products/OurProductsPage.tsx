@@ -17,11 +17,15 @@ import BannerOurProductsMobile from "./components/BannerOurProductsMobile";
 import BannerOurProducts from "./components/BannerOurProducts";
 import { useProductFilters } from "@/features/products/hooks/useProductFilters";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import { useGetProducts } from "@/features/products/queries/useGetProducts";
 
 const OurProductsPage = () => {
   const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
+
+  const selectedOption = parseInt(filters.selectedOption, 10);
+  const { data: products, isFetching, isError } = useGetProducts(selectedOption, filters.provider);
 
   useEffect(() => {
     console.log("[OurProductsPage] Página montada correctamente ✅");
@@ -49,7 +53,7 @@ const OurProductsPage = () => {
           </h1>
 
           <div id="#buysimappsection">
-            <FilterProductsBar filters={filters} updateFilters={updateFilters} />
+            <FilterProductsBar filters={filters} updateFilters={updateFilters} products={products}/>
 
             <ListOfProducts filters={filters} />
           </div>
