@@ -214,35 +214,26 @@ const FixedSimProducts: React.FC = () => {
         <div
           key={index}
           className={`
-            bg-custom-linear
-            sm:!bg-transparent
-            shadow-lg
-            sm:shadow-none
-            gap-6
-            flex flex-col
-            sm:flex-row
-            my-0
-            rounded-3xl
-            sm:p-0 ls:p-0
-            p-4
-            py-10 sm:py-0 ls:py-0
-          `}
+    border-y-4 border-[#E6F4F9]
+    bg-white
+    gap-8
+    flex flex-col md:flex-row
+    items-center justify-between
+    py-10
+    px-6 md:px-12
+    rounded-2xl
+  `}
         >
           {/* IZQUIERDA: CardDescription */}
           <CardDescription
-            logoSrc={card.logoSrc}
-            title={card.title}
-            description={card.description}
-            features={card.features}
+            features={card.featuresCardSim}
+            priceRange={card.priceLabel}
+            headerTitle={card.headerTitle}
           />
 
           {/* DERECHA: CardSim */}
           <CardSim
             productImage={card.productImage}
-            features={card.featuresCardSim}
-            priceRange={card.priceLabel}
-            headerIcon={card.headerIcon}
-            headerTitle={card.headerTitle}
           />
         </div>
       ))}
