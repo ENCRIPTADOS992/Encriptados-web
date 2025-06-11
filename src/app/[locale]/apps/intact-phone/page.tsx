@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from 'react';
 import ShoppingCart from '@/shared/svgs/ShoppingCart';
 import SupportContact from '@/shared/svgs/SupportContact';
 import { Check, CheckCircle2 } from 'lucide-react';
@@ -11,7 +14,15 @@ import Hero from './components/Hero';
 import { details } from './consts/details';
 import { plans } from './consts/plans';
 
+const prices: Record<string, string> = {
+  '12.1': '150$ USD',
+  '12.2': '1000$ USD',
+  '12.3': '1100$ USD'
+};
+
 const Page = () => {
+  const [selectedPlan, setSelectedPlan] = useState('12.1');
+
   return (
     <div>
       <Hero />
@@ -48,10 +59,16 @@ const Page = () => {
               <p>Envío de archivos adjuntos protegidos</p>
             </li>
           </ol>
-          <CustomRadioGroup options={plans} flexDirection='column' />
+          <CustomRadioGroup
+            options={plans}
+            flexDirection='column'
+            value={selectedPlan}
+            onChange={setSelectedPlan}
+          />
+
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
           <p className='text-xs'>Desde</p>
-          <b className='text-2xl'>449$ USD</b>
+          <b className='text-2xl'>{prices[selectedPlan]}</b>
           <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
             <Button type='primary' className='md:w-full md:justify-center'>
               <p className='font-medium text-base'>Comprar ahora</p>

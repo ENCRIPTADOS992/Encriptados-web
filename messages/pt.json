@@ -1097,10 +1097,10 @@
       },
       "license": {
         "threeMonths": "3 Meses",
-        "sixMonths": "6 Meses"
+        "sixMonths": "12 Meses"
       },
       "pricePrefix": "A partir de",
-      "price": "729$ USD",
+      "price": "250$ USD",
       "buttons": {
         "buyNow": "Comprar agora",
         "chatSupport": "Suporte por chat"
@@ -1431,7 +1431,7 @@
       },
       "license": {
         "threeMonths": "3 Meses",
-        "sixMonths": "3 Meses"
+        "sixMonths": "6 meses + telefone grátis"
       },
       "pricePrefix": "A partir de",
       "price": "650$ USD",
