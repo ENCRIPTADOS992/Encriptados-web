@@ -234,6 +234,10 @@ const FixedSimProducts: React.FC = () => {
           {/* DERECHA: CardSim */}
           <CardSim
             productImage={card.productImage}
+            features={card.featuresCardSim}
+            priceRange={card.priceLabel}
+            headerIcon={card.headerIcon}
+            headerTitle={card.headerTitle}
           />
         </div>
       ))}
