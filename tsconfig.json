@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/app/[locale]/our-products/components/FilterProductsBar/icons/SimProductsBarIconColor.tsx"  ],
   "exclude": [
     "node_modules"
   ]
