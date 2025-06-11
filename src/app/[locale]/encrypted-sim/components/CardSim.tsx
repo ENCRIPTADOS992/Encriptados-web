@@ -10,8 +10,13 @@ import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
 type ImageType = StaticImageData;
 
 interface CardSimProps {
-  productImage: string | ImageType;
+  productImage: string | StaticImageData;
+  features: string[]; 
+  priceRange: string; 
+  headerIcon: any;
+  headerTitle: string;
 }
+
 
 const CardSim: React.FC<CardSimProps> = ({
   productImage,
