@@ -27,12 +27,12 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
         <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
       </div>
 
-      <p className="text-xs text-gray-600 mb-3">Beneficios para ti:</p>
+      <p className="text-sm text-gray-600 mb-3">Beneficios para ti:</p>
 
       {/* Lista de características */}
       <ul className="space-y-2 mb-4">
         {features.map((item, index) => (
-          <li key={index} className="flex items-center text-xs gap-2">
+          <li key={index} className="flex items-center text-sm gap-2">
             <Image src={CheckSvg} alt="Check" className="w-4 h-4" />
             <span>{item}</span>
           </li>
@@ -40,8 +40,8 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
       </ul>
 
       {/* Precio */}
-      <div className="text-xs text-gray-600 mb-1">Desde</div>
-      <div className="text-sm font-bold mb-4">{priceRange}</div>
+      <div className="text-sm text-gray-600 mb-1">Desde</div>
+      <div className="text-xl font-bold mb-4">{priceRange}</div>
 
       {/* Botones */}
       <div className="flex justify-between gap-2 flex-nowrap">
@@ -49,7 +49,7 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
           size="medium"
           rounded="full"
           intent="black"
-          customStyles=" text-xs"
+          customStyles=" text-sm"
         >
           Comprar ahora
         </Button>
@@ -58,7 +58,7 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
           size="medium"
           rounded="full"
           intent="blueT"
-          customStyles="whitespace-nowrap text-xs"
+          customStyles="whitespace-nowrap text-sm"
           icon={<TelegramIcon className="w-5 h-5 text-white" />}
         >
           Chatear Telegram
