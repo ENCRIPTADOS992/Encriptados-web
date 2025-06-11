@@ -60,7 +60,7 @@ const EncryptedSim = () => {
             </BasicFormProvider>
           </div>
         </div>
-        <div className="max-w-[1100px] mx-auto p-4 ">
+        <div >
           {/* <SimProductsPage /> */}
           <FixedSimProducts />
         </div>
