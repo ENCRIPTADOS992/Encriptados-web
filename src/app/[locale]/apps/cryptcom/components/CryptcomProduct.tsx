@@ -1,10 +1,17 @@
 "use client";
 
+import { useState } from 'react';
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
+const prices: Record<string, string> = {
+  '3': '650$ USD',
+  '6': '1150$ USD'
+};
+
 const CryptcomProduct = () => {
   const t = useTranslations("CryptcomPage.product");
+  const [selectedLicense, setSelectedLicense] = useState<'3' | '6'>('3');
 
   return (
     <section className="lg:w-10/12 py-10 px-4 lg:px-10 bg-white mx-auto">
@@ -43,18 +50,36 @@ const CryptcomProduct = () => {
           </ul>
 
           <div className="flex items-center gap-4 mb-5 text-sm">
-            <label className="flex items-center gap-2">
-              <input type="radio" name="license" checked readOnly />
-              {t("license.sixMonths")}
-            </label>
-          </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="license"
+              value="3"
+              checked={selectedLicense === '3'}
+              onChange={() => setSelectedLicense('3')}
+            />
+            {t("license.threeMonths")}
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="license"
+              value="6"
+              checked={selectedLicense === '6'}
+              onChange={() => setSelectedLicense('6')}
+            />
+            {t("license.sixMonths")}
+          </label>
+        </div>
+
 
           <hr className="mb-4" />
 
           <p className="text-xs text-[#64748B] mb-1">{t("pricePrefix")}</p>
           <p className="text-2xl font-bold text-[#0F172A] mb-5">
-            {t("price")}
+            {prices[selectedLicense]}
           </p>
+
 
 					{/* Botones */}
 					<div className="flex flex-row gap-4 mb-6">
