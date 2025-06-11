@@ -11,6 +11,12 @@ import CustomRadioGroup from './components/RadioGroup';
 import { details } from './consts/details';
 import { plans } from './consts/plans';
 
+const prices: Record<string, string> = {
+  '6': '349$ USD',
+  '12': '595$ USD',
+  '12.1': '1495$ USD'
+};
+
 const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
   const selected = searchParams.plan || plans[0].value;
 
@@ -79,7 +85,7 @@ const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
 
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
           <p className='text-xs'>Desde</p>
-          <b className='text-2xl'>349$ USD</b>
+          <b className='text-2xl'>{prices[selected]}</b>
           <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
             <Button type='primary' className='md:w-full md:justify-center'>
               <p className='font-medium text-base'>Comprar ahora</p>

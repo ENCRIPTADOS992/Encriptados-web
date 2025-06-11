@@ -1478,10 +1478,10 @@
       },
       "license": {
         "threeMonths": "3 Months",
-        "sixMonths": "6 Months"
+        "sixMonths": "12 Months"
       },
       "pricePrefix": "From",
-      "price": "729$ USD",
+      "price": "250$ USD",
       "buttons": {
         "buyNow": "Buy now",
         "chatSupport": "Chat support"
