@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
 import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
@@ -16,7 +19,14 @@ import { characteristics } from './consts/characteristics';
 import { details } from './consts/details';
 import { plans } from './consts/plans';
 
+const prices: Record<string, number> = {
+  '3': 220,
+  '6': 350
+};
+
 const Page = () => {
+  const [selectedPlan, setSelectedPlan] = useState('3');
+
   return (
     <div>
       <Hero />
@@ -58,11 +68,15 @@ const Page = () => {
               <p>Chats encriptados</p>
             </li>
           </ol>
-          <CustomRadioGroup options={plans} />
+           <CustomRadioGroup
+            options={plans}
+            value={selectedPlan}
+            onChange={setSelectedPlan}
+          />
 
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
           <p className='text-xs'>Desde</p>
-          <b className='text-2xl'>220$ USD</b>
+           <b className='text-2xl'>{prices[selectedPlan]}$ USD</b>
           <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
             <Button type='primary' className='md:w-full md:justify-center'>
               <p className='font-medium'>Comprar ahora</p>

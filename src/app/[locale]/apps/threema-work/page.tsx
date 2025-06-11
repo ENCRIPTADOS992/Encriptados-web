@@ -23,7 +23,7 @@ const Page = () => {
       <main className='p-5 bg-[#F4F8FA] tracking-wide md:flex md:flex-row-reverse md:justify-center md:items-center md:gap-20 md:py-16 md:bg-white'>
         <div className='w-[85.5%] mx-auto mb-[50px] md:mt-9 md:w-2/4 lg:w-2/5 md:mx-0 xl:w-1/3'>
           <Image
-            src='/images/apps/threema-work/banner.webp'
+            src='/images/apps/threema-work/banner.png'
             alt='threema banner'
             width={320}
             height={237}
@@ -62,7 +62,7 @@ const Page = () => {
 
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
           <p className='text-xs'>Desde</p>
-          <b className='text-2xl'>180$ USD</b>
+          <b className='text-2xl'>45$ USD</b>
           <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
             <Button type='primary' className='md:w-full md:justify-center'>
               <p className='font-medium text-base'>Comprar ahora</p>

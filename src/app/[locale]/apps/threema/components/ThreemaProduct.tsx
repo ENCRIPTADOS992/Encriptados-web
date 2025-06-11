@@ -41,12 +41,12 @@ const ThreemaProduct = () => {
             </li>
           </ul>
 
-          <div className="flex items-center gap-4 mb-5 text-sm">
+          {/* <div className="flex items-center gap-4 mb-5 text-sm">
             <label className="flex items-center gap-2">
               <input type="radio" name="license" checked readOnly />
               {t("license.twelveMonths")}
             </label>
-          </div>
+          </div> */}
 
           <hr className="mb-4" />
 

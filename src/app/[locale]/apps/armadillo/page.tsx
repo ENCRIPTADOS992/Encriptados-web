@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
 import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
@@ -16,7 +19,15 @@ import { characteristics } from './consts/characteristics';
 import { details } from './consts/details';
 import { plans, plansDesktop } from './consts/plans';
 
+const prices: Record<string, number> = {
+  '1': 15,
+  '6': 75,
+  '12': 125
+};
+
 const Page = () => {
+  const [selectedPlan, setSelectedPlan] = useState('1');
+
   return (
     <div>
       <Hero />
@@ -58,15 +69,24 @@ const Page = () => {
               <p>Llamadas encriptadas</p>
             </li>
           </ol>
-          <CustomRadioGroup options={plans} className='md:hidden' />
+           <CustomRadioGroup
+            options={plans}
+            className='md:hidden'
+            defaultValue={selectedPlan}
+            onChange={setSelectedPlan}
+          />
+
+          {/* Desktop */}
           <CustomRadioGroup
             options={plansDesktop}
             className='hidden md:flex flex-wrap'
+            defaultValue={selectedPlan}
+            onChange={setSelectedPlan}
           />
 
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
           <p className='text-xs'>Desde</p>
-          <b className='text-2xl'>99$ USD</b>
+          <b className='text-2xl'>{prices[selectedPlan]}$ USD</b>
           <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
             <Button type='primary' className='md:w-full md:justify-center'>
               <p className='font-medium'>Comprar ahora</p>
