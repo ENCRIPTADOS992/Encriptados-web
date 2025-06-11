@@ -12,6 +12,7 @@ interface Props {
   option: Option;
   activeOption: string | null;
   setActiveOption: (value: string) => void;
+  disabled?: boolean;
 }
 
 const PaymentOption: React.FC<Props> = ({ option, activeOption, setActiveOption }) => {

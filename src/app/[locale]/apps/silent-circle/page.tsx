@@ -57,7 +57,10 @@ const Page = () => {
               <p>Mensajes temporizados</p>
             </li>
           </ol>
-          <CustomRadioGroup options={characteristics} />
+          <CustomRadioGroup
+            options={characteristics}
+            defaultValue={characteristics[0].value}
+          />
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
           <p className='text-xs'>Desde</p>
           <b className='text-2xl'>99$ USD</b>

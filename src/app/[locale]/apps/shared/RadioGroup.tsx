@@ -1,19 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 
 interface CustomRadioGroupProps {
   options: { label: string; value: string }[];
+  defaultValue?: string;
+  value?: string; 
+  onChange?: (value: string) => void;
   flexDirection?: 'row' | 'column';
   className?: string;
 }
 
 export default function CustomRadioGroup({
   options,
+  defaultValue,
+  value,
+  onChange,
   className,
-  flexDirection
+  flexDirection = 'row'
 }: CustomRadioGroupProps) {
-  const [selected, setSelected] = useState(options[0].value);
+  const [selected, setSelected] = useState(defaultValue ?? options[0].value);
+
+   useEffect(() => {
+    // sincronizar con value externo si cambia
+    if (value !== undefined && value !== selected) {
+      setSelected(value);
+    }
+  }, [value]);
+
+  const handleChange = (newValue: string) => {
+    setSelected(newValue);
+    onChange?.(newValue);
+  };
 
   return (
     <div
@@ -30,7 +48,7 @@ export default function CustomRadioGroup({
             name='customRadio'
             value={option.value}
             checked={selected === option.value}
-            onChange={() => setSelected(option.value)}
+            onChange={() => handleChange(option.value)}
             className='sr-only'
           />
           <div

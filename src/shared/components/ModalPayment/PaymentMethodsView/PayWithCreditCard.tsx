@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { CreditCardIcon } from "@heroicons/react/24/outline";
 import FormPaymentInput from "../FormPaymentInput";
@@ -18,21 +18,78 @@ const PayWithCreditCard: React.FC<Props> = ({
   productId,
   languageCode,
 }) => {
+  const [cardholderName, setCardholderName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvc, setCvc] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+
+  const normalizeCardNumber = (value: string) => value.replace(/\D/g, "");
+
+  const formatCardNumber = (value: string) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(.{4})/g, "$1 ")
+      .trim();
+  };
+
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "");
+    if (raw.length <= 16) {
+      setCardNumber(raw);
+    }
+  };
+
+  const currentYear = new Date().getFullYear() % 100;
+
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "");
+    if (raw.length > 4) return;
+
+    const mm = raw.slice(0, 2);
+    const yy = raw.slice(2, 4);
+
+    if (mm.length === 2 && (parseInt(mm, 10) < 1 || parseInt(mm, 10) > 12)) {
+      return;
+    }
+
+    if (yy && raw.length === 4 && parseInt(yy, 10) < currentYear) {
+      return;
+    }
+
+    setExpiry(raw);
+  };
+
+  const formatExpiry = (value: string) => {
+    const mm = value.slice(0, 2);
+    const yy = value.slice(2, 4);
+    return yy ? `${mm} / ${yy}` : mm;
+  };
+
+  const maskCvc = (value: string) => "•".repeat(value.length);
+
+  const handleCardholderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(value)) {
+      setCardholderName(value);
+    }
+  };
+
+  const handleNumericChange =
+    (setter: (value: string) => void, maxLength = Infinity) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const numeric = e.target.value.replace(/\D/g, "");
+      if (numeric.length <= maxLength) {
+        setter(numeric);
+      }
+    };
+
   return (
     <div className="mt-4 flex flex-col gap-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-900">Pagar con Tarjeta</h3>
-        <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
-          <XMarkIcon className="h-5 w-5" />
-        </button>
-      </div>
-
-      {/* Explicación */}
-      <p className="text-xs text-gray-700">
-        Usuario: <span className="font-medium">{email}</span>. Producto:{" "}
-        <span className="font-medium">{productId}</span> ({languageCode}).
-      </p>
+      <h3 className="text-sm font-semibold text-gray-900 mb-2">
+        Pagar con Tarjeta
+      </h3>
 
       {/* Bloque método */}
       <div className="flex items-center gap-2 bg-[#f6f9fb] rounded-lg p-3">
@@ -49,21 +106,20 @@ const PayWithCreditCard: React.FC<Props> = ({
           Titular de la tarjeta
           <FormPaymentInput
             placeholder="Juan Pérez"
-            handleChange={() => {}}
+            handleChange={handleCardholderChange}
             handleBlur={() => {}}
-            value=""
+            value={cardholderName}
             width="100%"
             type="text"
           />
         </label>
 
-        {/* Datos de tarjeta */}
         <p className="text-xs font-medium text-gray-700">Datos de tarjeta</p>
         <FormPaymentInput
           placeholder="1234 1234 1234 1234"
-          handleChange={() => {}}
+          handleChange={handleCardNumberChange}
           handleBlur={() => {}}
-          value=""
+          value={formatCardNumber(cardNumber)}
           width="100%"
           type="text"
         />
@@ -71,27 +127,28 @@ const PayWithCreditCard: React.FC<Props> = ({
         <div className="grid grid-cols-3 gap-1">
           <FormPaymentInput
             placeholder="MM / AA"
-            handleChange={() => {}}
+            handleChange={handleExpiryChange}
             handleBlur={() => {}}
-            value=""
+            value={formatExpiry(expiry)}
             width="100%"
             type="text"
           />
+
           <FormPaymentInput
             placeholder="CVC"
-            handleChange={() => {}}
+            handleChange={handleNumericChange(setCvc, 3)}
             handleBlur={() => {}}
-            value=""
+            value={cvc}
             width="100%"
-            type="text"
+            type="password"
           />
         </div>
 
         <FormPaymentInput
           placeholder="Código Postal"
-          handleChange={() => {}}
+          handleChange={handleNumericChange(setPostalCode)}
           handleBlur={() => {}}
-          value=""
+          value={postalCode}
           width="100%"
           type="text"
         />
