@@ -10,6 +10,7 @@ import PayForUse from "../../encrypted-sim/components/PayForUse";
 import WhyCallSim from "../../encrypted-sim/components/WhyCallSim/WhyCallSim";
 import BannerCoverage from "@/shared/BannerCoverage";
 import FeaturesListBlack from "../../encrypted-sim/components/FeaturesListBlack";
+import FixedSimProductDetail from "../../encrypted-sim/components/FixedSimProductDetail";
 
 const SimMoreInfo = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -18,7 +19,7 @@ const SimMoreInfo = () => {
     <>
       <div>
         {/* <SimProductsPage /> */}
-        <FixedSimProducts />
+        <FixedSimProductDetail />
       </div>
 
       <div>
@@ -27,8 +28,6 @@ const SimMoreInfo = () => {
             {t("improveYourSecurity.titleImproveYourSecurity")}
           </h2>
         </div>
-
-        {/* ¡NO ENCIERRES TODO EN w-9/12! */}
         <FeaturesListBlack />
       </div>
 

@@ -129,7 +129,7 @@ const CardProduct: React.FC<CardSimProps> = ({
               <h1
                 onClick={() => {
                   if (filters.selectedOption === "40") {
-                    router.push(`/${locale}/our-products/sim-more-info`);
+                    router.push(`/${locale}/our-products/sim-more-info?id=${id}`);
                   } else {
                     const url = getProductLink(headerTitle, Number(filters.selectedOption));
                     if (url) {
