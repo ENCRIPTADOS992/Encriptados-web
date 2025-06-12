@@ -17,9 +17,13 @@ export default function Layout({ children }: LayoutProps) {
 
   //No render product banner when the client is in productbyid
 
-  if (skipLayoutPaths === pathname) {
+  if (
+    skipLayoutPaths === pathname ||
+    pathname.includes("/sim-more-info")
+  ) {
     return children;
   }
+
   return (
     <div
       className="flex flex-col min-h-screen bg-[#EBF5FA]
