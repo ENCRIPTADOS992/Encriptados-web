@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import { useLocale } from "next-intl";
 
 interface CardSimProps {
   productImage: string; // Ahora es una URL de tipo string
@@ -30,6 +31,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
+  const locale = useLocale();
 
   console.log(`📝 [CardProduct] render para producto “${headerTitle}” (ID=${id})`);
 
@@ -108,11 +110,15 @@ const CardProduct: React.FC<CardSimProps> = ({
 
               <h1
                 onClick={() => {
-                  const url = getProductLink(headerTitle, Number(filters.selectedOption));
-                  if (url) {
-                    router.push(url);
+                  if (filters.selectedOption === "40") {
+                    router.push(`/${locale}/our-products/sim-more-info`);
                   } else {
-                    console.warn("Ruta no encontrada para:", headerTitle);
+                    const url = getProductLink(headerTitle, Number(filters.selectedOption));
+                    if (url) {
+                      router.push(url);
+                    } else {
+                      console.warn("Ruta no encontrada para:", headerTitle);
+                    }
                   }
                 }}
                 className="cursor-pointer text-[14px]"

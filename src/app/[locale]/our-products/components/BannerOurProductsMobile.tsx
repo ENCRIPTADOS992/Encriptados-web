@@ -4,9 +4,17 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 
 const BannerOurProductsMobile = () => {
-  const { setValue } = useFormContext();
+  // const { setValue } = useFormContext();
   const BannerBackground = "/images/home/banner-home.png";
   const t = useTranslations("OurProductsPage");
+
+  let setValue: ((key: string, value: any) => void) | null = null;
+  try {
+    const context = useFormContext();
+    setValue = context.setValue;
+  } catch {
+    console.warn("⚠️ useFormContext falló en BannerOurProductsMobile");
+  }
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
