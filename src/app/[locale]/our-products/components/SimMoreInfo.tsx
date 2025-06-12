@@ -17,9 +17,10 @@ const SimMoreInfo = () => {
 
   return (
     <>
-      <div>
-        {/* <SimProductsPage /> */}
-        <FixedSimProductDetail />
+      <div className="bg-gradient-to-r from-white to-[#c6f1ff] pt-16 pb-6">
+        <div>
+          <FixedSimProductDetail />
+        </div>
       </div>
 
       <div>
