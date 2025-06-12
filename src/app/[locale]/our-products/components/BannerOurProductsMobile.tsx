@@ -45,7 +45,9 @@ const BannerOurProductsMobile = () => {
                 type="button"
                 onClick={() => {
                   scrollToSection("#buysimappsection");
-                  setValue("selectedOption", "sim");
+                  if (setValue) {
+                    setValue("selectedOption", "sim");
+                  }
                 }}
                 className="w-full bg-[#7CD0F9] text-black font-semibold py-3 rounded-full hover:bg-[#6bb8e0] transition-colors"
               >
@@ -55,7 +57,9 @@ const BannerOurProductsMobile = () => {
                 type="button"
                 onClick={() => {
                   scrollToSection("#buysimappsection");
-                  setValue("selectedOption", "app");
+                  if (setValue) {
+                    setValue("selectedOption", "app");
+                  }
                 }}
                 className="w-full border-2 border-white text-white font-semibold py-3 rounded-full hover:bg-white/10 transition-colors"
               >
