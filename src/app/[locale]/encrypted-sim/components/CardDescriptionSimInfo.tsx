@@ -7,18 +7,26 @@ import TelegramIcon from "@/shared/svgs/TelegramIcon";
 import IconSupportChat from "@/shared/svgs/SupportChatIcon";
 import SimProductsBarIconColor from "../../our-products/components/FilterProductsBar/icons/SimProductsBarIconColor";
 import SupportChatIcon from "@/shared/svgs/SupportChatIcon";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 type CardDescriptionSimInfoProps = {
   features: string[];
   priceRange: string;
   headerTitle: string;
+  id: number;
+  languageCode: string;
 };
 
 const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
   features,
   priceRange,
   headerTitle,
+  id,
+  languageCode,
 }) => {
+
+  const { openModal } = useModalPayment();
+
   return (
     <div className="w-full max-w-sm mx-auto bg-white rounded-2xl overflow-hidden p-6">
       {/* Título con ícono */}
@@ -50,6 +58,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
           rounded="full"
           intent="black"
           customStyles="text-sm"
+          onClick={() => openModal({ productid: id.toString(), languageCode })}
         >
           Comprar ahora
         </Button>

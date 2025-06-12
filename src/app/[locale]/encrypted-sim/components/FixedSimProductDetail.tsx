@@ -3,6 +3,7 @@
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import CardDescriptionSimInfo from "./CardDescriptionSimInfo";
 import CardSimInfo from "./CardSimInfo";
@@ -16,7 +17,7 @@ const FixedSimProductDetail: React.FC = () => {
   const selectedId = searchParams.get("id");
   const selectedOption = searchParams.get("selectedOption") || "40";
   const categoryId = parseInt(selectedOption, 10);
-
+  const locale = useLocale();
   const {
     data: product,
     isLoading,
@@ -44,6 +45,8 @@ const FixedSimProductDetail: React.FC = () => {
           features={product.advantages?.map((adv) => adv.name) || []}
           priceRange={`${product.price}$`}
           headerTitle={product.name}
+          id={product.id} // 👈 el ID viene del fetch
+          languageCode={locale}
         />
 
         <CardSimInfo productImage={product.images[0]?.src ?? ""} />
