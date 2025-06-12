@@ -38,7 +38,7 @@ const FixedSimProductDetail: React.FC = () => {
   return (
     <div className="flex flex-col gap-5">
       <div
-        className={`border-y-4 border-[#E6F4F9] bg-white gap-8 flex flex-col md:flex-row items-center justify-between py-10 px-6 md:px-12`}
+        className={`bg-white gap-8 flex flex-col md:flex-row items-center justify-between py-10 px-6 md:px-12`}
       >
         <CardDescriptionSimInfo
           features={product.advantages?.map((adv) => adv.name) || []}
