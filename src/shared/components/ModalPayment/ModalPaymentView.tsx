@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Formik } from "formik";
-
+import Image from "next/image";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import FormPaymentInput from "./FormPaymentInput";
 import PaymentOption from "./PaymentOption";
@@ -91,19 +91,18 @@ const ModalPaymentView: React.FC = () => {
 
             <div className="flex flex-col md:flex-row gap-6 items-stretch">
               {/* Imagen del producto */}
-              <div className="flex-1 bg-blue-100 rounded-xl p-4 flex items-center justify-center h-full">
-                <div className="text-center">
-                  <img
-                    src={
-                      product?.images[0]?.src ?? "/your-image-placeholder.png"
-                    }
+              <div className="flex-1 rounded-xl flex flex-col justify-start">
+                <div className="w-full h-48 relative rounded-lg overflow-hidden">
+                  <Image
+                    src={product?.images[0]?.src ?? "/your-image-placeholder.png"}
                     alt={product?.name ?? "Producto"}
-                    className="mx-auto w-40 h-40 object-contain"
+                    fill
+                    className="object-cover"
                   />
-                  <h3 className="mt-4 font-semibold text-lg text-blue-900">
+                  </div>
+                  <h3 className="mt-4 font-semibold text-lg text-blue-900 text-center">
                     {product?.name}
                   </h3>
-                </div>
               </div>
 
               {/* Formulario principal */}

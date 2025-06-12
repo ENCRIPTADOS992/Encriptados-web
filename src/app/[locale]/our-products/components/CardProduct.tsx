@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { useLocale } from "next-intl";
 
 interface CardSimProps {
   productImage: string;
@@ -37,7 +36,6 @@ const CardProduct: React.FC<CardSimProps> = ({
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
-  const locale = useLocale();
 
   console.log(
     `📝 [CardProduct] render para producto “${headerTitle}” (ID=${id})`
@@ -50,16 +48,14 @@ const CardProduct: React.FC<CardSimProps> = ({
 
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
-      <div className="p-2 bg-[#B0B0B0]">
+      <div className="relative w-full h-32">
         <div className="relative w-full h-32 flex items-center justify-center ">
-          <div className="relative w-full h-28 flex items-center justify-center">
             <Image
               src={productImage}
               alt="Sim Card"
               fill
-              className="w-full h-full object-contain"
+              className="object-cover w-full h-full"
             />
-          </div>
         </div>
         <div className="">
           <div className="flex justify-end gap-2 mb-1 text-sm text-gray-600"></div>
@@ -128,15 +124,14 @@ const CardProduct: React.FC<CardSimProps> = ({
 
               <h1
                 onClick={() => {
-                  if (filters.selectedOption === "40") {
-                    router.push(`/${locale}/our-products/sim-more-info?id=${id}`);
+                  const url = getProductLink(
+                    headerTitle,
+                    Number(filters.selectedOption)
+                  );
+                  if (url) {
+                    router.push(url);
                   } else {
-                    const url = getProductLink(headerTitle, Number(filters.selectedOption));
-                    if (url) {
-                      router.push(url);
-                    } else {
-                      console.warn("Ruta no encontrada para:", headerTitle);
-                    }
+                    console.warn("Ruta no encontrada para:", headerTitle);
                   }
                 }}
                 className="cursor-pointer text-[14px]"
