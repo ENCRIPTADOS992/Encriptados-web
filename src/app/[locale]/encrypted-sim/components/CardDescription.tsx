@@ -1,68 +1,63 @@
-"use client";
+// src/app/[locale]/encrypted-sim/components/CardDescription.tsx
 
 import Image from "next/image";
-import Button from "@/shared/components/Button";
-import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
-import TelegramIcon from "@/shared/svgs/TelegramIcon";
-import SimProductsBarIconColor from "../../our-products/components/FilterProductsBar/icons/SimProductsBarIconColor";
+import type { StaticImageData } from "next/image";
 
-
-
-type CardDescriptionProps = {
-  features: string[];
-  priceRange: string;
-  headerTitle: string;
-};
+interface CardDescriptionProps {
+  logoSrc: StaticImageData;
+  title: string;
+  description: string;
+  features: {
+    icon: StaticImageData;
+    alt: string;
+    description: string;
+  }[];
+}
 
 const CardDescription: React.FC<CardDescriptionProps> = ({
+  logoSrc,
+  title,
+  description,
   features,
-  priceRange,
-  headerTitle,
+
 }) => {
   return (
-    <div className="w-full max-w-sm mx-auto bg-white rounded-2xl overflow-hidden p-6">
-      {/* Título con ícono */}
-      <div className="flex items-center gap-2 mb-2">
-        <SimProductsBarIconColor className="w-6 h-6 text-cyan-500" />
-        <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
+    <div className="ls:bg-custom-linear-2 md:bg-custom-linear-2 sm:bg-custom-linear-2 p-8 rounded-2xl overflow-hidden flex flex-col justify-center">
+      {/* Logo en la parte superior */}
+      <div className="mb-6 flex justify-center">
+        <Image
+          src={logoSrc}
+          alt="Logo"
+          width={200}
+          height={50}
+          className="object-contain"
+        />
       </div>
 
-      <p className="text-sm text-gray-600 mb-3">Beneficios para ti:</p>
+      {/* Título y descripción */}
+      <h2 className="lg:text-4xl md:text-2xl text-2xl font-bold text-black mb-4">
+        {title}
+      </h2>
+      <p className="text-black mb-8 text-base">{description}</p>
 
-      {/* Lista de características */}
-      <ul className="space-y-2 mb-4">
-        {features.map((item, index) => (
-          <li key={index} className="flex items-center text-sm gap-2">
-            <Image src={CheckSvg} alt="Check" className="w-4 h-4" />
-            <span>{item}</span>
-          </li>
+      {/* Aquí pintamos la cuadrícula de iconos + texto */}
+      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-center">
+        {features.map((feature, index) => (
+          <div key={index} className="flex flex-col items-center">
+            <div className="h-[80px] sm:h-[100px] md:h-[100px] lg:h-[100px] w-full bg-[#E6F4F9] rounded-2xl flex items-center justify-center p-2">
+              <Image
+                src={feature.icon}
+                alt={feature.alt}
+                width={36}
+                height={36}
+                className="object-contain"
+              />
+            </div>
+            <span className="mt-2 text-[0.6rem] sm:text-[0.8rem] text-center text-black">
+              {feature.description}
+            </span>
+          </div>
         ))}
-      </ul>
-
-      {/* Precio */}
-      <div className="text-sm text-gray-600 mb-1">Desde</div>
-      <div className="text-xl font-bold mb-4">{priceRange}</div>
-
-      {/* Botones */}
-      <div className="flex justify-between gap-2 flex-nowrap">
-        <Button
-          size="medium"
-          rounded="full"
-          intent="black"
-          customStyles=" text-sm"
-        >
-          Comprar ahora
-        </Button>
-
-        <Button
-          size="medium"
-          rounded="full"
-          intent="blueT"
-          customStyles="whitespace-nowrap text-sm"
-          icon={<TelegramIcon className="w-5 h-5 text-white" />}
-        >
-          Chatear Telegram
-        </Button>
       </div>
     </div>
   );

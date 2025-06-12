@@ -209,26 +209,31 @@ const FixedSimProducts: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#D9F6FF] w-full px-4 sm:px-8 py-10">
+    <div className="flex flex-col gap-5">
       {cardData.map((card, index) => (
         <div
           key={index}
           className={`
-              w-full
-              border-y-4 border-[#E6F4F9]
-              bg-white
-              flex flex-col md:flex-row
-              items-center justify-between
-              gap-8
-              py-10
-              px-6 md:px-12
-            `}
-          >
+            bg-custom-linear
+            sm:!bg-transparent
+            shadow-lg
+            sm:shadow-none
+            gap-6
+            flex flex-col
+            sm:flex-row
+            my-0
+            rounded-3xl
+            sm:p-0 ls:p-0
+            p-4
+            py-10 sm:py-0 ls:py-0
+          `}
+        >
           {/* IZQUIERDA: CardDescription */}
           <CardDescription
-            features={card.featuresCardSim}
-            priceRange={card.priceLabel}
-            headerTitle={card.headerTitle}
+            logoSrc={card.logoSrc}
+            title={card.title}
+            description={card.description}
+            features={card.features}
           />
 
           {/* DERECHA: CardSim */}
