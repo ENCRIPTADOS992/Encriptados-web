@@ -25,9 +25,12 @@ import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg"
 import IcomImsiSvg from "/public/images/encrypted-sim/icons/icon-imsi.svg";
 import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
 
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
+
 import type { StaticImageData } from "next/image";
 
 interface FixedCard {
+  id: number; 
   logoSrc: StaticImageData;
   title: string;
   description: string;
@@ -46,6 +49,12 @@ interface FixedCard {
 const FixedSimProducts: React.FC = () => {
   const t = useTranslations("EncryptedSimPage");
 
+  const { openModal } = useModalPayment();
+
+  const handleBuy = (id: number) => {
+    console.log(`🛒 Comprar clicado para ID=${id}`);
+    openModal({ productid: id.toString(), languageCode: "es" });
+  };
   // Define aquí las 4 cards EXACTAS (datos, minutos, imsi, esim)
   const commonFeaturesData = [
     {
@@ -139,9 +148,9 @@ const FixedSimProducts: React.FC = () => {
     },
   ];
 
-  // Array de 4 cards fijas (sin consumir la API)
   const cardData: FixedCard[] = [
     {
+      id: 443,
       logoSrc: LogoSvg1,
       title: t("products.data.title"),
       description: t("products.data.description"),
@@ -158,6 +167,7 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: t("products.data.headerTitle"),
     },
     {
+      id: 446,
       logoSrc: LogoSvg1,
       title: t("products.minutes.title"),
       description: t("products.minutes.description"),
@@ -175,6 +185,7 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: t("products.minutes.headerTitle"),
     },
     {
+      id: 452,
       logoSrc: LogoSvg1,
       title: t("products.imsi.title"),
       description: t("products.imsi.description"),
@@ -191,6 +202,7 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: t("products.imsi.headerTitle"),
     },
     {
+      id: 449,
       logoSrc: LogoSvg1,
       title: t("products.esim.title"),
       description: t("products.esim.description"),
@@ -243,6 +255,7 @@ const FixedSimProducts: React.FC = () => {
             priceRange={card.priceLabel}
             headerIcon={card.headerIcon}
             headerTitle={card.headerTitle}
+            onBuy={() => handleBuy(card.id)}
           />
         </div>
       ))}

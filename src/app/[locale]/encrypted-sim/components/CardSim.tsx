@@ -21,6 +21,7 @@ interface CardSimProps {
   priceRange: string;
   headerIcon: string | ImageType;
   headerTitle: string;
+  onBuy?: () => void;
 }
 
 const CardSim: React.FC<CardSimProps> = ({
@@ -29,6 +30,7 @@ const CardSim: React.FC<CardSimProps> = ({
   priceRange,
   headerIcon,
   headerTitle,
+  onBuy,
 }) => {
   return (
     <div className="w-full max-w-sm mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
@@ -112,6 +114,7 @@ const CardSim: React.FC<CardSimProps> = ({
             size="medium"
             rounded="full"
             intent="black"
+            onClick={onBuy}
             icon={
               <Image
                 src={LocalMallSvg}
