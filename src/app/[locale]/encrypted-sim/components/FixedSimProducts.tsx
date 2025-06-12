@@ -25,9 +25,12 @@ import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg"
 import IcomImsiSvg from "/public/images/encrypted-sim/icons/icon-imsi.svg";
 import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
 
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
+
 import type { StaticImageData } from "next/image";
 
 interface FixedCard {
+  id: number; 
   logoSrc: StaticImageData;
   title: string;
   description: string;
@@ -46,6 +49,12 @@ interface FixedCard {
 const FixedSimProducts: React.FC = () => {
   const t = useTranslations("EncryptedSimPage");
 
+  const { openModal } = useModalPayment();
+
+  const handleBuy = (id: number) => {
+    console.log(`🛒 Comprar clicado para ID=${id}`);
+    openModal({ productid: id.toString(), languageCode: "es" });
+  };
   // Define aquí las 4 cards EXACTAS (datos, minutos, imsi, esim)
   const commonFeaturesData = [
     {
@@ -139,9 +148,9 @@ const FixedSimProducts: React.FC = () => {
     },
   ];
 
-  // Array de 4 cards fijas (sin consumir la API)
   const cardData: FixedCard[] = [
     {
+      id: 443,
       logoSrc: LogoSvg1,
       title: t("products.data.title"),
       description: t("products.data.description"),
@@ -158,6 +167,7 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: t("products.data.headerTitle"),
     },
     {
+      id: 446,
       logoSrc: LogoSvg1,
       title: t("products.minutes.title"),
       description: t("products.minutes.description"),
@@ -175,6 +185,7 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: t("products.minutes.headerTitle"),
     },
     {
+      id: 452,
       logoSrc: LogoSvg1,
       title: t("products.imsi.title"),
       description: t("products.imsi.description"),
@@ -191,6 +202,7 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: t("products.imsi.headerTitle"),
     },
     {
+      id: 449,
       logoSrc: LogoSvg1,
       title: t("products.esim.title"),
       description: t("products.esim.description"),
@@ -209,31 +221,41 @@ const FixedSimProducts: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#D9F6FF] w-full px-4 sm:px-8 py-10">
+    <div className="flex flex-col gap-5">
       {cardData.map((card, index) => (
         <div
           key={index}
           className={`
-              w-full
-              border-y-4 border-[#E6F4F9]
-              bg-white
-              flex flex-col md:flex-row
-              items-center justify-between
-              gap-8
-              py-10
-              px-6 md:px-12
-            `}
-          >
+            bg-custom-linear
+            sm:!bg-transparent
+            shadow-lg
+            sm:shadow-none
+            gap-6
+            flex flex-col
+            sm:flex-row
+            my-0
+            rounded-3xl
+            sm:p-0 ls:p-0
+            p-4
+            py-10 sm:py-0 ls:py-0
+          `}
+        >
           {/* IZQUIERDA: CardDescription */}
           <CardDescription
-            features={card.featuresCardSim}
-            priceRange={card.priceLabel}
-            headerTitle={card.headerTitle}
+            logoSrc={card.logoSrc}
+            title={card.title}
+            description={card.description}
+            features={card.features}
           />
 
           {/* DERECHA: CardSim */}
           <CardSim
             productImage={card.productImage}
+            features={card.featuresCardSim}
+            priceRange={card.priceLabel}
+            headerIcon={card.headerIcon}
+            headerTitle={card.headerTitle}
+            onBuy={() => handleBuy(card.id)}
           />
         </div>
       ))}

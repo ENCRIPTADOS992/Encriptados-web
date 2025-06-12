@@ -11,7 +11,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useLocale } from "next-intl";
 
 interface CardSimProps {
-  productImage: string; // Ahora es una URL de tipo string
+  productImage: string;
   features: string[];
   priceRange: string;
   headerIcon: string;
@@ -19,6 +19,11 @@ interface CardSimProps {
   priceDiscount: string;
   id: number;
   filters: ProductFilters;
+  advantages: {
+    name: string;
+    description: string;
+    image: string;
+  }[];
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -28,12 +33,15 @@ const CardProduct: React.FC<CardSimProps> = ({
   id,
   headerTitle,
   filters,
+  advantages,
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
   const locale = useLocale();
 
-  console.log(`📝 [CardProduct] render para producto “${headerTitle}” (ID=${id})`);
+  console.log(
+    `📝 [CardProduct] render para producto “${headerTitle}” (ID=${id})`
+  );
 
   const handleBuy = () => {
     console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`);
@@ -77,6 +85,16 @@ const CardProduct: React.FC<CardSimProps> = ({
         <hr className="my-4" />
         <div className="p-0">
           <div className="w-full">
+            <div className="mt-4 mb-12 space-y-2 h-[72px] flex flex-col justify-start">
+              {advantages
+                ?.slice(0, 3)
+                .map((adv: { name: string }, index: number) => (
+                  <div key={index} className="flex items-center gap-2 text-sm">
+                    <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
+                    <span>{adv.name}</span>
+                  </div>
+                ))}
+            </div>
             <div className="flex justify-between items-center mb-2">
               <div className="flex gap-x-5 items-center justify-center">
                 <div className="flex items-center justify-center gap-x-1 text-sm">

@@ -120,6 +120,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               headerIcon={""}
               headerTitle={product.name}
               filters={filters}
+              advantages={product.advantages || []}
             />
           ))}
         </div>
