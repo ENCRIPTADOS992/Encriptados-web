@@ -166,9 +166,9 @@ const ModalPaymentView: React.FC = () => {
                       email={values.email}
                     />
                   )}
-                  {activePaymentOption === PAYMENTS_METHODS.CRYPTO && (
+                  {activePaymentOption === PAYMENTS_METHODS.CRYPTO && product && (
                     <PayWithCrypto
-                      productId={productid!}
+                      product={product}
                       closeModal={goBack}
                       languageCode={languageCode ?? "es"}
                       email={values.email}

@@ -1,20 +1,31 @@
 "use client";
 
 import React, { useEffect } from "react";
+import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 interface Props {
-  productId: string;
+  product: ProductById;
   closeModal: () => void;
   languageCode: string;
   email?: string;
 }
 
 const PayWithCrypto: React.FC<Props> = ({
-  productId,
+  product,
   closeModal,
   languageCode,
   email,
 }) => {
+  const getAmountForCrypto = (price: string) => {
+    const parsed = Number(price);
+    if (isNaN(parsed)) return 0;
+    return parsed * 100;
+  };
+
+  const amount = product.on_sale
+    ? getAmountForCrypto(product.sale_price)
+    : getAmountForCrypto(product.price);
+
   useEffect(() => {
     const startCryptoPayment = async () => {
       try {
@@ -23,13 +34,33 @@ const PayWithCrypto: React.FC<Props> = ({
           `${window.location.origin}/api/cripto/cryptomus-process`;
 
         const payload = {
-          product_id: productId,
+          sim_number: "",
           email: email || "",
+          telegramid: "",
+          name: product.name,
+          product_type: product.type_product || "app",
+          esim_select: "No",
           lang: languageCode,
-          crypto_currency: "USDT", // fija la cripto deseada, o parametrízala si quieres
+          type: "5",
+          cripto: "",
+          description: `${product.name}\n${product.licensetime || "12 meses de servicio"}`,
+          amount, 
+          image: product.images?.[0]?.src || "",
+          quantity: 1,
+          planinfo: "",
+          variant1: "",
+          variant2: "",
+          variant3: "",
+          address: "",
+          city: "",
+          country: "",
+          postal: "",
+          phone: "",
+          titular: "",
+          postal_code: "",
         };
 
-        console.log("→ Payload:", payload);
+        console.log("→ Payload enviado a Cryptomus:", payload);
 
         const res = await fetch(apiUrl, {
           method: "POST",
@@ -43,7 +74,7 @@ const PayWithCrypto: React.FC<Props> = ({
           throw new Error(json.message || "Error al generar pago cripto");
         }
 
-        window.location.href = json.url; // redirección automática
+        window.location.href = json.url;
       } catch (err) {
         console.error("Error en redirección cripto:", err);
         alert("Hubo un error al procesar el pago con criptomonedas.");
@@ -52,9 +83,9 @@ const PayWithCrypto: React.FC<Props> = ({
     };
 
     startCryptoPayment();
-  }, [productId, languageCode, email, closeModal]);
+  }, [product, languageCode, email, closeModal, amount]);
 
-  return null; // no renderizamos nada
+  return null;
 };
 
 export default PayWithCrypto;
