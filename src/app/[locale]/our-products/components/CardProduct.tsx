@@ -18,10 +18,8 @@ interface CardSimProps {
   priceDiscount: string;
   id: number;
   filters: ProductFilters;
-  advantages: {
+  checks: {
     name: string;
-    description: string;
-    image: string;
   }[];
 }
 
@@ -32,7 +30,7 @@ const CardProduct: React.FC<CardSimProps> = ({
   id,
   headerTitle,
   filters,
-  advantages,
+  checks,
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
@@ -82,7 +80,7 @@ const CardProduct: React.FC<CardSimProps> = ({
         <div className="p-0">
           <div className="w-full">
             <div className="mt-4 mb-12 space-y-2 h-[72px] flex flex-col justify-start">
-              {advantages
+              {checks
                 ?.slice(0, 3)
                 .map((adv: { name: string }, index: number) => (
                   <div key={index} className="flex items-center gap-2 text-sm">
