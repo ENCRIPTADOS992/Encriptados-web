@@ -1,3 +1,5 @@
+'use client';
+
 import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
 import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
@@ -15,8 +17,28 @@ import { characteristics } from './consts/characteristics';
 import { plans } from './consts/plans';
 import CardDetails from '../shared/CardDetails';
 import { details } from './consts/details';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getProductById } from '@/features/products/services';
+import type { ProductById } from '@/features/products/types/AllProductsResponse';
+
 
 const Page = () => {
+  const searchParams = useSearchParams();
+  const plan = searchParams.get('plan');
+  const productId = searchParams.get('productId');
+  const selected = plan || plans[0].value;
+
+  const [product, setProduct] = useState<ProductById | null>(null);
+
+  useEffect(() => {
+    if (productId) {
+      getProductById(productId, 'es')
+        .then(setProduct)
+        .catch(console.error);
+    }
+  }, [productId]);
+  
   return (
     <div>
       <Hero />
@@ -44,20 +66,19 @@ const Page = () => {
             Cifrado de extremo a extremo para la máxima privacidad y secreto en
             sus comunicaciones.
           </p>
-          <ol className='my-4'>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Videoconferencias seguras</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Edición colaborativa de documentos</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Mensajería segura</p>
-            </li>
-          </ol>
+          {Array.isArray(product?.checks) && product.checks.length > 0 ? (
+            <ol className='my-4'>
+              {product.checks.map((check: { name: string }, idx: number) => (
+                <li key={idx} className='flex items-center gap-2'>
+                  <Check width={28} height={28} color='#1C1B1F' />
+                  <p>{check.name}</p>
+                </li>
+              ))}
+            </ol>
+          ): productId ? (
+            <p className="text-sm text-gray-400 my-4">Cargando características...</p>
+          ) : null}
+          
           <CustomRadioGroup options={plans} />
 
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>

@@ -1,3 +1,5 @@
+'use client';
+
 import ShoppingCart from '@/shared/svgs/ShoppingCart';
 import SupportContact from '@/shared/svgs/SupportContact';
 import { Check, CheckCircle2 } from 'lucide-react';
@@ -12,6 +14,10 @@ import CustomRadioGroup from './components/RadioGroup';
 import { characteristics } from './consts/characteristics';
 import { details } from './consts/details';
 import { plans } from './consts/plans';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getProductById } from '@/features/products/services';
+import type { ProductById } from '@/features/products/types/AllProductsResponse';
 
 
 const prices: Record<string, string> = {
@@ -20,8 +26,22 @@ const prices: Record<string, string> = {
 };
 
 
-const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
-  const selected = searchParams.plan || plans[0].value;
+const Page = () => {
+  const searchParams = useSearchParams();
+  const plan = searchParams.get('plan');
+  const productId = searchParams.get('productId');
+  const selected = plan || plans[0].value;
+
+  const [product, setProduct] = useState<ProductById | null>(null);
+
+  useEffect(() => {
+    if (productId) {
+      getProductById(productId, 'es')
+        .then(setProduct)
+        .catch(console.error);
+    }
+  }, [productId]);
+
 
   return (
     <div>
@@ -57,20 +77,18 @@ const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
             Seguridad para tus comunicaciones con un sistema operativo versátil
             y seguro
           </p>
-          <ol className='my-4'>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Mensajes cifrados con imágenes y voz</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Interfaz unificada</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Chats grupales cifrados</p>
-            </li>
-          </ol>
+          {Array.isArray(product?.checks) && product.checks.length > 0 ? (
+            <ol className='my-4'>
+              {product.checks.map((check: { name: string }, idx: number) => (
+                <li key={idx} className='flex items-center gap-2'>
+                  <Check width={28} height={28} color='#1C1B1F' />
+                  <p>{check.name}</p>
+                </li>
+              ))}
+            </ol>
+          ): productId ? (
+            <p className="text-sm text-gray-400 my-4">Cargando características...</p>
+          ) : null}
           <CustomRadioGroup options={plans} initialSelected={selected} />
 
           <div className='h-px bg-[#D9D9D9] my-[18px]'></div>

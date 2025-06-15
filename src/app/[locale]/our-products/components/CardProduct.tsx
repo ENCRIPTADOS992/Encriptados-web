@@ -124,12 +124,9 @@ const CardProduct: React.FC<CardSimProps> = ({
 
               <h1
                 onClick={() => {
-                  const url = getProductLink(
-                    headerTitle,
-                    Number(filters.selectedOption)
-                  );
+                  const url = getProductLink(headerTitle, Number(filters.selectedOption));
                   if (url) {
-                    router.push(url);
+                    router.push(`${url}?productId=${id}`);
                   } else {
                     console.warn("Ruta no encontrada para:", headerTitle);
                   }

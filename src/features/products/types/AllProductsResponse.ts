@@ -4,6 +4,9 @@ export type Product = {
   id: number;
   name: string;
   description: string;
+  checks:{
+    name:string;
+  } [];
   activation: string;
   type_product: string;
   provider: string;
@@ -40,11 +43,13 @@ export type Product = {
 };
 
 
-
 export interface ProductById {
   id: number;
   name: string;
   description: string;
+   checks?:{
+    name:string;
+  } [];
   activation: string;
   type_product: string;
   provider: string;

@@ -30,7 +30,7 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
   { name: "SecureCrypt", link: "/app9", categoryId: 38 },
   { name: "Elyon", link: "apps/elyon", categoryId: 38 },
   { name: "VaultChat", link: "/apps/vault-chat", categoryId: 38 },
-  { name: "Armadillo", displayNames: ["Armadillo", "Armadillo Chat"], link: "/apps/armadillo", categoryId: 38 },
+  { name: "Armadillo Chat", link: "/apps/armadillo", categoryId: 38 },
   { name: "Salt App", link: "/apps/salt", categoryId: 38 },
   { name: "VNC Lagoon", link: "/apps/vnc-lagoon", categoryId: 38},
   { name: "Silent Phone", link: "/apps/silent-circle", categoryId: 38},

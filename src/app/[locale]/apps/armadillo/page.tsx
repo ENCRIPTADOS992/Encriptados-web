@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
 import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
@@ -18,6 +18,10 @@ import Hero from './components/Hero';
 import { characteristics } from './consts/characteristics';
 import { details } from './consts/details';
 import { plans, plansDesktop } from './consts/plans';
+import { useSearchParams } from 'next/navigation';
+import { getProductById } from '@/features/products/services';
+import type { ProductById } from '@/features/products/types/AllProductsResponse';
+
 
 const prices: Record<string, number> = {
   '1': 15,
@@ -26,7 +30,16 @@ const prices: Record<string, number> = {
 };
 
 const Page = () => {
+  const searchParams = useSearchParams();
+  const productId = searchParams.get('productId');
+  const [product, setProduct] = useState<ProductById | null>(null);
   const [selectedPlan, setSelectedPlan] = useState('1');
+
+  useEffect(() => {
+    if (productId) {
+      getProductById(productId, 'es').then(setProduct).catch(console.error);
+    }
+  }, [productId]);
 
   return (
     <div>
@@ -55,20 +68,18 @@ const Page = () => {
             Aplicación de mensajería instantánea de alta seguridad que respeta
             tu privacidad
           </p>
-          <ol className='my-4'>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Borrado remoto y automatizado</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Alertas de posibles impostores</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Llamadas encriptadas</p>
-            </li>
-          </ol>
+          {product?.checks ? (
+            <ol className='my-4'>
+              {product.checks.map((check, idx) => (
+                <li key={idx} className='flex items-center gap-2'>
+                  <Check width={28} height={28} color='#1C1B1F' />
+                  <p>{check.name}</p>
+                </li>
+              ))}
+            </ol>
+          ): (
+            <p className="text-sm text-gray-400 my-4">Cargando características...</p>
+          )}
            <CustomRadioGroup
             options={plans}
             className='md:hidden'

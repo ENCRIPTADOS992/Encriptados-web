@@ -1,3 +1,5 @@
+'use client';
+
 import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
 import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
@@ -14,8 +16,27 @@ import SimCardGroup from '../shared/SimCardGroup';
 import Hero from './components/Hero';
 import { details } from './consts/details';
 import { characteristics } from './consts/characteristics';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getProductById } from '@/features/products/services';
+import type { ProductById } from '@/features/products/types/AllProductsResponse';
+
 
 const Page = () => {
+  const searchParams = useSearchParams();
+  const plan = searchParams.get('plan');
+  const productId = searchParams.get('productId');
+
+  const [product, setProduct] = useState<ProductById | null>(null);
+
+  useEffect(() => {
+    if (productId) {
+      getProductById(productId, 'es')
+        .then(setProduct)
+        .catch(console.error);
+    }
+  }, [productId]);
+
   return (
     <div>
       <Hero />
@@ -43,20 +64,18 @@ const Page = () => {
             Es una app diseñada por las mejores mentes en tecnología móvil,
             centrado en mantener tus datos seguros en todo momento
           </p>
-          <ol className='my-4'>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Llamadas cifradas</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Sin permisos de ubicación</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Mensajes temporizados</p>
-            </li>
-          </ol>
+          {Array.isArray(product?.checks) && product.checks.length > 0 ? (
+            <ol className='my-4'>
+              {product.checks.map((check: { name: string }, idx: number) => (
+                <li key={idx} className='flex items-center gap-2'>
+                  <Check width={28} height={28} color='#1C1B1F' />
+                  <p>{check.name}</p>
+                </li>
+              ))}
+            </ol>
+          ): productId ? (
+            <p className="text-sm text-gray-400 my-4">Cargando características...</p>
+          ) : null}
           <CustomRadioGroup
             options={characteristics}
             defaultValue={characteristics[0].value}

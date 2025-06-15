@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
 import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
@@ -18,6 +17,11 @@ import Hero from './components/Hero';
 import { characteristics } from './consts/characteristics';
 import { details } from './consts/details';
 import { plans } from './consts/plans';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getProductById } from '@/features/products/services';
+import type { ProductById } from '@/features/products/types/AllProductsResponse';
+
 
 const prices: Record<string, number> = {
   '3': 220,
@@ -26,7 +30,21 @@ const prices: Record<string, number> = {
 
 const Page = () => {
   const [selectedPlan, setSelectedPlan] = useState('3');
+  const searchParams = useSearchParams();
+  const plan = searchParams.get('plan');
+  const productId = searchParams.get('productId');
+  const selected = plan || plans[0].value;
 
+  const [product, setProduct] = useState<ProductById | null>(null);
+
+  useEffect(() => {
+    if (productId) {
+      getProductById(productId, 'es')
+        .then(setProduct)
+        .catch(console.error);
+    }
+  }, [productId]);
+  
   return (
     <div>
       <Hero />
@@ -54,20 +72,16 @@ const Page = () => {
             Plataforma de comunicación cifrada optimizada con cifrado multicapa
             de alta gama.
           </p>
-          <ol className='my-4'>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Verificaciones de usuario</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Mensajes autodestructivos</p>
-            </li>
-            <li className='flex items-center gap-2'>
-              <Check width={28} height={28} color='#1C1B1F' />
-              <p>Chats encriptados</p>
-            </li>
-          </ol>
+          {Array.isArray(product?.checks) && product.checks.length > 0 && (
+            <ol className='my-4'>
+              {product.checks.map((check: { name: string }, idx: number) => (
+                <li key={idx} className='flex items-center gap-2'>
+                  <Check width={28} height={28} color='#1C1B1F' />
+                  <p>{check.name}</p>
+                </li>
+              ))}
+            </ol>
+          )}
            <CustomRadioGroup
             options={plans}
             value={selectedPlan}

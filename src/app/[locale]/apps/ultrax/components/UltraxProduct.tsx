@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from 'react';
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { getProductById } from "@/features/products/services";
+import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { useSearchParams } from "next/navigation";
 
 const prices: Record<string, string> = {
   '3': '649$ USD',
@@ -12,6 +15,18 @@ const prices: Record<string, string> = {
 const UltraxProduct = () => {
   const t = useTranslations("UltraxPage.product");
   const [selectedLicense, setSelectedLicense] = useState<'3' | '6'>('3');
+
+  const [product, setProduct] = useState<ProductById | null>(null);
+    const searchParams = useSearchParams();
+    const productId = searchParams.get("productId");
+  
+    useEffect(() => {
+      if (productId) {
+        getProductById(productId, 'es')
+          .then(setProduct)
+          .catch(console.error);
+      }
+    }, [productId]);
 
   return (
     <section className="lg:w-10/12 py-10 px-4 lg:px-10 bg-white mx-auto">
@@ -37,17 +52,17 @@ const UltraxProduct = () => {
             {t("description")}
           </p>
 
-          <ul className="text-[#1E293B] text-sm flex flex-col gap-2 mb-6">
-            <li className="flex items-center gap-2">
-              <span>✔</span> {t("features.endToEndEncryption")}
-            </li>
-            <li className="flex items-center gap-2">
-              <span>✔</span> {t("features.chatHiding")}
-            </li>
-            <li className="flex items-center gap-2">
-              <span>✔</span> {t("features.privateCalls")}
-            </li>
-          </ul>
+          {product?.checks ? (
+            <ul className="text-[#1E293B] text-sm flex flex-col gap-2 mb-6">
+              {product.checks.map((check, idx) => (
+                <li key={idx} className="flex items-center gap-2">
+                  <span>✔</span> {check.name}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-gray-400 mb-6">Cargando características...</p>
+          )}
 
           <div className="flex items-center gap-4 mb-5 text-sm">
             <label className="flex items-center gap-2 cursor-pointer">
