@@ -14,15 +14,25 @@ const FixedSimProductDetail: React.FC = () => {
   const t = useTranslations("EncryptedSimPage");
   const searchParams = useSearchParams();
 
-  const selectedId = searchParams.get("id");
+  const selectedId = searchParams.get("productId");
   const selectedOption = searchParams.get("selectedOption") || "40";
   const categoryId = parseInt(selectedOption, 10);
   const locale = useLocale();
+
+  console.log("🔍 ID recibido:", selectedId);
+  console.log("📦 Categoría seleccionada:", categoryId);
+
   const {
     data: product,
     isLoading,
     isError,
   } = useGetProductByIdUpdate(selectedId ?? "", categoryId);
+
+   console.log("📡 Resultado de useGetProductByIdUpdate:", {
+    isLoading,
+    isError,
+    product,
+  });
 
   if (isLoading) {
     return <div className="text-center py-10">Cargando producto...</div>;
@@ -42,7 +52,7 @@ const FixedSimProductDetail: React.FC = () => {
         className={`bg-white gap-8 flex flex-col md:flex-row items-center justify-between py-10 px-6 md:px-12`}
       >
         <CardDescriptionSimInfo
-          features={product.advantages?.map((adv) => adv.name) || []}
+          features={product.checks?.map((adv) => adv.name) || []}
           priceRange={`${product.price}$`}
           headerTitle={product.name}
           id={product.id} // 👈 el ID viene del fetch

@@ -15,7 +15,6 @@ export default function Layout({ children }: LayoutProps) {
 
   const skipLayoutPaths = `/${locale}/our-products/${productId}`;
 
-  //No render product banner when the client is in productbyid
 
   if (
     skipLayoutPaths === pathname ||

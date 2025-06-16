@@ -122,7 +122,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
               <h1
                 onClick={() => {
-                  const url = getProductLink(headerTitle, Number(filters.selectedOption));
+                  const url = getProductLink(headerTitle, Number(filters.selectedOption), id);
                   if (url) {
                     router.push(`${url}?productId=${id}`);
                   } else {
