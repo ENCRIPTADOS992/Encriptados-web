@@ -25,11 +25,12 @@ export default function CardProduct() {
         </h2>
         <p className="text-sm text-gray-600">{currentProduct?.description}</p>
         <div className="space-y-3">
-          {currentProduct?.checks.map((feature, key) => (
-            <div key={key} className="flex items-center gap-2">
-              <CheckProductIcon />
-              <span className="text-sm text-gray-700">{feature.name}</span>
-            </div>
+          {Array.isArray(currentProduct.checks) &&
+            currentProduct.checks.map((feature, key) => (
+              <div key={key} className="flex items-center gap-2">
+                <CheckProductIcon />
+                <span className="text-sm text-gray-700">{feature.name}</span>
+              </div>
           ))}
         </div>
 
