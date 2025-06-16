@@ -4,7 +4,7 @@ export type Product = {
   id: number;
   name: string;
   description: string;
-  checks:{
+  checks?:{
     name:string;
   } [];
   activation: string;
