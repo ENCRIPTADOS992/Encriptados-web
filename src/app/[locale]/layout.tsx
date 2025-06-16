@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
 import { InitAuthClient } from "@/shared/InitAuthClient";
+import { StripeProvider } from "@/shared/components/StripeProvider";
 
 export default async function LocaleLayout({
   children,
@@ -15,9 +16,11 @@ export default async function LocaleLayout({
     <>
       <InitAuthClient />
       <NextIntlClientProvider messages={messages}>
-        <CurrentHeader />
-        {children}
-        <FooterEncrypted />
+       <StripeProvider>
+          <CurrentHeader />
+          {children}
+          <FooterEncrypted />
+        </StripeProvider>
       </NextIntlClientProvider>
     </>
   );

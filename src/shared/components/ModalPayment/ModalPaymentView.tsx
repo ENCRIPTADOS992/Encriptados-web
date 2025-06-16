@@ -22,6 +22,7 @@ import {
 } from "@/shared/hooks/paymentOptions";
 import { paymentValidationSchema } from "@/shared/validations/paymentValidation";
 import { initialFormValues } from "@/shared/constants/initialFormValues";
+import { StripeProvider } from "@/shared/components/StripeProvider";
 
 const ModalPaymentView: React.FC = () => {
   const { closeModal, params } = useModalPayment();
@@ -159,13 +160,17 @@ const ModalPaymentView: React.FC = () => {
 
                   {/* Componente de pago */}
                   {activePaymentOption === PAYMENTS_METHODS.CREDIT_CARD && (
-                    <PayWithCreditCard
-                      productId={productid!}
-                      closeModal={goBack}
-                      languageCode={languageCode ?? "es"}
-                      email={values.email}
-                    />
+                    <StripeProvider>
+                      <PayWithCreditCard
+                        productId={productid!}
+                        closeModal={goBack}
+                        languageCode={languageCode ?? "es"}
+                        email={values.email}
+                        product={product!}
+                      />
+                    </StripeProvider>
                   )}
+
                   {activePaymentOption === PAYMENTS_METHODS.CRYPTO && product && (
                     <PayWithCrypto
                       product={product}

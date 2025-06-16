@@ -2,14 +2,28 @@
 
 import React, { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { CreditCardIcon } from "@heroicons/react/24/outline";
 import FormPaymentInput from "../FormPaymentInput";
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+} from "@stripe/react-stripe-js";
 
 interface Props {
   closeModal: () => void;
   email?: string;
   productId: string;
   languageCode: string;
+  product: {
+    name: string;
+    licensetime?: string;
+    price: string;
+    sale_price: string;
+    on_sale: boolean;
+    images?: { src: string }[];
+  };
 }
 
 const PayWithCreditCard: React.FC<Props> = ({
@@ -17,12 +31,88 @@ const PayWithCreditCard: React.FC<Props> = ({
   email,
   productId,
   languageCode,
+  product,
 }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
   const [cardholderName, setCardholderName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+
+    const card = elements.getElement(CardElement);
+    if (!card) return;
+
+    setLoading(true);
+
+    const { token, error } = await stripe.createToken(card, {
+      name: cardholderName,
+      address_zip: postalCode,
+    });
+
+    if (error || !token) {
+      console.error("Error generando token:", error);
+      alert("Error al procesar tarjeta.");
+      setLoading(false);
+      return;
+    }
+
+    const price = product.on_sale ? product.sale_price : product.price;
+    const amount = Number(price) * 100;
+
+    const payload = {
+      sim_number: "",
+      email: email || "",
+      telegramid: "",
+      name: product.name,
+      product_type: "app",
+      esim_select: "No",
+      lang: languageCode,
+      type: "5",
+      cripto: "",
+      description: `${product.name}\n${product.licensetime || "12 meses de servicio"}`,
+      amount,
+      image: product.images?.[0]?.src || "",
+      quantity: 1,
+      planinfo: "",
+      variant1: "",
+      variant2: "",
+      variant3: "",
+      address: "",
+      city: "",
+      country: "",
+      postal: "",
+      phone: "",
+      titular: cardholderName,
+      paymethod_id: "stripe",
+      postal_code: postalCode,
+      stripeToken: token.id,
+    };
+
+    const res = await fetch("https://app.encriptados.io/api/chargetype", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const json = await res.json();
+    if (json.status === "success") {
+      alert("✅ Pago exitoso");
+    } else {
+      console.error("❌ Error del servidor:", json);
+      alert("Error al procesar el pago");
+    }
+
+    setLoading(false);
+    closeModal();
+  };
 
   const normalizeCardNumber = (value: string) => value.replace(/\D/g, "");
 
@@ -115,34 +205,29 @@ const PayWithCreditCard: React.FC<Props> = ({
         </label>
 
         <p className="text-xs font-medium text-gray-700">Datos de tarjeta</p>
-        <FormPaymentInput
-          placeholder="1234 1234 1234 1234"
-          handleChange={handleCardNumberChange}
-          handleBlur={() => {}}
-          value={formatCardNumber(cardNumber)}
-          width="100%"
-          type="text"
-        />
+        <label className="flex flex-col text-xs text-gray-600">
+  Número de tarjeta
+  <div className="p-2 border rounded bg-white">
+    <CardNumberElement className="w-full" />
+  </div>
+</label>
 
-        <div className="grid grid-cols-3 gap-1">
-          <FormPaymentInput
-            placeholder="MM / AA"
-            handleChange={handleExpiryChange}
-            handleBlur={() => {}}
-            value={formatExpiry(expiry)}
-            width="100%"
-            type="text"
-          />
+{/* Fecha y CVC */}
+<div className="grid grid-cols-2 gap-2">
+  <label className="flex flex-col text-xs text-gray-600">
+    Vencimiento
+    <div className="p-2 border rounded bg-white">
+      <CardExpiryElement className="w-full" />
+    </div>
+  </label>
 
-          <FormPaymentInput
-            placeholder="CVC"
-            handleChange={handleNumericChange(setCvc, 3)}
-            handleBlur={() => {}}
-            value={cvc}
-            width="100%"
-            type="password"
-          />
-        </div>
+  <label className="flex flex-col text-xs text-gray-600">
+    CVC
+    <div className="p-2 border rounded bg-white">
+      <CardCvcElement className="w-full" />
+    </div>
+  </label>
+</div>
 
         <FormPaymentInput
           placeholder="Código Postal"
