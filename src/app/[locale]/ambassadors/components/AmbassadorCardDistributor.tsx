@@ -33,12 +33,12 @@ export default function AmbassadorCardDistributor({
     <div className="w-full max-w-md  text-white rounded-2xl overflow-hidden shadow-lg">
       <div className="relative h-[300px] overflow-hidden">
         {typeof image === "string" ? (
-          <img src={image} alt="" className="w-full h-full object-cover" />
-          ) : (
-            React.createElement(image, {
-              className: "w-full h-full object-cover",
-            })
-          )}
+          <img src={image} alt="Promotor" className="w-full h-full object-cover" />
+        ) : (
+          React.createElement(image as React.FC<React.SVGProps<SVGSVGElement>>, {
+            className: "w-full h-full object-cover",
+          })
+        )}
       </div>
       <div className="p-6 space-y-6 bg-[#151515]">
         <div className="flex items-center gap-2">
