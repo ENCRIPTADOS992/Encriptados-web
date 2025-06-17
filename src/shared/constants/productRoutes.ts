@@ -17,7 +17,7 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
   { name: "Total Sec", link: "/system8", categoryId: 35 },
   { name: "T2 Communicator", link: "/apps/t2-communicator", categoryId: 35 },
   { name: "Intact Phone", link: "/apps/intact-phone", categoryId: 35 },
-  { name: "Secure MDM iPhone", link: "/system1", categoryId: 35 },
+  { name: "Secure MDM iPhone", link: "/apps/secure-mdm-iphone", categoryId: 35 },
   { name: "Secure MDM Android", link: "/apps/secure-mdm-android", categoryId: 35 },
 
   // Aplicaciones (38)
