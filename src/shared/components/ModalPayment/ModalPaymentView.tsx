@@ -171,14 +171,16 @@ const ModalPaymentView: React.FC = () => {
                     </StripeProvider>
                   )}
 
-                  {activePaymentOption === PAYMENTS_METHODS.CRYPTO && product && (
+                 {activePaymentOption === PAYMENTS_METHODS.CRYPTO && product && (
+                  <div className="hidden">
                     <PayWithCrypto
                       product={product}
                       closeModal={goBack}
                       languageCode={languageCode ?? "es"}
                       email={values.email}
                     />
-                  )}
+                  </div>
+                )}
                 </div>
               </div>
             </div>
@@ -256,13 +258,67 @@ const ModalPaymentView: React.FC = () => {
                       option={option}
                       activeOption={activePaymentOption}
                       setActiveOption={(value) => {
-                        if (!emailIsValid) {
-                          setFieldTouched("email", true);
-                          setFieldTouched("termsAccepted", true);
-                        } else {
-                          setPaymentActiveOption(value);
-                        }
-                      }}
+                      if (!emailIsValid) {
+                        setFieldTouched("email", true);
+                        setFieldTouched("termsAccepted", true);
+                        return;
+                      }
+
+                      if (value === PAYMENTS_METHODS.CRYPTO) {
+                        const url = process.env.NEXT_PUBLIC_API_CRYPTO_MUS || `${window.location.origin}/api/cripto/cryptomus-process`;
+
+                        const payload = {
+                          sim_number: "",
+                          email: values.email,
+                          telegramid: values.telegramId || "",
+                          name: product?.name || "",
+                          product_type: product?.type_product || "app",
+                          esim_select: "No",
+                          lang: languageCode ?? "es",
+                          type: "5",
+                          cripto: "",
+                          description: `${product?.name}\n${product?.licensetime || "12 meses de servicio"}`,
+                          amount: Number(product?.price || 0) * 100,
+                          image: product?.images?.[0]?.src || "",
+                          quantity: 1,
+                          planinfo: "",
+                          variant1: "",
+                          variant2: "",
+                          variant3: "",
+                          address: "",
+                          city: "",
+                          country: "",
+                          postal: "",
+                          phone: "",
+                          titular: "",
+                          postal_code: "",
+                        };
+
+                        fetch(url, {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify(payload),
+                        })
+                          .then((res) => res.json())
+                          .then((json) => {
+                            if (json?.status && json?.url) {
+                              window.location.href = json.url;
+                            } else {
+                              throw new Error(json.message || "Error al generar pago cripto");
+                            }
+                          })
+                          .catch((err) => {
+                            console.error("❌ Error redirigiendo a Cryptomus", err);
+                            alert("Hubo un error al procesar el pago con criptomonedas.");
+                            closeModal();
+                          });
+
+                        return; 
+                      }
+
+                      setPaymentActiveOption(value);
+                    }}
+
                       disabled={!emailIsValid}
                     />
                   ))}
