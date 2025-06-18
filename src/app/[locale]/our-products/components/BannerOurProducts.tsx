@@ -18,7 +18,7 @@ const BannerOurProducts = () => {
   return (
     <div className="relative w-full py-10 flex justify-center items-center">
       {/* Contenedor tipo tarjeta */}
-      <div className="relative w-full max-w-[1100px] bg-[#1a1a1a] rounded-xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
+      <div className="relative w-full max-w-[1200px] bg-[#1a1a1a] rounded-xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
 
         {/* Fondo de puntos detrás del texto */}
         <div className="absolute top-0 left-0 h-[70%] w-full z-0">
