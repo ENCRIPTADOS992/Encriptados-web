@@ -12,6 +12,7 @@ import CustomRadioGroup from './components/RadioGroup';
 import { characteristics } from './consts/characteristics';
 import { details } from './consts/details';
 import { plans } from './consts/plans';
+import TelegramButton from '@/shared/components/TelegramButton';
 
 const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
   const selected = searchParams.plan || plans[0].value;
@@ -88,10 +89,11 @@ const Page = ({ searchParams }: { searchParams: { plan?: string } }) => {
               <p className='font-medium text-base'>Comprar ahora</p>
               <ShoppingCart color='white' height={20} width={20} />
             </Button>
-            <Button type='alternative' className='md:w-full md:justify-center'>
+            <TelegramButton />
+            {/* <Button type='alternative' className='md:w-full md:justify-center'>
               <p className='font-medium'>Chat soporte</p>
               <SupportContact width={20} height={18} color='#00516b' />
-            </Button>
+            </Button> */}
           </div>
         </div>
       </main>

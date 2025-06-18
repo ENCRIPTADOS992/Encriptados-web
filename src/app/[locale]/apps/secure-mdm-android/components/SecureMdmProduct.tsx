@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { useSearchParams } from "next/navigation";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 const SecureMdmProduct = () => {
   const t = useTranslations("SecureMdmPage.product");
@@ -84,7 +85,9 @@ const SecureMdmProduct = () => {
 							/>
 						</button>
 
-						<button className="bg-[#E6F6FB] text-[#054D61] px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-[#d7f0f7]">
+            <TelegramButton />
+
+						{/* <button className="bg-[#E6F6FB] text-[#054D61] px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-[#d7f0f7]">
 							{t("buttons.chatSupport")}
 							<Image
 								src="/images/apps/secure-mdm-android/support_agent.png"
@@ -92,7 +95,7 @@ const SecureMdmProduct = () => {
 								width={20}
 								height={20}
 							/>
-						</button>
+						</button> */}
 					</div>
 
         </div>

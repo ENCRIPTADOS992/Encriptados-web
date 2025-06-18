@@ -55,7 +55,7 @@ const FixedSimProductDetail: React.FC = () => {
           features={product.checks?.map((adv) => adv.name) || []}
           priceRange={`${product.price}$`}
           headerTitle={product.name}
-          id={product.id} // 👈 el ID viene del fetch
+          id={product.id}
           languageCode={locale}
         />
 

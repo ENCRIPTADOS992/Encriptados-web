@@ -24,14 +24,14 @@ const ListOfFiltersButton: React.FC<ListOfFiltersButtonProps> = ({ items, value,
           onClick={() => onChange(item.value)}
           className={`flex flex-col items-center justify-center rounded-lg shadow-md transition-transform transform p-1 w-full ${
             value === item.value
-              ? "bg-[#E3F8FF] border-[#0AAEE1] border"
-              : "bg-white border border-gray-300"
+              ? "bg-[#3E3E3E] border-[#CCCCCC] border"
+              : "bg-#222222 border-[#3E3E3E] border"
           }`}
         >
           {item.icon && <span className="mb-2">{item.icon}</span>}
           <span
             className={`text-xs font-semibold ${
-              value === item.value ? "text-[#085D77]" : "text-[#7E7E7E]"
+              value === item.value ? "text-[#CCCCCC]" : "text-[#7E7E7E]"
             }`}
           >
             {item.label}

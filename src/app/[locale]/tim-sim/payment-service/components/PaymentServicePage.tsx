@@ -12,6 +12,7 @@ import ListOfGBSMonths from "../../../../../shared/components/ListOfGBSMonths";
 import { useRouter } from "next/navigation";
 import ThreeCountries from "@/app/[locale]/ira-sim/svgs/ThreeCountries";
 import { useFormContext } from "react-hook-form";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 const PaymentServicePage = () => {
   const { watch } = useFormContext();
@@ -125,11 +126,13 @@ const PaymentServicePage = () => {
               Comprar ahora
             </Button>
           </div>
+          
+          <TelegramButton />
 
-          <div className="flex justify-center gap-x-2">
+          {/* <div className="flex justify-center gap-x-2">
             <h1 className="text-[#00516B] font-bold">Chat soporte</h1>
             <SupportContact color="#00516B" />
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { useSearchParams } from "next/navigation";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 
 const ElyonProduct = () => {
@@ -76,9 +77,10 @@ const ElyonProduct = () => {
             <button className="bg-black text-white px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:opacity-90">
               {t("buttons.buyNow")} 🛒
             </button>
-            <button className="bg-[#E6F6FB] text-[#054D61] px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-[#d7f0f7]">
+            <TelegramButton />
+            {/* <button className="bg-[#E6F6FB] text-[#054D61] px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-[#d7f0f7]">
               {t("buttons.chatSupport")} 💬
-            </button>
+            </button> */}
           </div>
         </div>
 

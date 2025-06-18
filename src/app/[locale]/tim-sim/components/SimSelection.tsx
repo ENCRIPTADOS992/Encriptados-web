@@ -1,5 +1,6 @@
 "use client";
 
+import TelegramButton from '@/shared/components/TelegramButton';
 import { useState } from 'react';
 
 interface Region {
@@ -162,7 +163,10 @@ const SimSelection = () => {
             <span className="font-bold text-lg">$10 USD</span>
             <button className="bg-blue-500 text-white py-2 px-4 rounded-lg">Comprar ahora</button>
           </div>
-          <button className="w-full border rounded-lg py-2">Chat soporte</button>
+
+          <TelegramButton />
+
+          {/* <button className="w-full border rounded-lg py-2">Chat soporte</button> */}
         </div>
       )}
     </div>

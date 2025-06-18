@@ -33,17 +33,17 @@ const SearchProduct = ({
         type="text"
         placeholder={placeholder}
         {...register(name)}
-        className={`py-4 text-[#085D77] border rounded-2xl border-[#085D77]  flex-grow ${
+        className={`py-5 bg-[#222222] text-[white] rounded-[3rem] flex-grow ${
           iconPosition === "left" ? "pl-10 pr-3" : "pl-3 pr-10"
-        } ${inputClassName} placeholder-[#085D77] outline-none`} // Eliminado el estilo de foco
-        style={{ boxShadow: "none" }} // Opcional: Elimina el sombreado de enfoque
+        } ${inputClassName} placeholder-[#CCCCCC] outline-none`}
+        style={{ boxShadow: "none" }} 
       />
 
       {iconPosition === "right" && (
         <div
           className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
         >
-          <SearchSvg color="#085D77" />
+          <SearchSvg color="#CCCCCC" />
         </div>
       )}
     </div>

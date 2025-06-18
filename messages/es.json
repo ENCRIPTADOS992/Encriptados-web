@@ -239,6 +239,9 @@
       "rating": "5/5",
       "buyNow": "Comprar Ahora"
     },
+    "characteristics": {
+      "title": "Características principales"
+    },
 
     "commonFeatures": {
       "dataMobile": "Datos móviles",
@@ -511,12 +514,14 @@
     "banner": {
       "title": "Administra múltiples SIMs con nuestra",
       "subtitle": "App Encriptada",
-      "titleNewConnectWith": "Conéctate en todo el mundo con",
-      "titleNewTotalSecurity": "total seguridad",
-      "titleNewInComunication": "en tus comunicaciones",
-      "descriptionNew": "Protégete de los ciber-delincuentes y mantén tu información personal segura",
+      "securityFromStartToEnd": "Seguridad de inicio a fin",
+      "titleNewConnectWith": "Conéctate ",
+      "titleNewTotalSecurity": "en todo el mundo ",
+      "titleNewInComunication": "con total seguridad",
+      "descriptionNew": "Productos y servicios que protegen todas tus comunicaciones",
       "newButtonBuy": "Comprar eSim",
-      "buttonAppEncriptados": "Apps Encriptados"
+      "buttonAppEncriptados": "Apps Encriptados",
+      "goToStore": "Ir a tienda"
     },
 
     "filterProducts": {
@@ -529,6 +534,12 @@
       "licenseTitle": "Duración de licencia",
       "selectPlacerholder": "Seleccionar",
       "searchPlaceholder": "Buscar"
+    },
+    "silentCircle": {
+      "badge": "Silent Circle",
+      "title": "Silent Phone",
+      "description": "Desarrollada por expertos en tecnología móvil, esta app protege tus datos con máxima seguridad en todo momento.",
+      "cta": "Compra aquí tu Silent Phone\nfácil y sin complicaciones"
     }
   },
   "DistributorsPage": {
@@ -1025,6 +1036,7 @@
     ],
     "buttons": {
       "buyNow": "Comprar ahora",
+      "buyHere": "Comprar aquí",
       "supportChat": "Chat soporte"
     },
     "characteristics": {

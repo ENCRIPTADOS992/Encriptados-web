@@ -29,10 +29,12 @@ const config: Config = {
           "linear-gradient(180deg, rgba(25,25,25,1) 72%, rgba(16,180,231,1) 100%)",
         "custom-gradient-our-sim-blue":
           "linear-gradient(180deg, #6ADDFF 72%, #A8EBFF 100%)",
+        "custom-gradient-our-sim-blue2": 
+        "linear-gradient(140deg, #BDEFFF 0%, #FDFFFF 50%, #2CCDFF 100%)",
         "custom-gradient-plans":
           "linear-gradient(90deg, rgba(168,235,255,1) 0%, rgba(106,221,255,1) 100%)",
         "custom-gradient-our-products-black":
-          "linear-gradient(135deg, rgba(0,0,0,1) 40%, rgba(0,74,96,1) 100%)",
+          "linear-gradient(135deg, #03212A 40%, #090909 70%)",
         "custom-gradient-qr-black-y-grey":
           "linear-gradient(90deg, #000000 40%, #272727 100%)",  
         "custom-gradient-secure-black-y-grey":

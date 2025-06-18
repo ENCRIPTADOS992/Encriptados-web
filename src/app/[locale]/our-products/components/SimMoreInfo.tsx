@@ -17,54 +17,48 @@ const SimMoreInfo = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-white to-[#c6f1ff] pt-16 pb-6">
+      <div className="pt-16 pb-6 bg-[linear-gradient(to_right,_#EAF5FF_10%,_white_20%,_#C1F0FF_100%)]">
         <div>
           <FixedSimProductDetail />
         </div>
       </div>
 
       <div>
-        <div className="w-4/12 justify-center mx-auto mt-16 items-center p-4 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#333333] mt-16 mb-16">
-            {t("improveYourSecurity.titleImproveYourSecurity")}
+        <div className="max-w-[1100px] m-auto px-4 mt-10 mb-10">
+          <h2 className="text-[24px] font-bold text-black text-left">
+            {t("characteristics.title")}
           </h2>
         </div>
         <FeaturesListBlack />
       </div>
 
       <div className="bg-[#f4f8fa] py-[8vh]">
-        <div className="max-w-[1100px] m-auto justify-center items-center p-4 ">
+        <div className="max-w-[1100px] m-auto px-4">
           <OurObjetive />
         </div>
       </div>
 
       <div className="bg-[#E7F4F8] py-[8vh]">
-        <div className="flex justify-center pt-[8vh] ">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#333333] max-w-[1100px]">
+        <div className="max-w-[1100px] m-auto px-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#000] mb-8">
             {t("comunicationTitle")}
           </h2>
-        </div>
-        <div className="flex justify-center items-center py-[8vh] bg-[#E7F4F8] m-auto max-w-[1100px] p-4">
           <BannerSecure />
         </div>
       </div>
 
-      <div className="items-center p-4 w-full py-[8vh] max-w-[1100px] m-auto">
-        <div className="w-full m-auto">
+      <div className="bg-white py-[8vh]">
+        <div className="max-w-[1100px] m-auto px-4">
           <PayForUse />
         </div>
       </div>
 
-      <div className="max-w-[1100px] m-auto p-4">
-        <div>
-          <h2 className=" text-3xl sm:text-4xl font-bold text-center text-[#333333] mt-16 mb-16">
+      <div className="bg-white py-[8vh]">
+        <div className="max-w-[1100px] m-auto px-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#000] mt-16 mb-16">
             {t("whyCallWithEncryptedSIM.title")}
           </h2>
-        </div>
-        <div className=" flex justify-center">
-          <div>
-            <WhyCallSim />
-          </div>
+          <WhyCallSim />
         </div>
       </div>
 

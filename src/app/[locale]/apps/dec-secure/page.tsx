@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getProductById } from '@/features/products/services';
 import type { ProductById } from '@/features/products/types/AllProductsResponse';
+import TelegramButton from '@/shared/components/TelegramButton';
 
 const prices: Record<string, string> = {
   '3': '349$ USD',
@@ -101,10 +102,11 @@ const Page = () => {
               <p className='font-medium text-base'>Comprar ahora</p>
               <ShoppingCart color='white' height={20} width={20} />
             </Button>
-            <Button type='alternative' className='md:w-full md:justify-center'>
+            <TelegramButton />
+            {/* <Button type='alternative' className='md:w-full md:justify-center'>
               <p className='font-medium'>Chat soporte</p>
               <SupportContact width={20} height={18} color='#00516b' />
-            </Button>
+            </Button> */}
           </div>
         </div>
       </main>

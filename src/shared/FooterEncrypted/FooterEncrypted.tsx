@@ -101,7 +101,7 @@ export default function FooterEncrypted() {
 
   return (
     <footer className="bg-black text-gray-300 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto gap-x-6">
+      <div className="max-w-[1100px] mx-auto gap-x-6">
         <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-8">
           <div className="col-span-1 lg:col-span-1 mb-8 flex flex-col items-center md:items-start">
             <EncryptedLogoSvg width={150} height={50} />

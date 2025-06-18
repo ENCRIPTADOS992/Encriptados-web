@@ -35,12 +35,13 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
       render={({ field: { onChange } }) => (
         <Menu
           gap={10}
+          menuClassName="bg-[#222222] border-none p-2 rounded-xl"
           menuButton={
             <MenuButton
               className={`flex items-center justify-between border rounded-2xl shadow-md p-4 w-full transition duration-150 ease-in-out ${
                 selectedItem
-                  ? "border-[#0AAEE1] text-[#085D77] bg-[#E3F8FF]"
-                  : "border-gray-300 text-[#7E7E7E] bg-white"
+                  ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
+                  : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
               }`}
             >
               <span className="flex items-center gap-x-2">
@@ -68,8 +69,8 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
                   onChangeExternal(item.value);
                 }
               }}
-              className={`flex items-center hover:bg-[#E3F8FF] transition duration-150 ease-in-out bg-[#FAFAFA] m-4 rounded-xl ${
-                selectedItem === item.value ? "bg-cyan-50" : ""
+              className={`flex items-center hover:bg-[#3E3E3E] transition duration-150 ease-in-out bg-[#222222] m-4 rounded-xl ${
+                selectedItem === item.value ? "bg-[#3E3E3E]" : ""
               }`}
             >
               <input
@@ -87,7 +88,7 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
               <span
                 className={`font-semibold py-2 ${
                   selectedItem === item.value
-                    ? "text-[#085D77] ]"
+                    ? "text-[#CCCCCC] ]"
                     : "text-[#7E7E7E]"
                 }`}
               >

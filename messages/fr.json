@@ -241,6 +241,10 @@
       "buyNow": "Acheter Maintenant"
     },
 
+    "characteristics": {
+      "title": "Caractéristiques principales"
+    },
+
     "commonFeatures": {
       "dataMobile": "Données mobiles",
       "speed": "Vitesse 4/5G LTE",
@@ -509,12 +513,14 @@
     "banner": {
       "title": "Gérez plusieurs SIM avec notre",
       "subtitle": "Application Cryptée",
+      "securityFromStartToEnd": "Sécurité de bout en bout",
       "titleNewConnectWith": "Connectez-vous dans le monde entier avec",
       "titleNewTotalSecurity": "une sécurité totale",
       "titleNewInComunication": "dans vos communications",
-      "descriptionNew": "Protégez-vous des cybercriminels et gardez vos informations personnelles en sécurité",
+      "descriptionNew": "Produits et services qui protègent toutes vos communications",
       "newButtonBuy": "Acheter eSim",
-      "buttonAppEncriptados": "Applications Cryptées"
+      "buttonAppEncriptados": "Applications Cryptées",
+      "goToStore": "Aller à la boutique"
     },
     "filterProducts": {
       "title": "Nos produits",

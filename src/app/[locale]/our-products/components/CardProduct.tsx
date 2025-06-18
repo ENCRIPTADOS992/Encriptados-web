@@ -46,14 +46,14 @@ const CardProduct: React.FC<CardSimProps> = ({
 
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
-      <div className="relative w-full h-32">
+      <div className="relative w-full h-32 bg-[#3E3E3E]">
         <div className="relative w-full h-32 flex items-center justify-center ">
-            <Image
-              src={productImage}
-              alt="Sim Card"
-              fill
-              className="object-cover w-full h-full"
-            />
+          <Image
+            src={productImage}
+            alt="Sim Card"
+            fill
+            className="object-cover w-full h-full"
+          />
         </div>
         <div className="">
           <div className="flex justify-end gap-2 mb-1 text-sm text-gray-600"></div>
@@ -119,20 +119,21 @@ const CardProduct: React.FC<CardSimProps> = ({
                   <LocalMallSvgNew />
                 </div>
               </button>
-
-              <h1
-                onClick={() => {
-                  const url = getProductLink(headerTitle, Number(filters.selectedOption), id);
-                  if (url) {
-                    router.push(`${url}?productId=${id}`);
-                  } else {
-                    console.warn("Ruta no encontrada para:", headerTitle);
-                  }
-                }}
-                className="cursor-pointer text-[14px]"
-              >
-                Más información
-              </h1>
+              <div>
+                <h1
+                  onClick={() => {
+                    const url = getProductLink(headerTitle, Number(filters.selectedOption), id);
+                    if (url) {
+                      router.push(`${url}?productId=${id}`);
+                    } else {
+                      console.warn("Ruta no encontrada para:", headerTitle);
+                    }
+                  }}
+                  className="cursor-pointer text-[14px]"
+                >
+                  Más información
+                </h1>
+              </div>
             </div>
           </div>
         </div>

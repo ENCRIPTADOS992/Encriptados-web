@@ -23,7 +23,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
   return (
     <>
       <div className="w-full lg:w-auto">
-        <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
+        <h1 className="text-[#7E7E7E] font-semibold mb-2">
           {t("filterProducts.software")}
         </h1>
       <MenuDropdownProductBar
@@ -36,7 +36,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
       />
       </div>
       <div className="w-full lg:w-auto lg:ml-4">
-        <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
+        <h1 className="text-[#7E7E7E] font-semibold mb-2">
           {t("filterProducts.licenseTitle")}
         </h1>
         <MenuDropdownProductBar

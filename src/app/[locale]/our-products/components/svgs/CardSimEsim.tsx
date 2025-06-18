@@ -19,6 +19,7 @@ interface CardSimEsimProps {
   moreInfoUrl?: string;
   onBuyClick?: () => void;
   onMoreInfoClick?: () => void;
+  moreInfoColor?: string;
 }
 
 const CardSimEsim: FC<CardSimEsimProps> = ({
@@ -26,27 +27,28 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
   description,
   imageSrc,
   altText,
-  background = "bg-gradient-to-br from-teal-950 to-black",
+  background = "bg-gradient-to-br from-[#03212A] to-[#090909]",
   titleColor = "text-white",
   descriptionColor = "text-gray-300",
   showMoreInfo = true,
-  buyText = "Comprar",
+  buyText = "Comprar aquí",
   moreInfoText = "Más información",
-   // buyUrl ya no se usa para envolver el botón Comprar
   moreInfoUrl = "#",
   onBuyClick,
   onMoreInfoClick,
+  moreInfoColor,
 }) => {
   return (
     <div className={`${background} w-full sm:rounded-3xl rounded-2xl`}>
-      <div className="p-6 sm:p-9 flex flex-wrap sm:flex-nowrap gap-6">
+      <div className="p-6 sm:p-9 flex flex-wrap sm:flex-nowrap gap-6 items-center">
+
         {/* Texto */}
         <div className="w-full sm:w-[55%]">
-          <h2 className={`text-lg sm:text-xl mb-2 font-semibold ${titleColor}`}>
+          <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>
             {title}
           </h2>
           {description && (
-            <p className={`text-sm sm:text-xs mb-6 ${descriptionColor}`}>
+            <p className={`text-sm sm:text-sm text-[#101010] mb-6 ${descriptionColor}`}>
               {description}
             </p>
           )}
@@ -54,7 +56,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
            <button
               type="button"
               onClick={onBuyClick}
-              className="bg-[#E3F8FF] hover:bg-[#c7edfa] text-[#001D26] rounded-full px-4 py-2 transition sm:w-1/2 w-full"
+              className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-6 py-2 transition w-full max-w-[180px] whitespace-nowrap"
             >
               {buyText}
             </button>
@@ -64,7 +66,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
               <button
                 type="button"
                 onClick={onMoreInfoClick}
-                className="text-gray-300 text-sm hover:text-white transition mt-6 sm:mt-14"
+                className={`text-sm transition mt-6 sm:mt-4 ${moreInfoColor || "text-gray-300 hover:text-white"}`}
               >
                 {moreInfoText}
               </button>
@@ -73,13 +75,13 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
         </div>
 
         {/* Imagen */}
-        <div className="w-full sm:w-[45%] self-center">
+        <div className="w-full sm:w-[45%] relative min-h-[180px] flex items-end">
           <Image
             src={imageSrc}
             alt={altText}
             width={200}
             height={160}
-            className="w-full h-auto"
+            className="object-contain object-bottom"
           />
         </div>
       </div>

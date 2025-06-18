@@ -11,6 +11,7 @@ import ListOfGBSMonths from "../../../../../shared/components/ListOfGBSMonths";
 import ThreeCountries from "../../svgs/ThreeCountries";
 
 import { useRouter } from "next/navigation";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 const PaymentServicePage = () => {
   const AllWorld = "/images/maya-data/payment-service/allworld.png";
@@ -121,11 +122,11 @@ const PaymentServicePage = () => {
               Comprar ahora
             </Button>
           </div>
-
-          <div className="flex justify-center gap-x-2">
+          <TelegramButton />
+          {/* <div className="flex justify-center gap-x-2">
             <h1 className="text-[#00516B] font-bold">Chat soporte</h1>
             <SupportContact color="#00516B" />
-          </div>
+          </div> */}
         </div>
       </div>
 

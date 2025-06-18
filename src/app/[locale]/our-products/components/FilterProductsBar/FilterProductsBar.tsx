@@ -16,7 +16,7 @@ import FilterProviderServices from "./FilterProviderServices";
 
 import { Product } from "@/features/products/types/AllProductsResponse";
 
-const ICON_COLOR_SELECTED = "#0AAEE1";
+const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
 const FILTER_OPTIONS = [
@@ -60,12 +60,12 @@ export default function FilterProductsBar({ filters, updateFilters, products  }:
   }
 
   return (
-    <div className="bg-white rounded-xl p-5 md:p-7 w-full max-w-7xl mx-auto ">
+    <div className="bg-[#161616] rounded-xl p-5 md:p-7 w-full max-w-7xl mx-auto ">
       <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-end lg:space-x-4 justify-between">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
             <div className="w-full lg:w-[340px] lg:mr-6">
-              <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
+              <h1 className="text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
               </h1>
               <ListOfFiltersButton

@@ -8,6 +8,7 @@ import IconSupportChat from "@/shared/svgs/SupportChatIcon";
 import SimProductsBarIconColor from "../../our-products/components/FilterProductsBar/icons/SimProductsBarIconColor";
 import SupportChatIcon from "@/shared/svgs/SupportChatIcon";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 type CardDescriptionSimInfoProps = {
   features: string[];
@@ -52,26 +53,18 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
       <div className="text-xl font-bold mb-4">{priceRange}</div>
 
       {/* Botones */}
-      <div className="flex justify-between gap-2 flex-nowrap">
+      <div className="flex justify-between gap-2 whitespace-nowrap">
         <Button
           size="medium"
           rounded="full"
           intent="black"
-          customStyles="text-sm"
+          customStyles="text-sm font-normal"
           onClick={() => openModal({ productid: id.toString(), languageCode })}
         >
           Comprar ahora
         </Button>
 
-        <Button
-          size="medium"
-          rounded="full"
-          intent="cyan"
-          customStyles="whitespace-nowrap text-sm"
-          icon={<SupportChatIcon className="w-5 h-5 text-cyan" />}
-        >
-          Chat soporte
-        </Button>
+        <TelegramButton />
 
       </div>
     </div>

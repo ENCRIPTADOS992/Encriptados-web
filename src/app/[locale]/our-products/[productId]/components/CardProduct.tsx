@@ -5,6 +5,7 @@ import Button from "@/shared/components/Button";
 import SupportContact from "@/shared/svgs/SupportContact";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useProductById } from "../context/ProductByIdContext";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 export default function CardProduct() {
   const { currentProduct } = useProductById();
@@ -87,15 +88,17 @@ export default function CardProduct() {
         >
           Comprar Ahora
         </Button>
+        
+        <TelegramButton />
 
-        <Button
+        {/* <Button
           icon={<SupportContact color="#00516B" />}
           iconPosition="right"
           rounded="full"
           intent="support"
         >
           Chat soporte
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

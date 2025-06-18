@@ -244,6 +244,9 @@
       "rating": "5/5",
       "buyNow": "Buy Now"
     },
+    "characteristics": {
+      "title": "Main Features"
+    },
 
     "commonFeatures": {
       "dataMobile": "Mobile data",
@@ -515,12 +518,14 @@
     "banner": {
       "title": "Manage multiple SIMs with our",
       "subtitle": "Encrypted App",
+      "securityFromStartToEnd": "Security from start to finish",
       "titleNewConnectWith": "Connect worldwide with",
       "titleNewTotalSecurity": "total security",
       "titleNewInComunication": "in your communications",
-      "descriptionNew": "Protect yourself from cybercriminals and keep your personal information safe",
+      "descriptionNew": "Products and services that protect all your communications",
       "newButtonBuy": "Buy eSim",
-      "buttonAppEncriptados": "Encrypted Apps"
+      "buttonAppEncriptados": "Encrypted Apps",
+      "goToStore": "Go to store"
     },
     "filterProducts": {
       "title": "Our products",

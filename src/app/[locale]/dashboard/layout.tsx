@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import useMenuStore from "@/store/useMenuStore";
 import SupportChat from "@/shared/components/SupportChat";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 interface MenuItem {
   icon: ReactNode;
@@ -179,7 +180,8 @@ export default function Layout({ children }: LayoutProps) {
 
           {/* Support button */}
           <div className="absolute bottom-8 left-0 right-0 px-14 block md:hidden">
-            <SupportChat />
+            <TelegramButton/>
+            {/* <SupportChat /> */}
           </div>
         </aside>
 

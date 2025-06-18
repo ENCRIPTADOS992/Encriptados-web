@@ -11,10 +11,10 @@ const OurObjetive = () => {
       <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-6 items-center text-center lg:text-left">
         {/* Texto */}
         <div className="w-full lg:w-5/12">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
             {t("ourObjetiveTitle")}
           </h1>
-          <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-700">
+          <p className="mt-4 text-xs sm:text-sm lg:text-base text-gray-700">
             {t("ourObjetiveDescription")}
           </p>
         </div>

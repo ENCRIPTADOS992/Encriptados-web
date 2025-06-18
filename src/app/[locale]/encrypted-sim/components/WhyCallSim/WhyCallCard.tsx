@@ -14,7 +14,7 @@ const WhyCallCard: React.FC<WhyCallCardProps> = ({
   textColor,
 }) => {
   return (
-    <div className={`${bgColor} p-10 rounded-lg shadow-md`}>
+    <div className={`${bgColor} p-10 rounded-[2rem] shadow-md`}>
       <div>{icon}</div>
       <div className="flex items-center space-x-4">
         <div
