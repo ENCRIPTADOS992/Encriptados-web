@@ -72,7 +72,7 @@ const OurProductsPage = () => {
             </div>
           </div>
 
-          <div className="bg-black">
+          <div className="bg-blackrounded-xl w-full max-w-7xl mx-auto mt-16 ">
             <div className="w-full bg-black py-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-20 2xl:px-32">
               <CardOurProducts filters={filters} />
             </div>
