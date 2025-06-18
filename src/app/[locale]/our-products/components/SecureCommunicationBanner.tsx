@@ -6,7 +6,7 @@ import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 const SecureCommunicationBanner = () => {
   return (
-    <section className="w-full max-w-[1200px] mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-2xl py-10 px-6 md:px-10 text-white">
+    <section className="w-full max-w-[1400px] mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-2xl py-10 px-6 md:px-10 text-white">
 
       <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Columna izquierda */}

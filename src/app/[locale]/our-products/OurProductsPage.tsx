@@ -55,9 +55,9 @@ const OurProductsPage = () => {
         >
           <BannerOurProducts />
         </div>
-        <div className="p-1 bg-[#000]">
-          <div className="max-w-[1200px] mx-auto">
-            <h1 className="bg-gradient-to-r text-3xl justify-center font-bold mt-[75px] flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-7 text-center">
+        <div className="bg-[#000]">
+          <div className="w-full bg-black py-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-20 2xl:px-32">
+            <h1 className="bg-gradient-to-r text-3xl justify-center font-bold mt-[10px] flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-7 text-center">
               {t("filterProducts.title")}
             </h1>
 
@@ -72,8 +72,8 @@ const OurProductsPage = () => {
             </div>
           </div>
 
-          <div className="rounded-xl w-full max-w-7xl mx-auto mt-16 ">
-            <div className="flex flex-col  justify-between">
+          <div className="bg-black">
+            <div className="w-full bg-black py-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-20 2xl:px-32">
               <CardOurProducts filters={filters} />
             </div>
           </div>

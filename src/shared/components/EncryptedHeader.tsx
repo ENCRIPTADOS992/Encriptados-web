@@ -94,7 +94,7 @@ export default function EncryptedHeader() {
   return (
     <header className="relative z-50" ref={headerRef}>
       <div className="bg-[#151515] border-b border-[#1A1A1A]">
-        <div className="max-w-[1200px] mx-auto px-4 py-4">
+        <div className="max-w-[1400px] mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
             {/* Logo y selector de idioma */}
             <div className="flex flex-row">
