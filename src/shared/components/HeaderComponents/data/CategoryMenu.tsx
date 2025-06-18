@@ -1,3 +1,4 @@
+import { link } from "fs";
 import { useTranslations } from "next-intl";
 
 // Hook para obtener categorías de productos traducidas
@@ -49,7 +50,7 @@ export function useTranslatedProductsCategories(): any {
         defaultValue:
           "Productos increíbles, aplicaciones y sistemas con encriptación de inicio a fin",
       }),
-      link: "/aplicaciones",
+      link:"",
       image: "/images/mega-menu/aplicaciones.jpeg",
       items: [
          {
@@ -130,26 +131,26 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Threema es una aplicación de mensajería segura.",
           }),
         },
-        {
-          title: t("apps.items.secureCrypt.title", {
-            defaultValue: "SecureCrypt",
-          }),
-          image:
-            "/images/mega-menu/apps/Secure-Crypt_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/app9",
-          description: t("apps.items.secureCrypt.description", {
-            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("apps.items.elyon.title", { defaultValue: "Elyon" }),
-          image:
-            "/images/mega-menu/apps/Eylon_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/elyon",
-          description: t("apps.items.elyon.description", {
-            defaultValue: "Elyon es una aplicación de mensajería segura.",
-          }),
-        },
+        // {
+        //   title: t("apps.items.secureCrypt.title", {
+        //     defaultValue: "SecureCrypt",
+        //   }),
+        //   image:
+        //     "/images/mega-menu/apps/Secure-Crypt_Apps_Encriptados_preview_menu_web.jpg",
+        //   link: "/app9",
+        //   description: t("apps.items.secureCrypt.description", {
+        //     defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
+        //   }),
+        // },
+        // {
+        //   title: t("apps.items.elyon.title", { defaultValue: "Elyon" }),
+        //   image:
+        //     "/images/mega-menu/apps/Eylon_Apps_Encriptados_preview_menu_web.jpg",
+        //   link: "/apps/elyon",
+        //   description: t("apps.items.elyon.description", {
+        //     defaultValue: "Elyon es una aplicación de mensajería segura.",
+        //   }),
+        // },
       ],
     },
     {
@@ -157,7 +158,7 @@ export function useTranslatedProductsCategories(): any {
       description: t("systems.description", {
         defaultValue: "Sistemas de encriptación de datos",
       }),
-      link: "/sistemas",
+      link: "",
       image: "/images/mega-menu/sistemas.jpeg",
       items: [
         {
@@ -166,7 +167,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/SecureMDM-IOS_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system1",
+          link: "/apps/secure-mdm-iphone",
           description: t("systems.items.secureMdmIphone.description", {
             defaultValue:
               "Secure MDM iPhone es una aplicación de mensajería segura.",
@@ -235,17 +236,17 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "DEC Secure es una aplicación de mensajería segura.",
           }),
         },
-        {
-          title: t("systems.items.totalSec.title", {
-            defaultValue: "Total Sec",
-          }),
-          image:
-            "/images/mega-menu/sistemas/TotalSec_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/system8",
-          description: t("systems.items.totalSec.description", {
-            defaultValue: "Total Sec es una aplicación de mensajería segura.",
-          }),
-        },
+        // {
+        //   title: t("systems.items.totalSec.title", {
+        //     defaultValue: "Total Sec",
+        //   }),
+        //   image:
+        //     "/images/mega-menu/sistemas/TotalSec_Sistemas_Encriptados_preview_menu_web.jpg",
+        //   link: "/system8",
+        //   description: t("systems.items.totalSec.description", {
+        //     defaultValue: "Total Sec es una aplicación de mensajería segura.",
+        //   }),
+        // },
         {
           title: t("systems.items.armadillo.title", {
             defaultValue: "Armadillo",
@@ -268,18 +269,18 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
         },
-        {
-          title: t("systems.items.t2Communicator.title", {
-            defaultValue: "T2 Communicator",
-          }),
-          image:
-            "/images/mega-menu/sistemas/T2Comunnicator_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/t2-communicator",
-          description: t("systems.items.t2Communicator.description", {
-            defaultValue:
-              "T2 Communicator es una aplicación de mensajería segura.",
-          }),
-        },
+        // {
+        //   title: t("systems.items.t2Communicator.title", {
+        //     defaultValue: "T2 Communicator",
+        //   }),
+        //   image:
+        //     "/images/mega-menu/sistemas/T2Comunnicator_Sistemas_Encriptados_preview_menu_web.jpg",
+        //   link: "/apps/t2-communicator",
+        //   description: t("systems.items.t2Communicator.description", {
+        //     defaultValue:
+        //       "T2 Communicator es una aplicación de mensajería segura.",
+        //   }),
+        // },
         {
           title: t("systems.items.intactPhone.title", {
             defaultValue: "Intact Phone",
