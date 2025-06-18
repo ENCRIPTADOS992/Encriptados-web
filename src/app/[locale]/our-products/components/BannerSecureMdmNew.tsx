@@ -52,7 +52,7 @@ const BannerSecureMdmNew = () => {
                         }}
                         className="w-full swiper-custom"
                     >
-                        {filteredPhones.map((product) => (
+                        {/* {filteredPhones.map((product) => (
                             <SwiperSlide key={product.id}>
                                 <CardProductItem
                                     product={product}
@@ -64,7 +64,7 @@ const BannerSecureMdmNew = () => {
                                     }
                                 />
                             </SwiperSlide>
-                        ))}
+                        ))} */}
                     </Swiper>
 
                     {/* 👇 Este div fuerza que el paginador tenga espacio visible */}
