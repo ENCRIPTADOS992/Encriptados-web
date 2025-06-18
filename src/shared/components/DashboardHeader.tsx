@@ -53,7 +53,7 @@ const DashboardHeader = () => {
 
       <div className="flex gap-x-2">
         <div className="hidden md:block">
-          <TelegramButton/>
+          {/* <TelegramButton/> */}
           {/* <SupportChat /> */}
         </div>
         <Button iconPosition="right" icon={<ProfileSvg />} intent="profile">
