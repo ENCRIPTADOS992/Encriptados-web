@@ -6,14 +6,13 @@ import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 const SecureCommunicationBanner = () => {
   return (
-    <section className="w-full max-w-[1400px] mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-2xl py-10 px-6 md:px-10 text-white">
-
+    <section className="w-full max-w-screen-2xl mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-2xl py-10 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 text-white">
       <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Columna izquierda */}
-        <div className="md:w-1/2 space-y-4">
-          <EncryptedLogoSvg width={150} height={50} />
+        <div className="md:w-1/2 space-y-1">
+          <EncryptedLogoSvg width={180} height={80} />
           <h2 className="text-xl md:text-2xl font-semibold">
-            Somos especialistas en <br /> soluciones de comunicación segura:
+            Somos especialistas en <br /> soluciones de comunicación <br /> segura:
           </h2>
           <div className="w-10 border-b-2 border-[#7EE0FF] mt-2"></div>
         </div>

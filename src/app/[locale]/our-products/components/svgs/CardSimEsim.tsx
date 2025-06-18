@@ -39,7 +39,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
   moreInfoColor,
 }) => {
   return (
-    <div className={`${background} w-full sm:rounded-3xl rounded-2xl`}>
+    <div className={`${background} flex-1 min-w-0 sm:rounded-3xl rounded-2xl`}>
       <div className="p-6 sm:p-9 flex flex-wrap sm:flex-nowrap gap-6 items-center">
 
         {/* Texto */}
