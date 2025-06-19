@@ -27,9 +27,8 @@ const BannerSmsActivation = () => {
         />
       </div>
 
-      {/* CONTENIDO RELATIVO ENCIMA */}
-      <div className="relative z-10 max-w-[1400px] mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
-        {/* Texto */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
+
         <div className="flex-1 space-y-6">
           <h2 className="text-2xl sm:text-4xl font-bold leading-snug">
             Activa APPs por SMS  
@@ -65,7 +64,6 @@ const BannerSmsActivation = () => {
             Comprar ahora
           </Button>
         </div>
-        {/* (dejamos flex-1 vacío para mantener gap y centrar) */}
         <div className="flex-1" />
       </div>
     </section>

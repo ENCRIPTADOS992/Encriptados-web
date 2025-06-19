@@ -42,6 +42,7 @@ const OurProductsPage = () => {
   return (
     <>
       <BasicFormProvider defaultValue={filters}>
+      <div className="max-w-[1400px]">
 
         <div className="block md:hidden">
           <BannerOurProductsMobile />
@@ -72,17 +73,15 @@ const OurProductsPage = () => {
             </div>
           </div>
 
-          {/* Cards alineadas */}
           <div className="w-full py-1">
             <CardOurProducts filters={filters} />
           </div>
 
-          {/* Banners extra */}
-          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
+          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14">
             <SilentCircleBanner />
           </div>
 
-          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
+          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-4">
             <BannerSmsActivation />
           </div>
 
@@ -94,7 +93,7 @@ const OurProductsPage = () => {
             <SecureCommunicationBanner />
           </div>
         </div>
-
+      </div>
       </BasicFormProvider>
     </>
   );

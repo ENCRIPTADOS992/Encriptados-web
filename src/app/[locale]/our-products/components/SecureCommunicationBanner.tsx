@@ -6,8 +6,8 @@ import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 const SecureCommunicationBanner = () => {
   return (
-    <section className="w-full px-4 lg:px-26">
-      <div className="w-full max-w-[1320px] mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-2xl py-16 px-6 text-white">
+    <section className="w-full max-w-screen-2xl mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-3xl py-10 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 text-white">
+      <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex flex-col md:flex-row items-start justify-between gap-8">
           {/* Columna izquierda — alineada natural con padding global */}
           <div className="md:w-1/2 space-y-2 pl-4 md:pl-16 -mt-8">
@@ -20,7 +20,7 @@ const SecureCommunicationBanner = () => {
           </div>
 
           {/* Columna derecha — separada del borde y alineada */}
-<div className="md:w-1/2 pt-2 pr-10 md:pl-[78px] ml-auto flex flex-col gap-3 text-base md:text-lg font-semibold">
+          <div className="md:w-1/2 pt-2 pr-10 md:pl-[78px] ml-auto flex flex-col gap-3 text-base md:text-lg font-semibold">
             {[
               "Celulares Seguros",
               "SIM Cards Encriptadas",

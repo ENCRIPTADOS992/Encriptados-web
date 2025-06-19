@@ -16,9 +16,9 @@ const BannerOurProducts = () => {
   };
 
   return (
-    <div className="relative w-full py-10 px-4 lg:px-20 flex justify-center items-center">
+    <div className="relative w-full py-10 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex justify-center items-center">
       {/* Contenedor tipo tarjeta */}
-      <div className="relative w-full max-w-screen-xl mx-auto bg-[#1a1a1a] rounded-xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
+      <div className="relative w-full max-w-screen-xl mx-auto bg-[#090909] rounded-3xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
 
 
         {/* Fondo de puntos detrás del texto */}
