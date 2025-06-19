@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 
 import EncryptedBgIcon from "../icons/EncryptedBgIcon";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 const JoinUsBanner = () => {
   const t = useTranslations("DistributorsPage.banner");
@@ -26,9 +27,10 @@ const JoinUsBanner = () => {
         </h1>
 
         <div className="flex items-center justify-center w-full">
-          <Button rounded="full" intent="primary">
+          <TelegramButton />
+          {/* <Button rounded="full" intent="primary">
             {t("sendRequest")}
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

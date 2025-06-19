@@ -3,6 +3,7 @@ import Button from "@/shared/components/Button";
 import { useTranslations } from "next-intl";
 import Bag from "../icons/Bag";
 import { useJoinUsModal } from "../context/JoinUsModalContext";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 const BannerDistributors = () => {
   const t = useTranslations("DistributorsPage.banner");
@@ -51,9 +52,10 @@ const BannerDistributors = () => {
         </p>
 
         <div className="flex items-center justify-center w-full">
-          <Button onClick={openModal} rounded="full" intent="primary">
+          <TelegramButton />
+          {/* <Button onClick={openModal} rounded="full" intent="primary">
             {t("sendRequest")}
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

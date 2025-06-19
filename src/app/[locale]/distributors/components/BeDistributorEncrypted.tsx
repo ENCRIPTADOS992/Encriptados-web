@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/shared/components/Button";
+import TelegramButton from "@/shared/components/TelegramButton";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -97,9 +98,10 @@ export default function BeDistributorEncrypted() {
               {t("beEncryptedDistributor.description")}
             </p>
             <div className="flex w-full">
-              <Button rounded="full" intent="primary">
+              <TelegramButton />
+              {/* <Button rounded="full" intent="primary">
                 {t("banner.sendRequest")}
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
