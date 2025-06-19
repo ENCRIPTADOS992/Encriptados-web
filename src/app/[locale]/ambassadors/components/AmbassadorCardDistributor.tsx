@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Check, Briefcase } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 type ImageProp = string | React.FC<React.SVGProps<SVGSVGElement>>;
 
@@ -29,6 +29,20 @@ export default function AmbassadorCardDistributor({
   onSubmit = () => console.log("Form submitted"),
 }: AmbassadorCardProps) {
   const t = useTranslations();
+  const locale = useLocale();
+
+  const urls: Record<string, string> = {
+    en: "https://t.me/encriptados_english",
+    es: "https://t.me/Encriptadosio",
+    fr: "https://t.me/encriptados_francais",
+  };
+
+  const handleRedirect = () => {
+    const target = urls[locale] ?? urls.es;
+    window.location.href = target;
+  };
+
+
   return (
     <div className="w-full max-w-md  text-white rounded-2xl overflow-hidden shadow-lg">
       <div className="relative h-[300px] overflow-hidden">
@@ -67,7 +81,7 @@ export default function AmbassadorCardDistributor({
         </div>
         <div className="p-6 pt-0">
           <button
-            onClick={onSubmit}
+            onClick={handleRedirect}
             className="w-full bg-[#E3F8FF] rounded-full  text-black py-2 px-4 font-bold transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
           >
             {buttonText}
