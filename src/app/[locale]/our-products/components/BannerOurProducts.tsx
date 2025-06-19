@@ -16,9 +16,10 @@ const BannerOurProducts = () => {
   };
 
   return (
-    <div className="relative w-full py-10 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex justify-center items-center">
+    <div className="relative w-full py-10 px-4 lg:px-20 flex justify-center items-center">
       {/* Contenedor tipo tarjeta */}
-      <div className="relative w-full bg-[#1a1a1a] rounded-xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
+      <div className="relative w-full max-w-screen-xl mx-auto bg-[#1a1a1a] rounded-xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
+
 
         {/* Fondo de puntos detrás del texto */}
         <div className="absolute top-0 left-0 h-[70%] w-full z-0">
@@ -32,7 +33,8 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Contenido de texto */}
-        <div className="flex-1 text-white space-y-3 px-2 lg:px-0 text-left z-10">
+        <div className="flex-1 text-white space-y-3 px-2 lg:px-0 text-left z-10 max-w-xl">
+
           <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-6 py-1 rounded-full text-sm font-medium w-fit">
             {t("banner.securityFromStartToEnd")}
           </div>
@@ -48,30 +50,6 @@ const BannerOurProducts = () => {
           <p className="text-sm sm:text-base lg:max-w-xl text-justify">
             {t("banner.descriptionNew")}
           </p>
-          {/* <div className="flex flex-wrap gap-4 pt-4">
-            <button
-              type="button"
-              onClick={() => {
-                scrollToSection("#buysimappsection");
-                setValue("selectedOption", "sim");
-              }}
-              className="bg-[#7CD0F9] text-black font-semibold px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-[#6bb8e0] transition-colors"
-            >
-              {t("banner.newButtonBuy")}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                scrollToSection("#buysimappsection");
-                setValue("selectedOption", "app");
-              }}
-              className="border-2 border-white text-white font-semibold px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-white/10 transition-colors"
-            >
-              {t("banner.buttonAppEncriptados")}
-            </button>
-          </div>
-        </div> */}
-
         {/* Botón con ícono personalizado */}
           <div className="pt-4">
             <button
@@ -90,7 +68,7 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Imagen de persona */}
-        <div className="flex-1 w-full max-w-md z-10 relative h-[400px]">
+        <div className="flex-1 w-full max-w-md z-10 relative h-[450px] translate-y-8">
           <Image
             src="/images/our-products/070e8ce9e05a772be2fda80c02b3733778db1afd.png"
             alt="Persona hablando"
