@@ -16,19 +16,19 @@ const BannerOurProducts = () => {
   };
 
   return (
-    <div className="relative w-full py-10 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex justify-center items-center">
+    <div className="relative w-full py-6 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex justify-center items-center">
       {/* Contenedor tipo tarjeta */}
       <div className="relative w-full max-w-screen-xl mx-auto bg-[#090909] rounded-3xl p-6 md:p-10 flex flex-col lg:flex-row justify-between items-center gap-8 overflow-hidden">
 
 
         {/* Fondo de puntos detrás del texto */}
-        <div className="absolute top-0 left-0 h-[70%] w-full z-0">
+        <div className="absolute top-0 left-0 h-[100%] w-full z-0">
           <Image
             src="/images/our-products/2f4c437915945215a21a8478b499fc508f3a35a2.png"
             alt="Dot background"
             layout="fill"
             objectFit="cover"
-            className="rounded-xl opacity-50"
+            className="rounded-xl opacity-20"
           />
         </div>
 
@@ -68,7 +68,7 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Imagen de persona */}
-        <div className="flex-1 w-full max-w-md z-10 relative h-[450px] translate-y-8">
+        <div className="flex-1 w-full max-w-md z-10 relative h-[450px] translate-y-10">
           <Image
             src="/images/our-products/070e8ce9e05a772be2fda80c02b3733778db1afd.png"
             alt="Persona hablando"

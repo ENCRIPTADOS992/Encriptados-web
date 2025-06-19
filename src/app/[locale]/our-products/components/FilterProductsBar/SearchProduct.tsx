@@ -23,25 +23,27 @@ const SearchProduct = ({
     <div className={`relative flex w-full ${containerClassName}`}>
       {iconPosition === "left" && (
         <div
-          className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
+          className={`absolute left-6 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
         >
           <SearchSvg />
         </div>
       )}
-
       <input
         type="text"
         placeholder={placeholder}
         {...register(name)}
-        className={`py-5 bg-[#222222] text-[white] rounded-[3rem] flex-grow ${
-          iconPosition === "left" ? "pl-10 pr-3" : "pl-3 pr-10"
-        } ${inputClassName} placeholder-[#CCCCCC] outline-none`}
+        className={`
+          py-5 bg-[#222222] text-sm text-white rounded-[3rem] flex-grow
+          ${iconPosition === "left" ? "pl-12 pr-6" : "pl-6 pr-12"}
+          ${inputClassName}
+          placeholder-[#CCCCCC] outline-none
+        `}
         style={{ boxShadow: "none" }} 
       />
 
       {iconPosition === "right" && (
         <div
-          className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
+          className={`absolute right-6 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
         >
           <SearchSvg color="#CCCCCC" />
         </div>

@@ -60,14 +60,14 @@ export default function FilterProductsBar({ filters, updateFilters, products  }:
   }
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-20 py-6">
+    <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
       <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-end lg:space-x-4 justify-between">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
-            <div className="w-full lg:w-[340px] lg:mr-6">
-              <h1 className="text-[#7E7E7E] font-semibold mb-2">
+            <div className="w-full lg:w-[340px] lg:mr-6" >
+              <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
-              </h1>
+              </h2>
               <ListOfFiltersButton
                 items={items}
                 value={filters.selectedOption}
@@ -76,18 +76,16 @@ export default function FilterProductsBar({ filters, updateFilters, products  }:
                   updateFilters({ selectedOption: value });
                 }}
               />
-
-
-            </div>
-
+            </div >
             {SubFilterComponent}
           </div>
         </div>
 
-        <div className="flex  w-full sm:w-auto ">
+        <div className="flex w-full justify-end">
           <SearchProduct
             name="searchinputproduct"
             placeholder={t("filterProducts.searchPlaceholder")}
+            containerClassName="w-full sm:w-96 md:w-72 lg:w-80"
           />
         </div>
       </div>

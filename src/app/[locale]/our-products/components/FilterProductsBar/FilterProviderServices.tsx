@@ -20,7 +20,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
       <>
-        <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
         <MenuDropdownProductBar
           name="encriptadosprovider"
           options={[
@@ -42,7 +42,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
       <>
         <div className="flex items-center justify-center gap-4">
           <div className="w-full ">
-            <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">
+            <h1 className="text-[#7E7E7E] font-semibold mb-2">
               Servicios
             </h1>
             <MenuDropdownProductBar
@@ -66,7 +66,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   return (
     <>
       <div className="w-full lg:w-auto">
-        <h1 className="text-[rgb(8,93,119)] font-semibold mb-2">Proveedor</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
         <MenuDropdownProductBar
           name="provider"
           options={[
