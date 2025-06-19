@@ -18,7 +18,9 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
   };
   
   return (
-     <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 mt-5 mb-12 flex flex-col md:flex-row gap-x-6 justify-between gap-y-4 items-stretch min-w-0">
+     <div className="w-full max-w-[1600px] mx-auto px-4 lg:px-28 mt-5 mb-12 flex flex-col md:flex-row gap-x-6 justify-between gap-y-4 items-stretch min-w-0">
+
+
       <CardSimEsim
         title="SIM Card encriptada"
         description="Protegete de los ciberdelincuentes y mantén tu información personal segura"
