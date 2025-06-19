@@ -14,7 +14,7 @@ const SilentCircleBanner = () => {
 
     return (
     <section className="w-full px-4 lg:px-26">
-        <div className="relative max-w-[1600px] mx-auto overflow-hidden py-8 rounded-xl bg-[#101010] text-white">
+        <div className="relative max-w-[1320px] mx-auto overflow-hidden py-8 rounded-xl bg-[#101010] text-white">
             {/* Fondo con desvanecimiento */}
             <div className="absolute inset-0 z-0">
                 <Image
