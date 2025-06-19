@@ -540,6 +540,12 @@
       "title": "Silent Phone",
       "description": "Desarrollada por expertos en tecnología móvil, esta app protege tus datos con máxima seguridad en todo momento.",
       "cta": "Compra aquí tu Silent Phone\nfácil y sin complicaciones"
+    },
+    "smsBanner": {
+      "title": "Activa APPs por SMS con Encriptados",
+      "subtitle": "Regístrate en cualquier aplicación con un número de teléfono virtual",
+      "note": "*Se genera un número colombiano",
+      "button": "Comprar ahora"
     }
   },
   "DistributorsPage": {
