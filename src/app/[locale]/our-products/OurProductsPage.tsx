@@ -42,7 +42,6 @@ const OurProductsPage = () => {
   return (
     <>
       <BasicFormProvider defaultValue={filters}>
-      <div className="max-w-[1400px]">
 
         <div className="block md:hidden">
           <BannerOurProductsMobile />
@@ -93,7 +92,6 @@ const OurProductsPage = () => {
             <SecureCommunicationBanner />
           </div>
         </div>
-      </div>
       </BasicFormProvider>
     </>
   );
