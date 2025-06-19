@@ -2,19 +2,10 @@
 "use client";
 
 import React from "react";
-import { useLocale } from "next-intl";
 import TelegramIcon from "@/shared/svgs/TelegramIcon";
 
 const TelegramButton = () => {
-  const locale = useLocale();
-
-  const urls = {
-    en: "https://t.me/encriptados_english",
-    es: "https://t.me/Encriptadosio",
-    fr: "https://t.me/encriptados_francais",
-  };
-
-  const telegramUrl = urls[locale as keyof typeof urls] || urls.en;
+  const telegramUrl = "https://t.me/encriptados";
 
   return (
     <a

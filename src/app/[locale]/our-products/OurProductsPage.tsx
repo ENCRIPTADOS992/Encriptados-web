@@ -21,6 +21,7 @@ import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import SilentCircleBanner from "./components/SilentCircleBanner";
 import BannerSecureMdmNew from "./components/BannerSecureMdmNew";
 import SecureCommunicationBanner from "./components/SecureCommunicationBanner";
+import BannerSmsActivation from "./components/BannerSmsActivation";
 
 const OurProductsPage = () => {
   const { openModal } = useModalPayment();
@@ -79,6 +80,10 @@ const OurProductsPage = () => {
           {/* Banners extra */}
           <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
             <SilentCircleBanner />
+          </div>
+
+          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
+            <BannerSmsActivation />
           </div>
 
           <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">

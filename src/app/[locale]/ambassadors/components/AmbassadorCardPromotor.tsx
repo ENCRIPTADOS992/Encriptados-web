@@ -28,15 +28,10 @@ export default function AmbassadorCardPromotor({
   const t = useTranslations();
   const locale = useLocale();
 
-  const urls: Record<string, string> = {
-    en: "https://t.me/encriptados_english",
-    es: "https://t.me/Encriptadosio",
-    fr: "https://t.me/encriptados_francais",
-  };
+  const telegramLink = "https://t.me/encriptados";
 
   const handleRedirect = () => {
-    const target = urls[locale] ?? urls.es;
-    window.location.href = target;
+    window.location.href = telegramLink;
   };
 
   return (
