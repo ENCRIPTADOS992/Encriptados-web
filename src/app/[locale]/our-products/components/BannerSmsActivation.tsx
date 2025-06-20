@@ -19,7 +19,8 @@ const BannerSmsActivation = () => {
       <div
         className="hidden lg:block absolute inset-y-0 right-20 w-2/5 overflow-hidden rounded-tr-3xl rounded-br-3xl"
         style={{
-          WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
           maskImage: "linear-gradient(to left, black 0%, black 75%, transparent 100%)",
         }}
       >
@@ -33,10 +34,10 @@ const BannerSmsActivation = () => {
         />
       </div>
 
-      {/* Contenido + espacio para la imagen en desktop */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 left-10">
+      {/* Contenido */}
+      <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-center gap-10 px-4 lg:px-10">
         {/* Texto */}
-        <div className="flex-1 space-y-6 ">
+        <div className="flex-1 space-y-6 text-center lg:text-left">
           <h2 className="text-2xl sm:text-4xl font-bold leading-snug">
             Activa APPs por SMS
             <br className="hidden sm:inline" />
@@ -47,7 +48,7 @@ const BannerSmsActivation = () => {
             <br className="hidden sm:inline" />
             con un número de teléfono virtual
           </p>
-          <p className="text-[#9CA3AF] italic text-xs flex items-center gap-2">
+          <p className="text-[#9CA3AF] italic text-xs flex items-center gap-2 justify-center lg:justify-start">
             <Image
               src="/images/our-products/emojione_flag-for-colombia.png"
               alt="Bandera de Colombia"
@@ -57,21 +58,27 @@ const BannerSmsActivation = () => {
             />
             <span>*Se genera un número colombiano</span>
           </p>
-          <Button
-            size="medium"
-            rounded="lg"
-            customStyles="
-              !bg-[#00CCFF]
-              !text-black
-              !rounded-lg
-              text-sm px-8 py-3 w-fit
+          {/* Contenedor del botón */}
+          <div
+            className="
+              flex 
+              justify-center lg:justify-start 
+              w-full lg:w-auto 
+              max-w-xs lg:max-w-none 
+              mx-auto lg:mx-0
             "
-            onClick={handleBuyClick}
           >
-            Comprar ahora
-          </Button>
+            <Button
+              size="medium"
+              rounded="lg"
+              customStyles="!bg-[#00CCFF] !text-black !rounded-lg text-sm px-8 py-3 w-fit"
+              onClick={handleBuyClick}
+            >
+              Comprar ahora
+            </Button>
+          </div>
         </div>
-        {/* Spacer para que en desktop empuje correctamente la foto */}
+        {/* Spacer para desktop */}
         <div className="flex-1 hidden lg:block" />
       </div>
 
