@@ -59,14 +59,17 @@ const CardProduct: React.FC<CardSimProps> = ({
       {/* Contenido */}
       <div className="p-6 flex flex-col">
         {/* Título */}
-        <h2 className="text-black text-lg font-bold mb-2 truncate">
+        <h2 className="text-xl md:text-lg font-bold mb-1 truncate">
           {headerTitle}
         </h2>
 
         {/* Lista de features */}
-        <ul>
+        <ul className="space-y-1">
           {features.map((item, idx) => (
-            <li key={idx} className="flex items-center text-sm gap-2">
+            <li
+              key={idx}
+              className="flex items-center text-base md:text-sm gap-2"
+            >
               <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
               <span>{item}</span>
             </li>
@@ -74,26 +77,24 @@ const CardProduct: React.FC<CardSimProps> = ({
         </ul>
 
         {/* Checks adicionales (si hay) */}
-        <div className="min-h-[72px] mb-3 flex flex-col justify-start space-y-2">
+        <div className="min-h-[72px] flex flex-col justify-start space-y-2">
           {checks.slice(0, 3).map((adv, idx) => (
-            <div key={idx} className="flex items-center gap-2 text-xs">
+            <div key={idx} className="flex items-center gap-2 text-sm md:text-xs">
               <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
               <span>{adv.name}</span>
             </div>
           ))}
         </div>
 
-         <hr className="my-2 border-gray-200" />
+        <hr className="my-2 border-gray-200" />
 
         {/* Precio y acciones */}
         <div className="mt-auto flex flex-col gap-2">
           {/* Precio */}
-          <div className="text-lg font-bold">
-            {priceRange}
-          </div>
+          <div className="text-lg font-bold">{priceRange}</div>
 
-          {/* Botones */}
-          <div className="flex items-center gap-10">
+          {/* Botones + “Más información” */}
+          <div className="flex justify-between items-center">
             <button
               onClick={handleBuy}
               className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center gap-2"
@@ -110,7 +111,7 @@ const CardProduct: React.FC<CardSimProps> = ({
                 );
                 if (url) router.push(`${url}?productId=${id}`);
               }}
-              className="cursor-pointer text-xs text-black hover:underline "
+              className="cursor-pointer text-xs text-black hover:underline"
             >
               Más información
             </span>

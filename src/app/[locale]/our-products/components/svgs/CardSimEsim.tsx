@@ -40,10 +40,25 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
 }) => {
   return (
     <div className={`${background} flex-1 min-w-0 sm:rounded-3xl rounded-2xl`}>
-      <div className="p-6 sm:p-9 flex flex-wrap sm:flex-nowrap gap-6 items-center">
-
+      <div className="
+          p-6 sm:p-9
+          flex
+          flex-col
+          sm:flex-row
+          gap-6
+          items-center
+          justify-center
+          sm:justify-start
+        "
+        >
         {/* Texto */}
-        <div className="w-full sm:w-[55%]">
+        <div
+          className="
+            w-full sm:w-[55%]
+            text-center
+            sm:text-left
+          "
+        >
           <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>
             {title}
           </h2>
@@ -56,7 +71,13 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
            <button
               type="button"
               onClick={onBuyClick}
-              className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-6 py-2 transition w-full max-w-[180px] whitespace-nowrap"
+              className="
+                bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold
+                rounded-lg px-6 py-2 transition
+                w-full max-w-[180px] whitespace-nowrap
+                mx-auto
+                sm:mx-0
+              "
             >
               {buyText}
             </button>
@@ -75,7 +96,15 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
         </div>
 
         {/* Imagen */}
-        <div className="w-full sm:w-[45%] relative min-h-[180px] flex items-end">
+        <div
+          className="
+            w-full sm:w-[45%] relative min-h-[180px]
+            flex
+            justify-center
+            sm:justify-end
+            items-end
+          "
+        >
           <Image
             src={imageSrc}
             alt={altText}
