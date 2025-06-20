@@ -6,6 +6,7 @@ import EncryptedSimIcon from "./simicons/EncryptedSimIcon";
 import IraSimIcon from "./simicons/IraSimIcon";
 import TimSimIcon from "./simicons/TimSimIcon";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
+import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 interface FilterAppWithLicenseProps {
   filters: ProductFilters;
@@ -71,7 +72,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
           name="provider"
           options={[
             { label: "TODO", value: "all", icon: "" },
-            { label: " ", value: "encriptados", icon: <EncryptedSimIcon /> },
+            { label: " ", value: "encriptados", icon: <EncryptedLogoSvg width={100} height={20} /> },
             { label: " ", value: "tim", icon: <TimSimIcon /> },
           ]}
            onChangeExternal={(value) => {

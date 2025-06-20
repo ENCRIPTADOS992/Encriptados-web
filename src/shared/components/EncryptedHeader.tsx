@@ -14,6 +14,7 @@ import {
   useTranslatedUsCategories
 } from "./HeaderComponents/data/CategoryMenu";
 import { useTranslations } from "next-intl";
+import SectionWrapper from "./SectionWrapper";
 
 export default function EncryptedHeader() {
   const t = useTranslations("encryptedHeader");
@@ -94,7 +95,7 @@ export default function EncryptedHeader() {
   return (
     <header className="relative z-50" ref={headerRef}>
       <div className="bg-[#151515] border-b border-[#1A1A1A]">
-        <div className="mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-4">
+        <SectionWrapper className="py-4">
           <nav className="flex items-center justify-between">
             {/* Logo y selector de idioma */}
             <div className="flex flex-row">
@@ -160,7 +161,7 @@ export default function EncryptedHeader() {
               </Link> */}
             </div>
           </nav>
-        </div>
+        </SectionWrapper>
       </div>
 
       {/* Mega Menu */}

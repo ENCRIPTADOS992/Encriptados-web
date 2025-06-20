@@ -22,6 +22,7 @@ import SilentCircleBanner from "./components/SilentCircleBanner";
 import BannerSecureMdmNew from "./components/BannerSecureMdmNew";
 import SecureCommunicationBanner from "./components/SecureCommunicationBanner";
 import BannerSmsActivation from "./components/BannerSmsActivation";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const OurProductsPage = () => {
   const { openModal } = useModalPayment();
@@ -43,21 +44,24 @@ const OurProductsPage = () => {
     <>
       <BasicFormProvider defaultValue={filters}>
 
-        <div className="block md:hidden">
+        <SectionWrapper className="block md:hidden">
           <BannerOurProductsMobile />
-        </div>
+        </SectionWrapper>
 
         {/* Banner para dispositivos mayores que móvil */}
         <div
-          className="hidden md:block bg-black"
-          style={{
-            background: 'radial-gradient(circle at 75% -70%, #7EE0FF 0%,rgb(37, 191, 238) 20%, #000 60%)',
-          }}
-        >
+        className="hidden md:block w-full bg-black"
+        style={{
+          background:
+            "radial-gradient(circle at 75% -70%, #7EE0FF 0%, rgb(37, 191, 238) 20%, #000 60%)",
+        }}
+      >
+        <SectionWrapper>
           <BannerOurProducts />
-        </div>
+        </SectionWrapper>
+      </div>
         <div className="bg-[#000]">
-          <div className="w-full bg-black py-1 px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14">
+          <SectionWrapper className="bg-black py-1">
             <h1 className="bg-gradient-to-r text-3xl justify-center font-bold mt-[10px] flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-7 text-center">
               {t("filterProducts.title")}
             </h1>
@@ -70,27 +74,27 @@ const OurProductsPage = () => {
               />
               <ListOfProducts filters={filters} />
             </div>
-          </div>
+          </SectionWrapper>
 
-          <div className="w-full py-1">
+          <SectionWrapper className="py-1">
             <CardOurProducts filters={filters} />
-          </div>
+          </SectionWrapper>
 
-          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14">
+          <SectionWrapper className="py-1">
             <SilentCircleBanner />
-          </div>
+          </SectionWrapper>
 
-          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-4">
+          <SectionWrapper className="py-2">
             <BannerSmsActivation />
-          </div>
+          </SectionWrapper>
 
-          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
+          <SectionWrapper className="py-1">
             <BannerSecureMdmNew />
-          </div>
+          </SectionWrapper>
 
-          <div className="bg-[#000] px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
+          <SectionWrapper className="py-1">
             <SecureCommunicationBanner />
-          </div>
+          </SectionWrapper>
         </div>
       </BasicFormProvider>
     </>

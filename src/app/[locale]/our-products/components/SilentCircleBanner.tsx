@@ -29,7 +29,7 @@ const SilentCircleBanner = () => {
             </div>
 
             {/* Contenido */}
-            <div className="relative z-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-10">
+            <div className="relative z-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-10 left-10">
                 {/* Texto a la izquierda */}
                 <div className="md:w-1/2 md:ml-14 text-center md:text-left space-y-4">
                     <div className="inline-block bg-[#CB0808] px-6 py-1 rounded-full text-sm font-semibold">
@@ -46,7 +46,7 @@ const SilentCircleBanner = () => {
 
                 {/* Card a la derecha */}
                 {silentProduct && (
-                    <div className="md:w-2/5 flex justify-center md:justify-end mt-6 md:mt-0 md:mr-10">
+                    <div className="md:w-2/5 flex justify-center md:justify-end mt-6 md:mt-0 md:mr-40">
                         <div className="w-full max-w-sm">
                             <CardProductItem key={silentProduct.id} product={silentProduct} />
                         </div>

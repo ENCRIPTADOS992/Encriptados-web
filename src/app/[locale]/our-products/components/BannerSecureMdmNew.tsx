@@ -21,7 +21,7 @@ const BannerSecureMdmNew = () => {
         <section className="w-full bg-black text-white py-14 px-0">
            <div className="max-w-screen-2xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex flex-col md:flex-row gap-10 md:items-center">
                 {/* Texto a la izquierda */}
-                <div className="md:w-1/2 space-y-4">
+                <div className="md:w-1/2 space-y-4 md:ml-20">
                     <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 py-1 rounded-full text-xs font-semibold">
                         Seguridad en inicio a fin
                     </div>
@@ -32,7 +32,7 @@ const BannerSecureMdmNew = () => {
                 </div>
 
                 {/* Slider a la derecha */}
-                <div className="md:w-1/2 flex flex-col items-center">
+                <div className="md:w-1/2 flex flex-col items-center md:mr-20">
                     <Swiper
                         spaceBetween={20}
                         pagination={{

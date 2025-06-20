@@ -14,10 +14,10 @@ const BannerSmsActivation = () => {
   };
 
   return (
-    <section className="relative w-full bg-[#0B0B0B] text-white py-6 px-4 lg:px-20 rounded-3xl overflow-hidden">
+    <section className="relative w-full bg-[#0B0B0B] text-white py-6 rounded-3xl overflow-hidden">
       {/* Desktop: imagen absoluta a la derecha */}
       <div
-        className="hidden lg:block absolute inset-y-0 right-0 w-2/5 overflow-hidden rounded-tr-3xl rounded-br-3xl"
+        className="hidden lg:block absolute inset-y-0 right-20 w-2/5 overflow-hidden rounded-tr-3xl rounded-br-3xl"
         style={{
           WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
           maskImage: "linear-gradient(to left, black 0%, black 75%, transparent 100%)",
@@ -34,9 +34,9 @@ const BannerSmsActivation = () => {
       </div>
 
       {/* Contenido + espacio para la imagen en desktop */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
+      <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 left-10">
         {/* Texto */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 space-y-6 ">
           <h2 className="text-2xl sm:text-4xl font-bold leading-snug">
             Activa APPs por SMS
             <br className="hidden sm:inline" />

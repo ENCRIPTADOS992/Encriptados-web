@@ -46,95 +46,74 @@ const CardProduct: React.FC<CardSimProps> = ({
 
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
-      <div className="relative w-full h-32 bg-[#3E3E3E]">
-        <div className="relative w-full h-32 flex items-center justify-center ">
-          <Image
-            src={productImage}
-            alt="Sim Card"
-            fill
-            className="object-cover w-full h-full"
-          />
-        </div>
-        <div className="">
-          <div className="flex justify-end gap-2 mb-1 text-sm text-gray-600"></div>
-        </div>
+      {/* Imagen de cabecera */}
+      <div className="relative w-full h-48 bg-[#3E3E3E]">
+        <Image
+          src={productImage}
+          alt="Sim Card"
+          fill
+          className="object-cover"
+        />
       </div>
 
-      <div className="p-6">
-        <div className="text-black rounded-full text-xs font-semibold flex gap-1">
-          <h2 className="text-base font-bold mb-2 truncate">{headerTitle}</h2>
-        </div>
+      {/* Contenido */}
+      <div className="p-6 flex flex-col">
+        {/* Título */}
+        <h2 className="text-black text-lg font-bold mb-2 truncate">
+          {headerTitle}
+        </h2>
 
-        <ul className="space-y-0">
-          {features.map((item, index) => (
-            <li
-              key={index}
-              className="flex items-center text-sm gap-1 truncate"
-            >
-              <Image src={CheckSvg} alt="Icon" className="w-4 h-4" />
-              {item}
+        {/* Lista de features */}
+        <ul>
+          {features.map((item, idx) => (
+            <li key={idx} className="flex items-center text-sm gap-2">
+              <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
+              <span>{item}</span>
             </li>
           ))}
         </ul>
-        <hr className="my-4" />
-        <div className="p-0">
-          <div className="w-full">
-            <div className="mt-4 mb-12 space-y-2 h-[72px] flex flex-col justify-start">
-              {checks
-                ?.slice(0, 3)
-                .map((adv: { name: string }, index: number) => (
-                  <div key={index} className="flex items-center gap-2 text-sm">
-                    <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
-                    <span>{adv.name}</span>
-                  </div>
-                ))}
-            </div>
-            <div className="flex justify-between items-center mb-2">
-              <div className="flex gap-x-5 items-center justify-center">
-                <div className="flex items-center justify-center gap-x-1 text-sm">
-                  <span>Desde</span>
-                  <span className="text-lg font-bold">{priceRange}</span>
-                </div>
-              </div>
 
-              <div className="flex items-center bg-[#EDF4F6] px-2 rounded-full">
-                <Image
-                  src={StarSvg}
-                  alt="Icon"
-                  className="w-6 h-6 fill-ct text-yellow-400 font-bold"
-                />
-                <span className="ml-1 text-sm text-gray-600 font-semibold">
-                  5/5
-                </span>
-              </div>
+        {/* Checks adicionales (si hay) */}
+        <div className="min-h-[72px] mb-3 flex flex-col justify-start space-y-2">
+          {checks.slice(0, 3).map((adv, idx) => (
+            <div key={idx} className="flex items-center gap-2 text-xs">
+              <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
+              <span>{adv.name}</span>
             </div>
-            <div className="flex items-center justify-between gap-x-2 ">
-              <button
-                onClick={handleBuy}
-                type="button"
-                className="bg-black rounded-full text-white px-3 py-2"
-              >
-                <div className="flex items-center justify-center gap-x-2 px-2">
-                  Comprar
-                  <LocalMallSvgNew />
-                </div>
-              </button>
-              <div>
-                <h1
-                  onClick={() => {
-                    const url = getProductLink(headerTitle, Number(filters.selectedOption), id);
-                    if (url) {
-                      router.push(`${url}?productId=${id}`);
-                    } else {
-                      console.warn("Ruta no encontrada para:", headerTitle);
-                    }
-                  }}
-                  className="cursor-pointer text-[14px]"
-                >
-                  Más información
-                </h1>
-              </div>
-            </div>
+          ))}
+        </div>
+
+         <hr className="my-2 border-gray-200" />
+
+        {/* Precio y acciones */}
+        <div className="mt-auto flex flex-col gap-2">
+          {/* Precio */}
+          <div className="text-lg font-bold">
+            {priceRange}
+          </div>
+
+          {/* Botones */}
+          <div className="flex items-center gap-10">
+            <button
+              onClick={handleBuy}
+              className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center gap-2"
+            >
+              Comprar
+              <LocalMallSvgNew />
+            </button>
+            <span
+              onClick={() => {
+                const url = getProductLink(
+                  headerTitle,
+                  Number(filters.selectedOption),
+                  id
+                );
+                if (url) router.push(`${url}?productId=${id}`);
+              }}
+              className="cursor-pointer text-xs text-black hover:underline "
+            >
+              Más información
+            </span>
           </div>
         </div>
       </div>

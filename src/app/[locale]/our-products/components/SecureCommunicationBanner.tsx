@@ -12,7 +12,7 @@ const SecureCommunicationBanner = () => {
           {/* Columna izquierda — alineada natural con padding global */}
           <div className="md:w-1/2 space-y-2 pl-4 md:pl-16 -mt-8">
             <EncryptedLogoSvg width={180} height={80} />
-            <h2 className="text-xl md:text-2xl font-semibold leading-snug">
+            <h2 className="text-xl md:text-2xl leading-snug">
               Somos especialistas en <br /> soluciones de comunicación <br />{" "}
               segura:
             </h2>
@@ -20,7 +20,7 @@ const SecureCommunicationBanner = () => {
           </div>
 
           {/* Columna derecha — separada del borde y alineada */}
-          <div className="md:w-1/2 pt-2 pr-10 md:pl-[78px] ml-auto flex flex-col gap-3 text-base md:text-lg font-semibold">
+          <div className="md:w-1/2 pt-2 pr-10 md:pl-[78px] ml-auto flex flex-col gap-3 text-base md:text-lg font-semibold md:ml-40">
             {[
               "Celulares Seguros",
               "SIM Cards Encriptadas",
