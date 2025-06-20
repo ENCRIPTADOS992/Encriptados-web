@@ -24,9 +24,10 @@ const BannerOurProductsMobile = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden bg-black py-5 items-center justify-center flex">
+    <div
+      className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden bg-black py-5 flex items-center justify-center">
       {/* Contenedor principal */}
-      <div className="flex flex-col h-full w-[450px] md:w-full">
+      <div className="flex flex-col w-full">
         {/* Contenido superior */}
         <div className="flex-1 flex flex-col justify-center items-center text-center px-4 pt-12 z-10">
           <div className="max-w-[500px] space-y-6">
