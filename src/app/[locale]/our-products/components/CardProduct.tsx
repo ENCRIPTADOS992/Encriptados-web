@@ -97,6 +97,7 @@ const CardProduct: React.FC<CardSimProps> = ({
           <div className="flex justify-between items-center">
             <button
               onClick={handleBuy}
+              type="button"
               className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center gap-2"
             >
               Comprar

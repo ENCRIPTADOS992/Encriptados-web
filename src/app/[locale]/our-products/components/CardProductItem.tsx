@@ -63,6 +63,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
       <div className="flex flex-col gap-3">
         <button
           onClick={() => openModal({ productid: product.id.toString(), languageCode: "es" })}
+          type="button"
           className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-full transition-colors"
         >
           Comprar ahora
