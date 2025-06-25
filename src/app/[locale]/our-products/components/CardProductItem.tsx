@@ -25,7 +25,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
     <div className="bg-[#181818] dark:bg-[#131313] text-black dark:text-white rounded-xl p-6 w-full max-w-md shadow-lg">
       <div className="w-full flex justify-center mb-4">
         <Image
-          src={product.images[0]?.src || "/images/fallback.png"} // ✅ acceso correcto
+          src={product.images[0]?.src || "/images/fallback.png"}
           alt={product.name}
           width={140}
           height={140}
@@ -64,7 +64,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
         <button
           onClick={() => openModal({ productid: product.id.toString(), languageCode: "es" })}
           type="button"
-          className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-full transition-colors"
+          className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-lg transition-colors"
         >
           Comprar ahora
         </button>

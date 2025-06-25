@@ -20,7 +20,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
 
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
-      <>
+      <div className="flex-1">
         <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
         <MenuDropdownProductBar
           name="encriptadosprovider"
@@ -37,55 +37,51 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             updateFilters({ encriptadosprovider: value });
           }}
         />
-      </>
+      </div>
     ),
     tim: (
-      <>
-        <div className="flex items-center justify-center gap-4">
-          <div className="w-full ">
-            <h1 className="text-[#7E7E7E] font-semibold mb-2">
-              Servicios
-            </h1>
-            <MenuDropdownProductBar
-              name="timprovider"
-              options={[
-                { label: "Sim Física", value: "physicsimtim" },
-                { label: "Recarga + eSIM", value: "esimplusdatatim" },
-                { label: "Recarga", value: "datarechargetim" },
-              ]}
-              onChangeExternal={(value) => {
-                console.log("[FilterAppWithLicense] Cambio de timprovider:", value);
-                updateFilters({ timprovider: value });
-              }}
-            />
-          </div>
-        </div>
-      </>
+      <div className="flex-1">
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <MenuDropdownProductBar
+          name="timprovider"
+          options={[
+            { label: "Sim Física", value: "physicsimtim" },
+            { label: "Recarga + eSIM", value: "esimplusdatatim" },
+            { label: "Recarga", value: "datarechargetim" },
+          ]}
+          onChangeExternal={(value) => {
+            console.log("[FilterAppWithLicense] Cambio de timprovider:", value);
+            updateFilters({ timprovider: value });
+          }}
+        />
+      </div>
     ),
   };
 
   return (
-    <>
-      <div className="w-full lg:w-auto">
+    <div className="flex flex-row space-x-4">
+      <div className="flex-1">
         <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
         <MenuDropdownProductBar
           name="provider"
           options={[
             { label: "TODO", value: "all", icon: "" },
-            { label: " ", value: "encriptados", icon: <EncryptedLogoSvg width={100} height={20} /> },
+            {
+              label: " ",
+              value: "encriptados",
+              icon: <EncryptedLogoSvg width={100} height={24} />,
+            },
             { label: " ", value: "tim", icon: <TimSimIcon /> },
           ]}
-           onChangeExternal={(value) => {
+          onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de provider:", value);
             updateFilters({ provider: value });
-  }}
+          }}
         />
+      </div>
 
-      </div>
-      <div className="w-full lg:w-auto lg:ml-4">
-        {currentProvider && optionByProvider[currentProvider]}
-      </div>
-    </>
+      {currentProvider && optionByProvider[currentProvider]}
+    </div>
   );
 };
 

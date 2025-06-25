@@ -104,11 +104,11 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   return (
     <>
-      <div className="md:w-11/12 lg:w-full xl:w-[1272px]  w-full  mx-auto mt-4 mb-4 font-bold">
+      <div className="md:w-11/12 lg:w-full xl:w-[1272px]  w-full  mx-auto mb-4 font-bold">
         {productCount} producto{productCount !== 1 ? "s" : ""} encontrado{productCount !== 1 ? "s" : ""}
       </div>
       <div className="flex items-center justify-between">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full max-w-7xl mx-auto ">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 w-full max-w-7xl mx-auto ">
           {filteredProducts.map((product) => (
             <CardProduct
               key={product.id}

@@ -14,10 +14,11 @@ const BannerSmsActivation = () => {
   };
 
   return (
-    <section className="relative w-full bg-[#0B0B0B] text-white py-6 rounded-3xl overflow-hidden">
+    <section className="relative overflow-hidden w-screen left-1/2 -translate-x-1/2 sm:w-full sm:left-0 sm:translate-x-0 bg-[#0B0B0B] text-white py-6 rounded-none sm:rounded-3xl">
+
       {/* Desktop: imagen absoluta a la derecha */}
       <div
-        className="hidden lg:block absolute inset-y-0 right-20 w-2/5 overflow-hidden rounded-tr-3xl rounded-br-3xl"
+        className="hidden lg:block absolute inset-y-0 right-20 w-2/5 overflow-hidden rounded-tr-3xl "
         style={{
           WebkitMaskImage:
             "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
@@ -35,10 +36,10 @@ const BannerSmsActivation = () => {
       </div>
 
       {/* Contenido */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-center gap-10 px-4 lg:px-10">
+       <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-center gap-10 px-6 lg:px-16">
         {/* Texto */}
         <div className="flex-1 space-y-6 text-center lg:text-left">
-          <h2 className="text-2xl sm:text-4xl font-bold leading-snug">
+          <h2 className="text-2xl sm:text-2xl font-bold leading-snug">
             Activa APPs por SMS
             <br className="hidden sm:inline" />
             con Encriptados
@@ -83,15 +84,17 @@ const BannerSmsActivation = () => {
       </div>
 
       {/* Móvil: imagen debajo del texto, full width */}
-      <div className="block lg:hidden mt-6 w-full h-56 relative">
-        <Image
-          src="/images/our-products/Wire 2025-06-18 at 11_48.png"
-          alt="Imagen mujer globe"
-          layout="fill"
-          objectFit="contain"
-          objectPosition="center"
-          priority
-        />
+      <div className="block lg:hidden relative w-full h-80 overflow-hidden">
+        <div className="absolute inset-x-0 bottom-0 h-full">
+          <Image
+            src="/images/our-products/Wire 2025-06-18 at 11_48.png"
+            alt="Imagen mujer globe"
+            layout="fill"
+            objectFit="contain"
+            objectPosition="bottom"
+            priority
+          />
+        </div>
       </div>
     </section>
   );

@@ -80,19 +80,19 @@ const OurProductsPage = () => {
             <CardOurProducts filters={filters} />
           </SectionWrapper>
 
-          <SectionWrapper className="py-1">
+          <SectionWrapper className="py-0 md:py-1">
             <SilentCircleBanner />
           </SectionWrapper>
 
-          <SectionWrapper className="py-2">
+          <SectionWrapper className="py-0 md:py-2">
             <BannerSmsActivation />
           </SectionWrapper>
 
-          <SectionWrapper className="py-1">
+          <SectionWrapper className="py-0 md:py-1">
             <BannerSecureMdmNew />
           </SectionWrapper>
 
-          <SectionWrapper className="py-1">
+          <SectionWrapper className="py-0 md:py-1">
             <SecureCommunicationBanner />
           </SectionWrapper>
         </div>

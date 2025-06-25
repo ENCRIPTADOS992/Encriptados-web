@@ -15,6 +15,7 @@ import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 
 import { Product } from "@/features/products/types/AllProductsResponse";
+import SearchSvg from "@/shared/svgs/SearchSvg";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
@@ -31,24 +32,24 @@ interface FilterProductsBarProps {
   products?: Product[];
 }
 
-export default function FilterProductsBar({ filters, updateFilters, products  }: FilterProductsBarProps) {
+export default function FilterProductsBar({ filters, updateFilters, products }: FilterProductsBarProps) {
   const t = useTranslations("OurProductsPage");
   const selectedCat = parseInt(filters.selectedOption, 10);
 
 
-    const items = FILTER_OPTIONS.map(({ key, label, catId, Icon }) => ({
+  const items = FILTER_OPTIONS.map(({ key, label, catId, Icon }) => ({
     value: String(catId),
     label:
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-        ? "Software"
-        : label,
+          ? "Software"
+          : label,
     icon: <Icon color={selectedCat === catId ? ICON_COLOR_SELECTED : ICON_COLOR_UNSELECTED} />,
   }));
 
 
- let SubFilterComponent: React.ReactNode = null;
+  let SubFilterComponent: React.ReactNode = null;
   switch (selectedCat) {
     case 40:
       SubFilterComponent = <FilterProviderServices filters={filters} updateFilters={updateFilters} />;
@@ -61,10 +62,10 @@ export default function FilterProductsBar({ filters, updateFilters, products  }:
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-end lg:space-x-4 justify-between">
+      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-end md:space-x-4 justify-between">
         <div className="flex-1 space-y-2">
-          <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
-            <div className="w-full lg:w-[340px] lg:mr-6" >
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
+         <div className="w-full md:w-[340px] md:mr-6">
               <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
               </h2>
@@ -81,12 +82,37 @@ export default function FilterProductsBar({ filters, updateFilters, products  }:
           </div>
         </div>
 
-        <div className="flex w-full justify-end">
-          <SearchProduct
-            name="searchinputproduct"
-            placeholder={t("filterProducts.searchPlaceholder")}
-            containerClassName="w-full sm:w-96 md:w-72 lg:w-80"
-          />
+        <div className="flex w-full justify-end items-center">
+          {/* 1️⃣ Input completo en <768px */}
+          <div className="w-full md:hidden">
+            <SearchProduct
+              name="searchinputproduct"
+              placeholder={t("filterProducts.searchPlaceholder")}
+              containerClassName="w-full"
+            />
+          </div>
+
+          {/* 2️⃣ Botón redondo SOLO en md (768–1023px) */}
+          <div className="hidden md:flex xl:hidden">
+            <button
+              type="button"
+              className="bg-[#222222] p-5 rounded-3xl shadow-sm"
+              onClick={() => {
+                /* aquí podrías abrir un modal o cambiar un estado para desplegar el input */
+              }}
+            >
+              <SearchSvg color="#CCCCCC" />
+            </button>
+          </div>
+
+          {/* 3️⃣ Input completo en ≥lg (≥1024px) */}
+          <div className="hidden xl:block w-full xl:w-80">
+            <SearchProduct
+              name="searchinputproduct"
+              placeholder={t("filterProducts.searchPlaceholder")}
+              containerClassName="w-full"
+            />
+          </div>
         </div>
       </div>
     </div>

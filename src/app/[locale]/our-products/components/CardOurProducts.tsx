@@ -18,8 +18,7 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
   };
 
   return (
-    <div className="w-full flex flex-col md:flex-row items-stretch gap-6 mt-5">
-      <div className="flex-1 h-full">
+    <div className="relative w-screen left-1/2 -translate-x-1/2 md:static md:w-auto md:left-0 md:translate-x-0 grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-2 mt-0 md:mt-1 mb-0 md:mb-1">
         <CardSimEsim
           title="SIM Card encriptada"
           description="Protegete de los ciberdelincuentes y mantén tu información personal segura"
@@ -39,8 +38,6 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
           moreInfoUrl={`/mas-informacion?selectedOption=${filters.selectedOption}`}
           onMoreInfoClick={() => console.log("Más información")}
         />
-      </div>
-      <div className="flex-1 h-full">
         <CardSimEsim
           title="SIM TIM Conéctate con total anonimato"
           description="Tus datos no expiran sin importar el tiempo que tardes en consumirlos"
@@ -59,7 +56,7 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
           moreInfoUrl={`/mas-informacion?selectedOption=${filters.selectedOption}`}
           onMoreInfoClick={() => console.log()}
         />
-      </div>
+
     </div>
   );
 };

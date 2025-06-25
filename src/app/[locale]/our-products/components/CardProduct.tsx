@@ -57,9 +57,9 @@ const CardProduct: React.FC<CardSimProps> = ({
       </div>
 
       {/* Contenido */}
-      <div className="p-6 flex flex-col">
+      <div className="p-2 sm:p-6 flex flex-col">
         {/* Título */}
-        <h2 className="text-xl md:text-lg font-bold mb-1 truncate">
+        <h2 className="text-lg md:text-xl font-bold mb-1 truncate">
           {headerTitle}
         </h2>
 
@@ -68,7 +68,7 @@ const CardProduct: React.FC<CardSimProps> = ({
           {features.map((item, idx) => (
             <li
               key={idx}
-              className="flex items-center text-base md:text-sm gap-2"
+              className="flex items-center text-sm md:text-base gap-2"
             >
               <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
               <span>{item}</span>
@@ -79,7 +79,7 @@ const CardProduct: React.FC<CardSimProps> = ({
         {/* Checks adicionales (si hay) */}
         <div className="min-h-[72px] flex flex-col justify-start space-y-2">
           {checks.slice(0, 3).map((adv, idx) => (
-            <div key={idx} className="flex items-center gap-2 text-sm md:text-xs">
+            <div key={idx} className="flex items-center gap-2 text-xs md:text-sm">
               <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
               <span>{adv.name}</span>
             </div>
@@ -94,11 +94,11 @@ const CardProduct: React.FC<CardSimProps> = ({
           <div className="text-lg font-bold">{priceRange}</div>
 
           {/* Botones + “Más información” */}
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-2">
             <button
               onClick={handleBuy}
               type="button"
-              className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center gap-2"
+              className="w-full sm:w-auto bg-black text-white text-xs rounded-full px-4 py-2 flex items-center justify-center gap-2"
             >
               Comprar
               <LocalMallSvgNew />
@@ -112,7 +112,7 @@ const CardProduct: React.FC<CardSimProps> = ({
                 );
                 if (url) router.push(`${url}?productId=${id}`);
               }}
-              className="cursor-pointer text-xs text-black hover:underline"
+              className="cursor-pointer text-xs text-black hover:underline mt-1 sm:mt-0"
             >
               Más información
             </span>

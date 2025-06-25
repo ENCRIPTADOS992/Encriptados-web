@@ -39,79 +39,40 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
   moreInfoColor,
 }) => {
   return (
-    <div className={`${background} flex-1 min-w-0 sm:rounded-3xl rounded-2xl`}>
-      <div className="
-          p-6 sm:p-9
-          flex
-          flex-col
-          sm:flex-row
-          gap-6
-          items-center
-          justify-center
-          sm:justify-start
-        "
-        >
-        {/* Texto */}
-        <div
-          className="
-            w-full sm:w-[55%]
-            text-center
-            sm:text-left
-          "
-        >
-          <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>
-            {title}
-          </h2>
-          {description && (
-            <p className={`text-sm sm:text-sm text-[#101010] mb-6 ${descriptionColor}`}>
-              {description}
-            </p>
-          )}
-          <div className="flex flex-col justify-start">
-           <button
-              type="button"
-              onClick={onBuyClick}
-              className="
-                bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold
-                rounded-lg px-6 py-2 transition
-                w-full max-w-[180px] whitespace-nowrap
-                mx-auto
-                sm:mx-0
-              "
-            >
-              {buyText}
-            </button>
-          </div>
+    <div className={`${background} min-w-0 h-full rounded-none sm:rounded-3xl overflow-hidden relative`}>
+      <div className="p-6 sm:p-9 flex flex-col sm:flex-row gap-6 items-start justify-start h-full">
+        <div className="w-full sm:w-[55%] text-center sm:text-left">
+          <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>{title}</h2>
+          {description && <p className={`text-sm mb-6 ${descriptionColor}`}>{description}</p>}
+          <button
+            type="button"
+            onClick={onBuyClick}
+            className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-6 py-2 transition w-full max-w-[180px] whitespace-nowrap mx-auto sm:mx-0"
+          >
+            {buyText}
+          </button>
           {showMoreInfo && (
             <Link href={moreInfoUrl} passHref>
               <button
                 type="button"
                 onClick={onMoreInfoClick}
-                className={`text-sm transition mt-6 sm:mt-4 ${moreInfoColor || "text-gray-300 hover:text-white"}`}
+                className={`hidden sm:inline-block text-sm transition mt-6 ${moreInfoColor || "text-gray-300 hover:text-white"}`}
               >
                 {moreInfoText}
               </button>
             </Link>
           )}
         </div>
-
-        {/* Imagen */}
-        <div
-          className="
-            w-full sm:w-[45%] relative min-h-[180px]
-            flex
-            justify-center
-            sm:justify-end
-            items-end
-          "
-        >
-          <Image
-            src={imageSrc}
-            alt={altText}
-            width={200}
-            height={160}
-            className="object-contain object-bottom"
-          />
+         <div className="w-full sm:w-[45%] h-full">
+          <div className="flex justify-center sm:absolute sm:bottom-0 ">
+            <Image
+              src={imageSrc}
+              alt={altText}
+              width={200}
+              height={160}
+              className="object-contain filter saturate-150"
+            />
+          </div>
         </div>
       </div>
     </div>

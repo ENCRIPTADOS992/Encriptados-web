@@ -21,21 +21,24 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
   console.log("[FilterAppWithLicense] products:", products);
 
   return (
-    <>
-      <div className="w-full lg:w-auto">
+    <div className="flex flex-row space-x-4">
+      {/* SOFTWARE */}
+      <div className="flex-1">
         <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">
           {t("filterProducts.software")}
         </h1>
-      <MenuDropdownProductBar
-        name="os"
-        options={osOptions}
-        onChangeExternal={(value) => {
-          console.log("[FilterAppWithLicense] Cambio de OS:", value);
-          updateFilters({ os: value });
-        }}
-      />
+        <MenuDropdownProductBar
+          name="os"
+          options={osOptions}
+          onChangeExternal={(value) => {
+            console.log("[FilterAppWithLicense] Cambio de OS:", value);
+            updateFilters({ os: value });
+          }}
+        />
       </div>
-      <div className="w-full lg:w-auto lg:ml-4">
+
+      {/* LICENCIA */}
+      <div className="flex-1">
         <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2 whitespace-nowrap">
           {t("filterProducts.licenseTitle")}
         </h1>
@@ -44,17 +47,17 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
           options={[
             { label: "TODO", value: "all" },
             { label: "1 mes", value: "1" },
-            { label: "3 meses", value: "3"},
+            { label: "3 meses", value: "3" },
             { label: "6 meses", value: "6" },
             { label: "12 meses", value: "12" },
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de License:", value);
-             updateFilters({ license: String(value) });
+            updateFilters({ license: String(value) });
           }}
         />
       </div>
-    </>
+    </div>
   );
 };
 
