@@ -62,10 +62,10 @@ export default function FilterProductsBar({ filters, updateFilters, products }: 
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-end md:space-x-4 justify-between">
+      <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-end sm:space-x-4 justify-between">
         <div className="flex-1 space-y-2">
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
-         <div className="w-full md:w-[340px] md:mr-6">
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0">
+         <div className="w-full sm:w-[340px] sm:mr-6">
               <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
               </h2>
@@ -83,8 +83,8 @@ export default function FilterProductsBar({ filters, updateFilters, products }: 
         </div>
 
         <div className="flex w-full justify-end items-center">
-          {/* 1️⃣ Input completo en <768px */}
-          <div className="w-full md:hidden">
+          {/* 1️⃣ Input completo en <640px */}
+          <div className="w-full sm:hidden">
             <SearchProduct
               name="searchinputproduct"
               placeholder={t("filterProducts.searchPlaceholder")}
@@ -93,7 +93,7 @@ export default function FilterProductsBar({ filters, updateFilters, products }: 
           </div>
 
           {/* 2️⃣ Botón redondo SOLO en md (768–1023px) */}
-          <div className="hidden md:flex xl:hidden">
+          <div className="hidden sm:flex xl:hidden">
             <button
               type="button"
               className="bg-[#222222] p-5 rounded-3xl shadow-sm"

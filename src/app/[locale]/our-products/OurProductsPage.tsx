@@ -44,13 +44,13 @@ const OurProductsPage = () => {
     <>
       <BasicFormProvider defaultValue={filters}>
 
-        <SectionWrapper className="block md:hidden">
+        <SectionWrapper className="block sm:hidden">
           <BannerOurProductsMobile />
         </SectionWrapper>
 
         {/* Banner para dispositivos mayores que móvil */}
         <div
-        className="hidden md:block w-full bg-black"
+        className="hidden sm:block w-full bg-black"
         style={{
           background:
             "radial-gradient(circle at 75% -70%, #7EE0FF 0%, rgb(37, 191, 238) 20%, #000 60%)",
