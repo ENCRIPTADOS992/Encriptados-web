@@ -2,6 +2,7 @@
 import React from "react";
 import { Check, Briefcase } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
 
 type ImageProp = string | React.FC<React.SVGProps<SVGSVGElement>>;
 
@@ -42,7 +43,7 @@ export default function AmbassadorCardDistributor({
     <div className="w-full max-w-md  text-white rounded-2xl overflow-hidden shadow-lg">
       <div className="relative h-[300px] overflow-hidden">
         {typeof image === "string" ? (
-          <img src={image} alt="Promotor" className="w-full h-full object-cover" />
+          <Image src={image} alt="Promotor" fill className="object-cover" />
         ) : (
           React.createElement(image as React.FC<React.SVGProps<SVGSVGElement>>, {
             className: "w-full h-full object-cover",
