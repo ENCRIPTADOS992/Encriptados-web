@@ -836,9 +836,9 @@
       "title": "Applications",
       "description": "Amazing products, applications, and systems with end-to-end encryption",
       "items": {
-        "silentCircle": {
-          "title": "Silent Circle",
-          "description": "Silent Circle is a secure messaging app."
+        "silentPhone": {
+          "title": "Silent phone",
+          "description": "Silent phone is a secure messaging app."
         },
         "armadillo": {
           "title": "Armadillo",

@@ -829,8 +829,8 @@
       "title": "Applications",
       "description": "Produits incroyables, applications et systèmes avec cryptage de bout en bout",
       "items": {
-        "silentCircle": {
-          "title": "Silent Circle",
+        "silentPhone": {
+          "title": "Silent phone",
           "description": "Silent Circle est une application de messagerie sécurisée."
         },
         "armadillo": {

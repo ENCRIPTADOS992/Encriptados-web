@@ -53,104 +53,72 @@ export function useTranslatedProductsCategories(): any {
       link:"",
       image: "/images/mega-menu/aplicaciones.jpeg",
       items: [
-         {
-          title: t("apps.items.threemaWork.title", {
-            defaultValue: "Threema Work",
-          }),
-          image:
-            "/images/mega-menu/apps/Threema-Work_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/threema-work",
-          description: t("apps.items.threemaWork.description", {
-            defaultValue:
-              "Threema Work es una aplicación de mensajería segura.",
-          }),
-        },
         {
-          title: t("apps.items.silentCircle.title", {
-            defaultValue: "Silent Circle",
-          }),
-          image:
-            "/images/mega-menu/apps/Silent-Circle_Apps_Encriptados_preview_menu_web.jpg",
+          title: t("apps.items.silentPhone.title", { defaultValue: "Silent phone" }),
+          image: "/images/mega-menu/apps/Silent-Circle_Apps_Encriptados_preview_menu_web.jpg",
           link: "/apps/silent-circle",
-          description: t("apps.items.silentCircle.description", {
-            defaultValue:
-              "Silent Circle es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("apps.items.armadillo.title", { defaultValue: "Armadillo" }),
-          image:
-            "/images/mega-menu/apps/Armadillo_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/armadillo",
-          description: t("apps.items.armadillo.description", {
-            defaultValue: "Armadillo es una aplicación de mensajería segura.",
+          description: t("apps.items.silentPhone.description", {
+            defaultValue: "Silent phone es una aplicación de mensajería segura.",
           }),
         },
         {
           title: t("apps.items.vaultChat.title", { defaultValue: "VaultChat" }),
-          image:
-            "/images/mega-menu/apps/VaultChat_Apps_Encriptados_preview_menu_web.jpg",
+          image: "/images/mega-menu/apps/VaultChat_Apps_Encriptados_preview_menu_web.jpg",
           link: "/apps/vault-chat",
           description: t("apps.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
         },
         {
-          title: t("apps.items.nordVpn.title", { defaultValue: "Nord VPN" }),
-          image:
-            "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/nord-vpn",
-          description: t("apps.items.nordVpn.description", {
-            defaultValue: "NORD VPN es una aplicación de mensajería segura.",
+          title: t("apps.items.armadillo.title", { defaultValue: "Armadillo" }),
+          image: "/images/mega-menu/apps/Armadillo_Apps_Encriptados_preview_menu_web.jpg",
+          link: "/apps/armadillo",
+          description: t("apps.items.armadillo.description", {
+            defaultValue: "Armadillo es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("apps.items.threema.title", { defaultValue: "Threema" }),
+          image: "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.jpg",
+          link: "/apps/threema",
+          description: t("apps.items.threema.description", {
+            defaultValue: "Threema es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("apps.items.threemaWork.title", {
+            defaultValue: "Threema Work",
+          }),
+          image: "/images/mega-menu/apps/Threema-Work_Apps_Encriptados_preview_menu_web.jpg",
+          link: "/apps/threema-work",
+          description: t("apps.items.threemaWork.description", {
+            defaultValue: "Threema Work es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("apps.items.vnclagoon.title", { defaultValue: "VncLagoon" }),
+          image: "/images/mega-menu/apps/VNC-lagoon_Apps_Encriptados_preview_menu_web.jpg",
+          link: "/apps/vnc-lagoon",
+          description: t("apps.items.vnclagoon.description", {
+            defaultValue: "VncLagoon es una aplicación de mensajería segura.",
           }),
         },
         {
           title: t("apps.items.salt.title", { defaultValue: "Salt" }),
-          image:
-            "/images/mega-menu/apps/Salt_Apps_Encriptados_preview_menu_web.jpg",
+          image: "/images/mega-menu/apps/Salt_Apps_Encriptados_preview_menu_web.jpg",
           link: "/apps/salt",
           description: t("apps.items.salt.description", {
             defaultValue: "Salt es una aplicación de mensajería segura.",
           }),
         },
         {
-          title: t("apps.items.vnclagoon.title", { defaultValue: "VNClagoon" }),
-          image:
-            "/images/mega-menu/apps/VNC-lagoon_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/vnc-lagoon",
-          description: t("apps.items.vnclagoon.description", {
-            defaultValue: "VNClagoon es una aplicación de mensajería segura.",
+          title: t("apps.items.nordVpn.title", { defaultValue: "NordVPN" }),
+          image: "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.jpg",
+          link: "/apps/nord-vpn",
+          description: t("apps.items.nordVpn.description", {
+            defaultValue: "NordVPN es una aplicación de mensajería segura.",
           }),
         },
-        {
-          title: t("apps.items.threema.title", { defaultValue: "Threema" }),
-          image:
-            "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/threema",
-          description: t("apps.items.threema.description", {
-            defaultValue: "Threema es una aplicación de mensajería segura.",
-          }),
-        },
-        // {
-        //   title: t("apps.items.secureCrypt.title", {
-        //     defaultValue: "SecureCrypt",
-        //   }),
-        //   image:
-        //     "/images/mega-menu/apps/Secure-Crypt_Apps_Encriptados_preview_menu_web.jpg",
-        //   link: "/app9",
-        //   description: t("apps.items.secureCrypt.description", {
-        //     defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
-        //   }),
-        // },
-        // {
-        //   title: t("apps.items.elyon.title", { defaultValue: "Elyon" }),
-        //   image:
-        //     "/images/mega-menu/apps/Eylon_Apps_Encriptados_preview_menu_web.jpg",
-        //   link: "/apps/elyon",
-        //   description: t("apps.items.elyon.description", {
-        //     defaultValue: "Elyon es una aplicación de mensajería segura.",
-        //   }),
-        // },
       ],
     },
     {
@@ -206,6 +174,39 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
+          title: t("systems.items.chatMail.title", {
+            defaultValue: "ChatMail",
+          }),
+          image:
+            "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.jpg",
+          link: "/apps/chat-mail",
+          description: t("systems.items.chatMail.description", {
+            defaultValue: "ChatMail es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("systems.items.armadillo.title", {
+            defaultValue: "Armadillo",
+          }),
+          image:
+            "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.jpg",
+          link: "/apps/armadillo-v2",
+          description: t("systems.items.armadillo.description", {
+            defaultValue: "Armadillo es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("systems.items.vaultChat.title", {
+            defaultValue: "VaultChat",
+          }),
+          image:
+            "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.jpg",
+          link: "/apps/vault-chat-v2",
+          description: t("systems.items.vaultChat.description", {
+            defaultValue: "VaultChat es una aplicación de mensajería segura.",
+          }),
+        },
+        {
           title: t("systems.items.ultraX.title", { defaultValue: "Ultra X" }),
           image:
             "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.jpg",
@@ -215,14 +216,15 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
-          title: t("systems.items.chatMail.title", {
-            defaultValue: "ChatMail",
+          title: t("systems.items.intactPhone.title", {
+            defaultValue: "Intact Phone",
           }),
           image:
-            "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/chat-mail",
-          description: t("systems.items.chatMail.description", {
-            defaultValue: "ChatMail es una aplicación de mensajería segura.",
+            "/images/mega-menu/sistemas/IntacPhone_Sistemas_Encriptados_preview_menu_web.jpg",
+          link: "/apps/intact-phone",
+          description: t("systems.items.intactPhone.description", {
+            defaultValue:
+              "Intact Phone es una aplicación de mensajería segura.",
           }),
         },
         {
@@ -247,28 +249,6 @@ export function useTranslatedProductsCategories(): any {
         //     defaultValue: "Total Sec es una aplicación de mensajería segura.",
         //   }),
         // },
-        {
-          title: t("systems.items.armadillo.title", {
-            defaultValue: "Armadillo",
-          }),
-          image:
-            "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/armadillo-v2",
-          description: t("systems.items.armadillo.description", {
-            defaultValue: "Armadillo es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("systems.items.vaultChat.title", {
-            defaultValue: "VaultChat",
-          }),
-          image:
-            "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/vault-chat-v2",
-          description: t("systems.items.vaultChat.description", {
-            defaultValue: "VaultChat es una aplicación de mensajería segura.",
-          }),
-        },
         // {
         //   title: t("systems.items.t2Communicator.title", {
         //     defaultValue: "T2 Communicator",
@@ -281,18 +261,6 @@ export function useTranslatedProductsCategories(): any {
         //       "T2 Communicator es una aplicación de mensajería segura.",
         //   }),
         // },
-        {
-          title: t("systems.items.intactPhone.title", {
-            defaultValue: "Intact Phone",
-          }),
-          image:
-            "/images/mega-menu/sistemas/IntacPhone_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/intact-phone",
-          description: t("systems.items.intactPhone.description", {
-            defaultValue:
-              "Intact Phone es una aplicación de mensajería segura.",
-          }),
-        },
       ],
     },
   ];
