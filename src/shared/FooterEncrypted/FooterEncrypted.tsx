@@ -103,19 +103,19 @@ export default function FooterEncrypted() {
   return (
     <footer className="bg-black text-gray-300">
       <SectionWrapper className="py-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-8">
-          <div className="col-span-1 lg:col-span-1 mb-8 flex flex-col items-center md:items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-5 lg:grid-cols-5 gap-8">
+          <div className="col-span-1 lg:col-span-1 mb-8 flex flex-col items-center sm:items-start">
             <EncryptedLogoSvg width={150} height={50} />
-            <p className="text-lg mb-4 text-center md:text-left">
+            <p className="text-lg mb-4 text-center sm:text-left">
               {t("downloadApp")}
             </p>
-            <div className="flex flex-col space-y-2 items-center md:items-start">
+            <div className="flex flex-col space-y-2 items-center sm:items-start">
               <AppleSvg />
               <PlayStoreSvg />
               <DownloadAPKNew width="187" height="55" />
             </div>
 
-            <div className="mt-4 flex justify-center md:justify-start">
+            <div className="mt-4 flex justify-center sm:justify-start">
               <QRFooter />
             </div>
           </div>
