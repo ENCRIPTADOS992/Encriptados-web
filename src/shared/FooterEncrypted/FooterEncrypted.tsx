@@ -41,28 +41,28 @@ export default function FooterEncrypted() {
       // title: t("encryptedSims.title"),
       items: [
         "Silent phone",
-        "VncLagon",
-        "Threema",
-        "Threema Works",
-        "Salt",
         "VaultChat",
         "Armadillo",
-        "SecureCrypt",
+        "Threema",
+        "Threema Works",
+        "VncLagon",
+        "Salt",
+        "Nord VPN",
       ],
     },
     {
       title: t("phoneEncrypted.title"),
       items: [
+        "Secure MDM iphone",
+        "Secure MDM Android",
+        "Cryptcom",
+        "Renati",
+        "Chatmail",
         "Armadillo",
+        "VaultChat",
         "UltraX",
         "Intact",
         "DecSecure",
-        "Renati",
-        "Chatmail",
-        "Cryptcom",
-        "Secure MDM iphone",
-        "Secure MDM Android",
-        "VaultChat",
       ],
     },
   ];
@@ -74,6 +74,8 @@ export default function FooterEncrypted() {
       link: "https://www.youtube.com/@encriptados_io",
     },
   ];
+
+  const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
   const countries = [
     { name: "Colombia", flag: <ColombiaFooterFlag /> },
@@ -100,19 +102,46 @@ export default function FooterEncrypted() {
     { key: "lFooter", icon: <LFooter /> },
   ];
 
+  const APPS_LINKS: Record<string, string> = {
+    "Silent phone": "/apps/silent-circle",
+    "VaultChat": "/apps/vault-chat",
+    "Armadillo": "/apps/armadillo",
+    "Threema": "/apps/threema",
+    "Threema Works": "/apps/threema-work",
+    "VncLagon": "/apps/vnc-lagoon",
+    "Salt": "/apps/salt",
+    "Nord VPN": "/apps/nord-vpn",
+  };
+
+  const SYSTEMS_LINKS: Record<string, string> = {
+    "Secure MDM iphone": "/apps/secure-mdm-iphone",
+    "Secure MDM Android": "/apps/secure-mdm-android",
+    "Cryptcom": "/apps/cryptcom",
+    "Renati": "/apps/renati",
+    "Chatmail": "/apps/chat-mail",
+    "Armadillo": "/apps/armadillo-v2",
+    "VaultChat": "/apps/vault-chat-v2",
+    "UltraX": "/apps/ultrax",
+    "Intact": "/apps/intact-phone",
+    "DecSecure": "/apps/dec-secure",
+  };
+
+
   return (
-    <footer className="bg-black text-gray-300">
+    <footer className="bg-black text-gray-300 text-base sm:text-sm md:text-sm lg:text-base">
       <SectionWrapper className="py-8">
         <div className="grid grid-cols-1 sm:grid-cols-5 lg:grid-cols-5 gap-8">
           <div className="col-span-1 lg:col-span-1 mb-8 flex flex-col items-center sm:items-start">
             <EncryptedLogoSvg width={150} height={50} />
-            <p className="text-lg mb-4 text-center sm:text-left">
+            <p className="text-lg mb-4 text-center sm:text-left sm:text-sm md:text-sm">
               {t("downloadApp")}
             </p>
             <div className="flex flex-col space-y-2 items-center sm:items-start">
               <AppleSvg />
               <PlayStoreSvg />
-              <DownloadAPKNew width="187" height="55" />
+              <div className="w-[144px] sm:w-[144px] md:w-[144px] lg:w-[187px]">
+                <DownloadAPKNew width="100%" height="auto" />
+              </div>
             </div>
 
             <div className="mt-4 flex justify-center sm:justify-start">
@@ -120,32 +149,41 @@ export default function FooterEncrypted() {
             </div>
           </div>
 
-          {sections.map((section, index) => (
-            <div key={index} className="col-span-1 mb-8">
-              <h3 className="text-lg font-semibold mb-4 text-center md:text-left">
+          {sections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="col-span-1 mb-8">
+              <h3 className="text-lg font-semibold mb-4 text-center md:text-left sm:text-sm md:text-sm lg:text-lg">
                 {section.title}
               </h3>
-              <ul className="space-y-2 text-center md:text-left">
-                {section.items.map((item, idx) => (
-                  <li key={idx}>
-                    <Link href="#" className="hover:text-white">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+              <ul>
+                {section.items.map((item) => {
+                  const href =
+                    sectionIndex === 1
+                      ? APPS_LINKS[item]
+                      : sectionIndex === 2
+                        ? SYSTEMS_LINKS[item]
+                        : "#";
+
+                  return (
+                    <li key={item}>
+                      <Link href={href} className="hover:text-white">
+                        {item}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
 
           <div className="col-span-1 lg:col-span-1 mb-8">
-            <h3 className="text-lg font-semibold mb-4 text-center md:text-left">
+            <h3 className="text-lg font-semibold mb-4 text-center md:text-left sm:text-sm md:text-sm">
               {t("securePay.title")}
             </h3>
-            <div className="grid grid-cols-3 gap-2 bg-[#131313] rounded-xl p-4">
+            <div className="grid grid-cols-3 gap-1 sm:gap-1 md:gap-1 lg:gap-2 bg-[#131313] rounded-xl p-2 sm:p-3 md:p-3 lg:p-4">
               {paymentMethods.map(({ key, icon }) => (
                 <div
                   key={key}
-                  className="rounded p-2 flex items-center justify-center"
+                  className="rounded flex items-center justify-center p-1 sm:p-1 md:p-1 lg:p-2"
                 >
                   {icon}
                 </div>
@@ -177,7 +215,7 @@ export default function FooterEncrypted() {
         <hr className="w-full border-t border-[#464646] mt-8 mb-4" />
         <div className="flex justify-between items-center text-sm">
           <div>
-            <Link href="#" className="hover:text-white">
+            <Link href={TERMS_URL} className="hover:text-white">
               Términos y condiciones
             </Link>
             {" | "}

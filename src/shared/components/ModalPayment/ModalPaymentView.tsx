@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link"; 
 import { Formik } from "formik";
 import Image from "next/image";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -51,6 +52,8 @@ const ModalPaymentView: React.FC = () => {
 
   const totalPrice = (Number(product?.price) || 0) * quantity;
   const goBack = () => closeModal();
+
+  const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
   if (isLoading) {
     return (
@@ -233,11 +236,20 @@ const ModalPaymentView: React.FC = () => {
                     }`}
                   />
                   <label
-                    htmlFor="termsAccepted"
-                    className="text-xs text-gray-800"
-                  >
-                    Acepto términos y condiciones de la compra
-                  </label>
+    htmlFor="termsAccepted"
+    className="text-xs text-gray-800"
+  >
+    Acepto{" "}
+    <Link
+      href={TERMS_URL}
+      className="underline"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      términos y condiciones
+    </Link>{" "}
+    de la compra
+  </label>
                 </div>
                 {touched.termsAccepted && errors.termsAccepted && (
                   <p className="text-xs text-red-500 mt-1">

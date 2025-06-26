@@ -1,6 +1,8 @@
 import * as React from "react";
-const AppleSvg: React.FC<React.SVGProps<SVGSVGElement>> = () => (
+const AppleSvg: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => (
   <svg
+    className={className}
+    {...props}
     width="187"
     height="55"
     viewBox="0 0 183 54"
