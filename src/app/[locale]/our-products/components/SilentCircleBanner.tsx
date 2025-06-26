@@ -52,7 +52,7 @@ const SilentCircleBanner = () => {
       </div>
 
       {/* —— TABLET+ (resto pantallas) —— */}
-      <div className="hidden sm:block relative overflow-hidden w-full max-w-screen-2xl mx-auto px-4 md:px-6 lg:px-8 py-8 rounded-3xl bg-[#101010] text-white">
+      <div className="hidden sm:block relative overflow-hidden w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 rounded-3xl bg-[#101010] text-white">
         {/* Fondo */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -69,21 +69,21 @@ const SilentCircleBanner = () => {
         </div>
 
         {/* Contenido */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-10">
+        <div className="relative z-10 flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-6">
           {/* Texto */}
-          <div className="w-full md:w-1/2 md:ml-8 lg:ml-12 text-center md:text-left space-y-4">
+          <div className="w-full sm:w-1/2 sm:ml-8 lg:ml-12 text-center sm:text-left space-y-4">
             <span className="inline-block bg-[#CB0808] px-6 py-1 rounded-full text-sm font-semibold">
               Silent Circle
             </span>
-            <h2 className="text-2xl font-bold">Silent Phone</h2>
-            <p className="text-sm text-gray-300 max-w-md">
+            <h2 className="text-2xl sm:text-xl md:text-2xl font-bold">Silent Phone</h2>
+            <p className="text-sm sm:text-xs md:text-sm text-gray-300 max-w-md">
               Desarrollada por expertos en tecnología móvil, esta app protege tus datos con máxima seguridad en todo momento.
             </p>
           </div>
 
           {/* Card */}
           {silentProduct && (
-            <div className="w-full md:w-2/5 flex justify-center md:justify-end mt-6 md:mt-0 mr-0 md:mr-8 lg:mr-20">
+            <div className="w-full sm:w-2/5 flex justify-center sm:justify-end mt-4 sm:mt-0 mr-0 sm:mr-8 lg:mr-20">
               <div className="w-full max-w-sm">
                 <CardProductItem product={silentProduct} />
               </div>

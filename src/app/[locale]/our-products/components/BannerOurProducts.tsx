@@ -67,7 +67,7 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Imagen de persona */}
-        <div className="flex-1 w-full max-w-md z-10 relative h-[280px] md:h-[450px] md:translate-y-10 translate-y-10">
+        <div className="flex-1 w-full max-w-md z-10 relative h-[280px] md:h-[280px] lg:h-[450px] translate-y-10 md:translate-y-10 lg:translate-y-10">
           <Image
             src="/images/our-products/070e8ce9e05a772be2fda80c02b3733778db1afd.png"
             alt="Persona hablando"

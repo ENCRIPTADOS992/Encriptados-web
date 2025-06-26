@@ -12,6 +12,10 @@ const config: Config = {
     extend: {
       screens: {
         "lg-custom": "1358px", // Nuevo breakpoint personalizado
+        sm: '600px',
+        md: '820px',
+        lg: '1024px',
+        xl: '1280px',
       },
       fontFamily: {
         sans: ["Roboto", "Helvetica", "Arial", "sans-serif"], // Fuente personalizada Roboto

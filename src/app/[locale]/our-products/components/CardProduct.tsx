@@ -57,7 +57,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       </div>
 
       {/* Contenido */}
-      <div className="p-2 sm:p-6 flex flex-col">
+      <div className="p-2 sm:p-4 flex flex-col">
         {/* Título */}
         <h2 className="text-lg md:text-xl font-bold mb-1 truncate">
           {headerTitle}
