@@ -1,13 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 
 const CryptcomFaq = () => {
-  const t = useTranslations("CryptcomPage.faq");
-
-	const faqs = t.raw("items") as { question: string; answer: string }[];
+  const faqs = [
+    {
+      question: "¿Cómo se hace la encriptación de un celular Cryptcom?",
+      answer:
+        "Al encriptar el celular con una licencia Cryptcom, se reemplaza el sistema operativo original por uno encriptado de grado militar, con características especiales como chats cifrados, llamadas seguras, destrucción remota, entre otras que puedes conocer en encriptados.io.",
+    },
+    {
+      question:
+        "¿Qué funcionalidades voy a tener al encriptar mi celular con Cryptcom?",
+      answer:
+        "Además de la seguridad y privacidad que ofrece el celular encriptado Cryptcom, tendrás funcionalidades como chats cifrados, borrado remoto, mail cifrado, mensajes temporizados, baúl en la nube y múltiples aplicaciones cifradas.",
+    },
+    {
+      question:
+        "¿Cómo funciona el borrado remoto en un celular encriptado como Cryptcom?",
+      answer:
+        "En caso de perder el teléfono o ser víctima de robo, se podrá enviar una combinación predeterminada de caracteres al propio chat de tu celular Cryptcom para eliminar toda la información. En otros casos, se podrá hacer contactando al proveedor de la licencia.",
+    },
+  ];
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -19,7 +34,7 @@ const CryptcomFaq = () => {
     <section className="bg-white py-10 px-4 lg:px-20">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-black font-bold text-2xl mb-8">
-          {t("title")}
+          Preguntas frecuentes
         </h2>
 
         <div className="flex flex-col gap-4">
@@ -39,7 +54,6 @@ const CryptcomFaq = () => {
                   }`}
                 />
               </div>
-
               {openIndex === index && (
                 <p className="text-gray-600 text-sm mt-4">{faq.answer}</p>
               )}

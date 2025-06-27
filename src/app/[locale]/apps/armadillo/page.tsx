@@ -6,7 +6,7 @@ import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
 import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
 import ShoppingCart from '@/shared/svgs/ShoppingCart';
 import SupportContact from '@/shared/svgs/SupportContact';
-import { Check } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import Accordion from '../shared/Accordion';
 import Button from '../shared/Button';
@@ -35,6 +35,23 @@ const Page = () => {
   const productId = searchParams.get('productId');
   const [product, setProduct] = useState<ProductById | null>(null);
   const [selectedPlan, setSelectedPlan] = useState('1');
+
+  const faqs = [
+    {
+      question: '¿Qué es el celular cifrado Armadillo Phone?',
+      answer: 'Es un celular cifrado que ofrece protección avanzada contra piratería. Cuenta con llamadas y videollamadas cifradas, chats encriptados y otras características que lo hacen un equipo seguro a prueba de hackers.',
+    },
+    {
+      question: '¿Dónde comprar Armadillo Phone Celular cifrado?',
+      answer: 'Puedes adquirir tu celular Armadillo Phone o la licencia en Encriptados.io. Paga con el medio de pago que desees y recíbelo en el menor tiempo posible.',
+    },
+    {
+      question: '¿Qué es el cifrado OMEMO que utiliza Armadillo Phone?',
+      answer: 'OMEMO es un protocolo moderno que proporciona cifrado de extremo a extremo multicapa, lo que permite la sincronización segura de mensajes entre múltiples clientes, incluso si algunos de ellos están fuera de línea.',
+    },
+  ];
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const toggleFaq = (idx: number) => setOpenFaq(openFaq === idx ? null : idx);
 
   useEffect(() => {
     if (productId) {
@@ -158,16 +175,35 @@ const Page = () => {
           />
         </div>
         <SimCardGroup />
-        <section className='mt-14 py-10 px-5 bg-white'>
-          <b className='block mx-auto mb-11 text-center text-2xl md:text-[34px]'>
-            Preguntas frecuentas
-          </b>
-          <div className='flex flex-col gap-4 md:w-3/4 md:mx-auto'>
-            <Accordion title='¿Cómo funciona Armadillo Chat?' />
-            <Accordion title='¿En qué celular puedo instalar Armadillo Chat?' />
-            <Accordion title='¿Por qué usar Armadillo Chat?' />
-          </div>
-        </section>
+        {/* Sección de FAQ integrada */}
+      <section className='mt-14 py-10 px-5 bg-white'>
+        <b className='block mx-auto mb-11 text-center text-2xl md:text-[34px]'>
+          Preguntas frecuentes
+        </b>
+        <div className='flex flex-col gap-4 md:w-3/4 md:mx-auto'>
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className='bg-[#F9F9F9] rounded-xl px-6 py-4 cursor-pointer'
+              onClick={() => toggleFaq(index)}
+            >
+              <div className='flex items-center justify-between'>
+                <h3 className='text-black font-medium text-base'>
+                  {faq.question}
+                </h3>
+                <ChevronDown
+                  className={`w-5 h-5 text-black transition-transform duration-300 ${
+                    openFaq === index ? 'rotate-180' : ''
+                  }`}
+                />
+              </div>
+              {openFaq === index && (
+                <p className='text-gray-600 text-sm mt-4'>{faq.answer}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
       </section>
     </div>
   );

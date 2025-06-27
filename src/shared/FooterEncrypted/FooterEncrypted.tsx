@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
 import EncryptedLogoSvg from "../svgs/EncryptedLogoSvg";
-import AppleSvg from "../svgs/AppleSvg";
-import PlayStoreSvg from "../svgs/PlayStoreSvg";
 import QRFooter from "./icon/QRFooter";
 import YoutubeFooter from "./icon/YoutubeFooter";
 import ColombiaFooterFlag from "./icon/ColombiaFooterFlag";
@@ -28,6 +26,8 @@ import { useTranslations } from "next-intl";
 import Marquee from "react-fast-marquee";
 import DownloadAPKNew from "@/app/[locale]/our-products/components/svgs/DownloadAPKNew";
 import SectionWrapper from "../components/SectionWrapper";
+import AppleSvgFooter from "../svgs/AppleSvgFooter";
+import PlayStoreSvgFooter from "../svgs/PlayStoreSvgFooter";
 
 export default function FooterEncrypted() {
   const t = useTranslations("FooterMenu");
@@ -38,7 +38,7 @@ export default function FooterEncrypted() {
       items: [t("simEsims.encryptedSim"), "SIM TIM"],
     },
     {
-      // title: t("encryptedSims.title"),
+      title: t("encryptedSims.title"),
       items: [
         "Silent phone",
         "VaultChat",
@@ -132,14 +132,16 @@ export default function FooterEncrypted() {
       <SectionWrapper className="py-8">
         <div className="grid grid-cols-1 sm:grid-cols-5 lg:grid-cols-5 gap-8">
           <div className="col-span-1 lg:col-span-1 mb-8 flex flex-col items-center sm:items-start">
-            <EncryptedLogoSvg width={150} height={50} />
+
+              <EncryptedLogoSvg className="w-[150px] sm:w-[124px] md:w-[124px] lg:w-[160px] mb-2" />
+
             <p className="text-lg mb-4 text-center sm:text-left sm:text-sm md:text-sm">
               {t("downloadApp")}
             </p>
             <div className="flex flex-col space-y-2 items-center sm:items-start">
-              <AppleSvg />
-              <PlayStoreSvg />
-              <div className="w-[144px] sm:w-[144px] md:w-[144px] lg:w-[187px]">
+              <AppleSvgFooter />
+              <PlayStoreSvgFooter />
+              <div className="w-[124px]">
                 <DownloadAPKNew width="100%" height="auto" />
               </div>
             </div>
@@ -150,8 +152,8 @@ export default function FooterEncrypted() {
           </div>
 
           {sections.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="col-span-1 mb-8">
-              <h3 className="text-lg font-semibold mb-4 text-center md:text-left sm:text-sm md:text-sm lg:text-lg">
+            <div key={sectionIndex} className="col-span-1 mb-8 text-center sm:text-left">
+              <h3 className="text-lg font-semibold mb-4 md:text-left sm:text-sm md:text-sm">
                 {section.title}
               </h3>
               <ul>
@@ -165,7 +167,7 @@ export default function FooterEncrypted() {
 
                   return (
                     <li key={item}>
-                      <Link href={href} className="hover:text-white">
+                      <Link href={href} className="text-[#787878] hover:text-white">
                         {item}
                       </Link>
                     </li>
@@ -176,7 +178,7 @@ export default function FooterEncrypted() {
           ))}
 
           <div className="col-span-1 lg:col-span-1 mb-8">
-            <h3 className="text-lg font-semibold mb-4 text-center md:text-left sm:text-sm md:text-sm">
+            <h3 className="text-lg font-semibold mb-4 text-center sm:text-left sm:text-sm md:text-sm">
               {t("securePay.title")}
             </h3>
             <div className="grid grid-cols-3 gap-1 sm:gap-1 md:gap-1 lg:gap-2 bg-[#131313] rounded-xl p-2 sm:p-3 md:p-3 lg:p-4">

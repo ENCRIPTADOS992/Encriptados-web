@@ -4,9 +4,11 @@ import { IconSvgProps } from "../types/IconSvgProps";
 const EncryptedLogoSvg: React.FC<IconSvgProps> = ({
   width = 21,
   height = 21,
+  className = "",
 }) => {
   return (
     <svg
+      className={className} 
       width={width}
       height={height}
       viewBox="0 0 170 26"

@@ -1,16 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 
 const ThreemaFAQ = () => {
-  const t = useTranslations("ThreemaPage.faq");
-
-  const faqs = t.raw("questions") as {
-    question: string;
-    answer: string;
-  }[];
+  const faqs = [
+    {
+      question: "¿Para qué sirve la aplicación Threema?",
+      answer:
+        "Threema es una aplicación de mensajería encriptada que sirve para proteger las comunicaciones privadas. Threema no solo es un servicio de mensajería privada y cifrado, sino que además es versátil y ofrece multitud de posibilidades.",
+    },
+    {
+      question: "¿Cómo funciona la aplicación Threema?",
+      answer:
+        "Threema es un código abierto que permite hacer llamadas y videollamadas cifradas de extremo a extremo y ofrece todas las opciones deseables de una aplicación de mensajería instantánea con tecnología punta.",
+    },
+    {
+      question:
+        "¿Qué tal es la seguridad y privacidad de la aplicación Threema?",
+      answer:
+        "Threema es bastante segura y completa. Gracias a su sistema de cifrado y a su versatilidad y sencillez, es una de las mejores aplicaciones de mensajería privada en el mundo. Nadie aparte del emisor y receptor del mensaje podrá acceder a la información. Ingresa y conoce más.",
+    },
+  ];
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -22,7 +33,7 @@ const ThreemaFAQ = () => {
     <section className="bg-white py-10 px-4 lg:px-20">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-black font-bold text-2xl mb-8">
-          {t("title")}
+          Preguntas frecuentes
         </h2>
 
         <div className="flex flex-col gap-4">
