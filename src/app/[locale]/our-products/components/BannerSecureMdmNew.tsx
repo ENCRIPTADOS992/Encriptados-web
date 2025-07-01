@@ -28,7 +28,6 @@ const BannerSecureMdmNew = () => {
                     <h2 className="text-3xl font-bold leading-snug">
                         Sistemas encriptados <br /> con seguridad cifrada
                     </h2>
-                    <p className="text-gray-400 text-sm">Descripción de la sección</p>
                 </div>
 
                 {/* Slider a la derecha */}
