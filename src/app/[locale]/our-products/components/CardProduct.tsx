@@ -47,12 +47,15 @@ const CardProduct: React.FC<CardSimProps> = ({
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
       {/* Imagen de cabecera */}
-      <div className="relative w-full h-48 bg-[#3E3E3E]">
+      <div className="w-full aspect-[16/9] bg-white flex items-center justify-center">
+
         <Image
           src={productImage}
           alt="Sim Card"
-          fill
-          className="object-cover"
+          layout="intrinsic"
+          width={300}
+          height={200}
+          className="object-contain"
         />
       </div>
 
