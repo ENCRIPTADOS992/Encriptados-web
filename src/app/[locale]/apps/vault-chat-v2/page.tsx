@@ -188,13 +188,15 @@ const Page = () => {
           <b className='text-[24px] lg:text-[44px] md:w-2/5'>
             VaultChat: Aplicación para comunicaciones encriptadas y privadas
           </b>
-          <Image
-            src='/images/apps/vault-chat-v2/youtube.png'
-            alt='vault-chat'
-            width={627}
-            height={346}
-            className='w-full lg:max-w-[51%] rounded-[14px]'
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
+          <iframe
+            src="https://www.youtube.com/embed/yOX_ohVVmc0"
+            title="Vault Chat Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
           />
+        </div>
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>

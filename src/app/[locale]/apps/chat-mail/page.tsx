@@ -182,13 +182,16 @@ const Page = () => {
             Chatmail. Blinda tu celular, evita hackeos y protege tus
             comunicaciones
           </b>
-          <Image
-            src='/images/apps/chat-mail/youtube.png'
-            alt='chat-mail'
-            width={627}
-            height={346}
-            className='w-full lg:max-w-[55%] rounded-[14px]'
+         <div className="w-full aspect-video rounded-[14px] overflow-hidden shadow-lg lg:max-w-[55%]">
+          <iframe
+            src="https://www.youtube.com/embed/snXYLSWpLkg"
+            title="Chat-Mail Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            className="w-full h-full"
           />
+        </div>
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>

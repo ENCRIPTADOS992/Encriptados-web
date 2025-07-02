@@ -220,13 +220,16 @@ const Page = () => {
             Cómo Proteger mi Celular de Malware y Hackers para evitar
             Intervenciones 2023
           </b>
-          <Image
-            src='/images/apps/dec-secure/youtube.png'
-            alt='dec secure youtube'
-            width={627}
-            height={346}
-            className='w-full lg:w-full rounded-[14px]'
+         <div className="w-full aspect-video rounded-[14px] overflow-hidden shadow-lg lg:w-full">
+          <iframe
+            src="https://www.youtube.com/embed/Og3xt5izfSU"
+            title="Dec Secure Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            className="w-full h-full"
           />
+        </div>
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>

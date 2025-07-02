@@ -19,7 +19,7 @@ const CryptcomVideo = () => {
         <div className="w-full lg:h-auto h-[206px] lg:w-1/2 flex justify-center">
           <iframe
             className="rounded-xl w-full max-w-[627px] lg:h-[346px] h-[206px]"
-            src="https://www.youtube.com/embed/O9MF_k5A0M0?si=JHnq_TXbcUxox_-Q"
+            src="https://www.youtube.com/embed/BkT7D_akpyU"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

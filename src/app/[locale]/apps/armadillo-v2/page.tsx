@@ -206,13 +206,16 @@ const Page = () => {
             Teléfonos Seguros y Celulares Encriptados Que No Conoces ¿Cómo tener
             Uno?
           </b>
-          <Image
-            src='/images/apps/armadillo-v2/youtube.png'
-            alt='armadillo youtube'
-            width={627}
-            height={346}
-            className='w-full lg:max-w-[55%] rounded-[14px]'
-          />
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
+            <iframe
+              src="https://www.youtube.com/embed/X9iE-f8briY"
+              title="Armadillo Chat Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+            />
+          </div>
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>

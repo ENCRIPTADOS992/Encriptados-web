@@ -152,13 +152,16 @@ const Page = () => {
             Cómo Proteger mi Celular de Malware y Hackers para evitar
             Intervenciones 2023
           </b>
-          <Image
-            src='/images/apps/intact-phone/youtube.png'
-            alt='intact-phone'
-            width={627}
-            height={346}
-            className='w-full lg:max-w-[55%] rounded-[14px]'
+         <div className="w-full aspect-video rounded-[14px] overflow-hidden shadow-lg lg:max-w-[55%]">
+          <iframe
+            src="https://www.youtube.com/embed/BCCgWTjrjVs"
+            title="Intact Phone Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            className="w-full h-full"
           />
+        </div>
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>
