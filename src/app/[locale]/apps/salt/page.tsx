@@ -134,13 +134,17 @@ const Page = () => {
           <b className='text-[24px] lg:text-[44px] md:w-1/2'>
             Diferencias entre una Aplicación Encriptada y Whatsapp
           </b>
-          <Image
-            src='/images/apps/salt/youtube.webp'
-            alt='salt'
-            width={373}
-            height={206}
-            className='w-full lg:max-w-[55%]'
-          />
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
+            <iframe
+              src="https://www.youtube.com/embed/1tE2QDcycD4"
+              title="Salt App Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+            />
+          </div>
+
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>

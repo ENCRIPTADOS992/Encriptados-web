@@ -239,13 +239,16 @@ const Page = () => {
           <b className='text-[24px] lg:text-[44px] md:w-1/2'>
             NordVPN una de las mejores opciones del mercado
           </b>
-          <Image
-            src='/images/apps/nord-vpn/youtube.webp'
-            alt='nord vpn'
-            width={373}
-            height={206}
-            className='w-full lg:max-w-[55%]'
-          />
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
+            <iframe
+              src="https://www.youtube.com/embed/-vgIVfWX1dU"
+              title="NordVPN Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+            />
+          </div>
         </div>
         <SimCardGroup />
         <section className='mt-14 py-10 px-5 bg-white'>

@@ -166,13 +166,16 @@ const Page = () => {
             Armadillo Chat. Aplicación de mensajería instantánea de alta
             seguridad
           </b>
-          <Image
-            src='/images/apps/armadillo/youtube.webp'
-            alt='armadillo chat'
-            width={373}
-            height={206}
-            className='w-full lg:max-w-[55%]'
-          />
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
+            <iframe
+              src="https://www.youtube.com/embed/-h92Hqn-hQM"
+              title="Armadillo Chat Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+            />
+          </div>
         </div>
         <SimCardGroup />
         {/* Sección de FAQ integrada */}
