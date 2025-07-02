@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import CardOfPost from "./CardOfPost";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 type Post = {
   image: string;
@@ -12,11 +13,20 @@ type ListOfPostsProps = {
   posts: Post[];
 };
 
+const POSTS_PER_PAGE = 6;
+
 const ListOfPosts = ({ posts }: ListOfPostsProps) => {
-  return (
-    <div className="bg-black p-4 sm:p-6 md:p-8">
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {posts?.map((post, index) => (
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const currentPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+
+ return (
+  <div className="bg-black py-8">
+    <SectionWrapper>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {currentPosts.map((post, index) => (
           <CardOfPost
             key={index}
             image={post.image}
@@ -26,8 +36,31 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
           />
         ))}
       </div>
-    </div>
-  );
+
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-8 space-x-2">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              type="button" // 🧠 importante
+              onClick={(e) => {
+                e.preventDefault(); // 🛡️ por si algo raro pasa
+                setCurrentPage(i + 1);
+              }}
+              className={`px-4 py-2 rounded-md border transition ${
+                currentPage === i + 1
+                  ? "bg-white text-black font-semibold"
+                  : "bg-transparent text-white border-gray-600 hover:bg-gray-800"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
+    </SectionWrapper>
+  </div>
+);
 };
 
 export default ListOfPosts;

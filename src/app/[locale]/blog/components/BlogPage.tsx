@@ -73,14 +73,21 @@ const BlogPage = () => {
         "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
       author: "Ronald Hernandez",
     },
+    {
+      image: "/images/blog/girlandman.png",
+      title:
+        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
+      author: "Ronald Hernandez",
+    },
   ];
 
   return (
     <>
       <BasicFormProvider defaultValue={{ category: "tech" }}>
         <BannerBlog />
-        <div className="bg-[#141414] flex justify-center items-center py-4">
-          {/* Renderizar el menú según el tamaño del navegador */}
+        {/* <div className="bg-[#141414] flex justify-center items-center py-4">
           {isMobile ? (
             <div className="w-full">
               <MenuCategoryResponsive
@@ -108,7 +115,7 @@ const BlogPage = () => {
               ]}
             />
           )}
-        </div>
+        </div> */}
 
         <ListOfPosts posts={listOfPosts} />
 
@@ -116,8 +123,7 @@ const BlogPage = () => {
           <DownloadAppBanner />
         </div>
         <div className="bg-[#151515] py-3 relative z-20"></div>
-
-        <SubscribeBanner />
+        {/* <SubscribeBanner /> */}
       </BasicFormProvider>
     </>
   );
