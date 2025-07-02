@@ -82,7 +82,7 @@ const PhoneSecureEncrypted = () => {
       </svg>
       <div className="text-xs md:text-4xl text-white">
         <h1 className="-translate-x-28 ml-4">{t("tryOurPhoneSecure.title")}</h1>
-        <h2 className="text-[#B2B2B2] text-xs md:text-4xl  ml-4 -translate-x-28">
+        <h2 className="text-[#B2B2B2] text-xs md:text-md  ml-4 -translate-x-28">
           {t("tryOurPhoneSecure.description")}
         </h2>
       </div>

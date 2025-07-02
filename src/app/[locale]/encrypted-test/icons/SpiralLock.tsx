@@ -2,6 +2,7 @@
 import Button from "@/shared/components/Button";
 import { useTranslations } from "next-intl";
 import React from "react";
+import KeyRotateResponsive from "./KeyRotateResponsive";
 
 interface SpiralLockProps {
   onTestInit: () => void;
@@ -13,7 +14,21 @@ const SpiralLock: React.FC<SpiralLockProps> = ({ onTestInit }) => {
   return (
     <div className="flex flex-col items-center justify-center p-4 sm:p-6 lg:flex-row lg:gap-8">
       <div className="mb-6 lg:mb-0">
-        <Button intent="support" onClick={onTestInit}>
+        <Button
+          onClick={onTestInit}
+          rounded="full"
+          size="medium"
+          customStyles="
+            bg-[#EDF5F5]
+            hover:bg-[#E0ECEC]
+            !text-black
+            whitespace-nowrap
+            px-6
+            py-2
+          "
+          icon={<KeyRotateResponsive />}
+          iconPosition="right"
+        >
           {t("initTest")}
         </Button>
       </div>
