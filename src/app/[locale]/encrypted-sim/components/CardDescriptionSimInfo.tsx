@@ -29,28 +29,28 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
   const { openModal } = useModalPayment();
 
   return (
-    <div className="w-full max-w-sm mx-auto bg-white rounded-2xl overflow-hidden p-6">
+    <div className="w-full max-w-md bg-white rounded-2xl overflow-hidden p-8">
       {/* Título con ícono */}
-      <div className="flex items-center gap-2 mb-2">
-        <SimProductsBarIconColor className="w-6 h-6 text-cyan-500" />
-        <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
+      <div className="flex items-center gap-3 mb-4">
+        <SimProductsBarIconColor className="w-8 h-8 text-cyan-500" />
+        <h2 className="text-2xl font-bold text-black">{headerTitle}</h2>
       </div>
 
-      <p className="text-sm text-gray-600 mb-3">Beneficios para ti:</p>
+      <p className="text-md text-gray-600 mb-4">Beneficios para ti:</p>
 
       {/* Lista de características */}
       <ul className="space-y-2 mb-4">
         {features.map((item, index) => (
-          <li key={index} className="flex items-center text-sm gap-2">
-            <Image src={CheckSvg} alt="Check" className="w-4 h-4" />
+          <li key={index} className="flex items-center text-base gap-3">
+            <Image src={CheckSvg} alt="Check" className="w-5 h-4" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
 
       {/* Precio */}
-      <div className="text-sm text-gray-600 mb-1">Desde</div>
-      <div className="text-xl font-bold mb-4">{priceRange}</div>
+      <div className="text-md text-gray-600 mb-1">Desde</div>
+      <div className="text-2xl font-bold mb-4">{priceRange}</div>
 
       {/* Botones */}
       <div className="flex justify-between gap-2 whitespace-nowrap">

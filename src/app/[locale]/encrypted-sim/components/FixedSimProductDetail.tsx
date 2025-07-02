@@ -9,6 +9,7 @@ import CardDescriptionSimInfo from "./CardDescriptionSimInfo";
 import CardSimInfo from "./CardSimInfo";
 
 import { useGetProductByIdUpdate } from "@/features/products/queries/useGetProductById";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const FixedSimProductDetail: React.FC = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -28,7 +29,7 @@ const FixedSimProductDetail: React.FC = () => {
     isError,
   } = useGetProductByIdUpdate(selectedId ?? "", categoryId);
 
-   console.log("📡 Resultado de useGetProductByIdUpdate:", {
+  console.log("📡 Resultado de useGetProductByIdUpdate:", {
     isLoading,
     isError,
     product,
@@ -47,20 +48,26 @@ const FixedSimProductDetail: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
-      <div
-        className={`bg-white gap-8 flex flex-col md:flex-row items-center justify-between py-10 px-6 md:px-12`}
-      >
-        <CardDescriptionSimInfo
-          features={product.checks?.map((adv) => adv.name) || []}
-          priceRange={`${product.price}$`}
-          headerTitle={product.name}
-          id={product.id}
-          languageCode={locale}
-        />
+    <div className="bg-white w-full">
+      {/* SectionWrapper centra y limita el ancho del contenido interno */}
+      <SectionWrapper className="py-10">
+        <div className="
+            flex flex-col md:flex-row 
+            items-center 
+            justify-center 
+            gap-6
+          ">
+          <CardDescriptionSimInfo
+            features={product.checks?.map((adv) => adv.name) || []}
+            priceRange={`${product.price}$`}
+            headerTitle={product.name}
+            id={product.id}
+            languageCode={locale}
+          />
 
-        <CardSimInfo productImage={product.images[0]?.src ?? ""} />
-      </div>
+          <CardSimInfo productImage={product.images[0]?.src ?? ""} />
+        </div>
+      </SectionWrapper>
     </div>
   );
 };

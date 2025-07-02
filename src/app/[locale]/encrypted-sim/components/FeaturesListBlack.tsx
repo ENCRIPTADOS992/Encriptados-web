@@ -16,6 +16,7 @@ import RedProviderSvg from "../svgs/RedProviderSvg";
 import WithOutNumberSvg from "../svgs/WithOutNumberSvg";
 import ListOfCardsSim from "@/shared/components/ListOfCards/ListOfCardsSim";
 import ListOfCardsStandard from "@/shared/components/ListOfCards/ListOfCardsStandard";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 
 
@@ -90,19 +91,19 @@ const FeaturesListBlack = () => {
 
   return (
     <div className="space-y-20">
-      {/* Sim cards con márgenes */}
-      <div className="px-4 sm:px-16 md:px-24 max-w-7xl mx-auto">
+      <SectionWrapper>
         <ListOfCardsSim items={simCards} />
-      </div>
+      </SectionWrapper>
 
-      {/* Standard cards con fondo completo y tarjetas centradas */}
-      <div className="bg-black py-20">
-        <div className="px-4 sm:px-16 md:px-24 max-w-7xl mx-auto">
-          <ListOfCardsStandard items={standardCards} />
+      <div className="w-full bg-black">
+        {/* Sólo este SectionWrapper interna limita el contenido */}
+        <div className="py-20">
+          <SectionWrapper>
+            <ListOfCardsStandard items={standardCards} />
+          </SectionWrapper>
         </div>
       </div>
     </div>
   );
 };
-
 export default FeaturesListBlack;

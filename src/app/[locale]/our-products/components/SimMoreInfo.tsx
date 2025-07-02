@@ -11,6 +11,7 @@ import WhyCallSim from "../../encrypted-sim/components/WhyCallSim/WhyCallSim";
 import BannerCoverage from "@/shared/BannerCoverage";
 import FeaturesListBlack from "../../encrypted-sim/components/FeaturesListBlack";
 import FixedSimProductDetail from "../../encrypted-sim/components/FixedSimProductDetail";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const SimMoreInfo = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -18,48 +19,45 @@ const SimMoreInfo = () => {
   return (
     <>
       <div className="pt-16 pb-6 bg-[linear-gradient(to_right,_#EAF5FF_10%,_white_20%,_#C1F0FF_100%)]">
-        <div>
-          <FixedSimProductDetail />
-        </div>
+        <FixedSimProductDetail />
       </div>
 
-      <div>
-        <div className="max-w-[1100px] m-auto px-4 mt-10 mb-10">
-          <h2 className="text-[24px] font-bold text-black text-left">
-            {t("characteristics.title")}
-          </h2>
-        </div>
-        <FeaturesListBlack />
-      </div>
+      <SectionWrapper className="mt-10 mb-16">
+        <h2 className="text-2xl mb-10 font-bold text-black">
+          {t("characteristics.title")}
+        </h2>
+      </SectionWrapper>
+      <FeaturesListBlack />
 
       <div className="bg-[#f4f8fa] py-[8vh]">
-        <div className="max-w-[1100px] m-auto px-4">
+        <SectionWrapper>
           <OurObjetive />
-        </div>
+        </SectionWrapper>
       </div>
 
-      <div className="bg-[#E7F4F8] py-[8vh]">
-        <div className="max-w-[1100px] m-auto px-4">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#000] mb-8">
+      <div className="bg-[#E7F4F8] py-[8vh] w-full">
+        <SectionWrapper>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
             {t("comunicationTitle")}
           </h2>
           <BannerSecure />
-        </div>
+        </SectionWrapper>
       </div>
 
+
       <div className="bg-white py-[8vh]">
-        <div className="max-w-[1100px] m-auto px-4">
+        <SectionWrapper>
           <PayForUse />
-        </div>
+        </SectionWrapper>
       </div>
 
-      <div className="bg-white py-[8vh]">
-        <div className="max-w-[1100px] m-auto px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#000] mt-16 mb-16">
+      <div className="bg-white w-full py-[8vh]">
+        <SectionWrapper>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mt-16 mb-16">
             {t("whyCallWithEncryptedSIM.title")}
           </h2>
           <WhyCallSim />
-        </div>
+        </SectionWrapper>
       </div>
 
       <div className="mt-16">

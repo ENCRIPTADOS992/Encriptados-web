@@ -9,7 +9,7 @@ const PayForUse = () => {
   const t = useTranslations("EncryptedSimPage");
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center w-full gap-8 lg:gap-12 px-4 sm:px-6 lg:px-12 xl:px-20">
+    <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
       {/* Primera Tarjeta */}
       <div className="relative w-full lg:w-[680px] h-[350px] sm:h-[450px] lg:h-[500px] p-6 sm:p-8 lg:p-10 rounded-3xl shadow-md overflow-hidden bg-[#def7ff]">
         <div className="absolute inset-0 h-full bg-custom-gradient-img z-10"></div>

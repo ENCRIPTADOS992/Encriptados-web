@@ -7,7 +7,7 @@ const BannerSecure = () => {
   const t = useTranslations("EncryptedSimPage");
 
   return (
-    <div className="w-full px-1 sm:px-2 lg:px-4 xl:px-8 relative">
+    <div className="relative flex justify-center">
       {/* Imagen */}
       <div className="relative w-[600px] h-[500px] rounded-3xl overflow-hidden">
         <Image
@@ -35,7 +35,6 @@ const BannerSecure = () => {
           </p>
         </div>
       </div>
-
     </div>
   );
 };
