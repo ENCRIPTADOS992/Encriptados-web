@@ -923,7 +923,17 @@
           "description": "Intact Phone è un'app di messaggistica sicura."
         }
       }
-    }
+    },
+        "router": {
+      "title": "router",
+      "description": "router de encriptación",
+      "items": {
+        "routerCamaleon": {
+          "title": "Router Camaleon",
+          "description": ""
+        }
+        }
+      }
   },
   "othersCategories": {
     "distributors": {

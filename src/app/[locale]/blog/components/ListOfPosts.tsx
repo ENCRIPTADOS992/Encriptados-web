@@ -42,9 +42,9 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
-              type="button" // 🧠 importante
+              type="button" 
               onClick={(e) => {
-                e.preventDefault(); // 🛡️ por si algo raro pasa
+                e.preventDefault(); 
                 setCurrentPage(i + 1);
               }}
               className={`px-4 py-2 rounded-md border transition ${

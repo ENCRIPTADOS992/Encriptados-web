@@ -931,7 +931,17 @@
           "description": "Intact Phone is a secure messaging app."
         }
       }
-    }
+    },
+        "router": {
+      "title": "router",
+      "description": "router de encriptación",
+      "items": {
+        "routerCamaleon": {
+          "title": "Router Camaleon",
+          "description": ""
+        }
+        }
+      }
   },
   "othersCategories": {
     "distributors": {

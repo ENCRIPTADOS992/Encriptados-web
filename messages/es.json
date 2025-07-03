@@ -837,11 +837,6 @@
         }
       }
     },
-    "test":{
-      "title": "test",
-      "description":"Esta es una pagina de prueba"
-
-    },
     "apps": {
       "title": "Aplicaciones",
       "description": "Productos increíbles, aplicaciones y sistemas con encriptación de inicio a fin",
@@ -941,7 +936,17 @@
           "description": "Intact Phone es una aplicación de mensajería segura."
         }
       }
-    }
+    },
+    "router": {
+      "title": "router",
+      "description": "router de encriptación",
+      "items": {
+        "routerCamaleon": {
+          "title": "Router Camaleon",
+          "description": ""
+        }
+        }
+      }
   },
   "othersCategories": {
     "distributors": {

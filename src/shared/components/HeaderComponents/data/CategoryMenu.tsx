@@ -263,6 +263,28 @@ export function useTranslatedProductsCategories(): any {
         // },
       ],
     },
+    {
+      title: t("router.title", { defaultValue: "Router" }),
+      description: t("router.description", {
+        defaultValue: "Router de encriptación",
+      }),
+      link: "",
+      image: "",
+      items: [
+        {
+          title: t("router.items.routerCamaleon.title", {
+            defaultValue: "Router Camaleon",
+          }),
+          image:
+            "",
+          link: "/router",
+          description: t("router.items.routerCamaleon.description", {
+            defaultValue:
+              "",
+          }),
+        },
+      ]
+    },
   ];
 }
 
