@@ -2303,5 +2303,89 @@
         }
       ]
     }
+  },
+  "RouterCamaleonPage": {
+    "product": {
+      "title": "SecureCrypt",
+      "description": "SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden en tu móvil.",
+      "features": {
+        "endToEndEncryption": "Chat Encriptado",
+        "chatHiding": "Bóveda encriptada",
+        "privateCalls": "Llamadas Encriptadas"
+      },
+      "license": {
+        "threeMonths": "Licencia 3 meses",
+        "sixMonths": "Licencia 6 meses"
+      },
+      "pricePrefix": "Desde",
+      "price": "375$ USD",
+      "buttons": {
+        "buyNow": "Comprar ahora",
+        "chatSupport": "Chat soporte"
+      }
+    },
+    "benefits": {
+      "title": "Mantén tu privacidad intacta con la máxima protección",
+      "features": {
+        "endToEndEncryption": "Servidores globales descentralizados que se autodestruyen cada 24 horas. Ningún servidor almacena datos permanentemente, eliminando riesgos de acceso no autorizados.",
+        "chatHiding": "En emergencias, envía alertas inmediatas a tus contactos de confianza. Proporciona información clave para actuar rápidamente en situaciones críticas.",
+        "privateCalls": "Activa una respuesta segura con una contraseña secundaria. Elimina datos y protege tu información sin alertar al intruso, brindando una defensa discreta y efectiva."
+      },
+      "mobileTitle": "Características principales",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "Cifrado ECC",
+        "hiddenAppsText": "El protocolo de encriptación SecureCrypt usa encriptación ECC de 512 bits, equivalente a RSA de 15,360 bits. Nuevas claves ECC para cada mensaje.",
+        "manipulationProtectionTitle": "Mensajes temporizados",
+        "manipulationProtectionText": "Habilita el modo de quema de mensajes para que los mensajes enviados se autodestruyan tanto desde el dispositivo del remitente como del destinatario.",
+        "nfcBlockingTitle": "Archivos Encriptados",
+        "nfcBlockingText": "Comparte archivos de forma segura y protegida sin riesgo de acceso no autorizado.",
+        "anonymityTitle": "Llamadas Encriptadas",
+        "anonymityText": "Comunicación de voz segura con cifrado extremo a extremo, protegiendo la privacidad de tus conversaciones."
+      }
+    },
+    "features": {
+      "feature1": "Modo Sigiloso: Oculta aplicaciones detrás de una calculadora funcional para mantener tus datos invisibles y seguros.",
+      "feature2": "Cambiador de Voz Seguro: Transforma tu voz en tiempo real durante grabaciones de voz o video, garantizando anonimato total.",
+      "feature3": "Código de Acceso de la Bóveda: Agrega una capa adicional de seguridad para acceder a la bóveda encriptada.",
+      "feature4": "Eliminación Remota: Elimina datos de forma irreversible y rescribe el contenedor seguro con ceros.",
+      "feature5": "Enmascaramiento de Chat: Reemplaza chats con texto aleatorio en segundos, ocultando conversaciones confidenciales.",
+      "feature6": "Bloqueo del Dispositivo al Agitar: Agita tu dispositivo para bloquear la aplicación rápidamente en situaciones críticas."
+    },
+    "videoSection": {
+      "title": "SecureCrypt App, comunicaciones seguras y encriptadas para chatear en secreto"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card encriptada",
+          "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          "buttonText": "Comprar",
+          "secondButtonText": "Más información"
+        },
+        {
+          "title": "E-SIM Encriptada Planes datos o minutos",
+          "description": "Planes adaptados a tus necesidades para máxima privacidad.",
+          "buttonText": "Ver más"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "questions": [
+        {
+          "question": "¿Qué archivos puedo proteger con la Aplicación SecureCrypt?",
+          "answer": "Puedes proteger mensajes, archivos, contactos y llamadas de voz. Toda tu información viaja cifrada de extremo a extremo."
+        },
+        {
+          "question": "¿Por qué debería usar la aplicación SecureCrypt en mi empresa?",
+          "answer": "Porque ofrece máxima seguridad, protección contra intrusiones y cifrado total, evitando fugas de información corporativa."
+        },
+        {
+          "question": "¿Por qué debería usar una aplicación cifrada como SecureCrypt en vez de una convencional?",
+          "answer": "Las apps convencionales no ofrecen protección real ante espionaje, SecureCrypt garantiza privacidad y confidencialidad absoluta."
+        }
+      ]
+    }
   }
+
 }
