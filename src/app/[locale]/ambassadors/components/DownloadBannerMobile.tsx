@@ -73,7 +73,7 @@ const DownloadBannerMobile = () => {
           <img
             src="/images/deliveries/iPhone 15 Pro Black Titanium Mockup Portrait (1).png"
             alt="Código QR en Celular"
-            className="w-48 sm:w-60 md:w-72 lg:w-80 relative z-10"
+            className="w-48 sm:w-60 md:w-72 lg:w-80 relative z-10 mt-5"
           />
         </div>
       </div>
