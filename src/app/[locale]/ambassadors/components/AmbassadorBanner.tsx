@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Button from "@/shared/components/Button";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 export default function AmbassadorBanner() {
   const t = useTranslations();
 
   return (
-    <section className="py-8 px-4 sm:px-6 lg:px-8">
+    <SectionWrapper className="py-8">
       <div className="mx-auto max-w-7xl">
         <div className="relative overflow-hidden rounded-3xl bg-[#051A22]">
           <div className="flex flex-col items-center justify-between gap-8 p-6 md:flex-row md:p-10 lg:p-16">
@@ -47,6 +48,6 @@ export default function AmbassadorBanner() {
           </div>
         </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

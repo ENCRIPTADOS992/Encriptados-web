@@ -35,10 +35,10 @@ const OurGoalCard: React.FC<OurGoalCardProps> = ({
   descriptionColor = "text-gray-700",
 }) => {
   return (
-    <div className={`${cardStyles({ borderRadius })} ${bgColor}`}>
-      <div className="flex items-center justify-center mb-4">{icon}</div>
-      <h2 className={`text-lg font-bold mb-2 ${titleColor}`}>{title}</h2>
-      <p className={`text-sm ${descriptionColor}`}>{description}</p>
+    <div className={`${cardStyles({ borderRadius })} ${bgColor} px-8`}>
+       <div className="flex mb-6 mt-8">{icon}</div>
+      <h2 className={`text-lg font-bold mb-2 ${titleColor} text-left`}>{title}</h2>
+      <p className={`text-sm mb-8 ${descriptionColor} text-left`}>{description}</p>
     </div>
   );
 };
