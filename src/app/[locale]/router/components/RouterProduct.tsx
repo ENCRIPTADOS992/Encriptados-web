@@ -42,14 +42,6 @@ const RouterCamaleon = () => {
         {/* Texto */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center">
           {/* Logo */}
-          <div className="mb-2">
-            <Image
-              src="/images/routercamaleon/logo-camaleon.png"
-              alt="Logo Camaleón"
-              width={130}
-              height={30}
-            />
-          </div>
           <h2 className="text-[#0F172A] font-bold text-2xl lg:text-3xl mb-2">
             Camaleón Router
           </h2>
