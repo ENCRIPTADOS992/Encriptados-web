@@ -95,7 +95,7 @@ const RouterCamaleon = () => {
         <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center relative">
           {/* Background principal */}
           <Image
-            src="/images/routercamaleon/router-bg.png"
+            src="/images/router/card_fondo.png"
             alt="Router Camaleón en mochila"
             width={520}
             height={329}
@@ -103,11 +103,11 @@ const RouterCamaleon = () => {
           />
           {/* Imagen flotante del router (opcional, puedes ajustarla con absolute para overlay) */}
           <Image
-            src="/images/routercamaleon/router-standalone.png"
+            src="/images/router/router.png"
             alt="Router Camaleón"
-            width={180}
+            width={250}
             height={230}
-            className="absolute left-[60%] top-[30%] -translate-x-1/2 -translate-y-1/2 z-10"
+            className="absolute left-[50%] top-[30%] -translate-x-1/2 -translate-y-1/2 z-10"
           />
         </div>
       </div>
