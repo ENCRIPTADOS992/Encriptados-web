@@ -24,7 +24,20 @@ const RouterCamaleon = () => {
   const price = product?.price ?? "750$ USD";
 
   return (
-    <section className="lg:w-10/12 py-10 px-4 lg:px-10 bg-white mx-auto">
+    <section className="
+    bg-white
+    mx-auto
+    w-full
+    max-w-[1440px]
+    h-[560px]
+    flex
+    flex-col
+    justify-center
+    px-4
+    py-10
+    lg:px-10
+    "
+>
       {/* MOBILE */}
       <div className="block lg:hidden mb-6 flex justify-center">
         <Image
@@ -44,10 +57,10 @@ const RouterCamaleon = () => {
             Camaleón Router
           </h2>
 
-         <p className="font-normal text-[14px] leading-[100%] text-[#000000] mb-5 max-w-[413px]">
-  El Router Camaleón es la solución ideal para aquellos que buscan
-  privacidad total y una conexión segura a Internet.
-</p>
+          <p className="font-normal text-[14px] leading-[100%] text-[#000000] mb-5 max-w-[413px]">
+            El Router Camaleón es la solución ideal para aquellos que buscan
+            privacidad total y una conexión segura a Internet.
+          </p>
 
           <ul className="text-[#1E293B] text-sm flex flex-col gap-2 mb-6">
             <li className="flex items-center gap-2">
