@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 
 const SecureMdmFaq = () => {
-  const t = useTranslations("SecureMdmPage.faq");
+  const t = useTranslations("SecureCryptPage.faq");
 
-	const faqs = t.raw("items") as { question: string; answer: string }[];
+  const faqs = t.raw("questions") as { question: string; answer: string }[];
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -16,32 +16,41 @@ const SecureMdmFaq = () => {
   };
 
   return (
-    <section className="bg-white py-10 px-4 lg:px-20">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-center text-black font-bold text-2xl mb-8">
+    <section className="w-full flex justify-center py-16 bg-white">
+      <div className="w-[1058px] flex flex-col items-center">
+        <h2 className="font-inter font-bold text-[34px] leading-[100%] text-black mb-[40px] w-[361px] h-[41px] text-center">
           {t("title")}
         </h2>
-
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-[14px] w-full">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-[#F9F9F9] rounded-xl px-6 py-4 cursor-pointer"
+              className="w-[1058px] min-h-[84px] bg-[#F9F9F9] rounded-[8px] border border-[#F1F1F1] cursor-pointer transition-all"
               onClick={() => toggleFaq(index)}
             >
-              <div className="flex items-center justify-between">
-                <h3 className="text-black font-medium text-base">
+              <div className="flex items-center justify-between w-full h-[84px] px-[34px]">
+                <h3
+                  className={`font-inter text-black transition-all duration-200
+        ${
+          openIndex === index
+            ? "font-normal text-[24px] leading-[100%] max-w-[703px]"
+            : "font-bold text-[24px]"
+        }`}
+                >
                   {faq.question}
                 </h3>
                 <ChevronDown
-                  className={`w-5 h-5 text-black transition-transform duration-300 ${
+                  className={`w-6 h-6 text-black transition-transform duration-300 ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                 />
               </div>
-
               {openIndex === index && (
-                <p className="text-gray-600 text-sm mt-4">{faq.answer}</p>
+                <div className="w-full px-[34px] pb-4">
+                  <p className="font-inter text-[16px] text-black opacity-60 pt-2">
+                    {faq.answer}
+                  </p>
+                </div>
               )}
             </div>
           ))}

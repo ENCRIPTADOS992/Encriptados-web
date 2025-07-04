@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 const SecureVideo = () => {
-  const t = useTranslations("SecurePage.videoSection");
+  const t = useTranslations("SecureCryptPage.videoSection");
 
   return (
     <section className="bg-white py-10 px-4 lg:px-20">
@@ -19,7 +19,7 @@ const SecureVideo = () => {
         <div className="w-full lg:h-auto h-[206px] lg:w-1/2 flex justify-center">
           <iframe
             className="rounded-xl w-full max-w-[627px] lg:h-[346px] h-[206px]"
-            src="https://www.youtube.com/embed/ppr6zQOdINI"
+            src="https://www.youtube.com/embed/YvuaT5-uaUg"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

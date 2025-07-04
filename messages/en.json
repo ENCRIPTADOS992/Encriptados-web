@@ -929,6 +929,10 @@
         "intactPhone": {
           "title": "Intact Phone",
           "description": "Intact Phone is a secure messaging app."
+        },
+        "secureCrypt": {
+          "title": "SecureCrypt",
+          "description": "SecureCrypt es una aplicación de mensajería segura."
         }
       }
     },
