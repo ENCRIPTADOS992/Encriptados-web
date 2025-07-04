@@ -1,26 +1,28 @@
 "use client";
-import CryptcomHero from "./CryptcomHero";
-import CryptcomProduct from "./CryptcomProduct";
-import CryptcomBenefits from "./CryptcomBenefits";
-import CryptcomFeatures from "./CryptcomFeatures";
-import CryptcomSystemFeatures from "./CryptcomSystemFeatures";
-import CryptcomVideo from "./CryptcomVideo";
-import CryptcomSims from "./CryptcomSims";
-import CryptcomFaq from "./CryptcomFaq";
+import RouterHero from "./RouterHero";
+import RouterProduct from "./RouterProduct";
+import RouterDescription from "./RouterDescription";
+import RouterBenefits from "./RouterBenefits";
+import RouterFeatures from "./RouterFeatures";
+import RouterSystemFeatures from "./RouterSystemFeatures";
+import RouterVideo from "./RouterVideo";
+import RouterSims from "./RouterSims";
+import RouterFaq from "./RouterFaq";
 
-const CryptcomPage = () => {
+const RouterPage = () => {
   return (
     <main className="bg-white min-h-screen">
-      <CryptcomHero />
-      <CryptcomProduct />
-      <CryptcomBenefits />
-      <CryptcomFeatures />
-      <CryptcomSystemFeatures />
-      <CryptcomVideo />
-      <CryptcomSims />
-      <CryptcomFaq />
+      <RouterHero />
+      <RouterProduct />
+      <RouterDescription/>
+      <RouterBenefits />
+      <RouterFeatures />
+      <RouterSystemFeatures />
+      <RouterVideo />
+      <RouterSims />
+      <RouterFaq />
     </main>
   );
 };
 
-export default CryptcomPage;
+export default RouterPage;

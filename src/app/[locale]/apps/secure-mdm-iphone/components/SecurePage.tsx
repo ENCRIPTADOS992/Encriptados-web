@@ -2,7 +2,10 @@
 import SecureHero from "./SecureHero";
 import SecureProduct from "./SecureProduct";
 import SecureBenefits from "./SecureBenefits";
-// import SecureFeatures from "./SecureFeatures";
+import SecureFeatures from "./SecureFeatures";
+import SecureVideo from "./SecureVideo";
+import SecureSims from "./SecureSims";
+import SecureFaq from "./SecureFaq";
 
 const SecurePage = () => {
   return (
@@ -10,7 +13,10 @@ const SecurePage = () => {
       <SecureHero />
       <SecureProduct />
       <SecureBenefits />
-      {/* <SecureFeatures /> */}
+      <SecureFeatures />
+      <SecureVideo/>
+      <SecureSims/>
+      <SecureFaq/>
     </main>
   );
 };

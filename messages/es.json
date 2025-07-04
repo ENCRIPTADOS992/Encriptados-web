@@ -2173,9 +2173,16 @@
         "anonymityText": "Protege la información y aplicaciones en segundo plano."
       }
     },
-    
+   "features": {
+      "feature1": "Protege la integridad de su información bloqueando el acceso por cable al dispositivo y su información.",
+      "feature2": "Modifica las políticas TI del dispositivo para eliminar vías de acceso que puedan comprometer la seguridad de la información y aplicaciones.",
+      "feature3": "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
+      "feature4": "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
+      "feature5": "Protege la integridad de su información bloqueando el acceso por cable al dispositivo y su información.",
+      "feature6": "Modifica las políticas TI del dispositivo para eliminar vías de acceso que puedan comprometer la seguridad de la información y aplicaciones."
+    },
     "videoSection": {
-      "title": "Elyon, aplicación para comunicaciones encriptadas y privadas"
+      "title": "¿Como encriptar tu celular para que nadie pueda espiarte?"
     },
     "simOptions": {
       "cards": [
