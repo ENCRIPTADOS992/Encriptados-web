@@ -1,9 +1,10 @@
 import React from "react";
-import DownloadAppBanner from "../../our-products/components/DownloadAppBanner";
 import AboutUsBanner from "./AboutUsBanner";
 import Image from "next/image";
 import WhoWeAre from "./WhoWeAre";
 import OurGoals from "./OurGoals";
+import DownloadBanner from "../../ambassadors/components/DownloadBanner";
+import DownloadBannerMobile from "../../ambassadors/components/DownloadBannerMobile";
 
 const AboutUsPage = () => {
   const PeopleImage = "/images/about-us/peopleimage.png";
@@ -40,7 +41,7 @@ const AboutUsPage = () => {
           <WhoWeAre />
         </div>
       </div>
-      <div className="w-full bg-gradient-to-b from-[black] via-[#073A4B] to-black relative min-h-screen py-24">
+      <div className="w-full bg-gradient-to-b from-[black] via-[#073A4B] to-black relative min-h-screen py-2">
         <div className="absolute inset-0 z-0">
           <Image
             src={SpiralLeft}
@@ -55,9 +56,18 @@ const AboutUsPage = () => {
         <div className="relative z-10">
           <OurGoals />
         </div>
-      </div>
 
-      <DownloadAppBanner />
+
+        {/* Desktop only */}
+        <div className="hidden lg:block">
+          <DownloadBanner />
+        </div>
+
+        {/* Mobile & tablet only */}
+        <div className="block lg:hidden">
+          <DownloadBannerMobile />
+        </div>
+      </div>
     </>
   );
 };

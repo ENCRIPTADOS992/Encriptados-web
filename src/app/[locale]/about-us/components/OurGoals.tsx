@@ -4,12 +4,13 @@ import { useTranslations } from "next-intl";
 import Information from "../icons/Information";
 import World from "../icons/World";
 import Security from "../icons/Security";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const OurGoals = () => {
   const t = useTranslations();
   return (
-    <div className="flex justify-center items-center ">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full  lg:w-7/12 px-4">
+    <SectionWrapper className="py-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <OurGoalCard
           title={t("AboutUsPage.cards.communicationCard.title")}
           description={t("AboutUsPage.cards.communicationCard.description")}
@@ -26,7 +27,6 @@ const OurGoals = () => {
           bgColor="bg-gradient-to-b from-[#151515] via-[#001D25] to-[#001D25]"
           borderRadius="lg"
         />
-
         <OurGoalCard
           title={t("AboutUsPage.cards.informationCard.title")}
           description={t("AboutUsPage.cards.informationCard.description")}
@@ -35,7 +35,7 @@ const OurGoals = () => {
           borderRadius="lg"
         />
       </div>
-    </div>
+    </SectionWrapper>
   );
 };
 

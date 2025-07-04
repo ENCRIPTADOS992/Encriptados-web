@@ -1,13 +1,14 @@
+import SectionWrapper from "@/shared/components/SectionWrapper";
 import { useTranslations } from "next-intl";
 import React from "react";
 
 const WhoWeAre = () => {
   const t = useTranslations();
   return (
-    <div className="flex justify-center items-center px-4 md:px-8 py-28">
-      <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-center">
+    <SectionWrapper className="py-28">
+      <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl mx-auto gap-4">
         {/* Título */}
-        <h1 className="text-[#5CDAFF] font-bold text-3xl md:text-5xl text-center md:text-left mb-4 md:mb-0 md:w-6/12">
+        <h1 className="text-[#5CDAFF] font-bold text-3xl md:text-5xl text-center md:text-left md:w-6/12">
           {t("AboutUsPage.aboutUs.title")}
         </h1>
 
@@ -16,7 +17,7 @@ const WhoWeAre = () => {
           {t("AboutUsPage.aboutUs.description")}
         </p>
       </div>
-    </div>
+    </SectionWrapper>
   );
 };
 
