@@ -16,9 +16,7 @@ const RouterCamaleon = () => {
 
   useEffect(() => {
     if (productId) {
-      getProductById(productId, 'es')
-        .then(setProduct)
-        .catch(console.error);
+      getProductById(productId, "es").then(setProduct).catch(console.error);
     }
   }, [productId]);
 
@@ -42,12 +40,14 @@ const RouterCamaleon = () => {
         {/* Texto */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center">
           {/* Logo */}
-          <h2 className="text-[#0F172A] font-bold text-2xl lg:text-3xl mb-2">
+          <h2 className="font-bold text-[28px] leading-[100%] text-[#131313] mb-2 max-w-[464px]">
             Camaleón Router
           </h2>
-          <p className="text-sm text-[#475569] mb-5">
-            El Router Camaleón es la solución ideal para aquellos que buscan privacidad total y una conexión segura a Internet.
-          </p>
+
+         <p className="font-normal text-[14px] leading-[100%] text-[#000000] mb-5 max-w-[413px]">
+  El Router Camaleón es la solución ideal para aquellos que buscan
+  privacidad total y una conexión segura a Internet.
+</p>
 
           <ul className="text-[#1E293B] text-sm flex flex-col gap-2 mb-6">
             <li className="flex items-center gap-2">
@@ -64,13 +64,11 @@ const RouterCamaleon = () => {
           <hr className="mb-4" />
 
           <p className="text-xs text-[#64748B] mb-1">Desde</p>
-          <p className="text-2xl font-bold text-[#0F172A] mb-5">
-            {price}
-          </p>
+          <p className="text-2xl font-bold text-[#0F172A] mb-5">{price}</p>
 
           {/* Botones */}
           <div className="flex flex-row gap-4 mb-6">
-            <button className="bg-black text-white px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:opacity-90">
+            <button className="bg-black text-white px-6 py-[10px] h-[54px] rounded-full text-[14px] flex items-center gap-2 hover:opacity-90">
               Comprar ahora
               <Image
                 src="/images/apps/cryptcom/shopping_cart.png"
@@ -79,6 +77,7 @@ const RouterCamaleon = () => {
                 height={20}
               />
             </button>
+
             <TelegramButton />
           </div>
         </div>
