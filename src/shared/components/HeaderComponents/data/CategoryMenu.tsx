@@ -238,6 +238,17 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "DEC Secure es una aplicación de mensajería segura.",
           }),
         },
+        {
+          title: t("systems.items.secureCrypt.title", {
+            defaultValue: "SecureCrypt",
+          }),
+          image:
+            "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.jpg",
+          link: "/apps/secureCrypt",
+          description: t("systems.items.secureCrypt.description", {
+            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
+          }),
+        },
         // {
         //   title: t("systems.items.totalSec.title", {
         //     defaultValue: "Total Sec",
@@ -269,7 +280,7 @@ export function useTranslatedProductsCategories(): any {
         defaultValue: "Router de encriptación",
       }),
       link: "",
-      image: "",
+      image: "/images/mega-menu/Camaleon_Reuter.png",
       items: [
         {
           title: t("router.items.routerCamaleon.title", {
