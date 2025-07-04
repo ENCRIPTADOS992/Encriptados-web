@@ -57,14 +57,13 @@ const AboutUsPage = () => {
           <OurGoals />
         </div>
 
-
         {/* Desktop only */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block z-10">
           <DownloadBanner />
         </div>
 
         {/* Mobile & tablet only */}
-        <div className="block lg:hidden">
+        <div className="block lg:hidden z-10">
           <DownloadBannerMobile />
         </div>
       </div>
