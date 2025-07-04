@@ -20,8 +20,10 @@ const AmbassadorsPage = () => {
         <AmbassadorCards />
       </SectionWrapper>
       {/* Desktop only */}
-      <div className="hidden lg:block">
-        <DownloadBanner />
+      <div className="hidden lg:block ">
+        <div className="w-full bg-custom-gradient-qr-black-y-grey">
+          <DownloadBanner />
+        </div>
       </div>
 
       {/* Mobile & tablet only */}
