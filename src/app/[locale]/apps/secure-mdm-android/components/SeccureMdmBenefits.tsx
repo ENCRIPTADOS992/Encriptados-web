@@ -9,7 +9,8 @@ const SeccureMdmBenefits = () => {
 
   return (
     <section className="lg:bg-[#F4F8FA] pt-[60px] overflow-hidden relative items-center justify-between">
-      <div className="bg-[#0F0F0F] lg:rounded-[2rem] max-w-7xl lg:mx-[5%] flex flex-col lg:flex-row items-center justify-between gap-10 lg:py-[40px] px-4 lg:px-20">
+      <div className="bg-[#0F0F0F] lg:rounded-[2rem] max-w-7xl mx-auto lg:mx-[5%] flex flex-col lg:flex-row items-center justify-center gap-10 lg:py-[40px] px-4 lg:px-20">
+
         {/* Image for Desktop */}
         <div className="w-full lg:w-1/2 flex justify-center hidden lg:flex relative overflow-hidden">
           <Image
@@ -22,7 +23,7 @@ const SeccureMdmBenefits = () => {
         </div>
 
         {/* Desktop */}
-        <div className="w-full lg:w-1/2 flex flex-col gap-6 hidden lg:flex">
+        <div className="w-full lg:w-1/2 flex flex-col gap-6 hidden lg:flex items-center">
           <h2 className="text-white text-2xl font-bold mb-4 text-center lg:text-left">
             {t("title")}
           </h2>
@@ -62,7 +63,7 @@ const SeccureMdmBenefits = () => {
         </div>
 
 				{/* Móviles */}
-				<div className="lg:hidden flex flex-col gap-6 mt-10">
+				{/* <div className="lg:hidden flex flex-col gap-6 mt-10">
 					<h2 className="text-white text-2xl font-bold mb-4 text-center">{t("title")}</h2>
 
 					<div className="bg-[#1A1A1A] rounded-2xl p-4 items-start gap-3">
@@ -106,7 +107,7 @@ const SeccureMdmBenefits = () => {
 							className="object-contain"
 						/>
 					</div>
-				</div>
+				</div> */}
 
 
       </div>

@@ -17,6 +17,7 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
   { name: "Ultra X", link: "/apps/ultrax", categoryId: 35 },
   { name: "Intact Phone", link: "/apps/intact-phone", categoryId: 35 },
   { name: "DEC Secure", link: "/apps/dec-secure", categoryId: 35 },
+  { name: "SecureCrypt", link: "/apps/secureCrypt", categoryId: 35 },
   // Extra (no visibles en frontend pero mantenidos en el array completo)
   { name: "Total Sec", link: "/system8", categoryId: 35 },
   { name: "T2 Communicator", link: "/apps/t2-communicator", categoryId: 35 },
@@ -24,10 +25,10 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
   // Aplicaciones (38)
   { name: "Silent Phone", link: "/apps/silent-circle", categoryId: 38 },
   { name: "VaultChat", link: "/apps/vault-chat", categoryId: 38 },
-  { name: "Armadillo", link: "/apps/armadillo", categoryId: 38 },
+  { name: "Armadillo Chat", link: "/apps/armadillo", categoryId: 38 },
   { name: "Threema", link: "/apps/threema", categoryId: 38 },
   { name: "Threema Work", link: "/apps/threema-work", categoryId: 38 },
-  { name: "VncLagoon", link: "/apps/vnc-lagoon", categoryId: 38 },
-  { name: "Salt", link: "/apps/salt", categoryId: 38 },
-  { name: "NordVPN", link: "/apps/nord-vpn", categoryId: 38 },
+  { name: "VNC Lagoon", link: "/apps/vnc-lagoon", categoryId: 38 },
+  { name: "Salt App", link: "/apps/salt", categoryId: 38 },
+  { name: "Nord VPN", link: "/apps/nord-vpn", categoryId: 38 },
 ];
