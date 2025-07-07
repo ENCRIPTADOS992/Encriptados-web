@@ -11,21 +11,16 @@ import DownloadBannerMobile from "../../ambassadors/components/DownloadBannerMob
 const WhereToFindUsPage = () => {
   return (
     <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black">
-      {/* 1. Banner principal */}
       <WhereToFindUsBanner />
 
-      {/* 2. Lista de tarjetas */}
       <WhereListOfCards />
 
-      {/* 3. Formulario */}
       <BasicFormProvider values={{ country: "Colombia" }}>
         <FormWhereToFind />
       </BasicFormProvider>
 
-      {/* 4. Sección “Cómo comprar” */}
       <HowToBuy />
 
-      {/* 5. Banners de descarga (desktop / mobile) */}
       <div className="hidden lg:block z-10">
         <DownloadBanner />
       </div>
