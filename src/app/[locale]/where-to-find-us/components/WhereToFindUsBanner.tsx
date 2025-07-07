@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 export default function Component() {
   const t = useTranslations();
@@ -24,7 +25,7 @@ export default function Component() {
       <div className="absolute inset-0 bg-black/50" />
 
       {/* Contenedor principal */}
-      <div className="relative z-10 flex h-full min-h-[300px]  flex-col items-center justify-between  mx-1 py-8 sm:px-6 lg:flex-row lg:px-8">
+      <SectionWrapper className="relative z-10 flex h-full min-h-[300px] flex-col items-center justify-between mx-1 py-8 sm:px-6 lg:flex-row lg:px-8">
         {/* Sección de texto */}
         <div className="flex flex-col text-center lg:text-left  mt-10 sm:mt-14">
           <div className="px-2">
@@ -56,7 +57,7 @@ export default function Component() {
             priority
           />
         </div>
-      </div>
+      </SectionWrapper>
     </div>
   );
 }

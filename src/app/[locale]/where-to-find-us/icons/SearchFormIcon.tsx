@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchFormIcon = () => {
+const SearchFormIcon = ({ className = "" }) => {
   return (
     <svg
       width="71"
