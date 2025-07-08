@@ -5,12 +5,14 @@ import SpiralLock from "../icons/SpiralLock";
 import PhoneSecureEncrypted from "../icons/PhoneSecureEncrypted";
 import KeySecureEncrypted from "../icons/KeySecureEncrypted";
 import { useRouter } from "next/navigation";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const InitTestEncrypted = () => {
   const router = useRouter();
   return (
     <>
       <div className="bg-black pt-14  pb-14">
+        <SectionWrapper>
         <div className="lg:flex justify-between">
           <PhoneSecureEncrypted />
 
@@ -30,6 +32,7 @@ const InitTestEncrypted = () => {
             }}
           />
         </div>
+        </SectionWrapper>
       </div>
     </>
   );

@@ -10,14 +10,14 @@ const EncryptedTestPage = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth >= 768); // Establece el límite de 768px para dispositivos móviles
+      setIsMobile(window.innerWidth >= 768); 
     };
 
-    handleResize(); // Verificar el tamaño al cargar el componente
-    window.addEventListener("resize", handleResize); // Escuchar los cambios de tamaño
+    handleResize(); 
+    window.addEventListener("resize", handleResize); 
 
     return () => {
-      window.removeEventListener("resize", handleResize); // Limpiar el evento cuando se desmonte el componente
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 

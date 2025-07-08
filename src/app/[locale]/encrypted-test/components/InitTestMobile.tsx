@@ -1,64 +1,44 @@
-import Button from "@/shared/components/Button";
-
-import KeyResponsive from "../icons/KeyResponsive";
-import PhoneResponsive from "../icons/PhoneResponsive";
-import KeyRotateResponsive from "../icons/KeyRotateResponsive";
+"use client";
+import React from "react";
+import SpiralLock from "../icons/SpiralLock";
+import PhoneSecureEncrypted from "../icons/PhoneSecureEncrypted";
+import KeySecureEncrypted from "../icons/KeySecureEncrypted";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
-export default function InitTestMobile() {
+const InitTestMobile = () => {
   const router = useRouter();
 
-  const t = useTranslations("EncryptedTestPage");
   return (
-    <div className="min-h-screen bg-black p-6 space-y-6">
-      <div className="bg-gradient-to-b from-black to-[#00232E] border-0 p-6 space-y-2 rounded-2xl">
-        <PhoneResponsive />
-
-        <h2 className="text-xl font-semibold text-white">
-          {t("tryOurPhoneSecure.title")}
-        </h2>
-        <p className="text-sm text-zinc-400 ">
-          {t("tryOurPhoneSecure.description")}
-        </p>
-        <div className="pt-7">
-          <Button
-            onClick={() => {
-              router.push("encrypted-test/phone");
-            }}
-            icon={<KeyRotateResponsive />}
-            rounded="full"
-            iconPosition="right"
-            intent="support"
+    <div className="bg-black py-8">
+      <SectionWrapper>
+        <div className="flex flex-col gap-8">
+          {/* Card Teléfono */}
+          <div
+            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-6"
           >
-            {t("initTest")}
-          </Button>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-b from-black to-[#00232E] border-0 p-6 rounded-2xl space-y-2">
-        <KeyResponsive />
-
-        <h2 className="text-xl font-semibold text-white">
-          {t("tryPassowordSecure.title")}
-        </h2>
-        <p className="text-sm text-zinc-400">
-          {t("tryPassowordSecure.description")}
-        </p>
-        <div className="pt-7">
-          <Button
-            onClick={() => {
-              router.push("encrypted-test/password");
-            }}
-            icon={<KeyRotateResponsive />}
-            rounded="full"
-            iconPosition="right"
-            intent="support"
+            <PhoneSecureEncrypted />
+            <SpiralLock
+              onTestInit={() => {
+                router.push("encrypted-test/phone");
+              }}
+            />
+          </div>
+          {/* Card Contraseña */}
+          <div
+            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-6"
           >
-            {t("initTest")}
-          </Button>
+            <KeySecureEncrypted />
+            <SpiralLock
+              onTestInit={() => {
+                router.push("encrypted-test/password");
+              }}
+            />
+          </div>
         </div>
-      </div>
+      </SectionWrapper>
     </div>
   );
-}
+};
+
+export default InitTestMobile;
