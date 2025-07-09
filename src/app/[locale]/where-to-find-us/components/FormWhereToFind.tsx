@@ -19,7 +19,7 @@ const FormWhereToFind = () => {
     <div className="bg-[#041A20] overflow-x-hidden">
       <SectionWrapper className="flex flex-row justify-between items-center py-8 gap-2 sm:gap-6">
         {/* Imagen izquierda */}
-        <div className="hidden sm:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[80px] sm:h-[180px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[400px] lg:-ml-16">
+        <div className="hidden lg:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[80px] sm:h-[180px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[400px] lg:-ml-16">
           <Image
             alt="Man"
             src={Man}
@@ -60,7 +60,7 @@ const FormWhereToFind = () => {
           ) : null}
         </div>
         {/* Imagen derecha */}
-        <div className="hidden sm:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[120px] sm:h-[190px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[300px] lg:-ml-10">
+        <div className="hidden lg:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[120px] sm:h-[190px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[300px] lg:-ml-10">
           <Image
             alt="Woman"
             src={Woman}
