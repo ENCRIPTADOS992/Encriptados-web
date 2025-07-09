@@ -19,7 +19,7 @@ const FormWhereToFind = () => {
     <div className="bg-[#041A20] overflow-x-hidden">
       <SectionWrapper className="flex flex-row justify-between items-center py-8 gap-2 sm:gap-6">
         {/* Imagen izquierda */}
-        <div className="relative flex-shrink-0 w-[80px] h-[120px] sm:w-[80px] sm:h-[180px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[400px] lg:-ml-16">
+        <div className="hidden sm:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[80px] sm:h-[180px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[400px] lg:-ml-16">
           <Image
             alt="Man"
             src={Man}
@@ -35,7 +35,7 @@ const FormWhereToFind = () => {
           flex-1 
           bg-gradient-to-b from-black via-[#001F28] to-[#050505]
           rounded-xl md:rounded-[44px]
-          p-2 sm:p-6 md:p-10
+          p-6 sm:p-6 md:p-10
           mx-2
           space-y-4 sm:space-y-6 md:space-y-8
           min-w-0
@@ -60,7 +60,7 @@ const FormWhereToFind = () => {
           ) : null}
         </div>
         {/* Imagen derecha */}
-        <div className="relative flex-shrink-0 w-[80px] h-[120px] sm:w-[120px] sm:h-[190px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[300px] lg:-ml-10">
+        <div className="hidden sm:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[120px] sm:h-[190px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[300px] lg:-ml-10">
           <Image
             alt="Woman"
             src={Woman}

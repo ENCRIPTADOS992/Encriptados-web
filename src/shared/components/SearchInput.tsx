@@ -34,13 +34,13 @@ const SearchInput = ({
         placeholder={placeholder}
         {...register(name)}
         className={`py-4 border rounded-full border-gray-400  flex-grow ${
-          iconPosition === "left" ? "pl-10 pr-3" : "pl-3 pr-10"
+          iconPosition === "left" ? "pl-14 pr-6" : "pl-6 pr-14"
         } ${inputClassName}`}
       />
 
       {iconPosition === "right" && (
         <div
-          className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
+          className={`absolute right-6 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
         >
           <SearchSvg />
         </div>
