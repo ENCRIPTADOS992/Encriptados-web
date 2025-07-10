@@ -5,4 +5,6 @@ export interface ProductFilters {
   license: string;
   encriptadosprovider: string;
   timprovider: string;
+  regionOrCountry?: string;
+
 }

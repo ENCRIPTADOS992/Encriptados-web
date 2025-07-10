@@ -533,7 +533,9 @@
       "osTitle": "Sistemas operativos",
       "licenseTitle": "Duración de licencia",
       "selectPlacerholder": "Seleccionar",
-      "searchPlaceholder": "Buscar"
+      "searchPlaceholder": "Buscar",
+      "regionTitle": "Regiónes",
+      "countryTitle": "Países"
     },
     "silentCircle": {
       "badge": "Silent Circle",
