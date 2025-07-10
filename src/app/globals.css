@@ -119,3 +119,8 @@ html {
   opacity: 1;
 }
 
+.telegram-w80 > a {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+  }

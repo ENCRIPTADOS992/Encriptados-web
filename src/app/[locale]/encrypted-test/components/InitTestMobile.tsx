@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import SpiralLock from "../icons/SpiralLock";
 import PhoneSecureEncrypted from "../icons/PhoneSecureEncrypted";
 import KeySecureEncrypted from "../icons/KeySecureEncrypted";
 import { useRouter } from "next/navigation";
@@ -12,13 +11,12 @@ const InitTestMobile = () => {
   return (
     <div className="bg-black py-8">
       <SectionWrapper>
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col">
           {/* Card Teléfono */}
           <div
-            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-6"
+            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-2 "
           >
-            <PhoneSecureEncrypted />
-            <SpiralLock
+            <PhoneSecureEncrypted
               onTestInit={() => {
                 router.push("encrypted-test/phone");
               }}
@@ -26,12 +24,11 @@ const InitTestMobile = () => {
           </div>
           {/* Card Contraseña */}
           <div
-            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-6"
+            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-2"
           >
-            <KeySecureEncrypted />
-            <SpiralLock
+            <KeySecureEncrypted
               onTestInit={() => {
-                router.push("encrypted-test/password");
+                router.push("encrypted-test/phone");
               }}
             />
           </div>

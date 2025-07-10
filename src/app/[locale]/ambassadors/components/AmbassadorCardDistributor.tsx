@@ -3,6 +3,7 @@ import React from "react";
 import { Check, Briefcase } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 type ImageProp = string | React.FC<React.SVGProps<SVGSVGElement>>;
 
@@ -31,12 +32,6 @@ export default function AmbassadorCardDistributor({
 }: AmbassadorCardProps) {
   const t = useTranslations();
   const locale = useLocale();
-
-  const telegramLink = "https://t.me/encriptados";
-
-  const handleRedirect = () => {
-    window.location.href = telegramLink;
-  };
 
 
   return (
@@ -75,13 +70,8 @@ export default function AmbassadorCardDistributor({
             ))}
           </ul>
         </div>
-        <div className="p-6 pt-0">
-          <button
-            onClick={handleRedirect}
-            className="w-full bg-[#E3F8FF] rounded-full  text-black py-2 px-4 font-bold transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-50"
-          >
-            {buttonText}
-          </button>
+        <div className="p-6 pt-0 flex justify-center telegram-w80">
+          <TelegramButton />
         </div>
       </div>
     </div>
