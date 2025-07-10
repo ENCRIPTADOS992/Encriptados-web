@@ -25,7 +25,7 @@ const ListOfFiltersButton: React.FC<ListOfFiltersButtonProps> = ({ items, value,
           className={`flex flex-col items-center justify-center rounded-lg shadow-md transition-transform transform p-1 w-full ${
             value === item.value
               ? "bg-[#3E3E3E] border-[#CCCCCC] border"
-              : "bg-#222222 border-[#3E3E3E] border"
+              : "bg-[#222222] border-[#3E3E3E] border"
           }`}
         >
           {item.icon && <span className="mb-2">{item.icon}</span>}

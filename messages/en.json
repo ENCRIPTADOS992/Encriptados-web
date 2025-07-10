@@ -536,7 +536,9 @@
       "osTitle": "Operating systems",
       "licenseTitle": "License duration",
       "selectPlacerholder": "Select",
-      "searchPlaceholder": "Search"
+      "searchPlaceholder": "Search",
+      "regionTitle": "Regiónes",
+      "countryTitle": "Países"
     }
   },
 

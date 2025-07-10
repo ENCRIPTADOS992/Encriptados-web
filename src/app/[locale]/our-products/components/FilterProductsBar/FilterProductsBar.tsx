@@ -86,9 +86,9 @@ export default function FilterProductsBar({
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-end sm:space-x-4 justify-between">
+      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px]">
         <div className="flex-1 space-y-2">
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end">
             <div className="w-full sm:w-[340px] sm:mr-6">
               <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
@@ -106,6 +106,14 @@ export default function FilterProductsBar({
               />
             </div>
             {SubFilterComponent}
+             <div className="ml-[12px]">
+              <FilterRegionCountry
+                filters={filters}
+                updateFilters={updateFilters}
+              />
+            </div>
+
+
           </div>
         </div>
 
