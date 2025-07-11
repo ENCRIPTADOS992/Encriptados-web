@@ -47,8 +47,8 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
           name="timprovider"
           options={[
             { label: "Sim Física", value: "physicsimtim" },
-            { label: "Recarga + eSIM", value: "esimplusdatatim" },
-            { label: "Recarga", value: "datarechargetim" },
+            { label: "eSIM + Datos", value: "esimplusdatatim" },
+            { label: "Recarga Datos", value: "datarechargetim" },
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de timprovider:", value);
