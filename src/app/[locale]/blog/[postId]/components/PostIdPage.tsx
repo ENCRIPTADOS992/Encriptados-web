@@ -3,7 +3,7 @@ import BannerPostById from "./BannerPostById";
 import TalkNowBanner from "./TalkNowBanner";
 import ContentBlogById from "./ContentBlogById";
 
-const MAX_WIDTH = "max-w-[1239px]"; // suma de tus bloques en desktop
+const MAX_WIDTH = "max-w-[1239px]"; 
 
 const PostIdPage = () => {
   return (
@@ -12,11 +12,9 @@ const PostIdPage = () => {
       <div className="w-full bg-black flex flex-col justify-center items-center py-10 md:py-16 px-4 gap-10">
         <ContentBlogById />
 
-        {/* Contenedor limitado para gradientes y banner */}
         <div
           className={`relative w-full ${MAX_WIDTH} mx-auto flex justify-center items-center overflow-hidden`}
         >
-          {/* Gradiente izquierdo */}
           <div
             className="absolute left-0 top-0 h-full w-[36vw] md:w-[30vw] xl:w-[26rem] rounded-full blur-2xl pointer-events-none z-0"
             style={{
@@ -26,7 +24,6 @@ const PostIdPage = () => {
             }}
           ></div>
 
-          {/* Gradiente derecho */}
           <div
             className="absolute right-0 top-0 h-full w-[36vw] md:w-[30vw] xl:w-[26rem] rounded-full blur-2xl pointer-events-none z-0"
             style={{
@@ -36,7 +33,6 @@ const PostIdPage = () => {
             }}
           ></div>
 
-          {/* Banner centrado */}
           <div className="relative z-10 w-full flex justify-center">
             <TalkNowBanner />
           </div>

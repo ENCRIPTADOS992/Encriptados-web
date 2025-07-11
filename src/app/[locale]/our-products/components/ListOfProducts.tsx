@@ -21,8 +21,8 @@ const serviceMap: Record<string, string> = {
   minuterecharge: "Minutos",
   imsi: "IMSI",
   physicsimtim: "SIM Física",
-  esimplusdatatim: "Recarga + eSIM",
-  datarechargetim: "Recarga"
+  esimplusdatatim: "eSIM + Datos",
+  datarechargetim: "Recarga Datos"
 };
 
 
