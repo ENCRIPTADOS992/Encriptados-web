@@ -83,19 +83,16 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
     <div>
       <span
         className="
-        mb-3
-        text-xs
+        mb-2
+        text-sm
         font-semibold
         text-[#7E7E7E]
-        uppercase
-        tracking-wide
-        font-inter
         block
         pl-[4px]
       "
         style={{ fontFamily: "Inter, sans-serif" }}
       >
-        Región / País
+        {t("filterProducts.regionTitle") || "Región / País"}
       </span>
 
       <div className="relative" ref={dropdownRef}>
@@ -103,53 +100,44 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
           type="button"
           className={`
             flex items-center justify-between
-            w-[150px] h-[55px]
-            px-[14px]
+            w-full h-[58px]
+            p-4
             border
-            rounded-[12px]
-            font-semibold
-            text-xs
+            rounded-2xl
+            text-sm
             transition-all
             focus:outline-none
-            ${open
-              ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#FFFFFF]"
-              : "bg-[#222222] border-[#3E3E3E] text-[#7E7E7E]"
+            ${
+              open
+                ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#CCCCCC]"
+                : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC]"
             }
             hover:bg-[#3E3E3E]"
           `}
           onClick={() => setOpen((v) => !v)}
         >
-          <span
-            className="
-              text-[12px]
-              leading-[12px]
-              font-semibold
-              uppercase
-              text-left
-              flex-1
-              truncate
-            "
-            style={{ fontFamily: "Inter, sans-serif" }}
-          >
-            {selected.label}
+          <span className="flex items-center gap-2 truncate">
+            {countryFlagImages[selected.value] && (
+              <Image
+                src={countryFlagImages[selected.value]}
+                alt={selected.label}
+                width={22}
+                height={22}
+                className="rounded-full"
+                priority
+              />
+            )}
+            <span className="uppercase ">
+              {countryFlagImages[selected.value]
+                ? selected.value.toUpperCase()
+                : selected.label}
+            </span>
           </span>
-          {countryFlagImages[selected.value] && (
-            <Image
-              src={countryFlagImages[selected.value]}
-              alt={selected.label}
-              width={20}
-              height={20}
-              className="ml-2 rounded-full"
-              priority
-            />
-          )}
-          {!countryFlagImages[selected.value] && selected.icon && (
-            <span className="ml-2 text-lg">{selected.icon}</span>
-          )}
+          {/* Flecha */}
           <svg
             className={`
               ml-2 w-4 h-4
-              ${open ? "text-[#FFFFFF]" : "text-[#7E7E7E]"}
+              ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
             `}
             fill="none"
             viewBox="0 0 24 24"
@@ -166,27 +154,23 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
 
         {open && (
           <div
-  className={`
-    absolute z-20 mt-2
-    bg-[#222222]
-    border border-[#3E3E3E]
-    rounded-[12px]
-    shadow-xl
-    left-1/2 -translate-x-[52%]
-    md:fixed md:top-[140px] md:left-1/2 md:-translate-x-1/2 md:-ml-2
-
-    xl:absolute xl:left-1/2 xl:-translate-x-[52%]
-    w-[95vw] max-w-[518px]
-    p-4 sm:p-6
-    overflow-x-auto
-  `}
-  style={{
-    boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#3E3E3E",
-  }}
->
+            className="
+              absolute z-20 mt-2
+              bg-[#222222]
+              border border-[#3E3E3E]
+              rounded-[12px]
+              shadow-xl
+              right-0
+            "
+            style={{
+              width: 518,
+              padding: "18px 24px",
+              boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "#3E3E3E",
+            }}
+          >
             <div className="mb-4">
               <div
                 className="font-semibold text-[#CCCCCC] text-sm mb-1"
@@ -195,12 +179,12 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                 {t("filterProducts.regionTitle") || "Regiones"}
               </div>
               <div
-                className={`
-                  grid gap-2
-                  grid-cols-2
-                  sm:grid-cols-3
-                `}
-                style={{ marginBottom: 8 }}
+                className="grid gap-2"
+                style={{
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  width: 470,
+                  marginBottom: 8,
+                }}
               >
                 {REGION_OPTIONS.map((r) => (
                   <button
@@ -213,6 +197,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                       uppercase
                       font-semibold
                       text-[12px]
+                      
                       transition
                       ${
                         filters.regionOrCountry === r.value
@@ -237,12 +222,12 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                 {t("filterProducts.countryTitle") || "Países"}
               </div>
               <div
-                className={`
-                  grid gap-2
-                  grid-cols-2
-                  sm:grid-cols-3
-                `}
-                style={{ marginBottom: 8 }}
+                className="grid gap-2"
+                style={{
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  width: 470,
+                  marginBottom: 8,
+                }}
               >
                 {COUNTRY_OPTIONS.map((c) => (
                   <button

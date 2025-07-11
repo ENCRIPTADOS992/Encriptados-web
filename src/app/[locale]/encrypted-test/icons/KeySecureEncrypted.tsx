@@ -12,7 +12,7 @@ const KeySecureEncrypted: React.FC<KeySecureEncryptedProps> = ({ onTestInit }) =
   const t = useTranslations("EncryptedTestPage");
 
   return (
-    <SectionWrapper className="flex flex-col md:flex-row items-center justify-between bg-[#161616] rounded-2xl p-6 min-h-[450px]">
+    <SectionWrapper className="flex flex-col sm:flex-row items-center justify-between bg-[#161616] rounded-2xl p-6 min-h-[450px]">
       {/* Columna izquierda: SVG + Título*/}
       <div className="flex flex-col flex-1 w-full justify-center">
         {/* Icono + h1 en una línea */}
@@ -90,7 +90,7 @@ const KeySecureEncrypted: React.FC<KeySecureEncryptedProps> = ({ onTestInit }) =
         </div>
       </div>
       {/* Botón */}
-      <div className="flex justify-center w-full md:w-auto mt-6 md:mt-0 md:ml-10 lg:mr-20">
+      <div className="flex justify-center w-full sm:w-auto mt-6 md:mt-0 sm:ml-10 lg:mr-20">
         <Button
           onClick={onTestInit}
           rounded="full"
