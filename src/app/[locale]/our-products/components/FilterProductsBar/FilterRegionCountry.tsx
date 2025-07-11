@@ -166,25 +166,27 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
 
         {open && (
           <div
-            className={`
-              absolute z-20 mt-2
-              bg-[#222222]
-              border border-[#3E3E3E]
-              rounded-[12px]
-              shadow-xl
-              left-1/2 -translate-x-[52%]
-              w-[95vw] max-w-[518px]
-              p-4 sm:p-6
-              overflow-x-auto
-              ml 0 sm:ml-0
-            `}
-            style={{
-              boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor: "#3E3E3E",
-            }}
-          >
+  className={`
+    absolute z-20 mt-2
+    bg-[#222222]
+    border border-[#3E3E3E]
+    rounded-[12px]
+    shadow-xl
+    left-1/2 -translate-x-[52%]
+    md:fixed md:top-[140px] md:left-1/2 md:-translate-x-1/2 md:-ml-2
+
+    xl:absolute xl:left-1/2 xl:-translate-x-[52%]
+    w-[95vw] max-w-[518px]
+    p-4 sm:p-6
+    overflow-x-auto
+  `}
+  style={{
+    boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#3E3E3E",
+  }}
+>
             <div className="mb-4">
               <div
                 className="font-semibold text-[#CCCCCC] text-sm mb-1"
