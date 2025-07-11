@@ -1,22 +1,23 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 export default function TalkNowBanner() {
   const ManWoman = "/images/blog/man-woman.png";
-
   const t = useTranslations("BlogPage");
 
   return (
     <div className="bg-[#232323] px-4 py-8 md:px-8 md:py-12 rounded-2xl">
-      <div className="mx-auto max-w-6xl">
+      <SectionWrapper>
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-12">
           <Image
             src={ManWoman}
             width={350}
             height={350}
-            alt=""
-            layout=""
+            alt="Soporte en línea"
             objectFit="cover"
+            className="rounded-xl"
+            // Quita layout="" si usas Next 13+ con "next/image"
           />
 
           {/* Text Content */}
@@ -40,7 +41,7 @@ export default function TalkNowBanner() {
             </a>
           </div>
         </div>
-      </div>
+      </SectionWrapper>
     </div>
   );
 }

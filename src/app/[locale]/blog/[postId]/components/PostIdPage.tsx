@@ -1,7 +1,7 @@
 import React from "react";
 import BannerPostById from "./BannerPostById";
 import TalkNowBanner from "./TalkNowBanner";
-import ContentBlogById from "./contentBlogById";
+import ContentBlogById from "./ContentBlogById";
 
 const PostIdPage = () => {
   return (

@@ -8,11 +8,23 @@ import ListOfPosts from "./ListOfPosts";
 const BLOGS_API_URL =
   "https://encriptados.es/wp-json/encriptados/v1/blogs?lang=es";
 
+  type BlogAPIItem = {
+  id: number;
+  card: {
+    imagen: string;
+    titulo: string;
+    descripcion: string;
+  };
+  contenido?: {
+    autor?: string;
+  };
+};
+
 const BlogPage = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
+  const [posts, setPosts] = useState<any[]>([]);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 1315);
@@ -34,8 +46,8 @@ const BlogPage = () => {
         if (!res.ok) throw new Error("Error al cargar los blogs");
         return res.json();
       })
-      .then((data) => {
-        const mappedPosts = data.map((item) => ({
+      .then((data: BlogAPIItem[]) => { 
+        const mappedPosts = data.map((item: BlogAPIItem) => ({
           image: item.card.imagen,
           title: item.card.titulo,
           description: item.card.descripcion,
