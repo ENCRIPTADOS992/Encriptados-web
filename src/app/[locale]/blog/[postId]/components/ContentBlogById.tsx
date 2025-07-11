@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const BLOGS_API_URL = "https://encriptados.es/wp-json/encriptados/v1/blogs?lang=es";
 
@@ -25,7 +26,7 @@ type BlogPost = {
 
 const ContentBlogById = () => {
   const params = useParams();
-  const postId = params?.postId; // <--- CORREGIDO!
+  const postId = params?.postId;
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
@@ -82,8 +83,7 @@ const ContentBlogById = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-[#191919] rounded-2xl shadow-lg mt-6">
-      {/* Imagen principal */}
+    <SectionWrapper className="max-w-3xl bg-[#191919] rounded-2xl shadow-lg mt-6 p-4">
       <div className="relative w-full h-56 sm:h-80 rounded-lg overflow-hidden mb-4">
         <Image
           src={post.card.imagen}
@@ -97,19 +97,13 @@ const ContentBlogById = () => {
       <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
         {post.card.titulo}
       </h1>
-      <p className="text-base text-gray-300 mb-6">{post.card.descripcion}</p>
       <div className="flex items-center text-gray-400 text-sm mb-8 gap-3">
-        <span>
-          Escrito por <span className="font-medium">Equipo Encriptados</span>
-        </span>
-        <span>•</span>
-        <span>{/* fecha aquí si la tienes */}</span>
       </div>
       <article
         className="prose prose-invert max-w-none text-gray-200"
         dangerouslySetInnerHTML={{ __html: post.contenido.cuerpo }}
       />
-    </div>
+    </SectionWrapper>
   );
 };
 
