@@ -83,222 +83,207 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
     <div>
       <span
         className="
-        mb-3
-        text-xs
+        mb-2
+        text-sm
         font-semibold
         text-[#7E7E7E]
-        uppercase
-        tracking-wide
-        font-inter
         block
         pl-[4px]
       "
         style={{ fontFamily: "Inter, sans-serif" }}
       >
-        Región / País
+        {t("filterProducts.regionTitle") || "Región / País"}
       </span>
 
       <div className="relative" ref={dropdownRef}>
         <button
-  type="button"
-  className={`
-    flex items-center justify-between
-    w-[150px] h-[55px]
-    px-[14px]
-    border
-    rounded-[12px]
-    font-semibold
-    text-xs
-    transition-all
-    focus:outline-none
-    ${
-      open
-        ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#FFFFFF]"
-        : "bg-[#222222] border-[#3E3E3E] text-[#7E7E7E]"
-    }
-    hover:bg-[#3E3E3E]"
-  `}
-  onClick={() => setOpen((v) => !v)}
->
-  <span
-    className="
-      text-[12px]
-      leading-[12px]
-      font-semibold
-      uppercase
-      text-left
-      flex-1
-      truncate
-    "
-    style={{ fontFamily: "Inter, sans-serif" }}
-  >
-    {selected.label}
-  </span>
-  {countryFlagImages[selected.value] && (
-    <Image
-      src={countryFlagImages[selected.value]}
-      alt={selected.label}
-      width={20}
-      height={20}
-      className="ml-2 rounded-full"
-      priority
-    />
-  )}
-  {!countryFlagImages[selected.value] && selected.icon && (
-    <span className="ml-2 text-lg">{selected.icon}</span>
-  )}
-  <svg
-    className={`
-      ml-2 w-4 h-4
-      ${open ? "text-[#FFFFFF]" : "text-[#7E7E7E]"}
-    `}
-    fill="none"
-    viewBox="0 0 24 24"
-  >
-    <path
-      d="M7 10l5 5 5-5"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-</button>
-
-
-        {open && (
-  <div
-    className="
-      absolute z-20 mt-2
-      bg-[#222222]
-      border border-[#3E3E3E]
-      rounded-[12px]
-      shadow-xl
-      right-0
-    "
-    style={{
-      width: 518,
-      padding: "18px 24px",
-      boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
-      borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: "#3E3E3E",
-    }}
-  >
-    <div className="mb-4">
-      <div
-        className="font-semibold text-[#CCCCCC] text-sm mb-1"
-        style={{ fontFamily: "Inter, sans-serif" }}
-      >
-        {t("filterProducts.regionTitle") || "Regiones"}
-      </div>
-      <div
-        className="grid gap-2"
-        style={{
-          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-          width: 470,
-          marginBottom: 8,
-        }}
-      >
-        {REGION_OPTIONS.map((r) => (
-          <button
-            key={r.value}
-            className={`
-              flex items-center justify-start
-              w-full
-              h-[45px]
-              rounded-[8px]
-              uppercase
-              font-semibold
-              text-[12px]
-              
-              transition
-              ${
-                filters.regionOrCountry === r.value
-                  ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#FFFFFF]"
-                  : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC] hover:bg-[#3E3E3E]"
-              }
-            `}
-            style={{ padding: "14px 10px" }}
-            onClick={() => {
-              setOpen(false);
-              updateFilters({ regionOrCountry: r.value });
-            }}
-          >
-            {r.label}
-          </button>
-        ))}
-      </div>
-      <div
-        className="mb-1 font-semibold text-[#CCCCCC] text-sm"
-        style={{ fontFamily: "Inter, sans-serif" }}
-      >
-        {t("filterProducts.countryTitle") || "Países"}
-      </div>
-      <div
-        className="grid gap-2"
-        style={{
-          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-          width: 470,
-          marginBottom: 8,
-        }}
-      >
-        {COUNTRY_OPTIONS.map((c) => (
-          <button
-            key={c.value}
-            className={`
-              flex items-center justify-start
-              w-full
-              h-[45px]
-              rounded-[8px]
-              uppercase
-              font-semibold
-              text-[12px]
-              transition
-              ${
-                filters.regionOrCountry === c.value
-                  ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#FFFFFF]"
-                  : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC] hover:bg-[#3E3E3E]"
-              }
-            `}
-            style={{ padding: "14px 10px" }}
-            onClick={() => {
-              setOpen(false);
-              updateFilters({ regionOrCountry: c.value });
-            }}
-          >
-            {countryFlagImages[c.value] && (
+          type="button"
+          className={`
+            flex items-center justify-between
+            w-full h-[58px]
+            p-4
+            border
+            rounded-2xl
+            text-sm
+            transition-all
+            focus:outline-none
+            ${
+              open
+                ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#CCCCCC]"
+                : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC]"
+            }
+            hover:bg-[#3E3E3E]"
+          `}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className="flex items-center gap-2 truncate">
+            {countryFlagImages[selected.value] && (
               <Image
-                src={countryFlagImages[c.value]}
-                alt={c.label}
-                width={20}
-                height={20}
-                className="mr-2 rounded-full"
+                src={countryFlagImages[selected.value]}
+                alt={selected.label}
+                width={22}
+                height={22}
+                className="rounded-full"
+                priority
               />
             )}
-            {!countryFlagImages[c.value] && c.icon && (
-              <span className="mr-2 text-lg">{c.icon}</span>
-            )}
-            <span
-              className="
-                text-[12px]
-                leading-[12px]
-                font-semibold
-                uppercase
-                text-left
-                truncate
-              "
-              style={{ fontFamily: "Inter, sans-serif" }}
-            >
-              {c.label}
+            <span className="uppercase ">
+              {countryFlagImages[selected.value]
+                ? selected.value.toUpperCase()
+                : selected.label}
             </span>
-          </button>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+          </span>
+          {/* Flecha */}
+          <svg
+            className={`
+              ml-2 w-4 h-4
+              ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
+            `}
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
 
+        {open && (
+          <div
+            className="
+              absolute z-20 mt-2
+              bg-[#222222]
+              border border-[#3E3E3E]
+              rounded-[12px]
+              shadow-xl
+              right-0
+            "
+            style={{
+              width: 518,
+              padding: "18px 24px",
+              boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "#3E3E3E",
+            }}
+          >
+            <div className="mb-4">
+              <div
+                className="font-semibold text-[#CCCCCC] text-sm mb-1"
+                style={{ fontFamily: "Inter, sans-serif" }}
+              >
+                {t("filterProducts.regionTitle") || "Regiones"}
+              </div>
+              <div
+                className="grid gap-2"
+                style={{
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  width: 470,
+                  marginBottom: 8,
+                }}
+              >
+                {REGION_OPTIONS.map((r) => (
+                  <button
+                    key={r.value}
+                    className={`
+                      flex items-center justify-start
+                      w-full
+                      h-[45px]
+                      rounded-[8px]
+                      uppercase
+                      font-semibold
+                      text-[12px]
+                      
+                      transition
+                      ${
+                        filters.regionOrCountry === r.value
+                          ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#FFFFFF]"
+                          : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC] hover:bg-[#3E3E3E]"
+                      }
+                    `}
+                    style={{ padding: "14px 10px" }}
+                    onClick={() => {
+                      setOpen(false);
+                      updateFilters({ regionOrCountry: r.value });
+                    }}
+                  >
+                    {r.label}
+                  </button>
+                ))}
+              </div>
+              <div
+                className="mb-1 font-semibold text-[#CCCCCC] text-sm"
+                style={{ fontFamily: "Inter, sans-serif" }}
+              >
+                {t("filterProducts.countryTitle") || "Países"}
+              </div>
+              <div
+                className="grid gap-2"
+                style={{
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  width: 470,
+                  marginBottom: 8,
+                }}
+              >
+                {COUNTRY_OPTIONS.map((c) => (
+                  <button
+                    key={c.value}
+                    className={`
+                      flex items-center justify-start
+                      w-full
+                      h-[45px]
+                      rounded-[8px]
+                      uppercase
+                      font-semibold
+                      text-[12px]
+                      transition
+                      ${
+                        filters.regionOrCountry === c.value
+                          ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#FFFFFF]"
+                          : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC] hover:bg-[#3E3E3E]"
+                      }
+                    `}
+                    style={{ padding: "14px 10px" }}
+                    onClick={() => {
+                      setOpen(false);
+                      updateFilters({ regionOrCountry: c.value });
+                    }}
+                  >
+                    {countryFlagImages[c.value] && (
+                      <Image
+                        src={countryFlagImages[c.value]}
+                        alt={c.label}
+                        width={20}
+                        height={20}
+                        className="mr-2 rounded-full"
+                      />
+                    )}
+                    {!countryFlagImages[c.value] && c.icon && (
+                      <span className="mr-2 text-lg">{c.icon}</span>
+                    )}
+                    <span
+                      className="
+                        text-[12px]
+                        leading-[12px]
+                        font-semibold
+                        uppercase
+                        text-left
+                        truncate
+                      "
+                      style={{ fontFamily: "Inter, sans-serif" }}
+                    >
+                      {c.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

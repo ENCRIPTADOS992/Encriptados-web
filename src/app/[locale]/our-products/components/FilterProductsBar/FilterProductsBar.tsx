@@ -5,6 +5,7 @@ import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
+import RoutersBarIcon from "./icons/RoutersBarIcon";
 import { useFormContext } from "react-hook-form";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
@@ -29,6 +30,7 @@ const FILTER_OPTIONS = [
     Icon: AplicationsProductsBarIcon,
   },
   { key: "mobile", label: "Software", catId: 35, Icon: PhoneProductsBarIcon },
+  { key: "routers", label: "Routers", catId: 50, Icon: RoutersBarIcon },
 ] as const;
 
 interface FilterProductsBarProps {
@@ -51,8 +53,8 @@ export default function FilterProductsBar({
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-        ? "Software"
-        : label,
+          ? "Software"
+          : label,
     icon: (
       <Icon
         color={
@@ -86,7 +88,7 @@ export default function FilterProductsBar({
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px]">
+      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px] force-mobile-filters">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end">
             <div className="w-full sm:w-[340px] sm:mr-6">
@@ -106,11 +108,13 @@ export default function FilterProductsBar({
               />
             </div>
             {SubFilterComponent}
-             <div className="ml-[12px]">
-              <FilterRegionCountry
-                filters={filters}
-                updateFilters={updateFilters}
-              />
+            <div className="ml-[12px]">
+              {filters.provider === "tim" && (
+                <FilterRegionCountry
+                  filters={filters}
+                  updateFilters={updateFilters}
+                />
+              )}
             </div>
 
 
@@ -128,7 +132,7 @@ export default function FilterProductsBar({
           </div>
 
           {/* 2️⃣ Botón redondo SOLO en md (768–1023px) */}
-          <div className="hidden sm:flex xl:hidden">
+          {/* <div className="hidden sm:flex xl:hidden">
             <button
               type="button"
               className="bg-[#222222] p-5 rounded-3xl shadow-sm"
@@ -137,7 +141,7 @@ export default function FilterProductsBar({
             >
               <SearchSvg color="#CCCCCC" />
             </button>
-          </div>
+          </div> */}
 
           {/* 3️⃣ Input completo en ≥lg (≥1024px) */}
           <div className="hidden xl:block w-full xl:w-80">
