@@ -91,7 +91,7 @@ export default function FilterProductsBar({
       <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px]">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end">
-            <div className="w-full xs:w-[340px] sm:mr-6">
+            <div className="w-full md:w-[340px] sm:mr-6">
               <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
               </h2>
