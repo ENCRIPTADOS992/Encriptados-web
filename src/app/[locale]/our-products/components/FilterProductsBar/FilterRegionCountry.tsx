@@ -38,7 +38,7 @@ interface FilterRegionCountryProps {
 }
 
 const countryFlagImages: Record<string, string> = {
-  co: "/images/dashboard/colombia.png",
+  co: "/images/dashboard/Colombia.png",
   mx: "/images/dashboard/mexico.png",
   uk: "/images/dashboard/united_kingdom.png",
   es: "/images/dashboard/spain.png",

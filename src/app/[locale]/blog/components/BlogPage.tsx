@@ -2,14 +2,29 @@
 import React, { useState, useEffect } from "react";
 import BannerBlog from "./BannerBlog";
 import DownloadAppBanner from "../../our-products/components/DownloadAppBanner";
-import SubscribeBanner from "./SubscribeBanner";
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import ListOfPosts from "./ListOfPosts";
-import MenuCategory from "./MenuCategory";
-import MenuCategoryResponsive from "./MenuCategoryResponsive";
+
+const BLOGS_API_URL =
+  "https://encriptados.es/wp-json/encriptados/v1/blogs?lang=es";
+
+  type BlogAPIItem = {
+  id: number;
+  card: {
+    imagen: string;
+    titulo: string;
+    descripcion: string;
+  };
+  contenido?: {
+    autor?: string;
+  };
+};
 
 const BlogPage = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+  const [posts, setPosts] = useState<any[]>([]);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 1315);
@@ -24,100 +39,36 @@ const BlogPage = () => {
     };
   }, []);
 
-  const listOfPosts = [
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-    {
-      image: "/images/blog/girlandman.png",
-      title:
-        "Optimiza la experiencia del cliente en tu tienda online con tecnología avanzada",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Cursus est nulla ipsum commodo sem dolor vitae massa. Mi mi adipiscing pulvinar iaculis...",
-      author: "Ronald Hernandez",
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    fetch(BLOGS_API_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error("Error al cargar los blogs");
+        return res.json();
+      })
+      .then((data: BlogAPIItem[]) => { 
+        const mappedPosts = data.map((item: BlogAPIItem) => ({
+          image: item.card.imagen,
+          title: item.card.titulo,
+          description: item.card.descripcion,
+          author: item.contenido?.autor || "Equipo Encriptados",
+          id: item.id,
+        }));
+        setPosts(mappedPosts);
+        setFetchError(null);
+      })
+      .catch((err) => {
+        setFetchError(err.message || "Ocurrió un error inesperado");
+        setPosts([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <>
       <BasicFormProvider defaultValue={{ category: "tech" }}>
         <BannerBlog />
-        {/* <div className="bg-[#141414] flex justify-center items-center py-4">
-          {isMobile ? (
-            <div className="w-full">
-              <MenuCategoryResponsive
-                name="os"
-                options={[
-                  { value: "tech", label: "Tecnología" },
-                  { value: "venture", label: "Emprendimiento" },
-                  { value: "ecommerce", label: "Commerce" },
-                  { value: "marketing", label: "Marketing" },
-                  { value: "tools", label: "Herramientas" },
-                  { value: "publicity", label: "Publicidad" },
-                ]}
-              />
-            </div>
-          ) : (
-            <MenuCategory
-              name={"category"}
-              options={[
-                { value: "tech", label: "Tecnología" },
-                { value: "venture", label: "Emprendimiento" },
-                { value: "ecommerce", label: "Commerce" },
-                { value: "marketing", label: "Marketing" },
-                { value: "tools", label: "Herramientas" },
-                { value: "publicity", label: "Publicidad" },
-              ]}
-            />
-          )}
-        </div> */}
-
-        <ListOfPosts posts={listOfPosts} />
+        <ListOfPosts posts={posts} />
 
         <div>
           <DownloadAppBanner />

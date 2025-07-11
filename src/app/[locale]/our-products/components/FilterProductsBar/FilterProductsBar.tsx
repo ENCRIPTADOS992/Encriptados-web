@@ -5,7 +5,6 @@ import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
-import RoutersBarIcon from "./icons/RoutersBarIcon";
 import { useFormContext } from "react-hook-form";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
@@ -17,6 +16,7 @@ import FilterProviderServices from "./FilterProviderServices";
 import FilterRegionCountry from "./FilterRegionCountry";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import SearchSvg from "@/shared/svgs/SearchSvg";
+import RoutersBarIcon from "./icons/RoutersBarIcon";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
@@ -88,10 +88,10 @@ export default function FilterProductsBar({
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px] force-mobile-filters">
+      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px]">
         <div className="flex-1 space-y-2">
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end">
-            <div className="w-full sm:w-[340px] sm:mr-6">
+            <div className="w-full xs:w-[340px] sm:mr-6">
               <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
                 {t("filterProducts.categoryTitle")}
               </h2>

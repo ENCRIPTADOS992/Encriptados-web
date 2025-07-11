@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type CardOfPostProps = {
+  id: number | string;
   image: string;
   title: string;
   description: string;
@@ -8,6 +10,7 @@ type CardOfPostProps = {
 };
 
 export default function CardOfPost({
+  id,
   image,
   title,
   description,
@@ -47,12 +50,12 @@ export default function CardOfPost({
             </div>
             <span className="text-sm text-gray-600">{author}</span>
           </div>
-          <a
+          <Link
             className="text-sm font-medium text-black hover:underline"
-            href="#"
+            href={`/blog/${id}`}
           >
             Leer más →
-          </a>
+          </Link>
         </div>
       </div>
     </div>
