@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link"; 
+import Link from "next/link";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -38,11 +38,10 @@ const ModalPaymentView: React.FC = () => {
     error: productError,
   } = useQuery<Product, Error, Product>({
     queryKey: ["productById", productid],
-    // aquí va tu función de fetch
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
   });
-
+  const [selectedVariant, setSelectedVariant] = useState<null | Product["variants"][0]>(null);
   const [quantity, setQuantity] = useState(1);
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -50,9 +49,25 @@ const ModalPaymentView: React.FC = () => {
     null
   );
 
-  const totalPrice = (Number(product?.price) || 0) * quantity;
+  React.useEffect(() => {
+    if (product?.variants && product.variants.length > 0) {
+      setSelectedVariant(product.variants[0]);
+    } else {
+      setSelectedVariant(null);
+    }
+  }, [product]);
+
+  const price = selectedVariant?.price || product?.price || 0;
+  const licensetime =
+    selectedVariant?.licensetime || product?.licensetime || "12";
   const goBack = () => closeModal();
 
+  const unitPrice =
+  Array.isArray(product?.variants) && product.variants.length > 0
+    ? selectedVariant?.price ?? product.variants[0].price
+    : Number(product?.price) || 0;
+
+  const totalPrice = unitPrice * quantity - discount;
   const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
   if (isLoading) {
@@ -60,6 +75,15 @@ const ModalPaymentView: React.FC = () => {
       <div className="flex flex-col items-center justify-center py-10 h-full w-full">
         <p className="mb-4 text-sm text-gray-500">Cargando producto...</p>
         <div className="h-8 w-8 border-4 border-gray-300 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
+  if (!product) {
+    return (
+      <div className="flex flex-col items-center justify-center py-10 h-full w-full">
+        <p className="mb-4 text-sm text-red-500">
+          No se pudo cargar el producto.
+        </p>
       </div>
     );
   }
@@ -98,23 +122,59 @@ const ModalPaymentView: React.FC = () => {
               <div className="flex-1 rounded-xl flex flex-col justify-start">
                 <div className="w-full h-48 relative rounded-lg overflow-hidden">
                   <Image
-                    src={product?.images[0]?.src ?? "/your-image-placeholder.png"}
+                    src={
+                      product?.images[0]?.src ?? "/your-image-placeholder.png"
+                    }
                     alt={product?.name ?? "Producto"}
                     fill
                     className="object-cover"
                   />
-                  </div>
-                  <h3 className="mt-4 font-semibold text-lg text-blue-900 text-center">
-                    {product?.name}
-                  </h3>
+                </div>
+                <h3 className="mt-4 font-semibold text-lg text-blue-900 text-center">
+                  {product?.name}
+                </h3>
               </div>
 
               {/* Formulario principal */}
               <div className="flex-1">
                 <div className="flex flex-col gap-1">
+                  {Array.isArray(product.variants) &&
+                    product.variants.length > 0 && (
+                      <EditableDividerSection label="Duración de licencia">
+                        <div className="flex w-full">
+                          <div className="ml-auto">
+                            <select
+                              value={selectedVariant?.id ?? ""}
+                              onChange={(e) => {
+                                const selected = product.variants?.find(
+                                  (variant) =>
+                                    variant.id === Number(e.target.value)
+                                );
+                                setSelectedVariant(selected ?? null);
+                              }}
+                              className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 font-sans focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                              <option value="" disabled>
+                                Selecciona una duración
+                              </option>
+                              {product.variants?.map((variant) => (
+                                <option key={variant.id} value={variant.id}>
+                                  {variant.licensetime} meses
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </EditableDividerSection>
+                    )}
+
                   <DividerSection
                     label="Precio unitario"
-                    value={`${product?.price ?? "0"} USD`}
+                    value={
+                      Array.isArray(product.variants) && product.variants.length > 0
+                        ? `${selectedVariant?.price ?? product.variants[0].price} USD`
+                        : `${product?.price ?? "0"} USD`
+                    }
                   />
 
                   <EditableDividerSection label="Cantidad">
@@ -174,16 +234,17 @@ const ModalPaymentView: React.FC = () => {
                     </StripeProvider>
                   )}
 
-                 {activePaymentOption === PAYMENTS_METHODS.CRYPTO && product && (
-                  <div className="hidden">
-                    <PayWithCrypto
-                      product={product}
-                      closeModal={goBack}
-                      languageCode={languageCode ?? "es"}
-                      email={values.email}
-                    />
-                  </div>
-                )}
+                  {activePaymentOption === PAYMENTS_METHODS.CRYPTO &&
+                    product && (
+                      <div className="hidden">
+                        <PayWithCrypto
+                          product={product}
+                          closeModal={goBack}
+                          languageCode={languageCode ?? "es"}
+                          email={values.email}
+                        />
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -236,20 +297,20 @@ const ModalPaymentView: React.FC = () => {
                     }`}
                   />
                   <label
-    htmlFor="termsAccepted"
-    className="text-xs text-gray-800"
-  >
-    Acepto{" "}
-    <Link
-      href={TERMS_URL}
-      className="underline"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      términos y condiciones
-    </Link>{" "}
-    de la compra
-  </label>
+                    htmlFor="termsAccepted"
+                    className="text-xs text-gray-800"
+                  >
+                    Acepto{" "}
+                    <Link
+                      href={TERMS_URL}
+                      className="underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      términos y condiciones
+                    </Link>{" "}
+                    de la compra
+                  </label>
                 </div>
                 {touched.termsAccepted && errors.termsAccepted && (
                   <p className="text-xs text-red-500 mt-1">
@@ -270,67 +331,77 @@ const ModalPaymentView: React.FC = () => {
                       option={option}
                       activeOption={activePaymentOption}
                       setActiveOption={(value) => {
-                      if (!emailIsValid) {
-                        setFieldTouched("email", true);
-                        setFieldTouched("termsAccepted", true);
-                        return;
-                      }
+                        if (!emailIsValid) {
+                          setFieldTouched("email", true);
+                          setFieldTouched("termsAccepted", true);
+                          return;
+                        }
 
-                      if (value === PAYMENTS_METHODS.CRYPTO) {
-                        const url = process.env.NEXT_PUBLIC_API_CRYPTO_MUS || `${window.location.origin}/api/cripto/cryptomus-process`;
+                        if (value === PAYMENTS_METHODS.CRYPTO) {
+                          const url =
+                            process.env.NEXT_PUBLIC_API_CRYPTO_MUS ||
+                            `${window.location.origin}/api/cripto/cryptomus-process`;
 
-                        const payload = {
-                          sim_number: "",
-                          email: values.email,
-                          telegramid: values.telegramId || "",
-                          name: product?.name || "",
-                          product_type: product?.type_product || "app",
-                          esim_select: "No",
-                          lang: languageCode ?? "es",
-                          type: "5",
-                          cripto: "",
-                          description: `${product?.name}\n${product?.licensetime || "12 meses de servicio"}`,
-                          amount: Number(product?.price || 0) * 100,
-                          image: product?.images?.[0]?.src || "",
-                          quantity: 1,
-                          planinfo: "",
-                          variant1: "",
-                          variant2: "",
-                          variant3: "",
-                          address: "",
-                          city: "",
-                          country: "",
-                          postal: "",
-                          phone: "",
-                          titular: "",
-                          postal_code: "",
-                        };
+                          const payload = {
+                            sim_number: "",
+                            email: values.email,
+                            telegramid: values.telegramId || "",
+                            name: product?.name || "",
+                            product_type: product?.type_product || "app",
+                            esim_select: "No",
+                            lang: languageCode ?? "es",
+                            type: "5",
+                            cripto: "",
+                            description: `${product?.name}\n${
+                              product?.licensetime || "12 meses de servicio"
+                            }`,
+                            amount: Number(product?.price || 0) * 100,
+                            image: product?.images?.[0]?.src || "",
+                            quantity: 1,
+                            planinfo: "",
+                            variant1: "",
+                            variant2: "",
+                            variant3: "",
+                            address: "",
+                            city: "",
+                            country: "",
+                            postal: "",
+                            phone: "",
+                            titular: "",
+                            postal_code: "",
+                          };
 
-                        fetch(url, {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify(payload),
-                        })
-                          .then((res) => res.json())
-                          .then((json) => {
-                            if (json?.status && json?.url) {
-                              window.location.href = json.url;
-                            } else {
-                              throw new Error(json.message || "Error al generar pago cripto");
-                            }
+                          fetch(url, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
                           })
-                          .catch((err) => {
-                            console.error("❌ Error redirigiendo a Cryptomus", err);
-                            alert("Hubo un error al procesar el pago con criptomonedas.");
-                            closeModal();
-                          });
+                            .then((res) => res.json())
+                            .then((json) => {
+                              if (json?.status && json?.url) {
+                                window.location.href = json.url;
+                              } else {
+                                throw new Error(
+                                  json.message || "Error al generar pago cripto"
+                                );
+                              }
+                            })
+                            .catch((err) => {
+                              console.error(
+                                "❌ Error redirigiendo a Cryptomus",
+                                err
+                              );
+                              alert(
+                                "Hubo un error al procesar el pago con criptomonedas."
+                              );
+                              closeModal();
+                            });
 
-                        return; 
-                      }
+                          return;
+                        }
 
-                      setPaymentActiveOption(value);
-                    }}
-
+                        setPaymentActiveOption(value);
+                      }}
                       disabled={!emailIsValid}
                     />
                   ))}

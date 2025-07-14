@@ -4,9 +4,9 @@ export type Product = {
   id: number;
   name: string;
   description: string;
-  checks?:{
-    name:string;
-  } [];
+  checks?: {
+    name: string;
+  }[];
   activation: string;
   type_product: string;
   provider: string;
@@ -40,24 +40,31 @@ export type Product = {
     description: string;
     image: string;
   }[];
-};
+ variants?: {
+  id: number;
+  licensetime: number;
+  price: number;
+  sku: string;
+  image: string;
+}[];
 
+};
 
 export interface ProductById {
   id: number;
   name: string;
   description: string;
-   checks?:{
-    name:string;
-  } [];
+  checks?: {
+    name: string;
+  }[];
   activation: string;
   type_product: string;
   provider: string;
-  licensetime: string;    
+  licensetime: string;
   shipping: string;
   brand: string;
   sku: string;
-  price: string;             
+  price: string;
   on_sale: boolean;
   sale_price: string;
   stock_quantity: number | null;
@@ -67,7 +74,6 @@ export interface ProductById {
   faqs: FAQ[];
   advantages: Advantage[];
   features: Feature[];
-
 }
 
 export interface FAQ {
