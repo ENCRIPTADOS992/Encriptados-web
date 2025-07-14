@@ -25,6 +25,14 @@ import { paymentValidationSchema } from "@/shared/validations/paymentValidation"
 import { initialFormValues } from "@/shared/constants/initialFormValues";
 import { StripeProvider } from "@/shared/components/StripeProvider";
 
+export type Variant = {
+  id: number;
+  licensetime: number;
+  price: number;
+  sku: string;
+  image: string;
+};
+
 const ModalPaymentView: React.FC = () => {
   const { closeModal, params } = useModalPayment();
   const { productid, languageCode } = params as {
@@ -41,7 +49,7 @@ const ModalPaymentView: React.FC = () => {
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
   });
-  const [selectedVariant, setSelectedVariant] = useState<null | Product["variants"][0]>(null);
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
