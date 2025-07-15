@@ -135,3 +135,12 @@ html {
     margin-left: 0 !important;
   }
 }
+
+@layer utilities {
+  .md-min-w-150 {
+    @apply md:min-w-[150px];
+  }
+  .md-max-w-150 {
+    @apply md:max-w-[150px];
+  }
+}
