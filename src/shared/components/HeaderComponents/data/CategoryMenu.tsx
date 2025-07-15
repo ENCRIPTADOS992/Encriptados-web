@@ -352,7 +352,7 @@ export function useTranslatedUsCategories(): any[] {
       description: t2("aboutUs.description", {
         defaultValue: "Conoce más sobre nuestra misión y valores.",
       }),
-      image: "/images/mega-menu/nosotros.jpeg",
+      image: "/images/mega-menu/nosotros.png",
       link: "/nosotros",
       items: [],
     },
