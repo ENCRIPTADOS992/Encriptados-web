@@ -8,17 +8,21 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    "md:min-w-[150px]",
+    "md:max-w-[150px]",
+  ],
   theme: {
     extend: {
       screens: {
-        "lg-custom": "1358px", // Nuevo breakpoint personalizado
+        "lg-custom": "1358px", 
         sm: '600px',
         md: '820px',
         lg: '1024px',
         xl: '1280px',
       },
       fontFamily: {
-        sans: ["Roboto", "Helvetica", "Arial", "sans-serif"], // Fuente personalizada Roboto
+        sans: ["Roboto", "Helvetica", "Arial", "sans-serif"], 
       },     
       backgroundImage: {
         "cyan-gradient":
