@@ -19,9 +19,9 @@ import SectionWrapper from "./SectionWrapper";
 export default function EncryptedHeader() {
   const t = useTranslations("encryptedHeader");
 
-  const productsCategories = useTranslatedProductsCategories(); // Obtén las categorías traducidas
-  const othersCategories = useTranslatedOthersCategories(); // Obtén las otras categorías traducidas
-  const usCategories = useTranslatedUsCategories(); // Obtén Nosotros traducidos
+  const productsCategories = useTranslatedProductsCategories();
+  const othersCategories = useTranslatedOthersCategories(); 
+  const usCategories = useTranslatedUsCategories(); 
 
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
@@ -64,7 +64,6 @@ export default function EncryptedHeader() {
     };
   }, []);
 
-  // Maneja el cambio de menú (productos u otros)
   const handleMenuChange = (menu: "products" | "others" | "us") => {
     setCurrentMenu(menu);
     setActiveCategory(0);
@@ -78,7 +77,6 @@ export default function EncryptedHeader() {
     setIsDesktopMenuOpen(true);
   };
 
-  // Memoriza las categorías actuales para optimizar renders
   const currentCategories = useMemo(() => {
     if (currentMenu === "products") return productsCategories;
     if (currentMenu === "others") return othersCategories;
@@ -86,26 +84,21 @@ export default function EncryptedHeader() {
     return usCategories;
   }, [currentMenu]);
 
-  // Renderizado para dispositivos móviles
   if (isMobile) {
     return <MobileMenu />;
   }
 
-  // Renderizado para dispositivos de escritorio
   return (
     <header className="relative z-50" ref={headerRef}>
       <div className="bg-[#151515] border-b border-[#1A1A1A]">
         <SectionWrapper className="py-4">
           <nav className="flex items-center justify-between">
-            {/* Logo y selector de idioma */}
             <div className="flex flex-row">
               <EncryptedLogo />
               <LanguageDropdown />
             </div>
 
-            {/* Menú de navegación */}
             <div className="hidden lg:flex items-center gap-0">
-              {/* Tienda */}
               <Link
                 href="/"
                 prefetch
@@ -125,7 +118,6 @@ export default function EncryptedHeader() {
                 {t("menu.deliveries", { defaultValue: "Entregas" })}
               </Link>
               
-              {/* Navegación de Productos */}
               <Navigation
                 isOpen={isDesktopMenuOpen && currentMenu === "products"}
                 setIsOpen={() => handleMenuChange("products")}
@@ -133,7 +125,6 @@ export default function EncryptedHeader() {
                 buttonClassName="px-4 py-2"
               />
 
-              {/* Navegación de Otros */}
               <Navigation
                 isOpen={isDesktopMenuOpen && currentMenu === "others"}
                 setIsOpen={() => handleMenuChange("others")}

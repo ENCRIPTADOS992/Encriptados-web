@@ -243,7 +243,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "SecureCrypt",
           }),
           image:
-            "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/SecureCrypt.jpg",
           link: "/apps/secureCrypt",
           description: t("systems.items.secureCrypt.description", {
             defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
@@ -343,7 +343,6 @@ export function useTranslatedOthersCategories(): any[] {
   ];
 }
 
-// Hook para obtener las categorías de "Nosotros" traducidas
 export function useTranslatedUsCategories(): any[] {
   const t2 = useTranslations("usCategories");
 
@@ -362,7 +361,7 @@ export function useTranslatedUsCategories(): any[] {
       description: t2("ambassadors.description", {
         defaultValue: "Únete a nuestro programa de embajadores.",
       }),
-      image: "/images/mega-menu/embajador.jpeg",
+      image: "/images/mega-menu/embajador.png",
       link: "/ambassadors",
       items: [],
     },    
@@ -371,7 +370,7 @@ export function useTranslatedUsCategories(): any[] {
       description: t2("locations.description", {
         defaultValue: "Descubre nuestras ubicaciones en todo el mundo.",
       }),
-      image: "/images/mega-menu/lugares.jpeg",
+      image: "/images/mega-menu/dondeEstamos.png",
       link: "/where-to-find-us",
       items: [],
     },
