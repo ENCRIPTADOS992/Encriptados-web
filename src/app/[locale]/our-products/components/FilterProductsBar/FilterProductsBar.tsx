@@ -100,7 +100,8 @@ export default function FilterProductsBar({
 
   return (
   <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-    <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
+    <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end md:justify-between">
+
       {/* Categoría */}
       <div className="w-full md:w-[170px] xl:w-[340px]">
         <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
@@ -116,7 +117,7 @@ export default function FilterProductsBar({
       </div>
 
       {/* Subfiltros */}
-      <div className="flex flex-wrap md:flex-nowrap items-end gap-4 flex-1 min-w-0">
+      <div className="flex flex-wrap items-end gap-4 flex-1 min-w-0">
 
         {subfilters.map((child, idx) => {
           const isRegion =
@@ -127,7 +128,8 @@ export default function FilterProductsBar({
           return (
             <div
               key={idx}
-              className={isRegion ? "w-full md:w-[120px]" : "flex-1 min-w-0"}
+              className={isRegion ? "w-full md:min-w-[150px] md:max-w-[150px]" : "flex-1 min-w-0"}
+
             >
               {child}
             </div>
