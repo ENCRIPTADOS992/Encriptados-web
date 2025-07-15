@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useFormContext, Controller } from "react-hook-form";
 
 interface FilterItem {
   value: string;
@@ -16,7 +15,9 @@ interface ListOfFiltersButtonProps {
 
 const ListOfFiltersButton: React.FC<ListOfFiltersButtonProps> = ({ items, value, onChange }) => {
   return (
-    <div className="flex gap-x-4 justify-between">
+    <div
+      className="grid grid-cols-2 sm:grid-cols-4 gap-4 justify-between"
+    >
       {items.map((item, index) => (
         <button
           key={index}

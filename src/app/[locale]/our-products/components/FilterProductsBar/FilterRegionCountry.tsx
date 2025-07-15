@@ -80,7 +80,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
     COUNTRY_OPTIONS[0];
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <span
         className="
         mb-2
@@ -95,28 +95,35 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
         {t("filterProducts.regionTitle") || "Región / País"}
       </span>
 
-      <div className="relative" ref={dropdownRef}>
+      <div
+        className="relative flex-1 min-w-0 max-w-full md:max-w-[120px] xl:max-w-[120px]"
+        ref={dropdownRef}
+      >
         <button
           type="button"
           className={`
-            flex items-center justify-between
-            w-full h-[58px]
-            p-4
-            border
-            rounded-2xl
-            text-sm
-            transition-all
-            focus:outline-none
-            ${
-              open
-                ? "bg-[#3E3E3E] border-[#CCCCCC] text-[#CCCCCC]"
-                : "bg-[#222222] border-[#3E3E3E] text-[#CCCCCC]"
-            }
-            hover:bg-[#3E3E3E]"
-          `}
+    flex items-center justify-between
+    w-full
+    md:w-[120px]
+    border
+    rounded-2xl shadow-md
+    px-4 py-4
+    transition duration-150 ease-in-out
+    ${
+      open
+        ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
+        : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
+    }
+  `}
+          style={{
+            width: "100%",
+            minWidth: 0,
+            maxWidth: "100%",
+            boxSizing: "border-box",
+          }}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="flex items-center gap-2 truncate">
+          <span className="flex items-center gap-x-2 truncate">
             {countryFlagImages[selected.value] && (
               <Image
                 src={countryFlagImages[selected.value]}
@@ -127,18 +134,17 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                 priority
               />
             )}
-            <span className="uppercase ">
+            <span className="uppercase truncate">
               {countryFlagImages[selected.value]
                 ? selected.value.toUpperCase()
                 : selected.label}
             </span>
           </span>
-          {/* Flecha */}
           <svg
             className={`
-              ml-2 w-4 h-4
-              ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
-            `}
+      ml-2 w-4 h-4
+      ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
+    `}
             fill="none"
             viewBox="0 0 24 24"
           >

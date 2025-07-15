@@ -1,21 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { isValidElement } from "react";
 import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
-import { useFormContext } from "react-hook-form";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-
 import SearchProduct from "./SearchProduct";
 import { useTranslations } from "next-intl";
-
 import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 import FilterRegionCountry from "./FilterRegionCountry";
 import { Product } from "@/features/products/types/AllProductsResponse";
-import SearchSvg from "@/shared/svgs/SearchSvg";
 import RoutersBarIcon from "./icons/RoutersBarIcon";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
@@ -53,8 +49,8 @@ export default function FilterProductsBar({
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-          ? "Software"
-          : label,
+        ? "Software"
+        : label,
     icon: (
       <Icon
         color={
@@ -64,95 +60,91 @@ export default function FilterProductsBar({
     ),
   }));
 
-  let SubFilterComponent: React.ReactNode = null;
-  switch (selectedCat) {
-    case 40:
-      SubFilterComponent = (
-        <FilterProviderServices
+  let subfilters: React.ReactNode[] = [];
+  if (selectedCat === 40) {
+    subfilters = [
+      <FilterProviderServices
+        filters={filters}
+        updateFilters={updateFilters}
+        key="provider-services"
+      />,
+    ];
+    if (filters.provider === "tim") {
+      subfilters.push(
+        <FilterRegionCountry
           filters={filters}
           updateFilters={updateFilters}
+          key="region-country"
         />
       );
-      break;
-    case 38:
-    case 35:
-      SubFilterComponent = (
-        <FilterAppWithLicense
+    }
+  } else if (selectedCat === 38 || selectedCat === 35) {
+    subfilters = [
+      <FilterAppWithLicense
+        filters={filters}
+        updateFilters={updateFilters}
+        products={products}
+        key="app-license"
+      />,
+    ];
+    if (filters.provider === "tim") {
+      subfilters.push(
+        <FilterRegionCountry
           filters={filters}
           updateFilters={updateFilters}
-          products={products}
+          key="region-country"
         />
       );
-      break;
+    }
   }
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end sm:gap-[12px]">
-        <div className="flex-1 space-y-2">
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:items-end">
-            <div className="w-full md:w-[340px] sm:mr-6">
-              <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
-                {t("filterProducts.categoryTitle")}
-              </h2>
-              <ListOfFiltersButton
-                items={items}
-                value={filters.selectedOption}
-                onChange={(value) => {
-                  console.log(
-                    "[FilterProductsBar] Cambio de categoría:",
-                    value
-                  );
-                  updateFilters({ selectedOption: value });
-                }}
-              />
-            </div>
-            {SubFilterComponent}
-            <div className="ml-[12px]">
-              {filters.provider === "tim" && (
-                <FilterRegionCountry
-                  filters={filters}
-                  updateFilters={updateFilters}
-                />
-              )}
-            </div>
+  <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
+    <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end">
+      {/* Categoría */}
+      <div className="w-full md:w-[170px] xl:w-[340px]">
+        <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
+          {t("filterProducts.categoryTitle")}
+        </h2>
+        <ListOfFiltersButton
+          items={items}
+          value={filters.selectedOption}
+          onChange={(value) => {
+            updateFilters({ selectedOption: value });
+          }}
+        />
+      </div>
 
+      {/* Subfiltros */}
+      <div className="flex flex-wrap md:flex-nowrap items-end gap-4 flex-1 min-w-0">
 
-          </div>
-        </div>
+        {subfilters.map((child, idx) => {
+          const isRegion =
+            isValidElement(child) &&
+            ((typeof child.type === "function" && child.type.name === "FilterRegionCountry") ||
+              child.props?.key === "region-country");
 
-        <div className="flex w-full justify-end items-center">
-          {/* 1️⃣ Input completo en <640px */}
-          <div className="w-full sm:hidden">
-            <SearchProduct
-              name="searchinputproduct"
-              placeholder={t("filterProducts.searchPlaceholder")}
-              containerClassName="w-full"
-            />
-          </div>
-
-          {/* 2️⃣ Botón redondo SOLO en md (768–1023px) */}
-          {/* <div className="hidden sm:flex xl:hidden">
-            <button
-              type="button"
-              className="bg-[#222222] p-5 rounded-3xl shadow-sm"
-              onClick={() => {
-              }}
+          return (
+            <div
+              key={idx}
+              className={isRegion ? "w-full md:w-[120px]" : "flex-1 min-w-0"}
             >
-              <SearchSvg color="#CCCCCC" />
-            </button>
-          </div> */}
+              {child}
+            </div>
+          );
+        })}
 
-          {/* 3️⃣ Input completo en ≥lg (≥1024px) */}
-          <div className="hidden xl:block w-full xl:w-80">
-            <SearchProduct
-              name="searchinputproduct"
-              placeholder={t("filterProducts.searchPlaceholder")}
-              containerClassName="w-full"
-            />
-          </div>
+        {/* Search */}
+        <div className="w-full xl:w-56 xl:ml-auto">
+          <SearchProduct
+            name="searchinputproduct"
+            placeholder={t("filterProducts.searchPlaceholder")}
+            containerClassName="w-full"
+          />
         </div>
       </div>
     </div>
-  );
+  </div>
+);
+
 }
