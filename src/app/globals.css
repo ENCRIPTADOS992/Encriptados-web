@@ -59,6 +59,12 @@
       rgba(168, 235, 255, 1) 100%
     );
   }
+  .md-min-w-150 {
+    @apply md:min-w-[150px];
+  }
+  .md-max-w-150 {
+    @apply md:max-w-[150px];
+  }
 }
 
 .custom-shape-divider-bottom-1728419371 {
@@ -133,14 +139,5 @@ html {
     width: 100% !important;
     margin-right: 0 !important;
     margin-left: 0 !important;
-  }
-}
-
-@layer utilities {
-  .md-min-w-150 {
-    @apply md:min-w-[150px];
-  }
-  .md-max-w-150 {
-    @apply md:max-w-[150px];
   }
 }
