@@ -49,8 +49,8 @@ export default function FilterProductsBar({
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-        ? "Software"
-        : label,
+          ? "Software"
+          : label,
     icon: (
       <Icon
         color={
@@ -99,59 +99,59 @@ export default function FilterProductsBar({
   }
 
   return (
-  <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-    <div className="flex flex-col gap-4
-                    sm:flex-row sm:flex-wrap
-                    sm:items-end sm:justify-between">
+    <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
+      <div className="flex flex-col gap-4
+                lg:flex-row lg:flex-wrap lg:items-end lg:justify-between
+                xl:flex-nowrap">
 
-      {/* Categoría */}
-      <div className="w-full md:w-[170px] xl:w-[340px]">
-        <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
-          {t("filterProducts.categoryTitle")}
-        </h2>
-        <ListOfFiltersButton
-          items={items}
-          value={filters.selectedOption}
-          onChange={(value) => {
-            updateFilters({ selectedOption: value });
-          }}
-        />
-      </div>
-
-      {/* Subfiltros */}
-      <div className="flex flex-wrap items-end gap-4 flex-1 min-w-0">
-
-        {subfilters.map((child, idx) => {
-          const isRegion =
-            isValidElement(child) &&
-            ((typeof child.type === "function" && child.type.name === "FilterRegionCountry") ||
-              child.props?.key === "region-country");
-
-          return (
-            <div
-              key={idx}
-              className={
-                isRegion
-                  ? "w-full sm:w-[200px] md:w-[150px]"
-                  : "w-full sm:w-[200px] sm:flex-1 min-w-0"
-              }
-            >
-              {child}
-            </div>
-          );
-        })}
-
-        {/* Search */}
-        <div className="w-full xl:w-56 xl:ml-auto">
-          <SearchProduct
-            name="searchinputproduct"
-            placeholder={t("filterProducts.searchPlaceholder")}
-            containerClassName="w-full"
+        {/* Categoría */}
+        <div className="w-full  xl:w-[340px]">
+          <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
+            {t("filterProducts.categoryTitle")}
+          </h2>
+          <ListOfFiltersButton
+            items={items}
+            value={filters.selectedOption}
+            onChange={(value) => {
+              updateFilters({ selectedOption: value });
+            }}
           />
+        </div>
+
+        {/* Subfiltros */}
+        <div className="flex flex-wrap items-end gap-4 flex-1 min-w-0">
+
+          {subfilters.map((child, idx) => {
+            const isRegion =
+              isValidElement(child) &&
+              ((typeof child.type === "function" && child.type.name === "FilterRegionCountry") ||
+                child.props?.key === "region-country");
+
+            return (
+              <div
+                key={idx}
+                className={
+                  isRegion
+                    ? "w-full sm:w-[200px] md:w-[150px]"
+                    : "w-full sm:w-[200px] sm:flex-1 min-w-0"
+                }
+              >
+                {child}
+              </div>
+            );
+          })}
+
+          {/* Search */}
+          <div className="w-full xl:w-56 xl:ml-auto">
+            <SearchProduct
+              name="searchinputproduct"
+              placeholder={t("filterProducts.searchPlaceholder")}
+              containerClassName="w-full"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 }
