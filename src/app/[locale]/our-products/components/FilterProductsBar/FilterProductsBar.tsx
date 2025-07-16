@@ -105,7 +105,7 @@ export default function FilterProductsBar({
                 xl:flex-nowrap">
 
         {/* Categoría */}
-        <div className="w-full  xl:w-[340px]">
+        <div className="w-full  xl:w-[360px]">
           <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
             {t("filterProducts.categoryTitle")}
           </h2>
