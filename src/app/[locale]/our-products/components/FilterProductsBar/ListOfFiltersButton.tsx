@@ -16,7 +16,7 @@ interface ListOfFiltersButtonProps {
 const ListOfFiltersButton: React.FC<ListOfFiltersButtonProps> = ({ items, value, onChange }) => {
   return (
     <div
-      className="grid grid-cols-2 sm:grid-cols-4 gap-4 justify-between"
+      className="grid grid-cols-2 sm:grid-cols-4 gap-2 justify-between"
     >
       {items.map((item, index) => (
         <button
