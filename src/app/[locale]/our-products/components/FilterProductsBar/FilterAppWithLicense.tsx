@@ -21,7 +21,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
   console.log("[FilterAppWithLicense] products:", products);
 
   return (
-    <div className="flex flex-row space-x-4">
+    <div className="flex flex-row space-x-2">
       {/* SOFTWARE */}
       <div className="flex-1">
         <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">

@@ -119,7 +119,7 @@ export default function FilterProductsBar({
         </div>
 
         {/* Subfiltros */}
-        <div className="flex flex-wrap items-end gap-4 flex-1 min-w-0">
+        <div className="flex flex-wrap items-end gap-2 flex-1 min-w-0">
 
           {subfilters.map((child, idx) => {
             const isRegion =
