@@ -100,7 +100,9 @@ export default function FilterProductsBar({
 
   return (
   <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-    <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end md:justify-between">
+    <div className="flex flex-col gap-4
+                    sm:flex-row sm:flex-wrap
+                    sm:items-end sm:justify-between">
 
       {/* Categoría */}
       <div className="w-full md:w-[170px] xl:w-[340px]">
@@ -128,8 +130,11 @@ export default function FilterProductsBar({
           return (
             <div
               key={idx}
-              className={isRegion ? "w-full md:min-w-[150px] md:max-w-[150px]" : "flex-1 min-w-0"}
-
+              className={
+                isRegion
+                  ? "w-full sm:w-[200px] md:w-[150px]"
+                  : "w-full sm:w-[200px] sm:flex-1 min-w-0"
+              }
             >
               {child}
             </div>
