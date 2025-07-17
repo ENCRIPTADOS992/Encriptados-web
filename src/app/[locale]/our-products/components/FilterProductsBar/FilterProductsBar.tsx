@@ -119,25 +119,28 @@ export default function FilterProductsBar({
         </div>
 
         {/* Subfiltros */}
-        <div className="subfilters flex-1 min-w-0">
+        <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1 min-w-0">
+  {subfilters.map((child, idx) => {
+    // 1) Validamos que sea ReactElement y extraemos su key real
+    const element = React.isValidElement(child) ? child : null;
+    const childKey = element?.key?.toString();
 
-          {subfilters.map((child, idx) => {
-            const isRegion =
-              isValidElement(child) &&
-              ((typeof child.type === "function" && child.type.name === "FilterRegionCountry") ||
-                child.props?.key === "region-country");
+    // 2) Determinamos si es el dropdown de Regiones
+    const isRegion = childKey === "region-country";
 
-            return (
-              <div
-                key={idx}
-                className={
-                  isRegion ? "subfilter-region" : "subfilter-item"
-                }
-              >
-                {child}
-              </div>
-            );
-          })}
+    return (
+      <div
+        key={idx}
+        className={
+          isRegion
+            ? "w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
+            : "w-full sm:w-[200px] sm:flex-auto min-w-0"
+        }
+      >
+        {child}
+      </div>
+    );
+  })}
 
           {/* Search */}
           <div className="w-full xl:w-56 xl:ml-auto">
