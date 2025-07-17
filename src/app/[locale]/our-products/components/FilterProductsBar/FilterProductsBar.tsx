@@ -133,7 +133,7 @@ export default function FilterProductsBar({
                 className={
                   isRegion
                     ? "w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
-                    : "w-full sm:w-[200px] sm:flex-1 min-w-0"
+      : "w-full sm:w-[200px] sm:flex-auto min-w-0"
                 }
               >
                 {child}
