@@ -100,9 +100,10 @@ export default function FilterProductsBar({
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
-      <div className="flex flex-col gap-4
-                lg:flex-row lg:flex-wrap lg:items-end lg:justify-between
-                xl:flex-nowrap">
+      <div className="
+    flex flex-col gap-4
+    xl:flex-row xl:items-end xl:justify-between
+  ">
 
         {/* Categoría */}
         <div className="w-full  xl:w-[360px]">
@@ -119,31 +120,34 @@ export default function FilterProductsBar({
         </div>
 
         {/* Subfiltros */}
-        <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1 min-w-0">
-  {subfilters.map((child, idx) => {
-    // 1) Validamos que sea ReactElement y extraemos su key real
-    const element = React.isValidElement(child) ? child : null;
-    const childKey = element?.key?.toString();
+        <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-end xl:justify-between">
+          {/*  A) Sub‑filtros: en sm/md en una línea */}
+          <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1">
+            {subfilters.map((child, idx) => {
+              // 1) Validamos que sea ReactElement y extraemos su key real
+              const element = React.isValidElement(child) ? child : null;
+              const childKey = element?.key?.toString();
 
-    // 2) Determinamos si es el dropdown de Regiones
-    const isRegion = childKey === "region-country";
+              // 2) Determinamos si es el dropdown de Regiones
+              const isRegion = childKey === "region-country";
 
-    return (
-      <div
-        key={idx}
-        className={
-          isRegion
-            ? "w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
-            : "w-full sm:w-[200px] sm:flex-auto min-w-0"
-        }
-      >
-        {child}
-      </div>
-    );
-  })}
+              return (
+                <div
+                  key={idx}
+                  className={
+                    isRegion
+                      ? "w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
+                      : "w-full sm:w-[200px] sm:flex-auto min-w-0"
+                  }
+                >
+                  {child}
+                </div>
+              );
+            })}
+          </div>
 
           {/* Search */}
-          <div className="w-full xl:w-56 xl:ml-auto">
+          <div className="w-full mt-2 xl:mt-0 xl:w-56 xl:ml-auto">
             <SearchProduct
               name="searchinputproduct"
               placeholder={t("filterProducts.searchPlaceholder")}
