@@ -9,13 +9,13 @@ import { useSearchParams } from "next/navigation";
 import TelegramButton from "@/shared/components/TelegramButton";
 
 const prices: Record<string, string> = {
-  '3': '650$ USD',
-  '6': '1150$ USD'
+  "3": "650$ USD",
+  "6": "1150$ USD",
 };
 
 const CryptcomProduct = () => {
   const t = useTranslations("CryptcomPage.product");
-  const [selectedLicense, setSelectedLicense] = useState<'3' | '6'>('3');
+  const [selectedLicense, setSelectedLicense] = useState<"3" | "6">("3");
 
   const [product, setProduct] = useState<ProductById | null>(null);
   const searchParams = useSearchParams();
@@ -23,9 +23,7 @@ const CryptcomProduct = () => {
 
   useEffect(() => {
     if (productId) {
-      getProductById(productId, 'es')
-        .then(setProduct)
-        .catch(console.error);
+      getProductById(productId, "es").then(setProduct).catch(console.error);
     }
   }, [productId]);
 
@@ -36,22 +34,33 @@ const CryptcomProduct = () => {
         <Image
           src="/images/apps/cryptcom/phone-cryptcom-app.svg"
           alt="cryptcom Mobile"
-          width={250}
-          height={300}
-					className="w-[100%]"
+          width={320}
+          height={390}
+          priority
+          className="
+      w-[220px]
+      sm:w-[300px]
+      md:w-[360px]
+      max-w-[90vw]
+      h-auto
+    "
         />
       </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10">
-
+      <div
+        className="
+  max-w-7xl mx-auto
+  flex flex-col
+  md:flex-row md:items-center md:justify-between md:gap-8
+  lg:gap-10
+"
+      >
         {/* Texto */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 flex flex-col justify-center">
           <h2 className="text-[#0F172A] font-bold text-2xl lg:text-3xl mb-2">
             {t("title")}
           </h2>
-          <p className="text-sm text-[#475569] mb-5">
-            {t("description")}
-          </p>
+          <p className="text-sm text-[#475569] mb-5">{t("description")}</p>
 
           {product?.checks ? (
             <ul className="text-[#1E293B] text-sm flex flex-col gap-2 mb-6">
@@ -62,32 +71,33 @@ const CryptcomProduct = () => {
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-gray-400 mb-6">Cargando características...</p>
+            <p className="text-sm text-gray-400 mb-6">
+              Cargando características...
+            </p>
           )}
 
           <div className="flex items-center gap-4 mb-5 text-sm">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name="license"
-              value="3"
-              checked={selectedLicense === '3'}
-              onChange={() => setSelectedLicense('3')}
-            />
-            {t("license.threeMonths")}
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name="license"
-              value="6"
-              checked={selectedLicense === '6'}
-              onChange={() => setSelectedLicense('6')}
-            />
-            {t("license.sixMonths")}
-          </label>
-        </div>
-
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="license"
+                value="3"
+                checked={selectedLicense === "3"}
+                onChange={() => setSelectedLicense("3")}
+              />
+              {t("license.threeMonths")}
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="license"
+                value="6"
+                checked={selectedLicense === "6"}
+                onChange={() => setSelectedLicense("6")}
+              />
+              {t("license.sixMonths")}
+            </label>
+          </div>
 
           <hr className="mb-4" />
 
@@ -96,32 +106,20 @@ const CryptcomProduct = () => {
             {prices[selectedLicense]}
           </p>
 
-
-					{/* Botones */}
-					<div className="flex flex-row gap-4 mb-6">
-						<button className="bg-black text-white px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:opacity-90">
-							{t("buttons.buyNow")}
-							<Image
-								src="/images/apps/cryptcom/shopping_cart.png"
-								alt="Carrito"
-								width={20}
-								height={20}
-							/>
-						</button>
+          {/* Botones */}
+          <div className="flex flex-row gap-4 mb-6">
+            <button className="bg-black text-white px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:opacity-90">
+              {t("buttons.buyNow")}
+              <Image
+                src="/images/apps/cryptcom/shopping_cart.png"
+                alt="Carrito"
+                width={20}
+                height={20}
+              />
+            </button>
 
             <TelegramButton />
-
-						{/* <button className="bg-[#E6F6FB] text-[#054D61] px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-[#d7f0f7]">
-							{t("buttons.chatSupport")}
-							<Image
-								src="/images/apps/cryptcom/support_agent.png"
-								alt="Soporte"
-								width={20}
-								height={20}
-							/>
-						</button> */}
-					</div>
-
+          </div>
         </div>
 
         {/* Imagen desktop */}

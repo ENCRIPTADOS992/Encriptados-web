@@ -5,7 +5,7 @@ import Image from "next/image";
 const CryptcomHero = () => {
 	return (
 		<section className="w-full">
-			{/* Desktop */}
+			{/* Desktop only */}
 			<div className="hidden lg:block w-full aspect-[1440/284] relative">
 				<Image
 					src="/images/apps/cryptcom/cryptcom-banner-desktop.png"
@@ -16,8 +16,8 @@ const CryptcomHero = () => {
 				/>
 			</div>
 
-			{/* Mobile */}
-			<div className="block lg:hidden w-full h-[239px] relative">
+			{/* Tablet & Mobile */}
+			<div className="block lg:hidden w-full h-[160px] sm:h-[210px] md:h-[239px] relative">
 				<Image
 					src="/images/apps/cryptcom/cryptcom-banner-mobile.png"
 					alt="cryptcom Mobile Banner"
@@ -26,7 +26,6 @@ const CryptcomHero = () => {
 					priority
 				/>
 			</div>
-
 		</section>
 	);
 };
