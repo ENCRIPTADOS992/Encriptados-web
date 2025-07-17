@@ -165,3 +165,18 @@ html {
   }
 }
 
+@layer components {
+  /* Contenedor de todos los sub‑filtros */
+  .subfilters {
+    @apply flex flex-wrap items-end gap-2;
+  }
+  /* Cada “Item” de sub‑filtro (Servicios, Regiones, etc) */
+  .subfilter-item {
+    /* ancho base 200px, puede crecer y encoger respetando ese width */
+    @apply w-full sm:w-[200px] min-w-0 flex-auto;
+  }
+  /* Sólo la Región tiene ancho fijo y no se encoge */
+  .subfilter-region {
+    @apply w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0;
+  }
+}
