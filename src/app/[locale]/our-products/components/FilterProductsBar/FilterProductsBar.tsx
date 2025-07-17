@@ -120,7 +120,7 @@ export default function FilterProductsBar({
         </div>
 
         {/* Subfiltros */}
-        <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-center xl:justify-between">
+        <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-end xl:justify-between">
           {/*  A) Sub‑filtros: en sm/md en una línea */}
           <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1">
             {subfilters.map((child, idx) => {
