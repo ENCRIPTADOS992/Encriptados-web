@@ -142,6 +142,29 @@ html {
   }
 }
 
+@media (min-width: 700px) and (max-width: 819px) {
+  .mid-breakpoint-row {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 2rem !important;              
+    background-color: #fff !important; 
+    padding-top: 3rem !important;      
+    padding-bottom: 3rem !important;
+  }
+  .app-stores-desktop {
+    display: flex !important;
+  }
+  .plans-desktop {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+  .md\:hidden {
+    display: none !important;
+  }
+}
+
 @layer components {
   /* Contenedor de todos los sub‑filtros */
   .subfilters {

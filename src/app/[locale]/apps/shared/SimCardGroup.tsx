@@ -92,7 +92,14 @@ const cardData: cardDataType[] = [
 
 const SimCardGroup = () => {
   return (
-    <div className='flex flex-col gap-[15px] mt-3 mx-5 md:flex-row md:gap-4 md:mx-0 lg:mx-24 lg:gap-6'>
+    <div className="
+      grid gap-[15px] mt-3 mx-5
+      sm:grid-cols-2
+      md:grid-cols-2
+      lg:grid-cols-2
+      xl:grid-cols-2
+      md:mx-0 lg:mx-24 lg:gap-6
+    ">
       {cardData.map((card, index) => (
         <Card
           title={card.title}
