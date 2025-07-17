@@ -7,7 +7,10 @@ const CryptcomVideo = () => {
 
   return (
     <section className="bg-white py-10 px-4 lg:px-20">
-      <div className="max-w-7xl lg:max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-2">
+      <div className="  flex flex-col mx-5 gap-8 mb-[60px] 
+  sm:flex-row sm:items-center sm:justify-center 
+  sm:w-[95%] sm:ml-auto sm:text-left sm:gap-20
+  md:w-[85%] md:py-24 md:pr-20 md:mb-[60px] md:leading-tight md:ml-auto md:gap-20">
         {/* Texto */}
         <div className="w-full lg:w-1/2 lg:px-5">
           <h2 className="text-center lg:text-left text-black font-bold text-[24px] lg:text-[44px] leading-[100%] mb-[20px]">

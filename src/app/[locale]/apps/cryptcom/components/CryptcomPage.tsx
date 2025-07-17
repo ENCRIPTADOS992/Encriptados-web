@@ -7,6 +7,7 @@ import CryptcomSystemFeatures from "./CryptcomSystemFeatures";
 import CryptcomVideo from "./CryptcomVideo";
 import CryptcomSims from "./CryptcomSims";
 import CryptcomFaq from "./CryptcomFaq";
+import SimCardGroup from "../../shared/SimCardGroup";
 
 const CryptcomPage = () => {
   return (
@@ -17,7 +18,7 @@ const CryptcomPage = () => {
       <CryptcomFeatures />
       <CryptcomSystemFeatures />
       <CryptcomVideo />
-      <CryptcomSims />
+      <SimCardGroup />
       <CryptcomFaq />
     </main>
   );
