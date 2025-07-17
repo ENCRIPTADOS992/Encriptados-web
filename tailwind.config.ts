@@ -9,6 +9,8 @@ const config: Config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
+    "sm:w-[200px]",
+    "md:w-[150px]",
     "md:min-w-[150px]",
     "md:max-w-[150px]",
   ],
