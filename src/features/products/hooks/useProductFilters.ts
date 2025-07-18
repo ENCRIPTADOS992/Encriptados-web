@@ -3,6 +3,12 @@
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
+
+function getRegionOrCountryType(value: string | null): "region" | "country" | undefined {
+  if (value === "region" || value === "country") return value;
+  return undefined;
+}
+
 export const useProductFilters = () => {
   const params = useSearchParams();
   const pathname = usePathname();
@@ -15,7 +21,8 @@ export const useProductFilters = () => {
     license: params.get('license') || 'all',
     encriptadosprovider: params.get('encriptadosprovider') || 'all',
     timprovider: params.get('timprovider') || 'all',
-
+    regionOrCountryType: getRegionOrCountryType(params.get('regionOrCountryType')) || "region",
+    regionOrCountry: params.get('regionOrCountry') || 'global',
   };
 
 const updateFilters = (newFilters: Partial<ProductFilters>) => {  

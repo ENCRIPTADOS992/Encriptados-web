@@ -6,5 +6,6 @@ export interface ProductFilters {
   encriptadosprovider: string;
   timprovider: string;
   regionOrCountry?: string;
+   regionOrCountryType?: "region" | "country";
 
 }
