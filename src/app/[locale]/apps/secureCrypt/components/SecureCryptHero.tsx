@@ -4,29 +4,16 @@ import Image from "next/image";
 
 const SecureHero = () => {
 	return (
-		<section className="w-full">
-			{/* Desktop */}
-			<div className="hidden lg:block w-full aspect-[1440/284] relative">
+		<section className="w-full bg-white">
+			<div className="relative w-full aspect-[1440/284]">
 				<Image
 					src="/images/apps/secureCrypt/banner.png"
-					alt="Secure Desktop Banner"
+					alt="Secure Banner"
 					fill
-					className="object-contain"
+					className="object-contain object-center"
 					priority
 				/>
 			</div>
-
-			{/* Mobile */}
-			<div className="block lg:hidden w-full h-[239px] relative">
-				<Image
-					src="/images/apps/secureCrypt/banner.png"
-					alt="Secure Mobile Banner"
-					fill
-					className="object-cover"
-					priority
-				/>
-			</div>
-
 		</section>
 	);
 };
