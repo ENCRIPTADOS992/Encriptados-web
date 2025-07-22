@@ -43,24 +43,29 @@ const FEATURES = [
 export default function SecureSystemFeatures() {
   return (
     <section className="w-full flex flex-col items-center bg-[#F7FAFC] py-16 px-2">
-      <h2 className="font-inter font-bold text-[28px] leading-[100%] text-black mb-8 text-center">
+      <h2 className="font-inter font-bold text-[28px] leading-none text-black mb-8 text-center">
         Funciones De Seguridad Del Sistema
       </h2>
-      <div className="w-[878px] grid grid-cols-3 gap-[14px] mx-auto">
+
+      <div className="w-full max-w-screen-lg lg:max-w-[900px] grid grid-cols-1 sm:grid-cols-3 justify-items-center sm:justify-items-stretch gap-6 lg:gap-4 mx-auto px-2">
         {FEATURES.map((item, i) => (
           <div
             key={i}
-            className="bg-white rounded-[12px] shadow-sm"
-            style={{
-              width: 283,
-              height: 237,
-              paddingTop: 24,
-              paddingRight: 24,
-              paddingBottom: 34,
-              paddingLeft: 24,
-              display: "flex",
-              flexDirection: "column",
-            }}
+            className="
+              w-[280px] 
+              sm:w-full
+              lg:w-[280px]
+              bg-white rounded-[12px] shadow-sm
+              flex flex-col pt-[24px] px-[24px] pb-[34px]
+              aspect-square        /* cuadrado en móvil */
+              sm:aspect-auto       /* libera altura en ≥600px */
+              lg:aspect-square     /* vuelve cuadrado en ≥1024px */
+              [&_span]:font-bold
+              [&_span]:text-[20px]
+              sm:[&_span]:text-[16px]
+              [@media(min-width:744px)]:[&_span]:text-[16px]
+              md:[&_span]:text-[18px]
+            "
           >
             <Image
               src="/images/apps/secureCrypt/check_circle.png"
@@ -69,12 +74,19 @@ export default function SecureSystemFeatures() {
               height={28}
               className="mb-3"
             />
-            <span className="font-bold text-black text-[16px] mb-1 font-inter">
+            <span className="mb-1 text-black font-inter">
               {item.title}
             </span>
             <p
-              className="font-inter text-[16px] font-normal leading-[100%] text-black"
-              style={{ width: 235, height: 114, opacity: 0.6 }}
+              className="
+                font-inter font-normal leading-tight
+                text-black opacity-60
+                text-[14px]
+                sm:text-[12px]
+                [@media(min-width:744px)]:text-[14px]
+                md:text-[14px]
+                mt-1
+              "
             >
               {item.desc}
             </p>

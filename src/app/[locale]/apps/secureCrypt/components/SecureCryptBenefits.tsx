@@ -10,14 +10,14 @@ export default function SecureGrid() {
         </div>
 
         <div className="w-full max-w-[465px] h-auto flex justify-center items-start pt-4 lg:pt-[68px] z-10 mx-auto relative">
-  <Image
-    src="/images/apps/secureCrypt/phone_image.png"
-    alt="Celular encriptado"
-    width={465}
-    height={916}
-    className="object-contain rounded-2xl w-full h-auto"
-    priority
-  />
+          <Image
+            src="/images/apps/secureCrypt/phone_image.png"
+            alt="Celular encriptado"
+            width={465}
+            height={916}
+            className="object-contain rounded-2xl w-full h-auto"
+            priority
+          />
         </div>
 
         <div className="relative z-10 flex flex-col items-start w-full">
@@ -35,6 +35,7 @@ export default function SecureGrid() {
     grid
     grid-cols-1
     sm:grid-cols-3
+    [@media(min-width:744px)]:grid-cols-3
     md:grid-cols-3
     gap-[14px]
     z-20
@@ -43,7 +44,7 @@ export default function SecureGrid() {
     px-2 sm:px-4 md:px-0
     lg:mt-8
   "
-  style={{ maxWidth: "922px" }}
+  style={{ maxWidth: '922px' }}
 >
 
             {[
@@ -89,13 +90,12 @@ export default function SecureGrid() {
                   width={34}
                   height={34}
                 />
-               <span className="text-white font-bold text-[15px] md:text-[16px] lg:text-[15px] leading-[1.1]">
-  {item.title}
-</span>
-<p className="text-[#A3A3A3] text-[13px] md:text-[14px] lg:text-[13px] leading-tight">
-  {item.desc}
-</p>
-
+                <span className="text-white font-bold text-[15px] md:text-[16px] lg:text-[15px] leading-[1.1]">
+                  {item.title}
+                </span>
+                <p className="text-[#A3A3A3] text-[13px] md:text-[14px] lg:text-[13px] leading-tight">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>

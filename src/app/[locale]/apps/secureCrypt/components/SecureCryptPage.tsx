@@ -16,9 +16,9 @@ const SecureCryptPage = () => {
       <SecureCryptBenefits />
       <SecureCryptFeatures />
       <SecureCryptFunctions/>
-      <SecureCryptVideo/>
-      <SecureCryptSims/>
-      <SecureCryptFaq/>
+      {/* <SecureCryptVideo/> */}
+      {/* <SecureCryptSims/> */}
+      {/* <SecureCryptFaq/> */}
     </main>
   );
 };
