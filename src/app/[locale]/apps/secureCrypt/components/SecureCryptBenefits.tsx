@@ -9,34 +9,43 @@ export default function SecureGrid() {
           <div className="w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] rounded-full bg-[#32C7FF] opacity-90 blur-[140px]" />
         </div>
 
-        <div className="w-full max-w-[465px] h-auto flex justify-center items-start pt-4 lg:pt-[68px] z-10 mx-auto">
-          <Image
-            src="/images/apps/secureCrypt/phone_image.png"
-            alt="Celular encriptado"
-            width={465}
-            height={916}
-            className="object-contain rounded-2xl w-full h-auto"
-            priority
-          />
+        <div className="w-full max-w-[465px] h-auto flex justify-center items-start pt-4 lg:pt-[68px] z-10 mx-auto relative">
+  <Image
+    src="/images/apps/secureCrypt/phone_image.png"
+    alt="Celular encriptado"
+    width={465}
+    height={916}
+    className="object-contain rounded-2xl w-full h-auto"
+    priority
+  />
         </div>
 
         <div className="relative z-10 flex flex-col items-start w-full">
-          <h2 className="text-white font-bold text-[24px] lg:text-[28px] leading-tight mt-8 lg:mt-[68px] mb-8 font-['Inter',sans-serif] max-w-[580px]">
+          <h2 className="text-white font-bold text-[24px] lg:text-[28px] leading-tight mt-8 lg:mt-[68px] mb-8 font-['Inter',sans-serif] max-w-[580px] text-center w-full">
             Te mantenemos conectado con
             <br />
             encriptación de inicio a fin
           </h2>
 
           <div className="hidden md:block w-full h-28 -mt-14 bg-gradient-to-t from-[#0F0F0F] to-transparent z-10 relative " />
+
+          {/* GRID AJUSTADO */}
           <div
-            className="
-  grid grid-cols-1 sm:grid-cols-2 [@media(min-width:768px)]:grid-cols-3 
-  gap-[14px] 
-  z-20 mt-0 md:-mt-24 
-  justify-center lg:justify-start
-  mx-auto
-"
-          >
+  className="
+    grid
+    grid-cols-1
+    sm:grid-cols-3
+    md:grid-cols-3
+    gap-[14px]
+    z-20
+    mt-0 md:-mt-24
+    mx-auto
+    px-2 sm:px-4 md:px-0
+    lg:mt-8
+  "
+  style={{ maxWidth: "922px" }}
+>
+
             {[
               {
                 title: "Enmascaramiento y Rotación de IMEI",
@@ -65,8 +74,14 @@ export default function SecureGrid() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="w-[283px] h-[297px] rounded-[12px] bg-[#181818] pt-[24px] pb-[34px] px-[24px] flex flex-col items-start text-left gap-[14px]"
-
+                className="
+        w-full
+        h-[297px]        
+        rounded-[12px]
+        bg-[#181818]
+        pt-[24px] pb-[34px] px-[24px]
+        flex flex-col items-start text-left gap-[14px]
+        "
               >
                 <Image
                   src="/images/apps/secureCrypt/check_circle.png"
@@ -74,12 +89,13 @@ export default function SecureGrid() {
                   width={34}
                   height={34}
                 />
-                <span className="text-white font-bold text-[18px] leading-[1.1]">
-                  {item.title}
-                </span>
-                <p className="text-[#A3A3A3] text-[16px] leading-tight">
-                  {item.desc}
-                </p>
+               <span className="text-white font-bold text-[15px] md:text-[16px] lg:text-[15px] leading-[1.1]">
+  {item.title}
+</span>
+<p className="text-[#A3A3A3] text-[13px] md:text-[14px] lg:text-[13px] leading-tight">
+  {item.desc}
+</p>
+
               </div>
             ))}
           </div>
