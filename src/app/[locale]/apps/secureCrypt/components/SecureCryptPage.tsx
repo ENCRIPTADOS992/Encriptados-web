@@ -5,7 +5,7 @@ import SecureCryptBenefits from "./SecureCryptBenefits";
 import SecureCryptFeatures from "./SecureCryptFeatures";
 import SecureCryptFunctions from "./SecureCryptFunctions";
 import SecureCryptVideo from "./SecureCryptVideo";
-import SecureCryptSims from "./SecureCryptSims";
+import SimCardGroup from "../../shared/SimCardGroup";
 import SecureCryptFaq from "./SecureCryptFaq";
 
 const SecureCryptPage = () => {
@@ -17,8 +17,8 @@ const SecureCryptPage = () => {
       <SecureCryptFeatures />
       <SecureCryptFunctions/>
       <SecureCryptVideo/>
-      {/* <SecureCryptSims/> */}
-      {/* <SecureCryptFaq/> */}
+      <SimCardGroup />
+      <SecureCryptFaq/>
     </main>
   );
 };
