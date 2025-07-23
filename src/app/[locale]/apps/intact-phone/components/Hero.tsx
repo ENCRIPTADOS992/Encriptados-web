@@ -1,27 +1,23 @@
+'use client';
+
+
 import Image from 'next/image';
 
 const Hero = () => {
   return (
-    <>
-      <div className='block md:hidden'>
-        <Image
-          src='/images/apps/intact-phone/hero-mobile.jpg'
-          alt='intact-phone'
-          width={414}
-          height={174}
-          className='w-full h-auto'
+     <section className="w-full">
+      <picture className="block w-full">
+        {/* Desktop ≥1024px */}
+        <source
+          media="(min-width:1024px)"
+          srcSet="/images/apps/intact-phone/hero-desktop.jpg"
         />
-      </div>
-      <div className='hidden md:block lg:hidden'>
-        <Image
-          src='/images/apps/intact-phone/hero-tablet.jpg'
-          alt='intact-phone'
-          width={1440}
-          height={284}
-          className='w-full h-auto'
+        {/* Tablet 744px–1023px */}
+        <source
+          media="(min-width:744px)"
+          srcSet="/images/apps/intact-phone/hero-desktop.jpg"
         />
-      </div>
-      <div className='hidden lg:block'>
+        {/* Móvil <744px */}
         <Image
           src='/images/apps/intact-phone/hero-desktop.jpg'
           alt='intact-phone'
@@ -29,8 +25,8 @@ const Hero = () => {
           height={284}
           className='w-full h-auto'
         />
-      </div>
-    </>
+     </picture>
+    </section>
   );
 };
 

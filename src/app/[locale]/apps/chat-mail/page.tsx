@@ -19,7 +19,6 @@ import { useEffect, useState } from 'react';
 import { getProductById } from '@/features/products/services';
 import type { ProductById } from '@/features/products/types/AllProductsResponse';
 import TelegramButton from '@/shared/components/TelegramButton';
-import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const prices: Record<string, string> = {
   '3': '425$ USD',

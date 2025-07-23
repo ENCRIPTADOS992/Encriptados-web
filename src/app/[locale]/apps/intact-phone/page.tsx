@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { getProductById } from '@/features/products/services';
 import type { ProductById } from '@/features/products/types/AllProductsResponse';
 import TelegramButton from '@/shared/components/TelegramButton';
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const prices: Record<string, string> = {
   '12.1': '150$ USD',
@@ -45,7 +46,7 @@ const Page = () => {
   return (
     <div>
       <Hero />
-      <main className='p-5 bg-white tracking-wide md:flex md:flex-row-reverse md:justify-center md:items-center md:gap-20 md:py-16 md:bg-white'>
+      <SectionWrapper className='p-5 bg-white tracking-wide md:flex md:flex-row-reverse md:justify-center md:items-center md:gap-20 md:py-16 md:bg-white'>
         <div className='mx-auto mb-[50px] md:mt-9 md:w-2/4 lg:w-2/5 md:mx-0 xl:w-[37%]'>
           <Image
             src='/images/apps/intact-phone/banner-3-months.jpg'
@@ -98,7 +99,7 @@ const Page = () => {
             </Button> */}
           </div>
         </div>
-      </main>
+      </SectionWrapper>
 
       <section className='lg:bg-[#F4F8FA] lg:px-[52px] xl:px-[84px] lg:py-[74px] overflow-hidden'>
         <div className='relative flex flex-col px-5 pt-20 bg-black lg:rounded-[44px] lg:flex-row-reverse lg:items-start lg:pt-[65px] lg:pb-[118px] lg xl:px-[100px] lg:gap-[74px]'>
