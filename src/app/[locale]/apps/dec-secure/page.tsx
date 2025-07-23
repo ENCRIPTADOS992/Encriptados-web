@@ -43,7 +43,7 @@ const Page = () => {
   return (
     <div>
       <Hero />
-      <SectionWrapper className="p-5 bg-white tracking-wide sm:flex sm:flex-row-reverse sm:justify-center sm:items-center sm:gap-20 sm:py-16">
+      <SectionWrapper className='p-5 bg-white tracking-wide md:flex md:flex-row-reverse md:justify-center md:items-center md:gap-20 md:py-16 md:bg-white'>
         <div
           className="
      mx-auto
