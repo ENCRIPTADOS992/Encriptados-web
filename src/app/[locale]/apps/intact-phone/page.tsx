@@ -169,51 +169,90 @@ const Page = () => {
 </SectionWrapper>
 
 
-      <section className='lg:bg-[#F4F8FA] lg:px-[52px] xl:px-[84px] lg:py-[74px] overflow-hidden'>
-        <div className='relative flex flex-col px-5 pt-20 bg-black lg:rounded-[44px] lg:flex-row-reverse lg:items-start lg:pt-[65px] lg:pb-[118px] lg xl:px-[100px] lg:gap-[74px]'>
-          <div className='absolute z-0 h-[450px] w-[450px] bg-[#3fd3ff] rounded-[24px] left-[20%] top-[15%] blur-[104px] lg:left-auto lg:top-[35%] right-[13%] lg:h-[225px] lg:w:[225px]'></div>
-          <div className='z-10 flex flex-col lg:w-2/3 xl:w-[63%]'>
-            <b className='text-2xl text-center text-white mb-[28px] md:text-left md:text-[28px]'>
-              CommuniTake, la casa madre de Intact construye todo el hardware y
-              software
-            </b>
-            <ol className='flex flex-col gap-4 mb-[30px] lg:grid md:grid-cols-2 md:gap-[14px] md:mx-auto'>
-              {details.map((item, idx) => (
-                <CardDetails
-                  title={item.title}
-                  description={item.description}
-                  key={idx}
-                  icon={
-                    <CheckCircle2
-                      color='#6ADDFF'
-                      width={28}
-                      height={28}
-                      className='min-w-[20px] min-h-[20px]'
-                    />
-                  }
-                  className='h-[180px] lg:h-[290px] lg:max-h-none'
-                />
-              ))}
-            </ol>
-          </div>
-          <picture className='relative h-[350px] overflow-hidden flex justify-center lg:h-auto lg:w-auto'>
-            <Image
-              src='/images/apps/intact-phone/description.png'
-              alt='intact-phone description'
-              width={353}
-              height={730}
-              className='absolute top-0 lg:hidden'
-            />
-            <Image
-              src='/images/apps/intact-phone/description.png'
-              alt='intact-phone description'
-              width={411}
-              height={808}
-              className='hidden lg:block'
-            />
-          </picture>
-        </div>
-      </section>
+      <SectionWrapper className='lg:bg-[#F4F8FA] lg:px-[52px] xl:px-[84px] lg:py-[74px] overflow-hidden'>
+  <div className='relative flex flex-col px-5 pt-20 bg-black lg:rounded-[44px] lg:flex-row-reverse lg:items-start lg:pt-[65px] lg:pb-[118px] xl:px-[100px] lg:gap-[74px]'>
+
+    {/* Blur decorativo */}
+    <div className='absolute z-0 h-[450px] w-[450px] bg-[#3fd3ff] rounded-[24px] left-[20%] top-[15%] blur-[104px] lg:left-auto lg:top-[35%] right-[13%] lg:h-[225px] lg:w-[225px]'></div>
+
+    {/* Contenido principal */}
+    <div className='z-10 flex flex-col w-full lg:w-2/3 xl:w-[63%] order-1 lg:order-1'>
+      {/* Título */}
+      <b className='text-2xl text-center text-white mb-[28px] md:text-left md:text-[28px]'>
+        CommuniTake, la casa madre de Intact construye todo el hardware y software
+      </b>
+
+      {/* Imagen SOLO en sm y md (antes del grid) */}
+      <div className="hidden sm:flex lg:hidden w-full flex justify-center relative mb-4 overflow-hidden max-h-[320px] sm:max-h-[400px] md:max-h-[480px]">
+        <Image
+          src='/images/apps/intact-phone/description.png'
+          alt='intact-phone description'
+          width={300}
+          height={700}
+          className='w-auto h-full object-top object-contain sm:w-[350px] md:w-[400px]'
+        />
+        <div className="absolute bottom-0 left-0 w-full h-16 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.96))'
+          }}
+        ></div>
+      </div>
+
+      {/* Grid de Cards */}
+      <ol className='mb-[30px] gap-4 flex flex-col sm:grid sm:grid-cols-3 sm:gap-[14px] sm:mx-auto lg:grid lg:grid-cols-2 lg:gap-[14px] lg:mx-0'>
+        {details.map((item, idx) => (
+          <CardDetails
+            title={item.title}
+            description={item.description}
+            key={idx}
+            icon={
+              <CheckCircle2
+                color='#6ADDFF'
+                width={28}
+                height={28}
+                className='min-w-[20px] min-h-[20px]'
+              />
+            }
+            className='h-[180px] lg:h-[290px] lg:max-h-none'
+          />
+        ))}
+      </ol>
+
+      {/* Imagen SOLO en mobile, grande, recortada por abajo, y después del grid */}
+      {/* Imagen SOLO en mobile, GRANDE y recortada por abajo, después del grid */}
+<div className="block sm:hidden w-full flex justify-center relative mt-4 overflow-hidden max-h-[420px]">
+  <Image
+    src='/images/apps/intact-phone/description.png'
+    alt='intact-phone description'
+    width={500}      // Más ancho
+    height={1000}    // Más alto para mejor recorte y definición
+    className='w-[90vw] max-w-[400px] h-full object-top object-contain'
+  />
+  <div
+    className="absolute bottom-0 left-0 w-full h-20 pointer-events-none"
+    style={{
+      background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.96))'
+    }}
+  ></div>
+</div>
+
+
+    </div>
+
+    {/* Imagen solo visible en lg+ */}
+    <picture className='hidden lg:flex relative h-[350px] lg:h-auto lg:w-auto order-2 lg:order-2 justify-center'>
+      <Image
+        src='/images/apps/intact-phone/description.png'
+        alt='intact-phone description'
+        width={411}
+        height={808}
+        className='block'
+      />
+    </picture>
+  </div>
+</SectionWrapper>
+
+
 
       <section className='py-[40px] pb-[60px] bg-[#F4F8FA] md:pb-0'>
         <div className='flex flex-col text-center mx-5 gap-8 mb-[60px] md:flex-row md:items-center md:justify-center md:mb-[60px] md:py-24 md:pr-20 md:w-[85%] md:leading-tight md:ml-auto md:text-left md:gap-20'>
