@@ -12,10 +12,13 @@ import HeroVideoSection from "../component/HeroVideoSection";
 import HeroVideoSectionMobile from "../component/HeroVideoSectionMobile";
 import FeaturedProducts from "../component/FeaturedProducts";
 import FeaturedProductsMobile from "../component/FeaturedProductsMobile";
+import FeaturedProductsTablet from "../component/FeaturedProductsTablet";
 import FAQSection from "../component/FAQSection";
 import FAQSectionMobile from "../component/FAQSectionMobile";
+import FAQSectionTablet from "../component/FAQSectionTablet";
 import DownloadAppSection from "../component/DownloadAppSection";
 import DownloadAppSectionMobile from "../component/DownloadAppSectionMobile";
+import DownloadAppSectionTablet from "../component/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -210,10 +213,30 @@ const Page = () => {
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
+      <FeaturedProductsTablet
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/armadillo-v2/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/armadillo-v2/phone.png",
+        }}
+      />
       <FAQSection faqs={Faqs}/>
       <FAQSectionMobile faqs={Faqs}/>
+      <FAQSectionTablet faqs={Faqs}/>
       <DownloadAppSection />
       <DownloadAppSectionMobile/>
+      <DownloadAppSectionTablet/>
     </div>
   );
 };

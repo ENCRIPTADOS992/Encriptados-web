@@ -5,35 +5,44 @@ interface FAQItem {
   answer: string;
 }
 
-interface FAQSectionProps {
+interface FAQSectionTabletProps {
   title?: string;
   faqs: FAQItem[];
 }
 
-const FAQSection: React.FC<FAQSectionProps> = ({
+const FAQSectionTablet: React.FC<FAQSectionTabletProps> = ({
   title = "Preguntas frecuentes",
   faqs,
 }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-<section className="w-full flex flex-col items-center bg-white py-16 hidden lg:flex">
-      <h2 className="text-[34px] font-bold text-[#101010] text-center mb-10 leading-[100%]">
+    <section className="w-full bg-white py-8 px-0 hidden flex-col items-center sm:flex lg:hidden">
+      <h2 className="text-[26px] font-bold text-[#101010] text-center mb-7 leading-[100%]">
         {title}
       </h2>
-      <div className="w-full max-w-[1060px] flex flex-col gap-4">
+      <div className="w-full max-w-[713px] flex flex-col gap-[14px]">
         {faqs.map((faq, idx) => (
           <div
             key={idx}
-            className="bg-[#F9F9F9] border border-[#F1F1F1] rounded-[8px] px-9 py-4 flex flex-col"
+            className="bg-[#F9F9F9] border border-[#F1F1F1] rounded-[14px] flex flex-col"
+            style={{
+              padding: "10px 16px",
+              minHeight: 84,
+            }}
           >
             <button
-              className="w-full flex justify-between items-center text-left focus:outline-none"
+              className="w-full h-[48px] flex items-center justify-between text-left focus:outline-none"
               onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
               aria-expanded={openIndex === idx}
               aria-controls={`faq-answer-${idx}`}
             >
-              <span className="text-[24px] font-normal text-[#101010]">
+              <span
+                className="block max-w-[458px] text-[16px] font-normal text-black leading-[100%]"
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                }}
+              >
                 {faq.question}
               </span>
               <span
@@ -62,10 +71,14 @@ const FAQSection: React.FC<FAQSectionProps> = ({
                 </svg>
               </span>
             </button>
+
             {openIndex === idx && (
               <div
                 id={`faq-answer-${idx}`}
-                className="mt-4 text-[16px] text-[#101010] opacity-80"
+                className="mt-2 text-[14px] text-[#101010] opacity-80"
+                style={{
+                  lineHeight: "20px",
+                }}
               >
                 {faq.answer}
               </div>
@@ -77,4 +90,4 @@ const FAQSection: React.FC<FAQSectionProps> = ({
   );
 };
 
-export default FAQSection;
+export default FAQSectionTablet;
