@@ -16,7 +16,7 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
   benefits,
 }) => {
   return (
-    <section className="w-full flex justify-center bg-black py-16">
+    <section className="w-full hidden sm:flex justify-center bg-black py-16">
       <div className="w-full max-w-[1150px] mx-auto">
         <div
           className="

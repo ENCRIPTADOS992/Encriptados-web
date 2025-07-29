@@ -16,7 +16,7 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full flex justify-center bg-[#F6FAFC] py-10">
+    <section className="w-full hidden sm:flex justify-center bg-[#F6FAFC] py-10">
       <div className="w-full max-w-[1272px] mx-auto">
         <h3 className="text-[24px] font-bold leading-[100%] text-[#101010] mb-8">
           {title}
