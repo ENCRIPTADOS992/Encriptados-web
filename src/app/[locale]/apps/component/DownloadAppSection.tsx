@@ -3,7 +3,7 @@ import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const DownloadAppSection = () => (
-  <section className="w-full flex justify-center items-center bg-black min-h-[581px] py-6">
+  <section className="w-full hidden sm:flex justify-center items-center bg-black min-h-[581px] py-6">
     <SectionWrapper className="w-full max-w-[1440px] flex items-center justify-between mx-auto px-4 gap-4">
       <div className="flex flex-col gap-7 w-[431px] min-w-[310px] z-10">
         <h2 className="font-inter font-bold text-white text-[34px] leading-[100%]">

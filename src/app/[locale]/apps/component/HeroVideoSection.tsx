@@ -10,7 +10,7 @@ const HeroVideoSection: React.FC<HeroVideoSectionProps> = ({
   videoUrl,
 }) => {
   return (
-    <section className="w-full flex justify-center bg-white py-10">
+    <section className="w-full hidden sm:flex justify-center bg-white py-10">
       <div className="w-full max-w-[1150px] flex items-center mx-auto gap-4">
 
         {/* Título grande a la izquierda */}

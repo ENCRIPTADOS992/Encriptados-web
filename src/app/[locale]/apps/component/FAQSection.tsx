@@ -17,7 +17,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full flex flex-col items-center bg-white py-16">
+    <section className="w-full flex flex-col items-center bg-white py-16 hidden sm:flex">
       <h2 className="text-[34px] font-bold text-[#101010] text-center mb-10 leading-[100%]">
         {title}
       </h2>
