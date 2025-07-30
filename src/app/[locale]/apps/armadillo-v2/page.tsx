@@ -2,14 +2,19 @@
 
 import HeroBanner from "../component/HeroBanner";
 import HeroBannerMobile from "../component/HeroBannerMobile";
+import HeroBannerTablet from "../component/HeroBannerTablet";
 import ProductSection from "../component/ProductSection";
 import ProductSectionMobile from "../component/ProductSectionMobile";
+import ProductSectionTablet from "../component/ProductSectionTablet";
 import ProductFeaturesGrid from "../component/ProductFeaturesGrid";
 import ProductFeaturesGridMobile from "../component/ProductFeaturesGridMobile";
+import ProductFeaturesGridTablet from "../component/ProductFeaturesGridTablet";
 import ProductBenefitsGrid from "../component/ProductBenefitsGrid";
 import ProductBenefitsGridMobile from "../component/ProductBenefitsGridMobile";
+import ProductBenefitsGridTablet from "../component/ProductBenefitsGridTablet";
 import HeroVideoSection from "../component/HeroVideoSection";
 import HeroVideoSectionMobile from "../component/HeroVideoSectionMobile";
+import HeroVideoSectionTablet from "../component/HeroVideoSectionTablet";
 import FeaturedProducts from "../component/FeaturedProducts";
 import FeaturedProductsMobile from "../component/FeaturedProductsMobile";
 import FeaturedProductsTablet from "../component/FeaturedProductsTablet";
@@ -129,6 +134,8 @@ const Page = () => {
       />
       <HeroBannerMobile imageUrl="/images/apps/armadillo-v2/bannermobile.png" 
         alt="Armadillo Hero Banner" />
+      <HeroBannerTablet imageUrl="/images/apps/armadillo-v2/bannertablet.png" 
+        alt="Armadillo Hero Banner" />
       <ProductSection
         title="Armadillo"
         description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
@@ -165,15 +172,39 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
+      <ProductSectionTablet
+        title="Armadillo"
+        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        features={[
+          "Borrado remoto y automatizado",
+          "Alertas de posibles impostores",
+          "Llamadas encriptadas",
+        ]}
+        price="99$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/armadillo-v2/productImage.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
       <ProductFeaturesGrid features={featuresGrid} />
       <ProductFeaturesGridMobile features={featuresGrid} /> 
+      <ProductFeaturesGridTablet features={featuresGrid}/>
       <ProductBenefitsGrid benefits={benefits} />
       <ProductBenefitsGridMobile benefits={benefits}/>
+      <ProductBenefitsGridTablet benefits={benefits}/>
       <HeroVideoSection
         title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <HeroVideoSectionMobile
+        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <HeroVideoSectionTablet
         title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />

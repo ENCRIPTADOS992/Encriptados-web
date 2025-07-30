@@ -11,50 +11,44 @@ interface ProductBenefitsGridProps {
   benefits: BenefitItem[];
 }
 
-const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
-  title = "Beneficios de Armadillo",
+const ProductBenefitsGridTablet: React.FC<ProductBenefitsGridProps> = ({
   benefits,
 }) => {
   return (
-<section className="w-full hidden lg:flex justify-center bg-black py-16">
-      <div className="w-full max-w-[1150px] mx-auto">
+    <section className="w-full hidden sm:flex lg:hidden justify-center bg-black py-12">
+      <div className="w-full max-w-[628px] mx-auto">
         <div
           className="
             grid
-            grid-cols-1
-            sm:grid-cols-2
-            md:grid-cols-3
-            gap-x-4 gap-y-4
+            grid-cols-2
+            gap-x-[10px] gap-y-[14px]
             justify-center
-            mx-auto
           "
         >
           {benefits.map((benefit, idx) => (
             <div
               key={idx}
               className="
-      flex flex-col
-      bg-[#181818]
-      rounded-[12px]
-      py-6 px-5
-      min-h-[320px]
-      w-full
-      shadow-lg
-      items-start
-      gap-5 
-    "
+                flex flex-col items-start
+                bg-[#181818]
+                rounded-[12px]
+                w-[306px] h-[274px]
+                pt-[24px] pr-[24px] pb-[34px] pl-[24px]
+                shadow-lg
+                gap-[14px]
+              "
             >
               <img
                 src={benefit.icon}
                 alt={benefit.title}
-                className="w-[44px] h-[44px]"
+                className="w-[34px] h-[34px]"
                 draggable={false}
                 loading="lazy"
               />
-              <h4 className="font-inter font-semibold text-[18px] text-white">
+              <h4 className="font-inter font-semibold text-[14px] text-white">
                 {benefit.title}
               </h4>
-              <p className="font-inter text-[14px] text-white opacity-60 text-justify">
+              <p className="font-inter text-[12px] text-white opacity-60 text-left">
                 {benefit.description}
               </p>
             </div>
@@ -65,4 +59,4 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
   );
 };
 
-export default ProductBenefitsGrid;
+export default ProductBenefitsGridTablet;

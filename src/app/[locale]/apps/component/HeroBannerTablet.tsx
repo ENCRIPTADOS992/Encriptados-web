@@ -5,8 +5,8 @@ interface HeroBannerProps {
   alt?: string;
 }
 
-const HeroBanner: React.FC<HeroBannerProps> = ({ imageUrl, alt }) => (
-  <div className="w-full h-[284px] hidden lg:block">
+const HeroBannerTablet: React.FC<HeroBannerProps> = ({ imageUrl, alt }) => (
+  <div className="w-full h-[147px] hidden sm:block lg:hidden">
     <img
       src={imageUrl}
       alt={alt || "Banner"}
@@ -17,4 +17,4 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ imageUrl, alt }) => (
   </div>
 );
 
-export default HeroBanner;
+export default HeroBannerTablet;
