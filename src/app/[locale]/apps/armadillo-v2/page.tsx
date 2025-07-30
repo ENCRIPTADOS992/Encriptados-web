@@ -1,29 +1,29 @@
 "use client";
 
-import HeroBanner from "../component/HeroBanner";
-import HeroBannerMobile from "../component/HeroBannerMobile";
-import HeroBannerTablet from "../component/HeroBannerTablet";
-import ProductSection from "../component/ProductSection";
-import ProductSectionMobile from "../component/ProductSectionMobile";
-import ProductSectionTablet from "../component/ProductSectionTablet";
-import ProductFeaturesGrid from "../component/ProductFeaturesGrid";
-import ProductFeaturesGridMobile from "../component/ProductFeaturesGridMobile";
-import ProductFeaturesGridTablet from "../component/ProductFeaturesGridTablet";
-import ProductBenefitsGrid from "../component/ProductBenefitsGrid";
-import ProductBenefitsGridMobile from "../component/ProductBenefitsGridMobile";
-import ProductBenefitsGridTablet from "../component/ProductBenefitsGridTablet";
-import HeroVideoSection from "../component/HeroVideoSection";
-import HeroVideoSectionMobile from "../component/HeroVideoSectionMobile";
-import HeroVideoSectionTablet from "../component/HeroVideoSectionTablet";
-import FeaturedProducts from "../component/FeaturedProducts";
-import FeaturedProductsMobile from "../component/FeaturedProductsMobile";
-import FeaturedProductsTablet from "../component/FeaturedProductsTablet";
-import FAQSection from "../component/FAQSection";
-import FAQSectionMobile from "../component/FAQSectionMobile";
-import FAQSectionTablet from "../component/FAQSectionTablet";
-import DownloadAppSection from "../component/DownloadAppSection";
-import DownloadAppSectionMobile from "../component/DownloadAppSectionMobile";
-import DownloadAppSectionTablet from "../component/DownloadAppSectionTablet";
+import HeroBanner from "../component/templateApps/HeroBanner";
+import HeroBannerMobile from "../component/templateApps/HeroBannerMobile";
+import HeroBannerTablet from "../component/templateApps/HeroBannerTablet";
+import ProductSection from "../component/templateApps/ProductSection";
+import ProductSectionMobile from "../component/templateApps/ProductSectionMobile";
+import ProductSectionTablet from "../component/templateApps/ProductSectionTablet";
+import ProductFeaturesGrid from "../component/templateApps/ProductFeaturesGrid";
+import ProductFeaturesGridMobile from "../component/templateApps/ProductFeaturesGridMobile";
+import ProductFeaturesGridTablet from "../component/templateApps/ProductFeaturesGridTablet";
+import ProductBenefitsGrid from "../component/templateApps/ProductBenefitsGrid";
+import ProductBenefitsGridMobile from "../component/templateApps/ProductBenefitsGridMobile";
+import ProductBenefitsGridTablet from "../component/templateApps/ProductBenefitsGridTablet";
+import HeroVideoSection from "../component/templateApps/HeroVideoSection";
+import HeroVideoSectionMobile from "../component/templateApps/HeroVideoSectionMobile";
+import HeroVideoSectionTablet from "../component/templateApps/HeroVideoSectionTablet";
+import FeaturedProducts from "../component/templateApps/FeaturedProducts";
+import FeaturedProductsMobile from "../component/templateApps/FeaturedProductsMobile";
+import FeaturedProductsTablet from "../component/templateApps/FeaturedProductsTablet";
+import FAQSection from "../component/templateApps/FAQSection";
+import FAQSectionMobile from "../component/templateApps/FAQSectionMobile";
+import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
+import DownloadAppSection from "../component/templateApps/DownloadAppSection";
+import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
+import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -42,32 +42,6 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
-  const featuresGrid = [
-    {
-      image: "/images/apps/armadillo-v2/celular1.png",
-      title: "Chats Encriptados",
-      description:
-        "Armadillo Chat utiliza cifrado de extremo a extremo, por lo que tus mensajes son ilegibles incluso si el servidor está comprometido.",
-    },
-    {
-      image: "/images/apps/armadillo-v2/celular2.png",
-      title: "Borrado Remoto y Automatizado",
-      description:
-        "Configure automáticamente temporizadores de autodestrucción, borre de forma remota mensajes individuales o conversaciones completas.",
-    },
-    {
-      image: "/images/apps/armadillo-v2/celular3.png",
-      title: "Comunicaciones Cifradas",
-      description:
-        "Puede comunicarse con mensajes de texto, imágenes, archivos, chats grupales o videollamadas de forma segura.",
-    },
-    {
-      image: "/images/apps/armadillo-v2/celular4.png",
-      title: "Verifica la identidad de tus contactos",
-      description:
-        "Puede utilizar varios métodos para verificar las identidades de sus amigos: escanear un código QR, hacer una pregunta, verificación de Wi-Fi o verificación de texto.",
-    },
-  ];
   const benefits = [
     {
       icon: "/images/apps/armadillo-v2/icono.png",
@@ -108,16 +82,16 @@ const Page = () => {
   ];
   const Faqs =[
     {
-      question: "¿Cómo funciona Armadillo Chat?",
-      answer: "Armadillo Chat cifra tus mensajes de extremo a extremo para garantizar privacidad total. Solo tú y tus contactos pueden leer los mensajes.",
+      question: "¿Qué es el celular cifrado Armadillo Phone?",
+      answer: "Es un celular cifrado que ofrece protección avanzada contra piratería. Cuenta con llamadas y videollamadas cifradas, chats encriptados y otras características que lo hacen un equipo seguro a prueba de hackers.",
     },
     {
-      question: "¿En qué celular puedo instalar Armadillo Chat?",
-      answer: "Está disponible para dispositivos iOS y Android compatibles con las versiones actuales de la App Store y Google Play.",
+      question: "¿Dónde comprar Armadillo Phone Celular cifrado?",
+      answer: "Puedes adquirir tu celular Armadillo Phone o la licencia en Encriptados.io. Paga con el medio de pago que desees y recíbelo en el menor tiempo posible.",
     },
     {
-      question: "¿Por qué usar Armadillo Chat?",
-      answer: "Por su seguridad avanzada, facilidad de uso y soporte 24/7, ideal para quienes valoran la privacidad.",
+      question: "¿Que es el cifrado OMEMO que utiliza Armadillo Phone?",
+      answer: "OMEMO es un protocolo moderno que proporciona cifrado de extremo a extremo multicapa lo que permite la sincronización segura de mensajes entre múltiples clientes, incluso si algunos de ellos están fuera de línea.",
     },
   ]
   useEffect(() => {
@@ -129,7 +103,7 @@ const Page = () => {
   return (
     <div>
       <HeroBanner
-        imageUrl="/images/apps/armadillo-v2/armadillo_app.png"
+        imageUrl="/images/apps/armadillo-v2/armadillo_software.png"
         alt="Armadillo Hero Banner"
       />
       <HeroBannerMobile imageUrl="/images/apps/armadillo-v2/bannermobile.png" 
@@ -138,74 +112,71 @@ const Page = () => {
         alt="Armadillo Hero Banner" />
       <ProductSection
         title="Armadillo"
-        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
         features={[
-          "Borrado remoto y automatizado",
-          "Alertas de posibles impostores",
-          "Llamadas encriptadas",
+          "Llamadas y videollamadas cifradas",
+          "Interfaz intuitiva",
+          "Chats cifrados con borrado remoto",
         ]}
-        price="99$ USD"
+        price="349$ USD"
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selected}
         onRadioChange={(val) => {}}
         onBuy={() => {}}
         onChat={() => {}}
-        productImage="/images/apps/armadillo-v2/productImage.png"
+        productImage="/images/apps/armadillo-v2/productSoftware.jpg"
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
       <ProductSectionMobile
         title="Armadillo"
-        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
         features={[
-          "Borrado remoto y automatizado",
-          "Alertas de posibles impostores",
-          "Llamadas encriptadas",
+          "Llamadas y videollamadas cifradas",
+          "Interfaz intuitiva",
+          "Chats cifrados con borrado remoto",
         ]}
-        price="99$ USD"
+        price="349$ USD"
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selected}
         onRadioChange={(val) => {}}
         onBuy={() => {}}
         onChat={() => {}}
-        productImage="/images/apps/armadillo-v2/productImage.png"
+        productImage="/images/apps/armadillo-v2/productSoftware.jpg"
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
       <ProductSectionTablet
         title="Armadillo"
-        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
         features={[
-          "Borrado remoto y automatizado",
-          "Alertas de posibles impostores",
-          "Llamadas encriptadas",
+          "Llamadas y videollamadas cifradas",
+          "Interfaz intuitiva",
+          "Chats cifrados con borrado remoto",
         ]}
-        price="99$ USD"
+        price="349$ USD"
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selected}
         onRadioChange={(val) => {}}
         onBuy={() => {}}
         onChat={() => {}}
-        productImage="/images/apps/armadillo-v2/productImage.png"
+        productImage="/images/apps/armadillo-v2/productSoftware.jpg"
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
-      <ProductFeaturesGrid features={featuresGrid} />
-      <ProductFeaturesGridMobile features={featuresGrid} /> 
-      <ProductFeaturesGridTablet features={featuresGrid}/>
       <ProductBenefitsGrid benefits={benefits} />
       <ProductBenefitsGridMobile benefits={benefits}/>
       <ProductBenefitsGridTablet benefits={benefits}/>
       <HeroVideoSection
-        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        title={`Teléfonos Seguros y Celulares Encriptados Que No Conoces ¿Cómo tener Uno?`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <HeroVideoSectionMobile
-        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        title={`Teléfonos Seguros y Celulares Encriptados Que No Conoces ¿Cómo tener Uno?`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <HeroVideoSectionTablet
-        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        title={`Teléfonos Seguros y Celulares Encriptados Que No Conoces ¿Cómo tener Uno?`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <FeaturedProducts

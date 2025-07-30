@@ -1,60 +1,125 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
-import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
-import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
-import ShoppingCart from "@/shared/svgs/ShoppingCart";
-import SupportContact from "@/shared/svgs/SupportContact";
-import { Check, ChevronDown } from "lucide-react";
-import Image from "next/image";
-import Accordion from "../shared/Accordion";
-import Button from "../shared/Button";
-import CardDetails from "../shared/CardDetails";
-import DetailsElement from "../shared/DetailsElement";
-import CustomRadioGroup from "../shared/RadioGroup";
-import SimCardGroup from "../shared/SimCardGroup";
-import Hero from "./components/Hero";
-import { characteristics } from "./consts/characteristics";
-import { details } from "./consts/details";
-import { plans, plansDesktop } from "./consts/plans";
+import HeroBanner from "../component/templateApps/HeroBanner";
+import HeroBannerMobile from "../component/templateApps/HeroBannerMobile";
+import HeroBannerTablet from "../component/templateApps/HeroBannerTablet";
+import ProductSection from "../component/templateApps/ProductSection";
+import ProductSectionMobile from "../component/templateApps/ProductSectionMobile";
+import ProductSectionTablet from "../component/templateApps/ProductSectionTablet";
+import ProductFeaturesGrid from "../component/templateApps/ProductFeaturesGrid";
+import ProductFeaturesGridMobile from "../component/templateApps/ProductFeaturesGridMobile";
+import ProductFeaturesGridTablet from "../component/templateApps/ProductFeaturesGridTablet";
+import ProductBenefitsGrid from "../component/templateApps/ProductBenefitsGrid";
+import ProductBenefitsGridMobile from "../component/templateApps/ProductBenefitsGridMobile";
+import ProductBenefitsGridTablet from "../component/templateApps/ProductBenefitsGridTablet";
+import HeroVideoSection from "../component/templateApps/HeroVideoSection";
+import HeroVideoSectionMobile from "../component/templateApps/HeroVideoSectionMobile";
+import HeroVideoSectionTablet from "../component/templateApps/HeroVideoSectionTablet";
+import FeaturedProducts from "../component/templateApps/FeaturedProducts";
+import FeaturedProductsMobile from "../component/templateApps/FeaturedProductsMobile";
+import FeaturedProductsTablet from "../component/templateApps/FeaturedProductsTablet";
+import FAQSection from "../component/templateApps/FAQSection";
+import FAQSectionMobile from "../component/templateApps/FAQSectionMobile";
+import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
+import DownloadAppSection from "../component/templateApps/DownloadAppSection";
+import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
+import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
+import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
-import TelegramButton from "@/shared/components/TelegramButton";
 
-const prices: Record<string, number> = {
-  "1": 15,
-  "6": 75,
-  "12": 125,
+const prices: Record<string, string> = {
+  "6": "349$ USD",
+  "12": "595$ USD",
+  "12.1": "1495$ USD",
 };
 
 const Page = () => {
   const searchParams = useSearchParams();
+  const plan = searchParams.get("plan");
   const productId = searchParams.get("productId");
+  const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
-  const [selectedPlan, setSelectedPlan] = useState("1");
-
-  const faqs = [
+  const featuresGrid = [
     {
-      question: "¿Qué es el celular cifrado Armadillo Phone?",
-      answer:
-        "Es un celular cifrado que ofrece protección avanzada contra piratería. Cuenta con llamadas y videollamadas cifradas, chats encriptados y otras características que lo hacen un equipo seguro a prueba de hackers.",
+      image: "/images/apps/armadillo-v2/celular1.png",
+      title: "Chats Encriptados",
+      description:
+        "Armadillo Chat utiliza cifrado de extremo a extremo, por lo que tus mensajes son ilegibles incluso si el servidor está comprometido.",
     },
     {
-      question: "¿Dónde comprar Armadillo Phone Celular cifrado?",
-      answer:
-        "Puedes adquirir tu celular Armadillo Phone o la licencia en Encriptados.io. Paga con el medio de pago que desees y recíbelo en el menor tiempo posible.",
+      image: "/images/apps/armadillo-v2/celular2.png",
+      title: "Borrado Remoto y Automatizado",
+      description:
+        "Configure automáticamente temporizadores de autodestrucción, borre de forma remota mensajes individuales o conversaciones completas.",
     },
     {
-      question: "¿Qué es el cifrado OMEMO que utiliza Armadillo Phone?",
-      answer:
-        "OMEMO es un protocolo moderno que proporciona cifrado de extremo a extremo multicapa, lo que permite la sincronización segura de mensajes entre múltiples clientes, incluso si algunos de ellos están fuera de línea.",
+      image: "/images/apps/armadillo-v2/celular3.png",
+      title: "Comunicaciones Cifradas",
+      description:
+        "Puede comunicarse con mensajes de texto, imágenes, archivos, chats grupales o videollamadas de forma segura.",
+    },
+    {
+      image: "/images/apps/armadillo-v2/celular4.png",
+      title: "Verifica la identidad de tus contactos",
+      description:
+        "Puede utilizar varios métodos para verificar las identidades de sus amigos: escanear un código QR, hacer una pregunta, verificación de Wi-Fi o verificación de texto.",
     },
   ];
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const toggleFaq = (idx: number) => setOpenFaq(openFaq === idx ? null : idx);
-
+  const benefits = [
+    {
+      icon: "/images/apps/armadillo-v2/icono.png",
+      title: "Acceso sencillo a la cuenta",
+      description:
+        "Active o renueve su cuenta de Armadillo Chat para asegurarse de tener el software, las comunicaciones y el soporte más seguros.",
+    },
+    {
+      icon: "/images/apps/armadillo-v2/icono.png",
+      title: "Soporte 24/7",
+      description:
+        "También puede hablar directamente con nuestros expertos en seguridad móvil a través de Armadillo Chat sobre sus preocupaciones de seguridad.",
+    },
+    {
+      icon: "/images/apps/armadillo-v2/icono.png",
+      title: "Interfaz sencilla",
+      description:
+        "Armadillo Chat no solo es una aplicación completamente segura, también es muy fácil de usar.",
+    },
+    {
+      icon: "/images/apps/armadillo-v2/icono.png",
+      title: "Privacidad y seguridad",
+      description:
+        "Armadillo Chat es una aplicación de mensajería instantánea de alta seguridad. Con actualizaciones constantes nos aseguramos que todas tus comunicaciones sean privadas y que estén fuera del alcance de cualquier tercero malintencionado.",
+    },
+    {
+      icon: "/images/apps/armadillo-v2/icono.png",
+      title: "Alertas sobre posibles impostores",
+      description:
+        "Armadillo Chat le advierte automáticamente sobre posibles impostores en su lista de contactos y otros dispositivos conectados a su cuenta. En el modo de alta seguridad, también le advertirá sobre cualquier amigo que no haya verificado.",
+    },
+    {
+      icon: "/images/apps/armadillo-v2/icono.png",
+      title: "Notificaciones Push",
+      description:
+        "Armadillo Chat no solo es una aplicación completamente segura, también es muy fácil de usar.",
+    },
+  ];
+  const Faqs =[
+    {
+      question: "¿Cómo funciona Armadillo Chat?",
+      answer: "Armadillo Chat cifra tus mensajes de extremo a extremo para garantizar privacidad total. Solo tú y tus contactos pueden leer los mensajes.",
+    },
+    {
+      question: "¿En qué celular puedo instalar Armadillo Chat?",
+      answer: "Está disponible para dispositivos iOS y Android compatibles con las versiones actuales de la App Store y Google Play.",
+    },
+    {
+      question: "¿Por qué usar Armadillo Chat?",
+      answer: "Por su seguridad avanzada, facilidad de uso y soporte 24/7, ideal para quienes valoran la privacidad.",
+    },
+  ]
   useEffect(() => {
     if (productId) {
       getProductById(productId, "es").then(setProduct).catch(console.error);
@@ -62,196 +127,147 @@ const Page = () => {
   }, [productId]);
 
   return (
-   <div>
-      <Hero />
-<main
-  className="
-    w-full max-w-[1400px] mx-auto
-    p-5 bg-[#F4F8FA] tracking-wide
-    flex flex-col
-    md:flex-row-reverse md:justify-center md:items-center md:gap-8 md:py-12 md:bg-white
-    lg:gap-20 lg:py-16
-    mid-breakpoint-row
-  "
->
-<div
-  className="
-    w-full max-w-[400px] mx-auto mb-10 mt-8
-    sm:w-[90%] sm:max-w-[350px]
-    md:w-[45%] md:mx-0 md:mb-0 md:mt-0 md:max-w-[340px]
-    lg:w-2/5 lg:max-w-[350px] xl:w-1/3
-  "
->
-  <Image
-    src="/images/apps/armadillo/banner.png"
-    alt="armadillo banner"
-    width={320}
-    height={251}
-    priority
-    className="w-full h-auto object-contain"
-  />
-  <div className="app-stores-desktop hidden md:flex gap-3 mt-6">
-    <AppStoreFooter />
-    <PlayStoreSvg />
-    <DownloadApkSvg />
-  </div>
-</div>
-      <div
-    className="
-      w-full
-      sm:w-[90%] sm:mx-auto
-      md:w-1/2 md:mx-0
-      lg:w-2/5 xl:w-1/3
-    "
-  >
-          <b className="block text-2xl mb-3 text-[#131313] md:text-[28px]">
-            Armadillo
-          </b>
-          <p className="text-sm">
-            Aplicación de mensajería instantánea de alta seguridad que respeta
-            tu privacidad
-          </p>
-          {product?.checks ? (
-            <ol className="my-4">
-              {product.checks.map((check, idx) => (
-                <li key={idx} className="flex items-center gap-2">
-                  <Check width={28} height={28} color="#1C1B1F" />
-                  <p>{check.name}</p>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p className="text-sm text-gray-400 my-4">
-              Cargando características...
-            </p>
-          )}
-          <CustomRadioGroup
-            options={plans}
-            className="md:hidden"
-            defaultValue={selectedPlan}
-            onChange={setSelectedPlan}
-          />
-
-          {/* Desktop */}
-          <CustomRadioGroup
-            options={plansDesktop}
-            className="plans-desktop hidden md:flex flex-wrap"
-            defaultValue={selectedPlan}
-            onChange={setSelectedPlan}
-          />
-
-          <div className="h-px bg-[#D9D9D9] my-[18px]"></div>
-          <p className="text-xs">Desde</p>
-          <b className="text-2xl">{prices[selectedPlan]}$ USD</b>
-          <div className="flex gap-2 mt-[22px] mb-[28px] md:w-full">
-            <Button type="primary" className="md:w-full md:justify-center">
-              <p className="font-medium">Comprar</p>
-              <ShoppingCart color="white" height={20} width={20} />
-            </Button>
-            <TelegramButton />
-          </div>
-        </div>
-      </main>
-      <section className="p-5 bg-[#F4F8FA] md:pt-8 md:pb-16 lg:px-24">
-        <b className="text-xl text-center block md:text-2xl md:text-left">
-          Características principales
-        </b>
-        <div
-  className="
-    grid gap-6
-    sm:grid-cols-2
-    md:grid-cols-2
-    lg:grid-cols-3
-    xl:grid-cols-3
-    md:flex gap-4
-  "
->
-          {characteristics.map((item, idx) => (
-            <DetailsElement
-              key={idx}
-              title={item.title}
-              description={item.description}
-              imageAlt={item.imageAlt}
-              imageSrc={item.imageSrc}
-              imageWidth={item.imageWidth}
-              imageHeight={item.imageHeight}
-              imageCenter={item.imageCenter}
-              background={item.background}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="px-5 py-11 md:py-44 bg-black">
-        <ol
-  className="
-    grid gap-6
-    sm:grid-cols-2
-    md:grid-cols-2
-    lg:grid-cols-3
-    xl:w-[70%] md:mx-auto
-  "
->
-          {details.map((item, idx) => (
-            <CardDetails
-              title={item.title}
-              description={item.description}
-              key={idx}
-            />
-          ))}
-        </ol>
-      </section>
-      <section className="py-[60px] bg-[#F4F8FA] md:pt-0 md:pb-0">
-        <div className="
-  flex flex-col mx-5 gap-8 mb-[60px] 
-  sm:flex-row sm:items-center sm:justify-center 
-  sm:w-[95%] sm:ml-auto sm:text-left sm:gap-20
-  md:w-[85%] md:py-24 md:pr-20 md:mb-[60px] md:leading-tight md:ml-auto md:gap-20
-">
-  <b className="text-[24px] lg:text-[44px] flex-1">
-    Armadillo Chat. Aplicación de mensajería instantánea de alta seguridad
-  </b>
-  <div className="w-full flex-1 aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
-    <iframe
-      src="https://www.youtube.com/embed/-h92Hqn-hQM"
-      title="Armadillo Chat Video"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-      loading="lazy"
-      className="w-full h-full"
-    />
-  </div>
-</div>
-
-        <SimCardGroup />
-        <section className="mt-14 py-10 px-5 bg-white">
-          <b className="block mx-auto mb-11 text-center text-2xl md:text-[34px]">
-            Preguntas frecuentes
-          </b>
-          <div className="flex flex-col gap-4 md:w-3/4 md:mx-auto">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-[#F9F9F9] rounded-xl px-6 py-4 cursor-pointer"
-                onClick={() => toggleFaq(index)}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-black font-medium text-base">
-                    {faq.question}
-                  </h3>
-                  <ChevronDown
-                    className={`w-5 h-5 text-black transition-transform duration-300 ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </div>
-                {openFaq === index && (
-                  <p className="text-gray-600 text-sm mt-4">{faq.answer}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      </section>
+    <div>
+      <HeroBanner
+        imageUrl="/images/apps/armadillo-v2/armadillo_app.png"
+        alt="Armadillo Hero Banner"
+      />
+      <HeroBannerMobile imageUrl="/images/apps/armadillo-v2/bannermobile.png" 
+        alt="Armadillo Hero Banner" />
+      <HeroBannerTablet imageUrl="/images/apps/armadillo-v2/bannertablet.png" 
+        alt="Armadillo Hero Banner" />
+      <ProductSection
+        title="Armadillo"
+        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        features={[
+          "Borrado remoto y automatizado",
+          "Alertas de posibles impostores",
+          "Llamadas encriptadas",
+        ]}
+        price="99$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/armadillo-v2/productImage.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
+      <ProductSectionMobile
+        title="Armadillo"
+        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        features={[
+          "Borrado remoto y automatizado",
+          "Alertas de posibles impostores",
+          "Llamadas encriptadas",
+        ]}
+        price="99$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/armadillo-v2/productImage.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
+      <ProductSectionTablet
+        title="Armadillo"
+        description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
+        features={[
+          "Borrado remoto y automatizado",
+          "Alertas de posibles impostores",
+          "Llamadas encriptadas",
+        ]}
+        price="99$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/armadillo-v2/productImage.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
+      <ProductFeaturesGrid features={featuresGrid} />
+      <ProductFeaturesGridMobile features={featuresGrid} /> 
+      <ProductFeaturesGridTablet features={featuresGrid}/>
+      <ProductBenefitsGrid benefits={benefits} />
+      <ProductBenefitsGridMobile benefits={benefits}/>
+      <ProductBenefitsGridTablet benefits={benefits}/>
+      <HeroVideoSection
+        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <HeroVideoSectionMobile
+        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <HeroVideoSectionTablet
+        title={`Armadillo Chat.\nAplicación de mensajería instantánea de alta seguridad`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <FeaturedProducts
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/armadillo-v2/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/armadillo-v2/phone.png",
+        }}
+      />
+      <FeaturedProductsMobile
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/armadillo-v2/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/armadillo-v2/phone.png",
+        }}
+      />
+      <FeaturedProductsTablet
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/armadillo-v2/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/armadillo-v2/phone.png",
+        }}
+      />
+      <FAQSection faqs={Faqs}/>
+      <FAQSectionMobile faqs={Faqs}/>
+      <FAQSectionTablet faqs={Faqs}/>
+      <DownloadAppSection />
+      <DownloadAppSectionMobile/>
+      <DownloadAppSectionTablet/>
     </div>
   );
 };
