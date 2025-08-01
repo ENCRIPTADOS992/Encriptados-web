@@ -1,4 +1,4 @@
 export const plans = [
-  { label: 'Licencia 3 Meses', value: '3' },
-  { label: 'Licencia 6 Meses', value: '6' }
+  { label: 'Licencia 3 meses', value: '3' },
+  { label: 'Licencia 6 meses', value: '6' }
 ];
