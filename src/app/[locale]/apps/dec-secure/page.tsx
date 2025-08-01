@@ -90,7 +90,7 @@ const Page = () => {
       />
       <HeroBannerMobile imageUrl="/images/apps/dec-secure/hero-mobile.jpg" 
         alt="Armadillo Hero Banner" />
-      <HeroBannerTablet imageUrl="/images/apps/dec-secure/hero-tablet.jpg" 
+      <HeroBannerTablet imageUrl="/images/apps/dec-secure/banner_ipad.png" 
         alt="Armadillo Hero Banner" />
       <ProductSection
         title="DEC Secure"
