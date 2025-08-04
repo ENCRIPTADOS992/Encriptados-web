@@ -180,3 +180,25 @@ html {
     @apply w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0;
   }
 }
+
+.custom-scrollbar {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #3393F7 #18191B;
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;           /* ancho de la barra */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #18191B;  /* fondo del track */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3393F7; /* color del thumb */
+  border-radius: 4px;
+  border: 2px solid #18191B; /* espacio alrededor */
+}
