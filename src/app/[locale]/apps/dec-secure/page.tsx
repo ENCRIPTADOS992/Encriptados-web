@@ -9,15 +9,15 @@ import ProductSectionTablet from "../component/templateSoftware/ProductSectionTa
 import ProductFeaturesGrid from "../component/templateSoftware/ProductFeaturesGrid";
 import ProductFeaturesGridMobile from "../component/templateSoftware/ProductFeaturesGridMobile";
 import ProductFeaturesGridTablet from "../component/templateSoftware/ProductFeaturesGridTablet";
-import ProductBenefitsGrid from "../component/templateSoftware/ProductBenefitsGrid";
-import ProductBenefitsGridMobile from "../component/templateSoftware/ProductBenefitsGridMobile";
-import ProductBenefitsGridTablet from "../component/templateSoftware/ProductBenefitsGridTablet";
 import HeroVideoSection from "../component/templateSoftware/HeroVideoSection";
 import HeroVideoSectionMobile from "../component/templateSoftware/HeroVideoSectionMobile";
 import HeroVideoSectionTablet from "../component/templateSoftware/HeroVideoSectionTablet";
 import FeaturedProducts from "../component/templateSoftware/FeaturedProducts";
 import FeaturedProductsMobile from "../component/templateSoftware/FeaturedProductsMobile";
 import FeaturedProductsTablet from "../component/templateSoftware/FeaturedProductsTablet";
+import SecurityFeatures from "../component/templateSoftware/SecurityFeatures";
+import SecurityFeaturesTablet from "../component/templateSoftware/SecurityFeaturesTablet";
+import SecurityFeaturesMobile from "../component/templateSoftware/SecurityFeaturesMobile";
 import FAQSection from "../component/templateSoftware/FAQSection";
 import FAQSectionMobile from "../component/templateSoftware/FAQSectionMobile";
 import FAQSectionTablet from "../component/templateSoftware/FAQSectionTablet";
@@ -62,6 +62,7 @@ const Page = () => {
         "Las llamadas de video y de voz múltiple totalmente encriptadas de hasta 10 participantes te permiten utilizar una única plataforma para todas tus comunicaciones seguras.",
     },
   ];
+
   const Faqs =[
     {
           "question": "¿Qué archivos puedo proteger con la Aplicación dec-secure?",
@@ -76,6 +77,39 @@ const Page = () => {
           "answer": "Las apps convencionales no ofrecen protección real ante espionaje, dec-secure garantiza privacidad y confidencialidad absoluta."
         }
   ]
+
+  const securityFeaturesData = [
+    {
+      title: "Hardware – Dispositivos móviles confiables",
+      description:
+        "Dispositivos móviles encriptados diseñados, ensamblados y probados para garantizar su integridad. Óptimo funcionamiento con el sistema operativo.",
+    },
+    {
+      title: "Sistema operativo Seguro",
+      description:
+        "Sistema operativo con tecnología de ciberseguridad indescifrable, parches de seguridad, actualizaciones contra amenazas emergentes e interfaz intuitiva. Cifrado de disco completo.",
+    },
+    {
+      title: "Múltiples capas de seguridad de grado militar",
+      description:
+        "Desarrollamos continuamente capas adicionales de seguridad, haciendo el robo de información prácticamente imposible.",
+    },
+    {
+      title: "VPN sin clic",
+      description:
+        "Se conecta automáticamente con autenticación automatizada, sin permitir enviar o recibir datos sin protección.",
+    },
+    {
+      title: "Seguridad de la red",
+      description:
+        "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
+    },
+    {
+      title: "Control de cortafuegos",
+      description:
+        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+    },
+  ];
   useEffect(() => {
     if (productId) {
       getProductById(productId, "es").then(setProduct).catch(console.error);
@@ -146,6 +180,23 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/dec-secure-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.dec-secure"
       />
+
+      <SecurityFeatures
+        title="Te mantenemos conectado de forma segura y privada"
+        features={securityFeaturesData}
+        imageUrl="/images/apps/dec-secure/phone.png"
+      />
+      <SecurityFeaturesTablet
+        title="Te mantenemos conectado de forma segura y privada"
+        features={securityFeaturesData}
+        imageUrl="/images/apps/dec-secure/phone.png"
+      />
+
+      <SecurityFeaturesMobile
+        title="Te mantenemos conectado de forma segura y privada"
+        features={securityFeaturesData}
+        imageUrl="/images/apps/dec-secure/phone.png"
+      />
       <ProductFeaturesGrid features={featuresGrid} />
       <ProductFeaturesGridMobile features={featuresGrid} /> 
       <ProductFeaturesGridTablet features={featuresGrid}/>
@@ -161,6 +212,7 @@ const Page = () => {
         title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2023`}
         videoUrl="https://www.youtube.com/embed/Og3xt5izfSU"
       />
+
       <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
