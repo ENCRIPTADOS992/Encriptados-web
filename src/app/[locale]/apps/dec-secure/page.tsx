@@ -76,8 +76,7 @@ const Page = () => {
           "question": "¿Por qué debería usar una aplicación cifrada como dec-secure en vez de una convencional?",
           "answer": "Las apps convencionales no ofrecen protección real ante espionaje, dec-secure garantiza privacidad y confidencialidad absoluta."
         }
-  ]
-
+  ];
   const securityFeaturesData = [
     {
       title: "Hardware – Dispositivos móviles confiables",
@@ -191,7 +190,6 @@ const Page = () => {
         features={securityFeaturesData}
         imageUrl="/images/apps/dec-secure/phone.png"
       />
-
       <SecurityFeaturesMobile
         title="Te mantenemos conectado de forma segura y privada"
         features={securityFeaturesData}
