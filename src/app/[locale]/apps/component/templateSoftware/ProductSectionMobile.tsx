@@ -45,7 +45,7 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
           <img
             src={productImage}
             alt={`${title} screenshot`}
-            className="rounded-xl w-full max-w-[300px] object-contain mb-4"
+            className="rounded-[18px] w-full max-w-[430px] h-auto object-contain mb-4"
             draggable={false}
           />
         </div>

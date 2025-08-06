@@ -215,9 +215,6 @@ const Page = () => {
         features={securityFeaturesData}
         imageUrl="/images/apps/armadillo-v2/phoneSecurity.png"
       />
-      <ProductBenefitsGrid benefits={benefits} />
-      <ProductBenefitsGridMobile benefits={benefits}/>
-      <ProductBenefitsGridTablet benefits={benefits}/>
       <HeroVideoSection
         title={`Teléfonos Seguros y Celulares Encriptados Que No Conoces ¿Cómo tener Uno?`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
