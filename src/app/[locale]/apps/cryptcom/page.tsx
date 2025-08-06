@@ -92,34 +92,34 @@ const Page = () => {
   ];
    const securityFeaturesData = [
     {
-      title: "Seguridad de clave privada",
+      title: "Aplicaciones de seguridad ocultas",
       description:
-        "En caso que tus claves privadas lleguen a manos de personas equivocadas, tu información personal seguridad están en riesgo ¡No te preocupes! Tienes control total de tus claves privadas",
+        "El dispositivo parece un teléfono Android normal.",
     },
     {
-      title: "Cifrado integrado multicapa",
+      title: "Función de limpieza a prueba de manipulaciones",
       description:
-        "Nuestra interfaz de usuario detecta a los usuarios internos y externos, para establecer de forma predeterminada el protocolo de cifrado más seguro disponible.",
+        "Los criterios de manipulación e inactividad establecidos por el usuario harán que el dispositivo se borre.",
     },
     {
-      title: "Interfaz de usuario unificada",
+      title: "Cifrado de alto nivel ECC, OMEMO, AES-256, XMPP",
       description:
-        "Hemos simplificado por completo la experiencia de usuario al desarrollar el software cifrado más avanzado, intuitivo y potente. Ya no tienes que cambiar entre aplicaciones.",
+        "Equivalente a más de 15 360 bits RSA.",
     },
     {
-      title: "Las claves no salen del dispositivo",
+      title: "Sin ubicaciones fijas de servidores",
       description:
-        "Las claves privadas se crean en el dispositivo aleatoriamente para que sean lo más fuerte posible. Tu clave privada nunca deja tu dispositivo.",
+        "Los servidores se destruyen cada 24 horas después de la transferencia a uno sin dejar rastro.",
     },
     {
-      title: "Seguridad de la red",
+      title: "Vault Encriptado:",
       description:
-        "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
+        "Incorpora un vault encriptado integral donde puedes guardar de forma segura documentos, imágenes, videos, notas de voz y más.",
     },
     {
-      title: "Control de cortafuegos",
+      title: "Protección ante coacción o manipulación:",
       description:
-        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+        "Función de borrado inmediato y alerta de coacción activable con combinación de PIN especial.",
     },
   ];
   useEffect(() => {
@@ -193,17 +193,17 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
       <SecurityFeatures
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
         features={securityFeaturesData}
         imageUrl="/images/apps/cryptcom/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
         features={securityFeaturesData}
         imageUrl="/images/apps/cryptcom/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
         features={securityFeaturesData}
         imageUrl="/images/apps/cryptcom/phoneSecurity.png"
       />

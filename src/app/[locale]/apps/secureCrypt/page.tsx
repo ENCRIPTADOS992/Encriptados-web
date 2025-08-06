@@ -65,50 +65,55 @@ const Page = () => {
         "Comunicación de voz segura con cifrado extremo a extremo, protegiendo la privacidad de tus conversaciones.",
     },
   ];
-  const Faqs =[
+  const Faqs = [
     {
-          "question": "¿Qué archivos puedo proteger con la Aplicación SecureCrypt?",
-          "answer": "Puedes proteger mensajes, archivos, contactos y llamadas de voz. Toda tu información viaja cifrada de extremo a extremo."
-        },
-        {
-          "question": "¿Por qué debería usar la aplicación SecureCrypt en mi empresa?",
-          "answer": "Porque ofrece máxima seguridad, protección contra intrusiones y cifrado total, evitando fugas de información corporativa."
-        },
-        {
-          "question": "¿Por qué debería usar una aplicación cifrada como SecureCrypt en vez de una convencional?",
-          "answer": "Las apps convencionales no ofrecen protección real ante espionaje, SecureCrypt garantiza privacidad y confidencialidad absoluta."
-        }
+      question: "¿Qué archivos puedo proteger con la Aplicación SecureCrypt?",
+      answer:
+        "Puedes proteger mensajes, archivos, contactos y llamadas de voz. Toda tu información viaja cifrada de extremo a extremo.",
+    },
+    {
+      question:
+        "¿Por qué debería usar la aplicación SecureCrypt en mi empresa?",
+      answer:
+        "Porque ofrece máxima seguridad, protección contra intrusiones y cifrado total, evitando fugas de información corporativa.",
+    },
+    {
+      question:
+        "¿Por qué debería usar una aplicación cifrada como SecureCrypt en vez de una convencional?",
+      answer:
+        "Las apps convencionales no ofrecen protección real ante espionaje, SecureCrypt garantiza privacidad y confidencialidad absoluta.",
+    },
   ];
-   const securityFeaturesData = [
+  const securityFeaturesData = [
     {
-      title: "Seguridad de clave privada",
+      title: "Enmascaramiento y Rotación de IMEI",
       description:
-        "En caso que tus claves privadas lleguen a manos de personas equivocadas, tu información personal seguridad están en riesgo ¡No te preocupes! Tienes control total de tus claves privadas",
+        "El IMEI se enmascara y rota cada 30 minutos sin intervención del usuario. Protege tu identidad y ubicación, evitando rastreos y garantizando anonimato total en tus comunicaciones.",
     },
     {
-      title: "Cifrado integrado multicapa",
+      title: "Enmascaramiento de IP de Sistemas",
       description:
-        "Nuestra interfaz de usuario detecta a los usuarios internos y externos, para establecer de forma predeterminada el protocolo de cifrado más seguro disponible.",
+        "Tecnología avanzada que enmascara direcciones IP dinámicamente. Evita el rastreo de actividades en línea y protege identidades, brindando una capa adicional de privacidad.",
     },
     {
-      title: "Interfaz de usuario unificada",
+      title: "Mensajes Autodestructivos",
       description:
-        "Hemos simplificado por completo la experiencia de usuario al desarrollar el software cifrado más avanzado, intuitivo y potente. Ya no tienes que cambiar entre aplicaciones.",
+        "Envía mensajes que se eliminan automáticamente tras un período establecido. Seguridad garantizada tanto para el remitente como el destinatario.",
     },
     {
-      title: "Las claves no salen del dispositivo",
+      title: "Chat Encriptado",
       description:
-        "Las claves privadas se crean en el dispositivo aleatoriamente para que sean lo más fuerte posible. Tu clave privada nunca deja tu dispositivo.",
+        "Mensajería cifrada de extremo a extremo para garantizar que tus conversaciones sean totalmente privadas y seguras.",
     },
     {
-      title: "Seguridad de la red",
+      title: "Bóveda Encriptada",
       description:
-        "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
+        "Almacena información crítica de forma segura en nuestra bóveda encriptada y protegida.",
     },
     {
-      title: "Control de cortafuegos",
+      title: "Cámara Encriptada",
       description:
-        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+        "Captura y guarda fotos y videos con cifrado seguro, evitando cualquier acceso no autorizado.",
     },
   ];
   useEffect(() => {
@@ -123,10 +128,14 @@ const Page = () => {
         imageUrl="/images/apps/secureCrypt/banner.png"
         alt="Armadillo Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/secureCrypt/mobile.jpg" 
-        alt="Armadillo Hero Banner" />
-      <HeroBannerTablet imageUrl="/images/apps/secureCrypt/banner.png" 
-        alt="Armadillo Hero Banner" />
+      <HeroBannerMobile
+        imageUrl="/images/apps/secureCrypt/mobile.jpg"
+        alt="Armadillo Hero Banner"
+      />
+      <HeroBannerTablet
+        imageUrl="/images/apps/secureCrypt/banner.png"
+        alt="Armadillo Hero Banner"
+      />
       <ProductSection
         title="SecureCrypt"
         description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden tu movil."
@@ -146,7 +155,7 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.securecrypt"
       />
       <ProductSectionMobile
-               title="SecureCrypt"
+        title="SecureCrypt"
         description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden tu movil."
         features={[
           "Chat Encriptado",
@@ -164,7 +173,7 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.securecrypt"
       />
       <ProductSectionTablet
-                title="SecureCrypt"
+        title="SecureCrypt"
         description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden tu movil."
         features={[
           "Chat Encriptado",
@@ -182,23 +191,23 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.securecrypt"
       />
       <SecurityFeatures
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Te mantenemos conectado con encriptación de inicio a fin"
         features={securityFeaturesData}
         imageUrl="/images/apps/secureCrypt/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Te mantenemos conectado con encriptación de inicio a fin"
         features={securityFeaturesData}
         imageUrl="/images/apps/secureCrypt/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Te mantenemos conectado con encriptación de inicio a fin"
         features={securityFeaturesData}
         imageUrl="/images/apps/secureCrypt/phoneSecurity.png"
       />
       <ProductFeaturesGrid features={featuresGrid} />
-      <ProductFeaturesGridMobile features={featuresGrid} /> 
-      <ProductFeaturesGridTablet features={featuresGrid}/>
+      <ProductFeaturesGridMobile features={featuresGrid} />
+      <ProductFeaturesGridTablet features={featuresGrid} />
       <HeroVideoSection
         title={`SecureCrypt App, comunicaciones seguras y encriptadas para chatear en secreto`}
         videoUrl="https://www.youtube.com/embed/YvuaT5-uaUg"
@@ -214,12 +223,13 @@ const Page = () => {
       <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -232,12 +242,13 @@ const Page = () => {
       <FeaturedProductsMobile
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -250,12 +261,13 @@ const Page = () => {
       <FeaturedProductsTablet
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -265,12 +277,12 @@ const Page = () => {
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
-      <FAQSection faqs={Faqs}/>
-      <FAQSectionMobile faqs={Faqs}/>
-      <FAQSectionTablet faqs={Faqs}/>
+      <FAQSection faqs={Faqs} />
+      <FAQSectionMobile faqs={Faqs} />
+      <FAQSectionTablet faqs={Faqs} />
       <DownloadAppSection />
-      <DownloadAppSectionMobile/>
-      <DownloadAppSectionTablet/>
+      <DownloadAppSectionMobile />
+      <DownloadAppSectionTablet />
     </div>
   );
 };

@@ -62,50 +62,50 @@ const Page = () => {
         "Las llamadas de video y de voz múltiple totalmente encriptadas de hasta 10 participantes te permiten utilizar una única plataforma para todas tus comunicaciones seguras.",
     },
   ];
-  const Faqs =[
+  const Faqs = [
     {
-          "question": "¿Qué es y para qué sirve el celular IntactPhone?",
-          "answer": "Intactphone es un celular cifrado de grado militar con un hardware y software fuertes. No solo protege el dispositivo de ataques cibernéticos o brechas de seguridad sino contra situaciones ambientales como agua, caídas o golpes."
-        },
-        {
-          "question": "¿IntactPhone, cuál es el precio?",
-          "answer": "El precio del celular Intactphone varía de acuerdo a su modelo y licencia. Se puede adquirir en Encriptados.io desde un valor aproximado de $1000 USD."
-        },
-        {
-          "question": "¿IntactPhone, quién lo fabrica?",
-          "answer": "CommuniTake, la casa madre de Intact, manufactura completamente el dispositivo. Desde el hardware hasta el sistema operativo. Esto buscando prevenir la sustitución de código por parte de malintencionados y las brechas de información. Conócelo."
-        }
+      question: "¿Qué es y para qué sirve el celular IntactPhone?",
+      answer:
+        "Intactphone es un celular cifrado de grado militar con un hardware y software fuertes. No solo protege el dispositivo de ataques cibernéticos o brechas de seguridad sino contra situaciones ambientales como agua, caídas o golpes.",
+    },
+    {
+      question: "¿IntactPhone, cuál es el precio?",
+      answer:
+        "El precio del celular Intactphone varía de acuerdo a su modelo y licencia. Se puede adquirir en Encriptados.io desde un valor aproximado de $1000 USD.",
+    },
+    {
+      question: "¿IntactPhone, quién lo fabrica?",
+      answer:
+        "CommuniTake, la casa madre de Intact, manufactura completamente el dispositivo. Desde el hardware hasta el sistema operativo. Esto buscando prevenir la sustitución de código por parte de malintencionados y las brechas de información. Conócelo.",
+    },
   ];
-   const securityFeaturesData = [
+  const securityFeaturesData = [
     {
-      title: "Seguridad de clave privada",
-      description:
-        "En caso que tus claves privadas lleguen a manos de personas equivocadas, tu información personal seguridad están en riesgo ¡No te preocupes! Tienes control total de tus claves privadas",
+      title: "Seguridad",
+      description: "Elimina la totalidad de brechas de seguridad.",
     },
     {
-      title: "Cifrado integrado multicapa",
+      title: "Control",
       description:
-        "Nuestra interfaz de usuario detecta a los usuarios internos y externos, para establecer de forma predeterminada el protocolo de cifrado más seguro disponible.",
+        "Los controles facilitan el manejo de la inteligencia central y de la seguridad avanzada.",
     },
     {
-      title: "Interfaz de usuario unificada",
-      description:
-        "Hemos simplificado por completo la experiencia de usuario al desarrollar el software cifrado más avanzado, intuitivo y potente. Ya no tienes que cambiar entre aplicaciones.",
+      title: "Ciberataques",
+      description: "Minimiza los ciberataques.",
     },
     {
-      title: "Las claves no salen del dispositivo",
-      description:
-        "Las claves privadas se crean en el dispositivo aleatoriamente para que sean lo más fuerte posible. Tu clave privada nunca deja tu dispositivo.",
+      title: "Alertas",
+      description: "Previene ataques por medio de detección de alertas.",
     },
     {
-      title: "Seguridad de la red",
+      title: "Hardware Confiable",
       description:
-        "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
+        "Funciona solamente con hardware confiable y drivers oficiales, asegurando seguridad en todo momento.",
     },
     {
-      title: "Control de cortafuegos",
+      title: "Conexión Estable",
       description:
-        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+        "Asegura una conexión estable en todo momento en los dispositivos que estén operacionales.",
     },
   ];
   useEffect(() => {
@@ -120,10 +120,14 @@ const Page = () => {
         imageUrl="/images/apps/intact-phone/hero-desktop.jpg"
         alt="Armadillo Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/intact-phone/hero-mobile.jpg" 
-        alt="Armadillo Hero Banner" />
-      <HeroBannerTablet imageUrl="/images/apps/intact-phone/banner_ipad.png" 
-        alt="Armadillo Hero Banner" />
+      <HeroBannerMobile
+        imageUrl="/images/apps/intact-phone/hero-mobile.jpg"
+        alt="Armadillo Hero Banner"
+      />
+      <HeroBannerTablet
+        imageUrl="/images/apps/intact-phone/banner_ipad.png"
+        alt="Armadillo Hero Banner"
+      />
       <ProductSection
         title="DEC Secure"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
@@ -179,21 +183,21 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
       <SecurityFeatures
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="CommuniTake, la casa madre de Intact construye todo el hardware y software"
         features={securityFeaturesData}
         imageUrl="/images/apps/intact-phone/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="CommuniTake, la casa madre de Intact construye todo el hardware y software"
         features={securityFeaturesData}
         imageUrl="/images/apps/intact-phone/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="CommuniTake, la casa madre de Intact construye todo el hardware y software"
         features={securityFeaturesData}
         imageUrl="/images/apps/intact-phone/phoneSecurity.png"
       />
-      
+
       <HeroVideoSection
         title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2023`}
         videoUrl="https://www.youtube.com/embed/Og3xt5izfSU"
@@ -209,12 +213,13 @@ const Page = () => {
       <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -227,12 +232,13 @@ const Page = () => {
       <FeaturedProductsMobile
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -245,12 +251,13 @@ const Page = () => {
       <FeaturedProductsTablet
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -260,12 +267,12 @@ const Page = () => {
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
-      <FAQSection faqs={Faqs}/>
-      <FAQSectionMobile faqs={Faqs}/>
-      <FAQSectionTablet faqs={Faqs}/>
+      <FAQSection faqs={Faqs} />
+      <FAQSectionMobile faqs={Faqs} />
+      <FAQSectionTablet faqs={Faqs} />
       <DownloadAppSection />
-      <DownloadAppSectionMobile/>
-      <DownloadAppSectionTablet/>
+      <DownloadAppSectionMobile />
+      <DownloadAppSectionTablet />
     </div>
   );
 };
