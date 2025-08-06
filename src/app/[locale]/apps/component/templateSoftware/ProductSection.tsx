@@ -80,7 +80,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
               >
                 <input
                   type="radio"
-                  name="plan"
+                  name={`plan-${title.replace(/\s/g, "")}-desktop`}
                   value={option}
                   checked={selectedRadio === option}
                   onChange={() => onRadioChange(option)}

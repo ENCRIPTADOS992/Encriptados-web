@@ -132,7 +132,7 @@ const Page = () => {
         imageUrl="/images/apps/armadillo-v2/armadillo_app.png"
         alt="Armadillo Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/armadillo-v2/bannermobile.png" 
+      <HeroBannerMobile imageUrl="/images/apps/armadillo/bannermobile.png" 
         alt="Armadillo Hero Banner" />
       <HeroBannerTablet imageUrl="/images/apps/armadillo-v2/bannertablet.png" 
         alt="Armadillo Hero Banner" />

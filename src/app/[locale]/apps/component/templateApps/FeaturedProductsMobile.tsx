@@ -79,7 +79,7 @@ const FeaturedProductsMobile: React.FC<FeaturedProductsMobileProps> = ({
 
       {/* Botón “Ver más” (mismo bottom que el enlace de la izquierda) */}
       <button
-        className="absolute left-[18px] bottom-[16px] bg-white text-[#101010] font-medium rounded-full px-6 py-2 w-[116px] text-[14px] z-20"
+        className="absolute left-[18px] bottom-[35px] bg-white text-[#101010] font-medium rounded-full px-6 py-2 w-[116px] text-[14px] z-20"
         onClick={right.onButtonClick}
       >
         {right.buttonLabel}
