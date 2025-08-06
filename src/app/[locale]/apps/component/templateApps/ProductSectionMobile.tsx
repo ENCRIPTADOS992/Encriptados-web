@@ -45,12 +45,11 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
           <img
             src={productImage}
             alt={`${title} screenshot`}
-            className="rounded-[18px] w-[374px] h-[237px] object-contain mb-4 ml-[20px]"
+            className="rounded-[18px] w-[374px] h-[237px] object-contain mb-4 "
             draggable={false}
           />
         </div>
-
-
+        
         {/* Bloque alineado a la izquierda */}
         <div className="w-full flex flex-col items-start">
           <h2 className="font-bold text-[20px] text-[#131313] mb-2">{title}</h2>
