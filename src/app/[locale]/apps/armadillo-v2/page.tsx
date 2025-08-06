@@ -6,12 +6,6 @@ import HeroBannerTablet from "../component/templateApps/HeroBannerTablet";
 import ProductSection from "../component/templateApps/ProductSection";
 import ProductSectionMobile from "../component/templateApps/ProductSectionMobile";
 import ProductSectionTablet from "../component/templateApps/ProductSectionTablet";
-import ProductFeaturesGrid from "../component/templateApps/ProductFeaturesGrid";
-import ProductFeaturesGridMobile from "../component/templateApps/ProductFeaturesGridMobile";
-import ProductFeaturesGridTablet from "../component/templateApps/ProductFeaturesGridTablet";
-import ProductBenefitsGrid from "../component/templateApps/ProductBenefitsGrid";
-import ProductBenefitsGridMobile from "../component/templateApps/ProductBenefitsGridMobile";
-import ProductBenefitsGridTablet from "../component/templateApps/ProductBenefitsGridTablet";
 import HeroVideoSection from "../component/templateApps/HeroVideoSection";
 import HeroVideoSectionMobile from "../component/templateApps/HeroVideoSectionMobile";
 import HeroVideoSectionTablet from "../component/templateApps/HeroVideoSectionTablet";
@@ -41,9 +35,8 @@ const prices: Record<string, string> = {
 
 const Page = () => {
   const searchParams = useSearchParams();
-  const plan = searchParams.get("plan");
   const productId = searchParams.get("productId");
-  const selected = plan || plans[0].value;
+  const plan = searchParams.get("plan");
   const [product, setProduct] = useState<ProductById | null>(null);
   const benefits = [
     {
@@ -83,18 +76,21 @@ const Page = () => {
         "Armadillo Chat no solo es una aplicación completamente segura, también es muy fácil de usar.",
     },
   ];
-  const Faqs =[
+  const Faqs = [
     {
       question: "¿Qué es el celular cifrado Armadillo Phone?",
-      answer: "Es un celular cifrado que ofrece protección avanzada contra piratería. Cuenta con llamadas y videollamadas cifradas, chats encriptados y otras características que lo hacen un equipo seguro a prueba de hackers.",
+      answer:
+        "Es un celular cifrado que ofrece protección avanzada contra piratería. Cuenta con llamadas y videollamadas cifradas, chats encriptados y otras características que lo hacen un equipo seguro a prueba de hackers.",
     },
     {
       question: "¿Dónde comprar Armadillo Phone Celular cifrado?",
-      answer: "Puedes adquirir tu celular Armadillo Phone o la licencia en Encriptados.io. Paga con el medio de pago que desees y recíbelo en el menor tiempo posible.",
+      answer:
+        "Puedes adquirir tu celular Armadillo Phone o la licencia en Encriptados.io. Paga con el medio de pago que desees y recíbelo en el menor tiempo posible.",
     },
     {
       question: "¿Que es el cifrado OMEMO que utiliza Armadillo Phone?",
-      answer: "OMEMO es un protocolo moderno que proporciona cifrado de extremo a extremo multicapa lo que permite la sincronización segura de mensajes entre múltiples clientes, incluso si algunos de ellos están fuera de línea.",
+      answer:
+        "OMEMO es un protocolo moderno que proporciona cifrado de extremo a extremo multicapa lo que permite la sincronización segura de mensajes entre múltiples clientes, incluso si algunos de ellos están fuera de línea.",
     },
   ];
   const securityFeaturesData = [
@@ -135,16 +131,40 @@ const Page = () => {
     }
   }, [productId]);
 
+  const handleRadioChange = (val: string) => {
+  console.log("Cambio radio a:", val);
+  setSelectedRadio(val);
+};
+
+  const [selectedRadio, setSelectedRadio] = useState<string>("");
+  useEffect(() => {
+  if (
+    plans.length > 0 &&
+    (!selectedRadio || !plans.some((p) => p.label === selectedRadio))
+  ) {
+    console.log("Inicializa selectedRadio con:", plans[0].label);
+    setSelectedRadio(plans[0].label);
+  }
+}, [plans]);
+
+
+  console.log("plans:", plans);
+  console.log("selectedRadio:", selectedRadio);
+
   return (
     <div>
       <HeroBanner
         imageUrl="/images/apps/armadillo-v2/armadillo_software.png"
         alt="Armadillo Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/armadillo-v2/bannermobile.jpg" 
-        alt="Armadillo Hero Banner" />
-      <HeroBannerTablet imageUrl="/images/apps/armadillo-v2/bannertablet.png" 
-        alt="Armadillo Hero Banner" />
+      <HeroBannerMobile
+        imageUrl="/images/apps/armadillo-v2/bannermobile.jpg"
+        alt="Armadillo Hero Banner"
+      />
+      <HeroBannerTablet
+        imageUrl="/images/apps/armadillo-v2/bannertablet.png"
+        alt="Armadillo Hero Banner"
+      />
       <ProductSection
         title="Armadillo"
         description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
@@ -155,8 +175,8 @@ const Page = () => {
         ]}
         price="349$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
         onBuy={() => {}}
         onChat={() => {}}
         productImage="/images/apps/armadillo-v2/productSoftware.jpg"
@@ -173,8 +193,8 @@ const Page = () => {
         ]}
         price="349$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
         onBuy={() => {}}
         onChat={() => {}}
         productImage="/images/apps/armadillo-v2/productSoftware.jpg"
@@ -191,8 +211,8 @@ const Page = () => {
         ]}
         price="349$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
         onBuy={() => {}}
         onChat={() => {}}
         productImage="/images/apps/armadillo-v2/productSoftware.jpg"
@@ -230,12 +250,13 @@ const Page = () => {
       <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -248,12 +269,13 @@ const Page = () => {
       <FeaturedProductsMobile
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -266,12 +288,13 @@ const Page = () => {
       <FeaturedProductsTablet
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png", 
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -281,12 +304,12 @@ const Page = () => {
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
-      <FAQSection faqs={Faqs}/>
-      <FAQSectionMobile faqs={Faqs}/>
-      <FAQSectionTablet faqs={Faqs}/>
+      <FAQSection faqs={Faqs} />
+      <FAQSectionMobile faqs={Faqs} />
+      <FAQSectionTablet faqs={Faqs} />
       <DownloadAppSection />
-      <DownloadAppSectionMobile/>
-      <DownloadAppSectionTablet/>
+      <DownloadAppSectionMobile />
+      <DownloadAppSectionTablet />
     </div>
   );
 };

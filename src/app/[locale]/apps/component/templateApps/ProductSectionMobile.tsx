@@ -37,6 +37,10 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
   googlePlayUrl,
   loading = false,
 }) => {
+  console.log("Renders ProductSectionMobile");
+  console.log("Props.radioOptions:", radioOptions);
+  console.log("Props.selectedRadio:", selectedRadio);
+
   return (
     <section className="w-full flex justify-center bg-white sm:hidden">
       <div className="w-full flex flex-col px-3 py-5 gap-5">
@@ -51,36 +55,39 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
         </div>
 
         {/* Bloque alineado a la izquierda */}
-       <div className="w-full flex flex-col items-start">
-  <h2 className="font-bold text-[24px] text-[#131313] mb-3">{title}</h2>
-  <p className="text-[14px] text-[#000000] mb-3">{description}</p>
-  <div className="flex flex-wrap gap-2 justify-start w-full mb-1">
-    {features.map((f, i) => (
-      <div key={i} className="flex items-center gap-2 mb-1">
-        <Check width={20} height={20} color="#1C1B1F" />
-        <span className="text-[16px]">{f}</span>
-      </div>
-    ))}
-  </div>
-  <div className="flex flex-wrap gap-2 w-full mt-2 ">
-    {radioOptions.map((option) => (
-      <label
-        key={option}
-        className="flex items-center gap-1 text-[14px] mb-1"
-        style={{ maxWidth: "90vw" }}
-      >
-        <input
-          type="radio"
-          name="plan"
-          value={option}
-          checked={selectedRadio === option}
-          onChange={() => onRadioChange(option)}
-        />
-        {option}
-      </label>
-    ))}
-  </div>
-</div>
+        <div className="w-full flex flex-col items-start">
+          <h2 className="font-bold text-[24px] text-[#131313] mb-3">{title}</h2>
+          <p className="text-[14px] text-[#000000] mb-3">{description}</p>
+          <div className="flex flex-wrap gap-2 justify-start w-full mb-1">
+            {features.map((f, i) => (
+              <div key={i} className="flex items-center gap-2 mb-1">
+                <Check width={20} height={20} color="#1C1B1F" />
+                <span className="text-[16px]">{f}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2 w-full mt-2 ">
+            {radioOptions.map((option) => (
+              <label
+                key={option}
+                className="flex items-center gap-1 text-[14px] mb-1"
+                style={{ maxWidth: "90vw" }}
+              >
+                <input
+                  type="radio"
+                  name={`plan-${title.replace(/\s/g, "")}-mobile`}
+                  value={option}
+                  checked={selectedRadio === option}
+                  onChange={() => {
+                    console.log("onChange option:", option);
+                    onRadioChange(option);
+                  }}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        </div>
 
         <div className="flex flex-col items-start mb-3 leading-tight">
           <span className="text-[12px] text-[#000000] mb-[12px]">Desde</span>
