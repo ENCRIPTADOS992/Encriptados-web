@@ -19,10 +19,10 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
 }) => (
   // w-screen para full-bleed, py en lugar de p para controlar vertical
   <section className="hidden lg:flex justify-center py-8 bg-white">
-    <div className="bg-black rounded-[44px] w-[1272px] h-[1182px] mx-auto">
-      <div className="flex flex-col lg:flex-row lg:items-start gap-8">
+    <div className="bg-black rounded-[44px] max-w-[1272px] w-full h-[1182px] mx-auto px-[60px]">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
         {/* Imagen del teléfono */}
-        <div className="flex-shrink-0 flex justify-center mt-[85px]">
+        <div className="flex-shrink-0 flex justify-center mt-[85px] transform -translate-x-14">
           <div className="w-[450px] h-[736px] rounded-[24px] overflow-hidden">
             <img
               src={imageUrl}
@@ -34,7 +34,7 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
         </div>
 
         {/* Wrapper relativo para grid + círculo */}
-        <div className="relative flex-1 flex justify-start ml-[60px]">
+        <div className="relative">
           {/* Contenedor de ancho fijo PARA TÍTULO + GRID */}
           <div className="mt-[85px] w-[581px]">
             {/* Título alineado al inicio */}
