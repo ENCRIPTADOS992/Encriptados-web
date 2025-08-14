@@ -51,9 +51,9 @@ const Page = () => {
     },
     {
       image: "/images/apps/intact-phone/secure-call.png",
-      title: "DEC Secure Call",
+      title: "INTACT PHONE Call",
       description:
-        "DEC Secure Call te ofrece todo lo que esperas en una aplicación de comunicaciones seguras, incluido el cifrado AES-256 siempre activo; llamadas de voz individuales y grupales, videollamadas y mensajería Sus comunicaciones son 100% privadas, no podemos escuchar tus llamadas ni leer tus mensajes bajo ninguna circunstancia, y no se almacena nada en nuestros servidores.",
+        "INTACT PHONE Call te ofrece todo lo que esperas en una aplicación de comunicaciones seguras, incluido el cifrado AES-256 siempre activo; llamadas de voz individuales y grupales, videollamadas y mensajería Sus comunicaciones son 100% privadas, no podemos escuchar tus llamadas ni leer tus mensajes bajo ninguna circunstancia, y no se almacena nada en nuestros servidores.",
     },
     {
       image: "/images/apps/intact-phone/call.png",
@@ -129,7 +129,7 @@ const Page = () => {
         alt="Armadillo Hero Banner"
       />
       <ProductSection
-        title="DEC Secure"
+        title="INTACT PHONE"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
         features={[
           "Llamadas de voz seguras",
@@ -147,7 +147,7 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
       <ProductSectionMobile
-        title="DEC Secure"
+        title="INTACT PHONE"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
         features={[
           "Llamadas de voz seguras",
@@ -165,7 +165,7 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
       <ProductSectionTablet
-        title="DEC Secure"
+        title="INTACT PHONE"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
         features={[
           "Llamadas de voz seguras",

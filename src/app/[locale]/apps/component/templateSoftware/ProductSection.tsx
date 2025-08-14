@@ -122,8 +122,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
             draggable={false}
           />
           <div className="flex gap-4 mt-4">
-            <AppStoreFooter />
-            <PlayStoreSvg />
+            {/* <AppStoreFooter />
+            <PlayStoreSvg /> */}
           </div>
         </div>
       </div>

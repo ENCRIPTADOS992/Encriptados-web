@@ -100,7 +100,11 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
                 <span className="font-medium text-[14px]">Comprar ahora</span>
                 <ShoppingCart color="white" height={18} width={18} />
               </Button>
-              <TelegramButton />
+              <TelegramButton
+                className="min-w-[130px] px-2 py-1 text-sm gap-1
+             [&>svg]:w-4 [&>svg]:h-4 [&>svg]:shrink-0
+             leading-none"
+              />
             </div>
           </div>
         </div>
