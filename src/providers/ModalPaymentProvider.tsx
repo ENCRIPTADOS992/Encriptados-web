@@ -3,15 +3,19 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
+export type Mode = "new_user" | "roning_code" | "recharge";
+
 interface ModalPaymentParams {
   languageCode?: string;
   productid?: string;
   theme?: string;
+   mode?: Mode;                        
+  layout?: "default" | "compact";
 }
 
 interface ModalPaymentContextProps {
   isModalOpen: boolean;
-  openModal: (params?: ModalPaymentParams) => void;
+  openModal: (params?: Partial<ModalPaymentParams>) => void;
   closeModal: () => void;
   params: ModalPaymentParams;
 }
@@ -33,7 +37,7 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
 
   const openModal = (newParams?: ModalPaymentParams) => {
         console.log("💠 [Provider] openModal() llamado con:", newParams);
-    setParams(newParams || {});
+    setParams(prev => ({ ...prev, ...(newParams ?? {}) }));
     setIsModalOpen(true);
   };
   const closeModal = () => {

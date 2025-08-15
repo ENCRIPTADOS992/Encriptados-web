@@ -24,6 +24,7 @@ import {
 import { paymentValidationSchema } from "@/shared/validations/paymentValidation";
 import { initialFormValues } from "@/shared/constants/initialFormValues";
 import { StripeProvider } from "@/shared/components/StripeProvider";
+import TelegramButton from "@/shared/components/TelegramButton";
 
 export type Variant = {
   id: number;

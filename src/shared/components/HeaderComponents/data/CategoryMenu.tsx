@@ -127,7 +127,7 @@ export function useTranslatedProductsCategories(): any {
         defaultValue: "Sistemas de encriptación de datos",
       }),
       link: "",
-      image: "/images/mega-menu/sistemas.jpeg",
+      image: "/images/mega-menu/sistemas.png",
       items: [
         {
           title: t("systems.items.secureMdmIphone.title", {
