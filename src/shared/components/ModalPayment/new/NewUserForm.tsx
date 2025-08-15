@@ -12,22 +12,19 @@ type Props = {
 };
 
 export default function NewUserForm({ email = "", onSubmit }: Props) {
-  // ---- state
-  const [suggest1, setSuggest1] = React.useState("j41b5");
-  const [suggest2, setSuggest2] = React.useState("1O14");
+  const [suggest1, setSuggest1] = React.useState("");
+  const [suggest2, setSuggest2] = React.useState("");
   const [customUser, setCustomUser] = React.useState("");
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(false);
   const [method, setMethod] = React.useState<"card" | "crypto">("card");
 
-  // credit card fields
   const [cardName, setCardName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");
-  const [exp, setExp] = React.useState(""); // MM/AA
+  const [exp, setExp] = React.useState("");
   const [cvc, setCvc] = React.useState("");
   const [postal, setPostal] = React.useState("");
 
-  // ---- validation (simple, para estilos)
   const reUser = /^[a-zA-Z0-9]{4,20}$/;
   const invalid1 = suggest1.length > 0 && !reUser.test(suggest1);
   const invalid2 = suggest2.length > 0 && !reUser.test(suggest2);
@@ -37,20 +34,76 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
     emailVal.length <= 100 &&
     emailVal.length > 5;
 
+  const errBorderFilled = (val: string, ok: boolean) =>
+    `border-2 ${
+      val.trim()
+        ? ok
+          ? "border-transparent"
+          : "border-red-500"
+        : "border-transparent"
+    }`;
+
+  const onlyLetters = (s: string) =>
+    s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
+
+  const onlyDigits = (s: string, max = 99) =>
+    s.replace(/\D/g, "").slice(0, max);
+
+
+  const formatExpiry = (s: string) => {
+    const d = s.replace(/\D/g, "").slice(0, 4);
+    if (d.length <= 2) return d;
+    return `${d.slice(0, 2)}/${d.slice(2)}`;
+  };
+
+  const isValidExpiry = (mmYY: string) => {
+    if (!/^\d{2}\/\d{2}$/.test(mmYY)) return false;
+    const [mmS, yyS] = mmYY.split("/");
+    const mm = +mmS;
+    if (mm < 1 || mm > 12) return false;
+
+    const now = new Date();
+    const yNow = now.getFullYear() % 100;
+    const mNow = now.getMonth() + 1;
+    const yy = +yyS;
+
+    if (yy > yNow) return true;
+    if (yy < yNow) return false;
+    return mm >= mNow;
+  };
+
+  const isValidPostal = (cp: string) => {
+    const s = cp.trim().toUpperCase();
+    const patterns = [
+      /^\d{5}(-\d{4})?$/, 
+      /^[A-Z]\d[A-Z][ -]?\d[A-Z]\d$/, 
+      /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/, 
+      /^\d{5}$/, 
+      /^\d{6}$/,
+      /^\d{7}$/, 
+      /^[A-HJ-NP-Z]\d{4}[A-Z]{3}$|^\d{4}$/,
+    ];
+    return patterns.some((rx) => rx.test(s));
+  };
+
+  const digitsCard = (cardNumber ?? "").replace(/\D/g, "");
+  const nameOk =
+    cardName.trim().length > 0 &&
+    /^[A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]+$/.test(cardName);
+  const numberOk =
+    digitsCard.length >= 13 &&
+    digitsCard.length <= 19;
+  const expOk = isValidExpiry(exp);
+  const cvcOk = /^\d{3}$/.test(cvc);
+  const postalOk = isValidPostal(postal);
+
   const canPay =
     terms &&
     emailOk &&
-    (method === "crypto" || (cardName && cardNumber && exp && cvc));
-
-  // ---- styles helpers
-  const inputBase =
-    "h-[36px] rounded-[6px] px-3 text-[14px] border outline-none focus:ring-1 focus:ring-black/20";
-  const inputOk = "border-gray-300 bg-white";
-  const inputErr = "border-red-500 bg-white";
+    (method === "crypto" || (nameOk && numberOk && expOk && cvcOk && postalOk));
 
   return (
     <div className="flex flex-col gap-3">
-      {/* --- Sugerencias --- */}
       <div className="space-y-2">
         <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
           Ingresa los nombres sugeridos
@@ -60,7 +113,6 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
           máximo 20 alfanuméricos.
         </p>
 
-        {/* Sugerencia 1 */}
         <div
           className={`w-full h-[42px] rounded-[8px] border-2 ${
             invalid1 ? "border-red-500" : "border-[#3D3D3D]"
@@ -74,7 +126,6 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
           />
         </div>
 
-        {/* Sugerencia 2 */}
         <div
           className={`w-full h-[42px] rounded-[8px] border-2 ${
             invalid2 ? "border-red-500" : "border-[#3D3D3D]"
@@ -88,7 +139,6 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
           />
         </div>
 
-        {/* Custom */}
         <div className="w-full h-[42px] rounded-[8px] border-2 border-[#3D3D3D] px-[14px] py-[8px] flex items-center gap-[10px]">
           <input
             value={customUser}
@@ -99,13 +149,11 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
         </div>
       </div>
 
-      {/* --- Email --- */}
       <div className="space-y-2">
         <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
           Correo electrónico para recibir licencia
         </p>
 
-        {/* pegado a la izquierda: self-start; 416x42, r=8, p=14, bg #EBEBEB */}
         <div className="self-start w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
           <input
             value={emailVal}
@@ -117,7 +165,6 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
         </div>
       </div>
 
-      {/* --- TyC --- */}
       <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
         <input
           type="checkbox"
@@ -144,13 +191,11 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
         </span>
       </label>
 
-      {/* --- Método de pago --- */}
       <div className="space-y-2">
         <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
           Método de pago
         </p>
         <div className="grid grid-cols-2 gap-[10px]">
-          {/* Tarjeta */}
           <button
             type="button"
             aria-pressed={method === "card"}
@@ -178,7 +223,6 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
             </span>
           </button>
 
-          {/* Cripto */}
           <button
             type="button"
             aria-pressed={method === "crypto"}
@@ -208,22 +252,31 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
         </div>
       </div>
 
-      {/* --- Form tarjeta --- */}
       {method === "card" && (
         <div className="space-y-2">
-          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+          <div
+            className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
+              cardName,
+              nameOk
+            )}`}
+          >
             <input
               value={cardName}
-              onChange={(e) => setCardName(e.target.value)}
+              onChange={(e) => setCardName(onlyLetters(e.target.value))}
               placeholder="Titular de la tarjeta"
               className="w-full bg-transparent outline-none text-[14px]"
             />
           </div>
 
-          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center justify-between">
+          <div
+            className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center justify-between ${errBorderFilled(
+              cardNumber,
+              numberOk
+            )}`}
+          >
             <input
               value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value)}
+              onChange={(e) => setCardNumber(onlyDigits(e.target.value, 19))}
               placeholder="Número de tarjeta"
               inputMode="numeric"
               className="flex-1 bg-transparent outline-none text-[14px] pr-[8px]"
@@ -236,29 +289,47 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
               className="shrink-0"
             />
           </div>
+
           <div className="grid grid-cols-2 gap-[8px]">
-            <div className="h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+            <div
+              className={`h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
+                exp,
+                expOk
+              )}`}
+            >
               <input
                 value={exp}
-                onChange={(e) => setExp(e.target.value)}
+                onChange={(e) => setExp(formatExpiry(e.target.value))}
                 placeholder="MM/AA"
                 inputMode="numeric"
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
 
-            <div className="h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+            <div
+              className={`h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
+                cvc,
+                cvcOk
+              )}`}
+            >
               <input
+                type="password"
                 value={cvc}
-                onChange={(e) => setCvc(e.target.value)}
+                onChange={(e) => setCvc(onlyDigits(e.target.value, 3))}
                 placeholder="CVC"
                 inputMode="numeric"
+                autoComplete="cc-csc"
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
           </div>
 
-          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+          <div
+            className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
+              postal,
+              postalOk
+            )}`}
+          >
             <input
               value={postal}
               onChange={(e) => setPostal(e.target.value)}
@@ -269,7 +340,6 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
         </div>
       )}
 
-      {/* --- CTA --- */}
       <button
         type="button"
         disabled={!canPay}
