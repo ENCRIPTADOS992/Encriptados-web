@@ -7,11 +7,9 @@ import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import type { Mode } from "./PurchaseTabs";
 
-// --- Tipos locales para que TS no grite ---
 type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
 type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
 
-// Extendemos lo que venga del API con lo que la UI necesita
 type ModalProduct = ProductFromAPI & {
   variants?: Variant[];
   images?: { src: string }[];
@@ -27,7 +25,6 @@ export default function ModalRecharge() {
     mode?: Mode;
   };
 
-  // Tipamos el query con ModalProduct
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
@@ -39,12 +36,11 @@ export default function ModalRecharge() {
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
 
-  // Tomamos variantes de forma segura
   const variants = product?.variants ?? [];
 
   React.useEffect(() => {
     setSelectedVariant(variants.length ? variants[0] : null);
-  }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [product]);
 
   const unitPrice =
     (variants.length
@@ -58,9 +54,9 @@ export default function ModalRecharge() {
   return (
     <PurchaseScaffold
       mode="recharge"
-      enableTabSwitch={true}                  // pon true si quieres cambiar de pestaña
+      enableTabSwitch={true}                  
       onSelectMode={(m) => openModal({ ...params, mode: m })}
-      showRechargeCTA={true}                   // bloque Telegram
+      showRechargeCTA={true}                   
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
       onChangeVariant={(id) =>
@@ -73,7 +69,6 @@ export default function ModalRecharge() {
       onApplyCoupon={onApplyCoupon}
       unitPrice={unitPrice}
     >
-      {/* Contenido específico de "Recargar" (si hace falta) */}
     </PurchaseScaffold>
   );
 }

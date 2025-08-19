@@ -50,33 +50,38 @@ const ModalPayment: React.FC<Props> = ({
 }) => {
   // Cerrar con ESC y bloquear scroll del body
   // ✅ Llama SIEMPRE los hooks
-useEffect(() => {
-  if (!visible) return;
-  const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-  window.addEventListener("keydown", onKey);
-  const prev = document.body.style.overflow;
-  document.body.style.overflow = "hidden";
-  return () => {
-    window.removeEventListener("keydown", onKey);
-    document.body.style.overflow = prev;
-  };
-}, [visible, onClose]);
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [visible, onClose]);
 
-const isDark = theme === "dark";
-const isMobile = useIsMobile(744);  
+  const isDark = theme === "dark";
+  const isMobile = useIsMobile(744);
 
-if (!visible) return null;         
-
+  if (!visible) return null;
 
   return (
     <div
       className={`fixed inset-0 z-50 flex ${
         isMobile ? "items-end" : "items-center"
       } justify-center
-      ${isDark ? "bg-black/70" : "bg-black/50"} backdrop-blur-sm ${overlayClassName ?? ""}`}
+      ${isDark ? "bg-black/70" : "bg-black/50"} backdrop-blur-sm ${
+        overlayClassName ?? ""
+      }`}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className={`w-full h-full flex ${isMobile ? "items-end" : "items-center"} justify-center px-2 sm:px-3 ipad:px-4`}>
+      <div
+        className={`w-full h-full flex ${
+          isMobile ? "items-end" : "items-center"
+        } justify-center px-2 sm:px-3 ipad:px-4`}
+      >
         {/* ======= MOBILE: Bottom Sheet ======= */}
         {isMobile ? (
           <div
@@ -88,7 +93,10 @@ if (!visible) return null;
             ].join(" ")}
           >
             {/* Handle visual */}
-            <div aria-hidden="true" className="mx-auto mt-1 mb-2 h-1.5 w-10 rounded-full bg-black/20" />
+            <div
+              aria-hidden="true"
+              className="mx-auto mt-1 mb-2 h-1.5 w-10 rounded-full bg-black/20"
+            />
 
             {/* Botón cerrar (ligeramente hacia dentro) */}
             <button
@@ -131,8 +139,14 @@ if (!visible) return null;
       {/* Keyframes */}
       <style jsx>{`
         @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </div>

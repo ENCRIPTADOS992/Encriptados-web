@@ -1,4 +1,3 @@
-// src/shared/components/ModalPayment/new/NewUserForm.tsx
 "use client";
 
 import React from "react";
@@ -7,27 +6,37 @@ import Link from "next/link";
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
 type Props = {
+  quantity: number;
   email?: string;
   onSubmit?: () => void;
-  quantity: number;
+  onCodesChange?: (codes: string[]) => void; // opcional si quieres leerlos desde el padre
 };
 
-export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
-  const [usernames, setUsernames] = React.useState<string[]>([]);
+export default function RoningForm({
+  quantity,
+  email = "",
+  onSubmit,
+  onCodesChange,
+}: Props) {
+  // Códigos dinámicos por cantidad
+  const [codes, setCodes] = React.useState<string[]>([]);
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(false);
   const [method, setMethod] = React.useState<"card" | "crypto">("crypto");
 
+  // Tarjeta (si eligen method=card)
   const [cardName, setCardName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");
   const [exp, setExp] = React.useState("");
   const [cvc, setCvc] = React.useState("");
   const [postal, setPostal] = React.useState("");
 
-  const reUser = /^[a-zA-Z0-9]{4,20}$/;
+  // === Helpers y validaciones ===
+  // Código RONING: alfanumérico + guiones, 6 a 64 chars (ajusta si lo necesitas)
+  const reCode = /^[A-Z0-9-]{6,64}$/;
 
   React.useEffect(() => {
-    setUsernames((prev) => {
+    setCodes((prev) => {
       const next = [...prev];
       if (quantity > prev.length) {
         next.push(...Array(quantity - prev.length).fill(""));
@@ -38,10 +47,15 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
     });
   }, [quantity]);
 
-  const setUsernameAt = (idx: number, val: string) => {
-    setUsernames((prev) => {
+  React.useEffect(() => {
+    onCodesChange?.(codes);
+  }, [codes, onCodesChange]);
+
+  const setCodeAt = (idx: number, val: string) => {
+    setCodes((prev) => {
       const next = [...prev];
-      next[idx] = val;
+      // normaliza: quita espacios, mayúsculas
+      next[idx] = val.replace(/\s+/g, "").toUpperCase();
       return next;
     });
   };
@@ -91,13 +105,13 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
   const isValidPostal = (cp: string) => {
     const s = cp.trim().toUpperCase();
     const patterns = [
-      /^\d{5}(-\d{4})?$/,
-      /^[A-Z]\d[A-Z][ -]?\d[A-Z]\d$/,
-      /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/,
-      /^\d{5}$/,
-      /^\d{6}$/,
-      /^\d{7}$/,
-      /^[A-HJ-NP-Z]\d{4}[A-Z]{3}$|^\d{4}$/,
+      /^\d{5}(-\d{4})?$/, // US
+      /^[A-Z]\d[A-Z][ -]?\d[A-Z]\d$/, // CA
+      /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/, // ES
+      /^\d{5}$/, // generic 5
+      /^\d{6}$/, // generic 6
+      /^\d{7}$/, // JP (7)
+      /^[A-HJ-NP-Z]\d{4}[A-Z]{3}$|^\d{4}$/, // MX (satélite) | generic 4
     ];
     return patterns.some((rx) => rx.test(s));
   };
@@ -111,50 +125,22 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
   const cvcOk = /^\d{3}$/.test(cvc);
   const postalOk = isValidPostal(postal);
 
-  const usernamesOk =
-    usernames.length === quantity && usernames.every((u) => reUser.test(u));
+  const codesOk =
+    codes.length === quantity && codes.every((c) => reCode.test(c));
 
   const canPay =
     terms &&
     emailOk &&
+    codesOk &&
     (method === "crypto" || (nameOk && numberOk && expOk && cvcOk && postalOk));
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="space-y-2">
-        <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-          Ingresa los nombres sugeridos
-        </p>
-        <p className="rounded-[8px] px-3 py-2 text-[12px] leading-[14px] bg-amber-50 border border-amber-200">
-          Puedes sugerir nombres de usuarios con un mínimo de 4 caracteres y
-          máximo 20 alfanuméricos.
-        </p>
-
-        {usernames.map((val, idx) => {
-          const invalid = val.length > 0 && !reUser.test(val);
-          return (
-            <div
-              key={idx}
-              className={`w-full h-[42px] rounded-[8px] border-2 ${
-                invalid ? "border-red-500" : "border-[#3D3D3D]"
-              } px-[14px] py-[8px] flex items-center gap-[10px]`}
-            >
-              <input
-                value={val}
-                onChange={(e) => setUsernameAt(idx, e.target.value)}
-                placeholder="Ingresa nombre de usuario"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          );
-        })}
-      </div>
-
+      {/* Email */}
       <div className="space-y-2">
         <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
           Correo electrónico para recibir licencia
         </p>
-
         <div className="self-start w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
           <input
             value={emailVal}
@@ -166,18 +152,13 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
         </div>
       </div>
 
+      {/* Términos */}
       <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
         <input
           type="checkbox"
           checked={terms}
           onChange={(e) => setTerms(e.target.checked)}
-          className="
-      w-[18px] h-[18px]
-      border-2 border-black           
-      rounded-[2px]
-      accent-black                
-      focus:outline-none focus:ring-0
-    "
+          className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
         />
         <span className="select-none">
           Acepto{" "}
@@ -192,69 +173,75 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
         </span>
       </label>
 
-      <div className="space-y-2">
-        <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-          Método de pago
-        </p>
+      {/* Método de pago */}
+<div className="space-y-2">
+  <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+    Método de pago
+  </p>
 
-        {/* 2 columnas siempre; botones responsivos */}
-        <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
-          <button
-            type="button"
-            aria-pressed={method === "card"}
-            onClick={() => setMethod("card")}
-            className={[
-              "w-full", 
-              "rounded-[8px]",
-              "flex flex-col items-center justify-center",
-              "gap-1 sm:gap-2 ipad:gap-[10px]", 
-              "h-[78px] px-2 py-2", 
-              "sm:h-[76px] sm:px-3 sm:py-3", 
-              "ipad:h-[80px] ipad:px-[14px] ipad:pt-[24px] ipad:pb-[24px]", 
-              method === "card"
-                ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
-                : "bg-[#EBEBEB] border border-transparent",
-            ].join(" ")}
-          >
-            <img
-              src="/images/home/add_card.png"
-              alt=""
-              className="w-5 h-5 sm:w-6 sm:h-6 ipad:w-6 ipad:h-6"
-            />
-            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center">
-              Tarjeta de crédito
-            </span>
-          </button>
+  {/* 2 columnas siempre */}
+  <div className="grid grid-cols-2 gap-2 ipad:gap-3">
+    <button
+      type="button"
+      aria-pressed={method === "card"}
+      onClick={() => setMethod("card")}
+      className={[
+        "w-full rounded-[8px] border",
+        // layout: vertical en móvil, horizontal desde sm/ipad
+        "flex flex-col sm:flex-row items-center justify-center",
+        "gap-1 sm:gap-2",
+        // alturas/padding
+        "h-[78px] px-2 py-2",            // móvil
+        "sm:h-[76px] sm:px-3",           // sm/md
+        "ipad:h-[60px] ipad:px-4",       // 744+
+        method === "card"
+          ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
+          : "bg-[#EBEBEB] border border-transparent",
+        // accesibilidad/focus
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1"
+      ].join(" ")}
+    >
+      <img
+        src="/images/home/add_card.png"
+        alt=""
+        className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
+      />
+      <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
+        Tarjeta de crédito
+      </span>
+    </button>
 
-          <button
-            type="button"
-            aria-pressed={method === "crypto"}
-            onClick={() => setMethod("crypto")}
-            className={[
-              "w-full",
-              "rounded-[8px]",
-              "flex flex-col items-center justify-center",
-              "gap-1 sm:gap-2 ipad:gap-[10px]",
-              "h-[78px] px-2 py-2",
-              "sm:h-[76px] sm:px-3 sm:py-3",
-              "ipad:h-[80px] ipad:px-[14px] ipad:pt-[24px] ipad:pb-[24px]",
-              method === "crypto"
-                ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
-                : "bg-[#EBEBEB] border border-transparent",
-            ].join(" ")}
-          >
-            <img
-              src="/images/home/send_money.png"
-              alt=""
-              className="w-5 h-5 sm:w-6 sm:h-6 ipad:w-6 ipad:h-6"
-            />
-            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center">
-              Criptomonedas
-            </span>
-          </button>
-        </div>
-      </div>
+    <button
+      type="button"
+      aria-pressed={method === "crypto"}
+      onClick={() => setMethod("crypto")}
+      className={[
+        "w-full rounded-[8px] border",
+        "flex flex-col sm:flex-row items-center justify-center",
+        "gap-1 sm:gap-2",
+        "h-[78px] px-2 py-2",
+        "sm:h-[76px] sm:px-3",
+        "ipad:h-[60px] ipad:px-4",
+        method === "crypto"
+          ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
+          : "bg-[#EBEBEB] border border-transparent",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1"
+      ].join(" ")}
+    >
+      <img
+        src="/images/home/send_money.png"
+        alt=""
+        className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
+      />
+      <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
+        Criptomonedas
+      </span>
+    </button>
+  </div>
+</div>
 
+
+      {/* Campos tarjeta si corresponde */}
       {method === "card" && (
         <div className="space-y-2">
           <div
@@ -308,7 +295,6 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
-
             <div
               className={`h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
                 cvc,
@@ -348,14 +334,12 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
         disabled={!canPay}
         onClick={onSubmit}
         aria-disabled={!canPay}
-        className={`
-    mt-2 w-full h-[54px] 
-    rounded-[8px] px-[10px]
-    inline-flex items-center justify-center gap-[10px]
-    text-white text-[14px] font-semibold
-    ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"}
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30
-  `}
+        className={`mt-2 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
+        text-white text-[14px] font-semibold ${
+          canPay
+            ? "bg-black hover:bg-black/90"
+            : "bg-black/40 cursor-not-allowed"
+        } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >
         Pagar ahora
       </button>

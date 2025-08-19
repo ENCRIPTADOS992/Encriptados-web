@@ -8,7 +8,7 @@ import ModalPayment from "./ModalPayment";
 import ModalStack from "./atoms/ModalStack";
 
 import ModalNewUser from "./new/ModalNewUser";
-// import ModalRoning from "./new/ModalRoning";
+import ModalRoning from "./new/ModalRoning";
 import ModalRecharge from "./new/ModalRecharge";
 
 type Mode = "new_user" | "roning_code" | "recharge";
@@ -24,7 +24,8 @@ const ModalPaymentController = () => {
     switch (mode) {
       case "recharge":
         return <ModalRecharge />;
-      // case "roning_code": return <ModalRoning />;
+      case "roning_code": 
+      return <ModalRoning />;
       case "new_user":
       default:
         return <ModalNewUser />;
@@ -45,9 +46,10 @@ const ModalPaymentController = () => {
 "
     >
       {/* 👇 todos los contenidos respetan 472px + gap 16px */}
-      <div className="max-h-full overflow-auto">
-        <ModalStack>{renderByMode()}</ModalStack>
-      </div>
+      <div className="max-h-full overflow-auto pb-4 ipad:pb-6 lg:pb-8">
+  <ModalStack>{renderByMode()}</ModalStack>
+</div>
+
     </ModalPayment>
   );
 };
