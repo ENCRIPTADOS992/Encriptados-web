@@ -67,6 +67,7 @@ export default function ModalNewUser() {
       unitPrice={unitPrice}
     >
       <NewUserForm
+        quantity={quantity} 
         email=""
         onSubmit={() => {
           console.log("submit new user");

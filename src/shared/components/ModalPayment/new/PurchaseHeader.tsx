@@ -51,7 +51,7 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const variants = product?.variants ?? [];
   const showSelect = variants.length > 1;
-
+  const [showCoupon, setShowCoupon] = React.useState(false);
   // etiqueta para el pill/select
   const currentMonths =
     variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ??
@@ -99,7 +99,9 @@ const PurchaseHeader: React.FC<Props> = ({
           >
             –
           </button>
-          <span className="min-w-[18px] text-center text-[16px]">{quantity}</span>
+          <span className="min-w-[18px] text-center text-[16px]">
+            {quantity}
+          </span>
           <button
             onClick={inc}
             className="text-[16px] font-bold leading-none"
@@ -154,21 +156,33 @@ const PurchaseHeader: React.FC<Props> = ({
       </div>
 
       {/* Cupón: borde 2px #3D3D3D + botón negro */}
-      <div className="w-full h-[42px] flex items-center justify-between rounded-[8px] border-2 border-[#3D3D3D] pl-[12px] pr-[6px]">
-        <input
-          placeholder="Ingresa el código"
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value)}
-          className="flex-1 bg-transparent outline-none placeholder-black/50 text-[14px]"
-        />
-        <button
-          onClick={onApplyCoupon}
-          type="button"
-          className="h-[31px] rounded-[6px] bg-black text-white text-[12px] font-bold px-[12px] flex items-center justify-center"
-        >
-          Aplicar
-        </button>
-      </div>
+      {showCoupon ? (
+        <div className="w-full h-[42px] flex items-center justify-between rounded-[8px] border-2 border-[#3D3D3D] pl-[12px] pr-[6px]">
+          <input
+            placeholder="Ingresa el código"
+            value={coupon}
+            onChange={(e) => setCoupon(e.target.value)}
+            className="flex-1 bg-transparent outline-none placeholder-black/50 text-[14px]"
+          />
+          <button
+            onClick={onApplyCoupon}
+            type="button"
+            className="h-[31px] rounded-[6px] bg-black text-white text-[12px] font-bold px-[12px] flex items-center justify-center"
+          >
+            Aplicar
+          </button>
+        </div>
+      ) : (
+        <div className="flex justify-end">
+  <button
+    type="button"
+    onClick={() => setShowCoupon(true)}
+    className="text-[12px] underline text-[#3D3D3D]"
+  >
+    Ingresa código de promoción
+  </button>
+</div>
+      )}
     </div>
   );
 };

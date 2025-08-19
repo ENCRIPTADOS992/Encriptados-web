@@ -9,15 +9,15 @@ const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 type Props = {
   email?: string;
   onSubmit?: () => void;
+  quantity: number;
 };
 
-export default function NewUserForm({ email = "", onSubmit }: Props) {
-  const [suggest1, setSuggest1] = React.useState("");
-  const [suggest2, setSuggest2] = React.useState("");
-  const [customUser, setCustomUser] = React.useState("");
+export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
+  const [usernames, setUsernames] = React.useState<string[]>([]);
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(false);
-  const [method, setMethod] = React.useState<"card" | "crypto">("card");
+  const [method, setMethod] = React.useState<"card" | "crypto">("crypto");
+
 
   const [cardName, setCardName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");
@@ -26,8 +26,26 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
   const [postal, setPostal] = React.useState("");
 
   const reUser = /^[a-zA-Z0-9]{4,20}$/;
-  const invalid1 = suggest1.length > 0 && !reUser.test(suggest1);
-  const invalid2 = suggest2.length > 0 && !reUser.test(suggest2);
+
+  React.useEffect(() => {
+    setUsernames((prev) => {
+      const next = [...prev];
+      if (quantity > prev.length) {
+        next.push(...Array(quantity - prev.length).fill(""));
+      } else if (quantity < prev.length) {
+        next.length = quantity;
+      }
+      return next;
+    });
+  }, [quantity]);
+
+  const setUsernameAt = (idx: number, val: string) => {
+    setUsernames((prev) => {
+      const next = [...prev];
+      next[idx] = val;
+      return next;
+    });
+  };
 
   const emailOk =
     /\S+@\S+\.\S+/.test(emailVal) &&
@@ -97,6 +115,10 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
   const cvcOk = /^\d{3}$/.test(cvc);
   const postalOk = isValidPostal(postal);
 
+  const usernamesOk =
+    usernames.length === quantity &&
+    usernames.every((u) => reUser.test(u));
+
   const canPay =
     terms &&
     emailOk &&
@@ -113,40 +135,22 @@ export default function NewUserForm({ email = "", onSubmit }: Props) {
           máximo 20 alfanuméricos.
         </p>
 
-        <div
-          className={`w-full h-[42px] rounded-[8px] border-2 ${
-            invalid1 ? "border-red-500" : "border-[#3D3D3D]"
-          } px-[14px] py-[8px] flex items-center gap-[10px]`}
-        >
-          <input
-            value={suggest1}
-            onChange={(e) => setSuggest1(e.target.value)}
-            placeholder="Ingresa nombre de usuario"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-
-        <div
-          className={`w-full h-[42px] rounded-[8px] border-2 ${
-            invalid2 ? "border-red-500" : "border-[#3D3D3D]"
-          } px-[14px] py-[8px] flex items-center gap-[10px]`}
-        >
-          <input
-            value={suggest2}
-            onChange={(e) => setSuggest2(e.target.value)}
-            placeholder="Ingresa nombre de usuario"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-
-        <div className="w-full h-[42px] rounded-[8px] border-2 border-[#3D3D3D] px-[14px] py-[8px] flex items-center gap-[10px]">
-          <input
-            value={customUser}
-            onChange={(e) => setCustomUser(e.target.value)}
-            placeholder="Ingresa nombre de usuario"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
+        {usernames.map((val, idx) => {
+          const invalid = val.length > 0 && !reUser.test(val);
+          return (
+            <div
+              key={idx}
+              className={`w-full h-[42px] rounded-[8px] border-2 ${invalid ? "border-red-500" : "border-[#3D3D3D]"} px-[14px] py-[8px] flex items-center gap-[10px]`}
+            >
+              <input
+                value={val}
+                onChange={(e) => setUsernameAt(idx, e.target.value)}
+                placeholder="Ingresa nombre de usuario"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+          );
+        })}
       </div>
 
       <div className="space-y-2">
