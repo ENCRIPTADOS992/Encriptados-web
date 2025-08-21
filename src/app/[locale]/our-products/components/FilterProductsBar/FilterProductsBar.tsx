@@ -26,7 +26,7 @@ const FILTER_OPTIONS = [
     Icon: AplicationsProductsBarIcon,
   },
   { key: "mobile", label: "Software", catId: 35, Icon: PhoneProductsBarIcon },
-  { key: "routers", label: "Routers", catId: 50, Icon: RoutersBarIcon },
+  { key: "routers", label: "Routers", catId: 36, Icon: RoutersBarIcon },
 ] as const;
 
 interface FilterProductsBarProps {
