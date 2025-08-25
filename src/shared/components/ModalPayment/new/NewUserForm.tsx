@@ -6,10 +6,16 @@ import Link from "next/link";
 
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
+type Method = "card" | "crypto";
+
 type Props = {
   email?: string;
-  onSubmit?: () => void;
   quantity: number;
+  onSubmit?: (data: {
+    email: string;
+    usernames: string[];
+    method: Method;
+  }) => void;
 };
 
 export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
@@ -118,6 +124,15 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
     terms &&
     emailOk &&
     (method === "crypto" || (nameOk && numberOk && expOk && cvcOk && postalOk));
+
+  const handleSubmit = () => {
+    if (!canPay) return;
+    onSubmit?.({
+      email: emailVal.trim(),
+      usernames: usernames.map((u) => u.trim()),
+      method,
+    });
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -346,7 +361,7 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
       <button
         type="button"
         disabled={!canPay}
-        onClick={onSubmit}
+        onClick={handleSubmit}
         aria-disabled={!canPay}
         className={`
     mt-2 w-full h-[54px] 

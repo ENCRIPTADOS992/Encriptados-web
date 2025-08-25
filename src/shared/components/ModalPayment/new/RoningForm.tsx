@@ -8,31 +8,27 @@ const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 type Props = {
   quantity: number;
   email?: string;
-  onSubmit?: () => void;
-  onCodesChange?: (codes: string[]) => void; // opcional si quieres leerlos desde el padre
+  onSubmit?: (data: { email: string; method: "card" | "crypto" }) => void;
+  loading?: boolean;
 };
 
 export default function RoningForm({
   quantity,
   email = "",
   onSubmit,
-  onCodesChange,
+  loading = false,
 }: Props) {
-  // Códigos dinámicos por cantidad
   const [codes, setCodes] = React.useState<string[]>([]);
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(false);
   const [method, setMethod] = React.useState<"card" | "crypto">("crypto");
 
-  // Tarjeta (si eligen method=card)
   const [cardName, setCardName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");
   const [exp, setExp] = React.useState("");
   const [cvc, setCvc] = React.useState("");
   const [postal, setPostal] = React.useState("");
 
-  // === Helpers y validaciones ===
-  // Código RONING: alfanumérico + guiones, 6 a 64 chars (ajusta si lo necesitas)
   const reCode = /^[A-Z0-9-]{6,64}$/;
 
   React.useEffect(() => {
@@ -46,19 +42,6 @@ export default function RoningForm({
       return next;
     });
   }, [quantity]);
-
-  React.useEffect(() => {
-    onCodesChange?.(codes);
-  }, [codes, onCodesChange]);
-
-  const setCodeAt = (idx: number, val: string) => {
-    setCodes((prev) => {
-      const next = [...prev];
-      // normaliza: quita espacios, mayúsculas
-      next[idx] = val.replace(/\s+/g, "").toUpperCase();
-      return next;
-    });
-  };
 
   const emailOk =
     /\S+@\S+\.\S+/.test(emailVal) &&
@@ -125,14 +108,15 @@ export default function RoningForm({
   const cvcOk = /^\d{3}$/.test(cvc);
   const postalOk = isValidPostal(postal);
 
-  const codesOk =
-    codes.length === quantity && codes.every((c) => reCode.test(c));
-
   const canPay =
     terms &&
     emailOk &&
-    codesOk &&
     (method === "crypto" || (nameOk && numberOk && expOk && cvcOk && postalOk));
+
+  const handleSubmit = () => {
+    if (!canPay || loading) return;
+    onSubmit?.({ email: emailVal.trim(), method });
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -174,72 +158,71 @@ export default function RoningForm({
       </label>
 
       {/* Método de pago */}
-<div className="space-y-2">
-  <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-    Método de pago
-  </p>
+      <div className="space-y-2">
+        <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+          Método de pago
+        </p>
 
-  {/* 2 columnas siempre */}
-  <div className="grid grid-cols-2 gap-2 ipad:gap-3">
-    <button
-      type="button"
-      aria-pressed={method === "card"}
-      onClick={() => setMethod("card")}
-      className={[
-        "w-full rounded-[8px] border",
-        // layout: vertical en móvil, horizontal desde sm/ipad
-        "flex flex-col sm:flex-row items-center justify-center",
-        "gap-1 sm:gap-2",
-        // alturas/padding
-        "h-[78px] px-2 py-2",            // móvil
-        "sm:h-[76px] sm:px-3",           // sm/md
-        "ipad:h-[60px] ipad:px-4",       // 744+
-        method === "card"
-          ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
-          : "bg-[#EBEBEB] border border-transparent",
-        // accesibilidad/focus
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1"
-      ].join(" ")}
-    >
-      <img
-        src="/images/home/add_card.png"
-        alt=""
-        className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
-      />
-      <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
-        Tarjeta de crédito
-      </span>
-    </button>
+        {/* 2 columnas siempre */}
+        <div className="grid grid-cols-2 gap-2 ipad:gap-3">
+          <button
+            type="button"
+            aria-pressed={method === "card"}
+            onClick={() => setMethod("card")}
+            className={[
+              "w-full rounded-[8px] border",
+              // layout: vertical en móvil, horizontal desde sm/ipad
+              "flex flex-col sm:flex-row items-center justify-center",
+              "gap-1 sm:gap-2",
+              // alturas/padding
+              "h-[78px] px-2 py-2", // móvil
+              "sm:h-[76px] sm:px-3", // sm/md
+              "ipad:h-[60px] ipad:px-4", // 744+
+              method === "card"
+                ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
+                : "bg-[#EBEBEB] border border-transparent",
+              // accesibilidad/focus
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1",
+            ].join(" ")}
+          >
+            <img
+              src="/images/home/add_card.png"
+              alt=""
+              className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
+            />
+            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
+              Tarjeta de crédito
+            </span>
+          </button>
 
-    <button
-      type="button"
-      aria-pressed={method === "crypto"}
-      onClick={() => setMethod("crypto")}
-      className={[
-        "w-full rounded-[8px] border",
-        "flex flex-col sm:flex-row items-center justify-center",
-        "gap-1 sm:gap-2",
-        "h-[78px] px-2 py-2",
-        "sm:h-[76px] sm:px-3",
-        "ipad:h-[60px] ipad:px-4",
-        method === "crypto"
-          ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
-          : "bg-[#EBEBEB] border border-transparent",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1"
-      ].join(" ")}
-    >
-      <img
-        src="/images/home/send_money.png"
-        alt=""
-        className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
-      />
-      <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
-        Criptomonedas
-      </span>
-    </button>
-  </div>
-</div>
-
+          <button
+            type="button"
+            aria-pressed={method === "crypto"}
+            onClick={() => setMethod("crypto")}
+            className={[
+              "w-full rounded-[8px] border",
+              "flex flex-col sm:flex-row items-center justify-center",
+              "gap-1 sm:gap-2",
+              "h-[78px] px-2 py-2",
+              "sm:h-[76px] sm:px-3",
+              "ipad:h-[60px] ipad:px-4",
+              method === "crypto"
+                ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
+                : "bg-[#EBEBEB] border border-transparent",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1",
+            ].join(" ")}
+          >
+            <img
+              src="/images/home/send_money.png"
+              alt=""
+              className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
+            />
+            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
+              Criptomonedas
+            </span>
+          </button>
+        </div>
+      </div>
 
       {/* Campos tarjeta si corresponde */}
       {method === "card" && (
@@ -332,7 +315,7 @@ export default function RoningForm({
       <button
         type="button"
         disabled={!canPay}
-        onClick={onSubmit}
+        onClick={handleSubmit}
         aria-disabled={!canPay}
         className={`mt-2 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
         text-white text-[14px] font-semibold ${

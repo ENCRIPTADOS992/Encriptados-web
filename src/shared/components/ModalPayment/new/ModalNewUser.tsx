@@ -7,6 +7,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import NewUserForm from "./NewUserForm";
+import { useCheckout } from "@/shared/hooks/useCheckout";
 
 type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
 type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
@@ -22,6 +23,7 @@ type ModalProduct = ProductFromAPI & {
 export default function ModalNewUser() {
   const { params, openModal } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
+  const { payUserId, loading } = useCheckout();
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -48,6 +50,30 @@ export default function ModalNewUser() {
   const onApplyCoupon = () =>
     setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
+  const handleSubmit = async (data: { email: string; usernames: string[]; method: "card" | "crypto" }) => {
+    try {
+      const productIdNum = Number(productid);
+      const amount = Math.max(unitPrice * quantity - discount, 0);
+      const currency = "USD" as const;
+      const provider = data.method === "card" ? "stripe" : "kriptomus" as const;
+
+      await payUserId({
+        productId: productIdNum,
+        email: data.email,
+        username: data.usernames[0] || undefined,
+        provider,
+        amount,
+        currency,
+      });
+    } catch (e: any) {
+      if (e?.code === "out_of_stock") {
+        alert("Stock insuficiente");
+      } else {
+        alert(e?.message || "Error procesando el pago");
+      }
+    }
+  };
+
   return (
     <PurchaseScaffold
       mode="new_user"
@@ -69,9 +95,7 @@ export default function ModalNewUser() {
       <NewUserForm
         quantity={quantity} 
         email=""
-        onSubmit={() => {
-          console.log("submit new user");
-        }}
+        onSubmit={handleSubmit}
       />
     </PurchaseScaffold>
   );

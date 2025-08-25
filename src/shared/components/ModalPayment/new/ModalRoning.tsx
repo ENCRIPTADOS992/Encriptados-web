@@ -6,6 +6,8 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import RoningForm from "./RoningForm";
+import { useCheckout } from "@/shared/hooks/useCheckout";
+import type { Provider as PayProvider } from "@/services/checkout";
 
 type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
 type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
@@ -21,6 +23,7 @@ type ModalProduct = ProductFromAPI & {
 export default function ModalRoning() {
   const { params, openModal } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
+  const { loading, payRoaming } = useCheckout();
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -37,7 +40,7 @@ export default function ModalRoning() {
 
   React.useEffect(() => {
     setSelectedVariant(variants.length ? variants[0] : null);
-  }, [product]); // o [variants] si prefieres
+  }, [product]);
 
   const unitPrice =
     (variants.length
@@ -47,6 +50,31 @@ export default function ModalRoning() {
   const onApplyCoupon = () =>
     setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
+  const handleSubmit = async (data: { email: string; method: "card" | "crypto" }) => {
+    try {
+      const productIdNum = Number(productid);
+      const amount = Math.max(Number(unitPrice) * quantity - discount, 0);
+      const currency = "USD";
+      const provider: PayProvider = data.method === "card" ? "stripe" : "kriptomus";
+
+
+
+      await payRoaming({
+        productId: productIdNum,
+        qty: quantity,
+        email: data.email,
+        provider,
+        amount,
+        currency,
+      });
+    } catch (e: any) {
+      if (e?.code === "out_of_stock") {
+        alert("Stock insuficiente");
+      } else {
+        alert(e?.message || "Error procesando el pago");
+      }
+    }
+  };
   return (
     <PurchaseScaffold
       mode="roning_code"
@@ -68,11 +96,10 @@ export default function ModalRoning() {
       <RoningForm
         quantity={quantity}
         email=""
-        onSubmit={() => {
-          // Aquí ya tendrías los códigos y datos validados en el form
-          console.log("submit roning_code");
-        }}
+        onSubmit={handleSubmit}
+        loading={loading}
       />
+
     </PurchaseScaffold>
   );
 }

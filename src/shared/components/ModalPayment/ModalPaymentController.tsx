@@ -24,8 +24,8 @@ const ModalPaymentController = () => {
     switch (mode) {
       case "recharge":
         return <ModalRecharge />;
-      case "roning_code": 
-      return <ModalRoning />;
+      case "roning_code":
+        return <ModalRoning />;
       case "new_user":
       default:
         return <ModalNewUser />;
@@ -38,18 +38,24 @@ const ModalPaymentController = () => {
       onClose={closeModal}
       theme={theme}
       panelClassName="
-  bg-[#F7F9FB]
-  rounded-none p-3
-  w-full h-full max-h-screen
-  ipad:w-[560px] ipad:h-auto ipad:max-h-[90vh] ipad:rounded-[16px] ipad:overflow-hidden
-  lg:w-[628px]  lg:h-[800px] lg:rounded-[16px] lg:overflow-hidden
-"
+        bg-[#F7F9FB]
+        rounded-none p-3
+        w-full h-full max-h-screen
+        md:rounded-[16px] md:h-auto md:max-h-[90vh] md:p-6
+        md:w-[560px]
+        lg:w-[696px] lg:rounded-[16px]
+        overflow-x-hidden           /* ← solo ocultamos scroll horizontal */
+      "
     >
-      {/* 👇 todos los contenidos respetan 472px + gap 16px */}
-      <div className="max-h-full overflow-auto pb-4 ipad:pb-6 lg:pb-8">
-  <ModalStack>{renderByMode()}</ModalStack>
-</div>
-
+      {/* Contenido scrolleable solo en Y (vertical) */}
+      <div
+        className="max-h-full overflow-y-auto overflow-x-hidden pb-4 md:pb-6 lg:pb-8"
+        style={{ scrollbarGutter: "stable" }} // opcional: evita saltos por aparición de scroll
+      >
+        <ModalStack className="ipad:w-full lg:w-full md:mx-0">
+          {renderByMode()}
+        </ModalStack>
+      </div>
     </ModalPayment>
   );
 };
