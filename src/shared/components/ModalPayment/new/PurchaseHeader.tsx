@@ -63,7 +63,7 @@ const PurchaseHeader: React.FC<Props> = ({
   return (
     <div className="w-full">
       {/* Título */}
-      <div className="text-center text-[13px] md:text-[13px] lg:text-sm font-medium text-gray-600 border-b pb-2">
+      <div className="text-center text-[13px] md:text-[13px] lg:text-sm font-medium text-gray-600 pb-2">
         Detalles de compra
       </div>
 
