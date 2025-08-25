@@ -68,7 +68,7 @@ const PurchaseHeader: React.FC<Props> = ({
       </div>
 
       {/* Layout 2 columnas: imagen izquierda (306x194) | derecha 306 */}
-      <div className="mt-[22px] flex flex-col md:flex-row md:items-start md:gap-[22px]">
+      <div className="mt-[22px] flex flex-col sm:flex-row sm:items-start gap-[22px]">
         {/* Izquierda: imagen */}
         <div className="relative w-[306px] h-[194px] overflow-hidden rounded-[8px] mx-auto md:mx-0 flex-none">
           <Image
