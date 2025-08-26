@@ -70,7 +70,17 @@ const PurchaseHeader: React.FC<Props> = ({
       {/* Layout 2 columnas: imagen izquierda (306x194) | derecha 306 */}
       <div className="mt-[22px] flex flex-col sm:flex-row sm:items-start gap-[22px]">
         {/* Izquierda: imagen */}
-        <div className="relative w-[306px] h-[194px] overflow-hidden rounded-[8px] mx-auto md:mx-0 flex-none">
+        <div
+          className="
+    relative overflow-hidden mx-auto sm:mx-0 flex-none
+    h-[152px] w-[382px] rounded-t-[12px]        /* móvil (xs) */
+    sm:h-[194px] sm:w-[282px] sm:rounded-[12px] /* sm */
+    md:h-[194px] md:w-[282px] md:rounded-[12px] /* md */
+    ipad:h-[194px] ipad:w-[282px] ipad:rounded-[12px] /* 744 */
+    lg:h-[194px] lg:w-[306px] lg:rounded-[8px]  /* lg+ */
+    xl:h-[194px] xl:w-[306px] xl:rounded-[8px]
+  "
+        >
           <Image
             src={product?.images?.[0]?.src ?? "/your-image-placeholder.png"}
             alt={product?.name ?? "Producto"}
@@ -82,21 +92,30 @@ const PurchaseHeader: React.FC<Props> = ({
         </div>
 
         {/* Derecha: info */}
-        <div className="mt-[22px] md:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[16px]">
+        <div className="mt-[22px] md:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[16px] px-3 sm:px-4 ipad:px-3 lg:px-4">
           {/* Encabezado: nombre + precio */}
           <div className="flex items-center justify-between">
             <h3 className="text-[16px] font-semibold text-black truncate">
               {product?.name ?? "Producto"}
             </h3>
-            <div className="text-[16px] font-normal text-[#141414]">
+            <div
+              className="text-[16px] font-normal text-[#141414]
+                        translate-x-20
+                        sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
+                        lg:translate-x-0 xl:translate-x-0"
+            >
               {unitPrice} <span className="font-normal">USD</span>
             </div>
           </div>
 
           {/* Fila: Cantidad */}
-          <div className="flex items-center justify-between">
+          <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Cantidad</span>
-            <div className="flex items-center bg-[#EBEBEB] rounded-[6px] h-[36px] px-[14px] gap-2 select-none">
+            <div
+              className="justify-self-end flex items-center bg-[#EBEBEB] rounded-[6px] h-[36px] px-[14px] gap-2 select-none
+                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+            >
+              {/* stepper */}
               <button
                 onClick={dec}
                 className="text-[16px] font-bold leading-none"
@@ -120,22 +139,19 @@ const PurchaseHeader: React.FC<Props> = ({
           </div>
 
           {/* Fila: Licencia */}
-          <div className="flex items-center justify-between">
+          <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
 
             {showSelect ? (
-              <div className="relative">
+              <div
+                className="relative justify-self-end
+                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+              >
                 <select
                   aria-label="Duración de licencia"
                   value={selectedVariantId ?? variants[0]?.id ?? ""}
                   onChange={(e) => onChangeVariant?.(Number(e.target.value))}
-                  className="
-                    appearance-none
-                    w-[120px] h-[31px]
-                    bg-[#EBEBEB] rounded-[6px]
-                    pl-[14px] pr-8 text-[14px] font-normal text-black
-                    focus:outline-none
-                  "
+                  className="appearance-none w-[120px] h-[31px] bg-[#EBEBEB] rounded-[6px] pl-[14px] pr-8 text-[14px] font-normal text-black focus:outline-none"
                 >
                   {variants.map((v) => (
                     <option key={v.id} value={v.id}>
@@ -151,30 +167,43 @@ const PurchaseHeader: React.FC<Props> = ({
                 </span>
               </div>
             ) : (
-              <div className="w-[120px] h-[31px] bg-[#EBEBEB] rounded-[6px] px-[14px] flex items-center text-[14px] font-normal text-black select-none">
+              <div
+                className="justify-self-end w-[120px] h-[31px] bg-[#EBEBEB] rounded-[6px] px-[14px] flex items-center text-[14px] font-normal text-black select-none
+                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+              >
                 {currentMonths} Meses
               </div>
             )}
           </div>
 
           {/* Fila: Total a pagar */}
-          <div className="flex items-center justify-between">
+          <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Total a pagar</span>
-            <span className="text-[16px] font-bold text-[#141414]">
+            <span
+              className="justify-self-end text-[16px] font-bold text-[#141414]
+             translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+            >
               {total} USD
             </span>
           </div>
+
           {/* Link / Input cupón */}
           {!showCoupon ? (
             <button
               type="button"
               onClick={() => setShowCoupon(true)}
-              className="self-end text-[12px] underline text-[#3D3D3D]"
+              className="self-end text-[12px] underline text-[#3D3D3D]
+             translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
             >
               Ingresa código de promoción
             </button>
           ) : (
-            <div className="w-full h-[42px] flex items-center justify-between rounded-[8px] border-2 border-[#3D3D3D] pl-[12px] pr-[6px]">
+            <div
+              className="w-full h-[42px] flex items-center justify-between rounded-[8px]
+             border-2 border-[#3D3D3D] pl-[12px] pr-[6px]
+             sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
+             lg:translate-x-0 xl:translate-x-0"
+            >
               <input
                 placeholder="Ingresa el código"
                 value={coupon}

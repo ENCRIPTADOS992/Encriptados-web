@@ -38,19 +38,29 @@ const ModalPaymentController = () => {
       onClose={closeModal}
       theme={theme}
       panelClassName="
-        bg-[#F7F9FB]
-        rounded-none p-3
-        w-full h-full max-h-screen
-        md:rounded-[16px] md:h-auto md:max-h-[90vh] md:p-6
-        md:w-[560px]
-        lg:w-[696px] lg:rounded-[16px]
-        overflow-x-hidden           /* ← solo ocultamos scroll horizontal */
-      "
+  bg-[#F7F9FB]
+  rounded-none p-3
+  w-full h-full max-h-screen
+  overflow-x-hidden
+
+  /* sm (≥640px) */
+  sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6
+  sm:w-[628px]
+
+  /* md (≥768px) */
+  md:w-[628px]
+
+  /* ipad / 744px */
+  ipad:bg-[#FAFAFA]
+  ipad:w-[628px] ipad:rounded-[21px]
+
+  /* lg+ se mantiene */
+  lg:w-[696px] lg:rounded-[21px]
+"
     >
-      {/* Contenido scrolleable solo en Y (vertical) */}
       <div
         className="max-h-full overflow-y-auto overflow-x-hidden pb-4 md:pb-6 lg:pb-8"
-        style={{ scrollbarGutter: "stable" }} // opcional: evita saltos por aparición de scroll
+        style={{ scrollbarGutter: "stable" }}
       >
         <ModalStack className="ipad:w-full lg:w-full md:mx-0">
           {renderByMode()}
