@@ -15,6 +15,36 @@ type Mode = "new_user" | "roning_code" | "recharge";
 
 const ModalPaymentController = () => {
   const { isModalOpen, closeModal, params } = useModalPayment();
+  // justo después de obtener isModalOpen
+  // justo después de obtener isModalOpen
+  React.useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)"); // lg
+    const html = document.documentElement;
+    const body = document.body;
+
+    // estilos previos
+    const prevHtmlOverflow = html.style.overflowY;
+    const prevBodyOverflow = body.style.overflowY;
+    const prevBodyPR = body.style.paddingRight;
+
+    if (isModalOpen && mq.matches) {
+      const scrollbarW = window.innerWidth - html.clientWidth; // ancho de barra
+      html.style.overflowY = "hidden";
+      body.style.overflowY = "hidden"; // 👈 también el body
+      body.style.paddingRight = `${scrollbarW}px`; // evita “jump”
+    } else {
+      html.style.overflowY = prevHtmlOverflow || "";
+      body.style.overflowY = prevBodyOverflow || "";
+      body.style.paddingRight = prevBodyPR || "";
+    }
+
+    return () => {
+      html.style.overflowY = prevHtmlOverflow || "";
+      body.style.overflowY = prevBodyOverflow || "";
+      body.style.paddingRight = prevBodyPR || "";
+    };
+  }, [isModalOpen]);
+
   const { theme = "light", mode = "new_user" } = (params || {}) as {
     theme?: "light" | "dark";
     mode?: Mode;
@@ -42,26 +72,21 @@ const ModalPaymentController = () => {
   rounded-none p-3
   w-full h-full max-h-screen
   overflow-x-hidden
-
-  /* sm (≥640px) */
-  sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6
-  sm:w-[628px]
-
-  /* md (≥768px) */
+  sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6 sm:w-[628px]
   md:w-[628px]
-
-  /* ipad / 744px */
-  ipad:bg-[#FAFAFA]
-  ipad:w-[628px] ipad:rounded-[21px]
-
-  /* lg+ se mantiene */
-  lg:w-[696px] lg:rounded-[21px]
+  ipad:bg-[#FAFAFA] ipad:w-[628px] ipad:rounded-[21px]
+  lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden   /* 👈 aquí */
 "
     >
-      <div
-        className="max-h-full overflow-y-auto overflow-x-hidden pb-4 md:pb-6 lg:pb-8"
-        style={{ scrollbarGutter: "stable" }}
-      >
+<div
+  className="
+    max-h-full overflow-y-auto overflow-x-hidden overscroll-contain
+    pb-4 md:pb-6 lg:pb-8
+    lg:max-h-[calc(100vh-120px)] no-scrollbar-lg
+  "
+>
+
+
         <ModalStack className="ipad:w-full lg:w-full md:mx-0">
           {renderByMode()}
         </ModalStack>

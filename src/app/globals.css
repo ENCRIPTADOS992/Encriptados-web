@@ -164,6 +164,19 @@ html {
     display: none !important;
   }
 }
+/* Oculta la barra interna del modal SOLO en lg+ (sigue siendo scrollable) */
+@media (min-width: 1024px) {
+  .no-scrollbar-lg {
+    -ms-overflow-style: none;  /* IE/Edge antiguo */
+    scrollbar-width: none;     /* Firefox */
+  }
+  .no-scrollbar-lg::-webkit-scrollbar { /* Chrome/Edge/Safari */
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
 
 @layer components {
   /* Contenedor de todos los sub‑filtros */
