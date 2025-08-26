@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClientProviders } from "@/shared/components/Providers";
 import { ModalPaymentProvider } from "@/providers/ModalPaymentProvider";
 import ModalPaymentController from "@/shared/components/ModalPayment/ModalPaymentController";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ModalPaymentProvider>
             {children}
             {/* Aquí montamos el “controller” que escucha isModalOpen */}
-            <ModalPaymentController />
+            <Suspense fallback={null}>
+              <ModalPaymentController />
+            </Suspense>
           </ModalPaymentProvider>
         </ClientProviders>
       </body>
