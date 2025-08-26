@@ -1,7 +1,7 @@
 // src/shared/components/ModalPayment/ModalPaymentController.tsx
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import ModalPayment from "./ModalPayment";
 
@@ -16,7 +16,15 @@ import { useSearchParams } from "next/navigation";
 
 type Mode = "new_user" | "roning_code" | "recharge" | "sim";;
 
-const ModalPaymentController = () => {
+export default function ModalPaymentController() {
+  return (
+    <Suspense fallback={null}>
+      <ModalPaymentControllerInner />
+    </Suspense>
+  );
+}
+
+function ModalPaymentControllerInner() {
   const { isModalOpen, closeModal, params, openModal } = useModalPayment();
   const search = useSearchParams();
   const selectedOption = search.get("selectedOption");
@@ -107,4 +115,3 @@ const ModalPaymentController = () => {
   );
 };
 
-export default ModalPaymentController;
