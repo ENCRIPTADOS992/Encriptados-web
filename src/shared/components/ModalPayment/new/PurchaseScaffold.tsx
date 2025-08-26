@@ -7,6 +7,8 @@ import PurchaseHeader from "./PurchaseHeader";
 import PurchaseTabs, { Mode } from "./PurchaseTabs";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
 
+type UIMode = Mode | "sim";
+
 const TelegramButton =
   TelegramButtonOriginal as unknown as React.ComponentType<{
     className?: string;
@@ -17,10 +19,10 @@ type HeaderProps = React.ComponentProps<typeof PurchaseHeader>;
 
 type Props = React.PropsWithChildren<
   HeaderProps & {
-    mode: Mode;
+    mode: UIMode;                      
     enableTabSwitch?: boolean;
-    onSelectMode?: (m: Mode) => void;
-    showRechargeCTA?: boolean; 
+    onSelectMode?: (m: UIMode) => void; 
+    showRechargeCTA?: boolean;
     className?: string;
   }
 >;
@@ -37,12 +39,16 @@ export default function PurchaseScaffold({
   return (
     <div className={`flex flex-col gap-4 ${className ?? ""}`}>
       <PurchaseHeader {...headerProps} />
-      <PurchaseTabs
-        active={mode}
-        enableSwitching={enableTabSwitch}
-        onSelect={onSelectMode}
-      />
+      {mode !== "sim" && (
+        <PurchaseTabs
+          active={mode as Mode}         
+          enableSwitching={enableTabSwitch}
+          onSelect={onSelectMode as any}
+        />
+      )}
+
       {children}
+
       {showRechargeCTA && (
         <div className="pt-2">
           <div className="text-center py-6">

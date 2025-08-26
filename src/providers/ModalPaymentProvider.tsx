@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-export type Mode = "new_user" | "roning_code" | "recharge";
+export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
 interface ModalPaymentParams {
   languageCode?: string;

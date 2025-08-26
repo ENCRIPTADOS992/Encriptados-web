@@ -10,25 +10,28 @@ import ModalStack from "./atoms/ModalStack";
 import ModalNewUser from "./new/ModalNewUser";
 import ModalRoning from "./new/ModalRoning";
 import ModalRecharge from "./new/ModalRecharge";
+import ModalSIM from "./new/ModalSIM";
 
-type Mode = "new_user" | "roning_code" | "recharge";
+import { useSearchParams } from "next/navigation";
+
+type Mode = "new_user" | "roning_code" | "recharge" | "sim";;
 
 const ModalPaymentController = () => {
-  const { isModalOpen, closeModal, params } = useModalPayment();
-  // justo después de obtener isModalOpen
-  // justo después de obtener isModalOpen
+  const { isModalOpen, closeModal, params, openModal } = useModalPayment();
+  const search = useSearchParams();
+  const selectedOption = search.get("selectedOption");
+
   React.useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)"); // lg
+    const mq = window.matchMedia("(min-width: 1024px)"); 
     const html = document.documentElement;
     const body = document.body;
 
-    // estilos previos
     const prevHtmlOverflow = html.style.overflowY;
     const prevBodyOverflow = body.style.overflowY;
     const prevBodyPR = body.style.paddingRight;
 
     if (isModalOpen && mq.matches) {
-      const scrollbarW = window.innerWidth - html.clientWidth; // ancho de barra
+      const scrollbarW = window.innerWidth - html.clientWidth; 
       html.style.overflowY = "hidden";
       body.style.overflowY = "hidden"; // 👈 también el body
       body.style.paddingRight = `${scrollbarW}px`; // evita “jump”
@@ -50,12 +53,21 @@ const ModalPaymentController = () => {
     mode?: Mode;
   };
 
+  React.useEffect(() => {
+  if (!isModalOpen) return;                        // solo cuando el modal ya está visible
+  if (selectedOption === "40" && params?.mode !== "sim") {
+    openModal({ ...(params || {}), mode: "sim" }); // cambia el modo del modal
+  }
+}, [isModalOpen, selectedOption, params?.mode, openModal]);
+
   const renderByMode = () => {
     switch (mode) {
       case "recharge":
         return <ModalRecharge />;
       case "roning_code":
         return <ModalRoning />;
+      case "sim":                        
+        return <ModalSIM />;
       case "new_user":
       default:
         return <ModalNewUser />;
@@ -75,7 +87,7 @@ const ModalPaymentController = () => {
   sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6 sm:w-[628px]
   md:w-[628px]
   ipad:bg-[#FAFAFA] ipad:w-[628px] ipad:rounded-[21px]
-  lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden   /* 👈 aquí */
+  lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden 
 "
     >
 <div
