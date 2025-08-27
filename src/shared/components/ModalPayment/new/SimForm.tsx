@@ -2,6 +2,10 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
+
+const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+
 
 export default function SimForm({
   onSubmit,
@@ -22,7 +26,7 @@ export default function SimForm({
       country: "",
       postalCode: "",
       phone: "",
-      method: "card",
+      method: "crypto",
       cardName: "",
       cardNumber: "",
       exp: "",
@@ -32,7 +36,8 @@ export default function SimForm({
   });
 
   const method = watch("method");
-
+  const [terms, setTerms] = React.useState(false);
+  
   const wrap = (invalid?: boolean) =>
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
       invalid ? "border-2 border-red-500" : "border-2 border-transparent"
@@ -107,6 +112,31 @@ export default function SimForm({
           />
         </div>
       </div>
+      <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+              <input
+                type="checkbox"
+                checked={terms}
+                onChange={(e) => setTerms(e.target.checked)}
+                className="
+            w-[18px] h-[18px]
+            border-2 border-black           
+            rounded-[2px]
+            accent-black                
+            focus:outline-none focus:ring-0
+          "
+              />
+              <span className="select-none">
+                Acepto{" "}
+                <Link
+                  href={TERMS_URL}
+                  target="_blank"
+                  className="underline font-medium"
+                >
+                  términos y condiciones
+                </Link>{" "}
+                de la compra
+              </span>
+            </label>
 
       {/* Método de pago (mismo estilo que NewUserForm) */}
       <div className="space-y-2">

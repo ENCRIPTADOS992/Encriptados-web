@@ -74,20 +74,23 @@ export default function ModalSIM() {
 
   return (
     <PurchaseScaffold
-      mode="sim"           
-      enableTabSwitch={false}     
-      showRechargeCTA={false}
-      product={product}
-      selectedVariantId={selectedVariant?.id ?? null}
-      onChangeVariant={(id) => setSelectedVariant(variants.find(v => v.id === id) ?? null)}
-      quantity={quantity}
-      setQuantity={setQuantity}
-      coupon={coupon}
-      setCoupon={setCoupon}
-      onApplyCoupon={onApplyCoupon}
-      unitPrice={unitPrice}
-    >
-      <SimForm onSubmit={handleSubmit} />
-    </PurchaseScaffold>
+    mode="sim"
+    enableTabSwitch={false}
+    showRechargeCTA={false}
+    product={product}
+    selectedVariantId={selectedVariant?.id ?? null}
+    onChangeVariant={(id) => setSelectedVariant(variants.find(v => v.id === id) ?? null)}
+    quantity={quantity}
+    setQuantity={setQuantity}
+    coupon={coupon}
+    setCoupon={setCoupon}
+    onApplyCoupon={onApplyCoupon}
+    unitPrice={unitPrice}
+
+    showLicense={false}  
+    shipping={75}         
+  >
+    <SimForm onSubmit={handleSubmit} />
+  </PurchaseScaffold>
   );
 }
