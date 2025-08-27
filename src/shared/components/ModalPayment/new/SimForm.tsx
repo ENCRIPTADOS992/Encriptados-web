@@ -36,7 +36,7 @@ export default function SimForm({
   });
 
   const method = watch("method");
-  const [terms, setTerms] = React.useState(false);
+  const [terms, setTerms] = React.useState(true);
   
   const wrap = (invalid?: boolean) =>
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${

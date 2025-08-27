@@ -20,7 +20,7 @@ export default function RoningForm({
 }: Props) {
   const [codes, setCodes] = React.useState<string[]>([]);
   const [emailVal, setEmailVal] = React.useState(email);
-  const [terms, setTerms] = React.useState(false);
+  const [terms, setTerms] = React.useState(true);
   const [method, setMethod] = React.useState<"card" | "crypto">("crypto");
 
   const [cardName, setCardName] = React.useState("");

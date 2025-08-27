@@ -6,11 +6,11 @@ import React from "react";
 export type Mode = "new_user" | "roning_code" | "recharge";
 
 export default function PurchaseTabs({
-  active,
+  active = "roning_code",
   onSelect,
   enableSwitching = false,
 }: {
-  active: Mode;
+  active?: Mode;
   onSelect?: (m: Mode) => void;
   enableSwitching?: boolean;
 }) {
