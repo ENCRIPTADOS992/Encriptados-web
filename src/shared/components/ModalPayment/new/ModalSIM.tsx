@@ -10,8 +10,20 @@ import SimForm from "./SimForm";
 
 type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
 type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
-type ModalProduct = ProductFromAPI & { variants?: Variant[]; images?: { src: string }[]; price?: number | string; name?: string; licensetime?: number | string; };
-
+type ConfigSim = { type: string; sku?: string; code?: string };
+ type ModalProduct = ProductFromAPI & {
+   variants?: Variant[];
+   images?: { src: string }[];
+   price?: number | string;
+   name?: string;
+   licensetime?: number | string;
+   config_sim?: ConfigSim[];
+   provider?: string;
+   brand?: string;
+   shipping?: string;           
+   type_product?: string;       
+   category?: { id?: number | string; name?: string };
+ };
 export default function ModalSIM() {
   const { params } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
@@ -22,6 +34,41 @@ export default function ModalSIM() {
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
   });
+  type FormType =
+    | "encrypted_physical"
+    | "encrypted_esim"
+    | "encrypted_data"
+    | "encrypted_minutes"
+    | "encrypted_generic";
+
+  const formType: FormType = React.useMemo(() => {
+    const prov = (product?.provider || product?.brand || "").toLowerCase();
+    const cfg  = (product?.config_sim?.[0]?.type || "").toLowerCase();
+    const ship = (product?.shipping || "").toLowerCase();
+    const phys = (product?.type_product || "").toLowerCase();
+    if (!prov.includes("encript")) return "encrypted_generic";
+    if (cfg === "esim")    return "encrypted_esim";
+    if (cfg === "data")    return "encrypted_data";
+    if (cfg === "minutes") return "encrypted_minutes";
+    if (ship === "si" || phys === "fisico") return "encrypted_physical";
+    return "encrypted_generic";
+  }, [product]);
+
+  const minutesPlans = React.useMemo(() => {
+    if (formType !== "encrypted_minutes") return [];
+    const items = product?.config_sim ?? [];
+    return items.map((c, i) => ({
+      id: c.sku || c.code || i,
+      label: c.code ? `${c.code} Minutos` : (c.sku || "Plan"),
+      value: Number(c.code) || 0,
+    }));
+  }, [formType, product]);
+
+
+  const [selectedPlanId, setSelectedPlanId] = React.useState<string | number | null>(null);
+  React.useEffect(() => {
+    setSelectedPlanId(minutesPlans[0]?.id ?? null);
+  }, [minutesPlans]);
 
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
   const [quantity, setQuantity] = React.useState(1);
@@ -45,6 +92,7 @@ export default function ModalSIM() {
     postalCode: string;
     phone: string;
     method: "card" | "crypto";
+    simNumber?: string;
   };
 
   const handleSubmit = async (data: Shipping) => {
@@ -60,7 +108,12 @@ export default function ModalSIM() {
       // si tu SDK acepta metadata, envía los datos de envío:
       // @ts-expect-error metadata opcional según implementación
       metadata: {
-        type: "SIM_PHYSICAL",
+        type:
+          formType === "encrypted_esim" ? "ESIM"
+          : formType === "encrypted_data" ? "RECHARGE_DATA"
+          : formType === "encrypted_minutes" ? "RECHARGE_MINUTES"
+          : formType === "encrypted_physical" ? "SIM_PHYSICAL"
+          : "SIM_GENERIC",
         telegram: data.telegram,
         fullName: data.fullName,
         address: data.address,
@@ -68,6 +121,8 @@ export default function ModalSIM() {
         postalCode: data.postalCode,
         phone: data.phone,
         quantity,
+        simNumber: data.simNumber,
+        planId: selectedPlanId,
       },
     });
   };
@@ -88,9 +143,20 @@ export default function ModalSIM() {
     unitPrice={unitPrice}
 
     showLicense={false}  
-    shipping={75}         
+    // Ocultar envío en physical/data/minutes → no pases shipping
+    shipping={
+      formType === "encrypted_physical" || formType === "encrypted_data" || formType === "encrypted_minutes" || formType === "encrypted_esim"
+        ? undefined
+        : 75
+    }
+    // minutesPlans={minutesPlans}
+    selectedPlanId={selectedPlanId}
+    onChangePlan={setSelectedPlanId}
+    showEsimAddon={formType === "encrypted_data" || formType === "encrypted_minutes"}
+    esimAddonPrice={7.5}
+    esimAddonLabel="Lleva E-SIM por 7.50 USD"         
   >
-    <SimForm onSubmit={handleSubmit} />
+    <SimForm onSubmit={handleSubmit} formType={formType} />
   </PurchaseScaffold>
   );
 }

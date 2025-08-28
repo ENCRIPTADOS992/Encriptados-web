@@ -24,19 +24,22 @@ type Props = {
   product: ProductLike | undefined;
   selectedVariantId?: number | null;
   onChangeVariant?: (id: number) => void;
-
   quantity: number;
   setQuantity: (n: number) => void;
-
   coupon: string;
   setCoupon: (s: string) => void;
   onApplyCoupon: () => void;
-
   unitPrice: number;
-
   shipping?: number;
   showLicense?: boolean;
   currency?: string;
+  minutesPlans?: Array<{ id: string | number; label: string; value?: number }>;
+  selectedPlanId?: string | number | null;
+  onChangePlan?: (id: string | number) => void;
+  showEsimAddon?: boolean;
+  esimAddonPrice?: number;
+  esimAddonLabel?: string;
+
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -52,6 +55,13 @@ const PurchaseHeader: React.FC<Props> = ({
   shipping,
   showLicense = true,
   currency = "USD",
+  minutesPlans,
+  selectedPlanId,
+  onChangePlan,
+  showEsimAddon = false,
+  esimAddonPrice = 0,
+  esimAddonLabel = "Lleva E-SIM",
+
 }) => {
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
@@ -66,18 +76,25 @@ const PurchaseHeader: React.FC<Props> = ({
     (Number(product?.licensetime) || 12);
 
   const subtotal = unitPrice * quantity;
-  const total = Math.max(subtotal + (shipping ?? 0), 0);
+  const [includeEsimAddon, setIncludeEsimAddon] = React.useState(false);
+  const total = Math.max(
+    subtotal + (shipping ?? 0) + (showEsimAddon && includeEsimAddon ? esimAddonPrice : 0),
+    0
+  );
 
   const [openLicense, setOpenLicense] = React.useState(false);
   const licenseRef = React.useRef<HTMLDivElement | null>(null);
+  const [openPlan, setOpenPlan] = React.useState(false);
+  const planRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
-      if (!licenseRef.current) return;
-      if (!licenseRef.current.contains(e.target as Node)) setOpenLicense(false);
+      if (licenseRef.current && !licenseRef.current.contains(e.target as Node)) setOpenLicense(false);
+      if (planRef.current && !planRef.current.contains(e.target as Node)) setOpenPlan(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenLicense(false);
+      if (e.key === "Escape") setOpenPlan(false);
     };
     document.addEventListener("mousedown", onDocClick);
     document.addEventListener("keydown", onKey);
@@ -166,8 +183,9 @@ const PurchaseHeader: React.FC<Props> = ({
           </div>
 
           {/* Fila: Licencia (ocultable) */}
-          <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-            <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
+          {showLicense && (
+            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
+              <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
 
             {showSelect ? (
               <div
@@ -256,6 +274,7 @@ const PurchaseHeader: React.FC<Props> = ({
               </div>
             )}
           </div>
+          )}
 
           {/* Fila: Envío (si se provee) */}
           {typeof shipping === "number" && (
@@ -361,6 +380,75 @@ const PurchaseHeader: React.FC<Props> = ({
             >
               Ingresa código de promoción
             </button>
+          )}
+            {/* Fila: Plan (solo si hay minutesPlans) */}
+          {!!minutesPlans?.length && (
+            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
+              <span className="text-[14px] text-[#3D3D3D]">Plan</span>
+              <div
+                ref={planRef}
+                className="relative z-[1000] justify-self-end
+                           translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+              >
+                <button
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={openPlan}
+                  onClick={() => setOpenPlan((v) => !v)}
+                  className="group w-[120px] h-[32px] rounded-[8px] bg-[#EBEBEB]
+                             pl-[10px] pr-7 text-[12px] font-normal text-black
+                             outline-none ring-0 focus:ring-2 focus:ring-black/10
+                             flex items-center justify-between transition"
+                >
+                  <span className="truncate">
+                    {minutesPlans.find(p => p.id === (selectedPlanId ?? "__none__"))?.label
+                      ?? minutesPlans[0]?.label
+                      ?? "Plan"}
+                  </span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D]">▾</span>
+                </button>
+
+                {openPlan && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 w-[160px]
+                               rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
+                               max-h-60 overflow-auto"
+                  >
+                    {minutesPlans.map((p) => {
+                      const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
+                      return (
+                        <button
+                          key={String(p.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => { onChangePlan?.(p.id); setOpenPlan(false); }}
+                          className={`w-full px-3 py-2 text-left text-[12px] ${isActive ? "bg-black text-white" : "hover:bg-[#F2F2F2] text-[#141414]"}`}
+                        >
+                          {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Upsell eSIM (data & minutes) */}
+          {showEsimAddon && (
+            <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+              <input
+                type="checkbox"
+                checked={includeEsimAddon}
+                onChange={(e) => setIncludeEsimAddon(e.target.checked)}
+                className="w-[16px] h-[16px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+              />
+              <span className="select-none">
+                {esimAddonLabel.replace("7.50", (esimAddonPrice ?? 0).toFixed(2))}
+              </span>
+            </label>
           )}
         </div>
       </div>

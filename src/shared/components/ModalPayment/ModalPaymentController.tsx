@@ -14,7 +14,7 @@ import ModalSIM from "./new/ModalSIM";
 
 import { useSearchParams } from "next/navigation";
 
-type Mode = "new_user" | "roning_code" | "recharge" | "sim";;
+type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
 export default function ModalPaymentController() {
   return (
@@ -27,7 +27,20 @@ export default function ModalPaymentController() {
 function ModalPaymentControllerInner() {
   const { isModalOpen, closeModal, params, openModal } = useModalPayment();
   const search = useSearchParams();
-  const selectedOption = search.get("selectedOption");
+  const qpProvider = (search.get("provider") || "").toLowerCase();
+  const qpSelectedOption = search.get("selectedOption");
+
+  const isEncryptedSim = React.useMemo(() => {
+  const p: any = params || {};
+  const prov = (p.provider || p.brand || "").toLowerCase();
+  const catId = String(p.categoryId ?? p.category?.id ?? "");
+  const catName = (p.categoryName || p.category?.name || "").toLowerCase();
+
+  const providerCandidate = prov || qpProvider;
+  const isSimCategory =
+    catId === "40" || catName.includes("sim") || qpSelectedOption === "40";
+  return isSimCategory && providerCandidate.includes("encript");
+  }, [params, qpProvider, qpSelectedOption]);
 
   const { theme = "light", mode = "roning_code" } = (params || {}) as {
     theme?: "light" | "dark";
@@ -35,11 +48,14 @@ function ModalPaymentControllerInner() {
   };
 
   React.useEffect(() => {
-  if (!isModalOpen) return;                       
-  if (selectedOption === "40" && params?.mode !== "sim") {
-    openModal({ ...(params || {}), mode: "sim" });
-  }
-}, [isModalOpen, selectedOption, params?.mode, openModal]);
+    if (!isModalOpen) return;
+    if (isEncryptedSim && mode !== "sim") {
+      openModal({ ...(params || {}), mode: "sim" });
+    }
+    if (!isEncryptedSim && mode === "sim") {
+      openModal({ ...(params || {}), mode: "roning_code" });
+    }
+  }, [isModalOpen, isEncryptedSim, mode, openModal, params]);
 
   const renderByMode = () => {
     switch (mode) {
@@ -47,7 +63,7 @@ function ModalPaymentControllerInner() {
         return <ModalRoning />;
       case "recharge":
         return <ModalRecharge />;
-      case "sim":                        
+      case "sim":
         return <ModalSIM />;
       case "new_user":
       default:
@@ -71,20 +87,17 @@ function ModalPaymentControllerInner() {
   lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden 
 "
     >
-<div
-  className="
+      <div
+        className="
     max-h-full overflow-y-auto overflow-x-hidden overscroll-contain
     pb-4 md:pb-6 lg:pb-8
     lg:max-h-[calc(100vh-120px)] no-scrollbar-lg
   "
->
-
-
+      >
         <ModalStack className="ipad:w-full lg:w-full md:mx-0">
           {renderByMode()}
         </ModalStack>
       </div>
     </ModalPayment>
   );
-};
-
+}

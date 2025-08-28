@@ -7,10 +7,24 @@ import Link from "next/link";
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
 
+type FormType =
+  | "encrypted_physical"
+  | "encrypted_esim"
+  | "encrypted_data"
+  | "encrypted_minutes"
+  | "encrypted_generic";
+
 export default function SimForm({
   onSubmit,
+  formType = "encrypted_generic",
 }: {
   onSubmit: (data: any) => void | Promise<void>;
+  formType?: 
+    | "encrypted_physical"
+    | "encrypted_esim"
+    | "encrypted_data"
+    | "encrypted_minutes"
+    | "encrypted_generic";
 }) {
   const {
     register,
@@ -21,6 +35,7 @@ export default function SimForm({
     defaultValues: {
       email: "",
       telegram: "",
+      simNumber: "",
       fullName: "",
       address: "",
       country: "",
@@ -38,6 +53,56 @@ export default function SimForm({
   const method = watch("method");
   const [terms, setTerms] = React.useState(true);
   
+  const CFG = React.useMemo(() => {
+    switch (formType) {
+      case "encrypted_physical":
+        return {
+          emailFullWidth: false,
+          showTelegram: true,
+          showFullName: true,  reqFullName: true,
+          showAddress:  true,  reqAddress:  true,
+          showCountry:  true,  reqCountry:  true,
+          showPostal:   true,  reqPostal:   true,
+          showPhone:    true,  reqPhone:    true,
+          showSimNumber:false, reqSimNumber:false,
+        };
+      case "encrypted_esim":
+        return {
+          emailFullWidth: true,
+          showTelegram: false,
+          showFullName: false, reqFullName: false,
+          showAddress:  false, reqAddress:  false,
+          showCountry:  false, reqCountry:  false,
+          showPostal:   false, reqPostal:   false,
+          showPhone:    false, reqPhone:    false,
+          showSimNumber:false, reqSimNumber:false,
+        };
+      case "encrypted_data": 
+      case "encrypted_minutes": 
+        return {
+          emailFullWidth: true,
+          showTelegram: false,
+          showFullName: false, reqFullName: false,
+          showAddress:  false, reqAddress:  false,
+          showCountry:  false, reqCountry:  false,
+          showPostal:   false, reqPostal:   false,
+          showPhone:    false, reqPhone:    false,
+          showSimNumber:true,  reqSimNumber:true,
+        };
+      default: 
+        return {
+          emailFullWidth: false,
+          showTelegram: true,
+          showFullName: true,  reqFullName: true,
+          showAddress:  true,  reqAddress:  true,
+          showCountry:  true,  reqCountry:  true,
+          showPostal:   true,  reqPostal:   true,
+          showPhone:    true,  reqPhone:    true,
+          showSimNumber:false, reqSimNumber:false,
+        };
+    }
+  }, [formType]);
+
   const wrap = (invalid?: boolean) =>
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
       invalid ? "border-2 border-red-500" : "border-2 border-transparent"
@@ -45,8 +110,8 @@ export default function SimForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-      {/* Email / Telegram */}
-      <div className="grid grid-cols-2 gap-3">
+       {/* Email (full width para eSIM/recargas)  Telegram opcional */}
+      {CFG.emailFullWidth ? (
         <div className={wrap(!!errors.email)}>
           <input
             {...register("email", { required: true })}
@@ -55,63 +120,101 @@ export default function SimForm({
             className="w-full bg-transparent outline-none text-[14px]"
           />
         </div>
-        <div className={wrap()}>
+      ) : (
+        <div className="grid grid-cols-2 gap-3">
+          <div className={wrap(!!errors.email)}>
+            <input
+              {...register("email", { required: true })}
+              placeholder="Ingresa tu Email"
+              type="email"
+              className="w-full bg-transparent outline-none text-[14px]"
+            />
+          </div>
+          {CFG.showTelegram ? (
+            <div className={wrap()}>
+              <input
+                {...register("telegram")}
+                placeholder="ID Telegram (opcional)"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+          ) : (
+            <div />
+          )}
+        </div>
+      )}
+
+      {/* Número de SIM (solo recargas datos/minutos) */}
+      {CFG.showSimNumber && (
+        <div className={wrap(!!errors.simNumber)}>
           <input
-            {...register("telegram")}
-            placeholder="ID Telegram (opcional)"
+            {...register("simNumber", { required: CFG.reqSimNumber })}
+            placeholder="Número de SIM"
             className="w-full bg-transparent outline-none text-[14px]"
           />
         </div>
-      </div>
+      )}
+ 
 
-      {/* Nombre envío */}
-      <div className={wrap(!!errors.fullName)}>
-        <input
-          {...register("fullName", { required: true })}
-          placeholder="Nombre de envío"
-          className="w-full bg-transparent outline-none text-[14px]"
-        />
-      </div>
-
-      {/* Dirección / País */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className={wrap(!!errors.address)}>
+      {/* Nombre envío (solo físico/genérico) */}
+      {CFG.showFullName && (
+        <div className={wrap(!!errors.fullName)}>
           <input
-            {...register("address", { required: true })}
-            placeholder="Dirección de envío"
+            {...register("fullName", { required: CFG.reqFullName })}
+            placeholder="Nombre de envío"
             className="w-full bg-transparent outline-none text-[14px]"
           />
         </div>
-        <div className={wrap(!!errors.country)}>
-          <select
-            {...register("country", { required: true })}
-            className="w-full bg-transparent outline-none text-[14px]"
-          >
-            <option value="">País</option>
-            <option value="US">Estados Unidos</option>
-            <option value="MX">México</option>
-            <option value="CO">Colombia</option>
-          </select>
+      )}
+
+      {/* Dirección / País (solo físico/genérico) */}
+      {CFG.showAddress && (
+        <div className="grid grid-cols-2 gap-3">
+          <div className={wrap(!!errors.address)}>
+            <input
+              {...register("address", { required: CFG.reqAddress })}
+              placeholder="Dirección de envío"
+              className="w-full bg-transparent outline-none text-[14px]"
+            />
+          </div>
+          <div className={wrap(!!errors.country)}>
+            <select
+              {...register("country", { required: CFG.reqCountry })}
+              className="w-full bg-transparent outline-none text-[14px]"
+            >
+              <option value="">País</option>
+              <option value="US">Estados Unidos</option>
+              <option value="MX">México</option>
+              <option value="CO">Colombia</option>
+            </select>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Código postal / Teléfono */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className={wrap(!!errors.postalCode)}>
-          <input
-            {...register("postalCode", { required: true })}
-            placeholder="Código postal"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
+      {/* Código postal / Teléfono (solo físico/genérico) */}
+      {(CFG.showPostal || CFG.showPhone) && (
+        <div className="grid grid-cols-2 gap-3">
+          {CFG.showPostal ? (
+            <div className={wrap(!!errors.postalCode)}>
+              <input
+                {...register("postalCode", { required: CFG.reqPostal })}
+                placeholder="Código postal"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+          ) : <div />}
+          {CFG.showPhone ? (
+            <div className={wrap(!!errors.phone)}>
+              <input
+                {...register("phone", { required: CFG.reqPhone })}
+                placeholder="Teléfono"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+          ) : <div />}
         </div>
-        <div className={wrap(!!errors.phone)}>
-          <input
-            {...register("phone", { required: true })}
-            placeholder="Teléfono"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-      </div>
+      )}
       <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
               <input
                 type="checkbox"
