@@ -29,42 +29,15 @@ function ModalPaymentControllerInner() {
   const search = useSearchParams();
   const selectedOption = search.get("selectedOption");
 
-  React.useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)"); 
-    const html = document.documentElement;
-    const body = document.body;
-
-    const prevHtmlOverflow = html.style.overflowY;
-    const prevBodyOverflow = body.style.overflowY;
-    const prevBodyPR = body.style.paddingRight;
-
-    if (isModalOpen && mq.matches) {
-      const scrollbarW = window.innerWidth - html.clientWidth; 
-      html.style.overflowY = "hidden";
-      body.style.overflowY = "hidden"; // 👈 también el body
-      body.style.paddingRight = `${scrollbarW}px`; // evita “jump”
-    } else {
-      html.style.overflowY = prevHtmlOverflow || "";
-      body.style.overflowY = prevBodyOverflow || "";
-      body.style.paddingRight = prevBodyPR || "";
-    }
-
-    return () => {
-      html.style.overflowY = prevHtmlOverflow || "";
-      body.style.overflowY = prevBodyOverflow || "";
-      body.style.paddingRight = prevBodyPR || "";
-    };
-  }, [isModalOpen]);
-
   const { theme = "light", mode = "new_user" } = (params || {}) as {
     theme?: "light" | "dark";
     mode?: Mode;
   };
 
   React.useEffect(() => {
-  if (!isModalOpen) return;                        // solo cuando el modal ya está visible
+  if (!isModalOpen) return;                       
   if (selectedOption === "40" && params?.mode !== "sim") {
-    openModal({ ...(params || {}), mode: "sim" }); // cambia el modo del modal
+    openModal({ ...(params || {}), mode: "sim" });
   }
 }, [isModalOpen, selectedOption, params?.mode, openModal]);
 

@@ -68,6 +68,25 @@ const PurchaseHeader: React.FC<Props> = ({
   const subtotal = unitPrice * quantity;
   const total = Math.max(subtotal + (shipping ?? 0), 0);
 
+  const [openLicense, setOpenLicense] = React.useState(false);
+  const licenseRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!licenseRef.current) return;
+      if (!licenseRef.current.contains(e.target as Node)) setOpenLicense(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenLicense(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
   return (
     <div className="w-full">
       {/* Título */}
@@ -147,43 +166,96 @@ const PurchaseHeader: React.FC<Props> = ({
           </div>
 
           {/* Fila: Licencia (ocultable) */}
-          {showLicense && (
-            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-              <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
-              {showSelect ? (
-                <div
-                  className="relative justify-self-end
-                  translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+          <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
+            <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
+
+            {showSelect ? (
+              <div
+                ref={licenseRef}
+                className="
+        relative justify-self-end
+        translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
+      "
+              >
+                {/* Control */}
+                <button
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={openLicense}
+                  onClick={() => setOpenLicense((v) => !v)}
+                  className="
+          group w-[140px] h-[34px]  /* un pelín más alto y ancho */
+          rounded-[8px] bg-[#EBEBEB]
+          pl-[12px] pr-8 text-[14px] font-normal text-black
+          outline-none ring-0 focus:ring-2 focus:ring-black/10
+          flex items-center justify-between
+          transition
+        "
                 >
-                  <select
-                    aria-label="Duración de licencia"
-                    value={selectedVariantId ?? variants[0]?.id ?? ""}
-                    onChange={(e) => onChangeVariant?.(Number(e.target.value))}
-                    className="appearance-none w-[120px] h-[31px] bg-[#EBEBEB] rounded-[6px] pl-[14px] pr-8 text-[14px] font-normal text-black focus:outline-none"
-                  >
-                    {variants.map((v) => (
-                      <option key={v.id} value={v.id}>
-                        {v.licensetime} Meses
-                      </option>
-                    ))}
-                  </select>
-                  <span
-                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D]"
-                    aria-hidden="true"
-                  >
+                  <span className="truncate">
+                    {variants.find((v) => v.id === (selectedVariantId ?? -1))
+                      ?.licensetime ??
+                      variants[0]?.licensetime ??
+                      currentMonths}{" "}
+                    Meses
+                  </span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D] transition group-aria-expanded:rotate-180">
                     ▾
                   </span>
-                </div>
-              ) : (
-                <div
-                  className="justify-self-end w-[120px] h-[31px] bg-[#EBEBEB] rounded-[6px] px-[14px] flex items-center text-[14px] font-normal text-black select-none
-                  translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
-                >
-                  {currentMonths} Meses
-                </div>
-              )}
-            </div>
-          )}
+                </button>
+
+                {/* Menu — SIEMPRE ABAJO y DENTRO */}
+                {openLicense && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="
+            absolute top-full right-0 mt-2   /* abre hacia abajo */
+            z-50 w-[200px] rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
+            max-h-60 overflow-auto             /* no se sale del modal en sm/md/744 */
+          "
+                  >
+                    {variants.map((v) => {
+                      const isActive =
+                        (selectedVariantId ?? variants[0]?.id) === v.id;
+                      return (
+                        <button
+                          key={v.id}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangeVariant?.(v.id);
+                            setOpenLicense(false);
+                          }}
+                          className={`
+                  w-full px-3 py-2 text-left text-[14px]
+                  ${
+                    isActive
+                      ? "bg-black text-white"
+                      : "hover:bg-[#F2F2F2] text-[#141414]"
+                  }
+                `}
+                        >
+                          {v.licensetime} Meses
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div
+                className="
+        justify-self-end w-[140px] h-[34px]
+        bg-[#EBEBEB] rounded-[8px] px-[12px]
+        flex items-center text-[14px] font-normal text-black select-none
+        translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
+      "
+              >
+                {currentMonths} Meses
+              </div>
+            )}
+          </div>
 
           {/* Fila: Envío (si se provee) */}
           {typeof shipping === "number" && (
@@ -212,39 +284,67 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Link / Input cupón */}
           {showCoupon ? (
             <div
-              className="w-full h-[42px] flex items-center justify-between rounded-[8px]
-      border-2 border-[#3D3D3D] pl-[12px] pr-[6px]
+              className="
+      flex items-center
+      w-full h-[42px]
       sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
-      lg:translate-x-0 xl:translate-x-0"
+      lg:translate-x-0 xl:translate-x-0
+      lg:w-[306px]   /* ancho fijo en lg+ */
+    "
             >
-              <input
-                placeholder="Ingresa el código"
-                value={coupon}
-                onChange={(e) => setCoupon(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") {
-                    setShowCoupon(false);
-                  }
-                }}
-                autoFocus
-                className="flex-1 bg-transparent outline-none placeholder-black/50 text-[14px]"
-              />
+              {/* INPUT-BOX con borde */}
+              <div
+                className="
+        flex items-center
+        h-[42px]
+        rounded-[8px] border-[1.5px] border-[#3D3D3D]
+        pl-[12px] pr-[12px]
 
+        w-[250px]           
+        sm:w-[180px]        
+        md:w-[140px]       
+        ipad:w-[150px]      
+        lg:w-[180px]        
+      "
+              >
+                <input
+                  placeholder="Ingresa el código"
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") setShowCoupon(false);
+                  }}
+                  autoFocus
+                  className="flex-1 bg-transparent outline-none placeholder-black/50 text-[14px]"
+                />
+              </div>
+
+              {/* Botón Aplicar */}
               <button
                 onClick={onApplyCoupon}
                 type="button"
-                className="h-[31px] rounded-[6px] bg-black text-white text-[12px] font-bold px-[12px] flex items-center justify-center ml-2"
+                className="
+        ml-1 shrink-0 w-[70px] h-[42px]
+        rounded-[6px] bg-black text-white
+        text-[12px] font-bold
+        flex items-center justify-center
+      "
               >
                 Aplicar
               </button>
 
-              {/* Botón X para cerrar */}
+              {/* Botón X (grande tipo texto) */}
               <button
                 type="button"
                 onClick={() => setShowCoupon(false)}
                 aria-label="Cerrar cupón"
                 title="Cerrar"
-                className="ml-4 px-2 text-[#5D5D5D] hover:text-black text-[30px] leading-none"
+                className="
+        ml-1 shrink-0 
+        text-[30px] leading-none
+        text-[#5D5D5D] hover:text-black
+        flex items-center justify-center
+      "
               >
                 ×
               </button>
@@ -253,8 +353,11 @@ const PurchaseHeader: React.FC<Props> = ({
             <button
               type="button"
               onClick={() => setShowCoupon(true)}
-              className="self-end text-[12px] underline text-[#3D3D3D]
-      translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+              className="
+      self-end text-[12px] underline text-[#3D3D3D]
+      translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
+      lg:translate-x-0 xl:translate-x-0
+    "
             >
               Ingresa código de promoción
             </button>
