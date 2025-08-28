@@ -173,7 +173,7 @@ const PurchaseHeader: React.FC<Props> = ({
               <div
                 ref={licenseRef}
                 className="
-        relative justify-self-end
+        relative z-[1000] justify-self-end
         translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
       "
               >
@@ -184,9 +184,9 @@ const PurchaseHeader: React.FC<Props> = ({
                   aria-expanded={openLicense}
                   onClick={() => setOpenLicense((v) => !v)}
                   className="
-          group w-[140px] h-[34px]  /* un pelín más alto y ancho */
+          group w-[120px] h-[32px]
           rounded-[8px] bg-[#EBEBEB]
-          pl-[12px] pr-8 text-[14px] font-normal text-black
+          pl-[10px] pr-7 text-[12px] font-normal text-black
           outline-none ring-0 focus:ring-2 focus:ring-black/10
           flex items-center justify-between
           transition
@@ -210,9 +210,9 @@ const PurchaseHeader: React.FC<Props> = ({
                     role="listbox"
                     tabIndex={-1}
                     className="
-            absolute top-full right-0 mt-2   /* abre hacia abajo */
-            z-50 w-[200px] rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
-            max-h-60 overflow-auto             /* no se sale del modal en sm/md/744 */
+            absolute top-full right-0 mt-2   
+            z-50 w-[120px] rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
+            max-h-60 overflow-auto   
           "
                   >
                     {variants.map((v) => {

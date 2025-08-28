@@ -29,7 +29,7 @@ function ModalPaymentControllerInner() {
   const search = useSearchParams();
   const selectedOption = search.get("selectedOption");
 
-  const { theme = "light", mode = "new_user" } = (params || {}) as {
+  const { theme = "light", mode = "roning_code" } = (params || {}) as {
     theme?: "light" | "dark";
     mode?: Mode;
   };
@@ -43,10 +43,10 @@ function ModalPaymentControllerInner() {
 
   const renderByMode = () => {
     switch (mode) {
-      case "recharge":
-        return <ModalRecharge />;
       case "roning_code":
         return <ModalRoning />;
+      case "recharge":
+        return <ModalRecharge />;
       case "sim":                        
         return <ModalSIM />;
       case "new_user":

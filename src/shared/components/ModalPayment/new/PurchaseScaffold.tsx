@@ -41,6 +41,7 @@ export default function PurchaseScaffold({
       <PurchaseHeader {...headerProps} />
       {mode !== "sim" && (
         <PurchaseTabs
+          active={mode}
           enableSwitching={enableTabSwitch}
           onSelect={onSelectMode as any}
         />

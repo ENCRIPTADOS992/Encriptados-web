@@ -53,7 +53,7 @@ export default function ModalRecharge() {
 
   return (
     <PurchaseScaffold
-      mode="recharge"
+      mode={mode} 
       enableTabSwitch={true}                  
       onSelectMode={(m) => openModal({ ...params, mode: m })}
       showRechargeCTA={true}                   
