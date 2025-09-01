@@ -117,7 +117,7 @@ const PurchaseHeader: React.FC<Props> = ({
         <div
           className="
     relative overflow-hidden mx-auto sm:mx-0 flex-none
-    h-[152px] w-[382px] rounded-t-[12px]        /* móvil (xs) */
+    h-[152px] w-[382px] rounded-t-[12px] max-[390px]:w-[360px]        /* móvil (xs) */
     sm:h-[194px] sm:w-[282px] sm:rounded-[12px] /* sm */
     md:h-[194px] md:w-[282px] md:rounded-[12px] /* md */
     ipad:h-[194px] ipad:w-[282px] ipad:rounded-[12px] /* 744 */
@@ -143,10 +143,7 @@ const PurchaseHeader: React.FC<Props> = ({
               {product?.name ?? "Producto"}
             </h3>
             <div
-              className="text-[16px] font-normal text-[#141414]
-                        translate-x-20
-                        sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
-                        lg:translate-x-0 xl:translate-x-0"
+              className="text-[16px] font-normal text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
             >
               {unitPrice} <span className="font-normal">USD</span>
             </div>
@@ -157,7 +154,7 @@ const PurchaseHeader: React.FC<Props> = ({
             <span className="text-[14px] text-[#3D3D3D]">Cantidad</span>
             <div
               className="justify-self-end flex items-center bg-[#EBEBEB] rounded-[6px] h-[36px] px-[14px] gap-2 select-none
-                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
             >
               {/* stepper */}
               <button
@@ -190,10 +187,7 @@ const PurchaseHeader: React.FC<Props> = ({
             {showSelect ? (
               <div
                 ref={licenseRef}
-                className="
-        relative z-[1000] justify-self-end
-        translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
-      "
+                className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
               >
                 {/* Control */}
                 <button
@@ -267,8 +261,7 @@ const PurchaseHeader: React.FC<Props> = ({
         justify-self-end w-[140px] h-[34px]
         bg-[#EBEBEB] rounded-[8px] px-[12px]
         flex items-center text-[14px] font-normal text-black select-none
-        translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
-      "
+        translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
               >
                 {currentMonths} Meses
               </div>
@@ -281,8 +274,7 @@ const PurchaseHeader: React.FC<Props> = ({
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
               <span className="text-[14px] text-[#3D3D3D]">Envío</span>
               <span
-                className="justify-self-end text-[16px] text-[#141414]
-                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+                className="justify-self-end text-[16px] text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
               >
                 {shipping} {currency}
               </span>
@@ -293,8 +285,7 @@ const PurchaseHeader: React.FC<Props> = ({
           <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Total a pagar</span>
             <span
-              className="justify-self-end text-[16px] font-bold text-[#141414]
-             translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+              className="justify-self-end text-[16px] font-bold text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
             >
               {total} {currency}
             </span>
@@ -372,11 +363,7 @@ const PurchaseHeader: React.FC<Props> = ({
             <button
               type="button"
               onClick={() => setShowCoupon(true)}
-              className="
-      self-end text-[12px] underline text-[#3D3D3D]
-      translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
-      lg:translate-x-0 xl:translate-x-0
-    "
+              className="self-end text-[12px] underline text-[#3D3D3D] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
             >
               Ingresa código de promoción
             </button>
@@ -387,8 +374,7 @@ const PurchaseHeader: React.FC<Props> = ({
               <span className="text-[14px] text-[#3D3D3D]">Plan</span>
               <div
                 ref={planRef}
-                className="relative z-[1000] justify-self-end
-                           translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0"
+                className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
               >
                 <button
                   type="button"
