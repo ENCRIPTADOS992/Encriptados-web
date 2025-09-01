@@ -82,27 +82,30 @@ export async function confirmCardPayment(
 ): Promise<{
   status: "succeeded" | "processing" | "requires_action" | "canceled";
   error?: string;
+  intent?: import("@stripe/stripe-js").PaymentIntent;
 }> {
-  const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-    payment_method: {
-      card: cardNumberEl,
-      billing_details: {
-        name: billing.name,
-        email: billing.email,
-        address: billing.postal_code ? { postal_code: billing.postal_code } : undefined,
+  const { error, paymentIntent } = await stripe.confirmCardPayment(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardNumberEl,
+        billing_details: {
+          name: billing.name,
+          email: billing.email,
+          address: billing.postal_code
+            ? { postal_code: billing.postal_code }
+            : undefined,
+        },
       },
-    },
-  });
+    }
+  );
 
-  if (error) return { status: "requires_action", error: error.message };
-  if (!paymentIntent) return { status: "requires_action", error: "Sin PaymentIntent" };
-
-  switch (paymentIntent.status) {
-    case "succeeded": return { status: "succeeded" };
-    case "processing": return { status: "processing" };
-    case "requires_action": return { status: "requires_action" };
-    case "canceled": return { status: "canceled" };
-    default:
-      return { status: "requires_action", error: `Estado inesperado: ${paymentIntent.status}` };
+  if (error) {
+    return { status: "requires_action", error: error.message };
   }
+  if (!paymentIntent) {
+    return { status: "requires_action", error: "Sin PaymentIntent" };
+  }
+
+  return { status: paymentIntent.status as any, intent: paymentIntent };
 }
