@@ -39,7 +39,7 @@ type Props = {
   showEsimAddon?: boolean;
   esimAddonPrice?: number;
   esimAddonLabel?: string;
-
+  onTotalChange?: (total: number) => void;
 };
 
 const PurchaseHeader: React.FC<Props> = ({

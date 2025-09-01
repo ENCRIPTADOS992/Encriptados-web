@@ -10,7 +10,13 @@ import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
 
 type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
-type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
+type Variant = {
+  id: number;
+  licensetime: number;
+  price: number;
+  sku?: string;
+  image?: string;
+};
 
 type ModalProduct = ProductFromAPI & {
   variants?: Variant[];
@@ -21,7 +27,7 @@ type ModalProduct = ProductFromAPI & {
 };
 
 export default function ModalRoning() {
-  const { params, openModal } = useModalPayment();
+  const { params, openModal, closeModal } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
   const { loading, payRoaming } = useCheckout();
 
@@ -31,7 +37,9 @@ export default function ModalRoning() {
     enabled: !!productid,
   });
 
-  const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
+  const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(
+    null
+  );
   const [quantity, setQuantity] = React.useState(1);
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
@@ -50,14 +58,30 @@ export default function ModalRoning() {
   const onApplyCoupon = () =>
     setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
-  const handleSubmit = async (data: { email: string; method: "card" | "crypto" }) => {
+  const amountUsd = Math.max(Number(unitPrice) * quantity - discount, 0);
+
+  const payWithCrypto = async (email: string) => {
+    const provider: PayProvider = "kriptomus";
+    await payRoaming({
+      productId: Number(productid),
+      qty: quantity,
+      email,
+      provider,
+      amount: amountUsd,
+      currency: "USD",
+    });
+  };
+
+  const handleSubmit = async (data: {
+    email: string;
+    method: "card" | "crypto";
+  }) => {
     try {
       const productIdNum = Number(productid);
       const amount = Math.max(Number(unitPrice) * quantity - discount, 0);
       const currency = "USD";
-      const provider: PayProvider = data.method === "card" ? "stripe" : "kriptomus";
-
-
+      const provider: PayProvider =
+        data.method === "card" ? "stripe" : "kriptomus";
 
       await payRoaming({
         productId: productIdNum,
@@ -75,6 +99,7 @@ export default function ModalRoning() {
       }
     }
   };
+
   return (
     <PurchaseScaffold
       mode="roning_code"
@@ -96,10 +121,13 @@ export default function ModalRoning() {
       <RoningForm
         quantity={quantity}
         email=""
-        onSubmit={handleSubmit}
         loading={loading}
+        productId={Number(productid)}
+        orderType="roaming"             
+        amountUsd={amountUsd}
+        onPayCrypto={payWithCrypto}
+        onPaid={() => closeModal?.()}
       />
-
     </PurchaseScaffold>
   );
 }
