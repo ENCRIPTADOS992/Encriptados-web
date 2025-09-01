@@ -6,7 +6,7 @@ import Image from "next/image";
 
 type Variant = {
   id: number;
-  licensetime: number;
+  licensetime?: number; 
   price: number;
   sku?: string;
   image?: string;
@@ -222,36 +222,40 @@ const PurchaseHeader: React.FC<Props> = ({
                     role="listbox"
                     tabIndex={-1}
                     className="
-            absolute top-full right-0 mt-2   
-            z-50 w-[120px] rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
-            max-h-60 overflow-auto   
-          "
+  absolute top-full right-0 mt-2 z-50
+  w-auto min-w-[120px] sm:min-w-[130px] md:min-w-[130px] ipad:min-w-[130px]
+  rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
+  max-h-60 overflow-auto
+"
+
                   >
                     {variants.map((v) => {
-                      const isActive =
-                        (selectedVariantId ?? variants[0]?.id) === v.id;
-                      return (
-                        <button
-                          key={v.id}
-                          role="option"
-                          aria-selected={isActive}
-                          onClick={() => {
-                            onChangeVariant?.(v.id);
-                            setOpenLicense(false);
-                          }}
-                          className={`
-                  w-full px-3 py-2 text-left text-[14px]
-                  ${
-                    isActive
-                      ? "bg-black text-white"
-                      : "hover:bg-[#F2F2F2] text-[#141414]"
-                  }
-                `}
-                        >
-                          {v.licensetime} Meses
-                        </button>
-                      );
-                    })}
+  // Igual que el encabezado: caemos a product.licensetime o currentMonths
+  const months =
+    (typeof v.licensetime === "number" ? v.licensetime : undefined) ??
+    (product?.licensetime ? Number(product.licensetime) : undefined) ??
+    currentMonths;
+
+  const isActive = (selectedVariantId ?? variants[0]?.id) === v.id;
+
+  return (
+    <button
+      key={v.id}
+      role="option"
+      aria-selected={isActive}
+      onClick={() => {
+        onChangeVariant?.(v.id);
+        setOpenLicense(false);
+      }}
+      className={`
+        w-full px-3 py-2 text-left text-[14px] whitespace-nowrap
+        ${isActive ? "bg-black text-white" : "hover:bg-[#F2F2F2] text-[#141414]"}
+      `}
+    >
+      {months} Meses
+    </button>
+  );
+})}
                   </div>
                 )}
               </div>
