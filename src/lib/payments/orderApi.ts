@@ -95,7 +95,7 @@ export async function createUserIdOrderAndIntent({
 
   const r = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" }, // según tu doc para /userid
+    headers: { "Content-Type": "application/json" }, 
     body: JSON.stringify(payload),
   });
 

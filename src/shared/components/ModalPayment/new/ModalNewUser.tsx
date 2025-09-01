@@ -23,7 +23,7 @@ type ModalProduct = ProductFromAPI & {
 export default function ModalNewUser() {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
-  const { payUserId, loading } = useCheckout(); // lo usamos para CRYPTO
+  const { payUserId, loading } = useCheckout(); 
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -77,13 +77,12 @@ export default function ModalNewUser() {
             productId: productIdNum,
             email,
             username: undefined,
-            provider: "kriptomus", // usa el literal que acepta tu tipo Provider
+            provider: "kriptomus",
             amount,
             currency: "USD",
           });
         }}
         onPaid={() => {
-          // 👇 aquí cerramos el modal grande del provider
           closeModal();
         }}
         loading={loading}

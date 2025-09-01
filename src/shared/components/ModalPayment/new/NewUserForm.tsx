@@ -17,7 +17,7 @@ type Props = {
   quantity: number;
   productId: number;
   amountUsd: number;
-  orderType: OrderType; // aquí será siempre "userid"
+  orderType: OrderType;
   onPayCrypto?: (email: string) => Promise<void>;
   onPaid?: () => void;
   loading?: boolean;
@@ -33,31 +33,25 @@ export default function NewUserForm({
   onPaid,
   loading = false,
 }: Props) {
-  // usernames
   const [usernames, setUsernames] = React.useState<string[]>([]);
 
-  // contacto/legales
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(true);
   const [method, setMethod] = React.useState<Method>("crypto");
 
-  // billing básicos visibles
   const [cardName, setCardName] = React.useState("");
   const [postal, setPostal] = React.useState("");
 
-  // stripe
   const { status: stripeStatus, error: mountError, stripeRef, splitRef } = useStripeSplit(method === "card");
   const [stripeError, setStripeError] = React.useState<string | null>(null);
 
   const [clientSecret, setClientSecret] = React.useState("");
   const [orderId, setOrderId] = React.useState<number | null>(null);
 
-  // polling
   const [polling, setPolling] = React.useState(false);
   const pollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
   const pollStartedAtRef = React.useRef<number>(0);
 
-  // Modal éxito
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [successPI, setSuccessPI] = React.useState<any>(null);
 
@@ -84,17 +78,14 @@ export default function NewUserForm({
     });
   };
 
-  // validaciones
   const reUser = /^[a-zA-Z0-9]{4,20}$/;
   const usernamesOk = usernames.length === quantity && usernames.every((u) => reUser.test(u));
 
   const emailOk = /\S+@\S+\.\S+/.test(emailVal) && emailVal.length <= 100 && emailVal.length > 5;
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
 
-  // fases
   const phase = method === "crypto" ? "crypto" : clientSecret ? "card_confirm" : "card_init";
 
-  // habilitar botón
   const canPay =
     !loading &&
     terms &&
@@ -122,7 +113,6 @@ export default function NewUserForm({
         if (status === "fulfilled" || status === "pending_admin" || status === "cancelled") {
           clearInterval(pollRef.current!);
           setPolling(false);
-          // no cerramos aún; dejamos que el usuario vea el modal de éxito
         } else if (Date.now() - pollStartedAtRef.current > 75_000) {
           clearInterval(pollRef.current!);
           setPolling(false);
@@ -141,7 +131,6 @@ export default function NewUserForm({
       return;
     }
 
-    // FASE 1 (UserID): crear orden + intent
     if (!clientSecret) {
       try {
         setStripeError(null);
@@ -163,7 +152,6 @@ export default function NewUserForm({
       return;
     }
 
-    // FASE 2: confirmar
     try {
       if (!stripeRef.current || !splitRef.current?.number) throw new Error("Stripe no está listo.");
       setStripeError(null);
@@ -197,7 +185,6 @@ export default function NewUserForm({
   const errBorderFilled = (val: string, ok: boolean) =>
     `border-2 ${val.trim() ? (ok ? "border-transparent" : "border-red-500") : "border-transparent"}`;
 
-  // states “ok” cosméticos (no se usan para Stripe)
   const nameOk = cardName.trim().length > 0;
   const postalOk = postal.trim().length > 0;
 
@@ -359,7 +346,6 @@ export default function NewUserForm({
         )}
       </div>
 
-      {/* Modal de éxito: para UserID el backend devolverá luego `pending_admin` → el texto del modal puede explicar eso */}
       <PaymentSuccessModal
         open={showSuccess}
         onClose={() => {
