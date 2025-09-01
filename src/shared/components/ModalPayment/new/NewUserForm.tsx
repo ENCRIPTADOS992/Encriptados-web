@@ -363,11 +363,11 @@ export default function NewUserForm({
       <PaymentSuccessModal
         open={showSuccess}
         onClose={() => {
-          setShowSuccess(false);
-          onPaid?.(); // ← cierra el modal padre cuando el usuario cierra este modal
+          setShowSuccess(false);   
+          onPaid?.();              
         }}
         intent={successPI}
-        orderId={orderId ?? undefined}
+        orderId={orderId}
       />
     </>
   );

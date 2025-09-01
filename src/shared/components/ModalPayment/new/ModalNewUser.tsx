@@ -21,7 +21,7 @@ type ModalProduct = ProductFromAPI & {
 };
 
 export default function ModalNewUser() {
-  const { params, openModal } = useModalPayment();
+  const { params, openModal, closeModal } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
   const { payUserId, loading } = useCheckout(); // lo usamos para CRYPTO
 
@@ -50,7 +50,7 @@ export default function ModalNewUser() {
   const amount = Math.max(unitPrice * quantity - discount, 0);
   const productIdNum = Number(productid);
 
-  return (
+   return (
     <PurchaseScaffold
       mode="new_user"
       enableTabSwitch={true}
@@ -67,27 +67,24 @@ export default function ModalNewUser() {
       unitPrice={unitPrice}
     >
       <NewUserForm
-        // necesarios para construir la orden userid
         quantity={quantity}
         email=""
         productId={productIdNum}
         amountUsd={amount}
-        // pagos
         orderType="userid"
         onPayCrypto={async (email) => {
-          // CRYPTO por Cryptomus (corrige el typo 'kriptomus' → 'cryptomus')
           await payUserId({
             productId: productIdNum,
             email,
-            username: undefined, // si quieres pasar el sugerido principal, envíalo aquí
-            provider: "kriptomus",
+            username: undefined,
+            provider: "kriptomus", // usa el literal que acepta tu tipo Provider
             amount,
             currency: "USD",
           });
         }}
         onPaid={() => {
-          // Cierra el modal padre al terminar (después de ver el modal de éxito)
-          openModal({});
+          // 👇 aquí cerramos el modal grande del provider
+          closeModal();
         }}
         loading={loading}
       />
