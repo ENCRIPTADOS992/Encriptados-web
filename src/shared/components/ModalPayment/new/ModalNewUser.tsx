@@ -23,7 +23,7 @@ type ModalProduct = ProductFromAPI & {
 export default function ModalNewUser() {
   const { params, openModal } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
-  const { payUserId, loading } = useCheckout();
+  const { payUserId, loading } = useCheckout(); // lo usamos para CRYPTO
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -43,36 +43,12 @@ export default function ModalNewUser() {
   }, [product]);
 
   const unitPrice =
-    (variants.length
-      ? selectedVariant?.price ?? variants[0]?.price
-      : Number(product?.price)) || 0;
+    (variants.length ? selectedVariant?.price ?? variants[0]?.price : Number(product?.price)) || 0;
 
-  const onApplyCoupon = () =>
-    setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
+  const onApplyCoupon = () => setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
-  const handleSubmit = async (data: { email: string; usernames: string[]; method: "card" | "crypto" }) => {
-    try {
-      const productIdNum = Number(productid);
-      const amount = Math.max(unitPrice * quantity - discount, 0);
-      const currency = "USD" as const;
-      const provider = data.method === "card" ? "stripe" : "kriptomus" as const;
-
-      await payUserId({
-        productId: productIdNum,
-        email: data.email,
-        username: data.usernames[0] || undefined,
-        provider,
-        amount,
-        currency,
-      });
-    } catch (e: any) {
-      if (e?.code === "out_of_stock") {
-        alert("Stock insuficiente");
-      } else {
-        alert(e?.message || "Error procesando el pago");
-      }
-    }
-  };
+  const amount = Math.max(unitPrice * quantity - discount, 0);
+  const productIdNum = Number(productid);
 
   return (
     <PurchaseScaffold
@@ -82,9 +58,7 @@ export default function ModalNewUser() {
       showRechargeCTA={false}
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
-      onChangeVariant={(id) =>
-        setSelectedVariant(variants.find((v) => v.id === id) ?? null)
-      }
+      onChangeVariant={(id) => setSelectedVariant(variants.find((v) => v.id === id) ?? null)}
       quantity={quantity}
       setQuantity={setQuantity}
       coupon={coupon}
@@ -93,9 +67,29 @@ export default function ModalNewUser() {
       unitPrice={unitPrice}
     >
       <NewUserForm
-        quantity={quantity} 
+        // necesarios para construir la orden userid
+        quantity={quantity}
         email=""
-        onSubmit={handleSubmit}
+        productId={productIdNum}
+        amountUsd={amount}
+        // pagos
+        orderType="userid"
+        onPayCrypto={async (email) => {
+          // CRYPTO por Cryptomus (corrige el typo 'kriptomus' → 'cryptomus')
+          await payUserId({
+            productId: productIdNum,
+            email,
+            username: undefined, // si quieres pasar el sugerido principal, envíalo aquí
+            provider: "kriptomus",
+            amount,
+            currency: "USD",
+          });
+        }}
+        onPaid={() => {
+          // Cierra el modal padre al terminar (después de ver el modal de éxito)
+          openModal({});
+        }}
+        loading={loading}
       />
     </PurchaseScaffold>
   );

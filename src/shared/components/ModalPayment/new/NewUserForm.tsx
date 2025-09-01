@@ -3,6 +3,10 @@
 
 import React from "react";
 import Link from "next/link";
+import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
+import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
+import { confirmCardPayment } from "@/payments/stripeClient";
+import { createUserIdOrderAndIntent, fetchPublicStatus, type OrderType } from "@/lib/payments/orderApi";
 
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
@@ -11,38 +15,66 @@ type Method = "card" | "crypto";
 type Props = {
   email?: string;
   quantity: number;
-  onSubmit?: (data: {
-    email: string;
-    usernames: string[];
-    method: Method;
-  }) => void;
+  productId: number;
+  amountUsd: number;
+  orderType: OrderType; // aquí será siempre "userid"
+  onPayCrypto?: (email: string) => Promise<void>;
+  onPaid?: () => void;
+  loading?: boolean;
 };
 
-export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
+export default function NewUserForm({
+  email = "",
+  quantity,
+  productId,
+  amountUsd,
+  orderType,
+  onPayCrypto,
+  onPaid,
+  loading = false,
+}: Props) {
+  // usernames
   const [usernames, setUsernames] = React.useState<string[]>([]);
+
+  // contacto/legales
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(true);
-  const [method, setMethod] = React.useState<"card" | "crypto">("crypto");
+  const [method, setMethod] = React.useState<Method>("crypto");
 
+  // billing básicos visibles
   const [cardName, setCardName] = React.useState("");
-  const [cardNumber, setCardNumber] = React.useState("");
-  const [exp, setExp] = React.useState("");
-  const [cvc, setCvc] = React.useState("");
   const [postal, setPostal] = React.useState("");
 
-  const reUser = /^[a-zA-Z0-9]{4,20}$/;
+  // stripe
+  const { status: stripeStatus, error: mountError, stripeRef, splitRef } = useStripeSplit(method === "card");
+  const [stripeError, setStripeError] = React.useState<string | null>(null);
+
+  const [clientSecret, setClientSecret] = React.useState("");
+  const [orderId, setOrderId] = React.useState<number | null>(null);
+
+  // polling
+  const [polling, setPolling] = React.useState(false);
+  const pollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+  const pollStartedAtRef = React.useRef<number>(0);
+
+  // Modal éxito
+  const [showSuccess, setShowSuccess] = React.useState(false);
+  const [successPI, setSuccessPI] = React.useState<any>(null);
 
   React.useEffect(() => {
     setUsernames((prev) => {
       const next = [...prev];
-      if (quantity > prev.length) {
-        next.push(...Array(quantity - prev.length).fill(""));
-      } else if (quantity < prev.length) {
-        next.length = quantity;
-      }
+      if (quantity > prev.length) next.push(...Array(quantity - prev.length).fill(""));
+      else if (quantity < prev.length) next.length = quantity;
       return next;
     });
   }, [quantity]);
+
+  React.useEffect(() => {
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
+  }, []);
 
   const setUsernameAt = (idx: number, val: string) => {
     setUsernames((prev) => {
@@ -52,328 +84,291 @@ export default function NewUserForm({ email = "", onSubmit, quantity }: Props) {
     });
   };
 
-  const emailOk =
-    /\S+@\S+\.\S+/.test(emailVal) &&
-    emailVal.length <= 100 &&
-    emailVal.length > 5;
+  // validaciones
+  const reUser = /^[a-zA-Z0-9]{4,20}$/;
+  const usernamesOk = usernames.length === quantity && usernames.every((u) => reUser.test(u));
 
-  const errBorderFilled = (val: string, ok: boolean) =>
-    `border-2 ${
-      val.trim()
-        ? ok
-          ? "border-transparent"
-          : "border-red-500"
-        : "border-transparent"
-    }`;
+  const emailOk = /\S+@\S+\.\S+/.test(emailVal) && emailVal.length <= 100 && emailVal.length > 5;
+  const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
 
-  const onlyLetters = (s: string) =>
-    s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
+  // fases
+  const phase = method === "crypto" ? "crypto" : clientSecret ? "card_confirm" : "card_init";
 
-  const onlyDigits = (s: string, max = 99) =>
-    s.replace(/\D/g, "").slice(0, max);
-
-  const formatExpiry = (s: string) => {
-    const d = s.replace(/\D/g, "").slice(0, 4);
-    if (d.length <= 2) return d;
-    return `${d.slice(0, 2)}/${d.slice(2)}`;
-  };
-
-  const isValidExpiry = (mmYY: string) => {
-    if (!/^\d{2}\/\d{2}$/.test(mmYY)) return false;
-    const [mmS, yyS] = mmYY.split("/");
-    const mm = +mmS;
-    if (mm < 1 || mm > 12) return false;
-
-    const now = new Date();
-    const yNow = now.getFullYear() % 100;
-    const mNow = now.getMonth() + 1;
-    const yy = +yyS;
-
-    if (yy > yNow) return true;
-    if (yy < yNow) return false;
-    return mm >= mNow;
-  };
-
-  const isValidPostal = (cp: string) => {
-    const s = cp.trim().toUpperCase();
-    const patterns = [
-      /^\d{5}(-\d{4})?$/,
-      /^[A-Z]\d[A-Z][ -]?\d[A-Z]\d$/,
-      /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/,
-      /^\d{5}$/,
-      /^\d{6}$/,
-      /^\d{7}$/,
-      /^[A-HJ-NP-Z]\d{4}[A-Z]{3}$|^\d{4}$/,
-    ];
-    return patterns.some((rx) => rx.test(s));
-  };
-
-  const digitsCard = (cardNumber ?? "").replace(/\D/g, "");
-  const nameOk =
-    cardName.trim().length > 0 &&
-    /^[A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]+$/.test(cardName);
-  const numberOk = digitsCard.length >= 13 && digitsCard.length <= 19;
-  const expOk = isValidExpiry(exp);
-  const cvcOk = /^\d{3}$/.test(cvc);
-  const postalOk = isValidPostal(postal);
-
-  const usernamesOk =
-    usernames.length === quantity && usernames.every((u) => reUser.test(u));
-
+  // habilitar botón
   const canPay =
+    !loading &&
     terms &&
     emailOk &&
-    (method === "crypto" || (nameOk && numberOk && expOk && cvcOk && postalOk));
+    usernamesOk &&
+    (phase === "crypto" ? true : stripeStatus === "ready" && cardName.trim().length > 1);
 
-  const handleSubmit = () => {
+  const buttonLabel =
+    method === "crypto"
+      ? "Pagar ahora"
+      : phase === "card_init"
+      ? "Continuar"
+      : polling
+      ? "Procesando…"
+      : "Confirmar pago";
+
+  function startPolling(id: number) {
+    if (pollRef.current) clearInterval(pollRef.current);
+    setPolling(true);
+    pollStartedAtRef.current = Date.now();
+
+    const tick = async () => {
+      try {
+        const { status } = await fetchPublicStatus(id);
+        if (status === "fulfilled" || status === "pending_admin" || status === "cancelled") {
+          clearInterval(pollRef.current!);
+          setPolling(false);
+          // no cerramos aún; dejamos que el usuario vea el modal de éxito
+        } else if (Date.now() - pollStartedAtRef.current > 75_000) {
+          clearInterval(pollRef.current!);
+          setPolling(false);
+        }
+      } catch {}
+    };
+
+    pollRef.current = setInterval(tick, 2000);
+  }
+
+  const handlePay = async () => {
     if (!canPay) return;
-    onSubmit?.({
-      email: emailVal.trim(),
-      usernames: usernames.map((u) => u.trim()),
-      method,
-    });
+
+    if (method === "crypto") {
+      await onPayCrypto?.(emailVal.trim());
+      return;
+    }
+
+    // FASE 1 (UserID): crear orden + intent
+    if (!clientSecret) {
+      try {
+        setStripeError(null);
+        const primaryUsername = usernames[0]?.trim() || undefined;
+
+        const { order_id, client_secret } = await createUserIdOrderAndIntent({
+          productId,
+          email: emailVal.trim(),
+          username: primaryUsername,
+          amountUsd,
+          currency: "USD",
+        });
+
+        setOrderId(order_id);
+        setClientSecret(client_secret);
+      } catch (e: any) {
+        setStripeError(e?.message || "No se pudo iniciar el pago.");
+      }
+      return;
+    }
+
+    // FASE 2: confirmar
+    try {
+      if (!stripeRef.current || !splitRef.current?.number) throw new Error("Stripe no está listo.");
+      setStripeError(null);
+      if (orderId && !polling) startPolling(orderId);
+
+      const res = await confirmCardPayment(
+        stripeRef.current!,
+        clientSecret,
+        splitRef.current.number,
+        {
+          name: cardName.trim() || undefined,
+          email: emailVal.trim(),
+          postal_code: postal.trim() || undefined,
+        }
+      );
+
+      if (res?.status === "succeeded") {
+        setSuccessPI(res.intent ?? null);
+        setShowSuccess(true);
+        if (pollRef.current) clearInterval(pollRef.current);
+        setPolling(false);
+        return;
+      }
+
+      if (res.error) setStripeError(res.error);
+    } catch (e: any) {
+      setStripeError(e?.message || "Error confirmando el pago.");
+    }
   };
 
+  const errBorderFilled = (val: string, ok: boolean) =>
+    `border-2 ${val.trim() ? (ok ? "border-transparent" : "border-red-500") : "border-transparent"}`;
+
+  // states “ok” cosméticos (no se usan para Stripe)
+  const nameOk = cardName.trim().length > 0;
+  const postalOk = postal.trim().length > 0;
+
   return (
-    <div className="flex flex-col gap-3">
-      <div className="space-y-2">
-        <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-          Ingresa los nombres sugeridos
-        </p>
-        <p className="rounded-[8px] px-3 py-2 text-[12px] leading-[14px] bg-amber-50 border border-amber-200">
-          Puedes sugerir nombres de usuarios con un mínimo de 4 caracteres y
-          máximo 20 alfanuméricos.
-        </p>
-
-        {usernames.map((val, idx) => {
-          const invalid = val.length > 0 && !reUser.test(val);
-          return (
-            <div
-              key={idx}
-              className={`w-full h-[42px] rounded-[8px] border-2 ${
-                invalid ? "border-red-500" : "border-[#3D3D3D]"
-              } px-[14px] py-[8px] flex items-center gap-[10px]`}
-            >
-              <input
-                value={val}
-                onChange={(e) => setUsernameAt(idx, e.target.value)}
-                placeholder="Ingresa nombre de usuario"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="space-y-2">
-        <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-          Correo electrónico para recibir licencia
-        </p>
-
-        <div className="self-start w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-          <input
-            value={emailVal}
-            onChange={(e) => setEmailVal(e.target.value)}
-            placeholder="Email"
-            type="email"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-      </div>
-
-      <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
-        <input
-          type="checkbox"
-          checked={terms}
-          onChange={(e) => setTerms(e.target.checked)}
-          className="
-      w-[18px] h-[18px]
-      border-2 border-black           
-      rounded-[2px]
-      accent-black                
-      focus:outline-none focus:ring-0
-    "
-        />
-        <span className="select-none">
-          Acepto{" "}
-          <Link
-            href={TERMS_URL}
-            target="_blank"
-            className="underline font-medium"
-          >
-            términos y condiciones
-          </Link>{" "}
-          de la compra
-        </span>
-      </label>
-
-      <div className="space-y-2">
-        <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-          Método de pago
-        </p>
-
-        {/* 2 columnas siempre; botones responsivos */}
-        <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
-          <button
-            type="button"
-            aria-pressed={method === "card"}
-            onClick={() => setMethod("card")}
-            className={[
-              "w-full", 
-              "rounded-[8px]",
-              "flex flex-col items-center justify-center",
-              "gap-1 sm:gap-2 ipad:gap-[10px]", 
-              "h-[78px] px-2 py-2", 
-              "sm:h-[76px] sm:px-3 sm:py-3", 
-              "ipad:h-[80px] ipad:px-[14px] ipad:pt-[24px] ipad:pb-[24px]", 
-              method === "card"
-                ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
-                : "bg-[#EBEBEB] border border-transparent",
-            ].join(" ")}
-          >
-            <img
-              src="/images/home/add_card.png"
-              alt=""
-              className="w-5 h-5 sm:w-6 sm:h-6 ipad:w-6 ipad:h-6"
-            />
-            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center">
-              Tarjeta de crédito
-            </span>
-          </button>
-
-          <button
-            type="button"
-            aria-pressed={method === "crypto"}
-            onClick={() => setMethod("crypto")}
-            className={[
-              "w-full",
-              "rounded-[8px]",
-              "flex flex-col items-center justify-center",
-              "gap-1 sm:gap-2 ipad:gap-[10px]",
-              "h-[78px] px-2 py-2",
-              "sm:h-[76px] sm:px-3 sm:py-3",
-              "ipad:h-[80px] ipad:px-[14px] ipad:pt-[24px] ipad:pb-[24px]",
-              method === "crypto"
-                ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
-                : "bg-[#EBEBEB] border border-transparent",
-            ].join(" ")}
-          >
-            <img
-              src="/images/home/send_money.png"
-              alt=""
-              className="w-5 h-5 sm:w-6 sm:h-6 ipad:w-6 ipad:h-6"
-            />
-            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center">
-              Criptomonedas
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {method === "card" && (
+    <>
+      <div className="flex flex-col gap-3">
+        {/* Usernames */}
         <div className="space-y-2">
-          <div
-            className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
-              cardName,
-              nameOk
-            )}`}
-          >
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Ingresa los nombres sugeridos</p>
+          <p className="rounded-[8px] px-3 py-2 text-[12px] leading-[14px] bg-amber-50 border border-amber-200">
+            Mínimo 4 y máximo 20 caracteres alfanuméricos.
+          </p>
+
+          {usernames.map((val, idx) => {
+            const invalid = val.length > 0 && !reUser.test(val);
+            return (
+              <div
+                key={idx}
+                className={`w-full h-[42px] rounded-[8px] border-2 ${
+                  invalid ? "border-red-500" : "border-[#3D3D3D]"
+                } px-[14px] py-[8px] flex items-center gap-[10px]`}
+              >
+                <input
+                  value={val}
+                  onChange={(e) => setUsernameAt(idx, e.target.value)}
+                  placeholder="Ingresa nombre de usuario"
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Email */}
+        <div className="space-y-2">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Correo electrónico para recibir licencia</p>
+          <div className="self-start w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
             <input
-              value={cardName}
-              onChange={(e) => setCardName(onlyLetters(e.target.value))}
-              placeholder="Titular de la tarjeta"
-              className="w-full bg-transparent outline-none text-[14px]"
-            />
-          </div>
-
-          <div
-            className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center justify-between ${errBorderFilled(
-              cardNumber,
-              numberOk
-            )}`}
-          >
-            <input
-              value={cardNumber}
-              onChange={(e) => setCardNumber(onlyDigits(e.target.value, 19))}
-              placeholder="Número de tarjeta"
-              inputMode="numeric"
-              className="flex-1 bg-transparent outline-none text-[14px] pr-[8px]"
-            />
-            <img
-              src="/images/home/logos_mastercard.png"
-              alt="Mastercard"
-              width={24}
-              height={24}
-              className="shrink-0"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-[8px]">
-            <div
-              className={`h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
-                exp,
-                expOk
-              )}`}
-            >
-              <input
-                value={exp}
-                onChange={(e) => setExp(formatExpiry(e.target.value))}
-                placeholder="MM/AA"
-                inputMode="numeric"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-
-            <div
-              className={`h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
-                cvc,
-                cvcOk
-              )}`}
-            >
-              <input
-                type="password"
-                value={cvc}
-                onChange={(e) => setCvc(onlyDigits(e.target.value, 3))}
-                placeholder="CVC"
-                inputMode="numeric"
-                autoComplete="cc-csc"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          </div>
-
-          <div
-            className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(
-              postal,
-              postalOk
-            )}`}
-          >
-            <input
-              value={postal}
-              onChange={(e) => setPostal(e.target.value)}
-              placeholder="Código postal"
+              value={emailVal}
+              onChange={(e) => setEmailVal(e.target.value)}
+              placeholder="Email"
+              type="email"
               className="w-full bg-transparent outline-none text-[14px]"
             />
           </div>
         </div>
-      )}
 
-      <button
-        type="button"
-        disabled={!canPay}
-        onClick={handleSubmit}
-        aria-disabled={!canPay}
-        className={`
-    mt-2 w-full h-[54px] 
-    rounded-[8px] px-[10px]
-    inline-flex items-center justify-center gap-[10px]
-    text-white text-[14px] font-semibold
-    ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"}
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30
-  `}
-      >
-        Pagar ahora
-      </button>
-    </div>
+        {/* Términos */}
+        <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+          <input
+            type="checkbox"
+            checked={terms}
+            onChange={(e) => setTerms(e.target.checked)}
+            className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+          />
+          <span className="select-none">
+            Acepto{" "}
+            <Link href={TERMS_URL} target="_blank" className="underline font-medium">
+              términos y condiciones
+            </Link>{" "}
+            de la compra
+          </span>
+        </label>
+
+        {/* Método de pago */}
+        <div className="space-y-2">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Método de pago</p>
+
+          <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
+            <button
+              type="button"
+              aria-pressed={method === "card"}
+              onClick={() => setMethod("card")}
+              className={[
+                "w-full rounded-[8px] flex flex-col items-center justify-center gap-1",
+                "h-[78px] px-2 py-2",
+                method === "card" ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]" : "bg-[#EBEBEB] border border-transparent",
+              ].join(" ")}
+            >
+              <img src="/images/home/add_card.png" alt="" className="w-5 h-5" />
+              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Tarjeta de crédito</span>
+            </button>
+
+            <button
+              type="button"
+              aria-pressed={method === "crypto"}
+              onClick={() => setMethod("crypto")}
+              className={[
+                "w-full rounded-[8px] flex flex-col items-center justify-center gap-1",
+                "h-[78px] px-2 py-2",
+                method === "crypto" ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]" : "bg-[#EBEBEB] border border-transparent",
+              ].join(" ")}
+            >
+              <img src="/images/home/send_money.png" alt="" className="w-5 h-5" />
+              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Criptomonedas</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Campos tarjeta (Stripe Split Elements + billing básicos) */}
+        {method === "card" && (
+          <div className="space-y-2">
+            {/* Titular */}
+            <div className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(cardName, nameOk)}`}>
+              <input
+                value={cardName}
+                onChange={(e) => setCardName(onlyLetters(e.target.value))}
+                placeholder="Titular de la tarjeta"
+                className="w-full bg-transparent outline-none text-[14px]"
+                autoComplete="cc-name"
+              />
+            </div>
+
+            {/* Split Elements */}
+            <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+              <div id="card-number-el" className="w-full" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-[8px]">
+              <div className="h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div id="card-expiry-el" className="w-full" />
+              </div>
+              <div className="h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div id="card-cvc-el" className="w-full" />
+              </div>
+            </div>
+
+            {/* CP opcional para AVS */}
+            <div className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(postal, postalOk)}`}>
+              <input
+                value={postal}
+                onChange={(e) => setPostal(e.target.value)}
+                placeholder="Código postal"
+                className="w-full bg-transparent outline-none text-[14px]"
+                autoComplete="postal-code"
+              />
+            </div>
+
+            {(mountError || stripeError) && <p className="text-red-600 text-sm">{mountError || stripeError}</p>}
+          </div>
+        )}
+
+        {/* Botón */}
+        <button
+          type="button"
+          disabled={!canPay}
+          onClick={handlePay}
+          aria-disabled={!canPay}
+          className={`mt-2 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
+          text-white text-[14px] font-semibold ${
+            canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
+          } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
+        >
+          {buttonLabel}
+        </button>
+
+        {method === "card" && polling && (
+          <p className="text-xs text-[#3D3D3D]">Procesando la orden… puede tardar unos segundos.</p>
+        )}
+      </div>
+
+      {/* Modal de éxito: para UserID el backend devolverá luego `pending_admin` → el texto del modal puede explicar eso */}
+      <PaymentSuccessModal
+        open={showSuccess}
+        onClose={() => {
+          setShowSuccess(false);
+          onPaid?.(); // ← cierra el modal padre cuando el usuario cierra este modal
+        }}
+        intent={successPI}
+        orderId={orderId ?? undefined}
+      />
+    </>
   );
 }
