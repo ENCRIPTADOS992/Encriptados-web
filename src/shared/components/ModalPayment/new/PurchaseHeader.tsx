@@ -6,7 +6,7 @@ import Image from "next/image";
 
 type Variant = {
   id: number;
-  licensetime?: number; 
+  licensetime?: number | string;
   price: number;
   sku?: string;
   image?: string;
@@ -61,24 +61,44 @@ const PurchaseHeader: React.FC<Props> = ({
   showEsimAddon = false,
   esimAddonPrice = 0,
   esimAddonLabel = "Lleva E-SIM",
-
 }) => {
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
 
   const variants = product?.variants ?? [];
-  const showSelect = variants.length > 1;
   const [showCoupon, setShowCoupon] = React.useState(false);
 
+  // Normalizador seguro: convierte "3" -> 3, ignora basura
+  const toMonths = (v: unknown): number | undefined => {
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+    if (typeof v === "string") {
+      const n = parseInt(v, 10);
+      return Number.isFinite(n) ? n : undefined;
+    }
+    return undefined;
+  };
+
+  const rawVariants = product?.variants ?? [];
+
+  const normVariants = rawVariants
+    .map((v) => ({ ...v, months: toMonths(v.licensetime) }))
+    .filter((v) => v.months !== undefined);
+
+  const productMonths = toMonths(product?.licensetime) ?? 12;
+
+  const showSelect = normVariants.length > 1;
+
   const currentMonths =
-    variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ??
-    variants[0]?.licensetime ??
-    (Number(product?.licensetime) || 12);
+    normVariants.find((v) => v.id === (selectedVariantId ?? -1))?.months ??
+    normVariants[0]?.months ??
+    productMonths;
 
   const subtotal = unitPrice * quantity;
   const [includeEsimAddon, setIncludeEsimAddon] = React.useState(false);
   const total = Math.max(
-    subtotal + (shipping ?? 0) + (showEsimAddon && includeEsimAddon ? esimAddonPrice : 0),
+    subtotal +
+      (shipping ?? 0) +
+      (showEsimAddon && includeEsimAddon ? esimAddonPrice : 0),
     0
   );
 
@@ -89,8 +109,10 @@ const PurchaseHeader: React.FC<Props> = ({
 
   React.useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
-      if (licenseRef.current && !licenseRef.current.contains(e.target as Node)) setOpenLicense(false);
-      if (planRef.current && !planRef.current.contains(e.target as Node)) setOpenPlan(false);
+      if (licenseRef.current && !licenseRef.current.contains(e.target as Node))
+        setOpenLicense(false);
+      if (planRef.current && !planRef.current.contains(e.target as Node))
+        setOpenPlan(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenLicense(false);
@@ -142,9 +164,7 @@ const PurchaseHeader: React.FC<Props> = ({
             <h3 className="text-[16px] font-semibold text-black truncate">
               {product?.name ?? "Producto"}
             </h3>
-            <div
-              className="text-[16px] font-normal text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-            >
+            <div className="text-[16px] font-normal text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
               {unitPrice} <span className="font-normal">USD</span>
             </div>
           </div>
@@ -184,18 +204,18 @@ const PurchaseHeader: React.FC<Props> = ({
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
               <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
 
-            {showSelect ? (
-              <div
-                ref={licenseRef}
-                className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-              >
-                {/* Control */}
-                <button
-                  type="button"
-                  aria-haspopup="listbox"
-                  aria-expanded={openLicense}
-                  onClick={() => setOpenLicense((v) => !v)}
-                  className="
+              {showSelect ? (
+                <div
+                  ref={licenseRef}
+                  className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
+                >
+                  {/* Control */}
+                  <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={openLicense}
+                    onClick={() => setOpenLicense((v) => !v)}
+                    className="
           group w-[120px] h-[32px]
           rounded-[8px] bg-[#EBEBEB]
           pl-[10px] pr-7 text-[12px] font-normal text-black
@@ -203,41 +223,33 @@ const PurchaseHeader: React.FC<Props> = ({
           flex items-center justify-between
           transition
         "
-                >
-                  <span className="truncate">
-                    {variants.find((v) => v.id === (selectedVariantId ?? -1))
-                      ?.licensetime ??
-                      variants[0]?.licensetime ??
-                      currentMonths}{" "}
-                    Meses
-                  </span>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D] transition group-aria-expanded:rotate-180">
-                    ▾
-                  </span>
-                </button>
+                  >
+                    <span className="truncate">
+                      {variants.find((v) => v.id === (selectedVariantId ?? -1))
+                        ?.licensetime ??
+                        variants[0]?.licensetime ??
+                        currentMonths}{" "}
+                      Meses
+                    </span>
+                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D] transition group-aria-expanded:rotate-180">
+                      ▾
+                    </span>
+                  </button>
 
-                {/* Menu — SIEMPRE ABAJO y DENTRO */}
-                {openLicense && (
-                  <div
-                    role="listbox"
-                    tabIndex={-1}
-                    className="
+                  {/* Menu — SIEMPRE ABAJO y DENTRO */}
+                  {openLicense && (
+                    <div
+                      role="listbox"
+                      tabIndex={-1}
+                      className="
   absolute top-full right-0 mt-2 z-50
   w-auto min-w-[120px] sm:min-w-[130px] md:min-w-[130px] ipad:min-w-[130px]
   rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
   max-h-60 overflow-auto
 "
-
-                  >
-                    {variants.map((v) => {
-  // Igual que el encabezado: caemos a product.licensetime o currentMonths
-  const months =
-    (typeof v.licensetime === "number" ? v.licensetime : undefined) ??
-    (product?.licensetime ? Number(product.licensetime) : undefined) ??
-    currentMonths;
-
-  const isActive = (selectedVariantId ?? variants[0]?.id) === v.id;
-
+                    >
+                      {normVariants.map((v) => {
+  const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
   return (
     <button
       key={v.id}
@@ -252,34 +264,33 @@ const PurchaseHeader: React.FC<Props> = ({
         ${isActive ? "bg-black text-white" : "hover:bg-[#F2F2F2] text-[#141414]"}
       `}
     >
-      {months} Meses
+      {v.months} Meses
     </button>
   );
 })}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                className="
+
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div
+                  className="
         justify-self-end w-[140px] h-[34px]
         bg-[#EBEBEB] rounded-[8px] px-[12px]
         flex items-center text-[14px] font-normal text-black select-none
         translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-              >
-                {currentMonths} Meses
-              </div>
-            )}
-          </div>
+                >
+                  {currentMonths} Meses
+                </div>
+              )}
+            </div>
           )}
 
           {/* Fila: Envío (si se provee) */}
           {typeof shipping === "number" && (
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
               <span className="text-[14px] text-[#3D3D3D]">Envío</span>
-              <span
-                className="justify-self-end text-[16px] text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-              >
+              <span className="justify-self-end text-[16px] text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
                 {shipping} {currency}
               </span>
             </div>
@@ -288,9 +299,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Total a pagar */}
           <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Total a pagar</span>
-            <span
-              className="justify-self-end text-[16px] font-bold text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-            >
+            <span className="justify-self-end text-[16px] font-bold text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
               {total} {currency}
             </span>
           </div>
@@ -372,7 +381,7 @@ const PurchaseHeader: React.FC<Props> = ({
               Ingresa código de promoción
             </button>
           )}
-            {/* Fila: Plan (solo si hay minutesPlans) */}
+          {/* Fila: Plan (solo si hay minutesPlans) */}
           {!!minutesPlans?.length && (
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
               <span className="text-[14px] text-[#3D3D3D]">Plan</span>
@@ -391,11 +400,15 @@ const PurchaseHeader: React.FC<Props> = ({
                              flex items-center justify-between transition"
                 >
                   <span className="truncate">
-                    {minutesPlans.find(p => p.id === (selectedPlanId ?? "__none__"))?.label
-                      ?? minutesPlans[0]?.label
-                      ?? "Plan"}
+                    {minutesPlans.find(
+                      (p) => p.id === (selectedPlanId ?? "__none__")
+                    )?.label ??
+                      minutesPlans[0]?.label ??
+                      "Plan"}
                   </span>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D]">▾</span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D]">
+                    ▾
+                  </span>
                 </button>
 
                 {openPlan && (
@@ -407,14 +420,22 @@ const PurchaseHeader: React.FC<Props> = ({
                                max-h-60 overflow-auto"
                   >
                     {minutesPlans.map((p) => {
-                      const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
+                      const isActive =
+                        (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
                       return (
                         <button
                           key={String(p.id)}
                           role="option"
                           aria-selected={isActive}
-                          onClick={() => { onChangePlan?.(p.id); setOpenPlan(false); }}
-                          className={`w-full px-3 py-2 text-left text-[12px] ${isActive ? "bg-black text-white" : "hover:bg-[#F2F2F2] text-[#141414]"}`}
+                          onClick={() => {
+                            onChangePlan?.(p.id);
+                            setOpenPlan(false);
+                          }}
+                          className={`w-full px-3 py-2 text-left text-[12px] ${
+                            isActive
+                              ? "bg-black text-white"
+                              : "hover:bg-[#F2F2F2] text-[#141414]"
+                          }`}
                         >
                           {p.label}
                         </button>
@@ -436,7 +457,10 @@ const PurchaseHeader: React.FC<Props> = ({
                 className="w-[16px] h-[16px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
               />
               <span className="select-none">
-                {esimAddonLabel.replace("7.50", (esimAddonPrice ?? 0).toFixed(2))}
+                {esimAddonLabel.replace(
+                  "7.50",
+                  (esimAddonPrice ?? 0).toFixed(2)
+                )}
               </span>
             </label>
           )}
