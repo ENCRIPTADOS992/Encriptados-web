@@ -36,6 +36,9 @@ export default function PurchaseScaffold({
   className,
   ...headerProps
 }: Props) {
+
+  console.log("[Scaffold] mode:", mode);
+  
   return (
     <div className={`flex flex-col gap-4 ${className ?? ""}`}>
       <PurchaseHeader {...headerProps} />

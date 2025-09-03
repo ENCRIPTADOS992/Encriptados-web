@@ -54,6 +54,10 @@ export default function ModalSIM() {
     return "encrypted_generic";
   }, [product]);
 
+  const isPhysical = formType === "encrypted_physical";
+  const showLicense = !isPhysical;          
+  const shipping = isPhysical ? 75 : undefined; 
+
   const minutesPlans = React.useMemo(() => {
     if (formType !== "encrypted_minutes") return [];
     const items = product?.config_sim ?? [];
@@ -145,7 +149,7 @@ export default function ModalSIM() {
     showLicense={false}  
     // Ocultar envío en physical/data/minutes → no pases shipping
     shipping={
-      formType === "encrypted_physical" || formType === "encrypted_data" || formType === "encrypted_minutes" || formType === "encrypted_esim"
+       formType === "encrypted_data" || formType === "encrypted_minutes" || formType === "encrypted_esim"
         ? undefined
         : 75
     }
