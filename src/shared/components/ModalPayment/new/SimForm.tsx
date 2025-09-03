@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
-
 type FormType =
   | "encrypted_physical"
   | "encrypted_esim"
@@ -19,7 +18,7 @@ export default function SimForm({
   formType = "encrypted_generic",
 }: {
   onSubmit: (data: any) => void | Promise<void>;
-  formType?: 
+  formType?:
     | "encrypted_physical"
     | "encrypted_esim"
     | "encrypted_data"
@@ -74,58 +73,82 @@ export default function SimForm({
 
   // Validadores simples de tarjeta
   const cardNameOk = cardName.trim().length > 1;
-  const cardNumberOk = cardNumber.replace(/\s+/g, "").replace(/-/g, "").length >= 12;
+  const cardNumberOk =
+    cardNumber.replace(/\s+/g, "").replace(/-/g, "").length >= 12;
   const expOk = /^(\d{2})\/(\d{2})$/.test(exp); // MM/AA
   const cvcOk = /^\d{3,4}$/.test(cvc);
   const cardPostalOk = cardPostal.trim().length > 0;
 
-  
   const CFG = React.useMemo(() => {
     switch (formType) {
       case "encrypted_physical":
         return {
           emailFullWidth: false,
           showTelegram: true,
-          showFullName: true,  reqFullName: true,
-          showAddress:  true,  reqAddress:  true,
-          showCountry:  true,  reqCountry:  true,
-          showPostal:   true,  reqPostal:   true,
-          showPhone:    true,  reqPhone:    true,
-          showSimNumber:false, reqSimNumber:false,
+          showFullName: true,
+          reqFullName: true,
+          showAddress: true,
+          reqAddress: true,
+          showCountry: true,
+          reqCountry: true,
+          showPostal: true,
+          reqPostal: true,
+          showPhone: true,
+          reqPhone: true,
+          showSimNumber: false,
+          reqSimNumber: false,
         };
       case "encrypted_esim":
         return {
           emailFullWidth: true,
           showTelegram: false,
-          showFullName: false, reqFullName: false,
-          showAddress:  false, reqAddress:  false,
-          showCountry:  false, reqCountry:  false,
-          showPostal:   false, reqPostal:   false,
-          showPhone:    false, reqPhone:    false,
-          showSimNumber:false, reqSimNumber:false,
+          showFullName: false,
+          reqFullName: false,
+          showAddress: false,
+          reqAddress: false,
+          showCountry: false,
+          reqCountry: false,
+          showPostal: false,
+          reqPostal: false,
+          showPhone: false,
+          reqPhone: false,
+          showSimNumber: false,
+          reqSimNumber: false,
         };
-      case "encrypted_data": 
-      case "encrypted_minutes": 
+      case "encrypted_data":
+      case "encrypted_minutes":
         return {
           emailFullWidth: true,
           showTelegram: false,
-          showFullName: false, reqFullName: false,
-          showAddress:  false, reqAddress:  false,
-          showCountry:  false, reqCountry:  false,
-          showPostal:   false, reqPostal:   false,
-          showPhone:    false, reqPhone:    false,
-          showSimNumber:true,  reqSimNumber:true,
+          showFullName: false,
+          reqFullName: false,
+          showAddress: false,
+          reqAddress: false,
+          showCountry: false,
+          reqCountry: false,
+          showPostal: false,
+          reqPostal: false,
+          showPhone: false,
+          reqPhone: false,
+          showSimNumber: true,
+          reqSimNumber: true,
         };
-      default: 
+      default:
         return {
           emailFullWidth: false,
           showTelegram: true,
-          showFullName: true,  reqFullName: true,
-          showAddress:  true,  reqAddress:  true,
-          showCountry:  true,  reqCountry:  true,
-          showPostal:   true,  reqPostal:   true,
-          showPhone:    true,  reqPhone:    true,
-          showSimNumber:false, reqSimNumber:false,
+          showFullName: true,
+          reqFullName: true,
+          showAddress: true,
+          reqAddress: true,
+          showCountry: true,
+          reqCountry: true,
+          showPostal: true,
+          reqPostal: true,
+          showPhone: true,
+          reqPhone: true,
+          showSimNumber: false,
+          reqSimNumber: false,
         };
     }
   }, [formType]);
@@ -155,7 +178,7 @@ export default function SimForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-       {/* Email (full width para eSIM/recargas)  Telegram opcional */}
+      {/* Email (full width para eSIM/recargas)  Telegram opcional */}
       {CFG.emailFullWidth ? (
         <div className={wrap(!!errors.email)}>
           <input
@@ -199,42 +222,41 @@ export default function SimForm({
           />
         </div>
       )}
- 
 
       {/* Nombre envío (solo físico/genérico) */}
-      {CFG.showFullName && (
-        <div className={wrap(!!errors.fullName)}>
-          <input
-            {...register("fullName", { required: CFG.reqFullName })}
-            placeholder="Nombre de envío"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-      )}
-
-      {/* Dirección / País (solo físico/genérico) */}
-      {CFG.showAddress && (
-        <div className="grid grid-cols-2 gap-3">
-          <div className={wrap(!!errors.address)}>
+      <div className="grid grid-cols-2 gap-3">
+        {CFG.showFullName && (
+          <div className={wrap(!!errors.fullName)}>
             <input
-              {...register("address", { required: CFG.reqAddress })}
-              placeholder="Dirección de envío"
+              {...register("fullName", { required: CFG.reqFullName })}
+              placeholder="Nombre de envío"
               className="w-full bg-transparent outline-none text-[14px]"
             />
           </div>
-          <div className={wrap(!!errors.country)}>
-            <select
-              {...register("country", { required: CFG.reqCountry })}
+        )}
+
+        {/* Dirección / País (solo físico/genérico) */}
+        {CFG.showCountry ? (
+          <div
+            className={wrap(
+              !!errors.country || (country.length > 0 && country.trim() === "")
+            )}
+          >
+            <input
+              {...register("country", {
+                required: CFG.reqCountry,
+                maxLength: 64,
+              })}
+              placeholder="País"
               className="w-full bg-transparent outline-none text-[14px]"
-            >
-              <option value="">País</option>
-              <option value="US">Estados Unidos</option>
-              <option value="MX">México</option>
-              <option value="CO">Colombia</option>
-            </select>
+              autoComplete="country-name"
+              autoCapitalize="words"
+            />
           </div>
-        </div>
-      )}
+        ) : (
+          <div />
+        )}
+      </div>
 
       {/* Código postal / Teléfono */}
       {/* Código postal / Teléfono (solo físico/genérico) */}
@@ -248,7 +270,9 @@ export default function SimForm({
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
           {CFG.showPhone ? (
             <div className={wrap(!!errors.phone)}>
               <input
@@ -257,34 +281,36 @@ export default function SimForm({
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
-          ) : <div />}
+          ) : (
+            <div />
+          )}
         </div>
       )}
       <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
-              <input
-                type="checkbox"
-                checked={terms}
-                onChange={(e) => setTerms(e.target.checked)}
-                className="
+        <input
+          type="checkbox"
+          checked={terms}
+          onChange={(e) => setTerms(e.target.checked)}
+          className="
             w-[18px] h-[18px]
             border-2 border-black           
             rounded-[2px]
             accent-black                
             focus:outline-none focus:ring-0
           "
-              />
-              <span className="select-none">
-                Acepto{" "}
-                <Link
-                  href={TERMS_URL}
-                  target="_blank"
-                  className="underline font-medium"
-                >
-                  términos y condiciones
-                </Link>{" "}
-                de la compra
-              </span>
-            </label>
+        />
+        <span className="select-none">
+          Acepto{" "}
+          <Link
+            href={TERMS_URL}
+            target="_blank"
+            className="underline font-medium"
+          >
+            términos y condiciones
+          </Link>{" "}
+          de la compra
+        </span>
+      </label>
 
       {/* Método de pago (mismo estilo que NewUserForm) */}
       <div className="space-y-2">
@@ -418,9 +444,17 @@ export default function SimForm({
           rounded-[8px] px-[10px]
           inline-flex items-center justify-center gap-[10px]
           text-white text-[14px] font-semibold
-          ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"}
+          ${
+            canPay
+              ? "bg-black hover:bg-black/90"
+              : "bg-black/40 cursor-not-allowed"
+          }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
-          title={!canPay ? "Completa los datos requeridos y acepta los términos" : "Pagar ahora"}
+        title={
+          !canPay
+            ? "Completa los datos requeridos y acepta los términos"
+            : "Pagar ahora"
+        }
       >
         Pagar ahora
       </button>
