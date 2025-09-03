@@ -6,6 +6,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import ModalPayment from "./ModalPayment";
 
 import ModalStack from "./atoms/ModalStack";
+
 import ModalNewUser from "./new/ModalNewUser";
 import ModalRoning from "./new/ModalRoning";
 import ModalRecharge from "./new/ModalRecharge";
@@ -28,7 +29,6 @@ export default function ModalPaymentController() {
 function ModalPaymentControllerInner() {
   const { isModalOpen, closeModal, params, openModal } = useModalPayment();
   const search = useSearchParams();
-
   const qpProvider = (search.get("provider") || "").toLowerCase();
   const qpSelectedOption = search.get("selectedOption");
 
@@ -36,8 +36,7 @@ function ModalPaymentControllerInner() {
     theme?: "light" | "dark";
     mode?: Mode;
   };
-
-  const productid = (params as any)?.productid as string | undefined;
+const productid = (params as any)?.productid as string | undefined;
 
   // 🔎 si tenemos productid pero faltan datos del producto en params, los consultamos
   const { data: product } = useQuery({
@@ -110,13 +109,25 @@ function ModalPaymentControllerInner() {
       visible={isModalOpen}
       onClose={closeModal}
       theme={theme}
-      panelClassName="bg-[#F7F9FB] rounded-none p-3 w-full h-full max-h-screen overflow-x-hidden
-                      sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6 sm:w-[628px]
-                      md:w-[628px] ipad:bg-[#FAFAFA] ipad:w-[628px] ipad:rounded-[21px]
-                      lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden"
+      panelClassName="
+  bg-[#F7F9FB]
+  rounded-none p-3
+  w-full h-full max-h-screen
+  overflow-x-hidden
+  sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6 sm:w-[628px]
+  md:w-[628px]
+  ipad:bg-[#FAFAFA] ipad:w-[628px] ipad:rounded-[21px]
+  lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden 
+"
     >
-      <div className="max-h-full overflow-y-auto overflow-x-hidden overscroll-contain pb-4 md:pb-6 lg:pb-8 lg:max-h-[calc(100vh-120px)] no-scrollbar-lg">
-        <ModalStack className="ipad:w/full lg:w/full md:mx-0">
+      <div
+        className="
+    max-h-full overflow-y-auto overflow-x-hidden overscroll-contain
+    pb-4 md:pb-6 lg:pb-8
+    lg:max-h-[calc(100vh-120px)] no-scrollbar-lg
+  "
+      >
+        <ModalStack className="ipad:w-full lg:w-full md:mx-0">
           {renderByMode()}
         </ModalStack>
       </div>
