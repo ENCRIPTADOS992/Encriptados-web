@@ -50,8 +50,35 @@ export default function SimForm({
     },
   });
 
+  const email = watch("email");
+  const simNumber = watch("simNumber");
+  const fullName = watch("fullName");
+  const address = watch("address");
+  const country = watch("country");
+  const postalCode = watch("postalCode");
+  const phone = watch("phone");
+
+  const cardName = watch("cardName");
+  const cardNumber = watch("cardNumber");
+  const exp = watch("exp");
+  const cvc = watch("cvc");
+  const cardPostal = watch("cardPostal");
+
   const method = watch("method");
   const [terms, setTerms] = React.useState(true);
+
+  const emailOk = /\S+@\S+\.\S+/.test(email) && email.length <= 100;
+  const phoneOk = phone.trim().length >= 7; // sencillo (evitamos over-validar)
+  const simOk = simNumber.trim().length >= 6; // idem
+  const postalOk = postalCode.trim().length > 0;
+
+  // Validadores simples de tarjeta
+  const cardNameOk = cardName.trim().length > 1;
+  const cardNumberOk = cardNumber.replace(/\s+/g, "").replace(/-/g, "").length >= 12;
+  const expOk = /^(\d{2})\/(\d{2})$/.test(exp); // MM/AA
+  const cvcOk = /^\d{3,4}$/.test(cvc);
+  const cardPostalOk = cardPostal.trim().length > 0;
+
   
   const CFG = React.useMemo(() => {
     switch (formType) {
@@ -102,6 +129,24 @@ export default function SimForm({
         };
     }
   }, [formType]);
+
+  const typeSpecificOk =
+    formType === "encrypted_physical" || formType === "encrypted_generic"
+      ? fullName.trim() !== "" &&
+        address.trim() !== "" &&
+        country.trim() !== "" &&
+        postalOk &&
+        phoneOk
+      : formType === "encrypted_data" || formType === "encrypted_minutes"
+      ? simOk
+      : /* encrypted_esim */ true;
+
+  const methodSpecificOk =
+    method === "crypto"
+      ? true
+      : cardNameOk && cardNumberOk && expOk && cvcOk && cardPostalOk;
+
+  const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk;
 
   const wrap = (invalid?: boolean) =>
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
@@ -367,14 +412,15 @@ export default function SimForm({
       {/* Botón pagar */}
       <button
         type="submit"
-        className="
-          mt-2 w-full h-[54px]
+        disabled={!canPay}
+        aria-disabled={!canPay}
+        className={`mt-2 w-full h-[54px]
           rounded-[8px] px-[10px]
           inline-flex items-center justify-center gap-[10px]
           text-white text-[14px] font-semibold
-          bg-black hover:bg-black/90
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30
-        "
+          ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"}
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
+          title={!canPay ? "Completa los datos requeridos y acepta los términos" : "Pagar ahora"}
       >
         Pagar ahora
       </button>
