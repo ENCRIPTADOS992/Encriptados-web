@@ -1,8 +1,252 @@
-import React from "react";
-import SecurePage from "./components/SecurePage";
+"use client";
+
+import HeroBanner from "../component/templateSoftware/HeroBanner";
+import HeroBannerMobile from "../component/templateSoftware/HeroBannerMobile";
+import HeroBannerTablet from "../component/templateSoftware/HeroBannerTablet";
+import ProductSection from "../component/templateSoftware/ProductSection";
+import ProductSectionMobile from "../component/templateSoftware/ProductSectionMobile";
+import ProductSectionTablet from "../component/templateSoftware/ProductSectionTablet";
+import HeroVideoSection from "../component/templateSoftware/HeroVideoSection";
+import HeroVideoSectionMobile from "../component/templateSoftware/HeroVideoSectionMobile";
+import HeroVideoSectionTablet from "../component/templateSoftware/HeroVideoSectionTablet";
+import FeaturedProducts from "../component/templateSoftware/FeaturedProducts";
+import FeaturedProductsMobile from "../component/templateSoftware/FeaturedProductsMobile";
+import FeaturedProductsTablet from "../component/templateSoftware/FeaturedProductsTablet";
+import SecurityFeatures from "../component/templateSoftware/SecurityFeatures";
+import SecurityFeaturesTablet from "../component/templateSoftware/SecurityFeaturesTablet";
+import SecurityFeaturesMobile from "../component/templateSoftware/SecurityFeaturesMobile";
+import FAQSection from "../component/templateSoftware/FAQSection";
+import FAQSectionMobile from "../component/templateSoftware/FAQSectionMobile";
+import FAQSectionTablet from "../component/templateSoftware/FAQSectionTablet";
+import DownloadAppSection from "../component/templateSoftware/DownloadAppSection";
+import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppSectionMobile";
+import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
+import { plans } from "./consts/plans";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getProductById } from "@/features/products/services";
+import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 const Page = () => {
-	return <SecurePage />;
+  const searchParams = useSearchParams();
+  const plan = searchParams.get("plan");
+  const productId = searchParams.get("productId");
+  const selected = plan || plans[0].value;
+  const [product, setProduct] = useState<ProductById | null>(null);
+
+  const Faqs = [
+	{
+	  question: "¿Qué es y para qué sirve el celular IntactPhone?",
+	  answer:
+		"Intactphone es un celular cifrado de grado militar con un hardware y software fuertes. No solo protege el dispositivo de ataques cibernéticos o brechas de seguridad sino contra situaciones ambientales como agua, caídas o golpes.",
+	},
+	{
+	  question: "¿IntactPhone, cuál es el precio?",
+	  answer:
+		"El precio del celular Intactphone varía de acuerdo a su modelo y licencia. Se puede adquirir en Encriptados.io desde un valor aproximado de $1000 USD.",
+	},
+	{
+	  question: "¿IntactPhone, quién lo fabrica?",
+	  answer:
+		"CommuniTake, la casa madre de Intact, manufactura completamente el dispositivo. Desde el hardware hasta el sistema operativo. Esto buscando prevenir la sustitución de código por parte de malintencionados y las brechas de información. Conócelo.",
+	},
+  ];
+  const securityFeaturesData = [
+	{
+	  title: "",
+	  description: "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
+	},
+	{
+	  title: "",
+	  description:
+		"Incrementa la seguridad del dispositivo usando nuestra Sim Card Encriptados",
+	},
+	{
+	  title: "",
+	  description: "Correo electrónico seguro y noticias en cualquier parte del mundo. Notificaciones Push",
+	},
+	{
+	  title: "X-Change",
+	  description: "Restringimos el uso e instalación de aplicaciones o softwares que puedan comprometer la seguridad del dispositivo.",
+	},
+	{
+	  title: "Emergency Wipe:",
+	  description:
+		"Secure MDM iPhone te permite borrar remotamente todos los datos del dispositivo en cualquier situación de emergencia —pérdida, robo o riesgo de filtración.",
+	},
+	{
+	  title: "Comunicaciones seguras",
+	  description:
+		"Usa cifrado de extremo a extremo con estándares de seguridad militar para proteger correos, mensajes, llamadas y archivos.",
+	},
+  ];
+  useEffect(() => {
+	if (productId) {
+	  getProductById(productId, "es").then(setProduct).catch(console.error);
+	}
+  }, [productId]);
+
+  return (
+	<div>
+	  <HeroBanner
+		imageUrl="/images/apps/secure-mdm-iphone/secure-banner-desktop.png"
+		alt="Secure MDM Android Hero Banner"
+	  />
+	  <HeroBannerMobile
+		imageUrl="/images/apps/secure-mdm-iphone/secure-banner-mobile.png"
+		alt="Secure MDM Android Hero Banner"
+	  />
+	  <HeroBannerTablet
+		imageUrl="/images/apps/secure-mdm-iphone/secure-phone-tablet.png"
+		alt="Secure MDM Android Hero Banner"
+	  />
+	  <ProductSection
+		title="SECURE MDM IPHONE"
+		description="Blinda con el mayor grado de seguridad tu iPhone"
+		features={[
+		  "Bloqueo de acceso por USB ",
+		  "Borrado remoto de emergencia",
+		  "Mensajería segura y privada",
+		]}
+		price="600$ USD"
+		radioOptions={plans.map((p) => p.label)}
+		selectedRadio={selected}
+		onRadioChange={(val) => {}}
+		onBuy={() => {}}
+		onChat={() => {}}
+		productImage="/images/apps/secure-mdm-iphone/banner-3-months.jpg"
+		appStoreUrl="https://apps.apple.com/app/secure-mdm-iphone-app"
+		googlePlayUrl="https://play.google.com/store/apps/details?id=com.secure-mdm-iphone"
+	  />
+	  <ProductSectionMobile
+		title="SECURE MDM IPHONE"
+		description="Blinda con el mayor grado de seguridad tu iPhone"
+		features={[
+		  "Bloqueo de acceso por USB ",
+		  "Borrado remoto de emergencia",
+		  "Mensajería segura y privada",
+		]}
+		price="600$ USD"
+		radioOptions={plans.map((p) => p.label)}
+		selectedRadio={selected}
+		onRadioChange={(val) => {}}
+		onBuy={() => {}}
+		onChat={() => {}}
+		productImage="/images/apps/secure-mdm-iphone/banner-3-months.jpg"
+		appStoreUrl="https://apps.apple.com/app/secure-mdm-iphone-app"
+		googlePlayUrl="https://play.google.com/store/apps/details?id=com.secure-mdm-iphone"
+	  />
+	  <ProductSectionTablet
+		title="SECURE MDM IPHONE"
+		description="Blinda con el mayor grado de seguridad tu iPhone"
+		features={[
+		  "Mensajería segura",
+		  "Mail Cifrado",
+		  "Borrado remoto",
+		]}
+		price="600$ USD"
+		radioOptions={plans.map((p) => p.label)}
+		selectedRadio={selected}
+		onRadioChange={(val) => {}}
+		onBuy={() => {}}
+		onChat={() => {}}
+		productImage="/images/apps/secure-mdm-iphone/banner-3-months.jpg"
+		appStoreUrl="https://apps.apple.com/app/secure-mdm-iphone-app"
+		googlePlayUrl="https://play.google.com/store/apps/details?id=com.secure-mdm-iphone"
+	  />
+	  <SecurityFeatures
+		title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+		features={securityFeaturesData}
+		imageUrl="/images/apps/secure-mdm-iphone/phoneSecurity.png"
+	  />
+	  <SecurityFeaturesTablet
+		title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+		features={securityFeaturesData}
+		imageUrl="/images/apps/secure-mdm-iphone/phoneSecurity.png"
+	  />
+	  <SecurityFeaturesMobile
+		title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+		features={securityFeaturesData}
+		imageUrl="/images/apps/secure-mdm-iphone/phoneSecurity.png"
+	  />
+
+	  <HeroVideoSection
+		title={`¿Cómo encriptar tu celular para que nadie pueda espiarte?`}
+		videoUrl="https://www.youtube.com/embed/O9MF_k5A0M0?si=JHnq_TXbcUxox_-Q"
+	  />
+	  <HeroVideoSectionMobile
+		title={`¿Cómo encriptar tu celular para que nadie pueda espiarte?`}
+		videoUrl="https://www.youtube.com/embed/O9MF_k5A0M0?si=JHnq_TXbcUxox_-Q"
+	  />
+	  <HeroVideoSectionTablet
+		title={`¿Cómo encriptar tu celular para que nadie pueda espiarte?`}
+		videoUrl="https://www.youtube.com/embed/O9MF_k5A0M0?si=JHnq_TXbcUxox_-Q"
+	  />
+	  <FeaturedProducts
+		left={{
+		  title: "SIM Card encriptada",
+		  description:
+			"Protégete de los ciberdelincuentes y mantén tu información personal segura",
+		  buttonLabel: "Comprar",
+		  onButtonClick: () => alert("Comprar SIM Card encriptada"),
+		  moreInfoLabel: "Más información",
+		  onMoreInfo: () => alert("Más información de SIM Card"),
+		  image: "/images/apps/secure-mdm-iphone/sim.png",
+		}}
+		right={{
+		  title: "E-SIM Encriptada Planes datos o minutos",
+		  subtitle: "Subtitle element copy",
+		  buttonLabel: "Ver más",
+		  onButtonClick: () => alert("Ver más E-SIM"),
+		  image: "/images/apps/secure-mdm-iphone/phone.png",
+		}}
+	  />
+	  <FeaturedProductsMobile
+		left={{
+		  title: "SIM Card encriptada",
+		  description:
+			"Protégete de los ciberdelincuentes y mantén tu información personal segura",
+		  buttonLabel: "Comprar",
+		  onButtonClick: () => alert("Comprar SIM Card encriptada"),
+		  moreInfoLabel: "Más información",
+		  onMoreInfo: () => alert("Más información de SIM Card"),
+		  image: "/images/apps/secure-mdm-iphone/sim.png",
+		}}
+		right={{
+		  title: "E-SIM Encriptada Planes datos o minutos",
+		  subtitle: "Subtitle element copy",
+		  buttonLabel: "Ver más",
+		  onButtonClick: () => alert("Ver más E-SIM"),
+		  image: "/images/apps/secure-mdm-iphone/phone.png",
+		}}
+	  />
+	  <FeaturedProductsTablet
+		left={{
+		  title: "SIM Card encriptada",
+		  description:
+			"Protégete de los ciberdelincuentes y mantén tu información personal segura",
+		  buttonLabel: "Comprar",
+		  onButtonClick: () => alert("Comprar SIM Card encriptada"),
+		  moreInfoLabel: "Más información",
+		  onMoreInfo: () => alert("Más información de SIM Card"),
+		  image: "/images/apps/secure-mdm-iphone/sim.png",
+		}}
+		right={{
+		  title: "E-SIM Encriptada Planes datos o minutos",
+		  subtitle: "Subtitle element copy",
+		  buttonLabel: "Ver más",
+		  onButtonClick: () => alert("Ver más E-SIM"),
+		  image: "/images/apps/secure-mdm-iphone/phone.png",
+		}}
+	  />
+	  <FAQSection faqs={Faqs} />
+	  <FAQSectionMobile faqs={Faqs} />
+	  <FAQSectionTablet faqs={Faqs} />
+	  <DownloadAppSection />
+	  <DownloadAppSectionMobile />
+	  <DownloadAppSectionTablet />
+	</div>
+  );
 };
 
 export default Page;
