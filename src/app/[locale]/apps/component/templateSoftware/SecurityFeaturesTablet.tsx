@@ -49,7 +49,7 @@ const SecurityFeaturesTablet: React.FC<SecurityFeaturesTabletProps> = ({
         {features.map((feat, idx) => (
           <div
             key={idx}
-            className="bg-[#101010] rounded-[12px] p-[24px] flex flex-col items-start gap-[14px]"
+            className="bg-[#101010] rounded-[14px] p-[24px] flex flex-col items-start gap-[14px]"
           >
             {/* Icono check */}
             <img

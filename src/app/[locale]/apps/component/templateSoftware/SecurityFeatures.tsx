@@ -18,7 +18,7 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
   imageUrl,
 }) => (
   // w-screen para full-bleed, py en lugar de p para controlar vertical
-  <section className="hidden lg:flex justify-center py-8 bg-white">
+  <section className="hidden lg:flex justify-center py-8 bg-white mt-[100px]">
     <div className="bg-black rounded-[44px] max-w-[1272px] w-full h-[1182px] mx-auto px-[60px]">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
         {/* Imagen del teléfono */}

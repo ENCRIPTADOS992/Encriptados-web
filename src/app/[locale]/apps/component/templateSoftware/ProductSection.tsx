@@ -38,7 +38,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   loading = false,
 }) => {
   return (
-    <section className="w-full hidden lg:flex justify-center bg-white">
+    <section className="w-full hidden lg:flex justify-center bg-white mt-[60px]">
       <div className="w-full max-w-[1440px] h-[600px] flex items-center justify-center mx-auto px-2">
         {/* Columna izquierda */}
         <div className="flex flex-col w-[455px] mt-10">
