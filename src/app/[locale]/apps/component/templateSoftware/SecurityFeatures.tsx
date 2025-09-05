@@ -23,7 +23,7 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
         {/* Imagen del teléfono */}
         <div className="flex-shrink-0 flex justify-center mt-[85px] transform -translate-x-14">
-          <div className="w-[450px] h-[736px] rounded-[24px] overflow-hidden">
+          <div className="w-[570px] h-[1006px] rounded-[24px] overflow-hidden">
             <img
               src={imageUrl}
               alt="DEC Secure Phone"
