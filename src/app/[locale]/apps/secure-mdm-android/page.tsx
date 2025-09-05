@@ -53,26 +53,29 @@ const Page = () => {
   ];
   const securityFeaturesData = [
     {
-      title: "Aplicaciones de seguridad ocultas",
-      description: "Elimina la totalidad de brechas de seguridad.",
-    },
-    {
-      title: "Función de limpieza a prueba de manipulaciones",
+      title: "Bloqueo de Redes",
       description:
-        "Los criterios de manipulación e inactividad establecidos por el usuario harán que el dispositivo se borre.",
+        "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
     },
     {
-      title: "Bloqueo de redes NFC",
-      description: "Bloqueo de redes inhalambricas bluetooth y NFC para evitar posibles accesos.",
-    },
-    {
-      title: "Anonimato",
-      description: "Protege la informacion y aplicaciones en su dispositivo de intrusos. Usa apps de chat cifradas, correo y billeteras crypto con total seguridad.",
+      title: "Seguridad del dispositivos",
+      description:
+        "Incrementa la seguridad del dispositivo usando nuestra Sim Card Encriptados",
     },
     {
       title: "Emergency Wipe:",
       description:
         "Secure MDM iPhone te permite borrar remotamente todos los datos del dispositivo en cualquier situación de emergencia —pérdida, robo o riesgo de filtración.",
+    },
+    {
+      title: "Correo electrónico seguro",
+      description:
+        "Correo electrónico seguro y noticias en cualquier parte del mundo. Notificaciones Push",
+    },
+    {
+      title: "Sistema restringido y privado",
+      description:
+        "Restringimos el uso e instalación de aplicaciones o softwares que puedan comprometer la seguridad del dispositivo.",
     },
     {
       title: "Comunicaciones seguras",

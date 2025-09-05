@@ -53,26 +53,26 @@ const Page = () => {
   ];
   const securityFeaturesData = [
 	{
-	  title: "",
+	  title: "Bloqueo de Redes",
 	  description: "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
 	},
 	{
-	  title: "",
+	  title: "Seguridad del dispositivos",
 	  description:
 		"Incrementa la seguridad del dispositivo usando nuestra Sim Card Encriptados",
 	},
 	{
-	  title: "",
+	  title: "Emergency Wipe:",
+	  description: "Secure MDM iPhone te permite borrar remotamente todos los datos del dispositivo en cualquier situación de emergencia —pérdida, robo o riesgo de filtración.",
+	},
+	{
+	  title: "Correo electrónico seguro",
 	  description: "Correo electrónico seguro y noticias en cualquier parte del mundo. Notificaciones Push",
 	},
 	{
-	  title: "X-Change",
-	  description: "Restringimos el uso e instalación de aplicaciones o softwares que puedan comprometer la seguridad del dispositivo.",
-	},
-	{
-	  title: "Emergency Wipe:",
+	  title: "Sistema restringido y privado",
 	  description:
-		"Secure MDM iPhone te permite borrar remotamente todos los datos del dispositivo en cualquier situación de emergencia —pérdida, robo o riesgo de filtración.",
+		"Restringimos el uso e instalación de aplicaciones o softwares que puedan comprometer la seguridad del dispositivo.",
 	},
 	{
 	  title: "Comunicaciones seguras",
