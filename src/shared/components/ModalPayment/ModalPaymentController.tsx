@@ -38,7 +38,6 @@ function ModalPaymentControllerInner() {
   };
 const productid = (params as any)?.productid as string | undefined;
 
-  // 🔎 si tenemos productid pero faltan datos del producto en params, los consultamos
   const { data: product } = useQuery({
     queryKey: ["productById-for-mode", productid],
     queryFn: () => getProductById(productid!),
@@ -48,10 +47,8 @@ const productid = (params as any)?.productid as string | undefined;
   const norm = (s?: string) =>
     (s ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  // ✅ criterio robusto para detectar que es producto de SIM Encriptados
   const isEncryptedSim = React.useMemo(() => {
     const p: any = params || {};
-    // 1) intenta con params
     const provP = norm(p.provider || p.brand || "");
     const catIdP = String(p.categoryId ?? p.category?.id ?? "");
     const catNameP = norm(p.categoryName || p.category?.name || "");
@@ -60,7 +57,6 @@ const productid = (params as any)?.productid as string | undefined;
     const isSimCategoryParams =
       catIdP === "40" || catNameP.includes("sim") || qpSelectedOption === "40";
 
-    // 2) si no alcanzan los params, intenta con el producto cargado
     const provProd = norm((product as any)?.provider || (product as any)?.brand);
     const typeProd = norm((product as any)?.type_product);
     const shipProd = norm((product as any)?.shipping);
@@ -69,20 +65,17 @@ const productid = (params as any)?.productid as string | undefined;
       cfgProd === "esim" ||
       cfgProd === "data" ||
       cfgProd === "minutes" ||
-      typeProd.includes("fisic") || // cubre "físico"/"fisico"
+      typeProd.includes("fisic") ||
       shipProd === "si";
 
     const isSimByParams = isSimCategoryParams && (providerCandidate.includes("encript"));
     const providerIsEncriptados = (provP || provProd).includes("encript");
 
-    // Si por params o por producto sabemos que es SIM "encriptados", true
     return (isSimByParams && providerIsEncriptados) || (isSimByProduct && providerIsEncriptados);
   }, [params, qpProvider, qpSelectedOption, product]);
 
-  // 🔁 ajustar mode SOLO cuando el modal está abierto
   React.useEffect(() => {
     if (!isModalOpen) return;
-    // Evita bucles: solo cambia si realmente es distinto
     if (isEncryptedSim && mode !== "sim") {
       openModal({ ...(params || {}), mode: "sim" });
     } else if (!isEncryptedSim && mode === "sim") {
@@ -97,7 +90,7 @@ const productid = (params as any)?.productid as string | undefined;
       case "recharge":
         return <ModalRecharge />;
       case "sim":
-        return <ModalSIM />;  // <-- aquí ya llega
+        return <ModalSIM />;
       case "new_user":
       default:
         return <ModalNewUser />;

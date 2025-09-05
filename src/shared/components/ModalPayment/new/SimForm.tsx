@@ -180,7 +180,7 @@ export default function SimForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
       {/* Email (full width para eSIM/recargas)  Telegram opcional */}
       {CFG.emailFullWidth ? (
-        <div className={wrap(!!errors.email)}>
+        <div className={`${wrap(!!errors.email)} w-[416px] max-w-full`}>
           <input
             {...register("email", { required: true })}
             placeholder="Ingresa tu Email"
@@ -214,7 +214,7 @@ export default function SimForm({
 
       {/* Número de SIM (solo recargas datos/minutos) */}
       {CFG.showSimNumber && (
-        <div className={wrap(!!errors.simNumber)}>
+        <div className={`${wrap(!!errors.email)} w-[416px] max-w-full`}>
           <input
             {...register("simNumber", { required: CFG.reqSimNumber })}
             placeholder="Número de SIM"

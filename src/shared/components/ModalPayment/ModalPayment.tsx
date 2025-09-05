@@ -117,7 +117,7 @@ const ModalPayment: React.FC<Props> = ({
           <div
             className={[
               "relative w-full h-full max-h-screen overflow-auto rounded-none p-3",
-              isDark ? "bg-white/0 text-zinc-100" : "bg-white text-zinc-900", // respeta tema
+              isDark ? "bg-white/0 text-zinc-100" : "bg-white text-zinc-900",
               "ipad:rounded-2xl ipad:h-auto ipad:p-4 ipad:max-w-[560px]",
               "lg:max-w-[820px] lg:p-6",
               "translate-y-2 opacity-0 animate-[fadeInUp_160ms_ease-out_forwards]",
@@ -126,7 +126,7 @@ const ModalPayment: React.FC<Props> = ({
           >
             <button
               onClick={onClose}
-              className="absolute top-0.5 right-0.5 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10"
+              className="absolute top-1.5 right-2 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10"
               aria-label="Cerrar"
             >
               ✕
