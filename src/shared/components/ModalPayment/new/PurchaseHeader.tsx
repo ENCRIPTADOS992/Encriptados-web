@@ -68,6 +68,8 @@ const PurchaseHeader: React.FC<Props> = ({
   const variants = product?.variants ?? [];
   const [showCoupon, setShowCoupon] = React.useState(false);
 
+  const discountAmount = 0;
+
   // Normalizador seguro: convierte "3" -> 3, ignora basura
   const toMonths = (v: unknown): number | undefined => {
     if (typeof v === "number" && Number.isFinite(v)) return v;
@@ -161,10 +163,23 @@ const PurchaseHeader: React.FC<Props> = ({
         <div className="mt-[22px] md:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[16px] px-3 sm:px-4 ipad:px-3 lg:px-4">
           {/* Encabezado: nombre + precio */}
           <div className="flex items-center justify-between">
-            <h3 className="text-[16px] font-semibold text-black truncate">
+            <h3
+              className="
+                text-[16px] font-semibold text-black truncate
+                sm:-mt-6 md:-mt-0 ipad:-mt-12   
+                lg:mt-0 xl:mt-0                
+              "
+            >
               {product?.name ?? "Producto"}
             </h3>
-            <div className="text-[16px] font-normal text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
+            <div
+  className="
+    text-[16px] font-normal text-[#141414]
+    translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
+    max-[390px]:-translate-x-[-30px]
+    sm:-mt-6 md:-mt-0 ipad:-mt-12 lg:mt-0 xl:mt-0
+  "
+>
               {unitPrice} <span className="font-normal">USD</span>
             </div>
           </div>
@@ -296,6 +311,15 @@ const PurchaseHeader: React.FC<Props> = ({
             </div>
           )}
 
+          {showCoupon && (
+            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
+              <span className="text-[14px] text-[#3D3D3D]">Descuento</span>
+              <span className="justify-self-end text-[16px] font-bold text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
+                {discountAmount.toFixed(2)} {currency}
+              </span>
+            </div>
+          )}
+
           {/* Fila: Total a pagar */}
           <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Total a pagar</span>
@@ -303,7 +327,7 @@ const PurchaseHeader: React.FC<Props> = ({
               {total} {currency}
             </span>
           </div>
-
+          
           {/* Link / Input cupón */}
           {showCoupon ? (
             <div
