@@ -3,6 +3,8 @@
 
 import React from "react";
 
+import { useUiPolicy } from "./useUiPolicy";
+
 export type Mode = "new_user" | "roning_code" | "recharge";
 
 export default function PurchaseTabs({
@@ -14,6 +16,10 @@ export default function PurchaseTabs({
   onSelect?: (m: Mode) => void;
   enableSwitching?: boolean;
 }) {
+  const { showTabs, allowedModes } = useUiPolicy();
+
+  if (!showTabs) return null;
+
   const base =
     "h-11 rounded-[8px] px-[14px] text-[12px] leading-[12px] font-bold flex items-center justify-center text-center";
   const clsInactive = "bg-[#EBEBEB] text-[#3D3D3D] border border-transparent";

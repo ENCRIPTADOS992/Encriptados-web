@@ -41,7 +41,11 @@ const CardProduct: React.FC<CardSimProps> = ({
 
   const handleBuy = () => {
     console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`);
-    openModal({ productid: id.toString(), languageCode: "es" });
+    openModal({ 
+      productid: id.toString(), 
+      languageCode: "es",
+      selectedOption: Number(filters.selectedOption),
+    });
   };
 
   return (

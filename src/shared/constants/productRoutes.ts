@@ -1,8 +1,15 @@
-interface ProductRouteItem {
-  name: string; 
-  link: string; 
+// src/shared/constants/productRoutes.ts
+export type AllowedMode = "new_user" | "roning_code" | "recharge";
+
+export interface ProductRouteItem {
+  name: string;
+  link: string;
   categoryId: number;
   displayNames?: string[];
+  uiPolicy?: {
+    showTabs?: boolean;
+    allowedModes?: AllowedMode[];
+  };
 }
 
 export const PRODUCT_ROUTES: ProductRouteItem[] = [
@@ -23,7 +30,14 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
   { name: "T2 Communicator", link: "/apps/t2-communicator", categoryId: 35 },
   
   // Aplicaciones (38)
-  { name: "Silent Phone", link: "/apps/silent-circle", categoryId: 38 },
+  {
+    name: "Silent Phone",
+    link: "/apps/silent-circle",
+    categoryId: 38,
+    uiPolicy: {
+      showTabs: true,                 
+    },
+  },
   { name: "VaultChat", link: "/apps/vault-chat", categoryId: 38 },
   { name: "Armadillo Chat", link: "/apps/armadillo", categoryId: 38 },
   { name: "Threema", link: "/apps/threema", categoryId: 38 },

@@ -16,6 +16,9 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getProductById } from "@/features/products/services";
 
+import { getProductCategoryKind, type CategoryKind } from "@/shared/utils/getProductCategoryKind";
+import { PurchaseKindProvider } from "./PurchaseKindContext";
+
 type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
 export default function ModalPaymentController() {
@@ -43,6 +46,16 @@ const productid = (params as any)?.productid as string | undefined;
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
   });
+
+  const selectedOption = Number((params as any)?.selectedOption ?? qpSelectedOption ?? NaN);
+
+  const { kind }: { kind: CategoryKind } = product
+    ? getProductCategoryKind(product, {
+        selectedOption,
+        categoryId: (params as any)?.categoryId ?? product?.category?.id,
+        categoryName: (params as any)?.categoryName ?? product?.category?.name,
+      })
+    : { kind: "DESCONOCIDO" as CategoryKind, reason: "no product yet" };
 
   const norm = (s?: string) =>
     (s ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -74,14 +87,15 @@ const productid = (params as any)?.productid as string | undefined;
     return (isSimByParams && providerIsEncriptados) || (isSimByProduct && providerIsEncriptados);
   }, [params, qpProvider, qpSelectedOption, product]);
 
-  React.useEffect(() => {
-    if (!isModalOpen) return;
-    if (isEncryptedSim && mode !== "sim") {
+    React.useEffect(() => {
+    if (!isModalOpen || !product) return;
+    const wantSimMode = kind === "SIM";
+    if (wantSimMode && mode !== "sim") {
       openModal({ ...(params || {}), mode: "sim" });
-    } else if (!isEncryptedSim && mode === "sim") {
+    } else if (!wantSimMode && mode === "sim") {
       openModal({ ...(params || {}), mode: "roning_code" });
     }
-  }, [isModalOpen, isEncryptedSim, mode, openModal, params]);
+  }, [isModalOpen, product, kind, mode, openModal, params]);
 
   const renderByMode = () => {
     switch (mode) {
@@ -112,7 +126,8 @@ const productid = (params as any)?.productid as string | undefined;
   ipad:bg-[#FAFAFA] ipad:w-[628px] ipad:rounded-[21px]
   lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden 
 "
-    >
+    > 
+    <PurchaseKindProvider value={kind}>
       <div
         className="
     max-h-full overflow-y-auto overflow-x-hidden overscroll-contain
@@ -124,6 +139,7 @@ const productid = (params as any)?.productid as string | undefined;
           {renderByMode()}
         </ModalStack>
       </div>
+    </PurchaseKindProvider>
     </ModalPayment>
   );
 }

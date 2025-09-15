@@ -11,6 +11,11 @@ interface ModalPaymentParams {
   theme?: string;
    mode?: Mode;                        
   layout?: "default" | "compact";
+  selectedOption?: number;        
+  categoryId?: number | string;  
+  categoryName?: string;          
+  provider?: string;              
+  brand?: string;
 }
 
 interface ModalPaymentContextProps {
