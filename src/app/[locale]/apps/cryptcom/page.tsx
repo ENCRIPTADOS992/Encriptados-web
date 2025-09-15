@@ -48,27 +48,27 @@ const Page = () => {
   const featuresGrid = [
     {
       image: "/images/apps/cryptcom/chat.png",
-      title: "Chat",
+      title: "Chat Cifrado",
       description:
-        "Chats cifrados: Envía texto, imágenes, notas de voz y videos de forma segura y encriptada. ",
+        "Envía texto, imágenes, notas de voz y videos de forma segura y encriptada.",
     },
     {
       image: "/images/apps/cryptcom/chat-cifrado.png",
-      title: "Chat Cifrado",
+      title: "Chat grupal",
       description:
         "Con la opción de grupos anónimos de conocimiento cero, los usuarios no podrán ver ni recuperar la información de contacto de los miembros del grupo.",
     },
     {
       image: "/images/apps/cryptcom/mensajeria.png",
-      title: "Mensajería segura",
+      title: "Llamadas Cifradas",
       description:
-        "Mensajería combinada y chat y correo electrónico cifrados Chats cifrados híbridos en la vista de chat en vivo con marcas de verificación de notificación entregada y leída, funciones de eliminación y edición de mensajes, traducción de texto.",
+        "Mantén tus llamadas de voz y mensajería seguras y cifradas con un cambiador de voz que utiliza un algoritmo de alta protección.",
     },
     {
       image: "/images/apps/cryptcom/chat-enmascarado.png",
-      title: "Chat enmascarado",
+      title: "Encubrimiento",
       description:
-        "El texto se convierte en una fuente enmascarada ilegible cuando el dispositivo está inactivo.",
+        "Adapta la interfaz de usuario de tu aplicación para que parezca una aplicación popular como WhatsApp, ofreciendo así una mayor privacidad y discreción.",
     },
   ];
   const Faqs =[
@@ -92,14 +92,19 @@ const Page = () => {
   ];
    const securityFeaturesData = [
     {
-      title: "Aplicaciones de seguridad ocultas",
+      title: "Integración de aplicaciones seguras",
       description:
-        "El dispositivo parece un teléfono Android normal.",
+        "Ofrece a los usuarios la posibilidad de incorporar aplicaciones como Signal, Threema y Silent Circle en el entorno seguro del dispositivo, garantizando una comunicación privada y confiable.",
     },
     {
-      title: "Función de limpieza a prueba de manipulaciones",
+      title: "Función de Limpieza Segura",
       description:
-        "Los criterios de manipulación e inactividad establecidos por el usuario harán que el dispositivo se borre.",
+        "El dispositivo se borra automáticamente si se detectan acciones como la extracción de la SIM, la conexión de un cable USB o varios intentos fallidos de contraseña.",
+    },
+    {
+      title: "Vault Encriptado:",
+      description:
+        "Incorpora un vault encriptado integral donde puedes guardar de forma segura documentos, imágenes, videos, notas de voz y más.",
     },
     {
       title: "Cifrado de alto nivel ECC, OMEMO, AES-256, XMPP",
@@ -110,11 +115,6 @@ const Page = () => {
       title: "Sin ubicaciones fijas de servidores",
       description:
         "Los servidores se destruyen cada 24 horas después de la transferencia a uno sin dejar rastro.",
-    },
-    {
-      title: "Vault Encriptado:",
-      description:
-        "Incorpora un vault encriptado integral donde puedes guardar de forma segura documentos, imágenes, videos, notas de voz y más.",
     },
     {
       title: "Protección ante coacción o manipulación:",
@@ -193,17 +193,17 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
       <SecurityFeatures
-        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+        title="Red Segura descentralizada Compatible con Pixel - Samsung"
         features={securityFeaturesData}
         imageUrl="/images/apps/cryptcom/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+        title="Red Segura descentralizada Compatible con Pixel - Samsung"
         features={securityFeaturesData}
         imageUrl="/images/apps/cryptcom/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+        title="Red Segura descentralizada Compatible con Pixel - Samsung"
         features={securityFeaturesData}
         imageUrl="/images/apps/cryptcom/phoneSecurity.png"
       />

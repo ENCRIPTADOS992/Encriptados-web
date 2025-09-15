@@ -55,7 +55,7 @@ const Page = () => {
     {
       title: "Bloqueo de Redes",
       description:
-        "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
+        "Protege tu información de posibles intentos de extracción a través de USB y conexiones inalámbricas.",
     },
     {
       title: "Seguridad del dispositivos",
@@ -63,14 +63,14 @@ const Page = () => {
         "Incrementa la seguridad del dispositivo usando nuestra Sim Card Encriptados",
     },
     {
-      title: "Emergency Wipe:",
+      title: "Borrado de emergencia",
       description:
-        "Secure MDM iPhone te permite borrar remotamente todos los datos del dispositivo en cualquier situación de emergencia —pérdida, robo o riesgo de filtración.",
+        "Puede solicitar un borrado remoto de toda la informacion en el dispositivo.",
     },
     {
-      title: "Correo electrónico seguro",
+      title: "Seguridad en tu Dispositivo",
       description:
-        "Correo electrónico seguro y noticias en cualquier parte del mundo. Notificaciones Push",
+        "Protege tu información y aplicaciones de intrusos usando herramientas de chat, correo y billeteras criptográficas cifradas.",
     },
     {
       title: "Sistema restringido y privado",
@@ -78,10 +78,25 @@ const Page = () => {
         "Restringimos el uso e instalación de aplicaciones o softwares que puedan comprometer la seguridad del dispositivo.",
     },
     {
-      title: "Comunicaciones seguras",
+      title: "Fortalecimiento de Políticas TI",
       description:
-        "Usa cifrado de extremo a extremo con estándares de seguridad militar para proteger correos, mensajes, llamadas y archivos.",
+        "Ajusta las políticas del dispositivo para eliminar accesos que pongan en riesgo la seguridad.",
     },
+    {
+      title: "Contenedor Seguro",
+      description:
+        "Un contenedor que previene fugas de información o el ingreso de malware al dispositivo.",
+    },
+    {
+      title: "Fácil Configuración",
+      description:
+        "Configura tu MDM en menos de 5 minutos.",
+    },
+    {
+      title: "Privacidad",
+      description:
+        "No utilices una cuenta personal para autenticarte en Google.",
+    }
   ];
   useEffect(() => {
     if (productId) {
@@ -158,17 +173,17 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.secure-mdm-android"
       />
       <SecurityFeatures
-        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+        title="Beneficios de MDM Android"
         features={securityFeaturesData}
         imageUrl="/images/apps/secure-mdm-android/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+        title="Beneficios de MDM Android"
         features={securityFeaturesData}
         imageUrl="/images/apps/secure-mdm-android/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+        title="Beneficios de MDM Android"
         features={securityFeaturesData}
         imageUrl="/images/apps/secure-mdm-android/phoneSecurity.png"
       />

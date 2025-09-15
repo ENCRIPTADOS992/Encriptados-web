@@ -50,13 +50,13 @@ const Page = () => {
       image: "/images/apps/secureCrypt/phone_image.png",
       title: "Mensajes temporizados",
       description:
-        "Habilitar el modo de quema de mensajes, permite al remitente de un mensaje configurar un temporizador y hacer que el mensaje enviado se autodestruya tanto desde el dispositivo del remitente como desde el dispositivo del destinatario.",
+        "Permite configurar un temporizador para que el mensaje se autodestruya automáticamente en los dispositivos del remitente y del destinatario.",
     },
     {
       image: "/images/apps/secureCrypt/mensajes.png",
-      title: "Archivos Encriptados",
+      title: "Enmascaramiento de Chat",
       description:
-        "Comparte archivos de forma segura y protegida sin riesgo de acceso no autorizado.",
+        "Con un toque, tus conversaciones se transforman en mensajes aleatorios, asegurando que permanezcan ocultas y protegidas de miradas curiosas.",
     },
     {
       image: "/images/apps/secureCrypt/llamadas.png",
@@ -86,34 +86,34 @@ const Page = () => {
   ];
   const securityFeaturesData = [
     {
-      title: "Enmascaramiento y Rotación de IMEI",
+      title: "Chat encriptado",
       description:
-        "El IMEI se enmascara y rota cada 30 minutos sin intervención del usuario. Protege tu identidad y ubicación, evitando rastreos y garantizando anonimato total en tus comunicaciones.",
+        "Tus mensajes están protegidos con cifrado de extremo a extremo, lo que mantiene la privacidad y seguridad de cada conversación.",
     },
     {
-      title: "Enmascaramiento de IP de Sistemas",
+      title: "Borrado remoto",
       description:
-        "Tecnología avanzada que enmascara direcciones IP dinámicamente. Evita el rastreo de actividades en línea y protege identidades, brindando una capa adicional de privacidad.",
+        "Elimina y sobrescribe todos los datos del dispositivo, garantizando que no puedan recuperarse, ni siquiera con herramientas forenses avanzadas.",
     },
     {
-      title: "Mensajes Autodestructivos",
+      title: "Contraseña de coacción",
       description:
-        "Envía mensajes que se eliminan automáticamente tras un período establecido. Seguridad garantizada tanto para el remitente como el destinatario.",
+        "Ingresa una contraseña secundaria de pánico que elimina instantáneamente la aplicación evitando que sea comprometida",
     },
     {
-      title: "Chat Encriptado",
+      title: "Detección de Cables",
       description:
-        "Mensajería cifrada de extremo a extremo para garantizar que tus conversaciones sean totalmente privadas y seguras.",
+        "Si se conecta algún cable no autorizado al dispositivo donde está instalada la aplicación, esta se desactivará automáticamente evitando que se pueda abrir",
     },
     {
-      title: "Bóveda Encriptada",
+      title: "Copias de seguridad cifrada",
       description:
         "Almacena información crítica de forma segura en nuestra bóveda encriptada y protegida.",
     },
     {
       title: "Cámara Encriptada",
       description:
-        "Captura y guarda fotos y videos con cifrado seguro, evitando cualquier acceso no autorizado.",
+        "Priorizamos su privacidad con copias de seguridad cifradas que solo cubren sus contactos y bóveda, nunca sus mensajes.",
     },
   ];
   useEffect(() => {

@@ -54,7 +54,7 @@ const Page = () => {
   const securityFeaturesData = [
 	{
 	  title: "Bloqueo de Redes",
-	  description: "Bloqueo de redes inalámbricas para prevenir intentos de acceso o ataques por estos medios.",
+	  description: "Implementar medidas para prevenir intentos de acceso o ataques a través de conexiones inalámbricas.",
 	},
 	{
 	  title: "Seguridad del dispositivos",
@@ -62,12 +62,12 @@ const Page = () => {
 		"Incrementa la seguridad del dispositivo usando nuestra Sim Card Encriptados",
 	},
 	{
-	  title: "Emergency Wipe:",
+	  title: "Borrado remoto",
 	  description: "Secure MDM iPhone te permite borrar remotamente todos los datos del dispositivo en cualquier situación de emergencia —pérdida, robo o riesgo de filtración.",
 	},
 	{
-	  title: "Correo electrónico seguro",
-	  description: "Correo electrónico seguro y noticias en cualquier parte del mundo. Notificaciones Push",
+	  title: "VPN Permanente",
+	  description: "No funcionará sin una conexión VPN, lo que garantiza que tus comunicaciones permanezcan seguras",
 	},
 	{
 	  title: "Sistema restringido y privado",
@@ -79,6 +79,20 @@ const Page = () => {
 	  description:
 		"Usa cifrado de extremo a extremo con estándares de seguridad militar para proteger correos, mensajes, llamadas y archivos.",
 	},
+	{
+	  title: "Contenedor Seguro",
+	  description: "Un contenedor que previene fugas de información o el ingreso de malware al dispositivo.",
+	},
+	{
+	  title: "Cuenta Privada",
+	  description:
+		"No utilices cuentas personales para identificarse con Apple",
+	},
+	{
+	  title: "Fortalecimiento de Políticas TI",
+	  description:
+		"Ajusta las políticas del dispositivo para eliminar accesos que pongan en riesgo la seguridad.",
+	}
   ];
   useEffect(() => {
 	if (productId) {
@@ -155,17 +169,17 @@ const Page = () => {
 		googlePlayUrl="https://play.google.com/store/apps/details?id=com.secure-mdm-iphone"
 	  />
 	  <SecurityFeatures
-		title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+		title="Beneficios de MDM iPhone"
 		features={securityFeaturesData}
 		imageUrl="/images/apps/secure-mdm-iphone/phoneSecurity.png"
 	  />
 	  <SecurityFeaturesTablet
-		title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+		title="Beneficios de MDM iPhone"
 		features={securityFeaturesData}
 		imageUrl="/images/apps/secure-mdm-iphone/phoneSecurity.png"
 	  />
 	  <SecurityFeaturesMobile
-		title="Vuelve tu celular o tablet un dispositivo totalmente seguro"
+		title="Beneficios de MDM iPhone"
 		features={securityFeaturesData}
 		imageUrl="/images/apps/secure-mdm-iphone/phoneSecurity.png"
 	  />

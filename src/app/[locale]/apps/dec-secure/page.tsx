@@ -47,19 +47,19 @@ const Page = () => {
       image: "/images/apps/dec-secure/call.png",
       title: "Contenedor Dedicado",
       description:
-        "Se requiere la instalación de Secure Call dentro de un contenedor dedicado, protegiendo los datos y el uso de la aplicación contra el espionaje inapropiado. La lista de contactos de Secure Call dedicada es inaccesible desde fuera de la aplicación, lo que mantiene tus contactos de Secure Call privados y discretos.",
+        "La app se instala en un contenedor seguro para evitar espionaje. Los contactos quedan inaccesibles fuera de la app, protegiendo la privacidad.",
     },
     {
       image: "/images/apps/dec-secure/secure-call.png",
       title: "DEC Secure Call",
       description:
-        "DEC Secure Call te ofrece todo lo que esperas en una aplicación de comunicaciones seguras, incluido el cifrado AES-256 siempre activo; llamadas de voz individuales y grupales, videollamadas y mensajería Sus comunicaciones son 100% privadas, no podemos escuchar tus llamadas ni leer tus mensajes bajo ninguna circunstancia, y no se almacena nada en nuestros servidores.",
+        "Cifrado AES-256 siempre activo para voz, video y mensajes. Comunicaciones 100% privadas: sin acceso a tus datos y sin almacenamiento en servidores. ",
     },
     {
       image: "/images/apps/dec-secure/call.png",
       title: "Conferencia y llamadas grupales",
       description:
-        "Las llamadas de video y de voz múltiple totalmente encriptadas de hasta 10 participantes te permiten utilizar una única plataforma para todas tus comunicaciones seguras.",
+        "Llamadas de voz y video encriptadas, con hasta 10 participantes, te permiten centralizar todas tus comunicaciones seguras en una sola plataforma.",
     },
   ];
 
@@ -94,11 +94,6 @@ const Page = () => {
         "Desarrollamos continuamente capas adicionales de seguridad, haciendo el robo de información prácticamente imposible.",
     },
     {
-      title: "VPN sin clic",
-      description:
-        "Se conecta automáticamente con autenticación automatizada, sin permitir enviar o recibir datos sin protección.",
-    },
-    {
       title: "Seguridad de la red",
       description:
         "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
@@ -107,6 +102,11 @@ const Page = () => {
       title: "Control de cortafuegos",
       description:
         "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+    },
+    {
+      title: "VPN sin clic",
+      description:
+        "Se conecta automáticamente con autenticación automatizada, sin permitir enviar o recibir datos sin protección.",
     },
   ];
   useEffect(() => {

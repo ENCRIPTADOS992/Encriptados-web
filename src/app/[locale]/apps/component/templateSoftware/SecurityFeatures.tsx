@@ -16,104 +16,110 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
   title,
   features,
   imageUrl,
-}) => (
+}) => {
+  const COLS = 3;
+  const ITEMS = features.slice(0, 9);                
+  const rows = Math.ceil(ITEMS.length / COLS);       
+  const CARD_H = 264;
+  const GAP_Y = 9;
+  const gridHeight = rows * CARD_H + (rows - 1) * GAP_Y;
+
+  const containerHeight = rows <= 2 ? 1182 : 1460;
+
+  return (
   // w-screen para full-bleed, py en lugar de p para controlar vertical
-  <section className="hidden lg:flex justify-center py-8 bg-white mt-[100px]">
-    <div className="bg-black rounded-[44px] max-w-[1272px] w-full h-[1182px] mx-auto px-[60px]">
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
-        {/* Imagen del teléfono */}
-        <div className="flex-shrink-0 flex justify-center mt-[85px] transform -translate-x-14">
-          <div className="w-[570px] h-[1006px] rounded-[24px] overflow-hidden">
-            <img
-              src={imageUrl}
-              alt="DEC Secure Phone"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              draggable={false}
-            />
-          </div>
-        </div>
+  <section className="hidden lg:flex justify-center py-8 bg-white mt-[60px]">
+    <div
+        className="bg-black rounded-[44px] max-w-[1272px] w-full mx-auto px-[60px]"
+        style={{ height: containerHeight }}
+      >
+      <div className="w-full">
+        {/* TÍTULO centrado al ancho del layout (927px) */}
+        <div className="pt-[85px] mx-auto text-center" style={{ width: 891 }}>
+  <h2
+    className="
+      font-inter font-bold
+      text-[30px] leading-[30px] tracking-[0]
+      text-white
+      break-words 
+    "
+  >
+    {title}
+  </h2>
+</div>
 
-        {/* Wrapper relativo para grid + círculo */}
-        <div className="relative">
-          {/* Contenedor de ancho fijo PARA TÍTULO + GRID */}
-          <div className="mt-[85px] w-[581px]">
-            {/* Título alineado al inicio */}
-            <h2
-              className="
-                font-inter        /* si tienes la fuente Inter registrada */
-                font-bold          /* weight 700 */
-                text-[28px]        /* tamaño 28px */
-                leading-[28px]     /* line-height = 100% = 28px */
-                tracking-[0px]     /* letter-spacing 0 */
-                text-white         /* #FFFFFF */
-                w-[581px]          /* ancho fijo 581px */
-                h-[68px]           /* alto fijo 68px */
-                mb-8
-              "
-            >
-              {title}
-            </h2>
-            {/* CÍRCULO AZUL DETRÁS del grid */}
+        {/* CELULAR: mitad superior, SIN bordes redondeados */}
+     <div className="flex justify-center mt-10">
+  <div
+    className="relative overflow-hidden"   /* sin rounded */
+    style={{ width: 283, height: 315.39 }} /* ancho del fade */
+  >
+    {/* Imagen centrada dentro del marco de 283 */}
+    <img
+      src={imageUrl}
+      alt="DEC Secure Phone"
+      className="block mx-auto select-none pointer-events-none"
+      style={{
+        width: "273.91px",            // especificación exacta
+        height: "auto",
+        objectFit: "contain",
+        objectPosition: "top center",
+        clipPath: "inset(0 0 50% 0)", // recorta la mitad inferior
+      }}
+      draggable={false}
+    />
+
+    {/* DESVANECIDO PEGADO AL CELULAR (283×110) */}
+    <div
+      className="pointer-events-none"
+      style={{
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        width: 283,
+        height: 110,
+        background:
+          "linear-gradient(180deg, rgba(2,6,7,0) 0%, #020607 100%)",
+      }}
+    />
+  </div>
+</div>
+        {/* GRID 3x3 centrado EXACTO */}
+        <div className="relative w-full">
+          <div className="mx-auto" style={{ width: 927 }}>
             <div
-              className="absolute"
+              className="relative z-10 grid"
               style={{
-                width: "400px", // ancho reducido
-                height: "550px", // alto reducido
-                borderRadius: "24px",
-                backgroundColor: "#3FD3FF",
-                filter: "blur(100px)", // menos blur si lo deseas
-                top: "450px", // mueve más arriba
-                right: "230px", // mueve más hacia la izquierda
+                width: 927,
+                height: 810, 
+                gridTemplateColumns: "repeat(3, 303px)",
+                gridAutoRows: "264px",
+                columnGap: 9,
+                rowGap: 9,
               }}
-            />
-
-            {/* Grid de tarjetas */}
-            <div
-              className="grid grid-cols-2 gap-x-[15px] gap-y-[20px] relative z-10"
-              style={{ width: "581px" }}
             >
-              {features.map((feat, idx) => (
+              {features.slice(0, 9).map((feat, idx) => (
                 <div
                   key={idx}
-                  className="w-[283px] h-[297px] bg-[#101010] rounded-[12px] p-[24px_24px_34px_24px] flex flex-col items-start gap-[14px]"
+                  className="bg-[#101010] rounded-[12px] flex flex-col items-start"
+                  style={{
+                    width: 303,
+                    height: 264,
+                    padding: "24px 16px 34px 16px",
+                    gap: 14,
+                  }}
                 >
-                  {/* Icono check */}
                   <img
                     src="/images/apps/dec-secure/check_circle.png"
                     alt="check icon"
                     className="w-[34px] h-[34px] select-none pointer-events-none"
                     draggable={false}
                   />
-
-                  {/* Contenido de la tarjeta */}
                   <div>
-                    <h3
-                      className="
-                      font-inter            /* Inter */
-                      font-semibold          /* 600 Semi Bold */
-                      text-[18px]            /* 18px */
-                      leading-[18px]         /* line-height 100% */
-                      tracking-[0px]         /* letter-spacing 0 */
-                      text-white             /* #FFFFFF */
-                      w-[235px]              /* width 235px */
-                      h-[44px]               /* height 44px */
-                    "
-                    >
+                    <h3 className="font-inter font-semibold text-[14px] leading-[18px] text-white w-[271px] h-[34px]">
                       {feat.title}
                     </h3>
-                    <p
-                      className="
-                      font-inter            /* Inter */
-                      font-normal            /* 400 Regular */
-                      text-[16px]            /* 16px */
-                      leading-[16px]         /* line-height 100% */
-                      tracking-[0px]         /* letter-spacing 0 */
-                      text-[rgba(244,248,250,0.6)] /* #F4F8FA a 60% */
-                      w-[235px]              /* width 235px */
-                      h-[114px]              /* height 114px */
-                      mt-1
-                    "
-                    >
+                    <p className="font-inter font-normal text-[14px] leading-[16px] text-[rgba(244,248,250,0.6)] w-[271px] h-[85px] mt-2">
                       {feat.description}
                     </p>
                   </div>
@@ -126,5 +132,5 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
     </div>
   </section>
 );
-
+};
 export default SecurityFeatures;

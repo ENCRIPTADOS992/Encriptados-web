@@ -107,6 +107,20 @@ const Page = () => {
       description:
         "Asegura una conexión estable en todo momento en los dispositivos que estén operacionales.",
     },
+    {
+      title: "Control Remoto",
+      description: "IntactPhone garantiza el funcionamiento óptimo de tu dispositivo con una aplicación segura que resuelve problemas de forma autónoma y ofrece control remoto.",
+    },
+    {
+      title: "Hardware Seguro",
+      description:
+        "Este teléfono inteligente de alta gama está desarrollado desde cero con drivers oficiales para ofrecer una mayor protección contra el cibercrimen móvil.",
+    },
+    {
+      title: "Datos Cifrados",
+      description:
+        "El cifrado de disco de IntactPhone permite que solo el propietario acceda a los datos mediante una contraseña o PIN exclusivo.",
+    }
   ];
   useEffect(() => {
     if (productId) {
@@ -183,31 +197,31 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
       <SecurityFeatures
-        title="CommuniTake, la casa madre de Intact construye todo el hardware y software"
+        title="IntactPhone construye todo el hardware y software"
         features={securityFeaturesData}
         imageUrl="/images/apps/intact-phone/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="CommuniTake, la casa madre de Intact construye todo el hardware y software"
+        title="IntactPhone construye todo el hardware y software"
         features={securityFeaturesData}
         imageUrl="/images/apps/intact-phone/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="CommuniTake, la casa madre de Intact construye todo el hardware y software"
+        title="IntactPhone construye todo el hardware y software"
         features={securityFeaturesData}
         imageUrl="/images/apps/intact-phone/phoneSecurity.png"
       />
 
       <HeroVideoSection
-        title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2023`}
+        title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2025`}
         videoUrl="https://www.youtube.com/embed/Og3xt5izfSU"
       />
       <HeroVideoSectionMobile
-        title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2023`}
+        title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2025`}
         videoUrl="https://www.youtube.com/embed/Og3xt5izfSU"
       />
       <HeroVideoSectionTablet
-        title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2023`}
+        title={`Cómo Proteger mi Celular de Malware y Hackers para evitar Intervenciones 2025`}
         videoUrl="https://www.youtube.com/embed/Og3xt5izfSU"
       />
       <FeaturedProducts

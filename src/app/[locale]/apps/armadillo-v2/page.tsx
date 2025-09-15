@@ -124,6 +124,22 @@ const Page = () => {
       description:
         "Una defensa proactiva. Nuestras aplicaciones monitorean constantemente la actividad a su alrededor y alerta al usuario de posibles peligros, así se previenen los ataques antes de que sucedan.",
     },
+    {
+      title: "Chat Cifrado",
+      description:
+        "Videoconferencias, mensajes autodestructivos y chats grupales con cifrado descentralizado. Incluso si el servidor es comprometido, tus conversaciones permanecen seguras",
+    },
+    {
+      title: "Correo electrónico Cifrado PGP-N",
+      description:
+        "Protege tus datos: Usa tu red y cifrada de inicio a fin. Correo PGP cifrado: Asuntos aleatorios, conexión cifrada a servidores de claves y correo, y claves PGP de 4096 bits.",
+    },
+    {
+      title: " Cifrado OMEMO",
+      description:
+        "Todas las conexiones de chat utilizan cifrado TLS 1.2 con certificados de 4096 bits. Las claves de cifrado se verifican manualmente mediante código QR",
+    }
+    
   ];
   useEffect(() => {
     if (productId) {
@@ -220,18 +236,18 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
       <SecurityFeatures
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Te da protección avanzada"
         features={securityFeaturesData}
         imageUrl="/images/apps/armadillo-v2/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Te da protección avanzada"
         features={securityFeaturesData}
         imageUrl="/images/apps/armadillo-v2/phoneSecurity.png"
       />
 
       <SecurityFeaturesMobile
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Te da protección avanzada"
         features={securityFeaturesData}
         imageUrl="/images/apps/armadillo-v2/phoneSecurity.png"
       />

@@ -48,27 +48,27 @@ const Page = () => {
   const featuresGrid = [
     {
       image: "/images/apps/chat-mail/chat-delete-time.png",
-      title: "Chat",
+      title: "Chat de texto y voz encriptado ",
       description:
-        "Puedes mantener seguras las comunicaciones profesionales e incorporar aplicaciones estándar para hablar con tu familia.",
+        "Elimina mensajes sin conexión, marca favoritos y usa mensajes autodestructivos que se borran en todos los dispositivos tras el tiempo definido.",
     },
     {
       image: "/images/apps/chat-mail/chat-voice-note.png",
-      title: "Chat",
+      title: "Chat grupal anónimo",
       description:
-        "Control absoluto de nuevas tecnologías. La tecnología a tu servicio y no al revés, para obtener el mayor control en protección y privacidad.",
+        "Envía mensajes a múltiples personas de manera fácil y segura, garantizando al mismo tiempo la protección de las identidades de todos los participantes.",
     },
     {
       image: "/images/apps/chat-mail/chat-protection.png",
-      title: "Protección",
+      title: "Llamadas encriptadas",
       description:
-        "Habla por teléfono con total tranquilidad, guarda y custodia la información confidencial y las bases de datos con total confianza.",
+        "Habla con hasta dos usuarios en ChatMail sin límites. Llamadas ultraseguras, nítidas y rápidas, diseñadas para proteger tu privacidad en todo momento.",
     },
     {
       image: "/images/apps/chat-mail/chat-mail.png",
-      title: "ChatMail",
+      title: "Bloqueo de Notas:",
       description:
-        "Es una solución patentada que bloquea cualquier intrusión y cualquier intercambio de información no autorizado.",
+        "Protege tu información importante con un PIN personalizado. Además, realiza copias de seguridad y restaura de forma segura tus notas y contactos.",
     },
   ];
   const Faqs =[
@@ -100,6 +100,11 @@ const Page = () => {
         "Nuestra interfaz de usuario detecta a los usuarios internos y externos, para establecer de forma predeterminada el protocolo de cifrado más seguro disponible.",
     },
     {
+      title: "Duress Password y Borrado bajo coacción:",
+      description:
+        "Permite configurar una contraseña de coacción (duress password) que, al ingresarse, activa automáticamente el borrado total del dispositivo y reenvía una alerta de emergencia a contactos predefinidos.",
+    },
+    {
       title: "Interfaz de usuario unificada",
       description:
         "Hemos simplificado por completo la experiencia de usuario al desarrollar el software cifrado más avanzado, intuitivo y potente. Ya no tienes que cambiar entre aplicaciones.",
@@ -110,14 +115,9 @@ const Page = () => {
         "Las claves privadas se crean en el dispositivo aleatoriamente para que sean lo más fuerte posible. Tu clave privada nunca deja tu dispositivo.",
     },
     {
-      title: "Seguridad de la red",
+      title: "Mensajes autodestructivos programados:",
       description:
-        "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
-    },
-    {
-      title: "Control de cortafuegos",
-      description:
-        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+        "Envía mensajes, notas, imágenes o archivos que se eliminen automáticamente de todos los dispositivos a una hora preconfigurada (hasta 30 días).",
     },
   ];
   useEffect(() => {
@@ -191,17 +191,17 @@ const Page = () => {
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
       <SecurityFeatures
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Protege tu identidad con una seguridad móvil encriptada."
         features={securityFeaturesData}
         imageUrl="/images/apps/chat-mail/phoneSecurity.png"
       />
       <SecurityFeaturesTablet
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Protege tu identidad con una seguridad móvil encriptada."
         features={securityFeaturesData}
         imageUrl="/images/apps/chat-mail/phoneSecurity.png"
       />
       <SecurityFeaturesMobile
-        title="Nuestros dispositivos cuentan con programas y aplicaciones exclusivos"
+        title="Protege tu identidad con una seguridad móvil encriptada."
         features={securityFeaturesData}
         imageUrl="/images/apps/chat-mail/phoneSecurity.png"
       />
