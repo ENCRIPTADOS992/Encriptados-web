@@ -18,7 +18,11 @@ export default function PurchaseTabs({
 }) {
   const { showTabs, allowedModes } = useUiPolicy();
 
-  if (!showTabs) return null;
+  const visibleModes: Mode[] = (allowedModes ?? []).filter((m): m is Mode =>
+    ["new_user", "roning_code", "recharge"].includes(m as string)
+  ) as Mode[];
+
+  if (!showTabs || visibleModes.length <= 1) return null;
 
   const base =
     "h-11 rounded-[8px] px-[14px] text-[12px] leading-[12px] font-bold flex items-center justify-center text-center";
@@ -31,11 +35,7 @@ export default function PurchaseTabs({
       <button
         type="button"
         aria-pressed={isActive}
-        className={[
-          base,
-          isActive ? clsActive : clsInactive,
-          !enableSwitching && "cursor-not-allowed",
-        ]
+        className={[base, isActive ? clsActive : clsInactive, !enableSwitching && "cursor-not-allowed"]
           .filter(Boolean)
           .join(" ")}
         onClick={enableSwitching ? () => onSelect?.(mode) : undefined}
@@ -46,18 +46,22 @@ export default function PurchaseTabs({
     );
   };
 
+  // Mapeo nombre → label
+  const labels: Record<Mode, string> = {
+    new_user: "Quiero mi usuario",
+    roning_code: "Código RONING",
+    recharge: "Recargar",
+  };
+
   return (
     <div className="w-full">
-      {/* Título de la sección (12px, bold, #010C0F al 80%, line-height 12px) */}
       <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80 mb-2">
         ¿Cómo quieres recibir tu licencia?
       </p>
-
-      {/* Grid 3 columnas, gap 8px, alto 44px total */}
       <div className="w-full h-11 grid grid-cols-3 gap-2">
-        <Btn label="Quiero mi usuario" mode="new_user" />
-        <Btn label="Código RONING" mode="roning_code" />
-        <Btn label="Recargar" mode="recharge" />
+        {visibleModes.map((m) => (
+          <Btn key={m} label={labels[m]} mode={m} />
+        ))}
       </div>
     </div>
   );

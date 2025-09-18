@@ -19,6 +19,8 @@ import { getProductById } from "@/features/products/services";
 import { getProductCategoryKind, type CategoryKind } from "@/shared/utils/getProductCategoryKind";
 import { PurchaseKindProvider } from "./PurchaseKindContext";
 
+import { useUiPolicy } from "./new/useUiPolicy";
+
 type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
 export default function ModalPaymentController() {
@@ -56,6 +58,8 @@ const productid = (params as any)?.productid as string | undefined;
         categoryName: (params as any)?.categoryName ?? product?.category?.name,
       })
     : { kind: "DESCONOCIDO" as CategoryKind, reason: "no product yet" };
+
+  const { allowedModes } = useUiPolicy(); 
 
   const norm = (s?: string) =>
     (s ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");

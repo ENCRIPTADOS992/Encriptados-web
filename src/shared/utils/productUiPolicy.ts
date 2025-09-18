@@ -10,11 +10,24 @@ const norm = (s?: string) =>
 
 function findRouteItem(product: any, selectedOption?: number): ProductRouteItem | undefined {
   const pname = norm(product?.name);
-  return PRODUCT_ROUTES.find((it) => {
+
+  // 1) Intento por nombre / displayNames
+  const byName = PRODUCT_ROUTES.find((it) => {
     const names = [it.name, ...(it.displayNames ?? [])].map(norm);
-    // match por nombre o (como fallback suave) por categoryId == selectedOption
-    return names.includes(pname) || (selectedOption && it.categoryId === selectedOption);
+    return names.includes(pname);
   });
+  if (byName) return byName;
+
+  // 2) Fallback por categoryId SOLO si es único
+  if (selectedOption) {
+    const byCat = PRODUCT_ROUTES.filter((it) => it.categoryId === selectedOption);
+    if (byCat.length === 1) {
+      return byCat[0]; // único → confiable
+    }
+    // Si hay varios con el mismo categoryId (como 38), NO devolver nada
+  }
+
+  return undefined;
 }
 
 export function getUiPolicyForProduct(opts: {

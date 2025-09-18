@@ -19,10 +19,9 @@ export function useUiPolicy() {
   });
 
   if (!product) {
-    // Defaults seguros mientras carga
     return {
-      showTabs: kind === "SIM",
-      allowedModes: ["new_user", "roning_code", "recharge"] as const,
+      showTabs: false,
+      allowedModes: [] as const,
       policyBase: null,
       routeItem: null,
     };
@@ -31,9 +30,9 @@ export function useUiPolicy() {
   const merged = getUiPolicyForProduct({ product, kind, selectedOption });
 
   return {
-    showTabs: merged.showTabs,
-    allowedModes: merged.allowedModes,
-    policyBase: merged,   
+    showTabs: !!merged.showTabs,
+    allowedModes: merged.allowedModes ?? ([] as const),
+    policyBase: merged,
     routeItem: merged.routeItem,
   };
 }
