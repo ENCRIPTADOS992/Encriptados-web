@@ -9,9 +9,6 @@ import ProductSectionTablet from "../component/templateSoftware/ProductSectionTa
 import ProductFeaturesGrid from "../component/templateSoftware/ProductFeaturesGrid";
 import ProductFeaturesGridMobile from "../component/templateSoftware/ProductFeaturesGridMobile";
 import ProductFeaturesGridTablet from "../component/templateSoftware/ProductFeaturesGridTablet";
-import ProductBenefitsGrid from "../component/templateSoftware/ProductBenefitsGrid";
-import ProductBenefitsGridMobile from "../component/templateSoftware/ProductBenefitsGridMobile";
-import ProductBenefitsGridTablet from "../component/templateSoftware/ProductBenefitsGridTablet";
 import HeroVideoSection from "../component/templateSoftware/HeroVideoSection";
 import HeroVideoSectionMobile from "../component/templateSoftware/HeroVideoSectionMobile";
 import HeroVideoSectionTablet from "../component/templateSoftware/HeroVideoSectionTablet";
