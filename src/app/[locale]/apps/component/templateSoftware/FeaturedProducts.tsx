@@ -20,7 +20,7 @@ interface FeaturedProductsProps {
 }
 
 const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
-  <section className="w-full hidden lg:flex justify-center py-8 mt-[60px]"
+  <section className="w-full hidden lg:flex justify-center py-8 mt-[90px]"
   style={{ maxHeight: 306 }}
   >
 

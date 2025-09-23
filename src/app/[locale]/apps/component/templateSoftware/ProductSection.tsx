@@ -38,12 +38,12 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   loading = false,
 }) => {
   return (
-    <section className="w-full hidden lg:flex justify-center bg-white mt-[60px]">
+    <section className="w-full hidden lg:flex justify-center bg-white">
       <div className="w-full max-w-[1440px] h-[600px] flex items-center justify-center mx-auto px-2">
         {/* Columna izquierda */}
-        <div className="flex flex-col w-[455px] mt-10">
+        <div className="flex flex-col w-[455px] gap-y-[20px]">
           {/* Bloque 1: Título + Descripción */}
-          <div className="flex flex-col gap-[20px] mb-[12px]">
+          <div className="flex flex-col w-[413px] gap-[12px]">
             <h2 className="font-inter font-bold text-[28px] leading-[100%] text-[#131313]">
               {title}
             </h2>
@@ -52,8 +52,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({
             </p>
           </div>
 
+
           {/* Bloque 2: Features/Checks */}
-          <div className="flex flex-col gap-[8px] mb-[12px]">
+          <div className="flex flex-col gap-[8px]">
             {features.length > 0 ? (
               features.map((f, i) => (
                 <div key={i} className="flex items-center gap-2">
@@ -69,7 +70,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           </div>
 
           {/* Bloque 3: Radio buttons */}
-          <div className="flex flex-row flex-wrap gap-[18px] mb-[18px]">
+          <div className="flex flex-row flex-wrap gap-[18px]">
             {radioOptions.map((option) => (
               <label
                 key={option}

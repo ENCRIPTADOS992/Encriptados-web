@@ -16,7 +16,7 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-10 mt-[60px]">
+     <section className="hidden lg:flex justify-center bg-[#F6FAFC] mt-[90px]">
 
       <div className="w-full max-w-[1272px] mx-auto">
         <h3 className="text-[24px] font-bold leading-[100%] text-[#101010] mb-8">
@@ -32,7 +32,7 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
                 <img
                   src={feature.image}
                   alt={feature.title}
-                  className="w-[250px] h-[300px] object-contain"
+                  className="w-[306px] h-[289px] object-contain"
                   draggable={false}
                   loading="lazy"
                   style={{ margin: "0 auto" }}
