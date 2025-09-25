@@ -102,13 +102,13 @@ const Page = () => {
       image: "/images/apps/vault-chat-v2/correo_PGP.png",
       title: "Correo PGP",
       description:
-        "Los grupos anónimos ocultan la información de contacto y permiten fijar un tiempo para que toda la información se borre de forma automática.",
+        "Usamos OMEMO, ECC y AES256: ningún mensaje es accesible en el servidor. Sin almacenar datos, ciframos imágenes y notas de voz para mayor seguridad.",
     },
     {
       image: "/images/apps/vault-chat-v2/llamadas_cifradas.png",
       title: "Llamadas Cifradas",
       description:
-        "Implementamos la máxima encriptación con ZRTP, autenticación adicional y AES, garantizando la privacidad de tus conversaciones.",
+        "Implementamos la máxima encriptación con ZRTP, autenticación adicional y AES, garantizando la privacidad de tus conversaciones .",
     },
     {
       image: "/images/apps/vault-chat-v2/mensajeria.png",

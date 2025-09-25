@@ -142,8 +142,8 @@ const Page = () => {
         title="Cryptcom"
         description="Convierte tu teléfono inteligente en un dispositivo de comunicaciones altamente seguro."
         features={[
-          "Cambiador automático de IMEI",
-          "Baúl cifrado en la nube",
+          "Cifrado alto nivel",
+          "Vault cifrado en nube",
           "Encubrimiento de aplicaciones",
         ]}
         price="729$ USD"
@@ -160,8 +160,8 @@ const Page = () => {
         title="Cryptcom"
         description="Convierte tu teléfono inteligente en un dispositivo de comunicaciones altamente seguro."
         features={[
-          "Cambiador automático de IMEI",
-          "Baúl cifrado en la nube",
+          "Cifrado alto nivel",
+          "Vault cifrado en nube",
           "Encubrimiento de aplicaciones",
         ]}
         price="729$ USD"
@@ -178,8 +178,8 @@ const Page = () => {
         title="Cryptcom"
         description="Convierte tu teléfono inteligente en un dispositivo de comunicaciones altamente seguro."
         features={[
-          "Cambiador automático de IMEI",
-          "Baúl cifrado en la nube",
+          "Cifrado alto nivel",
+          "Vault cifrado en nube",
           "Encubrimiento de aplicaciones",
         ]}
         price="729$ USD"

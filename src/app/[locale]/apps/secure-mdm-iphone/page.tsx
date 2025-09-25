@@ -118,9 +118,9 @@ const Page = () => {
 		title="SECURE MDM IPHONE"
 		description="Blinda con el mayor grado de seguridad tu iPhone"
 		features={[
-		  "Bloqueo de acceso por USB ",
-		  "Borrado remoto de emergencia",
-		  "Mensajería segura y privada",
+		  "Mensajería segura",
+		  "Bloqueo de Redes",
+		  "Borrado remoto",
 		]}
 		price="600$ USD"
 		radioOptions={plans.map((p) => p.label)}
@@ -136,9 +136,9 @@ const Page = () => {
 		title="SECURE MDM IPHONE"
 		description="Blinda con el mayor grado de seguridad tu iPhone"
 		features={[
-		  "Bloqueo de acceso por USB ",
-		  "Borrado remoto de emergencia",
-		  "Mensajería segura y privada",
+		  "Mensajería segura",
+		  "Bloqueo de Redes",
+		  "Borrado remoto",
 		]}
 		price="600$ USD"
 		radioOptions={plans.map((p) => p.label)}
@@ -155,7 +155,7 @@ const Page = () => {
 		description="Blinda con el mayor grado de seguridad tu iPhone"
 		features={[
 		  "Mensajería segura",
-		  "Mail Cifrado",
+		  "Bloqueo de Redes",
 		  "Borrado remoto",
 		]}
 		price="600$ USD"

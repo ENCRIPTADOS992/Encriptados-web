@@ -102,7 +102,7 @@ const Page = () => {
     {
       title: "Duress Password y Borrado bajo coacción:",
       description:
-        "Permite configurar una contraseña de coacción (duress password) que, al ingresarse, activa automáticamente el borrado total del dispositivo y reenvía una alerta de emergencia a contactos predefinidos.",
+        "PPermite configurar una contraseña de coacción (duress password) que, al ingresarse, activa automáticamente el borrado total del dispositivo y reenvía una alerta de emergencia a contactos predefinidos.",
     },
     {
       title: "Interfaz de usuario unificada",

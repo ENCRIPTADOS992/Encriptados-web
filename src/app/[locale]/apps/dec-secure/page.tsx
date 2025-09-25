@@ -53,7 +53,7 @@ const Page = () => {
       image: "/images/apps/dec-secure/secure-call.png",
       title: "DEC Secure Call",
       description:
-        "Cifrado AES-256 siempre activo para voz, video y mensajes. Comunicaciones 100% privadas: sin acceso a tus datos y sin almacenamiento en servidores. ",
+        "Cifrado AES-256 siempre activo para voz, video y mensajes. Comunicaciones 100% privadas: sin acceso a tus datos y sin almacenamiento en servidores.",
     },
     {
       image: "/images/apps/dec-secure/call.png",
@@ -86,7 +86,7 @@ const Page = () => {
     {
       title: "Sistema operativo Seguro",
       description:
-        "Sistema operativo con tecnología de ciberseguridad indescifrable, parches de seguridad, actualizaciones contra amenazas emergentes e interfaz intuitiva. Cifrado de disco completo.",
+        "Sistema operativo con tecnología de ciberseguridad indescifrable, parches de seguridad, actualizadas contra las amenazas emergentes e interfaz de usuario intuitiva. Cifrado de disco completo.",
     },
     {
       title: "Múltiples capas de seguridad de grado militar",
@@ -96,17 +96,17 @@ const Page = () => {
     {
       title: "Seguridad de la red",
       description:
-        "Un sofisticado programa de detección y respuesta de amenazas de red frustra los esfuerzos de los ciberatacantes.",
+        "Un sofisticado programa de seguridad de red y detección y respuesta de amenazas frustra los esfuerzos de los ciberatacantes.",
     },
     {
       title: "Control de cortafuegos",
       description:
-        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de exposiciones inapropiadas.",
+        "Evita todas las conexiones no autenticadas y no cifradas, eliminando la posibilidad de una exposición inapropiada.",
     },
     {
       title: "VPN sin clic",
       description:
-        "Se conecta automáticamente con autenticación automatizada, sin permitir enviar o recibir datos sin protección.",
+        "Se conecta automáticamente con la autenticación automatizada, sin permitirte enviar o recibir datos sin protección.",
     },
   ];
   useEffect(() => {

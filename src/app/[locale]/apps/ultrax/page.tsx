@@ -45,32 +45,6 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
-  const featuresGrid = [
-    {
-      image: "/images/apps/ultrax/chat-delete-time.png",
-      title: "Chat de texto y voz encriptado ",
-      description:
-        "Elimina mensajes sin conexión, marca favoritos y usa mensajes autodestructivos que se borran en todos los dispositivos tras el tiempo definido.",
-    },
-    {
-      image: "/images/apps/ultrax/chat-voice-note.png",
-      title: "Chat grupal anónimo",
-      description:
-        "Envía mensajes a múltiples personas de manera fácil y segura, garantizando al mismo tiempo la protección de las identidades de todos los participantes.",
-    },
-    {
-      image: "/images/apps/ultrax/chat-protection.png",
-      title: "Llamadas encriptadas",
-      description:
-        "Habla con hasta dos usuarios en ChatMail sin límites. Llamadas ultraseguras, nítidas y rápidas, diseñadas para proteger tu privacidad en todo momento.",
-    },
-    {
-      image: "/images/apps/ultrax/ultrax.png",
-      title: "Bloqueo de Notas:",
-      description:
-        "Protege tu información importante con un PIN personalizado. Además, realiza copias de seguridad y restaura de forma segura tus notas y contactos.",
-    },
-  ];
   const Faqs =[
     {
       question: "¿Cómo se hace la encriptación de un celular?",
@@ -220,9 +194,6 @@ const Page = () => {
         features={securityFeaturesData}
         imageUrl="/images/apps/ultrax/phoneSecurity.png"
       />
-      {/* <ProductBenefitsGrid benefits={benefits} />
-      <ProductBenefitsGridMobile benefits={benefits}/>
-      <ProductBenefitsGridTablet benefits={benefits}/> */}
       <HeroVideoSection
         title={`¿Cómo encriptar tu celular para que nadie pueda espiarte?`}
         videoUrl="https://www.youtube.com/embed/ppr6zQOdINI"

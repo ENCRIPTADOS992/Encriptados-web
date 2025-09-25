@@ -138,7 +138,7 @@ const Page = () => {
       />
       <ProductSection
         title="SecureCrypt"
-        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden tu movil."
+        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Para Android y iPhone (iOS)"
         features={[
           "Chat Encriptado",
           "Bóveda encriptada ",
@@ -156,7 +156,7 @@ const Page = () => {
       />
       <ProductSectionMobile
         title="SecureCrypt"
-        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden tu movil."
+        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Para Android y iPhone (iOS)"
         features={[
           "Chat Encriptado",
           "Bóveda encriptada ",
@@ -174,7 +174,7 @@ const Page = () => {
       />
       <ProductSectionTablet
         title="SecureCrypt"
-        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Este enfoque evita que datos se guarden tu movil."
+        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Para Android y iPhone (iOS)"
         features={[
           "Chat Encriptado",
           "Bóveda encriptada ",
