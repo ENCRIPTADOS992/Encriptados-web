@@ -17,16 +17,24 @@ const SecurityFeaturesTablet: React.FC<SecurityFeaturesTabletProps> = ({
   imageUrl,
 }) => (
   <section className="hidden sm:flex flex-col items-center py-8 bg-white lg:hidden">
-    <div className="bg-black w-full max-w-[744px] mx-auto overflow-hidden pt-[60px]">
+    <div
+    className="
+      w-[711px] h-[1204px] mx-auto
+      bg-[#000000] rounded-[44px] overflow-hidden
+      pt-[62px] pb-[62px] px-[24px]
+      flex flex-col gap-[44px]
+    "
+  >
       <h2
-        className="
-          font-inter font-bold text-[24px] leading-[100%]
-          tracking-[0px] text-white text-center
-          w-[329px] h-[58px] mx-auto mb-6
-        "
-      >
-        {title}
-      </h2>
+  className="
+    font-inter font-bold text-[24px] leading-[100%]
+    text-white text-center
+    w-[495px] h-[58px] mx-auto
+  "
+>
+  {title}
+</h2>
+
 
       {/* Imagen recortada a la mitad */}
       <div className="relative w-[280px] h-[324px] mt-[24px] mx-auto overflow-hidden">
@@ -45,12 +53,18 @@ const SecurityFeaturesTablet: React.FC<SecurityFeaturesTabletProps> = ({
       </div>
 
       {/* Grid de 3 cards por fila */}
-      <div className="px-6 py-8 grid grid-cols-3 gap-[15px]">
+      <div className="w-[663px] mx-auto grid grid-cols-3 gap-[6px]">
         {features.map((feat, idx) => (
           <div
-            key={idx}
-            className="bg-[#101010] rounded-[14px] p-[24px] flex flex-col items-start gap-[14px]"
-          >
+  key={idx}
+  className="
+    bg-[#101010] rounded-[12px]
+    flex flex-col items-start
+    w-full h-[314px]
+    pt-[24px] pr-[16px] pb-[34px] pl-[16px]
+    gap-[14px]
+  "
+>
             {/* Icono check */}
             <img
               src="/images/apps/dec-secure/check_circle.png"

@@ -95,13 +95,13 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
             <div className="flex gap-3">
               <Button
                 type="primary"
-                className="flex items-center justify-center w-[180px] h-[48px] px-4 py-2 text-[14px] gap-2 whitespace-nowrap"
+                className="flex items-center justify-center w-[130px] h-[48px] px-4 py-2 text-[14px] gap-2 whitespace-nowrap"
               >
-                <span className="font-medium text-[14px]">Comprar ahora</span>
+                <span className="font-medium text-[14px]">Comprar</span>
                 <ShoppingCart color="white" height={18} width={18} />
               </Button>
               <TelegramButton
-                className="min-w-[130px] px-2 py-1 text-sm gap-1
+                className="min-w-[90px] px-2 py-1 text-sm gap-1
              [&>svg]:w-4 [&>svg]:h-4 [&>svg]:shrink-0
              leading-none"
               />
@@ -109,12 +109,12 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
           </div>
         </div>
         {/* Columna derecha */}
-        <div className="flex flex-col items-center w-[344px]">
-          <div className="w-[344px] h-[240px] rounded-[22.25px] bg-white flex items-center justify-center">
+        <div className="flex flex-col items-center w-[324px]">
+          <div className="w-[324px] h-[205px] rounded-[22.25px] bg-white flex items-center justify-center">
             <img
               src={productImage}
               alt={`${title} screenshot`}
-              className="w-[344px] h-[205px] object-contain"
+              className="w-[324px] h-[205px] object-contain rounded-[22.25px]"
               draggable={false}
             />
           </div>
@@ -135,18 +135,7 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
                 justifyContent: "center",
               }}
             >
-              <AppStoreFooter />
-            </div>
-            <div
-              style={{
-                width: "148.5px",
-                height: "44px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <PlayStoreSvg />
+              
             </div>
           </div>
         </div>

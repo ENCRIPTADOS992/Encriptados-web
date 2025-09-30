@@ -8,11 +8,14 @@ import { confirmCardPayment } from "@/payments/stripeClient";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import {
   createOrderAndIntent,
+  createManualOrderAndIntent,
   fetchPublicStatus,
   type OrderType,
 } from "@/payments/orderApi";
 
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const MANUAL_PRODUCT_IDS = new Set<number>([134, 133, 127, 137]);
+const DEFAULT_SUCCESS_URL = "https://t.me/encriptados";
 
 type Props = {
   quantity: number;
@@ -124,13 +127,24 @@ export default function RoningForm({
     if (!clientSecret) {
       try {
         setStripeError(null);
-        const { order_id, client_secret } = await createOrderAndIntent({
-          orderType,
+        const isManual = MANUAL_PRODUCT_IDS.has(productId);
+        const { order_id, client_secret } = isManual
+      ? await createManualOrderAndIntent({
+          productId,
+          email: emailVal,
+          quantity,
+          amountUsd,
+          currency: "USD",
+          successUrl: DEFAULT_SUCCESS_URL, 
+        })
+      : await createOrderAndIntent({
+          orderType,      
           productId,
           email: emailVal,
           quantity,
           amountUsd,
         });
+
         setOrderId(order_id);
         setClientSecret(client_secret);
       } catch (e: any) {

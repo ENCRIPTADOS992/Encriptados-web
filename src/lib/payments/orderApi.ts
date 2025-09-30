@@ -124,3 +124,4 @@ export async function fetchPublicStatus(orderId: number): Promise<{
   if (!r.ok) throw new Error(`HTTP ${r.status} consultando estado público`);
   return r.json();
 }
+

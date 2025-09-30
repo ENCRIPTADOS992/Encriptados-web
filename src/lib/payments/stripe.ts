@@ -6,9 +6,9 @@ const stripe = STRIPE_SECRET_KEY
   : null;
 
 export async function createStripeCheckout(args: {
-  amount: number;                // ej. 99.00
-  currency: string;              // 'USD'
-  email: string;                 // customer email
+  amount: number;                
+  currency: string;              
+  email: string;                 
   metadata?: Record<string, string>;
 }) {
   if (!stripe) {

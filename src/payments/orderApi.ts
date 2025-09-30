@@ -52,3 +52,51 @@ export async function fetchPublicStatus(orderId: number) {
   if (!r.ok) throw new Error("No se pudo consultar el estado");
   return (await r.json()) as { status: string };
 }
+
+// =====================
+// MANUAL
+// =====================
+
+export async function createManualOrderAndIntent({
+  productId,
+  email,
+  quantity,
+  amountUsd,
+  currency = "USD",
+  successUrl,
+}: {
+  productId: number;
+  email: string;
+  quantity: number;
+  amountUsd: number;
+  currency?: "USD";
+  successUrl?: string;
+}): Promise<{ order_id: number; client_secret: string }> {
+  const url = `${API_BASE_URL}/orders/manual`;
+
+  const payload = {
+    product_id: productId,
+    qty: quantity,
+    email,
+    payment_provider: "stripe",
+    amount: Number(amountUsd.toFixed(2)),
+    currency,
+    ...(successUrl ? { success_url: successUrl } : {}),
+  };
+
+  const r = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const text = await r.text();
+  const data = text ? JSON.parse(text) : {};
+  if (!r.ok) {
+    throw new Error(data?.message || data?.error || `HTTP ${r.status} creando orden manual`);
+  }
+  if (!data?.order_id || !data?.client_secret) {
+    throw new Error("Respuesta inválida: falta order_id o client_secret");
+  }
+  return { order_id: data.order_id, client_secret: data.client_secret };
+}
