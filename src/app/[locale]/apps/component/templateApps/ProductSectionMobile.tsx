@@ -49,15 +49,18 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
           <img
             src={productImage}
             alt={`${title} screenshot`}
-            className="rounded-[18px] w-full max-w-[430px] h-auto object-contain mb-4"
+            className="rounded-[18px] w-full max-w-[430px] h-auto object-contain"
             draggable={false}
           />
         </div>
 
         {/* Bloque alineado a la izquierda */}
-        <div className="w-full flex flex-col items-start">
-          <h2 className="font-bold text-[24px] text-[#131313] mb-3">{title}</h2>
-          <p className="text-[14px] text-[#000000] mb-3">{description}</p>
+        <div className="flex flex-col w-[374px] gap-[18px]">
+          <div className="flex flex-col w-[374px] gap-[12px]">
+            <h2 className="font-bold text-[24px] text-[#131313]">{title}</h2>
+            <p className="text-[14px] text-[#000000]">{description}</p>
+          </div>
+
           <div className="flex flex-wrap gap-2 justify-start w-full mb-1">
             {features.map((f, i) => (
               <div key={i} className="flex items-center gap-2 mb-1">

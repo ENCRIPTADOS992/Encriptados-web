@@ -132,7 +132,7 @@ const Page = () => {
         imageUrl="/images/apps/nord-vpn/hero-desktop.png"
         alt="Nord VPN Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/armadillo/hero-mobile.png" 
+      <HeroBannerMobile imageUrl="/images/apps/nord-vpn/hero-mobile.jpg" 
         alt="Nord VPN Hero Banner" />
       <HeroBannerTablet imageUrl="/images/apps/nord-vpn/hero-tablet.png" 
         alt="Nord VPN Hero Banner" />
