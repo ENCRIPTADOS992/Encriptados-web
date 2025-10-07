@@ -22,7 +22,7 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
         {/* Contenido interno con separación de Figma */}
         <div className="flex flex-col items-center gap-[44px] h-full">
           {/* Título */}
-          <h2 className="w-[891px] text-center text-white font-inter font-bold text-[30px] leading-[100%] mt-[32px]">
+          <h2 className="w-[891px] text-center text-white font-inter font-bold text-[30px] leading-[100%] mt-[42px]">
             {title}
           </h2>
 
