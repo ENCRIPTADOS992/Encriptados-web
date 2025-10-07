@@ -24,7 +24,7 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-6">
           {features.map((feature, idx) => (
             <div key={idx} className="flex flex-col items-stretch h-full">
-              <div className="bg-[#101010] rounded-[14.84px] flex flex-col items-center justify-center w-[306px] h-[289px]">
+              <div className="bg-white rounded-[14.84px] flex flex-col items-center justify-center w-[306px] h-[289px]">
                 <img
                   src={feature.image}
                   alt={feature.title}
