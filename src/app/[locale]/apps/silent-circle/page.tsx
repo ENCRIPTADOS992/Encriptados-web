@@ -193,7 +193,10 @@ const Page = () => {
       <ProductFeaturesGrid features={featuresGrid} />
       <ProductFeaturesGridMobile features={featuresGrid} /> 
       <ProductFeaturesGridTablet features={featuresGrid}/>
-      <ProductBenefitsGrid benefits={benefits} />
+      <ProductBenefitsGrid
+        title="Te mantenemos conectado de forma segura y privada"
+        benefits={benefits}
+      />
       <ProductBenefitsGridMobile benefits={benefits}/>
       <ProductBenefitsGridTablet benefits={benefits}/>
       <HeroVideoSection

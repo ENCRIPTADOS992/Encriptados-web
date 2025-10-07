@@ -11,7 +11,7 @@ const HeroVideoSection: React.FC<HeroVideoSectionProps> = ({
 }) => {
   return (
     <section
-      className="w-full hidden lg:flex justify-center bg-white py-10 mt-[60px]"
+      className="w-full hidden lg:flex justify-center bg-white py-10 mt-[90px]"
       style={{ maxHeight: 350 }}
     >
       <div className="w-full max-w-[1272px] flex items-center mx-auto gap-6">

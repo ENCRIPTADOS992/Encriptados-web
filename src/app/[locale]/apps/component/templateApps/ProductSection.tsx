@@ -41,9 +41,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     <section className="w-full hidden lg:flex justify-center bg-white">
       <div className="w-full max-w-[1440px] h-[600px] flex items-center justify-center mx-auto px-2">
         {/* Columna izquierda */}
-        <div className="flex flex-col w-[455px] mt-10">
+        <div className="flex flex-col w-[455px] gap-[20px] mt-10">
           {/* Bloque 1: Título + Descripción */}
-          <div className="flex flex-col gap-[20px] mb-[12px]">
+          <div className="flex flex-col w-[413px] gap-[12px]">
             <h2 className="font-inter font-bold text-[28px] leading-[100%] text-[#131313]">
               {title}
             </h2>
@@ -53,7 +53,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           </div>
 
           {/* Bloque 2: Features/Checks */}
-          <div className="flex flex-col gap-[8px] mb-[12px]">
+          <div className="flex flex-col gap-[8px]">
             {features.length > 0 ? (
               features.map((f, i) => (
                 <div key={i} className="flex items-center gap-2">
@@ -69,7 +69,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           </div>
 
           {/* Bloque 3: Radio buttons */}
-          <div className="flex flex-row flex-wrap gap-[18px] mb-[18px]">
+          <div className="flex flex-row flex-wrap gap-[18px] ">
             {radioOptions.map((option) => (
               <label
                 key={option}
@@ -94,27 +94,31 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           <hr className="my-[18px] border-[#E0E0E0]" />
 
           {/* Bloque 4: Precio + Botones */}
-          <div className="flex flex-col gap-[22px]">
+          <div className="flex flex-col w-[455px] gap-[22px]">
             <div>
-              <span className="block text-[14px] text-[#000000] leading-[100%] mb-[2px]">
+              <span className="block text-[14px] text-[#000000] leading-[100%]">
                 Desde
               </span>
               <span className="block font-inter font-bold text-[24px] leading-[100%] text-[#000000]">
                 {price}
               </span>
             </div>
-            <div className="flex gap-3">
-              <Button type="primary" className="md:w-full md:justify-center">
+
+            <div className="flex gap-[22px]">
+              <Button
+                type="primary"
+                className="w-full justify-center h-[54px] rounded-[50px] px-[20px]"
+              >
                 <p className="font-medium text-base">Comprar ahora</p>
                 <ShoppingCart color="white" height={20} width={20} />
               </Button>
-              <TelegramButton />
+              <TelegramButton className="h-[54px] rounded-[50px]" />
             </div>
           </div>
         </div>
 
         {/* Columna derecha */}
-        <div className="flex flex-col items-center w-[520px] h-[329px] ml-14">
+        <div className="flex flex-col items-center w-[520px] gap-[24px] ml-14">
           <img
             src={productImage}
             alt={`${title} screenshot`}
