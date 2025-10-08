@@ -132,7 +132,7 @@ const Page = () => {
         imageUrl="/images/apps/threema/hero-desktop.png"
         alt="Nord VPN Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/threema/hero-mobile.jpg" 
+      <HeroBannerMobile imageUrl="/images/apps/threema/hero-mobile.png" 
         alt="Nord VPN Hero Banner" />
       <HeroBannerTablet imageUrl="/images/apps/threema/hero-tablet.png" 
         alt="Nord VPN Hero Banner" />
