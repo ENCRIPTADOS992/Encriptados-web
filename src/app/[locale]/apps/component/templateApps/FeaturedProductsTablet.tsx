@@ -23,13 +23,13 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
   left,
   right,
 }) => (
-  <section className="w-full hidden sm:flex lg:hidden justify-center bg-[#F6FAFC] py-8">
+  <section className="w-full hidden sm:flex lg:hidden justify-center py-8 mt-[30px]">
     <div className="flex flex-row gap-[20px] w-full max-w-[718px]">
       {" "}
       {/* 349*2 + gap */}
       {/* LEFT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[28px] w-[349px] h-[218px] px-4 py-4"
+        className="relative flex flex-col justify-between rounded-[16px] w-[349px] h-[218px] px-4 py-4"
         style={{
           background:
             "radial-gradient(120% 120% at 100% 0%, #004A60 0%, #000 100%)",
@@ -65,7 +65,7 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
       </div>
       {/* RIGHT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[28px] w-[349px] h-[218px] px-4 py-4"
+        className="relative flex flex-col justify-between rounded-[16px] w-[349px] h-[218px] px-4 py-4"
         style={{
           background: "linear-gradient(90deg, #35CDFB 0%, #A8EBFF 100%)",
         }}

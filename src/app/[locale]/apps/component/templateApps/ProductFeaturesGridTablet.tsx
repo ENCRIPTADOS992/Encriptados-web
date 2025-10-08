@@ -16,7 +16,7 @@ const ProductFeaturesGridTablet: React.FC<ProductFeaturesGridProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full hidden sm:flex lg:hidden justify-center bg-[#F6FAFC] py-10">
+    <section className="w-full hidden sm:flex lg:hidden justify-center bg-[#F6FAFC] py-10 mt-[50px]">
       <div className="w-full max-w-[712px] mx-auto">
         <h3 className="text-[16px] font-bold leading-[100%] text-[#101010] mb-8">
           {title}
@@ -39,11 +39,11 @@ const ProductFeaturesGridTablet: React.FC<ProductFeaturesGridProps> = ({
               </div>
 
               {/* Texto */}
-              <div className="flex flex-col items-center w-full gap-[12px] mt-4">
-                <h4 className="font-inter font-semibold text-[14px] text-[#101010] leading-[22px] text-center">
+              <div className="flex flex-col w-[344px] gap-[12px] mt-[30px]">
+                <h4 className="font-inter font-semibold text-[14px] leading-[17px] text-[#101010]">
                   {feature.title}
                 </h4>
-                <p className="font-inter font-light text-[12px] text-[#101010] opacity-70 leading-[1.2] text-center">
+                <p className="font-inter font-light text-[12px] leading-[15px] text-[#101010]/70 text-justify">
                   {feature.description}
                 </p>
               </div>

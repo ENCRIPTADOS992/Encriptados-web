@@ -10,16 +10,15 @@ const HeroVideoSectionTablet: React.FC<HeroVideoSectionProps> = ({
   videoUrl,
 }) => {
   return (
-    <section className="w-full hidden sm:flex lg:hidden justify-center bg-white py-8">
-      <div className="w-full max-w-[713px] flex flex-row items-center justify-center gap-[28px] mx-auto">
-        {/* Título a la izquierda */}
-        <div className="w-[262px] h-[170px] flex items-center">
-          <h1 className="font-inter font-bold text-[28px] leading-[100%] text-black text-left">
+    <section className="w-full hidden sm:flex lg:hidden justify-center bg-white py-8 mt-[50px]">
+      <div className="w-full max-w-[713px] flex flex-row items-center justify-center gap-[64px] mx-auto">
+        <div className="w-[262px] h-[136px] flex items-center">
+          <h1 className="font-inter font-bold text-[28px] leading-[100%] text-[#000000] text-left">
             {title}
           </h1>
         </div>
-        {/* Video a la derecha */}
-        <div className="w-[354px] h-[196px] rounded-[14px] overflow-hidden bg-black flex-shrink-0 flex items-center justify-center">
+
+        <div className="w-[352px] h-[196px] rounded-[18px] overflow-hidden bg-black flex-shrink-0 flex items-center justify-center">
           <iframe
             width="354"
             height="196"

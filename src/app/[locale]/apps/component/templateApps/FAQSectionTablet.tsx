@@ -17,11 +17,11 @@ const FAQSectionTablet: React.FC<FAQSectionTabletProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full bg-white py-8 px-0 hidden flex-col items-center sm:flex lg:hidden">
+    <section className="w-full bg-white py-8 px-0 hidden flex-col items-center sm:flex lg:hidden mt-[50px]">
       <h2 className="text-[26px] font-bold text-[#101010] text-center mb-7 leading-[100%]">
         {title}
       </h2>
-      <div className="w-full max-w-[713px] flex flex-col gap-[14px]">
+      <div className="w-full max-w-[713px] flex flex-col gap-[14px] mt-[20px]">
         {faqs.map((faq, idx) => (
           <div
             key={idx}

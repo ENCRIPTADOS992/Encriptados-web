@@ -1,1 +1,10 @@
-export const plans = [{ label: '12 meses', value: '12' }];
+export const plans = 
+[
+    { 
+        label: '3 meses', value: '3',
+    },
+    {
+        label: '6 meses', value: '6'
+    }
+
+];

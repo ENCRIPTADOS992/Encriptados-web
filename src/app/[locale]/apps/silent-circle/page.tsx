@@ -197,8 +197,14 @@ const Page = () => {
         title="Te mantenemos conectado de forma segura y privada"
         benefits={benefits}
       />
-      <ProductBenefitsGridMobile benefits={benefits}/>
-      <ProductBenefitsGridTablet benefits={benefits}/>
+      <ProductBenefitsGridMobile
+        title="Te mantenemos conectado de forma segura y privada"
+        benefits={benefits}
+      />
+      <ProductBenefitsGridTablet
+        title="Te mantenemos conectado de forma segura y privada"
+        benefits={benefits}
+      />
       <HeroVideoSection
         title={`Silent Phone, la aplicación cifrada que protegerá todos tus chats`}
         videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
