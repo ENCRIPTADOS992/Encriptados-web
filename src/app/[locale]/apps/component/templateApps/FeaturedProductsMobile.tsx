@@ -13,7 +13,7 @@ interface FeaturedProductsMobileProps {
   right: {
     title: string;
     subtitle: string;
-    buttonLabel: string;       // Ver más
+    buttonLabel: string; 
     onButtonClick: () => void;
     image: string;
   };
@@ -23,7 +23,7 @@ const FeaturedProductsMobile: React.FC<FeaturedProductsMobileProps> = ({
   left,
   right,
 }) => (
-  <section className="w-full flex flex-col gap-4 items-center bg-[#F6FAFC] py-6 px-4 block sm:hidden">
+  <section className="w-full flex flex-col gap-4 items-center py-6 px-4 block sm:hidden mt-[40px]">
     {/* LEFT CARD */}
     <div
       className="relative bg-gradient-to-br from-[#004A60] to-black rounded-[24px] w-full max-w-[374px] h-[216px] px-[18px] pt-[24px] overflow-hidden"

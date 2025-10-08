@@ -17,11 +17,11 @@ const FAQSectionMobile: React.FC<FAQSectionMobileProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full bg-white flex flex-col items-center py-8 px-0 block sm:hidden">
+    <section className="w-full bg-white flex flex-col items-center py-8 px-0 block sm:hidden mt-[40px]">
       <h2 className="text-[20px] font-bold text-[#101010] text-center mb-6">
         {title}
       </h2>
-      <div className="flex flex-col gap-[6px] w-full items-center" style={{ maxWidth: 374 }}>
+      <div className="flex flex-col gap-[6px] w-full items-center mt-[20px]" style={{ maxWidth: 374 }}>
         {faqs.map((faq, idx) => (
           <div
             key={idx}
