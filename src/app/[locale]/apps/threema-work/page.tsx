@@ -1,162 +1,282 @@
-'use client';
+"use client";
 
-import AppStoreFooter from '@/shared/FooterEncrypted/icon/AppStoreFooter';
-import DownloadApkSvg from '@/shared/svgs/DownloadApkSvg';
-import PlayStoreSvg from '@/shared/svgs/PlayStoreSvg';
-import ShoppingCart from '@/shared/svgs/ShoppingCart';
-import SupportContact from '@/shared/svgs/SupportContact';
-import { Check } from 'lucide-react';
-import Image from 'next/image';
-import Accordion from '../shared/Accordion';
-import Button from '../shared/Button';
-import CardDetails from '../shared/CardDetails';
-import DetailsElement from '../shared/DetailsElement';
-import CustomRadioGroup from '../shared/RadioGroup';
-import SimCardGroup from '../shared/SimCardGroup';
-import Hero from './components/Hero';
-import { characteristics } from './consts/characteristics';
-import { details } from './consts/details';
-import { plans } from './consts/plans';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { getProductById } from '@/features/products/services';
-import type { ProductById } from '@/features/products/types/AllProductsResponse';
-import TelegramButton from '@/shared/components/TelegramButton';
+import HeroBanner from "../component/templateApps/HeroBanner";
+import HeroBannerMobile from "../component/templateApps/HeroBannerMobile";
+import HeroBannerTablet from "../component/templateApps/HeroBannerTablet";
+import ProductSection from "../component/templateApps/ProductSection";
+import ProductSectionMobile from "../component/templateApps/ProductSectionMobile";
+import ProductSectionTablet from "../component/templateApps/ProductSectionTablet";
+import ProductFeaturesGrid from "../component/templateApps/ProductFeaturesGrid";
+import ProductFeaturesGridMobile from "../component/templateApps/ProductFeaturesGridMobile";
+import ProductFeaturesGridTablet from "../component/templateApps/ProductFeaturesGridTablet";
+import ProductBenefitsGrid from "../component/templateApps/ProductBenefitsGrid";
+import ProductBenefitsGridMobile from "../component/templateApps/ProductBenefitsGridMobile";
+import ProductBenefitsGridTablet from "../component/templateApps/ProductBenefitsGridTablet";
+import HeroVideoSection from "../component/templateApps/HeroVideoSection";
+import HeroVideoSectionMobile from "../component/templateApps/HeroVideoSectionMobile";
+import HeroVideoSectionTablet from "../component/templateApps/HeroVideoSectionTablet";
+import FeaturedProducts from "../component/templateApps/FeaturedProducts";
+import FeaturedProductsMobile from "../component/templateApps/FeaturedProductsMobile";
+import FeaturedProductsTablet from "../component/templateApps/FeaturedProductsTablet";
+import FAQSection from "../component/templateApps/FAQSection";
+import FAQSectionMobile from "../component/templateApps/FAQSectionMobile";
+import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
+import DownloadAppSection from "../component/templateApps/DownloadAppSection";
+import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
+import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
+import { plans } from "./consts/plans";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getProductById } from "@/features/products/services";
+import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
+const prices: Record<string, string> = {
+  "6": "349$ USD",
+  "12": "595$ USD",
+  "12.1": "1495$ USD",
+};
 
 const Page = () => {
-
   const searchParams = useSearchParams();
-  const plan = searchParams.get('plan');
-  const productId = searchParams.get('productId');
+  const plan = searchParams.get("plan");
+  const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
-
   const [product, setProduct] = useState<ProductById | null>(null);
-
+  const featuresGrid = [
+    {
+      image: "/images/apps/threema-work/chat.png",
+      title: "Mensajes de Texto y Voz",
+      description:
+        "Chatee de forma completamente anónima. Si prefieres ahorrar tiempo, los mensajes de voz son una alternativa muy práctica.",
+    },
+    {
+      image: "/images/apps/threema-work/verificacion.png",
+      title: "Verificación de Contacto",
+      description:
+        "Confirma tus contactos escaneando su código QR para protegerte de ataques de intermediarios.",
+    },
+    {
+      image: "/images/apps/threema-work/grupos.png",
+      title: "Grupos de chat",
+      description:
+        "Envía mensajes a varios destinatarios simultáneamente. La gestión es descentralizada, y solo los miembros conocen su identidad.",
+    },
+    {
+      image: "/images/apps/threema-work/llamadas.png",
+      title: "Llamadas de Voz y Video",
+      description:
+        "Realiza llamadas sin revelar tu número. Las llamadas en Threema están cifradas de extremo a extremo y ofrecen una calidad de sonido y video excepcionales.",
+    },
+  ];
+  const benefits = [
+    {
+      icon: "/images/apps/threema-work/icono.png",
+      title: "Chats Privados",
+      description:
+        "Oculta tus conversaciones más confidenciales y protégelas con un PIN o huella digital.",
+    },
+    {
+      icon: "/images/apps/threema-work/icono.png",
+      title: "Chatea de Forma Anónima",
+      description:
+        "Disfruta de conversaciones sin revelar tu número de teléfono, garantizando así tu total privacidad.",
+    },
+    {
+      icon: "/images/apps/threema-work/icono.png",
+      title: "Editar y Borrar Mensajes",
+      description:
+        "Si cometes un error tipográfico, puedes editar tus mensajes enviados o eliminarlos para que los destinatarios no los vean.",
+    },
+    {
+      icon: "/images/apps/threema-work/icono.png",
+      title: "Anonimato Total sin Datos Personales",
+      description:
+        "En Threema, no necesitas un número de teléfono ni un correo electrónico. Tu ID de Threema garantiza tu anonimato, permitiéndote comunicarte sin dejar huellas digitales ni revelar tu red personal.",
+    },
+    {
+      icon: "/images/apps/threema-work/icono.png",
+      title: "Aplicación iOS Más Vendida",
+      description:
+        "Google & Apple reconocieron a Threema al incluirla en su prestigiosa lista de las mejores aplicaciones de seguridad en sus tiendas.",
+    },
+    {
+      icon: "/images/apps/threema-work/icono.png",
+      title: "Las Mejores Calificaciones",
+      description:
+        "Los usuarios prefieren a Threema. Es la aplicación con más usuarios y mayor alcance.",
+    },        
+  ];
+  const Faqs =[
+    {
+      question: "¿Cómo funciona Threema.Work?",
+      answer: "Nord VPN Chat cifra tus mensajes de extremo a extremo para garantizar privacidad total. Solo tú y tus contactos pueden leer los mensajes.",
+    },
+    {
+      question: "¿Threema.Work puede ser hackeada?",
+      answer: "Está disponible para dispositivos iOS y Android compatibles con las versiones actuales de la App Store y Google Play.",
+    },
+    {
+      question: "¿Cuál es la diferencia de Threema.Work con Threema?",
+      answer: "Por su seguridad avanzada, facilidad de uso y soporte 24/7, ideal para quienes valoran la privacidad.",
+    },
+  ]
   useEffect(() => {
     if (productId) {
-      getProductById(productId, 'es')
-        .then(setProduct)
-        .catch(console.error);
+      getProductById(productId, "es").then(setProduct).catch(console.error);
     }
   }, [productId]);
 
-
   return (
     <div>
-      <Hero />
-      <main className='p-5 bg-[#F4F8FA] tracking-wide md:flex md:flex-row-reverse md:justify-center md:items-center md:gap-20 md:py-16 md:bg-white'>
-        <div className='w-[85.5%] mx-auto mb-[50px] md:mt-9 md:w-2/4 lg:w-2/5 md:mx-0 xl:w-1/3'>
-          <Image
-            src='/images/apps/threema-work/banner.png'
-            alt='threema banner'
-            width={320}
-            height={237}
-            priority
-            className='w-full'
-          />
-          <div className='hidden md:flex gap-3 mt-6'>
-            <AppStoreFooter />
-            <PlayStoreSvg />
-            <DownloadApkSvg />
-          </div>
-        </div>
-        <div className='md:w-2/4 lg:w-2/5 xl:w-1/3'>
-          <b className='block text-2xl mb-3 text-[#131313] md:text-[28px]'>
-            Threema Work
-          </b>
-          <p className='text-sm'>
-            Threema.Work ofrece todas las características que se esperan de un
-            mensajero profesional de negocios
-          </p>
-           {Array.isArray(product?.checks) && product.checks.length > 0 && (
-            <ol className='my-4'>
-              {product.checks.map((check: { name: string }, idx: number) => (
-                <li key={idx} className='flex items-center gap-2'>
-                  <Check width={28} height={28} color='#1C1B1F' />
-                  <p>{check.name}</p>
-                </li>
-              ))}
-            </ol>
-          )}
-          <CustomRadioGroup options={plans} />
-
-          <div className='h-px bg-[#D9D9D9] my-[18px]'></div>
-          <p className='text-xs'>Desde</p>
-          <b className='text-2xl'>45$ USD</b>
-          <div className='flex gap-2 mt-[22px] mb-[28px] md:w-full'>
-            <Button type='primary' className='md:w-full md:justify-center'>
-              <p className='font-medium text-base'>Comprar ahora</p>
-              <ShoppingCart color='white' height={20} width={20} />
-            </Button>
-            <TelegramButton />
-            {/* <Button type='alternative' className='md:w-full md:justify-center'>
-              <p className='font-medium'>Chat soporte</p>
-              <SupportContact width={20} height={18} color='#00516b' />
-            </Button> */}
-          </div>
-        </div>
-      </main>
-      <section className='p-5 bg-[#F4F8FA] md:pt-8 md:pb-16 lg:px-24'>
-        <b className='text-xl text-center block md:text-2xl md:text-left'>
-          Características principales
-        </b>
-        <div className='md:flex gap-4'>
-          {characteristics.map((item, idx) => (
-            <DetailsElement
-              key={idx}
-              title={item.title}
-              description={item.description}
-              imageAlt={item.imageAlt}
-              imageSrc={item.imageSrc}
-              imageWidth={item.imageWidth}
-              imageHeight={item.imageHeight}
-              imageCenter={item.imageCenter}
-              background={item.background}
-            />
-          ))}
-        </div>
-      </section>
-      <section className='px-5 py-11 md:py-44 bg-black'>
-        <ol className='flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-x-4 md:gap-y-8 xl:w-[70%] md:mx-auto'>
-          {details.map((item, idx) => (
-            <CardDetails
-              title={item.title}
-              description={item.description}
-              key={idx}
-            />
-          ))}
-        </ol>
-      </section>
-      <section className='py-[60px] bg-[#F4F8FA] md:pb-0'>
-        <div className='flex flex-col text-center mx-5 gap-8 mb-[60px] md:flex-row md:items-center md:justify-center md:mb-[60px] md:py-24 md:pr-20 md:w-[85%] md:leading-tight md:ml-auto md:text-left md:gap-20'>
-          <b className='text-[24px] lg:text-[44px] md:w-1/2'>
-            Threema.Work la aplicación de mensajería para organizaciones más
-            segura y fácil de usar
-          </b>
-          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg lg:max-w-[55%]">
-            <iframe
-              src="https://www.youtube.com/embed/-ruokc6BnmA"
-              title="Threema Work Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              className="w-full h-full"
-            />
-          </div>
-        </div>
-        <SimCardGroup />
-        <section className='mt-14 py-10 px-5 bg-white'>
-          <b className='block mx-auto mb-11 text-center text-2xl md:text-[34px]'>
-            Preguntas frecuentas
-          </b>
-          <div className='flex flex-col gap-4 md:w-3/4 md:mx-auto'>
-            <Accordion title='¿Qué es VNC?' />
-            <Accordion title='¿Cómo funciona VNC Lagoon?' />
-            <Accordion title='¿Qué compatibilidad tiene VNC Lagoon?' />
-          </div>
-        </section>
-      </section>
+      <HeroBanner
+        imageUrl="/images/apps/threema-work/hero-desktop.png"
+        alt="Nord VPN Hero Banner"
+      />
+      <HeroBannerMobile imageUrl="/images/apps/threema-work/hero-mobile.png" 
+        alt="Nord VPN Hero Banner" />
+      <HeroBannerTablet imageUrl="/images/apps/threema-work/hero-tablet.png" 
+        alt="Nord VPN Hero Banner" />
+      <ProductSection
+        title="Threema Work"
+        description="Threema.Work ofrece todas las características que se esperan de un mensajero profesional de negocios"
+        features={[
+          "Chats grupales",
+          "Llamadas cifradas",
+          "Chats Anónimos",
+        ]}
+        price="180$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/threema-work/banner.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
+      <ProductSectionMobile
+        title="Threema Work"
+        description="Threema.Work ofrece todas las características que se esperan de un mensajero profesional de negocios"
+        features={[
+          "Chats grupales",
+          "Llamadas cifradas",
+          "Chats Anónimos",
+        ]}
+        price="180$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/threema-work/banner.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
+      <ProductSectionTablet
+        title="Threema Work"
+        description="Threema.Work ofrece todas las características que se esperan de un mensajero profesional de negocios"
+        features={[
+          "Chats grupales",
+          "Llamadas cifradas",
+          "Chats Anónimos",
+        ]}
+        price="180$ USD"
+        radioOptions={plans.map((p) => p.label)}
+        selectedRadio={selected}
+        onRadioChange={(val) => {}}
+        onBuy={() => {}}
+        onChat={() => {}}
+        productImage="/images/apps/threema-work/banner.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+      />
+      <ProductFeaturesGrid features={featuresGrid} />
+      <ProductFeaturesGridMobile features={featuresGrid} /> 
+      <ProductFeaturesGridTablet features={featuresGrid}/>
+      <ProductBenefitsGrid 
+        title="Con la versión de Threema Work obtienes más beneficios"
+        benefits={benefits}
+      />
+      <ProductBenefitsGridMobile 
+        title="Con la versión de Threema Work obtienes más beneficios"
+        benefits={benefits}
+        />
+      <ProductBenefitsGridTablet 
+        title="Con la versión de Threema Work obtienes más beneficios"
+        benefits={benefits}
+        />
+      <HeroVideoSection
+        title={`Threema.Work la aplicación de mensajería para organizaciones más segura y fácil de usar`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <HeroVideoSectionMobile
+        title={`Threema.Work la aplicación de mensajería para organizaciones más segura y fácil de usar`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <HeroVideoSectionTablet
+        title={`Threema.Work la aplicación de mensajería para organizaciones más segura y fácil de usar`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
+      />
+      <FeaturedProducts
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/threema-work/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/threema-work/phone.png",
+        }}
+      />
+      <FeaturedProductsMobile
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/threema-work/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/threema-work/phone.png",
+        }}
+      />
+      <FeaturedProductsTablet
+        left={{
+          title: "SIM Card encriptada",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          buttonLabel: "Comprar",
+          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          moreInfoLabel: "Más información",
+          onMoreInfo: () => alert("Más información de SIM Card"),
+          image: "/images/apps/threema-work/sim.png", 
+        }}
+        right={{
+          title: "E-SIM Encriptada Planes datos o minutos",
+          subtitle: "Subtitle element copy",
+          buttonLabel: "Ver más",
+          onButtonClick: () => alert("Ver más E-SIM"),
+          image: "/images/apps/threema-work/phone.png",
+        }}
+      />
+      <FAQSection faqs={Faqs}/>
+      <FAQSectionMobile faqs={Faqs}/>
+      <FAQSectionTablet faqs={Faqs}/>
+      <DownloadAppSection />
+      <DownloadAppSectionMobile/>
+      <DownloadAppSectionTablet/>
     </div>
   );
 };
