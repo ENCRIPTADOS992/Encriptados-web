@@ -1,1 +1,1 @@
-export const plans = [{ label: 'Licencia 12 mes', value: '12' }];
+export const plans = [{ label: '12 meses', value: '12' }];

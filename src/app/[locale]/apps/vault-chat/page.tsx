@@ -1,37 +1,40 @@
 "use client";
 
-import HeroBanner from "../component/templateSoftware/HeroBanner";
-import HeroBannerMobile from "../component/templateSoftware/HeroBannerMobile";
-import HeroBannerTablet from "../component/templateSoftware/HeroBannerTablet";
-import ProductSection from "../component/templateSoftware/ProductSection";
-import ProductSectionMobile from "../component/templateSoftware/ProductSectionMobile";
-import ProductSectionTablet from "../component/templateSoftware/ProductSectionTablet";
-import ProductFeaturesGrid from "../component/templateSoftware/ProductFeaturesGrid";
-import ProductFeaturesGridMobile from "../component/templateSoftware/ProductFeaturesGridMobile";
-import ProductFeaturesGridTablet from "../component/templateSoftware/ProductFeaturesGridTablet";
-import ProductBenefitsGrid from "../component/templateSoftware/ProductBenefitsGrid";
-import ProductBenefitsGridMobile from "../component/templateSoftware/ProductBenefitsGridMobile";
-import ProductBenefitsGridTablet from "../component/templateSoftware/ProductBenefitsGridTablet";
-import HeroVideoSection from "../component/templateSoftware/HeroVideoSection";
-import HeroVideoSectionMobile from "../component/templateSoftware/HeroVideoSectionMobile";
-import HeroVideoSectionTablet from "../component/templateSoftware/HeroVideoSectionTablet";
-import FeaturedProducts from "../component/templateSoftware/FeaturedProducts";
-import FeaturedProductsMobile from "../component/templateSoftware/FeaturedProductsMobile";
-import FeaturedProductsTablet from "../component/templateSoftware/FeaturedProductsTablet";
-import SecurityFeatures from "../component/templateSoftware/SecurityFeatures";
-import SecurityFeaturesTablet from "../component/templateSoftware/SecurityFeaturesTablet";
-import SecurityFeaturesMobile from "../component/templateSoftware/SecurityFeaturesMobile";
-import FAQSection from "../component/templateSoftware/FAQSection";
-import FAQSectionMobile from "../component/templateSoftware/FAQSectionMobile";
-import FAQSectionTablet from "../component/templateSoftware/FAQSectionTablet";
-import DownloadAppSection from "../component/templateSoftware/DownloadAppSection";
-import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppSectionMobile";
-import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
+import HeroBanner from "../component/templateApps/HeroBanner";
+import HeroBannerMobile from "../component/templateApps/HeroBannerMobile";
+import HeroBannerTablet from "../component/templateApps/HeroBannerTablet";
+import ProductSection from "../component/templateApps/ProductSection";
+import ProductSectionMobile from "../component/templateApps/ProductSectionMobile";
+import ProductSectionTablet from "../component/templateApps/ProductSectionTablet";
+import ProductFeaturesGrid from "../component/templateApps/ProductFeaturesGrid";
+import ProductFeaturesGridMobile from "../component/templateApps/ProductFeaturesGridMobile";
+import ProductFeaturesGridTablet from "../component/templateApps/ProductFeaturesGridTablet";
+import ProductBenefitsGrid from "../component/templateApps/ProductBenefitsGrid";
+import ProductBenefitsGridMobile from "../component/templateApps/ProductBenefitsGridMobile";
+import ProductBenefitsGridTablet from "../component/templateApps/ProductBenefitsGridTablet";
+import HeroVideoSection from "../component/templateApps/HeroVideoSection";
+import HeroVideoSectionMobile from "../component/templateApps/HeroVideoSectionMobile";
+import HeroVideoSectionTablet from "../component/templateApps/HeroVideoSectionTablet";
+import FeaturedProducts from "../component/templateApps/FeaturedProducts";
+import FeaturedProductsMobile from "../component/templateApps/FeaturedProductsMobile";
+import FeaturedProductsTablet from "../component/templateApps/FeaturedProductsTablet";
+import FAQSection from "../component/templateApps/FAQSection";
+import FAQSectionMobile from "../component/templateApps/FAQSectionMobile";
+import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
+import DownloadAppSection from "../component/templateApps/DownloadAppSection";
+import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
+import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+
+const prices: Record<string, string> = {
+  "6": "349$ USD",
+  "12": "595$ USD",
+  "12.1": "1495$ USD",
+};
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -41,81 +44,82 @@ const Page = () => {
   const [product, setProduct] = useState<ProductById | null>(null);
   const featuresGrid = [
     {
-      image: "/images/apps/secureCrypt/imagen_setup.png",
+      image: "/images/apps/vault-chat/cipher-chat.png",
       title: "Chat Cifrado",
       description:
-        "Usamos OMEMO, ECC y AES256: ningún mensaje es accesible en el servidor. Sin almacenar datos, ciframos imágenes y notas de voz para mayor seguridad.",
+        "Privacidad blindada: OMEMO, ECC y AES-256 protegen mensajes, imágenes y audios. Sin acceso del servidor ni datos guardados. Seguridad total.",
     },
     {
-      image: "/images/apps/secureCrypt/phone_image.png",
-      title: "Correo PGP",
-      description:
-        "Usamos OMEMO, ECC y AES256: ningún mensaje es accesible en el servidor. Sin almacenar datos, ciframos imágenes y notas de voz para mayor seguridad.",
-    },
-    {
-      image: "/images/apps/secureCrypt/mensajes.png",
+      image: "/images/apps/vault-chat/encrypted-chats.png",
       title: "Llamadas Cifradas",
       description:
-        "Implementamos la máxima encriptación con ZRTP, autenticación adicional y AES, garantizando la privacidad de tus conversaciones .",
+        "Vaultchat ofrece llamadas encriptadas con ZRTP, AES y autenticación adicional, asegurando la máxima privacidad y protección contra accesos no autorizados.",
     },
     {
-      image: "/images/apps/secureCrypt/llamadas.png",
+      image: "/images/apps/vault-chat/self-destructing-messages.png",
       title: "Mensajes Autodestructivos",
       description:
-        "Los mensajes autodestructivos son prioritarios. Configura un temporizador para eliminarlos al finalizar el tiempo.",
+        "Los mensajes que se autodestruyen tienen prioridad sobre todo. Configura tu temporizador para destruir todos los mensajes cuando se acabe el tiempo",
+    },
+    {
+      image: "/images/apps/vault-chat/broadcast-lists.png",
+      title: "Listas de difusión",
+      description:
+        "La lista de difusión permite enviar mensajes cifrados a varios contactos a la vez y, al guardarlas, evita seleccionar uno por uno en cada envío.",
     },
   ];
-  const Faqs = [
+  const benefits = [
     {
-      question: "¿Qué archivos puedo proteger con la Aplicación SecureCrypt?",
-      answer:
-        "Puedes proteger mensajes, archivos, contactos y llamadas de voz. Toda tu información viaja cifrada de extremo a extremo.",
+      icon: "/images/apps/vault-chat/icono.png",
+      title: "Notificaciones privadas",
+      description:
+        "Mantén la confidencialidad de los tiempos y recuentos de llegada de los mensajes eligiendo que las notificaciones push se originen en nuestros servidores",
     },
     {
-      question:
-        "¿Por qué debería usar la aplicación SecureCrypt en mi empresa?",
-      answer:
-        "Porque ofrece máxima seguridad, protección contra intrusiones y cifrado total, evitando fugas de información corporativa.",
+      icon: "/images/apps/vault-chat/icono.png",
+      title: "Características de última generación",
+      description:
+        "VaultChat está repleto de funciones y seguridad. Ofrecemos productos de última generación para su uso.",
     },
     {
-      question:
-        "¿Por qué debería usar una aplicación cifrada como SecureCrypt en vez de una convencional?",
-      answer:
-        "Las apps convencionales no ofrecen protección real ante espionaje, SecureCrypt garantiza privacidad y confidencialidad absoluta.",
+      icon: "/images/apps/vault-chat/icono.png",
+      title: "Monitoreo 24/7",
+      description:
+        "El monitoreo de seguridad de la infraestructura brinda protección a la red con medidas preventivas para denegar el acceso no autorizado y la actividad maliciosa.",
     },
+    {
+      icon: "/images/apps/vault-chat/icono.png",
+      title: "Datos Cifrados en Reposo",
+      description:
+        "Todos los datos almacenados en VaultChat se cifran mediante una base de datos cifrada personalizada con AES-256.",
+    },
+    {
+      icon: "/images/apps/vault-chat/icono.png",
+      title: "Protección de Contraseña",
+      description:
+        "Nuestra protección con contraseña requerida mantiene tus datos en VaultChat cifrados y protegidos, incluso si tu dispositivo está desbloqueado. Varios intentos incorrectos borrarán todos los datos.",
+    },
+    {
+      icon: "/images/apps/vault-chat/icono.png",
+      title: "Cifrado Multicapa",
+      description:
+        "Las comunicaciones entrantes y salientes se cifran de extremo a extremo y se transmiten a través de una red cifrada. Todos los datos almacenados en el dispositivo están protegidos y encriptados.",
+    },        
   ];
-  const securityFeaturesData = [
+  const Faqs =[
     {
-      title: "Chat encriptado",
-      description:
-        "Tus mensajes están protegidos con cifrado de extremo a extremo, lo que mantiene la privacidad y seguridad de cada conversación.",
+      question: "¿Qué es VaultChat?",
+      answer: "Nord VPN Chat cifra tus mensajes de extremo a extremo para garantizar privacidad total. Solo tú y tus contactos pueden leer los mensajes.",
     },
     {
-      title: "Borrado remoto",
-      description:
-        "Elimina y sobrescribe todos los datos del dispositivo, garantizando que no puedan recuperarse, ni siquiera con herramientas forenses avanzadas.",
+      question: "¿Cuál es la diferencia de VaultChat con VaultSecure?",
+      answer: "Está disponible para dispositivos iOS y Android compatibles con las versiones actuales de la App Store y Google Play.",
     },
     {
-      title: "Contraseña de coacción",
-      description:
-        "Ingresa una contraseña secundaria de pánico que elimina instantáneamente la aplicación evitando que sea comprometida",
+      question: "¿Qué ventajas se obtienen al usar VaultChat?",
+      answer: "Por su seguridad avanzada, facilidad de uso y soporte 24/7, ideal para quienes valoran la privacidad.",
     },
-    {
-      title: "Detección de Cables",
-      description:
-        "Si se conecta algún cable no autorizado al dispositivo donde está instalada la aplicación, esta se desactivará automáticamente evitando que se pueda abrir",
-    },
-    {
-      title: "Copias de seguridad cifrada",
-      description:
-        "Almacena información crítica de forma segura en nuestra bóveda encriptada y protegida.",
-    },
-    {
-      title: "Cámara Encriptada",
-      description:
-        "Priorizamos su privacidad con copias de seguridad cifradas que solo cubren sus contactos y bóveda, nunca sus mensajes.",
-    },
-  ];
+  ]
   useEffect(() => {
     if (productId) {
       getProductById(productId, "es").then(setProduct).catch(console.error);
@@ -125,164 +129,154 @@ const Page = () => {
   return (
     <div>
       <HeroBanner
-        imageUrl="/images/apps/secureCrypt/banner.png"
-        alt="Armadillo Hero Banner"
+        imageUrl="/images/apps/vault-chat/hero-desktop.png"
+        alt="Nord VPN Hero Banner"
       />
-      <HeroBannerMobile
-        imageUrl="/images/apps/secureCrypt/mobile.jpg"
-        alt="Armadillo Hero Banner"
-      />
-      <HeroBannerTablet
-        imageUrl="/images/apps/secureCrypt/banner.png"
-        alt="Armadillo Hero Banner"
-      />
+      <HeroBannerMobile imageUrl="/images/apps/vault-chat/hero-mobile.png" 
+        alt="Nord VPN Hero Banner" />
+      <HeroBannerTablet imageUrl="/images/apps/vault-chat/hero-tablet.png" 
+        alt="Nord VPN Hero Banner" />
       <ProductSection
-        title="SecureCrypt"
-        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Para Android y iPhone (iOS)"
+        title="VaultChat"
+        description="Plataforma de comunicación cifrada optimizada con cifrado multicapa de alta gama."
         features={[
-          "Chat Encriptado",
-          "Bóveda encriptada ",
-          "Llamadas Encriptadas",
+          "Verificaciones de usuario",
+          "Mensajes autodestructivos",
+          "Chats encriptados",
         ]}
-        price="375$ USD"
+        price="220$ USD"
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selected}
         onRadioChange={(val) => {}}
         onBuy={() => {}}
         onChat={() => {}}
-        productImage="/images/apps/secureCrypt/Group_fondo.png"
-        appStoreUrl="https://apps.apple.com/app/securecrypt-app"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.securecrypt"
+        productImage="/images/apps/vault-chat/banner.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
       <ProductSectionMobile
-        title="SecureCrypt"
-        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Para Android y iPhone (iOS)"
+        title="VaultChat"
+        description="Plataforma de comunicación cifrada optimizada con cifrado multicapa de alta gama."
         features={[
-          "Chat Encriptado",
-          "Bóveda encriptada ",
-          "Llamadas Encriptadas",
+          "Verificaciones de usuario",
+          "Mensajes autodestructivos",
+          "Chats encriptados",
         ]}
-        price="375$ USD"
+        price="220$ USD"
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selected}
         onRadioChange={(val) => {}}
         onBuy={() => {}}
         onChat={() => {}}
-        productImage="/images/apps/secureCrypt/Group_fondo.png"
-        appStoreUrl="https://apps.apple.com/app/securecrypt-app"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.securecrypt"
+        productImage="/images/apps/vault-chat/banner.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
       <ProductSectionTablet
-        title="SecureCrypt"
-        description="SecureCrypt utiliza servidores globales descentralizados que se autodestruyen cada 24 horas. Para Android y iPhone (iOS)"
+        title="VaultChat"
+        description="Plataforma de comunicación cifrada optimizada con cifrado multicapa de alta gama."
         features={[
-          "Chat Encriptado",
-          "Bóveda encriptada ",
-          "Llamadas Encriptadas",
+          "Verificaciones de usuario",
+          "Mensajes autodestructivos",
+          "Chats encriptados",
         ]}
-        price="375$ USD"
+        price="220$ USD"
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selected}
         onRadioChange={(val) => {}}
         onBuy={() => {}}
         onChat={() => {}}
-        productImage="/images/apps/secureCrypt/Group_fondo.png"
-        appStoreUrl="https://apps.apple.com/app/securecrypt-app"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.securecrypt"
-      />
-      <SecurityFeatures
-        title="Te mantenemos conectado con encriptación de inicio a fin"
-        features={securityFeaturesData}
-        imageUrl="/images/apps/secureCrypt/phoneSecurity.png"
-      />
-      <SecurityFeaturesTablet
-        title="Te mantenemos conectado con encriptación de inicio a fin"
-        features={securityFeaturesData}
-        imageUrl="/images/apps/secureCrypt/phoneSecurity.png"
-      />
-      <SecurityFeaturesMobile
-        title="Te mantenemos conectado con encriptación de inicio a fin"
-        features={securityFeaturesData}
-        imageUrl="/images/apps/secureCrypt/phoneSecurity.png"
+        productImage="/images/apps/vault-chat/banner.png"
+        appStoreUrl="https://apps.apple.com/app/armadillo-app"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
       <ProductFeaturesGrid features={featuresGrid} />
-      <ProductFeaturesGridMobile features={featuresGrid} />
-      <ProductFeaturesGridTablet features={featuresGrid} />
+      <ProductFeaturesGridMobile features={featuresGrid} /> 
+      <ProductFeaturesGridTablet features={featuresGrid}/>
+      <ProductBenefitsGrid 
+        title="Cifrado multicapa de alta gama"
+        benefits={benefits}
+      />
+      <ProductBenefitsGridMobile 
+        title="Cifrado multicapa de alta gama"
+        benefits={benefits}
+        />
+      <ProductBenefitsGridTablet 
+        title="Cifrado multicapa de alta gama"
+        benefits={benefits}
+        />
       <HeroVideoSection
-        title={`SecureCrypt App, comunicaciones seguras y encriptadas para chatear en secreto`}
-        videoUrl="https://www.youtube.com/embed/YvuaT5-uaUg"
+        title={`Vault Chat, aplicación para comunicaciones encriptadas y privadas`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <HeroVideoSectionMobile
-        title={`SecureCrypt App, comunicaciones seguras y encriptadas para chatear en secreto`}
-        videoUrl="https://www.youtube.com/embed/YvuaT5-uaUg"
+        title={`Vault Chat, aplicación para comunicaciones encriptadas y privadas`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <HeroVideoSectionTablet
-        title={`SecureCrypt App, comunicaciones seguras y encriptadas para chatear en secreto`}
-        videoUrl="https://www.youtube.com/embed/YvuaT5-uaUg"
+        title={`Vault Chat, aplicación para comunicaciones encriptadas y privadas`}
+        videoUrl="https://www.youtube.com/embed/X9iE-f8briY"
       />
       <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
-          description:
-            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png",
+          image: "/images/apps/vault-chat/sim.png", 
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
           onButtonClick: () => alert("Ver más E-SIM"),
-          image: "/images/apps/armadillo-v2/phone.png",
+          image: "/images/apps/vault-chat/phone.png",
         }}
       />
       <FeaturedProductsMobile
         left={{
           title: "SIM Card encriptada",
-          description:
-            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png",
+          image: "/images/apps/vault-chat/sim.png", 
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
           onButtonClick: () => alert("Ver más E-SIM"),
-          image: "/images/apps/armadillo-v2/phone.png",
+          image: "/images/apps/vault-chat/phone.png",
         }}
       />
       <FeaturedProductsTablet
         left={{
           title: "SIM Card encriptada",
-          description:
-            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/armadillo-v2/sim.png",
+          image: "/images/apps/vault-chat/sim.png", 
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
           onButtonClick: () => alert("Ver más E-SIM"),
-          image: "/images/apps/armadillo-v2/phone.png",
+          image: "/images/apps/vault-chat/phone.png",
         }}
       />
-      <FAQSection faqs={Faqs} />
-      <FAQSectionMobile faqs={Faqs} />
-      <FAQSectionTablet faqs={Faqs} />
+      <FAQSection faqs={Faqs}/>
+      <FAQSectionMobile faqs={Faqs}/>
+      <FAQSectionTablet faqs={Faqs}/>
       <DownloadAppSection />
-      <DownloadAppSectionMobile />
-      <DownloadAppSectionTablet />
+      <DownloadAppSectionMobile/>
+      <DownloadAppSectionTablet/>
     </div>
   );
 };
