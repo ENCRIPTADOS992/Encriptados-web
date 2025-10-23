@@ -91,13 +91,13 @@ const Page = () => {
       icon: "/images/apps/armadillo-v2/icono.png",
       title: "Privacidad y seguridad",
       description:
-        "Armadillo Chat es una aplicación de mensajería instantánea de alta seguridad. Con actualizaciones constantes nos aseguramos que todas tus comunicaciones sean privadas y que estén fuera del alcance de cualquier tercero malintencionado.",
+        "Armadillo Chat es una aplicación de mensajería instantánea de alta seguridad. Con actualizaciones constantes nos aseguramos que todas tus comunicaciones sean privadas.",
     },
     {
       icon: "/images/apps/armadillo-v2/icono.png",
       title: "Alertas sobre posibles impostores",
       description:
-        "Armadillo Chat le advierte automáticamente sobre posibles impostores en su lista de contactos y otros dispositivos conectados a su cuenta. En el modo de alta seguridad, también le advertirá sobre cualquier amigo que no haya verificado.",
+        "Armadillo Chat le advierte automáticamente sobre posibles impostores en su lista de contactos y otros dispositivos conectados a su cuenta.",
     },
     {
       icon: "/images/apps/armadillo-v2/icono.png",
