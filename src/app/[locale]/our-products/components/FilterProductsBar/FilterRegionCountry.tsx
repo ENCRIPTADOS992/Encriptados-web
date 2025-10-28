@@ -1,23 +1,33 @@
-import React, { useState, useRef, useEffect } from "react";
-import { ProductFilters } from "@/features/products/types/ProductFilters";
-import { useTranslations } from "next-intl";
+"use client";
+
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { ProductFilters } from "@/features/products/types/ProductFilters";
+import SearchSvg from "@/shared/svgs/SearchSvg";
+
 import {
-  fetchRegions,
-  fetchCountries,
+  getRegions,
+  getCountries,
+  searchRegions,
+  searchCountries,
   Region,
   Country,
-} from "@/services/regionCountryService";
+} from "@/services/simtimService";
 
-type Option = {
-  label: string;
-  value: string;
-  icon?: string;
-};
+function useDebounce<T>(value: T, delay = 300): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(id);
+  }, [value, delay]);
+  return debounced;
+}
 
 interface FilterRegionCountryProps {
   filters: ProductFilters;
   updateFilters: (newFilters: Partial<ProductFilters>) => void;
+  service: "esim_datos" | "recarga_datos" | "sim_fisica";
 }
 
 const countryFlagImages: Record<string, string> = {
@@ -32,62 +42,114 @@ const countryFlagImages: Record<string, string> = {
   ca: "/images/dashboard/canada.png",
 };
 
+function formatMinFrom(minFrom: Region["minFrom"]) {
+  if (!minFrom) return "—";
+  const { amount, currency } = minFrom;
+  return `Desde ${amount} ${currency}`;
+}
+
 const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
   filters,
   updateFilters,
+  service,
 }) => {
-  console.log(
-    "[FilterRegionCountry] filters.regionOrCountryType:",
-    filters.regionOrCountryType
-  );
-  console.log(
-    "[FilterRegionCountry] filters.regionOrCountry:",
-    filters.regionOrCountry
-  );
-
   const t = useTranslations("OurProductsPage");
+
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [regions, setRegions] = useState<Region[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
+
+  const [visibleRegions, setVisibleRegions] = useState<Region[]>([]);
+  const [visibleCountries, setVisibleCountries] = useState<Country[]>([]);
+
   const [loadingRegions, setLoadingRegions] = useState(true);
-  const [loadingCountries, setLoadingCountries] = useState(false);
+  const [loadingCountries, setLoadingCountries] = useState(true);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearch = useDebounce(searchTerm, 300);
+
+  const safeRegionOrCountry = filters.regionOrCountry ?? "global";
+  const safeRegionOrCountryType = filters.regionOrCountryType ?? "region";
+
+useEffect(() => {
+    let cancelled = false;
+
+    async function initRegions() {
+      setLoadingRegions(true);
+      try {
+        const r = await getRegions(service);
+        if (!cancelled) {
+          setRegions(r);
+          setVisibleRegions(r);
+        }
+      } catch (e) {
+        console.error("[FilterRegionCountry] getRegions error:", e);
+      } finally {
+        if (!cancelled) setLoadingRegions(false);
+      }
+    }
+
+    async function initCountries() {
+      setLoadingCountries(true);
+      try {
+        const c = await getCountries();
+        if (!cancelled) {
+          setCountries(c);
+          setVisibleCountries(c);
+        }
+      } catch (e) {
+        console.error("[FilterRegionCountry] getCountries error:", e);
+      } finally {
+        if (!cancelled) setLoadingCountries(false);
+      }
+    }
+
+    initRegions();
+    initCountries();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [service]);
 
   useEffect(() => {
-    console.log("[useEffect] Fetching regions...");
-    fetchRegions()
-      .then((data) => {
-        console.log("[useEffect] Regions fetched:", data);
-        setRegions(data);
-      })
-      .catch((err) => console.error("[useEffect] Error fetching regions:", err))
-      .finally(() => setLoadingRegions(false));
-  }, []);
+    if (debouncedSearch.trim().length < 2) {
+      setVisibleRegions(regions);
+      setVisibleCountries(countries);
+      return;
+    }
 
- useEffect(() => {
-  if (!filters.regionOrCountry || regions.length === 0) return;
-  const sel = regions.find(r => r.id.toString() === filters.regionOrCountry);
-  if (!sel) return;
+    let cancelled = false;
+    async function doSearch() {
+      setLoadingSearch(true);
+      try {
+        if (filters.regionOrCountryType === "region") {
+          const res = await searchRegions(debouncedSearch.trim());
+          if (!cancelled) setVisibleRegions(res);
+        } else {
+          const res = await searchCountries(debouncedSearch.trim());
+          if (!cancelled) setVisibleCountries(res);
+        }
+      } catch (e) {
+        console.error("[FilterRegionCountry] search error:", e);
+      } finally {
+        if (!cancelled) setLoadingSearch(false);
+      }
+    }
+    doSearch();
 
-  setCountries([]);
-  setLoadingCountries(true);
-
-  fetchCountries(sel.id)
-    .then(raw => {
-      const mapped: Country[] = raw.map(item => ({
-        id:        Number(item.id),   
-        name:      item.name,
-        code:      item.id,           
-        region_id: sel.id,         
-      }));
-      setCountries(mapped);
-    })
-    .catch(console.error)
-    .finally(() => setLoadingCountries(false));
-}, [filters.regionOrCountry, regions]);
-
-
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    debouncedSearch,
+    filters.regionOrCountryType,
+    regions,
+    countries,
+  ]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -100,40 +162,69 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
     }
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
-  const selectedRegion = regions.find(
-    (r) => r.id.toString() === filters.regionOrCountry
-  );
-  const selectedCountry = countries.find(
-    (c) => c.code === filters.regionOrCountry
-  );
-
-  const selected: { label: string; value: string } = selectedCountry
-    ? { label: selectedCountry.name, value: selectedCountry.code }
-    : selectedRegion
-    ? { label: selectedRegion.name, value: selectedRegion.slug }
-    : { label: "Global", value: "global" };
-
   useEffect(() => {
-    console.log(
-      "[useEffect: init] regionOrCountryType:",
-      filters.regionOrCountryType
-    );
-    console.log("[useEffect: init] regionOrCountry:", filters.regionOrCountry);
-
-    if (!filters.regionOrCountryType || !filters.regionOrCountry) {
-      console.log("[useEffect: init] Setting default region and type...");
-      updateFilters({
-        regionOrCountryType: filters.regionOrCountryType ?? "region",
-        regionOrCountry: filters.regionOrCountry ?? "global",
-      });
+    if (!filters.regionOrCountryType) {
+      updateFilters({ regionOrCountryType: "region" });
     }
-  }, []);
+    if (!filters.regionOrCountry) {
+      updateFilters({ regionOrCountry: "global" });
+    }
+  }, [filters.regionOrCountryType, filters.regionOrCountry, updateFilters]);
+
+  const selectedInfo = useMemo(() => {
+    if (!filters.regionOrCountry) {
+      return { label: "Global", code: "global", flagImg: null, emoji: null };
+    }
+
+    if (filters.regionOrCountryType === "country") {
+      const found = countries.find(
+        (c) => c.code.toUpperCase() === safeRegionOrCountry.toUpperCase()
+      );
+      if (found) {
+        return {
+          label: found.name,
+          code: found.code,
+          flagImg: countryFlagImages[found.code.toLowerCase()] ?? null,
+          emoji: found.flag,
+        };
+      }
+    }
+
+    const foundR = regions.find(
+      (r) => r.code.toUpperCase() === safeRegionOrCountry.toUpperCase()
+    );
+    if (foundR) {
+      return {
+        label: foundR.name,
+        code: foundR.code,
+        flagImg: null,
+        emoji: null,
+      };
+    }
+
+    return { label: "Global", code: "global", flagImg: null, emoji: null };
+  }, [filters.regionOrCountry, filters.regionOrCountryType, countries, regions]);
+
+  function handleSelectRegion(r: Region) {
+    updateFilters({
+      regionOrCountryType: "region",
+      regionOrCountry: r.code,
+    });
+    setOpen(false);
+  }
+
+  function handleSelectCountry(c: Country) {
+    updateFilters({
+      regionOrCountryType: "country",
+      regionOrCountry: c.code, 
+    });
+    setOpen(false);
+  }
+
 
   return (
     <div className="flex flex-col h-full">
@@ -180,20 +271,24 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
           onClick={() => setOpen((v) => !v)}
         >
           <span className="flex items-center gap-x-2 truncate">
-            {countryFlagImages[selected.value] && (
+            {selectedInfo.flagImg ? (
               <Image
-                src={countryFlagImages[selected.value]}
-                alt={selected.label}
+                src={selectedInfo.flagImg}
+                alt={selectedInfo.label}
                 width={22}
                 height={22}
                 className="rounded-full"
                 priority
               />
-            )}
-            <span className="uppercase truncate">
-              {countryFlagImages[selected.value]
-                ? selected.value.toUpperCase()
-                : selected.label}
+            ) : selectedInfo.emoji ? (
+              <span className="text-xl leading-none">{selectedInfo.emoji}</span>
+            ) : null}
+
+            <span className="uppercase truncate text-left">
+              {filters.regionOrCountryType === "country" &&
+              selectedInfo.code !== "global"
+                ? selectedInfo.code.toUpperCase()
+                : selectedInfo.label}
             </span>
           </span>
 
@@ -234,8 +329,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
               borderColor: "#3E3E3E",
             }}
           >
-            {/* Toggle Región / País */}
-            <div className="flex gap-3 mb-6">
+            <div className="flex gap-3 mb-4">
               <button
                 className={`
           px-4 py-2 rounded-full text-sm font-semibold
@@ -247,10 +341,15 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
           }
         `}
                 type="button"
-                onClick={() => updateFilters({ regionOrCountryType: "region" })}
+                onClick={() => {
+                  updateFilters({ regionOrCountryType: "region" });
+                  setSearchTerm("");
+                  setVisibleRegions(regions);
+                }}
               >
                 Región
               </button>
+
               <button
                 className={`
           px-4 py-2 rounded-full text-sm font-semibold
@@ -262,15 +361,39 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
           }
         `}
                 type="button"
-                onClick={() =>
-                  updateFilters({ regionOrCountryType: "country" })
-                }
+                onClick={() => {
+                  updateFilters({ regionOrCountryType: "country" });
+                  setSearchTerm("");
+                  setVisibleCountries(countries);
+                }}
               >
                 País
               </button>
+
             </div>
             {/* Lista dinámica según toggle */}
             <div className="mb-4">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={`
+                  w-full bg-[#18191B] text-white rounded-2xl
+                  pl-10 pr-4 py-3 text-sm outline-none border
+                  border-[#3E3E3E] placeholder-[#7E7E7E]
+                `}
+                placeholder={
+                  filters.regionOrCountryType === "region"
+                    ? "Buscar región..."
+                    : "Buscar país..."
+                }
+              />
+              {/* <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7E7E7E]">
+                <SearchSvg color="#7E7E7E" />
+              </div> */}
+            </div>
+
+            <div className="mb-4 max-h-60 overflow-y-auto custom-scrollbar">
               {filters.regionOrCountryType === "region" && (
                 <>
                   <div
@@ -279,36 +402,43 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                   >
                     {t("filterProducts.regionTitle") || "Regiones"}
                   </div>
-                  <div className="flex flex-col gap-2 max-h-60 overflow-y-auto custom-scrollbar">
-                    {regions.map((r) => (
+                {loadingRegions && (
+                    <div className="text-[#7E7E7E] text-sm py-2">
+                      Cargando regiones...
+                    </div>
+                  )}
+
+                  {!loadingRegions && loadingSearch && searchTerm.length >= 2 && (
+                    <div className="text-[#7E7E7E] text-sm py-2">
+                      Buscando...
+                    </div>
+                  )}
+
+                  {!loadingRegions &&
+                    visibleRegions.map((r) => (
                       <button
-                        key={r.id}
+                        key={r.code}
                         type="button"
                         className={`
-                  flex items-center justify-between
-                  w-full
-                  rounded-xl
-                  border
-                  px-4 py-3
-                  transition
-                  ${
-                    filters.regionOrCountry === r.id.toString()
-                      ? "bg-[#25272B] border-[#3393F7]"
-                      : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
-                  }
-                `}
+                          flex items-center justify-between
+                          w-full
+                          rounded-xl
+                          border
+                          px-4 py-3
+                          mb-2
+                          transition
+                          ${
+                    filters.regionOrCountry === r.code &&
+                            filters.regionOrCountryType === "region"
+                              ? "bg-[#25272B] border-[#3393F7]"
+                              : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
+                          }
+                        `}
                         style={{ minHeight: 60 }}
-                        onClick={() => {
-                          console.log("[onClick: Region] Clicked region:", r.id);
-                          updateFilters({
-                            regionOrCountry: r.id.toString(),
-                            regionOrCountryType: "country",
-                          });
-                          setOpen(true);
-                        }}
+                        onClick={() => handleSelectRegion(r)}
                       >
                         {/* Izquierda: ícono (globo genérico) */}
-                        <span className="flex items-center gap-3">
+                       <span className="flex items-center gap-3 text-left">
                           <span className="bg-[#1C1E21] rounded-full w-9 h-9 flex items-center justify-center mr-3">
                             <svg
                               width={22}
@@ -338,7 +468,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                               {r.name}
                             </span>
                             <span className="text-xs text-[#CCCCCC]">
-                              Desde €9.99
+                              {formatMinFrom(r.minFrom)}
                             </span>
                           </span>
                         </span>
@@ -347,20 +477,21 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                           <span
                             className={`block w-4 h-4 rounded-full border transition-all
                       ${
-                        filters.regionOrCountry === r.slug
-                          ? "border-[#3393F7] bg-[#3393F7]"
-                          : "border-[#555] bg-[#232427]"
-                      }
-                    `}
+                                filters.regionOrCountry === r.code &&
+                                filters.regionOrCountryType === "region"
+                                  ? "border-[#3393F7] bg-[#3393F7]"
+                                  : "border-[#555] bg-[#232427]"
+                              }
+                            `}
                           >
-                            {filters.regionOrCountry === r.slug && (
-                              <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
-                            )}
+                            {filters.regionOrCountry === r.code &&
+                              filters.regionOrCountryType === "region" && (
+                                <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
+                              )}
                           </span>
                         </span>
                       </button>
                     ))}
-                  </div>
                 </>
               )}
               {filters.regionOrCountryType === "country" && (
@@ -371,67 +502,86 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                   >
                     {t("filterProducts.countryTitle") || "Países"}
                   </div>
-                  <div className="flex flex-col gap-2 max-h-60 overflow-y-auto custom-scrollbar">
-                    {countries.map((c) => (
+                  {loadingCountries && (
+                    <div className="text-[#7E7E7E] text-sm py-2">
+                      Cargando países...
+                    </div>
+                  )}
+
+                  {!loadingCountries &&
+                    loadingSearch &&
+                    searchTerm.length >= 2 && (
+                      <div className="text-[#7E7E7E] text-sm py-2">
+                        Buscando...
+                      </div>
+                    )}
+
+                  {!loadingCountries &&
+                    visibleCountries.map((c) => (
                       <button
                         key={c.code}
                         type="button"
                         className={`
-                  flex items-center justify-between
-                  w-full
-                  rounded-xl
-                  border
-                  px-4 py-3
-                  transition
-                  ${
-                    filters.regionOrCountry === c.code
-                      ? "bg-[#25272B] border-[#3393F7]"
-                      : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
-                  }
-                `}
+                          flex items-center justify-between
+                          w-full
+                          rounded-xl
+                          border
+                          px-4 py-3
+                          mb-2
+                          transition
+                          ${
+                            filters.regionOrCountry === c.code &&
+                            filters.regionOrCountryType === "country"
+                              ? "bg-[#25272B] border-[#3393F7]"
+                              : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
+                          }
+                        `}
                         style={{ minHeight: 60 }}
-                        onClick={() => {
-                          setOpen(false);
-                          updateFilters({ regionOrCountry: c.code });
-                        }}
+                        onClick={() => handleSelectCountry(c)}
                       >
-                        <span className="flex items-center gap-3">
-                          {countryFlagImages[c.code] && (
+                        <span className="flex items-center gap-3 text-left">
+                          {countryFlagImages[c.code.toLowerCase()] ? (
                             <Image
-                              src={countryFlagImages[c.code]}
+                              src={countryFlagImages[c.code.toLowerCase()]}
                               alt={c.name}
                               width={34}
                               height={34}
                               className="rounded-full mr-3"
                             />
+                          ) : (
+                            <span className="text-2xl leading-none mr-2">
+                              {c.flag}
+                            </span>
                           )}
-                          <span className="flex flex-col text-left">
+                          <span className="flex flex-col">
                             <span className="font-bold text-[16px] text-white">
                               {c.name}
                             </span>
                             <span className="text-xs text-[#CCCCCC]">
-                              Desde €9.99
+                              Cobertura 4G/5G
                             </span>
                           </span>
                         </span>
+
                         <span className="w-5 h-5 flex items-center justify-center">
                           <span
                             className={`block w-4 h-4 rounded-full border transition-all
                       ${
-                        filters.regionOrCountry === c.code
-                          ? "border-[#3393F7] bg-[#3393F7]"
-                          : "border-[#555] bg-[#232427]"
-                      }
-                    `}
+                                filters.regionOrCountry === c.code &&
+                                filters.regionOrCountryType === "country"
+                                  ? "border-[#3393F7] bg-[#3393F7]"
+                                  : "border-[#555] bg-[#232427]"
+                              }
+                            `}
                           >
-                            {filters.regionOrCountry === c.code && (
-                              <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
-                            )}
+                            {filters.regionOrCountry === c.code &&
+                              filters.regionOrCountryType === "country" && (
+                                <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
+                              )}
                           </span>
                         </span>
                       </button>
                     ))}
-                  </div>
                 </>
               )}
             </div>

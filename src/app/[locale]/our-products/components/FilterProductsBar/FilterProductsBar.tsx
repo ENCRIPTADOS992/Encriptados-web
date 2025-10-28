@@ -60,6 +60,9 @@ export default function FilterProductsBar({
     ),
   }));
 
+  const activeTimService =
+    filters.timService ?? ("esim_datos" as "esim_datos");
+    
   let subfilters: React.ReactNode[] = [];
   if (selectedCat === 40) {
     subfilters = [
@@ -72,10 +75,11 @@ export default function FilterProductsBar({
     if (filters.provider === "tim") {
       subfilters.push(
         <FilterRegionCountry
-          filters={filters}
-          updateFilters={updateFilters}
-          key="region-country"
-        />
+        filters={filters}
+        updateFilters={updateFilters}
+        service={filters.timService || "esim_datos"}
+        key="region-country"
+      />
       );
     }
   } else if (selectedCat === 38 || selectedCat === 35) {
@@ -92,6 +96,7 @@ export default function FilterProductsBar({
         <FilterRegionCountry
           filters={filters}
           updateFilters={updateFilters}
+          service={activeTimService}
           key="region-country"
         />
       );
@@ -121,14 +126,11 @@ export default function FilterProductsBar({
 
         {/* Subfiltros */}
         <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-end xl:justify-between">
-          {/*  A) Sub‑filtros: en sm/md en una línea */}
           <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1">
             {subfilters.map((child, idx) => {
-              // 1) Validamos que sea ReactElement y extraemos su key real
               const element = React.isValidElement(child) ? child : null;
               const childKey = element?.key?.toString();
 
-              // 2) Determinamos si es el dropdown de Regiones
               const isRegion = childKey === "region-country";
 
               return (
