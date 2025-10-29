@@ -69,7 +69,7 @@ const SecurityFeaturesMobile: React.FC<SecurityFeaturesMobileProps> = ({
     </div>
 
     {/* Imagen recortada desde la mitad hacia abajo */}
-    <div className="relative w-[324px] h-[393px] mt-6 overflow-hidden">
+    {/* <div className="relative w-[324px] h-[393px] mt-6 overflow-hidden">
       <img
         src={imageUrl}
         alt="DEC Secure Phone"
@@ -81,7 +81,7 @@ const SecurityFeaturesMobile: React.FC<SecurityFeaturesMobileProps> = ({
                    bg-gradient-to-t from-black to-transparent
                    pointer-events-none"
       />
-    </div>
+    </div> */}
   </section>
 );
 
