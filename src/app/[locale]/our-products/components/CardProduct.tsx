@@ -93,7 +93,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       ) : null}
     </div>
 
-    <span className="ml-2 text-[10px] font-semibold text-black leading-none">
+    <span className="ml-2 text-[13px] font-bold text-black leading-none">
       {badges.country.label}
     </span>
   </div>
@@ -109,7 +109,7 @@ const CardProduct: React.FC<CardSimProps> = ({
           </h2>
 
           {badges?.tag ? (
-            <div className="ml-2 rounded-full bg-sky-600 text-white text-[10px] md:text-xs font-bold px-2 py-1 leading-none h-fit self-start shadow-md">
+            <div className="ml-2 rounded-full bg-sky-600 text-black text-[12px] md:text-xs font-bold px-2 py-1 leading-none h-fit self-start shadow-md">
               {badges.tag}
             </div>
           ) : null}
