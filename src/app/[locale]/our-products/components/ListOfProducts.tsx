@@ -224,7 +224,7 @@ const buildTimBadges = (raw: Product): TimBadges | undefined => {
             const isCategory40 = selectedOption === 40;
             const isTim = filters.provider === "tim";
             const simName = (product.name ?? "").toLowerCase().trim();
-            const isSim = simName === "sim física" || simName === "esim" || simName === "esim + datos";
+            const isSim = simName === "recarga datos" || simName === "esim" || simName === "esim + datos";
             const showTimBadges = isCategory40 && isTim && isSim;
 
             console.log("🧮 [BadgeCheck]", {
