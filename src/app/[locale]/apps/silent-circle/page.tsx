@@ -24,9 +24,15 @@ import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
 import DownloadAppSection from "../component/templateApps/DownloadAppSection";
 import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
 import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+
+import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
+import StickyPriceBannerTablet from "../component/templateApps/StickyPriceBannerTablet";
+import StickyPriceBannerMobile from "../component/templateApps/StickyPriceBannerMobile";
+
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
@@ -42,6 +48,19 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
+  const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible } = usePriceVisibility(priceBlockRef);
+  const productInfo = {
+    title: "Silent Phone",
+    price: "99$ USD",
+    ctaLabel: "Comprar ahora",
+    onBuy: () => {
+      console.log("comprar");
+    },
+    onChat: () => {
+      console.log("chat telegram");
+    },
+  };
   const featuresGrid = [
     {
       image: "/images/apps/silent-circle/self-destructing-messages.png",
@@ -136,24 +155,26 @@ const Page = () => {
         alt="Nord VPN Hero Banner" />
       <HeroBannerTablet imageUrl="/images/apps/silent-circle/hero-tablet.png" 
         alt="Nord VPN Hero Banner" />
-      <ProductSection
-        title="Silent Phone "
-        description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
-        features={[
-          "Llamadas cifradas",
-          "Sin permisos de ubicación",
-          "Mensajes temporizados",
-        ]}
-        price="99$ USD"
-        radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
-        productImage="/images/apps/silent-circle/banner.png"
-        appStoreUrl="https://apps.apple.com/app/armadillo-app"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
-      />
+      <div ref={priceBlockRef}>
+        <ProductSection
+          title="Silent Phone "
+          description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
+          features={[
+            "Llamadas cifradas",
+            "Sin permisos de ubicación",
+            "Mensajes temporizados",
+          ]}
+          price="99$ USD"
+          radioOptions={plans.map((p) => p.label)}
+          selectedRadio={selected}
+          onRadioChange={(val) => {}}
+          onBuy={() => {}}
+          onChat={() => {}}
+          productImage="/images/apps/silent-circle/banner.png"
+          appStoreUrl="https://apps.apple.com/app/armadillo-app"
+          googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+        />
+      </div>
       <ProductSectionMobile
         title="Silent Phone "
         description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
@@ -190,6 +211,28 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
+      <div className="hidden lg:block">
+        <StickyPriceBannerDesktop
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Tablet */}
+      <div className="hidden md:block lg:hidden">
+        <StickyPriceBannerTablet
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Mobile */}
+      <div className="block md:hidden">
+        <StickyPriceBannerMobile
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
       <ProductFeaturesGrid features={featuresGrid} />
       <ProductFeaturesGridMobile features={featuresGrid} /> 
       <ProductFeaturesGridTablet features={featuresGrid}/>
