@@ -9,7 +9,7 @@ type StickyPriceBannerDesktopProps = {
     title: string;
     price: string;
     subtitle?: string;
-    iconUrl?: string;
+    iconUrl: string; 
     ctaLabel?: string;
     onBuy?: () => void;
     onChat?: () => void;
@@ -40,16 +40,13 @@ const StickyPriceBannerDesktop: React.FC<StickyPriceBannerDesktopProps> = ({
       `}
     >
       <div className="flex items-center gap-[22px] w-[247.8px] min-w-[247.8px]">
+        {/* Icono */}
         <div className="w-[54px] h-[54px] rounded-full bg-white/5 flex items-center justify-center overflow-hidden">
-          {productInfo.iconUrl ? (
-            <img
-              src={productInfo.iconUrl}
-              alt={productInfo.title}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span className="text-white text-sm font-semibold">App</span>
-          )}
+          <img
+            src={productInfo.iconUrl}
+            alt={productInfo.title}
+            className="w-full h-full object-cover"
+          />
         </div>
 
         {/* Texto */}

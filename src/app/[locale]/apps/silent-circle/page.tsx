@@ -24,8 +24,8 @@ import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
 import DownloadAppSection from "../component/templateApps/DownloadAppSection";
 import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
 import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
-import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
 import StickyPriceBannerTablet from "../component/templateApps/StickyPriceBannerTablet";
 import StickyPriceBannerMobile from "../component/templateApps/StickyPriceBannerMobile";
@@ -53,6 +53,8 @@ const Page = () => {
   const productInfo = {
     title: "Silent Phone",
     price: "99$ USD",
+    subtitle: "Comunicación cifrada y segura",
+    iconUrl: "/images/apps/silent-circle/logo.png",
     ctaLabel: "Comprar ahora",
     onBuy: () => {
       console.log("comprar");
@@ -61,6 +63,7 @@ const Page = () => {
       console.log("chat telegram");
     },
   };
+
   const featuresGrid = [
     {
       image: "/images/apps/silent-circle/self-destructing-messages.png",
@@ -123,22 +126,27 @@ const Page = () => {
       title: "Tecnología que Impulsa",
       description:
         "Nuestros servicios garantizan la seguridad de tus datos, posicionando a Silent Phone - Silent Circle como líder en comunicaciones móviles seguras.",
-    },        
+    },
   ];
-  const Faqs =[
+  const Faqs = [
     {
-      question: "¿Qué tan segura es la aplicación Silent Phone - Silent Circle?",
-      answer: "Nord VPN Chat cifra tus mensajes de extremo a extremo para garantizar privacidad total. Solo tú y tus contactos pueden leer los mensajes.",
+      question:
+        "¿Qué tan segura es la aplicación Silent Phone - Silent Circle?",
+      answer:
+        "Nord VPN Chat cifra tus mensajes de extremo a extremo para garantizar privacidad total. Solo tú y tus contactos pueden leer los mensajes.",
     },
     {
-      question: "¿En qué celular puedo instalar la aplicación Silent Phone de Silent Circle?",
-      answer: "Está disponible para dispositivos iOS y Android compatibles con las versiones actuales de la App Store y Google Play.",
+      question:
+        "¿En qué celular puedo instalar la aplicación Silent Phone de Silent Circle?",
+      answer:
+        "Está disponible para dispositivos iOS y Android compatibles con las versiones actuales de la App Store y Google Play.",
     },
     {
       question: "¿En qué celular puedo instalar la aplicación Silent Circle?",
-      answer: "Por su seguridad avanzada, facilidad de uso y soporte 24/7, ideal para quienes valoran la privacidad.",
+      answer:
+        "Por su seguridad avanzada, facilidad de uso y soporte 24/7, ideal para quienes valoran la privacidad.",
     },
-  ]
+  ];
   useEffect(() => {
     if (productId) {
       getProductById(productId, "es").then(setProduct).catch(console.error);
@@ -151,10 +159,14 @@ const Page = () => {
         imageUrl="/images/apps/silent-circle/hero-desktop.png"
         alt="Nord VPN Hero Banner"
       />
-      <HeroBannerMobile imageUrl="/images/apps/silent-circle/hero-mobile.jpg" 
-        alt="Nord VPN Hero Banner" />
-      <HeroBannerTablet imageUrl="/images/apps/silent-circle/hero-tablet.png" 
-        alt="Nord VPN Hero Banner" />
+      <HeroBannerMobile
+        imageUrl="/images/apps/silent-circle/hero-mobile.jpg"
+        alt="Nord VPN Hero Banner"
+      />
+      <HeroBannerTablet
+        imageUrl="/images/apps/silent-circle/hero-tablet.png"
+        alt="Nord VPN Hero Banner"
+      />
       <div ref={priceBlockRef}>
         <ProductSection
           title="Silent Phone "
@@ -175,42 +187,46 @@ const Page = () => {
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
         />
       </div>
-      <ProductSectionMobile
-        title="Silent Phone "
-        description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
-        features={[
-          "Llamadas cifradas",
-          "Sin permisos de ubicación",
-          "Mensajes temporizados",
-        ]}
-        price="99$ USD"
-        radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
-        productImage="/images/apps/silent-circle/banner.png"
-        appStoreUrl="https://apps.apple.com/app/armadillo-app"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
-      />
-      <ProductSectionTablet
-        title="Silent Phone "
-        description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
-        features={[
-          "Llamadas cifradas",
-          "Sin permisos de ubicación",
-          "Mensajes temporizados",
-        ]}
-        price="99$ USD"
-        radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
-        productImage="/images/apps/silent-circle/banner.png"
-        appStoreUrl="https://apps.apple.com/app/armadillo-app"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
-      />
+      <div ref={priceBlockRef}>
+        <ProductSectionMobile
+          title="Silent Phone "
+          description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
+          features={[
+            "Llamadas cifradas",
+            "Sin permisos de ubicación",
+            "Mensajes temporizados",
+          ]}
+          price="99$ USD"
+          radioOptions={plans.map((p) => p.label)}
+          selectedRadio={selected}
+          onRadioChange={(val) => {}}
+          onBuy={() => {}}
+          onChat={() => {}}
+          productImage="/images/apps/silent-circle/banner.png"
+          appStoreUrl="https://apps.apple.com/app/armadillo-app"
+          googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+        />
+      </div>
+      <div ref={priceBlockRef}>
+        <ProductSectionTablet
+          title="Silent Phone "
+          description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
+          features={[
+            "Llamadas cifradas",
+            "Sin permisos de ubicación",
+            "Mensajes temporizados",
+          ]}
+          price="99$ USD"
+          radioOptions={plans.map((p) => p.label)}
+          selectedRadio={selected}
+          onRadioChange={(val) => {}}
+          onBuy={() => {}}
+          onChat={() => {}}
+          productImage="/images/apps/silent-circle/banner.png"
+          appStoreUrl="https://apps.apple.com/app/armadillo-app"
+          googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+        />
+      </div>
       <div className="hidden lg:block">
         <StickyPriceBannerDesktop
           visible={!isVisible}
@@ -234,8 +250,8 @@ const Page = () => {
         />
       </div>
       <ProductFeaturesGrid features={featuresGrid} />
-      <ProductFeaturesGridMobile features={featuresGrid} /> 
-      <ProductFeaturesGridTablet features={featuresGrid}/>
+      <ProductFeaturesGridMobile features={featuresGrid} />
+      <ProductFeaturesGridTablet features={featuresGrid} />
       <ProductBenefitsGrid
         title="Te mantenemos conectado de forma segura y privada"
         benefits={benefits}
@@ -263,12 +279,13 @@ const Page = () => {
       <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/silent-circle/sim.png", 
+          image: "/images/apps/silent-circle/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -281,12 +298,13 @@ const Page = () => {
       <FeaturedProductsMobile
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/silent-circle/sim.png", 
+          image: "/images/apps/silent-circle/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -299,12 +317,13 @@ const Page = () => {
       <FeaturedProductsTablet
         left={{
           title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
+          description:
+            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
           onButtonClick: () => alert("Comprar SIM Card encriptada"),
           moreInfoLabel: "Más información",
           onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/silent-circle/sim.png", 
+          image: "/images/apps/silent-circle/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
@@ -314,9 +333,9 @@ const Page = () => {
           image: "/images/apps/silent-circle/phone.png",
         }}
       />
-      <FAQSection faqs={Faqs}/>
-      <FAQSectionMobile faqs={Faqs}/>
-      <FAQSectionTablet faqs={Faqs}/>
+      <FAQSection faqs={Faqs} />
+      <FAQSectionMobile faqs={Faqs} />
+      <FAQSectionTablet faqs={Faqs} />
       {/* <DownloadAppSection />
       <DownloadAppSectionMobile/>
       <DownloadAppSectionTablet/> */}

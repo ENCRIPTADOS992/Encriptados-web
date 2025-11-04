@@ -26,9 +26,14 @@ import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppS
 import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
+import StickyPriceBannerTablet from "../component/templateApps/StickyPriceBannerTablet";
+import StickyPriceBannerMobile from "../component/templateApps/StickyPriceBannerMobile";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -36,6 +41,22 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
+  const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible } = usePriceVisibility(priceBlockRef);
+  const productInfo = {
+  title: "Silent Phone",
+  price: "99$ USD",
+  subtitle: "Comunicación cifrada y segura",
+  iconUrl: "/images/apps/silent-circle/logo.png", 
+  ctaLabel: "Comprar ahora",
+  onBuy: () => {
+    console.log("comprar");
+  },
+  onChat: () => {
+    console.log("chat telegram");
+  },
+};
+
   const featuresGrid = [
     {
       image: "/images/apps/dec-secure/vpn-active.png",
@@ -125,6 +146,7 @@ const Page = () => {
         alt="Armadillo Hero Banner" />
       <HeroBannerTablet imageUrl="/images/apps/dec-secure/banner_ipad.png" 
         alt="Armadillo Hero Banner" />
+      <div ref={priceBlockRef}>
       <ProductSection
         title="DEC Secure"
         description="DEC Secure ofrece total tranquilidad cuando se trata de la privacidad y seguridad de la información en tu dispositivo móvil."
@@ -143,6 +165,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/dec-secure-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.dec-secure"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionMobile
         title="DEC Secure"
         description="DEC Secure ofrece total tranquilidad cuando se trata de la privacidad y seguridad de la información en tu dispositivo móvil."
@@ -161,6 +185,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/dec-secure-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.dec-secure"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionTablet
         title="DEC Secure"
         description="DEC Secure ofrece total tranquilidad cuando se trata de la privacidad y seguridad de la información en tu dispositivo móvil."
@@ -179,7 +205,29 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/dec-secure-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.dec-secure"
       />
+      </div>
+      <div className="hidden lg:block">
+        <StickyPriceBannerDesktop
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
 
+      {/* Tablet */}
+      <div className="hidden md:block lg:hidden">
+        <StickyPriceBannerTablet
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Mobile */}
+      <div className="block md:hidden">
+        <StickyPriceBannerMobile
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
       <SecurityFeatures
         title="Te mantenemos conectado de forma segura y privada"
         features={securityFeaturesData}

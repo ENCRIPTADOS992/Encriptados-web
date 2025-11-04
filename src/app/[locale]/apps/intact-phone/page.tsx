@@ -26,9 +26,14 @@ import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppS
 import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
+import StickyPriceBannerTablet from "../component/templateApps/StickyPriceBannerTablet";
+import StickyPriceBannerMobile from "../component/templateApps/StickyPriceBannerMobile";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -36,6 +41,22 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
+  const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible } = usePriceVisibility(priceBlockRef);
+  const productInfo = {
+  title: "Silent Phone",
+  price: "99$ USD",
+  subtitle: "Comunicación cifrada y segura",
+  iconUrl: "/images/apps/silent-circle/logo.png", 
+  ctaLabel: "Comprar ahora",
+  onBuy: () => {
+    console.log("comprar");
+  },
+  onChat: () => {
+    console.log("chat telegram");
+  },
+};
+
   const featuresGrid = [
     {
       image: "/images/apps/intact-phone/vpn-active.png",
@@ -142,6 +163,7 @@ const Page = () => {
         imageUrl="/images/apps/intact-phone/banner_ipad.png"
         alt="Armadillo Hero Banner"
       />
+      <div ref={priceBlockRef}>
       <ProductSection
         title="INTACT PHONE"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
@@ -160,6 +182,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/intact-phone-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionMobile
         title="INTACT PHONE"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
@@ -178,6 +202,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/intact-phone-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionTablet
         title="INTACT PHONE"
         description="Seguridad completa desde el hardware hasta el sistema operativo para comunicaciones seguras."
@@ -196,6 +222,29 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/intact-phone-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.intact-phone"
       />
+      </div>
+      <div className="hidden lg:block">
+        <StickyPriceBannerDesktop
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Tablet */}
+      <div className="hidden md:block lg:hidden">
+        <StickyPriceBannerTablet
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Mobile */}
+      <div className="block md:hidden">
+        <StickyPriceBannerMobile
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
       <SecurityFeatures
         title="IntactPhone construye todo el hardware y software"
         features={securityFeaturesData}

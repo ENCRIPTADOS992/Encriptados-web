@@ -23,9 +23,14 @@ import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppS
 import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
+import StickyPriceBannerTablet from "../component/templateApps/StickyPriceBannerTablet";
+import StickyPriceBannerMobile from "../component/templateApps/StickyPriceBannerMobile";
 
 const prices: Record<string, string> = {
   "6": "349$ USD",
@@ -38,6 +43,22 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const plan = searchParams.get("plan");
   const [product, setProduct] = useState<ProductById | null>(null);
+  const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible } = usePriceVisibility(priceBlockRef);
+  const productInfo = {
+  title: "Silent Phone",
+  price: "99$ USD",
+  subtitle: "Comunicación cifrada y segura",
+  iconUrl: "/images/apps/silent-circle/logo.png", 
+  ctaLabel: "Comprar ahora",
+  onBuy: () => {
+    console.log("comprar");
+  },
+  onChat: () => {
+    console.log("chat telegram");
+  },
+};
+
   const benefits = [
     {
       icon: "/images/apps/armadillo-v2/icono.png",
@@ -181,6 +202,7 @@ const Page = () => {
         imageUrl="/images/apps/armadillo-v2/bannertablet.png"
         alt="Armadillo Hero Banner"
       />
+      <div ref={priceBlockRef}>
       <ProductSection
         title="Armadillo"
         description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
@@ -199,6 +221,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionMobile
         title="Armadillo"
         description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
@@ -217,6 +241,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionTablet
         title="Armadillo"
         description="Un equipo ultra seguro a prueba de ataques y fácil de usar."
@@ -235,6 +261,29 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
+      </div>
+      <div className="hidden lg:block">
+        <StickyPriceBannerDesktop
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Tablet */}
+      <div className="hidden md:block lg:hidden">
+        <StickyPriceBannerTablet
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Mobile */}
+      <div className="block md:hidden">
+        <StickyPriceBannerMobile
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
       <SecurityFeatures
         title="Te da protección avanzada"
         features={securityFeaturesData}

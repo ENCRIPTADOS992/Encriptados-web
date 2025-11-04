@@ -26,9 +26,14 @@ import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppS
 import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
+import StickyPriceBannerTablet from "../component/templateApps/StickyPriceBannerTablet";
+import StickyPriceBannerMobile from "../component/templateApps/StickyPriceBannerMobile";
 
 const prices: Record<string, string> = {
   "6": "349$ USD",
@@ -42,6 +47,22 @@ const Page = () => {
   const productId = searchParams.get("productId");
   const selected = plan || plans[0].value;
   const [product, setProduct] = useState<ProductById | null>(null);
+  const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible } = usePriceVisibility(priceBlockRef);
+  const productInfo = {
+  title: "Silent Phone",
+  price: "99$ USD",
+  subtitle: "Comunicación cifrada y segura",
+  iconUrl: "/images/apps/silent-circle/logo.png", 
+  ctaLabel: "Comprar ahora",
+  onBuy: () => {
+    console.log("comprar");
+  },
+  onChat: () => {
+    console.log("chat telegram");
+  },
+};
+
   const featuresGrid = [
     {
       image: "/images/apps/renati/chat-enmascarado.png",
@@ -133,6 +154,7 @@ const Page = () => {
         alt="Armadillo Hero Banner" />
       <HeroBannerTablet imageUrl="/images/apps/renati/hero-tablet.png" 
         alt="Armadillo Hero Banner" />
+      <div ref={priceBlockRef}>
       <ProductSection
         title="Renati"
         description="Protégete con un sistema operativo móvil seguro y creado para comunicaciones encriptadas."
@@ -151,6 +173,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionMobile
         title="Renati"
         description="Protégete con un sistema operativo móvil seguro y creado para comunicaciones encriptadas."
@@ -169,6 +193,8 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
+      </div>
+      <div ref={priceBlockRef}>
       <ProductSectionTablet
         title="Renati"
         description="Protégete con un sistema operativo móvil seguro y creado para comunicaciones encriptadas."
@@ -187,6 +213,29 @@ const Page = () => {
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
+      </div>
+      <div className="hidden lg:block">
+        <StickyPriceBannerDesktop
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Tablet */}
+      <div className="hidden md:block lg:hidden">
+        <StickyPriceBannerTablet
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
+
+      {/* Mobile */}
+      <div className="block md:hidden">
+        <StickyPriceBannerMobile
+          visible={!isVisible}
+          productInfo={productInfo}
+        />
+      </div>
       <SecurityFeatures
         title="La tecnología de Renati es tu aliado sin obstáculos"
         features={securityFeaturesData}
