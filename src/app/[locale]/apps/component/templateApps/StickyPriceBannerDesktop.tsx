@@ -41,7 +41,7 @@ const StickyPriceBannerDesktop: React.FC<StickyPriceBannerDesktopProps> = ({
     >
       <div className="flex items-center gap-[22px] w-[247.8px] min-w-[247.8px]">
         {/* Icono */}
-        <div className="w-[54px] h-[54px] rounded-full bg-white/5 flex items-center justify-center overflow-hidden">
+        <div className="w-[54px] h-[54px] rounded-[12px] bg-white/5 flex items-center justify-center overflow-hidden">
           <img
             src={productInfo.iconUrl}
             alt={productInfo.title}

@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 export const usePriceVisibility = (targetRef: React.RefObject<HTMLElement>) => {
-  const [isVisible, setIsVisible] = useState(true); // "visible" = el bloque de precio cuenta como visible/activo
+  const [isVisible, setIsVisible] = useState(true); 
 
   useEffect(() => {
     const el = targetRef.current;

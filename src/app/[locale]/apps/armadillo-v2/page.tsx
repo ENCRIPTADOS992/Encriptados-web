@@ -49,7 +49,7 @@ const Page = () => {
   title: "Silent Phone",
   price: "99$ USD",
   subtitle: "Comunicación cifrada y segura",
-  iconUrl: "/images/apps/silent-circle/logo.png", 
+  iconUrl: "/images/apps/armadillo/logo.png", 
   ctaLabel: "Comprar ahora",
   onBuy: () => {
     console.log("comprar");
