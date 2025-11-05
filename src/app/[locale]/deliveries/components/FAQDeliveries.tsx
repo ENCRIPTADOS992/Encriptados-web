@@ -31,6 +31,7 @@ const FAQDeliveries = () => {
         {faqs.map((faq, index) => (
           <div key={index} className="bg-white shadow-md rounded-lg mb-4 p-4 text-left">
             <button
+              type="button"
               onClick={() => toggleFAQ(index)}
               className="flex justify-between items-center w-full font-semibold text-lg"
             >
