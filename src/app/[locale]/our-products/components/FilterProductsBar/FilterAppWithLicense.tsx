@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
 import { useTranslations } from "next-intl";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
@@ -19,6 +19,53 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
   const t = useTranslations("OurProductsPage");
   const osOptions = useBrandsFromProducts(products);
   console.log("[FilterAppWithLicense] products:", products);
+
+    const licenseOptions = useMemo(() => {
+    if (!products || products.length === 0) {
+      return [{ label: "TODO", value: "all" }];
+    }
+
+    const filteredByBrand = products.filter((p) => {
+      const brand = (p as any).brand as string | undefined;
+
+      if (filters.os && filters.os !== "all") {
+        return brand === filters.os;
+      }
+
+      return true; 
+    });
+
+    if (filteredByBrand.length === 0) {
+      return [{ label: "TODO", value: "all" }];
+    }
+
+    const set = new Set<string>();
+
+    filteredByBrand.forEach((p) => {
+      const lt = (p as any).licensetime as string | undefined;
+      if (lt && lt !== "0") {
+        set.add(lt);
+      }
+    });
+
+    const sorted = Array.from(set).sort(
+      (a, b) => Number(a) - Number(b)
+    );
+
+    if (sorted.length === 0) {
+      return [{ label: "TODO", value: "all" }];
+    }
+
+    return [
+      { label: "TODO", value: "all" },
+      ...sorted.map((val) => ({
+        label: `${val} mes${val === "1" ? "" : "es"}`,
+        value: val,
+      })),
+    ];
+  }, [products, filters.os]);
+
+
 
   return (
     <div className="flex flex-row space-x-2">
@@ -44,13 +91,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
         </h1>
         <MenuDropdownProductBar
           name="license"
-          options={[
-            { label: "TODO", value: "all" },
-            { label: "1 mes", value: "1" },
-            { label: "3 meses", value: "3" },
-            { label: "6 meses", value: "6" },
-            { label: "12 meses", value: "12" },
-          ]}
+          options={licenseOptions}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de License:", value);
             updateFilters({ license: String(value) });
