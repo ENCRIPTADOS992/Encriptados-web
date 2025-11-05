@@ -1,3 +1,4 @@
+// src/app/[locale]/our-products/components/FilterProductsBar/FilterProductsBar.tsx
 "use client";
 
 import React from "react";
@@ -5,26 +6,25 @@ import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
-import { ProductFilters } from "@/features/products/types/ProductFilters";
+import RoutersBarIcon from "./icons/RoutersBarIcon";
 import SearchProduct from "./SearchProduct";
-import { useTranslations } from "next-intl";
 import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 import FilterRegionCountry from "./FilterRegionCountry";
+
+import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { Product } from "@/features/products/types/AllProductsResponse";
-import RoutersBarIcon from "./icons/RoutersBarIcon";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/routing"; 
+
+import MobileMenuSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
 const FILTER_OPTIONS = [
   { key: "sim", label: "SIM", catId: 40, Icon: SimProductsBarIcon },
-  {
-    key: "app",
-    label: "Aplicaciones",
-    catId: 38,
-    Icon: AplicationsProductsBarIcon,
-  },
+  { key: "app", label: "Aplicaciones", catId: 38, Icon: AplicationsProductsBarIcon },
   { key: "mobile", label: "Software", catId: 35, Icon: PhoneProductsBarIcon },
   { key: "routers", label: "Routers", catId: 36, Icon: RoutersBarIcon },
 ] as const;
@@ -33,7 +33,7 @@ interface FilterProductsBarProps {
   filters: ProductFilters;
   updateFilters: (newFilters: Partial<ProductFilters>) => void;
   products?: Product[];
-  variant?: "static" | "floating"; // 👈 nuevo
+  variant?: "static" | "floating";
 }
 
 export default function FilterProductsBar({
@@ -43,6 +43,8 @@ export default function FilterProductsBar({
   variant = "static",
 }: FilterProductsBarProps) {
   const t = useTranslations("OurProductsPage");
+  const router = useRouter();
+
   const selectedCat = parseInt(filters.selectedOption, 10);
 
   const items = FILTER_OPTIONS.map(({ key, label, catId, Icon }) => ({
@@ -105,15 +107,89 @@ export default function FilterProductsBar({
     }
   }
 
-  const containerClass = `
-    w-full max-w-screen-xl mx-auto
-    bg-[#161616] rounded-xl
-    px-4 lg:px-8 py-6
-    ${variant === "floating" ? "shadow-[0_14px_54px_rgba(0,0,0,0.8)]" : ""}
-  `;
+  if (variant === "floating") {
+    const navItems: {
+      key: "sims" | "apps" | "systems" | "routers" | "offers";
+      label: string;
+      catId?: number;
+    }[] = [
+      { key: "sims", label: "SIMs", catId: 40 },
+      { key: "apps", label: "Apps", catId: 38 },
+      { key: "systems", label: "Sistemas", catId: 35 },
+      { key: "routers", label: "Routers", catId: 36 },
+      { key: "offers", label: "Ofertas" },
+    ];
 
-  const content = (
-    <div className={containerClass}>
+    const handleNavClick = (item: (typeof navItems)[number]) => {
+    if (item.key === "offers") {
+      router.push("/offers");
+      return;
+    }
+    if (item.catId) {
+      updateFilters({ selectedOption: String(item.catId) });
+
+      const filtersEl = document.getElementById("filters-section");
+      if (filtersEl) {
+        const rect = filtersEl.getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 16;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
+
+
+    return (
+      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-3 pb-4 bg-[#050505]/70 backdrop-blur-sm">
+        <div
+          className="
+            w-full max-w-screen-xl
+            bg-[#161616]
+            rounded-xl
+            px-6 py-3
+            flex items-center justify-between gap-6
+          "
+        >
+          {/* Logo / marca */}
+          <div className="flex items-center gap-3">
+            <MobileMenuSvg width={180} height={52} />
+          </div>
+
+          {/* Tabs */}
+          <div className="flex items-center gap-2">
+            {navItems.map((item) => {
+              const isActive =
+                item.catId !== undefined && item.catId === selectedCat;
+
+              return (
+                <button
+                  key={item.key}
+                  type="button"                 
+                  onClick={() => handleNavClick(item)}
+                  className={`
+                    px-4 py-2 rounded-full text-sm font-medium
+                    transition-colors
+                    ${
+                      isActive
+                        ? "bg-[#2A2A2A] text-white"
+                        : "text-[#A3A3A3] hover:text-white"
+                    }
+                  `}
+                >
+                  {item.label}
+                </button>
+
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
       <div
         className="
           flex flex-col gap-4
@@ -121,7 +197,7 @@ export default function FilterProductsBar({
         "
       >
         {/* Categoría */}
-        <div className="w-full xl:w-[360px]">
+        <div className="w-full  xl:w-[360px]">
           <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
             {t("filterProducts.categoryTitle")}
           </h2>
@@ -168,14 +244,4 @@ export default function FilterProductsBar({
       </div>
     </div>
   );
-
-  if (variant === "floating") {
-    return (
-      <div className="fixed top-0 left-0 right-0 z-50 px-4 pt-3 pb-2 bg-[#0B0B0B]/70 backdrop-blur-sm">
-        {content}
-      </div>
-    );
-  }
-
-  return content;
 }

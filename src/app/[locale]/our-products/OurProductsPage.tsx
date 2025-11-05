@@ -64,7 +64,7 @@ const OurProductsPage = () => {
             </h1>
 
             <div id="#buysimappsection">
-              <div ref={filterRef}>
+              <div ref={filterRef} id="filters-section">
                 <FilterProductsBar
                   filters={filters}
                   updateFilters={updateFilters}
