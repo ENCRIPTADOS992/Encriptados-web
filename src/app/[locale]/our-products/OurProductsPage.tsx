@@ -1,14 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import FilterProductsBar from "./components/FilterProductsBar/FilterProductsBar";
 import CardOurProducts from "./components/CardOurProducts";
-import BannerActivate from "./components/BannerActivate";
-import BannerCards from "./components/BannerCards";
-import AnonymousBanner from "../tim-sim/components/BannerAnonymous";
-import BannerCoverage from "@/shared/BannerCoverage";
-import BannerSecureMdm from "./components/BannerSecureMdm";
-import DownloadAppBanner from "./components/DownloadAppBanner";
-import FormOurProducts from "./components/FormOurProducts";
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+
 
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import ListOfProducts from "./components/ListOfProducts";
@@ -28,6 +23,8 @@ const OurProductsPage = () => {
   const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
+  const filterRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible: isFilterVisible } = usePriceVisibility(filterRef);
 
   const selectedOption = parseInt(filters.selectedOption, 10);
   const { data: products, isFetching, isError } = useGetProducts(selectedOption, filters.provider);
@@ -67,11 +64,21 @@ const OurProductsPage = () => {
             </h1>
 
             <div id="#buysimappsection">
-              <FilterProductsBar
-                filters={filters}
-                updateFilters={updateFilters}
-                products={products}
-              />
+              <div ref={filterRef}>
+                <FilterProductsBar
+                  filters={filters}
+                  updateFilters={updateFilters}
+                  products={products}
+                />
+              </div>
+              {!isFilterVisible && (
+                <FilterProductsBar
+                  filters={filters}
+                  updateFilters={updateFilters}
+                  products={products}
+                  variant="floating"
+                />
+              )}
               <ListOfProducts filters={filters} />
             </div>
           </SectionWrapper>
