@@ -186,8 +186,6 @@ const Page = () => {
           appStoreUrl="https://apps.apple.com/app/armadillo-app"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
         />
-      </div>
-      <div ref={priceBlockRef}>
         <ProductSectionMobile
           title="Silent Phone "
           description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
@@ -206,8 +204,6 @@ const Page = () => {
           appStoreUrl="https://apps.apple.com/app/armadillo-app"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
         />
-      </div>
-      <div ref={priceBlockRef}>
         <ProductSectionTablet
           title="Silent Phone "
           description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
@@ -227,6 +223,7 @@ const Page = () => {
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
         />
       </div>
+      {/* Desktop */}
       <div className="hidden lg:block">
         <StickyPriceBannerDesktop
           visible={!isVisible}
@@ -235,7 +232,7 @@ const Page = () => {
       </div>
 
       {/* Tablet */}
-      <div className="hidden md:block lg:hidden">
+      <div className="hidden sm:block lg:hidden">
         <StickyPriceBannerTablet
           visible={!isVisible}
           productInfo={productInfo}
@@ -243,12 +240,13 @@ const Page = () => {
       </div>
 
       {/* Mobile */}
-      <div className="block md:hidden">
+      <div className="block sm:hidden">
         <StickyPriceBannerMobile
           visible={!isVisible}
           productInfo={productInfo}
         />
       </div>
+
       <ProductFeaturesGrid features={featuresGrid} />
       <ProductFeaturesGridMobile features={featuresGrid} />
       <ProductFeaturesGridTablet features={featuresGrid} />
