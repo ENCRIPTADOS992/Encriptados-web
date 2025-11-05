@@ -153,6 +153,22 @@ const Page = () => {
     }
   }, [productId]);
 
+  const handleRadioChange = (val: string) => {
+    console.log("Cambio radio a:", val);
+    setSelectedRadio(val);
+  };
+  
+    const [selectedRadio, setSelectedRadio] = useState<string>("");
+    useEffect(() => {
+    if (
+      plans.length > 0 &&
+      (!selectedRadio || !plans.some((p) => p.label === selectedRadio))
+    ) {
+      console.log("Inicializa selectedRadio con:", plans[0].label);
+      setSelectedRadio(plans[0].label);
+    }
+  }, [plans]);
+
   return (
     <div>
       <HeroBanner
@@ -178,8 +194,8 @@ const Page = () => {
           ]}
           price="99$ USD"
           radioOptions={plans.map((p) => p.label)}
-          selectedRadio={selected}
-          onRadioChange={(val) => {}}
+          selectedRadio={selectedRadio}
+          onRadioChange={handleRadioChange}
           onBuy={() => {}}
           onChat={() => {}}
           productImage="/images/apps/silent-circle/banner.png"

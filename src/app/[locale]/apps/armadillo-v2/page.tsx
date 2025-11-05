@@ -184,10 +184,6 @@ const Page = () => {
   }
 }, [plans]);
 
-
-  console.log("plans:", plans);
-  console.log("selectedRadio:", selectedRadio);
-
   return (
     <div>
       <HeroBanner
