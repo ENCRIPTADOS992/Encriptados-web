@@ -1,44 +1,81 @@
 "use client";
+
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const faqs = [
   {
     question: "¿Cómo encuentro un distribuidor?",
-    answer: "Puedes usar nuestro mapa interactivo para localizar el distribuidor más cercano.",
+    answer:
+      "Puedes usar nuestro mapa interactivo para localizar el distribuidor más cercano.",
   },
   {
     question: "¿Cuánto tarda la entrega?",
-    answer: "El tiempo de entrega depende de tu ubicación y del distribuidor seleccionado.",
+    answer:
+      "El tiempo de entrega depende de tu ubicación y del distribuidor seleccionado.",
   },
   {
     question: "¿Puedo cambiar mi pedido después de confirmarlo?",
-    answer: "Depende del distribuidor. Te recomendamos contactarlo directamente.",
+    answer:
+      "Depende del distribuidor. Te recomendamos contactarlo directamente.",
   },
 ];
 
-const FAQDeliveries = () => {
+const FAQDeliveries: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
-    <section className="py-10 bg-gray-100 text-center">
-      <h2 className="text-3xl font-bold mb-6">Preguntas Frecuentes</h2>
-      <div className="max-w-3xl mx-auto">
-        {faqs.map((faq, index) => (
-          <div key={index} className="bg-white shadow-md rounded-lg mb-4 p-4 text-left">
+    <section className="w-full flex flex-col items-center py-16 bg-gray-100">
+      <h2 className="text-[34px] font-bold text-[#101010] text-center mb-10 leading-[100%]">
+        Preguntas frecuentes
+      </h2>
+
+      <div className="w-full max-w-[1060px] flex flex-col gap-4">
+        {faqs.map((faq, idx) => (
+          <div
+            key={idx}
+            className="bg-white shadow-md rounded-lg px-9 py-4 flex flex-col"
+          >
             <button
               type="button"
-              onClick={() => toggleFAQ(index)}
-              className="flex justify-between items-center w-full font-semibold text-lg"
+              className="w-full flex justify-between items-center text-left focus:outline-none"
+              onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+              aria-expanded={openIndex === idx}
+              aria-controls={`faq-deliveries-answer-${idx}`}
             >
-              {faq.question}
-              {openIndex === index ? <FaChevronUp /> : <FaChevronDown />}
+              <span className="text-[24px] font-normal text-[#101010]">
+                {faq.question}
+              </span>
+              <span className="text-[#101010] text-2xl">
+                <svg
+                  width={18}
+                  height={12}
+                  viewBox="0 0 18 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`transition-transform duration-200 ${
+                    openIndex === idx ? "rotate-180" : ""
+                  }`}
+                  style={{ minWidth: 18, minHeight: 12 }}
+                >
+                  <path
+                    d="M1 1.5L9 10.5L17 1.5"
+                    stroke="#283A06"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
             </button>
-            {openIndex === index && <p className="mt-2 text-gray-600">{faq.answer}</p>}
+
+            {openIndex === idx && (
+              <div
+                id={`faq-deliveries-answer-${idx}`}
+                className="mt-4 text-[16px] text-[#101010] opacity-80"
+              >
+                {faq.answer}
+              </div>
+            )}
           </div>
         ))}
       </div>
