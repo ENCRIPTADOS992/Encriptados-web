@@ -141,7 +141,7 @@ export default function FilterProductsBar({
 
 
     return (
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-3 pb-4 bg-[#050505]/70 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pt-3 pb-4 bg-[#050505]/70 backdrop-blur-sm">
         <div
           className="
             w-full max-w-screen-xl

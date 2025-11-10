@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FilterProductsBar from "./components/FilterProductsBar/FilterProductsBar";
 import CardOurProducts from "./components/CardOurProducts";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -23,11 +23,18 @@ const OurProductsPage = () => {
   const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
+
   const filterRef = useRef<HTMLDivElement | null>(null);
-  const { isVisible: isFilterVisible } = usePriceVisibility(filterRef);
+  const cardSectionRef = useRef<HTMLDivElement | null>(null);
+
+  const { isVisible: isCardVisible } = usePriceVisibility(cardSectionRef);
+  const [hasReachedCard, setHasReachedCard] = useState(false);
 
   const selectedOption = parseInt(filters.selectedOption, 10);
-  const { data: products, isFetching, isError } = useGetProducts(selectedOption, filters.provider);
+  const { data: products, isFetching, isError } = useGetProducts(
+    selectedOption,
+    filters.provider
+  );
 
   useEffect(() => {
     console.log("[OurProductsPage] Página montada correctamente ✅");
@@ -36,6 +43,15 @@ const OurProductsPage = () => {
   useEffect(() => {
     console.log("[OurProductsPage] Current filters:", filters);
   }, [filters]);
+
+  useEffect(() => {
+    if (isCardVisible) {
+      setHasReachedCard(true);
+    }
+  }, [isCardVisible]);
+
+  const showFloatingFilters = hasReachedCard && !isCardVisible;
+
 
   return (
     <>
@@ -71,7 +87,7 @@ const OurProductsPage = () => {
                   products={products}
                 />
               </div>
-              {!isFilterVisible && (
+              {showFloatingFilters && (
                 <FilterProductsBar
                   filters={filters}
                   updateFilters={updateFilters}
@@ -84,8 +100,11 @@ const OurProductsPage = () => {
           </SectionWrapper>
 
           <SectionWrapper className="py-1">
-            <CardOurProducts filters={filters} />
+            <div ref={cardSectionRef}>
+              <CardOurProducts filters={filters} />
+            </div>
           </SectionWrapper>
+
 
           <SectionWrapper className="py-0 md:py-1">
             <SilentCircleBanner />
