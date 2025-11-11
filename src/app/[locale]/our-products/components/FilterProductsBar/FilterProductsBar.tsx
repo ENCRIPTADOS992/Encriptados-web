@@ -11,6 +11,7 @@ import SearchProduct from "./SearchProduct";
 import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 import FilterRegionCountry from "./FilterRegionCountry";
+import SectionWrapper from "@/shared/components/SectionWrapper";
 
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { Product } from "@/features/products/types/AllProductsResponse";
@@ -142,6 +143,7 @@ export default function FilterProductsBar({
 
     return (
       <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pt-3 pb-4 bg-[#050505]/70 backdrop-blur-sm">
+        <SectionWrapper className="py-3">
         <div
           className="
             w-full max-w-screen-xl
@@ -184,6 +186,7 @@ export default function FilterProductsBar({
             })}
           </div>
         </div>
+        </SectionWrapper>
       </div>
     );
   }
