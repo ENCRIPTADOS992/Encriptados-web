@@ -109,19 +109,19 @@ export default function FilterProductsBar({
   }
 
   if (variant === "floating") {
-    const navItems: {
-      key: "sims" | "apps" | "systems" | "routers" | "offers";
-      label: string;
-      catId?: number;
-    }[] = [
-      { key: "sims", label: "SIMs", catId: 40 },
-      { key: "apps", label: "Apps", catId: 38 },
-      { key: "systems", label: "Sistemas", catId: 35 },
-      { key: "routers", label: "Routers", catId: 36 },
-      { key: "offers", label: "Ofertas" },
-    ];
+  const navItems: {
+    key: "sims" | "apps" | "systems" | "routers" | "offers";
+    label: string;
+    catId?: number;
+  }[] = [
+    { key: "sims", label: "SIMs", catId: 40 },
+    { key: "apps", label: "Apps", catId: 38 },
+    { key: "systems", label: "Sistemas", catId: 35 },
+    { key: "routers", label: "Routers", catId: 36 },
+    { key: "offers", label: "Ofertas" },
+  ];
 
-    const handleNavClick = (item: (typeof navItems)[number]) => {
+  const handleNavClick = (item: (typeof navItems)[number]) => {
     if (item.key === "offers") {
       router.push("/offers");
       return;
@@ -140,17 +140,16 @@ export default function FilterProductsBar({
     }
   };
 
-
-    return (
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pt-3 pb-4 bg-[#050505]/70 backdrop-blur-sm">
-        <SectionWrapper className="py-3">
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#050505]/70 backdrop-blur-sm">
+      <SectionWrapper className="py-3">
         <div
           className="
-            w-full max-w-screen-xl
+            w-full
             bg-[#161616]
             rounded-xl
-            px-6 py-3
-            flex items-center justify-between gap-6
+            px-4 md:px-6 py-3
+            flex items-center justify-between gap-4
           "
         >
           {/* Logo / marca */}
@@ -167,7 +166,7 @@ export default function FilterProductsBar({
               return (
                 <button
                   key={item.key}
-                  type="button"                 
+                  type="button"
                   onClick={() => handleNavClick(item)}
                   className={`
                     px-4 py-2 rounded-full text-sm font-medium
@@ -181,15 +180,14 @@ export default function FilterProductsBar({
                 >
                   {item.label}
                 </button>
-
               );
             })}
           </div>
         </div>
-        </SectionWrapper>
-      </div>
-    );
-  }
+      </SectionWrapper>
+    </div>
+  );
+}
 
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">

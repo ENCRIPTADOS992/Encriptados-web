@@ -26,10 +26,6 @@ const OurProductsPage = () => {
 
   const filterRef = useRef<HTMLDivElement | null>(null);
   const cardSectionRef = useRef<HTMLDivElement | null>(null);
-
-  const { isVisible: isCardVisible } = usePriceVisibility(cardSectionRef);
-  const [hasReachedCard, setHasReachedCard] = useState(false);
-
   const selectedOption = parseInt(filters.selectedOption, 10);
   const { data: products, isFetching, isError } = useGetProducts(
     selectedOption,
@@ -44,13 +40,10 @@ const OurProductsPage = () => {
     console.log("[OurProductsPage] Current filters:", filters);
   }, [filters]);
 
-  useEffect(() => {
-    if (isCardVisible) {
-      setHasReachedCard(true);
-    }
-  }, [isCardVisible]);
 
-  const showFloatingFilters = hasReachedCard && !isCardVisible;
+const { isVisible: isCardVisible } = usePriceVisibility(cardSectionRef);
+
+const showFloatingFilters = !isCardVisible;
 
 
   return (
@@ -87,7 +80,7 @@ const OurProductsPage = () => {
                   products={products}
                 />
               </div>
-              <SectionWrapper>
+
               {showFloatingFilters && (
                 <FilterProductsBar
                   filters={filters}
@@ -96,9 +89,10 @@ const OurProductsPage = () => {
                   variant="floating"
                 />
               )}
-              </SectionWrapper>
+
               <ListOfProducts filters={filters} />
             </div>
+
           </SectionWrapper>
 
           <SectionWrapper className="py-1">
