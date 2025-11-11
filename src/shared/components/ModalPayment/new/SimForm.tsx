@@ -214,14 +214,15 @@ export default function SimForm({
 
       {/* Número de SIM (solo recargas datos/minutos) */}
       {CFG.showSimNumber && (
-        <div className={`${wrap(!!errors.email)} w-[416px] max-w-full`}>
-          <input
-            {...register("simNumber", { required: CFG.reqSimNumber })}
-            placeholder="Número de SIM"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-      )}
+  <div className={`${wrap(!!errors.simNumber)} w-[416px] max-w-full`}>
+    <input
+      {...register("simNumber", { required: CFG.reqSimNumber })}
+      placeholder="Número de SIM"
+      className="w-full bg-transparent outline-none text-[14px]"
+    />
+  </div>
+)}
+
 
       {/* Nombre envío (solo físico/genérico) */}
       <div className="grid grid-cols-2 gap-3">

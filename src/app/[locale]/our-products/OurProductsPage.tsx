@@ -87,6 +87,7 @@ const OurProductsPage = () => {
                   products={products}
                 />
               </div>
+              <SectionWrapper>
               {showFloatingFilters && (
                 <FilterProductsBar
                   filters={filters}
@@ -95,6 +96,7 @@ const OurProductsPage = () => {
                   variant="floating"
                 />
               )}
+              </SectionWrapper>
               <ListOfProducts filters={filters} />
             </div>
           </SectionWrapper>

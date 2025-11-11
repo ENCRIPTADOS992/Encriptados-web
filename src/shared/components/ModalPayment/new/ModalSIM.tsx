@@ -6,6 +6,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import { useCheckout } from "@/shared/hooks/useCheckout";
+import { tottoliCheckout } from "@/features/products/payments/tottoliCheckout";
 import SimForm from "./SimForm";
 
 type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
@@ -99,9 +100,89 @@ export default function ModalSIM() {
     simNumber?: string;
   };
 
-  const handleSubmit = async (data: Shipping) => {
-    const amount = Math.max(unitPrice * quantity - discount, 0);
-    const provider = data.method === "card" ? "stripe" : "kriptomus" as const;
+    const handleSubmit = async (data: Shipping) => {
+    const shippingFee =
+      formType === "encrypted_physical" ? 75 : 0;
+    const baseAmount = unitPrice * quantity - discount;
+    const amount = Math.max(baseAmount + shippingFee, 0);
+
+    const providerName = (product?.provider || product?.brand || "").toLowerCase();
+    const isEncryptedProvider = providerName.includes("encript");
+    const isEncryptedForm =
+      formType === "encrypted_esim" ||
+      formType === "encrypted_data" ||
+      formType === "encrypted_minutes" ||
+      formType === "encrypted_physical";
+
+    if (isEncryptedProvider && isEncryptedForm) {
+      const common = {
+        email: data.email,
+        method: data.method,
+        amount,
+        currency: "USD",
+      } as const;
+
+      let payload: import("@/features/products/payments/tottoliCheckout").TottoliCheckoutPayload;
+
+      if (formType === "encrypted_esim") {
+        payload = {
+          ...common,
+          product: "esim",
+          qty: quantity,
+          esim_type: product?.config_sim?.[0]?.type, 
+          esim_group: product?.config_sim?.[0]?.code
+            ? Number(product.config_sim[0].code)
+            : undefined,
+        };
+      } else if (formType === "encrypted_data") {
+        payload = {
+          ...common,
+          product: "data",
+          sim_number: data.simNumber, 
+        };
+      } else if (formType === "encrypted_minutes") {
+        payload = {
+          ...common,
+          product: "minutes",
+          sim_number: data.simNumber,
+        };
+      } else {
+        const subTotal = unitPrice * quantity;
+
+        payload = {
+          ...common,
+          product: "sim_physical",
+          qty: quantity,
+          shipping_payload: {
+            total_price: `$${amount.toFixed(2)}`,
+            data_created_format: new Date().toLocaleDateString("en-US", {
+              month: "short", 
+              day: "2-digit",
+              year: "numeric",
+            }), 
+            number: `INV-${Date.now()}`, 
+            product: product?.name || "SIM Física Encriptados",
+            qty: String(quantity),
+            unit_price: `$${unitPrice.toFixed(2)}`,
+            sub_price: `$${subTotal.toFixed(2)}`,
+            discount_value: `$${discount.toFixed(2)}`,
+            priceship: `$${shippingFee.toFixed(2)}`,
+          },
+        };
+      }
+
+      const res = await tottoliCheckout(payload);
+
+      if (res.payment.method === "card") {
+        window.location.href = res.payment.stripe.checkoutUrl;
+      } else {
+        window.location.href = res.payment.cryptomus.url;
+      }
+
+      return;
+    }
+
+    const provider = data.method === "card" ? "stripe" : ("kriptomus" as const);
 
     await payUserId({
       productId: Number(productid),
@@ -109,15 +190,18 @@ export default function ModalSIM() {
       provider,
       amount,
       currency: "USD",
-      // si tu SDK acepta metadata, envía los datos de envío:
-      // @ts-expect-error metadata opcional según implementación
+      // @ts-expect-error metadata depende de tu implementación
       metadata: {
         type:
-          formType === "encrypted_esim" ? "ESIM"
-          : formType === "encrypted_data" ? "RECHARGE_DATA"
-          : formType === "encrypted_minutes" ? "RECHARGE_MINUTES"
-          : formType === "encrypted_physical" ? "SIM_PHYSICAL"
-          : "SIM_GENERIC",
+          formType === "encrypted_esim"
+            ? "ESIM"
+            : formType === "encrypted_data"
+            ? "RECHARGE_DATA"
+            : formType === "encrypted_minutes"
+            ? "RECHARGE_MINUTES"
+            : formType === "encrypted_physical"
+            ? "SIM_PHYSICAL"
+            : "SIM_GENERIC",
         telegram: data.telegram,
         fullName: data.fullName,
         address: data.address,
@@ -147,13 +231,11 @@ export default function ModalSIM() {
     unitPrice={unitPrice}
 
     showLicense={false}  
-    // Ocultar envío en physical/data/minutes → no pases shipping
     shipping={
        formType === "encrypted_data" || formType === "encrypted_minutes" || formType === "encrypted_esim"
         ? undefined
         : 75
     }
-    // minutesPlans={minutesPlans}
     selectedPlanId={selectedPlanId}
     onChangePlan={setSelectedPlanId}
     showEsimAddon={formType === "encrypted_data" || formType === "encrypted_minutes"}
