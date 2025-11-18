@@ -5,11 +5,15 @@ export const getProductLink = (
   categoryId: number,
   productId?: number
 ): string | null => {
-   if (categoryId === 40 && productId) {
-    return `/our-products/sim-more-info`;
+  const baseName = productName.split(" - ")[0].trim();
+
+  if (baseName.toLowerCase().includes("silent phone")) {
+    return "/apps/silent-circle";
   }
 
-  const baseName = productName.split(" - ")[0].trim();
+  if (categoryId === 40 && productId) {
+    return `/our-products/sim-more-info`;
+  }
 
   const item = PRODUCT_ROUTES.find(
     (route) => route.name === baseName && route.categoryId === categoryId
@@ -17,4 +21,3 @@ export const getProductLink = (
 
   return item ? item.link : null;
 };
-

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
-import CardProductItem from "./CardProductItem";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -51,22 +50,8 @@ const BannerSecureMdmNew = () => {
                         }}
                         className="w-full swiper-custom"
                     >
-                        {/* {filteredPhones.map((product) => (
-                            <SwiperSlide key={product.id}>
-                                <CardProductItem
-                                    product={product}
-                                    showPeriodSelector
-                                    periodOptions={
-                                        product.attributes?.find((a) =>
-                                            a.name.toLowerCase().includes("licencia")
-                                        )?.options || []
-                                    }
-                                />
-                            </SwiperSlide>
-                        ))} */}
                     </Swiper>
 
-                    {/* 👇 Este div fuerza que el paginador tenga espacio visible */}
                     <div className="mt-4 h-6"></div>
                 </div>
             </div>

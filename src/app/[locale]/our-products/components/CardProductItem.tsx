@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import type { Product } from "@/features/products/types/AllProductsResponse"; // ✅ tipo correcto
-import { FC, useState } from "react";
+import type { Product } from "@/features/products/types/AllProductsResponse";
+import { FC, useState, MouseEvent } from "react";
 
 interface CardProductItemProps {
   product: Product;
@@ -21,6 +21,20 @@ const CardProductItem: FC<CardProductItemProps> = ({
   const { openModal } = useModalPayment();
   const router = useRouter();
 
+  const handleMoreInfo = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const isSilentPhone = product.name.toLowerCase().includes("silent phone");
+
+    if (isSilentPhone) {
+      // Next i18n se encarga de anteponer /es si ese es el locale actual
+      router.push(`/apps/silent-circle?productId=${product.id}`);
+    } else {
+      router.push(`/mas-informacion?id=${product.id}`);
+    }
+  };
+
   return (
     <div className="bg-[#181818] dark:bg-[#131313] text-black dark:text-white rounded-xl p-6 w-full max-w-md shadow-lg">
       <div className="w-full flex justify-center mb-4">
@@ -33,7 +47,9 @@ const CardProductItem: FC<CardProductItemProps> = ({
         />
       </div>
 
-      <h3 className="text-xl text-white font-bold text-center mb-2">{product.name}</h3>
+      <h3 className="text-xl text-white font-bold text-center mb-2">
+        {product.name}
+      </h3>
 
       <p className="text-center text-xs text-white dark:text-gray-400 mb-4">
         Desde ${product.price} USD
@@ -62,14 +78,20 @@ const CardProductItem: FC<CardProductItemProps> = ({
 
       <div className="flex flex-col gap-3">
         <button
-          onClick={() => openModal({ productid: product.id.toString(), languageCode: "es" })}
+          onClick={() =>
+            openModal({
+              productid: product.id.toString(),
+              languageCode: "es",
+            })
+          }
           type="button"
           className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-lg transition-colors"
         >
           Comprar ahora
         </button>
+
         <button
-          onClick={() => router.push(`/mas-informacion?id=${product.id}`)}
+          onClick={handleMoreInfo}
           className="text-sm text-[#10B4E7] underline text-center hover:text-[#7EE0FF]"
         >
           Más información
