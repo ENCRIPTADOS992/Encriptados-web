@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
@@ -5,6 +6,7 @@ import { Check } from "lucide-react";
 import Button from "../../shared/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 interface ProductSectionProps {
   title: string;
@@ -14,12 +16,20 @@ interface ProductSectionProps {
   radioOptions: string[];
   selectedRadio: string;
   onRadioChange: (value: string) => void;
-  onBuy: () => void;
+
+  /** Si te pasan onBuy, lo usas. Si no, abrirás el modal desde aquí */
+  onBuy?: () => void;
   onChat: () => void;
+
   productImage: string;
   appStoreUrl?: string;
   googlePlayUrl?: string;
   loading?: boolean;
+
+  /** Nuevas props para abrir el modal directamente */
+  productId?: number | string;
+  selectedOption?: number | string; // ej: 40 para SIM encriptada
+  languageCode?: string;            // "es" por defecto
 }
 
 const ProductSection: React.FC<ProductSectionProps> = ({
@@ -36,13 +46,38 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   appStoreUrl,
   googlePlayUrl,
   loading = false,
+  productId,
+  selectedOption,
+  languageCode = "es",
 }) => {
+  const { openModal } = useModalPayment();
+
+  const handleBuy = () => {
+    // 1) Si el padre definió su propio onBuy, lo respetamos
+    if (onBuy) {
+      onBuy();
+      return;
+    }
+
+    // 2) Default: abrimos el modal de pago
+    if (!productId) {
+      console.warn("[ProductSection] No se recibió productId; no se puede abrir el modal.");
+      return;
+    }
+
+    openModal({
+      productid: String(productId),
+      languageCode,
+      selectedOption: Number(selectedOption ?? 0),
+    });
+  };
+
   return (
     <section className="w-full hidden lg:flex justify-center bg-white">
       <div className="w-full max-w-[1440px] h-[600px] flex items-center justify-center mx-auto px-2">
         {/* Columna izquierda */}
         <div className="flex flex-col w-[455px] gap-y-[20px]">
-          {/* Bloque 1: Título + Descripción */}
+          {/* Título + Descripción */}
           <div className="flex flex-col w-[413px] gap-[12px]">
             <h2 className="font-inter font-bold text-[28px] leading-[100%] text-[#131313]">
               {title}
@@ -52,8 +87,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
             </p>
           </div>
 
-
-          {/* Bloque 2: Features/Checks */}
+          {/* Features/Checks */}
           <div className="flex flex-col gap-[8px]">
             {features.length > 0 ? (
               features.map((f, i) => (
@@ -63,21 +97,17 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                 </div>
               ))
             ) : loading ? (
-              <p className="text-sm text-gray-400">
-                Cargando características...
-              </p>
+              <p className="text-sm text-gray-400">Cargando características...</p>
             ) : null}
           </div>
 
-          {/* Bloque 3: Radio buttons */}
+          {/* Radios */}
           <div className="flex flex-row flex-wrap gap-[18px]">
             {radioOptions.map((option) => (
               <label
                 key={option}
                 className="flex items-center gap-1 cursor-pointer font-inter font-normal text-[16px] text-[#131313] whitespace-nowrap"
-                style={{
-                  maxWidth: "calc(100% - 20px)",
-                }}
+                style={{ maxWidth: "calc(100% - 20px)" }}
               >
                 <input
                   type="radio"
@@ -91,10 +121,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({
             ))}
           </div>
 
-          {/* Separador */}
           <hr className="my-[18px] border-[#E0E0E0]" />
 
-          {/* Bloque 4: Precio + Botones */}
+          {/* Precio + Botones */}
           <div className="flex flex-col gap-[22px]">
             <div>
               <span className="block text-[14px] text-[#000000] leading-[100%] mb-[2px]">
@@ -105,7 +134,12 @@ const ProductSection: React.FC<ProductSectionProps> = ({
               </span>
             </div>
             <div className="flex gap-3">
-              <Button type="primary" className="md:w-full md:justify-center">
+              <Button
+                type="primary"
+                className="md:w-full md:justify-center"
+                onClick={handleBuy}
+                disabled={!productId}
+              >
                 <p className="font-medium text-base">Comprar ahora</p>
                 <ShoppingCart color="white" height={20} width={20} />
               </Button>

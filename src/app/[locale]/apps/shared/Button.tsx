@@ -3,6 +3,7 @@ interface ButtonProps {
   type: 'primary' | 'alternative';
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
 const Button = ({ children, type, onClick, className }: ButtonProps) => {

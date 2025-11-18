@@ -6,6 +6,8 @@ import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
+import { useGetEncryptedPacks } from "@/features/products/queries/useGetEncryptedPacks";
+
 interface ListOfProductsProps {
   filters: ProductFilters;
 }

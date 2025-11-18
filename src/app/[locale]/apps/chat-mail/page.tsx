@@ -30,6 +30,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
@@ -50,15 +51,22 @@ const Page = () => {
   const [product, setProduct] = useState<ProductById | null>(null);
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
+  const { openModal } = useModalPayment();
   const productInfo = {
   title: "Silent Phone",
   price: "99$ USD",
   subtitle: "Comunicación cifrada y segura",
   iconUrl: "/images/apps/silent-circle/logo.png", 
   ctaLabel: "Comprar ahora",
+  categoryId: 35,
+  productId: 142,
   onBuy: () => {
-    console.log("comprar");
-  },
+      openModal({
+        productid: "142",          
+        languageCode: "es",
+        selectedOption: 35,        
+      });
+    },
   onChat: () => {
     console.log("chat telegram");
   },
@@ -145,6 +153,22 @@ const Page = () => {
     }
   }, [productId]);
 
+     const handleRadioChange = (val: string) => {
+        console.log("Cambio radio a:", val);
+        setSelectedRadio(val);
+      };
+      
+        const [selectedRadio, setSelectedRadio] = useState<string>("");
+        useEffect(() => {
+        if (
+          plans.length > 0 &&
+          (!selectedRadio || !plans.some((p) => p.label === selectedRadio))
+        ) {
+          console.log("Inicializa selectedRadio con:", plans[0].label);
+          setSelectedRadio(plans[0].label);
+        }
+      }, [plans]);
+      
   return (
     <div>
       <HeroBanner
@@ -166,16 +190,14 @@ const Page = () => {
         ]}
         price="649$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
+        onBuy={productInfo.onBuy}
+        onChat={productInfo.onChat}
         productImage="/images/apps/chat-mail/banner.jpg"
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
-      </div>
-      <div ref={priceBlockRef}>
       <ProductSectionMobile
         title="CHATMAIL"
         description="Comunicaciones cifradas con una interfaz fácil de usar"
@@ -186,16 +208,14 @@ const Page = () => {
         ]}
         price="649$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
+        onBuy={productInfo.onBuy}
+        onChat={productInfo.onChat}
         productImage="/images/apps/chat-mail/banner.jpg"
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
-      </div>
-      <div ref={priceBlockRef}>
       <ProductSectionTablet
         title="CHATMAIL"
         description="Comunicaciones cifradas con una interfaz fácil de usar"
@@ -206,10 +226,10 @@ const Page = () => {
         ]}
         price="649$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
+        onBuy={productInfo.onBuy}
+        onChat={productInfo.onChat}
         productImage="/images/apps/chat-mail/banner.jpg"
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"

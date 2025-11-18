@@ -35,6 +35,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
+
 
 const prices: Record<string, string> = {
   "6": "349$ USD",
@@ -50,20 +52,27 @@ const Page = () => {
   const [product, setProduct] = useState<ProductById | null>(null);
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
+  const { openModal } = useModalPayment();
+
   const productInfo = {
     title: "Silent Phone",
     price: "99$ USD",
     subtitle: "Comunicación cifrada y segura",
     iconUrl: "/images/apps/silent-circle/logo.png",
     ctaLabel: "Comprar ahora",
+    categoryId: 38,
+    productId: 122,
     onBuy: () => {
-      console.log("comprar");
+      openModal({
+        productid: "122",          
+        languageCode: "es",
+        selectedOption: 38,        
+      });
     },
     onChat: () => {
       console.log("chat telegram");
     },
   };
-
   const featuresGrid = [
     {
       image: "/images/apps/silent-circle/self-destructing-messages.png",
@@ -185,6 +194,26 @@ const Page = () => {
       />
       <div ref={priceBlockRef}>
         <ProductSection
+          title={productInfo.title}
+          description={productInfo.subtitle}
+          features={[
+            "Llamadas cifradas",
+            "Sin permisos de ubicación",
+            "Mensajes temporizados",
+          ]}
+          price={productInfo.price}
+          radioOptions={plans.map((p) => p.label)}
+          selectedRadio={selectedRadio}
+          onRadioChange={handleRadioChange}
+          onBuy={productInfo.onBuy}
+          onChat={productInfo.onChat}
+          productImage="/images/apps/silent-circle/banner.png"
+          appStoreUrl="https://apps.apple.com/app/armadillo-app"
+          googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
+        />
+
+
+        <ProductSectionMobile
           title="Silent Phone "
           description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
           features={[
@@ -196,26 +225,8 @@ const Page = () => {
           radioOptions={plans.map((p) => p.label)}
           selectedRadio={selectedRadio}
           onRadioChange={handleRadioChange}
-          onBuy={() => {}}
-          onChat={() => {}}
-          productImage="/images/apps/silent-circle/banner.png"
-          appStoreUrl="https://apps.apple.com/app/armadillo-app"
-          googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
-        />
-        <ProductSectionMobile
-          title="Silent Phone "
-          description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
-          features={[
-            "Llamadas cifradas",
-            "Sin permisos de ubicación",
-            "Mensajes temporizados",
-          ]}
-          price="99$ USD"
-          radioOptions={plans.map((p) => p.label)}
-          selectedRadio={selected}
-          onRadioChange={(val) => {}}
-          onBuy={() => {}}
-          onChat={() => {}}
+          onBuy={productInfo.onBuy}
+          onChat={productInfo.onChat}
           productImage="/images/apps/silent-circle/banner.png"
           appStoreUrl="https://apps.apple.com/app/armadillo-app"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
@@ -230,10 +241,10 @@ const Page = () => {
           ]}
           price="99$ USD"
           radioOptions={plans.map((p) => p.label)}
-          selectedRadio={selected}
-          onRadioChange={(val) => {}}
-          onBuy={() => {}}
-          onChat={() => {}}
+          selectedRadio={selectedRadio}
+          onRadioChange={handleRadioChange}
+          onBuy={productInfo.onBuy}
+          onChat={productInfo.onChat}
           productImage="/images/apps/silent-circle/banner.png"
           appStoreUrl="https://apps.apple.com/app/armadillo-app"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"

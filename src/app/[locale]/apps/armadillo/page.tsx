@@ -29,6 +29,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import StickyPriceBannerDesktop from "../component/templateApps/StickyPriceBannerDesktop";
@@ -49,14 +50,22 @@ const Page = () => {
   const [product, setProduct] = useState<ProductById | null>(null);
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
+  const { openModal } = useModalPayment();
+  
   const productInfo = {
     title: "Silent Phone",
     price: "99$ USD",
     subtitle: "Comunicación cifrada y segura",
     iconUrl: "/images/apps/armadillo-v2/logo.png", 
     ctaLabel: "Comprar ahora",
+    categoryId: 38,
+    productId: 177,
     onBuy: () => {
-      console.log("comprar");
+      openModal({
+        productid: "177",          
+        languageCode: "es",
+        selectedOption: 38,        
+      });
     },
     onChat: () => {
       console.log("chat telegram");
@@ -186,14 +195,12 @@ const Page = () => {
         radioOptions={plans.map((p) => p.label)}
         selectedRadio={selectedRadio}
         onRadioChange={handleRadioChange}
-        onBuy={() => {}}
-        onChat={() => {}}
+        onBuy={productInfo.onBuy}
+        onChat={productInfo.onChat}
         productImage="/images/apps/armadillo-v2/productImage.png"
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
-      </div>
-      <div ref={priceBlockRef}>
       <ProductSectionMobile
         title="Armadillo"
         description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
@@ -204,16 +211,14 @@ const Page = () => {
         ]}
         price="99$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
+        onBuy={productInfo.onBuy}
+        onChat={productInfo.onChat}
         productImage="/images/apps/armadillo-v2/productImage.png"
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
       />
-      </div>
-      <div ref={priceBlockRef}>
       <ProductSectionTablet
         title="Armadillo"
         description="Aplicación de mensajería instantánea de alta seguridad que respeta tu privacidad"
@@ -224,10 +229,10 @@ const Page = () => {
         ]}
         price="99$ USD"
         radioOptions={plans.map((p) => p.label)}
-        selectedRadio={selected}
-        onRadioChange={(val) => {}}
-        onBuy={() => {}}
-        onChat={() => {}}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
+        onBuy={productInfo.onBuy}
+        onChat={productInfo.onChat}
         productImage="/images/apps/armadillo-v2/productImage.png"
         appStoreUrl="https://apps.apple.com/app/armadillo-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"

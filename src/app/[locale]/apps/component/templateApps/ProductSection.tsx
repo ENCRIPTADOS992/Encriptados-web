@@ -108,11 +108,13 @@ const ProductSection: React.FC<ProductSectionProps> = ({
               <Button
                 type="primary"
                 className="w-full justify-center h-[54px] rounded-[50px] px-[20px]"
+                onClick={onBuy}
               >
                 <p className="font-medium text-base">Comprar ahora</p>
                 <ShoppingCart color="white" height={20} width={20} />
               </Button>
               <TelegramButton className="h-[54px] rounded-[50px]" />
+              
             </div>
           </div>
         </div>
