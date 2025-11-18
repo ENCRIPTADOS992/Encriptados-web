@@ -5,42 +5,79 @@ import { ArrowUpRight } from "lucide-react";
 
 const PayForUse = () => {
   const Man = "/images/encrypted-sim/Encrypted_man_cellphone.png";
-
   const t = useTranslations("EncryptedSimPage");
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+    <section className="flex flex-col lg:flex-row justify-center items-stretch gap-4 lg:gap-6">
       {/* Primera Tarjeta */}
-      <div className="relative w-full lg:w-[680px] h-[350px] sm:h-[450px] lg:h-[500px] p-6 sm:p-8 lg:p-10 rounded-3xl shadow-md overflow-hidden bg-[#def7ff]">
-        <div className="absolute inset-0 h-full bg-custom-gradient-img z-10"></div>
-
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={Man}
-            alt="Man with cellphone"
-            layout="fill"
-            className="-scale-x-100 translate-y-10 lg:translate-y-40 object-cover"
-          />
+      <div
+        className="
+      relative
+      w-full
+      max-w-[417px]
+      h-[420px] sm:h-[520px] lg:h-[524px]
+      rounded-[34px]
+      shadow-md
+      overflow-hidden
+      bg-[#DDF7FF]
+    "
+      >
+        <div className="relative w-[417px] h-[603px] rounded-b-[34px] overflow-hidden flex items-end justify-center">
+          {/* Contenedor más pequeño solo para la imagen */}
+          <div className="relative w-[450px] h-[370px]">
+            <Image
+              src={Man}
+              alt="Man with cellphone"
+              fill
+              className="-scale-x-100 object-cover"
+            />
+          </div>
         </div>
 
-        <div className="absolute inset-0 flex flex-col justify-start z-20 p-6 sm:p-8 lg:p-10">
-          <h2 className="text-black font-semibold text-2xl sm:text-3xl lg:text-4xl mb-2">
+        {/* Overlay DIFUMINADO superior */}
+        <div
+          className="pointer-events-none absolute inset-0 rounded-[34px]"
+          style={{
+            background:
+              "linear-gradient(to bottom, #DDF7FF 0%, #DDF7FF 45%, rgba(221,247,255,0) 100%)",
+          }}
+        />
+
+        {/* Texto encima */}
+        <div className="absolute inset-x-0 top-0 z-20 px-6 sm:px-8 pt-6 sm:pt-8 space-y-3">
+          <h2 className="text-[38px] font-semibold text-black leading-tight">
             {t("payOnlyForWhatYouUseTitle")}
           </h2>
-          <p className="text-black text-sm sm:text-base lg:text-lg">
+          <p className="text-[20px] text-black leading-snug max-w-[423px]">
             {t("payOnlyForWhatYouUseDescription")}
           </p>
         </div>
       </div>
 
       {/* Segunda Tarjeta */}
-      <div className="relative w-full lg:w-[680px] h-[350px] sm:h-[450px] lg:h-[500px] border border-gray-300 rounded-3xl shadow-md flex justify-end items-center p-6 sm:p-8 lg:p-10 bg-gradient-to-b from-[#6ADDFF] via-[#6ADDFF] to-[#A8EBFF] bg-[length:80%_100%]">
-        <ArrowUpRight className="absolute top-6 right-6 text-black h-12 w-12 sm:h-16 sm:w-16 lg:h-20 lg:w-20" />
-        <p className="text-black font-bold text-3xl sm:text-4xl lg:text-6xl text-left self-center">
+      <div
+        className="
+          relative
+          w-full
+          max-w-[417px]
+          h-[420px] sm:h-[520px] lg:h-[514px]
+          rounded-[34px]
+          shadow-md
+          flex
+          items-center
+          p-6 sm:p-8 lg:p-10
+          bg-gradient-to-b
+          from-[#6ADDFF]
+          to-[#A8EBFF]
+        "
+      >
+        <ArrowUpRight className="absolute top-6 right-6 text-black h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14" />
+
+        <p className="text-black font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight">
           {t("payOnlySecondCard")}
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

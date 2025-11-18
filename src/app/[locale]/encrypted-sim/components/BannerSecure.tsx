@@ -7,35 +7,63 @@ const BannerSecure = () => {
   const t = useTranslations("EncryptedSimPage");
 
   return (
-    <div className="relative flex justify-center">
-      {/* Imagen */}
-      <div className="relative w-[600px] h-[500px] rounded-3xl overflow-hidden">
-        <Image
-          quality={100}
-          title="Image"
-          src={FloatSimCard}
-          alt="Image"
-          loading="eager"
-          layout="fill"
-          objectFit="cover"
-          className="-scale-x-100"
-        />
-      </div>
+    <section className="bg-[#E7F4F8] px-4 py-10">
+      <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-center gap-8">
+        {/* Imagen */}
+        <div className="relative w-full md:w-[594px] lg:w-[594px] aspect-[4/3] rounded-3xl overflow-hidden">
+          <Image
+            src={FloatSimCard}
+            alt="Persona usando un celular"
+            fill
+            className="object-cover -scale-x-100"
+            priority
+          />
+        </div>
 
-      {/* Bloque de texto superpuesto */}
-      <div className="absolute top-20 right-5 w-[320px] lg:w-[500px] z-10 flex flex-col gap-4">
-        <div className="bg-[#6ADDFF] py-[60px] px-6 rounded-2xl text-center">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-            {t("secureAndEasyToUse")}
-          </h2>
-        </div>
-        <div className="bg-[#DDF7FF] py-[50px] rounded-2xl text-center">
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            {t("secureAndEasyToUseDescription")}
-          </p>
+        {/* Burbujas */}
+        <div className="relative flex-1 md:-ml-12 flex flex-col gap-2 md:gap-1">
+          {/* Título */}
+          <div
+            className="
+              bg-[#6ADDFF]
+              rounded-[24px]
+              shadow-md
+              w-full
+              md:w-[500px]
+              md:h-[158px]
+              flex
+              items-center
+              justify-center
+              px-6 md:px-8
+            "
+          >
+            <h2 className="text-xl md:text-2xl font-bold text-[#010101] text-center md:text-left">
+              {t("secureAndEasyToUse")}
+            </h2>
+          </div>
+
+          {/* Descripción, más pegada */}
+          <div
+            className="
+              bg-[#DDF7FF]
+              rounded-[24px]
+              shadow-md
+              w-full
+              md:w-[500px]
+              md:h-[158px]
+              flex
+              items-center
+              justify-center
+              px-6 md:px-8
+            "
+          >
+            <p className="text-[17px] leading-snug text-[#6E6E6E] text-center md:text-left">
+              {t("secureAndEasyToUseDescription")}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
