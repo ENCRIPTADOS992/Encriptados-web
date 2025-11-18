@@ -819,10 +819,9 @@
         }
       }
     },
-    "test":{
+    "test": {
       "title": "test",
-      "description":"Esta es una pagina de prueba"
-
+      "description": "Esta es una pagina de prueba"
     },
     "apps": {
       "title": "Aplicativos",
@@ -924,7 +923,7 @@
         }
       }
     },
-        "router": {
+    "router": {
       "title": "router",
       "description": "router de encriptación",
       "items": {
@@ -932,8 +931,8 @@
           "title": "Router Camaleon",
           "description": ""
         }
-        }
       }
+    }
   },
   "othersCategories": {
     "distributors": {
@@ -969,21 +968,23 @@
   },
   "menuMobile": {
     "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
     "login": "Entrar",
     "store": {
       "label": "Loja",
       "new": "Novo"
     },
-    "deliveries":{
+    "deliveries": {
       "label": "Entregas"
     },
     "categories": {
       "products": "Produtos",
-      "others": "Outros"
+      "others": "Outros",
+      "us": "Sobre nós"
     },
     "aboutUs": "Sobre nós",
     "suggestions": {
-      "question": "Você viu algo errado?",
+      "question": "Viu algo errado?",
       "link": "envie-nos uma sugestão aqui"
     }
   },
@@ -991,12 +992,12 @@
     "menu": {
       "products": "Produtos",
       "others": "Outros",
-      "us":"Nós",
+      "us": "Nós",
       "store": {
         "label": "Loja",
         "new": "Novo"
       },
-      "deliveries":"entregas",
+      "deliveries": "entregas",
       "aboutUs": "Sobre nós",
       "login": "Entrar",
       "notAvailable": "Não disponível",
@@ -2137,87 +2138,86 @@
     }
   },
   "SecureCryptPage": {
-  "product": {
-    "title": "SecureCrypt",
-    "description": "O SecureCrypt utiliza servidores globais descentralizados que se autodestroem a cada 24 horas. Essa abordagem impede que dados sejam armazenados no seu dispositivo.",
-    "features": {
-      "endToEndEncryption": "Chat Criptografado",
-      "chatHiding": "Cofre criptografado",
-      "privateCalls": "Chamadas Criptografadas"
-    },
-    "license": {
-      "threeMonths": "Licença 3 meses",
-      "sixMonths": "Licença 6 meses"
-    },
-    "pricePrefix": "A partir de",
-    "price": "375 USD",
-    "buttons": {
-      "buyNow": "Comprar agora",
-      "chatSupport": "Suporte chat"
-    }
-  },
-  "benefits": {
-    "title": "Mantenha sua privacidade intacta com proteção máxima",
-    "features": {
-      "endToEndEncryption": "Servidores globais descentralizados que se autodestroem a cada 24 horas. Nenhum servidor armazena dados permanentemente, eliminando riscos de acesso não autorizado.",
-      "chatHiding": "Em emergências, envie alertas imediatos aos seus contatos de confiança. Fornece informações-chave para agir rapidamente em situações críticas.",
-      "privateCalls": "Ative uma resposta segura com uma senha secundária. Exclua dados e proteja suas informações sem alertar o intruso, oferecendo defesa discreta e eficaz."
-    },
-    "mobileTitle": "Principais funcionalidades",
-    "mobileFeatures": {
-      "hiddenAppsTitle": "Criptografia ECC",
-      "hiddenAppsText": "O protocolo de criptografia SecureCrypt usa ECC de 512 bits, equivalente a RSA de 15.360 bits. Novas chaves ECC para cada mensagem.",
-      "manipulationProtectionTitle": "Mensagens temporizadas",
-      "manipulationProtectionText": "Ative o modo de autodestruição para que as mensagens enviadas sejam apagadas tanto do dispositivo do remetente quanto do destinatário.",
-      "nfcBlockingTitle": "Arquivos Criptografados",
-      "nfcBlockingText": "Compartilhe arquivos de forma segura, sem risco de acesso não autorizado.",
-      "anonymityTitle": "Chamadas Criptografadas",
-      "anonymityText": "Comunicação de voz segura com criptografia de ponta a ponta, protegendo a privacidade das suas conversas."
-    }
-  },
-  "features": {
-    "feature1": "Modo Discreto: Oculte aplicativos atrás de uma calculadora funcional para manter seus dados invisíveis e seguros.",
-    "feature2": "Modificador de Voz Seguro: Transforme sua voz em tempo real durante gravações de voz ou vídeo, garantindo anonimato total.",
-    "feature3": "Código de Acesso ao Cofre: Adicione uma camada extra de segurança para acessar o cofre criptografado.",
-    "feature4": "Eliminação Remota: Exclua dados de forma irreversível e sobrescreva o contêiner seguro com zeros.",
-    "feature5": "Mascaramento de Chat: Substitua conversas por textos aleatórios em segundos, ocultando conversas confidenciais.",
-    "feature6": "Bloqueio ao Sacudir o Dispositivo: Sacuda seu dispositivo para bloquear rapidamente o aplicativo em situações críticas."
-  },
-  "videoSection": {
-    "title": "Como funciona o SecureCrypt?"
-  },
-  "simOptions": {
-    "cards": [
-      {
-        "title": "SIM Card criptografado",
-        "description": "Proteja-se contra cibercriminosos e mantenha suas informações pessoais seguras",
-        "buttonText": "Comprar",
-        "secondButtonText": "Mais informações"
+    "product": {
+      "title": "SecureCrypt",
+      "description": "O SecureCrypt utiliza servidores globais descentralizados que se autodestroem a cada 24 horas. Essa abordagem impede que dados sejam armazenados no seu dispositivo.",
+      "features": {
+        "endToEndEncryption": "Chat Criptografado",
+        "chatHiding": "Cofre criptografado",
+        "privateCalls": "Chamadas Criptografadas"
       },
-      {
-        "title": "E-SIM Criptografada: Planos de dados ou voz",
-        "description": "Planos adaptados às suas necessidades de privacidade.",
-        "buttonText": "Ver mais"
+      "license": {
+        "threeMonths": "Licença 3 meses",
+        "sixMonths": "Licença 6 meses"
+      },
+      "pricePrefix": "A partir de",
+      "price": "375 USD",
+      "buttons": {
+        "buyNow": "Comprar agora",
+        "chatSupport": "Suporte chat"
       }
-    ]
-  },
-  "faq": {
-    "title": "Perguntas frequentes",
-    "questions": [
-      {
-        "question": "Quais arquivos posso proteger com o SecureCrypt?",
-        "answer": "Você pode proteger mensagens, arquivos, contatos e chamadas de voz. Todas as suas informações são criptografadas de ponta a ponta."
+    },
+    "benefits": {
+      "title": "Mantenha sua privacidade intacta com proteção máxima",
+      "features": {
+        "endToEndEncryption": "Servidores globais descentralizados que se autodestroem a cada 24 horas. Nenhum servidor armazena dados permanentemente, eliminando riscos de acesso não autorizado.",
+        "chatHiding": "Em emergências, envie alertas imediatos aos seus contatos de confiança. Fornece informações-chave para agir rapidamente em situações críticas.",
+        "privateCalls": "Ative uma resposta segura com uma senha secundária. Exclua dados e proteja suas informações sem alertar o intruso, oferecendo defesa discreta e eficaz."
       },
-      {
-        "question": "Por que devo usar o SecureCrypt na minha empresa?",
-        "answer": "Porque oferece máxima segurança, proteção contra invasões e criptografia total, prevenindo vazamentos de informações corporativas."
-      },
-      {
-        "question": "Por que devo usar um aplicativo criptografado como o SecureCrypt em vez de um convencional?",
-        "answer": "Aplicativos convencionais não oferecem proteção real contra espionagem; o SecureCrypt garante privacidade e confidencialidade absolutas."
+      "mobileTitle": "Principais funcionalidades",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "Criptografia ECC",
+        "hiddenAppsText": "O protocolo de criptografia SecureCrypt usa ECC de 512 bits, equivalente a RSA de 15.360 bits. Novas chaves ECC para cada mensagem.",
+        "manipulationProtectionTitle": "Mensagens temporizadas",
+        "manipulationProtectionText": "Ative o modo de autodestruição para que as mensagens enviadas sejam apagadas tanto do dispositivo do remetente quanto do destinatário.",
+        "nfcBlockingTitle": "Arquivos Criptografados",
+        "nfcBlockingText": "Compartilhe arquivos de forma segura, sem risco de acesso não autorizado.",
+        "anonymityTitle": "Chamadas Criptografadas",
+        "anonymityText": "Comunicação de voz segura com criptografia de ponta a ponta, protegendo a privacidade das suas conversas."
       }
-    ]
+    },
+    "features": {
+      "feature1": "Modo Discreto: Oculte aplicativos atrás de uma calculadora funcional para manter seus dados invisíveis e seguros.",
+      "feature2": "Modificador de Voz Seguro: Transforme sua voz em tempo real durante gravações de voz ou vídeo, garantindo anonimato total.",
+      "feature3": "Código de Acesso ao Cofre: Adicione uma camada extra de segurança para acessar o cofre criptografado.",
+      "feature4": "Eliminação Remota: Exclua dados de forma irreversível e sobrescreva o contêiner seguro com zeros.",
+      "feature5": "Mascaramento de Chat: Substitua conversas por textos aleatórios em segundos, ocultando conversas confidenciais.",
+      "feature6": "Bloqueio ao Sacudir o Dispositivo: Sacuda seu dispositivo para bloquear rapidamente o aplicativo em situações críticas."
+    },
+    "videoSection": {
+      "title": "Como funciona o SecureCrypt?"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "SIM Card criptografado",
+          "description": "Proteja-se contra cibercriminosos e mantenha suas informações pessoais seguras",
+          "buttonText": "Comprar",
+          "secondButtonText": "Mais informações"
+        },
+        {
+          "title": "E-SIM Criptografada: Planos de dados ou voz",
+          "description": "Planos adaptados às suas necessidades de privacidade.",
+          "buttonText": "Ver mais"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Perguntas frequentes",
+      "questions": [
+        {
+          "question": "Quais arquivos posso proteger com o SecureCrypt?",
+          "answer": "Você pode proteger mensagens, arquivos, contatos e chamadas de voz. Todas as suas informações são criptografadas de ponta a ponta."
+        },
+        {
+          "question": "Por que devo usar o SecureCrypt na minha empresa?",
+          "answer": "Porque oferece máxima segurança, proteção contra invasões e criptografia total, prevenindo vazamentos de informações corporativas."
+        },
+        {
+          "question": "Por que devo usar um aplicativo criptografado como o SecureCrypt em vez de um convencional?",
+          "answer": "Aplicativos convencionais não oferecem proteção real contra espionagem; o SecureCrypt garante privacidade e confidencialidade absolutas."
+        }
+      ]
+    }
   }
-}
-
 }

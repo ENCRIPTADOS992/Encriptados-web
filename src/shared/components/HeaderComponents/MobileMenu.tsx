@@ -6,13 +6,22 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import EncryptedLogoMobile from "./EncrytedLogoMovbile";
 import LanguageDropdown from "./LanguageSelector";
-import WorldIcon from "@/shared/svgs/WorldIcon";
 import {
   useTranslatedProductsCategories,
   useTranslatedOthersCategories,
-  useTranslatedUsCategories
+  useTranslatedUsCategories,
 } from "@/shared/components/HeaderComponents/data/CategoryMenu";
 import { useTranslations } from "next-intl";
+
+type MobileMenuItem = {
+  title: string;
+  link: string;
+};
+
+type MobileMenuCategory = {
+  title: string;
+  items: MobileMenuItem[];
+};
 
 export default function MobileMenu() {
   const t = useTranslations("menuMobile");
@@ -26,8 +35,10 @@ export default function MobileMenu() {
   const [activeSubCategory, setActiveSubCategory] = useState(-1);
   const router = useRouter();
 
+  
+  
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
     setActiveCategory(-1);
     setActiveSubCategory(-1);
   };
@@ -47,14 +58,11 @@ export default function MobileMenu() {
     };
 
     handleRouteChange();
-    return () => {
-      // Cleanup if needed
-    };
+    return () => {};
   }, [router]);
 
   return (
     <div className="lg:hidden">
-      {/* Header */}
       <div className="sticky top-0 z-50 bg-[#151515] border-b border-[#1A1A1A]">
         <div className="flex items-center justify-between px-4 py-2">
           <div className="flex items-center space-x-2">
@@ -62,26 +70,17 @@ export default function MobileMenu() {
             <LanguageDropdown />
           </div>
 
-          <div className="flex items-center space-x-3">
-            <a
-              href="/login"
-              className="px-4 py-2 text-sm text-[#1C1B1F] bg-[#E3F8FF] hover:bg-gray-100 rounded-full transition-colors flex items-center gap-2"
-            >
-              <WorldIcon color="#1C1B1F" />
-              {t("login")}
-            </a>
-            <button
-              onClick={toggleMenu}
-              className="text-white"
-              aria-label={t("openMenu")}
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-          </div>
+          <button
+            onClick={toggleMenu}
+            className="text-white"
+            aria-label={isOpen ? t("closeMenu") : t("openMenu")}
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Content */}
+      {/* Contenido del menú móvil */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -99,8 +98,8 @@ export default function MobileMenu() {
                   >
                     <X className="w-6 h-6" />
                   </button>
+
                   <div className="flex-1">
-                    {/* Store with New badge */}
                     <button
                       onClick={() => handleLinkClick("/")}
                       className="flex items-center justify-start gap-4 w-full px-4 py-3 border-b border-[#1A1A1A] text-left text-[#ffffff80] hover:text-white"
@@ -113,7 +112,6 @@ export default function MobileMenu() {
                       </span>
                     </button>
 
-                    {/* Products Section */}
                     <div className="border-b border-[#1A1A1A]">
                       <button
                         onClick={() =>
@@ -135,14 +133,8 @@ export default function MobileMenu() {
                           <ChevronDown className="w-5 h-5" />
                         </motion.div>
                       </button>
-                      <button
-                        onClick={() => handleLinkClick("/deliveries")}
-                        className="flex items-center justify-start gap-4 w-full px-4 py-3 border-b border-[#1A1A1A] text-left text-[#ffffff80] hover:text-white"
-                      >
-                        <span className="text-xl font-extralight">
-                          {t("deliveries.label")}
-                        </span>
-                      </button>
+
+                      
 
                       <AnimatePresence>
                         {activeCategory === 0 && (
@@ -152,60 +144,69 @@ export default function MobileMenu() {
                             exit={{ height: 0 }}
                             className="bg-[#0A0A0A] overflow-hidden"
                           >
-                            {productsCategories.map(
-                              (category: any, index: any) => (
-                                <div key={category.title}>
-                                  <button
-                                    onClick={() =>
-                                      setActiveSubCategory(
-                                        activeSubCategory === index ? -1 : index
-                                      )
-                                    }
-                                    className="flex items-center justify-between w-full px-6 py-2 text-[#FFFFFF] relative text-ls"
-                                  >
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#35CDFB]"></span>
-                                    <span className="ml-4">
-                                      {category.title}
-                                    </span>
-                                    <ChevronDown
-                                      className={`w-5 h-5 transition-transform ${
-                                        activeSubCategory === index
-                                          ? "rotate-180"
-                                          : ""
-                                      }`}
-                                    />
-                                  </button>
-                                  <AnimatePresence>
-                                    {activeSubCategory === index && (
-                                      <motion.div
-                                        initial={{ height: 0 }}
-                                        animate={{ height: "auto" }}
-                                        exit={{ height: 0 }}
-                                        className="overflow-hidden"
-                                      >
-                                        {category.items.map((item: any) => (
-                                          <button
-                                            key={item.title}
-                                            onClick={() =>
-                                              handleLinkClick(item.link)
-                                            }
-                                            className="w-full px-12 py-2 text-left text-[#FFFFFF] hover:text-white/90 text-sm"
-                                          >
-                                            {item.title}
-                                          </button>
-                                        ))}
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
-                                </div>
-                              )
-                            )}
+                            {productsCategories.map((category: MobileMenuCategory, index: number) => (
+                              <div key={category.title}>
+                                <button
+                                  onClick={() =>
+                                    setActiveSubCategory(
+                                      activeSubCategory === index ? -1 : index
+                                    )
+                                  }
+                                  className="flex items-center justify-between w-full px-6 py-2 text-[#FFFFFF] relative text-ls"
+                                >
+                                  <span className="absolute left-4 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#35CDFB]" />
+                                  <span className="ml-4">
+                                    {category.title}
+                                  </span>
+                                  <ChevronDown
+                                    className={`w-5 h-5 transition-transform ${
+                                      activeSubCategory === index
+                                        ? "rotate-180"
+                                        : ""
+                                    }`}
+                                  />
+                                </button>
+
+                                <AnimatePresence>
+                                  {activeSubCategory === index && (
+                                    <motion.div
+                                      initial={{ height: 0 }}
+                                      animate={{ height: "auto" }}
+                                      exit={{ height: 0 }}
+                                      className="overflow-hidden"
+                                    >
+                                      {category.items.map((item: any) => (
+                                        <button
+                                          key={item.title}
+                                          onClick={() =>
+                                            handleLinkClick(item.link)
+                                          }
+                                          className="w-full px-12 py-2 text-left text-[#FFFFFF] hover:text-white/90 text-sm"
+                                        >
+                                          {item.title}
+                                        </button>
+                                      ))}
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            ))}
                           </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
 
-                    {/* Others Section */}
+                    <div className="border-b border-[#1A1A1A]">
+                    <button
+                        onClick={() => handleLinkClick("/deliveries")}
+                        className="flex items-center justify-start gap-4 w-full px-4 py-3 border-b border-[#1A1A1A] text-left text-[#ffffff80] hover:text-white"
+                      >
+                        <span className="text-xl font-extralight">
+                          {t("deliveries.label")}
+                        </span>
+                      </button>
+                    </div>
+                    {/* Others */}
                     <div className="border-b border-[#1A1A1A]">
                       <button
                         onClick={() =>
@@ -242,7 +243,7 @@ export default function MobileMenu() {
                                 onClick={() => handleLinkClick(item.link)}
                                 className="flex w-full px-6 py-2 text-left text-[#FFFFFF] hover:text-white/90 relative text-ls"
                               >
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#35CDFB]"></span>
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#35CDFB]" />
                                 <span className="ml-4">{item.title}</span>
                               </button>
                             ))}
@@ -251,10 +252,12 @@ export default function MobileMenu() {
                       </AnimatePresence>
                     </div>
 
-                    {/* About Us */}
+                    {/* Us */}
                     <div className="border-b border-[#1A1A1A]">
                       <button
-                        onClick={() => setActiveCategory(activeCategory === 2 ? -1 : 2)}
+                        onClick={() =>
+                          setActiveCategory(activeCategory === 2 ? -1 : 2)
+                        }
                         className={`flex items-center justify-between w-full px-4 py-3 transition-colors text-xl font-extralight
                           ${
                             activeCategory === 2
@@ -286,7 +289,7 @@ export default function MobileMenu() {
                                 onClick={() => handleLinkClick(item.link)}
                                 className="flex w-full px-6 py-2 text-left text-[#FFFFFF] hover:text-white/90 relative text-ls"
                               >
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#35CDFB]"></span>
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#35CDFB]" />
                                 <span className="ml-4">{item.title}</span>
                               </button>
                             ))}
@@ -297,13 +300,8 @@ export default function MobileMenu() {
                   </div>
                 </div>
               </div>
+
               <div className="border-t border-[#1A1A1A] p-6">
-                <button
-                  onClick={() => handleLinkClick("/login")}
-                  className="w-full py-3 text-center text-black hover:text-white bg-white rounded-md mb-4 hover:bg-[#1a1a1a] transition-colors"
-                >
-                  {t("login")}
-                </button>
                 <div className="text-center text-sm">
                   <span className="text-gray-400">
                     {t("suggestions.question")}{" "}

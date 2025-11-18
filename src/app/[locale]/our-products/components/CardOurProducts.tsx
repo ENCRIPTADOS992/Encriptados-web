@@ -18,11 +18,10 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
 
   const buildSimMoreInfoUrl = (productId: string) => {
     const basePath = `/our-products/sim-more-info?productId=${productId}`;
-    // Detectar locale desde el pathname: /es/... /en/...
     const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
     if (!match) return basePath;
 
-    const locale = match[1]; // 'es', 'en', etc.
+    const locale = match[1];
     if (basePath.startsWith(`/${locale}/`)) return basePath;
 
     return `/${locale}${basePath}`;

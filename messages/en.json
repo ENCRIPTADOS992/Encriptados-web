@@ -147,11 +147,11 @@
         "offers": "Offers"
       },
       "us": {
-      "title": "Us",
-      "aboutUs": "About Us",
-      "ambassadors": "Be an Ambassador",
-      "locations": "Where We Are"
-    }
+        "title": "Us",
+        "aboutUs": "About Us",
+        "ambassadors": "Be an Ambassador",
+        "locations": "Where We Are"
+      }
     }
   },
   "FooterMenu": {
@@ -829,10 +829,9 @@
         }
       }
     },
-    "test":{
+    "test": {
       "title": "test",
-      "description":"Esta es una pagina de prueba"
-
+      "description": "Esta es una pagina de prueba"
     },
     "apps": {
       "title": "Applications",
@@ -938,7 +937,7 @@
         }
       }
     },
-        "router": {
+    "router": {
       "title": "router",
       "description": "router de encriptación",
       "items": {
@@ -946,8 +945,8 @@
           "title": "Router Camaleon",
           "description": ""
         }
-        }
       }
+    }
   },
   "othersCategories": {
     "distributors": {
@@ -967,7 +966,7 @@
       "description": "Discover our offers"
     }
   },
-    "usCategories": {
+  "usCategories": {
     "aboutUs": {
       "title": "About Us",
       "description": "Learn more about our mission and values."
@@ -982,26 +981,27 @@
     }
   },
   "menuMobile": {
-    "openMenu": "Open menu",
-    "login": "Log in",
-    "store": {
-      "label": "Store",
-      "new": "New"
-    },
-    "deliveries":{
-      "label": "Deliveries"
-    },
-    "categories": {
-      "products": "Products",
-      "others": "Others",
-      "us": "Us"
-    },
-    "aboutUs": "About us",
-    "suggestions": {
-      "question": "Did you see something wrong?",
-      "link": "send us a suggestion here"
-    }
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "login": "Log in",
+  "store": {
+    "label": "Store",
+    "new": "New"
   },
+  "deliveries": {
+    "label": "Deliveries"
+  },
+  "categories": {
+    "products": "Products",
+    "others": "Others",
+    "us": "About us"
+  },
+  "aboutUs": "About us",
+  "suggestions": {
+    "question": "Did you see something wrong?",
+    "link": "send us a suggestion here"
+  }
+},
   "encryptedHeader": {
     "menu": {
       "products": "Products",
@@ -1011,7 +1011,7 @@
         "label": "Store",
         "new": "New"
       },
-      "deliveries":"Deliveries",
+      "deliveries": "Deliveries",
       "aboutUs": "About Us",
       "login": "Log In",
       "notAvailable": "Not Available",
@@ -1027,7 +1027,7 @@
   "RechargeSim": {
     "errorInput": "Must be a valid phone number with at least 6 digits."
   },
-   "appsShared": {
+  "appsShared": {
     "encryptedSim": {
       "title": "Encrypted SIM Card",
       "description": "Protect yourself from cybercriminals and keep your personal information secure",
@@ -1471,7 +1471,7 @@
       }
     ],
     "faq": {
-      "title":"Frequently Asked Questions",
+      "title": "Frequently Asked Questions",
       "items": [
         {
           "question": "What is the Threema application for?",
@@ -1697,7 +1697,7 @@
       ]
     }
   },
-  
+
   "RenatiPage": {
     "product": {
       "title": "Renati",
@@ -1823,7 +1823,7 @@
       ]
     }
   },
-   "UltraxPage": {
+  "UltraxPage": {
     "product": {
       "title": "Ultrax",
       "description": "Protect yourself with a secure mobile operating system designed for encrypted communications.",
@@ -2602,87 +2602,87 @@
     }
   },
   "SecureCryptPage": {
-  "product": {
-    "title": "SecureCrypt",
-    "description": "SecureCrypt uses decentralized global servers that self-destruct every 24 hours. This approach prevents any data from being stored on your device.",
-    "features": {
-      "endToEndEncryption": "Encrypted Chat",
-      "chatHiding": "Encrypted Vault",
-      "privateCalls": "Encrypted Calls"
-    },
-    "license": {
-      "threeMonths": "3-Month License",
-      "sixMonths": "6-Month License"
-    },
-    "pricePrefix": "From",
-    "price": "375 USD",
-    "buttons": {
-      "buyNow": "Buy now",
-      "chatSupport": "Chat support"
-    }
-  },
-  "benefits": {
-    "title": "Keep your privacy intact with maximum protection",
-    "features": {
-      "endToEndEncryption": "Decentralized global servers that self-destruct every 24 hours. No server stores data permanently, eliminating unauthorized access risks.",
-      "chatHiding": "In emergencies, immediately sends alerts to your trusted contacts. Provides key information to act quickly in critical situations.",
-      "privateCalls": "Activate a secure response with a secondary password. Delete data and protect your information without alerting the intruder, offering discreet and effective defense."
-    },
-    "mobileTitle": "Main Features",
-    "mobileFeatures": {
-      "hiddenAppsTitle": "ECC Encryption",
-      "hiddenAppsText": "SecureCrypt encryption protocol uses 512-bit ECC, equivalent to RSA 15,360 bits. New ECC keys for each message.",
-      "manipulationProtectionTitle": "Timed Messages",
-      "manipulationProtectionText": "Enable burn mode for messages so that sent messages self-destruct from both sender and recipient devices.",
-      "nfcBlockingTitle": "Encrypted Files",
-      "nfcBlockingText": "Share files securely and safely, preventing unauthorized access.",
-      "anonymityTitle": "Encrypted Calls",
-      "anonymityText": "Secure voice communication with end-to-end encryption, protecting the privacy of your conversations."
-    }
-  },
-  "features": {
-    "feature1": "Stealth Mode: Hide applications behind a functional calculator to keep your data invisible and secure.",
-    "feature2": "Secure Voice Changer: Transform your voice in real time during voice or video recordings, guaranteeing total anonymity.",
-    "feature3": "Vault Access Code: Add an extra security layer to access the encrypted vault.",
-    "feature4": "Remote Deletion: Irreversibly delete data and overwrite the secure container with zeros.",
-    "feature5": "Chat Masking: Replace chats with random text in seconds, hiding confidential conversations.",
-    "feature6": "Shake Device Lock: Shake your device to quickly lock the app in critical situations."
-  },
-  "videoSection": {
-    "title": "How does SecureCrypt work?"
-  },
-  "simOptions": {
-    "cards": [
-      {
-        "title": "Encrypted SIM Card",
-        "description": "Protect yourself from cybercriminals and keep your personal information safe",
-        "buttonText": "Buy",
-        "secondButtonText": "More info"
+    "product": {
+      "title": "SecureCrypt",
+      "description": "SecureCrypt uses decentralized global servers that self-destruct every 24 hours. This approach prevents any data from being stored on your device.",
+      "features": {
+        "endToEndEncryption": "Encrypted Chat",
+        "chatHiding": "Encrypted Vault",
+        "privateCalls": "Encrypted Calls"
       },
-      {
-        "title": "E-SIM Encrypted: Data or voice plans",
-        "description": "Plans tailored to your privacy needs.",
-        "buttonText": "See more"
+      "license": {
+        "threeMonths": "3-Month License",
+        "sixMonths": "6-Month License"
+      },
+      "pricePrefix": "From",
+      "price": "375 USD",
+      "buttons": {
+        "buyNow": "Buy now",
+        "chatSupport": "Chat support"
       }
-    ]
-  },
-  "faq": {
-    "title": "Frequently Asked Questions",
-    "questions": [
-      {
-        "question": "What files can I protect with SecureCrypt?",
-        "answer": "You can protect messages, files, contacts, and voice calls. All your information is end-to-end encrypted."
+    },
+    "benefits": {
+      "title": "Keep your privacy intact with maximum protection",
+      "features": {
+        "endToEndEncryption": "Decentralized global servers that self-destruct every 24 hours. No server stores data permanently, eliminating unauthorized access risks.",
+        "chatHiding": "In emergencies, immediately sends alerts to your trusted contacts. Provides key information to act quickly in critical situations.",
+        "privateCalls": "Activate a secure response with a secondary password. Delete data and protect your information without alerting the intruder, offering discreet and effective defense."
       },
-      {
-        "question": "Why should I use SecureCrypt in my company?",
-        "answer": "Because it offers maximum security, intrusion protection, and full encryption, preventing corporate information leaks."
-      },
-      {
-        "question": "Why should I use an encrypted app like SecureCrypt instead of a conventional one?",
-        "answer": "Conventional apps don't offer real protection against spying; SecureCrypt guarantees absolute privacy and confidentiality."
+      "mobileTitle": "Main Features",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "ECC Encryption",
+        "hiddenAppsText": "SecureCrypt encryption protocol uses 512-bit ECC, equivalent to RSA 15,360 bits. New ECC keys for each message.",
+        "manipulationProtectionTitle": "Timed Messages",
+        "manipulationProtectionText": "Enable burn mode for messages so that sent messages self-destruct from both sender and recipient devices.",
+        "nfcBlockingTitle": "Encrypted Files",
+        "nfcBlockingText": "Share files securely and safely, preventing unauthorized access.",
+        "anonymityTitle": "Encrypted Calls",
+        "anonymityText": "Secure voice communication with end-to-end encryption, protecting the privacy of your conversations."
       }
-    ]
-  }
+    },
+    "features": {
+      "feature1": "Stealth Mode: Hide applications behind a functional calculator to keep your data invisible and secure.",
+      "feature2": "Secure Voice Changer: Transform your voice in real time during voice or video recordings, guaranteeing total anonymity.",
+      "feature3": "Vault Access Code: Add an extra security layer to access the encrypted vault.",
+      "feature4": "Remote Deletion: Irreversibly delete data and overwrite the secure container with zeros.",
+      "feature5": "Chat Masking: Replace chats with random text in seconds, hiding confidential conversations.",
+      "feature6": "Shake Device Lock: Shake your device to quickly lock the app in critical situations."
+    },
+    "videoSection": {
+      "title": "How does SecureCrypt work?"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "Encrypted SIM Card",
+          "description": "Protect yourself from cybercriminals and keep your personal information safe",
+          "buttonText": "Buy",
+          "secondButtonText": "More info"
+        },
+        {
+          "title": "E-SIM Encrypted: Data or voice plans",
+          "description": "Plans tailored to your privacy needs.",
+          "buttonText": "See more"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "questions": [
+        {
+          "question": "What files can I protect with SecureCrypt?",
+          "answer": "You can protect messages, files, contacts, and voice calls. All your information is end-to-end encrypted."
+        },
+        {
+          "question": "Why should I use SecureCrypt in my company?",
+          "answer": "Because it offers maximum security, intrusion protection, and full encryption, preventing corporate information leaks."
+        },
+        {
+          "question": "Why should I use an encrypted app like SecureCrypt instead of a conventional one?",
+          "answer": "Conventional apps don't offer real protection against spying; SecureCrypt guarantees absolute privacy and confidentiality."
+        }
+      ]
+    }
   },
   "RouterCamaleonPage": {
     "product": {

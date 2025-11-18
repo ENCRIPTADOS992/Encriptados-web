@@ -820,10 +820,9 @@
         }
       }
     },
-    "test":{
+    "test": {
       "title": "test",
-      "description":"Esta es una pagina de prueba"
-
+      "description": "Esta es una pagina de prueba"
     },
     "apps": {
       "title": "Applications",
@@ -925,7 +924,7 @@
         }
       }
     },
-        "router": {
+    "router": {
       "title": "router",
       "description": "router de encriptación",
       "items": {
@@ -933,9 +932,9 @@
           "title": "Router Camaleon",
           "description": ""
         }
-        }
       }
-      },
+    }
+  },
   "othersCategories": {
     "distributors": {
       "title": "Distributeurs",
@@ -970,21 +969,23 @@
   },
   "menuMobile": {
     "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
     "login": "Se connecter",
     "store": {
       "label": "Boutique",
       "new": "Nouveau"
     },
-    "deliveries":{
+    "deliveries": {
       "label": "Livraisons"
     },
     "categories": {
       "products": "Produits",
-      "others": "Autres"
+      "others": "Autres",
+      "us": "À propos de nous"
     },
     "aboutUs": "À propos de nous",
     "suggestions": {
-      "question": "Avez-vous vu quelque chose de mal?",
+      "question": "Vous avez vu quelque chose d’erroné ?",
       "link": "envoyez-nous une suggestion ici"
     }
   },
@@ -992,12 +993,12 @@
     "menu": {
       "products": "Produits",
       "others": "Autres",
-      "us":"Nous",
+      "us": "Nous",
       "store": {
         "label": "Boutique",
         "new": "Nouveau"
       },
-      "deliveries":"livraisons",
+      "deliveries": "livraisons",
       "aboutUs": "À propos de nous",
       "login": "Se connecter",
       "notAvailable": "Non disponible",
@@ -1562,7 +1563,7 @@
       ]
     }
   },
-   "chatmail": {
+  "chatmail": {
     "description": "Communications chiffrées avec une interface facile à utiliser",
     "details": [
       "Messages chiffrés avec images et voix",
@@ -2134,88 +2135,86 @@
     }
   },
   "SecureCryptPage": {
-  "product": {
-    "title": "SecureCrypt",
-    "description": "SecureCrypt utilise des serveurs mondiaux décentralisés qui s’autodétruisent toutes les 24 heures. Cette approche empêche toute donnée d’être stockée sur votre appareil.",
-    "features": {
-      "endToEndEncryption": "Chat chiffré",
-      "chatHiding": "Coffre-fort chiffré",
-      "privateCalls": "Appels chiffrés"
-    },
-    "license": {
-      "threeMonths": "Licence 3 mois",
-      "sixMonths": "Licence 6 mois"
-    },
-    "pricePrefix": "À partir de",
-    "price": "375 USD",
-    "buttons": {
-      "buyNow": "Acheter maintenant",
-      "chatSupport": "Support chat"
-    }
-  },
-  "benefits": {
-    "title": "Protégez votre vie privée avec une sécurité maximale",
-    "features": {
-      "endToEndEncryption": "Serveurs mondiaux décentralisés s’autodétruisant toutes les 24h. Aucune donnée n’est stockée de façon permanente, éliminant tout risque d’accès non autorisé.",
-      "chatHiding": "En cas d’urgence, envoie immédiatement des alertes à vos contacts de confiance. Fournit les informations clés pour agir rapidement.",
-      "privateCalls": "Activez une réponse sécurisée avec un mot de passe secondaire. Supprimez les données et protégez vos informations sans alerter l’intrus, offrant une défense discrète et efficace."
-    },
-    "mobileTitle": "Fonctionnalités principales",
-    "mobileFeatures": {
-      "hiddenAppsTitle": "Chiffrement ECC",
-      "hiddenAppsText": "Le protocole SecureCrypt utilise un chiffrement ECC 512 bits, équivalent à RSA 15 360 bits. Nouvelles clés ECC pour chaque message.",
-      "manipulationProtectionTitle": "Messages temporisés",
-      "manipulationProtectionText": "Activez le mode « burn » pour que les messages s’autodétruisent sur les deux appareils.",
-      "nfcBlockingTitle": "Fichiers chiffrés",
-      "nfcBlockingText": "Partagez des fichiers de façon sécurisée, sans risque d’accès non autorisé.",
-      "anonymityTitle": "Appels chiffrés",
-      "anonymityText": "Communication vocale sécurisée grâce au chiffrement de bout en bout, protégeant la confidentialité de vos conversations."
-    }
-  },
-  "features": {
-    "feature1": "Mode furtif : Cachez des applications derrière une calculatrice fonctionnelle pour garder vos données invisibles et sécurisées.",
-    "feature2": "Modificateur de voix sécurisé : Transformez votre voix en temps réel lors d’enregistrements audio ou vidéo pour garantir un anonymat total.",
-    "feature3": "Code d’accès au coffre-fort : Ajoutez une couche de sécurité supplémentaire à votre coffre-fort chiffré.",
-    "feature4": "Suppression à distance : Effacez irréversiblement les données et réécrivez le conteneur sécurisé avec des zéros.",
-    "feature5": "Masquage du chat : Remplacez les chats par du texte aléatoire en quelques secondes pour masquer les conversations confidentielles.",
-    "feature6": "Verrouillage par secousse : Secouez votre appareil pour verrouiller rapidement l’application en cas d’urgence."
-  },
-  "videoSection": {
-    "title": "Comment fonctionne SecureCrypt ?"
-  },
-  "simOptions": {
-    "cards": [
-      {
-        "title": "Carte SIM chiffrée",
-        "description": "Protégez-vous des cybercriminels et gardez vos informations personnelles en sécurité",
-        "buttonText": "Acheter",
-        "secondButtonText": "Plus d’infos"
+    "product": {
+      "title": "SecureCrypt",
+      "description": "SecureCrypt utilise des serveurs mondiaux décentralisés qui s’autodétruisent toutes les 24 heures. Cette approche empêche toute donnée d’être stockée sur votre appareil.",
+      "features": {
+        "endToEndEncryption": "Chat chiffré",
+        "chatHiding": "Coffre-fort chiffré",
+        "privateCalls": "Appels chiffrés"
       },
-      {
-        "title": "E-SIM chiffrée : Forfaits data ou appels",
-        "description": "Des forfaits adaptés à vos besoins pour une confidentialité maximale.",
-        "buttonText": "Voir plus"
+      "license": {
+        "threeMonths": "Licence 3 mois",
+        "sixMonths": "Licence 6 mois"
+      },
+      "pricePrefix": "À partir de",
+      "price": "375 USD",
+      "buttons": {
+        "buyNow": "Acheter maintenant",
+        "chatSupport": "Support chat"
       }
-    ]
-  },
-  "faq": {
-    "title": "Questions fréquentes",
-    "questions": [
-      {
-        "question": "Quels fichiers puis-je protéger avec SecureCrypt ?",
-        "answer": "Vous pouvez protéger messages, fichiers, contacts et appels vocaux. Toutes vos informations sont chiffrées de bout en bout."
+    },
+    "benefits": {
+      "title": "Protégez votre vie privée avec une sécurité maximale",
+      "features": {
+        "endToEndEncryption": "Serveurs mondiaux décentralisés s’autodétruisant toutes les 24h. Aucune donnée n’est stockée de façon permanente, éliminant tout risque d’accès non autorisé.",
+        "chatHiding": "En cas d’urgence, envoie immédiatement des alertes à vos contacts de confiance. Fournit les informations clés pour agir rapidement.",
+        "privateCalls": "Activez une réponse sécurisée avec un mot de passe secondaire. Supprimez les données et protégez vos informations sans alerter l’intrus, offrant une défense discrète et efficace."
       },
-      {
-        "question": "Pourquoi utiliser SecureCrypt dans mon entreprise ?",
-        "answer": "Parce qu’il offre une sécurité maximale, protège contre les intrusions et évite toute fuite d’informations sensibles."
-      },
-      {
-        "question": "Pourquoi utiliser une application chiffrée comme SecureCrypt plutôt qu’une application classique ?",
-        "answer": "Les applications classiques n’offrent aucune vraie protection contre l’espionnage : SecureCrypt garantit confidentialité et sécurité absolues."
+      "mobileTitle": "Fonctionnalités principales",
+      "mobileFeatures": {
+        "hiddenAppsTitle": "Chiffrement ECC",
+        "hiddenAppsText": "Le protocole SecureCrypt utilise un chiffrement ECC 512 bits, équivalent à RSA 15 360 bits. Nouvelles clés ECC pour chaque message.",
+        "manipulationProtectionTitle": "Messages temporisés",
+        "manipulationProtectionText": "Activez le mode « burn » pour que les messages s’autodétruisent sur les deux appareils.",
+        "nfcBlockingTitle": "Fichiers chiffrés",
+        "nfcBlockingText": "Partagez des fichiers de façon sécurisée, sans risque d’accès non autorisé.",
+        "anonymityTitle": "Appels chiffrés",
+        "anonymityText": "Communication vocale sécurisée grâce au chiffrement de bout en bout, protégeant la confidentialité de vos conversations."
       }
-    ]
+    },
+    "features": {
+      "feature1": "Mode furtif : Cachez des applications derrière une calculatrice fonctionnelle pour garder vos données invisibles et sécurisées.",
+      "feature2": "Modificateur de voix sécurisé : Transformez votre voix en temps réel lors d’enregistrements audio ou vidéo pour garantir un anonymat total.",
+      "feature3": "Code d’accès au coffre-fort : Ajoutez une couche de sécurité supplémentaire à votre coffre-fort chiffré.",
+      "feature4": "Suppression à distance : Effacez irréversiblement les données et réécrivez le conteneur sécurisé avec des zéros.",
+      "feature5": "Masquage du chat : Remplacez les chats par du texte aléatoire en quelques secondes pour masquer les conversations confidentielles.",
+      "feature6": "Verrouillage par secousse : Secouez votre appareil pour verrouiller rapidement l’application en cas d’urgence."
+    },
+    "videoSection": {
+      "title": "Comment fonctionne SecureCrypt ?"
+    },
+    "simOptions": {
+      "cards": [
+        {
+          "title": "Carte SIM chiffrée",
+          "description": "Protégez-vous des cybercriminels et gardez vos informations personnelles en sécurité",
+          "buttonText": "Acheter",
+          "secondButtonText": "Plus d’infos"
+        },
+        {
+          "title": "E-SIM chiffrée : Forfaits data ou appels",
+          "description": "Des forfaits adaptés à vos besoins pour une confidentialité maximale.",
+          "buttonText": "Voir plus"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "questions": [
+        {
+          "question": "Quels fichiers puis-je protéger avec SecureCrypt ?",
+          "answer": "Vous pouvez protéger messages, fichiers, contacts et appels vocaux. Toutes vos informations sont chiffrées de bout en bout."
+        },
+        {
+          "question": "Pourquoi utiliser SecureCrypt dans mon entreprise ?",
+          "answer": "Parce qu’il offre une sécurité maximale, protège contre les intrusions et évite toute fuite d’informations sensibles."
+        },
+        {
+          "question": "Pourquoi utiliser une application chiffrée comme SecureCrypt plutôt qu’une application classique ?",
+          "answer": "Les applications classiques n’offrent aucune vraie protection contre l’espionnage : SecureCrypt garantit confidentialité et sécurité absolues."
+        }
+      ]
+    }
   }
-}
-
-
 }
