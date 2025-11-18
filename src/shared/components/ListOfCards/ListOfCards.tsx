@@ -12,9 +12,9 @@ interface ListOfFeatureCardsProps {
   centered?: boolean;
   bgIconCard?: string;
   columns?: number;
-  bgColorCard?: string; // Nueva prop para el color de fondo de la tarjeta
-  titleColor?: string; // Nueva prop para el color del título
-  descriptionColor?: string; // Nueva prop para el color de la descripción
+  bgColorCard?: string;
+  titleColor?: string; 
+  descriptionColor?: string; 
   padding?: number;
 }
 
@@ -24,9 +24,9 @@ const ListOfCards: React.FC<ListOfFeatureCardsProps> = ({
   bgIconCard,
 
   columns = 4,
-  bgColorCard = "white", // Valor por defecto para el color de fondo
-  titleColor = "black", // Valor por defecto para el color del título
-  descriptionColor = "gray", // Valor por defecto para el color de la descripción
+  bgColorCard = "white", 
+  titleColor = "black",
+  descriptionColor = "gray",
 }) => {
   const gridClasses = `grid grid-cols-1 sm:grid-cols-${Math.min(
     columns,
