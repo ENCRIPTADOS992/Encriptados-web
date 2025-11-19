@@ -4,7 +4,7 @@ export const API_BASE_URL = `${WP_API}/encriptados/v1`;
 
 const USE_CREDENTIALS = false;
 
-export type OrderType = "roaming" | "userid";
+export type OrderType = "roaming" | "userid"| "sim";
 
 export async function createOrderAndIntent(params: {
   orderType: OrderType;

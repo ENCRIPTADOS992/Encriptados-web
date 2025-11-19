@@ -13,24 +13,40 @@ type FormType =
   | "encrypted_minutes"
   | "encrypted_generic";
 
+export type SimFormValues = {
+  email: string;
+  telegram: string;
+  simNumber: string;
+  fullName: string;
+  address: string;
+  country: string;
+  postalCode: string;
+  phone: string;
+  method: "card" | "crypto";
+  cardName: string;
+  cardNumber: string;
+  exp: string;
+  cvc: string;
+  cardPostal: string;
+};
+
+type SimFormProps = {
+  onSubmit: (data: SimFormValues) => void | Promise<void>;
+  formType?: FormType;
+  loading?: boolean;
+};
+
 export default function SimForm({
   onSubmit,
   formType = "encrypted_generic",
-}: {
-  onSubmit: (data: any) => void | Promise<void>;
-  formType?:
-    | "encrypted_physical"
-    | "encrypted_esim"
-    | "encrypted_data"
-    | "encrypted_minutes"
-    | "encrypted_generic";
-}) {
+  loading = false, 
+}: SimFormProps) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<SimFormValues>({
     defaultValues: {
       email: "",
       telegram: "",
@@ -439,25 +455,20 @@ export default function SimForm({
       {/* Botón pagar */}
       <button
         type="submit"
-        disabled={!canPay}
-        aria-disabled={!canPay}
+        disabled={!canPay || loading}
+        aria-disabled={!canPay || loading}
         className={`mt-2 w-full h-[54px]
           rounded-[8px] px-[10px]
           inline-flex items-center justify-center gap-[10px]
           text-white text-[14px] font-semibold
           ${
-            canPay
+            canPay && !loading
               ? "bg-black hover:bg-black/90"
               : "bg-black/40 cursor-not-allowed"
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
-        title={
-          !canPay
-            ? "Completa los datos requeridos y acepta los términos"
-            : "Pagar ahora"
-        }
       >
-        Pagar ahora
+        {loading ? "Procesando..." : "Pagar ahora"}
       </button>
     </form>
   );
