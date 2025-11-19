@@ -3,6 +3,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
@@ -46,7 +47,9 @@ export default function SimForm({
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = useForm<SimFormValues>({
+
     defaultValues: {
       email: "",
       telegram: "",
@@ -82,16 +85,21 @@ export default function SimForm({
   const method = watch("method");
   const [terms, setTerms] = React.useState(true);
 
+  const {
+    status: stripeStatus,
+    error: mountError,
+  } = useStripeSplit(method === "card");
+
+
   const emailOk = /\S+@\S+\.\S+/.test(email) && email.length <= 100;
-  const phoneOk = phone.trim().length >= 7; // sencillo (evitamos over-validar)
-  const simOk = simNumber.trim().length >= 6; // idem
+  const phoneOk = phone.trim().length >= 7;
+  const simOk = simNumber.trim().length >= 6;
   const postalOk = postalCode.trim().length > 0;
 
-  // Validadores simples de tarjeta
   const cardNameOk = cardName.trim().length > 1;
   const cardNumberOk =
     cardNumber.replace(/\s+/g, "").replace(/-/g, "").length >= 12;
-  const expOk = /^(\d{2})\/(\d{2})$/.test(exp); // MM/AA
+  const expOk = /^(\d{2})\/(\d{2})$/.test(exp);
   const cvcOk = /^\d{3,4}$/.test(cvc);
   const cardPostalOk = cardPostal.trim().length > 0;
 
@@ -178,14 +186,15 @@ export default function SimForm({
         phoneOk
       : formType === "encrypted_data" || formType === "encrypted_minutes"
       ? simOk
-      : /* encrypted_esim */ true;
+      : true;
 
-  const methodSpecificOk =
-    method === "crypto"
-      ? true
-      : cardNameOk && cardNumberOk && expOk && cvcOk && cardPostalOk;
+    const methodSpecificOk =
+      method === "crypto"
+        ? true
+        : stripeStatus === "ready" && cardName.trim().length > 1;
 
-  const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk;
+    const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk;
+
 
   const wrap = (invalid?: boolean) =>
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
@@ -329,126 +338,102 @@ export default function SimForm({
         </span>
       </label>
 
-      {/* Método de pago (mismo estilo que NewUserForm) */}
+      {/* Método de pago (mismo look & feel que RoningForm) */}
       <div className="space-y-2">
         <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
           Método de pago
         </p>
 
-        <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
-          <label
+        <div className="grid grid-cols-2 gap-2 ipad:gap-3">
+          <button
+            type="button"
+            aria-pressed={method === "card"}
+            onClick={() => setValue("method", "card", { shouldValidate: true })}
             className={[
-              "w-full rounded-[8px] flex flex-col items-center justify-center",
-              "gap-1 sm:gap-2 ipad:gap-[10px]",
-              "h-[78px] px-2 py-2",
-              "sm:h-[76px] sm:px-3 sm:py-3",
-              "ipad:h-[80px] ipad:px-[14px] ipad:pt-[24px] ipad:pb-[24px]",
+              "w-full rounded-[8px] border flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2",
+              "h-[78px] px-2 py-2 sm:h-[76px] sm:px-3 ipad:h-[60px] ipad:px-4",
               method === "card"
                 ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
                 : "bg-[#EBEBEB] border border-transparent",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1",
             ].join(" ")}
           >
-            <input
-              type="radio"
-              value="card"
-              {...register("method")}
-              className="hidden"
-            />
             <img
               src="/images/home/add_card.png"
               alt=""
-              className="w-5 h-5 sm:w-6 sm:h-6 ipad:w-6 ipad:h-6"
+              className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
             />
-            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center">
+            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
               Tarjeta de crédito
             </span>
-          </label>
+          </button>
 
-          <label
+          <button
+            type="button"
+            aria-pressed={method === "crypto"}
+            onClick={() => setValue("method", "crypto", { shouldValidate: true })}
             className={[
-              "w-full rounded-[8px] flex flex-col items-center justify-center",
-              "gap-1 sm:gap-2 ipad:gap-[10px]",
-              "h-[78px] px-2 py-2",
-              "sm:h-[76px] sm:px-3 sm:py-3",
-              "ipad:h-[80px] ipad:px-[14px] ipad:pt-[24px] ipad:pb-[24px]",
+              "w-full rounded-[8px] border flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2",
+              "h-[78px] px-2 py-2 sm:h-[76px] sm:px-3 ipad:h-[60px] ipad:px-4",
               method === "crypto"
                 ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
                 : "bg-[#EBEBEB] border border-transparent",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1",
             ].join(" ")}
           >
-            <input
-              type="radio"
-              value="crypto"
-              {...register("method")}
-              className="hidden"
-            />
             <img
               src="/images/home/send_money.png"
               alt=""
-              className="w-5 h-5 sm:w-6 sm:h-6 ipad:w-6 ipad:h-6"
+              className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
             />
-            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center">
+            <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
               Criptomonedas
             </span>
-          </label>
+          </button>
         </div>
       </div>
 
+
       {/* Campos de tarjeta cuando el método es "card" (mismo look) */}
-      {method === "card" && (
+            {method === "card" && (
         <div className="space-y-2">
+          {/* Titular */}
           <div className={wrap()}>
             <input
               {...register("cardName")}
               placeholder="Titular de la tarjeta"
               className="w-full bg-transparent outline-none text-[14px]"
+              autoComplete="cc-name"
             />
           </div>
 
-          <div className={`${wrap()} justify-between`}>
-            <input
-              {...register("cardNumber")}
-              placeholder="Número de tarjeta"
-              inputMode="numeric"
-              className="flex-1 bg-transparent outline-none text-[14px] pr-[8px]"
-            />
-            <img
-              src="/images/home/logos_mastercard.png"
-              alt="Mastercard"
-              width={24}
-              height={24}
-              className="shrink-0"
-            />
+          {/* Split Elements */}
+          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+            <div id="card-number-el" className="w-full" />
           </div>
 
           <div className="grid grid-cols-2 gap-[8px]">
-            <div className={wrap()}>
-              <input
-                {...register("exp")}
-                placeholder="MM/AA"
-                inputMode="numeric"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
+            <div className="h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+              <div id="card-expiry-el" className="w-full" />
             </div>
-            <div className={wrap()}>
-              <input
-                type="password"
-                {...register("cvc")}
-                placeholder="CVC"
-                inputMode="numeric"
-                autoComplete="cc-csc"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
+            <div className="h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+              <div id="card-cvc-el" className="w-full" />
             </div>
           </div>
 
-          <div className={wrap()}>
+          {/* Código postal (igual que en RoningForm) */}
+          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
             <input
               {...register("cardPostal")}
               placeholder="Código postal"
               className="w-full bg-transparent outline-none text-[14px]"
+              autoComplete="postal-code"
             />
           </div>
+
+          {(mountError) && (
+            <p className="text-red-600 text-sm">{mountError}</p>
+          )}
         </div>
       )}
 
