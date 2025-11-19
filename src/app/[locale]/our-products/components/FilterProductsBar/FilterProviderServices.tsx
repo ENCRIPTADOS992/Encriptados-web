@@ -31,7 +31,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             { label: "eSim", value: "esim" },
             { label: "Recarga Datos", value: "datarecharge" },
             { label: "Recarga Minutos", value: "minuterecharge" },
-            { label: "Recarga IMSI", value: "imsi" },
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de encriptadosprovider:", value);

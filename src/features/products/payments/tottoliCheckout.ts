@@ -39,6 +39,7 @@ type TottoliOkResponse = TottoliStripeOk | TottoliCryptoOk;
 export async function tottoliCheckout(
   payload: TottoliCheckoutPayload
 ): Promise<TottoliOkResponse> {
+  console.log("➡️ Tottoli checkout payload", payload);
   const res = await fetch(
     "https://encriptados.es/wp-json/encriptados/v1/tottoli/checkout",
     {
@@ -49,18 +50,22 @@ export async function tottoliCheckout(
   );
 
   if (!res.ok) {
+    const raw = await res.text();
+    console.error("❌ Tottoli checkout error", res.status, raw);
+
     let msg = "Error iniciando checkout";
     try {
       const data = await res.json();
       if (data?.error) msg = data.error;
     } catch {
-      /* ignore */
+      
     }
     throw new Error(msg);
   }
 
   const data = await res.json();
   if (!data.ok) {
+    console.error("❌ Tottoli respuesta no OK", data);
     throw new Error(data.error || "Respuesta inválida del checkout");
   }
   return data as TottoliOkResponse;

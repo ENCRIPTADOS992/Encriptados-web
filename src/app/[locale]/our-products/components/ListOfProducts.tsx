@@ -20,8 +20,8 @@ const providerMap: Record<string, string> = {
 const serviceMap: Record<string, string> = {
   physicsim: "SIM Física",
   esim: "eSIM",
-  datarecharge: "Recarga",
-  minuterecharge: "Minutos",
+  datarecharge: "Recarga Datos",
+  minuterecharge: "Recarga Minutos",
   imsi: "IMSI",
   physicsimtim: "SIM Física",
   esimplusdatatim: "eSIM + Datos",
