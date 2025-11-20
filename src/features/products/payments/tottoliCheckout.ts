@@ -1,6 +1,6 @@
 // src/features/products/payments/tottoliCheckout.ts
 export type TottoliProductType = "esim" | "data" | "minutes" | "sim_physical";
-export type TottoliMethod = "card" | "crypto";
+export type TottoliMethod = "card" | "cryptomus";
 
 export interface TottoliCheckoutPayload {
   email: string;
@@ -20,7 +20,7 @@ interface TottoliStripeOk {
   ok: true;
   order_id: number;
   payment: {
-    method: "card";
+    method: "stripe";
     stripe: { checkoutUrl: string };
   };
 }
@@ -29,7 +29,7 @@ interface TottoliCryptoOk {
   ok: true;
   order_id: number;
   payment: {
-    method: "crypto";
+    method: "cryptomus";
     cryptomus: { url: string };
   };
 }
@@ -39,7 +39,8 @@ type TottoliOkResponse = TottoliStripeOk | TottoliCryptoOk;
 export async function tottoliCheckout(
   payload: TottoliCheckoutPayload
 ): Promise<TottoliOkResponse> {
-  console.log("➡️ Tottoli checkout payload", payload);
+  console.log("➡️ [tottoliCheckout] payload enviado:", payload);
+
   const res = await fetch(
     "https://encriptados.es/wp-json/encriptados/v1/tottoli/checkout",
     {
@@ -49,24 +50,35 @@ export async function tottoliCheckout(
     }
   );
 
+  const raw = await res.text();
+  console.log("⬅️ [tottoliCheckout] status:", res.status);
+  console.log("⬅️ [tottoliCheckout] raw body:", raw);
+
   if (!res.ok) {
-    const raw = await res.text();
-    console.error("❌ Tottoli checkout error", res.status, raw);
+    console.error("❌ [tottoliCheckout] error HTTP", res.status, raw);
 
     let msg = "Error iniciando checkout";
     try {
-      const data = await res.json();
+      const data = JSON.parse(raw);
       if (data?.error) msg = data.error;
     } catch {
-      
     }
     throw new Error(msg);
   }
 
-  const data = await res.json();
+  let data: any;
+  try {
+    data = JSON.parse(raw);
+  } catch (e) {
+    console.error("❌ [tottoliCheckout] no se pudo parsear JSON de éxito", raw);
+    throw new Error("Respuesta inválida del checkout");
+  }
+
   if (!data.ok) {
-    console.error("❌ Tottoli respuesta no OK", data);
+    console.error("❌ [tottoliCheckout] respuesta ok=false", data);
     throw new Error(data.error || "Respuesta inválida del checkout");
   }
+
+  console.log("✅ [tottoliCheckout] respuesta OK", data);
   return data as TottoliOkResponse;
 }
