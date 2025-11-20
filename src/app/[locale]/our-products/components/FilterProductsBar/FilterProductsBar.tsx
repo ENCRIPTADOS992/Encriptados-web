@@ -65,8 +65,14 @@ export default function FilterProductsBar({
     ),
   }));
 
-  const activeTimService =
-    filters.timService ?? ("esim_datos" as "esim_datos");
+  type TimServiceType = "esim_datos" | "recarga_datos" | "sim_fisica";
+
+  const activeTimService: TimServiceType =
+    (filters.timService as TimServiceType) ?? "esim_datos";
+
+  const isTim = filters.provider === "tim";
+  const isTimSimFisica = isTim && activeTimService === "sim_fisica";
+  const shouldShowTimRegion = isTim && !isTimSimFisica;
 
   let subfilters: React.ReactNode[] = [];
   if (selectedCat === 40) {
@@ -77,16 +83,16 @@ export default function FilterProductsBar({
         key="provider-services"
       />,
     ];
-    if (filters.provider === "tim") {
-      subfilters.push(
-        <FilterRegionCountry
-          filters={filters}
-          updateFilters={updateFilters}
-          service={filters.timService || "esim_datos"}
-          key="region-country"
-        />
-      );
-    }
+    if (shouldShowTimRegion) {
+    subfilters.push(
+      <FilterRegionCountry
+        filters={filters}
+        updateFilters={updateFilters}
+        service={activeTimService}
+        key="region-country"
+      />
+    );
+  }
   } else if (selectedCat === 38 || selectedCat === 35) {
     subfilters = [
       <FilterAppWithLicense
@@ -96,17 +102,17 @@ export default function FilterProductsBar({
         key="app-license"
       />,
     ];
-    if (filters.provider === "tim") {
-      subfilters.push(
-        <FilterRegionCountry
-          filters={filters}
-          updateFilters={updateFilters}
-          service={activeTimService}
-          key="region-country"
-        />
-      );
-    }
+    if (shouldShowTimRegion) {
+    subfilters.push(
+      <FilterRegionCountry
+        filters={filters}
+        updateFilters={updateFilters}
+        service={activeTimService}
+        key="region-country"
+      />
+    );
   }
+}
 
   if (variant === "floating") {
   const navItems: {

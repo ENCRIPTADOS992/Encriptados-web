@@ -6,7 +6,6 @@ import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
-import { useGetEncryptedPacks } from "@/features/products/queries/useGetEncryptedPacks";
 
 interface ListOfProductsProps {
   filters: ProductFilters;
@@ -33,62 +32,12 @@ type TimBadges = {
   tag?: string;
 };
 
-type ProductTimExtras = Product & {
-  country_name?: string;
-  country_code?: string;
-  countryFlag?: string;
-  data_gb?: number;
-  data_label?: string;
-  badges?: {
-    countryName?: string;
-    countryCode?: string;
-    flagUrl?: string;
-    dataText?: string;
-  };
+const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
+  CO: "Colombia",
+  MX: "México",
+  US: "Estados Unidos",
 };
 
-const buildTimBadges = (raw: Product): TimBadges | undefined => {
-  const p = raw as Product & {
-    country_name?: string;
-    country_code?: string;
-    countryFlag?: string;
-    data_gb?: number;
-    data_label?: string;
-    badges?: {
-      countryName?: string;
-      countryCode?: string;
-      flagUrl?: string;
-      dataText?: string;
-    };
-  };
-
-  const countryLabel =
-    p.badges?.countryName ?? p.country_name ?? (p as any).country ?? undefined;
-
-  const countryCode =
-    p.badges?.countryCode ?? p.country_code ?? (p as any).country_code ?? undefined;
-
-  const flagUrl = p.badges?.flagUrl ?? p.countryFlag ?? undefined;
-
-  const tag =
-    p.badges?.dataText ??
-    p.data_label ??
-    (typeof p.data_gb === "number" ? `${p.data_gb}GB` : undefined) ??
-    (p as any).data_text ??
-    undefined;
-
-  if (!countryLabel && !tag) return undefined;
-
-  const country: TimBadges["country"] = countryLabel
-    ? {
-        label: countryLabel,
-        ...(countryCode ? { code: countryCode } : {}),
-        ...(flagUrl ? { flagUrl } : {}),
-      }
-    : undefined;
-
-  return { country, tag };
-};
 
 const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const selectedOption = parseInt(filters.selectedOption, 10);
@@ -119,40 +68,108 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   let filteredProducts: Product[] = products;
 
-  // Filtro por provider (solo cat 40)
   if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
     const providerValue = providerMap[filters.provider];
     filteredProducts = products.filter((product) => {
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
       const filterNormalized = providerValue.toLowerCase().trim();
-      return providerNormalized === filterNormalized || brandNormalized === filterNormalized;
+      return (
+        providerNormalized === filterNormalized ||
+        brandNormalized === filterNormalized
+      );
     });
     console.log("🔎 [Filtro Provider] value:", providerValue, "=> count:", filteredProducts.length);
   } else {
     console.log("[Filtro Provider] no aplica");
   }
 
-  // Filtro por servicio
-  if (filters.provider) {
-    let providerServiceKey: string | undefined = undefined;
+  const getProviderServiceKey = (): string | undefined => {
+    if (!filters.provider) return;
 
-    if (filters.provider === "encriptados" && filters.encriptadosprovider && filters.encriptadosprovider !== "all") {
-      providerServiceKey = filters.encriptadosprovider;
-    }
-    if (filters.provider === "tim" && filters.timprovider && filters.timprovider !== "all") {
-      providerServiceKey = filters.timprovider;
+    if (filters.provider === "encriptados") {
+      const value = filters.encriptadosprovider;
+      if (!value || value === "all") return;
+      return Array.isArray(value) ? value[value.length - 1] : value;
     }
 
-    if (providerServiceKey) {
-      const serviceName = serviceMap[providerServiceKey];
+    if (filters.provider === "tim") {
+      const value = filters.timprovider;
+      if (!value || value === "all") return;
+      return Array.isArray(value) ? value[value.length - 1] : value;
+    }
+  };
+
+  const providerServiceKey = getProviderServiceKey();
+
+  if (providerServiceKey) {
+    const serviceName = serviceMap[providerServiceKey];
+
+    if (!serviceName) {
+      console.warn("⚠️ [Filtro Servicio] key sin mapping en serviceMap", {
+        providerServiceKey,
+        serviceMapKeys: Object.keys(serviceMap),
+      });
+    } else {
       const before = filteredProducts.length;
-      filteredProducts = filteredProducts.filter((product) => product.name === serviceName);
-      console.log("🔎 [Filtro Servicio]", { key: providerServiceKey, serviceName, before, after: filteredProducts.length });
+      filteredProducts = filteredProducts.filter(
+        (product) =>
+          product.name?.trim().toLowerCase() ===
+          serviceName.trim().toLowerCase()
+      );
+
+      console.log("🔎 [Filtro Servicio]", {
+        key: providerServiceKey,
+        serviceName,
+        before,
+        after: filteredProducts.length,
+      });
     }
   }
 
-  // Filtro OS
+  // 👇 Antes del filtro de región, detectamos si es SIM Física TIM
+let isSimTimFisica = false;
+
+if (
+  filters.provider === "tim" &&
+  filters.timprovider &&
+  filters.timprovider !== "all"
+) {
+  const serviceNameForTim = serviceMap[filters.timprovider];
+  isSimTimFisica = serviceNameForTim === "SIM Física";
+  console.log("[TIM] servicio actual:", {
+    timprovider: filters.timprovider,
+    serviceNameForTim,
+    isSimTimFisica,
+  });
+}
+
+
+  if (
+    filters.provider === "tim" &&
+    !isSimTimFisica && 
+    filters.regionOrCountryType === "country" &&
+    filters.regionOrCountry &&
+    filters.regionOrCountry !== "all"
+  ) {
+    const regionCode = filters.regionOrCountry.toUpperCase();
+    const before = filteredProducts.length;
+
+    filteredProducts = filteredProducts.filter((product) =>
+      (product.variants ?? []).some(
+        (v) => v.scope?.code?.toUpperCase() === regionCode
+      )
+    );
+
+    console.log("🌎 [Filtro Región TIM]", {
+      regionCode,
+      before,
+      after: filteredProducts.length,
+    });
+  } else if (filters.provider === "tim" && isSimTimFisica) {
+    console.log("🌎 [Filtro Región TIM] omitido porque es SIM Física TIM");
+  }
+
   if ((selectedOption === 38 || selectedOption === 35) && filters.os && filters.os !== "all") {
     const osFilter = filters.os.trim().toLowerCase();
     const before = filteredProducts.length;
@@ -163,7 +180,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     console.log("🔎 [Filtro OS]", { osFilter, before, after: filteredProducts.length });
   }
 
-  // Filtro Licencia
   if ((selectedOption === 38 || selectedOption === 35) && filters.license && filters.license !== "all") {
     const before = filteredProducts.length;
     filteredProducts = filteredProducts.filter((product) => String(product.licensetime) === String(filters.license));
@@ -181,38 +197,31 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   return c.length === 2 ? c : undefined;
 };
 
-const buildTimBadges = (raw: Product): TimBadges | undefined => {
-  const p = raw as ProductTimExtras;
+const buildTimBadges = (p: Product): TimBadges | undefined => {
+  const v = p.variants?.[0];
+  if (!v) return undefined;
 
+  const rawCode = v.scope?.code; 
+  const normalizedCode = normalizeCountryCode(rawCode);
   const countryLabel =
-    p.badges?.countryName ?? p.country_name ?? (p as any).country ?? undefined;
+    (rawCode && COUNTRY_LABEL_BY_CODE[rawCode]) ||
+    (normalizedCode && COUNTRY_LABEL_BY_CODE[normalizedCode.toUpperCase()]) ||
+    rawCode;
 
-  const countryCodeRaw =
-    p.badges?.countryCode ?? p.country_code ?? (p as any).country_code ?? undefined;
-
-  const flagUrl = p.badges?.flagUrl ?? p.countryFlag ?? undefined;
-
-  const tag =
-    p.badges?.dataText ??
-    p.data_label ??
-    (typeof p.data_gb === "number" ? `${p.data_gb}GB` : undefined) ??
-    (p as any).data_text ??
-    undefined;
+  const tag = v.gb || v.name || undefined;
 
   if (!countryLabel && !tag) return undefined;
-
-  const countryCode = normalizeCountryCode(countryCodeRaw);
 
   const country: TimBadges["country"] = countryLabel
     ? {
         label: countryLabel,
-        ...(countryCode ? { code: countryCode } : {}),
-        ...(flagUrl ? { flagUrl } : {}),
+        ...(normalizedCode ? { code: normalizedCode } : {}),
       }
     : undefined;
 
   return { country, tag };
 };
+
 
   return (
     <>
@@ -222,50 +231,41 @@ const buildTimBadges = (raw: Product): TimBadges | undefined => {
 
       <div className="flex items-center justify-between">
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 w-full max-w-7xl mx-auto">
-          {filteredProducts.map((product) => {
-            const isCategory40 = selectedOption === 40;
-            const isTim = filters.provider === "tim";
-            const simName = (product.name ?? "").toLowerCase().trim();
-            const isSim = simName === "recarga datos" || simName === "esim" || simName === "esim + datos";
-            const showTimBadges = isCategory40 && isTim && isSim;
+          {filteredProducts.map((product, index) => {
+  const isCategory40 = selectedOption === 40;
+  const isTim = filters.provider === "tim";
+  const simName = (product.name ?? "").toLowerCase().trim();
+  const isSim =
+    simName === "recarga datos" ||
+    simName === "esim" ||
+    simName === "esim + datos";
+  const showTimBadges = isCategory40 && isTim && isSim;
 
-            console.log("🧮 [BadgeCheck]", {
-              id: product.id,
-              name: product.name,
-              isCategory40,
-              isTim,
-              isSim,
-              showTimBadges,
-            });
+  const variantId = isTim ? product.variants?.[0]?.id : undefined;
 
-            let badges = showTimBadges ? buildTimBadges(product) : undefined;
+  const key = isTim && variantId
+    ? `tim-${variantId}`        
+    : `prod-${product.id ?? index}`; 
 
-            if (showTimBadges && !badges) {
-              badges = {
-                country: { label: "Colombia", code: "co" },
-                tag: "3GB",
-              };
-              console.log("🧪 [Badge Fallback] aplicado para", product.id, badges);
-            } else {
-              console.log("📎 [Badges] del back para", product.id, badges);
-            }
+  const badges = showTimBadges ? buildTimBadges(product) : undefined;
 
-            return (
-              <CardProduct
-                key={product.id}
-                id={product.id}
-                priceDiscount={product.sale_price}
-                productImage={product.images[0]?.src ?? ""}
-                features={[]}
-                priceRange={`${product.price}$`}
-                headerIcon={""}
-                headerTitle={product.name}
-                filters={filters}
-                checks={product.checks || []}
-                badges={badges}
-              />
-            );
-          })}
+  return (
+    <CardProduct
+      key={key}
+      id={product.id}
+      priceDiscount={product.sale_price}
+      productImage={product.images[0]?.src ?? ""}
+      features={[]}
+      priceRange={`${product.price}$`}
+      headerIcon={""}
+      headerTitle={product.name}
+      filters={filters}
+      checks={product.checks || []}
+      badges={badges}
+    />
+  );
+})}
+
         </div>
       </div>
     </>

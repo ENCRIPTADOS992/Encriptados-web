@@ -109,7 +109,6 @@ export default function ModalSIM() {
     setSelectedPlanId(minutesPlans[0]?.id ?? null);
   }, [minutesPlans]);
 
-  // --- Variantes / precio / descuento ---
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(
     null
   );
@@ -141,7 +140,6 @@ export default function ModalSIM() {
     isPhysical,
     productid,
   });
-  // 💰 Calculamos el monto total (igual que en Roning)
   const shippingFee = isPhysical ? 75 : 0;
   const baseAmount = Number(unitPrice) * quantity - discount;
   const amountUsd = Math.max(baseAmount + shippingFee, 0);
@@ -155,7 +153,6 @@ export default function ModalSIM() {
   const providerName = (product?.provider || product?.brand || "").toLowerCase();
   const isEncryptedProvider = providerName.includes("encript");
 
-  // 🔹 Todos estos tipos usan Tottoli
   const isTottoliSim =
     isEncryptedProvider &&
     (
@@ -172,7 +169,6 @@ export default function ModalSIM() {
     formType,
   });
 
-  // 👉 CASO 1: TOTTOLI
   if (isTottoliSim) {
     const tottoliMethod: TottoliMethod =
       data.method === "card" ? "card" : "cryptomus";
@@ -187,28 +183,24 @@ export default function ModalSIM() {
     let payload: TottoliCheckoutPayload;
 
     if (formType === "encrypted_esim") {
-      // ✅ eSIM
       payload = {
         ...common,
         product: "esim",
         qty: quantity,
       };
     } else if (formType === "encrypted_data") {
-      // ✅ Datos
       payload = {
         ...common,
         product: "data",
         sim_number: data.simNumber,
       };
     } else if (formType === "encrypted_minutes") {
-      // ✅ Minutos
       payload = {
         ...common,
         product: "minutes",
         sim_number: data.simNumber,
       };
     } else {
-      // ✅ SIM Física
       payload = {
         ...common,
         product: "sim_physical",
@@ -235,7 +227,6 @@ export default function ModalSIM() {
     return;
   }
 
-  // 👉 CASO 2: FLUJO NORMAL (Stripe / Kriptomus) – productos NO "encriptados"
   try {
     const productIdNum = Number(productid);
     const provider: PayProvider =

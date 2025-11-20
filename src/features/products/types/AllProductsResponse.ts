@@ -40,13 +40,7 @@ export type Product = {
     description: string;
     image: string;
   }[];
- variants?: {
-  id: number;
-  licensetime: number;
-  price: number;
-  sku: string;
-  image: string;
-}[];
+ variants?: ProductVariant[];
 
 };
 
@@ -110,4 +104,20 @@ export interface CategoryInfo {
 
 export interface ProductImage {
   src: string;
+}
+
+export interface ProductVariantScope {
+  type: string;
+  code: string;
+}
+
+export interface ProductVariant {
+  id: number;
+  name: string;        
+  gb?: string;         
+  cost: number;        
+  currency: string;    
+  label: string;       
+  purchase_url: string;
+  scope?: ProductVariantScope; 
 }
