@@ -16,6 +16,39 @@ import {
   Country,
 } from "@/services/simtimService";
 
+const SIM_REGION_VALUES = [
+  "norteamerica",
+  "centro-sur-america",
+  "europa",
+  "africa",
+  "asia",
+  "oceania",
+  "global",
+] as const;
+
+type SimRegion = (typeof SIM_REGION_VALUES)[number];
+
+const REGION_CODE_TO_SIM_REGION: Record<string, SimRegion> = {
+  "norteamerica": "norteamerica",
+  "centro-sur-america": "centro-sur-america",
+  "europa": "europa",
+  "africa": "africa",
+  "asia": "asia",
+  "oceania": "oceania",
+  "global": "global",
+
+  "north-america": "norteamerica",
+  "central-south-america": "centro-sur-america",
+  "europe": "europa",
+  "worldwide": "global",
+};
+
+function mapRegionCodeToSimRegion(code?: string): SimRegion | undefined {
+  if (!code) return undefined;
+  const key = code.trim().toLowerCase();
+  return REGION_CODE_TO_SIM_REGION[key];
+}
+
 function normalizeAlpha2(raw?: string): string | undefined {
   if (!raw) return undefined;
   let c = raw.trim().toLowerCase();
@@ -243,20 +276,51 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
   ]);
 
   function handleSelectRegion(r: Region) {
+    console.log("[FilterRegionCountry] seleccionaste región:", {
+      region: r,
+      service,
+    });
+    const simRegion = mapRegionCodeToSimRegion(r.code);
+
     updateFilters({
       regionOrCountryType: "region",
       regionOrCountry: r.code,
+      simCountry: undefined,
+      simRegion: undefined
     });
     setOpen(false);
   }
 
   function handleSelectCountry(c: Country) {
+    const iso2 = normalizeAlpha2(c.code) ?? c.code; 
+    console.log("[FilterRegionCountry] seleccionaste país:", {
+      country: c,
+      iso2,
+      service,
+    });
     updateFilters({
       regionOrCountryType: "country",
       regionOrCountry: c.code,
+      simCountry: iso2.toUpperCase(),
+      simCountryLabel: c.name,
     });
     setOpen(false);
   }
+
+  useEffect(() => {
+    console.log("[FilterRegionCountry] filtros actuales:", {
+      regionOrCountryType: filters.regionOrCountryType,
+      regionOrCountry: filters.regionOrCountry,
+      simCountry: filters.simCountry,
+      simCountryLabel: filters.simCountryLabel,
+      service,
+    });
+  }, [
+    filters.regionOrCountryType,
+    filters.regionOrCountry,
+    filters.simCountry,
+    service,
+  ]);
 
   return (
     <div className="flex flex-col h-full">

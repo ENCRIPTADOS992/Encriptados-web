@@ -8,4 +8,7 @@ export interface ProductFilters {
   regionOrCountry?: string;
   regionOrCountryType?: "region" | "country";
   timService?: "esim_datos" | "recarga_datos" | "sim_fisica";
+  simCountry?: string;
+  simCountryLabel?: string;
+  simRegion?: string;
 }

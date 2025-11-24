@@ -3,19 +3,29 @@ import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
 
 const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
 
+type GetAllProductsOptions = {
+  simCountry?: string | null;
+};
+
 export const getAllProducts = async (
   categoryId: number,
-  lang: string
+  lang: string,
+  options?: GetAllProductsOptions
 ): Promise<Allproducts> => {
   try {
+    const params: Record<string, string | number> = {
+      category_id: categoryId,
+      lang,
+    };
+    if (options?.simCountry && categoryId === 40) {
+      params.sim_country = options.simCountry;
+    }
+
     const response = await axios.get<{
       message: string;
       products: Record<string, Product>;
     }>(`${WP_API_BASE}/encriptados/v1/products/by-category-language`, {
-      params: {
-        category_id: categoryId,
-        lang: lang,
-      },
+      params,
     });
     const rawProducts = response.data.products;
     return Object.values(rawProducts);
@@ -24,7 +34,6 @@ export const getAllProducts = async (
     throw error;
   }
 };
-
 
 type ResponseProduct = {
   data: Product;

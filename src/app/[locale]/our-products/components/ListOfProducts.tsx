@@ -1,11 +1,10 @@
-'use client';
+"use client";
 import React from "react";
 import CardProduct from "./CardProduct";
 import Loader from "@/shared/components/Loader";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-
 
 interface ListOfProductsProps {
   filters: ProductFilters;
@@ -38,10 +37,12 @@ const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
   US: "Estados Unidos",
 };
 
-
 const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const selectedOption = parseInt(filters.selectedOption, 10);
-  const { data, isFetching, isError } = useGetProducts(selectedOption, filters.provider);
+  const { data, isFetching, isError } = useGetProducts(
+    selectedOption,
+    filters.provider
+  );
 
   console.log("🎛️ [ListOfProducts] filtros actuales =>", filters);
 
@@ -79,7 +80,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         brandNormalized === filterNormalized
       );
     });
-    console.log("🔎 [Filtro Provider] value:", providerValue, "=> count:", filteredProducts.length);
+    console.log(
+      "🔎 [Filtro Provider] value:",
+      providerValue,
+      "=> count:",
+      filteredProducts.length
+    );
   } else {
     console.log("[Filtro Provider] no aplica");
   }
@@ -128,41 +134,45 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   }
 
   // 👇 Antes del filtro de región, detectamos si es SIM Física TIM
-let isSimTimFisica = false;
-
-if (
-  filters.provider === "tim" &&
-  filters.timprovider &&
-  filters.timprovider !== "all"
-) {
-  const serviceNameForTim = serviceMap[filters.timprovider];
-  isSimTimFisica = serviceNameForTim === "SIM Física";
-  console.log("[TIM] servicio actual:", {
-    timprovider: filters.timprovider,
-    serviceNameForTim,
-    isSimTimFisica,
-  });
-}
-
+  let isSimTimFisica = false;
 
   if (
     filters.provider === "tim" &&
-    !isSimTimFisica && 
-    filters.regionOrCountryType === "country" &&
-    filters.regionOrCountry &&
-    filters.regionOrCountry !== "all"
+    filters.timprovider &&
+    filters.timprovider !== "all"
   ) {
-    const regionCode = filters.regionOrCountry.toUpperCase();
+    const serviceNameForTim = serviceMap[filters.timprovider];
+    isSimTimFisica = serviceNameForTim === "SIM Física";
+    console.log("[TIM] servicio actual:", {
+      timprovider: filters.timprovider,
+      serviceNameForTim,
+      isSimTimFisica,
+    });
+  }
+
+  const usingBackendCountryFilter = !!filters.simCountry;
+
+  if (filters.provider === "tim" && !isSimTimFisica) {
+    const regionCode = filters.regionOrCountry?.toUpperCase();
     const before = filteredProducts.length;
 
-    filteredProducts = filteredProducts.filter((product) =>
-      (product.variants ?? []).some(
-        (v) => v.scope?.code?.toUpperCase() === regionCode
-      )
-    );
+    if (
+      regionCode &&
+      regionCode !== "ALL" &&
+      regionCode !== "GLOBAL" &&
+      !usingBackendCountryFilter
+    ) {
+      filteredProducts = filteredProducts.filter((product) =>
+        (product.variants ?? []).some(
+          (v) => v.scope?.code?.toUpperCase() === regionCode
+        )
+      );
+    }
 
     console.log("🌎 [Filtro Región TIM]", {
       regionCode,
+      simCountry: filters.simCountry,
+      usingBackendCountryFilter,
       before,
       after: filteredProducts.length,
     });
@@ -170,102 +180,139 @@ if (
     console.log("🌎 [Filtro Región TIM] omitido porque es SIM Física TIM");
   }
 
-  if ((selectedOption === 38 || selectedOption === 35) && filters.os && filters.os !== "all") {
+  if (
+    (selectedOption === 38 || selectedOption === 35) &&
+    filters.os &&
+    filters.os !== "all"
+  ) {
     const osFilter = filters.os.trim().toLowerCase();
     const before = filteredProducts.length;
     filteredProducts = filteredProducts.filter((product) => {
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
       return brandNormalized === osFilter;
     });
-    console.log("🔎 [Filtro OS]", { osFilter, before, after: filteredProducts.length });
+    console.log("🔎 [Filtro OS]", {
+      osFilter,
+      before,
+      after: filteredProducts.length,
+    });
   }
 
-  if ((selectedOption === 38 || selectedOption === 35) && filters.license && filters.license !== "all") {
+  if (
+    (selectedOption === 38 || selectedOption === 35) &&
+    filters.license &&
+    filters.license !== "all"
+  ) {
     const before = filteredProducts.length;
-    filteredProducts = filteredProducts.filter((product) => String(product.licensetime) === String(filters.license));
-    console.log("🔎 [Filtro Licencia]", { license: filters.license, before, after: filteredProducts.length });
+    filteredProducts = filteredProducts.filter(
+      (product) => String(product.licensetime) === String(filters.license)
+    );
+    console.log("🔎 [Filtro Licencia]", {
+      license: filters.license,
+      before,
+      after: filteredProducts.length,
+    });
   }
 
   const productCount = filteredProducts.length;
   console.log("✅ [ListOfProducts] total a renderizar:", productCount);
 
   const normalizeCountryCode = (code?: string) => {
-  if (!code) return undefined;
-  const c = code.trim().toLowerCase();
-  if (c === "uk") return "gb";
-  if (c === "el") return "gr";
-  return c.length === 2 ? c : undefined;
-};
+    if (!code) return undefined;
+    const c = code.trim().toLowerCase();
+    if (c === "uk") return "gb";
+    if (c === "el") return "gr";
+    return c.length === 2 ? c : undefined;
+  };
 
-const buildTimBadges = (p: Product): TimBadges | undefined => {
-  const v = p.variants?.[0];
-  if (!v) return undefined;
+  const buildTimBadges = (p: Product): TimBadges | undefined => {
+    const v = p.variants?.[0];
 
-  const rawCode = v.scope?.code; 
-  const normalizedCode = normalizeCountryCode(rawCode);
-  const countryLabel =
-    (rawCode && COUNTRY_LABEL_BY_CODE[rawCode]) ||
-    (normalizedCode && COUNTRY_LABEL_BY_CODE[normalizedCode.toUpperCase()]) ||
-    rawCode;
+    const selectedCountryCode =
+      filters.simCountry || filters.regionOrCountry;
+    const selectedCountryLabel = filters.simCountryLabel; 
 
-  const tag = v.gb || v.name || undefined;
+    let flagCode: string | undefined;
+    let countryLabel: string | undefined;
 
-  if (!countryLabel && !tag) return undefined;
+    if (selectedCountryCode) {
+      const normalizedFromFilter = normalizeCountryCode(selectedCountryCode);
+      flagCode = normalizedFromFilter;
 
-  const country: TimBadges["country"] = countryLabel
-    ? {
-        label: countryLabel,
-        ...(normalizedCode ? { code: normalizedCode } : {}),
-      }
-    : undefined;
+      countryLabel =
+        selectedCountryLabel || 
+        COUNTRY_LABEL_BY_CODE[selectedCountryCode.toUpperCase()] ||
+        selectedCountryCode.toUpperCase();
+    } else if (v) {
+      const rawCode = v.scope?.code;
+      const normalizedCode = normalizeCountryCode(rawCode);
+      flagCode = normalizedCode;
+      countryLabel =
+        (rawCode && COUNTRY_LABEL_BY_CODE[rawCode]) ||
+        (normalizedCode &&
+          COUNTRY_LABEL_BY_CODE[normalizedCode.toUpperCase()]) ||
+        rawCode;
+    }
 
-  return { country, tag };
-};
 
+    const tag = v?.gb || v?.name || undefined;
+
+    if (!countryLabel && !tag) return undefined;
+
+    const country: TimBadges["country"] = countryLabel
+      ? {
+          label: countryLabel,
+          ...(flagCode ? { code: flagCode } : {}),
+        }
+      : undefined;
+
+    return { country, tag };
+  };
 
   return (
     <>
       <div className="md:w-11/12 lg:w-full xl:w-[1272px] w-full mx-auto mb-4 font-bold">
-        {productCount} producto{productCount !== 1 ? "s" : ""} encontrado{productCount !== 1 ? "s" : ""}
+        {productCount} producto{productCount !== 1 ? "s" : ""} encontrado
+        {productCount !== 1 ? "s" : ""}
       </div>
 
       <div className="flex items-center justify-between">
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 w-full max-w-7xl mx-auto">
           {filteredProducts.map((product, index) => {
-  const isCategory40 = selectedOption === 40;
-  const isTim = filters.provider === "tim";
-  const simName = (product.name ?? "").toLowerCase().trim();
-  const isSim =
-    simName === "recarga datos" ||
-    simName === "esim" ||
-    simName === "esim + datos";
-  const showTimBadges = isCategory40 && isTim && isSim;
+            const isCategory40 = selectedOption === 40;
+            const isTim = filters.provider === "tim";
+            const simName = (product.name ?? "").toLowerCase().trim();
+            const isSim =
+              simName === "recarga datos" ||
+              simName === "esim" ||
+              simName === "esim + datos";
+            const showTimBadges = isCategory40 && isTim && isSim;
 
-  const variantId = isTim ? product.variants?.[0]?.id : undefined;
+            const variantId = isTim ? product.variants?.[0]?.id : undefined;
 
-  const key = isTim && variantId
-    ? `tim-${variantId}`        
-    : `prod-${product.id ?? index}`; 
+            const key =
+              isTim && variantId
+                ? `tim-${variantId}`
+                : `prod-${product.id ?? index}`;
 
-  const badges = showTimBadges ? buildTimBadges(product) : undefined;
+            const badges = showTimBadges ? buildTimBadges(product) : undefined;
 
-  return (
-    <CardProduct
-      key={key}
-      id={product.id}
-      priceDiscount={product.sale_price}
-      productImage={product.images[0]?.src ?? ""}
-      features={[]}
-      priceRange={`${product.price}$`}
-      headerIcon={""}
-      headerTitle={product.name}
-      filters={filters}
-      checks={product.checks || []}
-      badges={badges}
-    />
-  );
-})}
-
+            return (
+              <CardProduct
+                key={key}
+                id={product.id}
+                priceDiscount={product.sale_price}
+                productImage={product.images[0]?.src ?? ""}
+                features={[]}
+                priceRange={`${product.price}$`}
+                headerIcon={""}
+                headerTitle={product.name}
+                filters={filters}
+                checks={product.checks || []}
+                badges={badges}
+              />
+            );
+          })}
         </div>
       </div>
     </>

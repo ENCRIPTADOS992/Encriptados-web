@@ -23,6 +23,9 @@ export const useProductFilters = () => {
     timprovider: params.get('timprovider') || 'all',
     regionOrCountryType: getRegionOrCountryType(params.get('regionOrCountryType')) || "region",
     regionOrCountry: params.get('regionOrCountry') || 'global',
+    simCountry: params.get("simCountry") || undefined,
+    simCountryLabel: params.get("simCountryLabel") || undefined,
+    simRegion: params.get("simRegion") || undefined,
   };
 
 const updateFilters = (newFilters: Partial<ProductFilters>) => {  

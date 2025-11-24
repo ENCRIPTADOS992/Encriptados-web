@@ -16,7 +16,7 @@ import SectionWrapper from "@/shared/components/SectionWrapper";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/routing"; 
+import { useRouter } from "@/i18n/routing";
 
 import MobileMenuSvg from "@/shared/svgs/EncryptedLogoSvg";
 
@@ -75,7 +75,9 @@ export default function FilterProductsBar({
   const shouldShowTimRegion = isTim && !isTimSimFisica;
 
   let subfilters: React.ReactNode[] = [];
+
   if (selectedCat === 40) {
+    // SIMs
     subfilters = [
       <FilterProviderServices
         filters={filters}
@@ -83,17 +85,19 @@ export default function FilterProductsBar({
         key="provider-services"
       />,
     ];
+
     if (shouldShowTimRegion) {
-    subfilters.push(
-      <FilterRegionCountry
-        filters={filters}
-        updateFilters={updateFilters}
-        service={activeTimService}
-        key="region-country"
-      />
-    );
-  }
+      subfilters.push(
+        <FilterRegionCountry
+          filters={filters}
+          updateFilters={updateFilters}
+          service={activeTimService}
+          key="region-country"
+        />
+      );
+    }
   } else if (selectedCat === 38 || selectedCat === 35) {
+    // Apps / Software
     subfilters = [
       <FilterAppWithLicense
         filters={filters}
@@ -102,99 +106,103 @@ export default function FilterProductsBar({
         key="app-license"
       />,
     ];
+
     if (shouldShowTimRegion) {
-    subfilters.push(
-      <FilterRegionCountry
-        filters={filters}
-        updateFilters={updateFilters}
-        service={activeTimService}
-        key="region-country"
-      />
+      subfilters.push(
+        <FilterRegionCountry
+          filters={filters}
+          updateFilters={updateFilters}
+          service={activeTimService}
+          key="region-country"
+        />
+      );
+    }
+  }
+
+  // Variante flotante (barra fija abajo en mobile)
+  if (variant === "floating") {
+    const navItems: {
+      key: "sims" | "apps" | "systems" | "routers" | "offers";
+      label: string;
+      catId?: number;
+    }[] = [
+      { key: "sims", label: "SIMs", catId: 40 },
+      { key: "apps", label: "Apps", catId: 38 },
+      { key: "systems", label: "Sistemas", catId: 35 },
+      { key: "routers", label: "Routers", catId: 36 },
+      { key: "offers", label: "Ofertas" },
+    ];
+
+    const handleNavClick = (item: (typeof navItems)[number]) => {
+      if (item.key === "offers") {
+        router.push("/offers");
+        return;
+      }
+
+      if (item.catId) {
+        updateFilters({ selectedOption: String(item.catId) });
+
+        const filtersEl = document.getElementById("filters-section");
+        if (filtersEl) {
+          const rect = filtersEl.getBoundingClientRect();
+          const offset = window.scrollY + rect.top - 16;
+          window.scrollTo({ top: offset, behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    };
+
+    return (
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#050505]/70 backdrop-blur-sm">
+        <SectionWrapper className="py-3">
+          <div
+            className="
+              w-full
+              bg-[#161616]
+              rounded-xl
+              px-4 md:px-6 py-3
+              flex items-center justify-between gap-4
+            "
+          >
+            {/* Logo / marca */}
+            <div className="flex items-center gap-3">
+              <MobileMenuSvg width={180} height={52} />
+            </div>
+
+            {/* Tabs */}
+            <div className="flex items-center gap-2">
+              {navItems.map((item) => {
+                const isActive =
+                  item.catId !== undefined && item.catId === selectedCat;
+
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => handleNavClick(item)}
+                    className={`
+                      px-4 py-2 rounded-full text-sm font-medium
+                      transition-colors
+                      ${
+                        isActive
+                          ? "bg-[#2A2A2A] text-white"
+                          : "text-[#A3A3A3] hover:text-white"
+                      }
+                    `}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </SectionWrapper>
+      </div>
     );
   }
-}
 
-  if (variant === "floating") {
-  const navItems: {
-    key: "sims" | "apps" | "systems" | "routers" | "offers";
-    label: string;
-    catId?: number;
-  }[] = [
-    { key: "sims", label: "SIMs", catId: 40 },
-    { key: "apps", label: "Apps", catId: 38 },
-    { key: "systems", label: "Sistemas", catId: 35 },
-    { key: "routers", label: "Routers", catId: 36 },
-    { key: "offers", label: "Ofertas" },
-  ];
-
-  const handleNavClick = (item: (typeof navItems)[number]) => {
-    if (item.key === "offers") {
-      router.push("/offers");
-      return;
-    }
-    if (item.catId) {
-      updateFilters({ selectedOption: String(item.catId) });
-
-      const filtersEl = document.getElementById("filters-section");
-      if (filtersEl) {
-        const rect = filtersEl.getBoundingClientRect();
-        const offset = window.scrollY + rect.top - 16;
-        window.scrollTo({ top: offset, behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }
-  };
-
-  return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#050505]/70 backdrop-blur-sm">
-      <SectionWrapper className="py-3">
-        <div
-          className="
-            w-full
-            bg-[#161616]
-            rounded-xl
-            px-4 md:px-6 py-3
-            flex items-center justify-between gap-4
-          "
-        >
-          {/* Logo / marca */}
-          <div className="flex items-center gap-3">
-            <MobileMenuSvg width={180} height={52} />
-          </div>
-
-          {/* Tabs */}
-          <div className="flex items-center gap-2">
-            {navItems.map((item) => {
-              const isActive =
-                item.catId !== undefined && item.catId === selectedCat;
-
-              return (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => handleNavClick(item)}
-                  className={`
-                    px-4 py-2 rounded-full text-sm font-medium
-                    transition-colors
-                    ${
-                      isActive
-                        ? "bg-[#2A2A2A] text-white"
-                        : "text-[#A3A3A3] hover:text-white"
-                    }
-                  `}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </SectionWrapper>
-    </div>
-  );
-}
-
+  // Variante estática
   return (
     <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
       <div
@@ -204,7 +212,7 @@ export default function FilterProductsBar({
         "
       >
         {/* Categoría */}
-        <div className="w-full  xl:w-[360px]">
+        <div className="w-full xl:w-[360px]">
           <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
             {t("filterProducts.categoryTitle")}
           </h2>
