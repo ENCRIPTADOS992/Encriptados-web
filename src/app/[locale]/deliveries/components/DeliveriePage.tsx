@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import BannerDeliveries from "./BannerDeliveries";
+import BannerDeliveriesIpad from "./BannerDeliveriesIpad";
+import BannerDeliveriesMobile from "./BannerDeliveriesMobile";
 import DeliveriesMap from "./DeliveriesMap";
 import HowItWorksDeliveries from "./HowItWorksDeliveries";
 import FeaturedProductsDeliveries from "./FeaturedProductsDeliveries";
@@ -19,13 +21,15 @@ const DeliveriesPage = () => {
         <JoinUsModalProvider>
           <ModalJoinUsDeliveries />
           <BannerDeliveries />
+          <BannerDeliveriesIpad/>
+          <BannerDeliveriesMobile/>
           <DeliveriesMap />
           <HowItWorksDeliveries />
           <RenatiEncryptedCellphone />
           <FeaturedProductsDeliveries />
           <LogoCarousel />
-          <DownloadAppBanner/>
-          <FAQDeliveries />
+          {/* <DownloadAppBanner/> */}
+          {/* <FAQDeliveries /> */}
         </JoinUsModalProvider>
       </BasicFormProvider>
     </>
