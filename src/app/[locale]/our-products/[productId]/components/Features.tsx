@@ -38,7 +38,7 @@ const Features = () => {
                 <div
                   className="relative w-full"
                   style={{
-                    paddingTop: "100%", // Mantiene la proporción 1:1
+                    paddingTop: "100%", 
                   }}
                 >
                   <img

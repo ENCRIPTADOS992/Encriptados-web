@@ -1,6 +1,15 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  Tooltip,
+  useMapEvents,
+  Circle,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +32,278 @@ export const COUNTRIES: Country[] = rawCountries.map((country) => ({
     : [0, 0], // fallback
 }));
 
+type RegionId = "Europa" | "Colombia" | "Chile" | "México" | "Canadá" | "Otros";
+
+type CityTag = {
+  id: number;
+  name: string;
+  countryLabel: string;
+  region: RegionId;
+  position: [number, number];
+};
+
+// ==== Ciudades de la lista con coordenadas aproximadas ====
+const CITY_TAGS: CityTag[] = [
+  // EUROPA - España
+  {
+    id: 1,
+    name: "Bilbao",
+    countryLabel: "España",
+    region: "Europa",
+    position: [43.263, -2.935],
+  },
+  {
+    id: 2,
+    name: "Islas Canarias",
+    countryLabel: "España",
+    region: "Europa",
+    position: [28.2916, -16.6291],
+  },
+  {
+    id: 3,
+    name: "Madrid",
+    countryLabel: "España",
+    region: "Europa",
+    position: [40.4168, -3.7038],
+  },
+  {
+    id: 4,
+    name: "Barcelona",
+    countryLabel: "España",
+    region: "Europa",
+    position: [41.3874, 2.1686],
+  },
+  {
+    id: 5,
+    name: "Málaga",
+    countryLabel: "España",
+    region: "Europa",
+    position: [36.7213, -4.4214],
+  },
+  {
+    id: 6,
+    name: "Granada",
+    countryLabel: "España",
+    region: "Europa",
+    position: [37.1773, -3.5986],
+  },
+  {
+    id: 7,
+    name: "Almería",
+    countryLabel: "España",
+    region: "Europa",
+    position: [36.834, -2.4637],
+  },
+  {
+    id: 8,
+    name: "Murcia",
+    countryLabel: "España",
+    region: "Europa",
+    position: [37.9922, -1.1307],
+  },
+  {
+    id: 9,
+    name: "Alicante",
+    countryLabel: "España",
+    region: "Europa",
+    position: [38.3452, -0.481],
+  },
+  {
+    id: 10,
+    name: "Valencia",
+    countryLabel: "España",
+    region: "Europa",
+    position: [39.4699, -0.3763],
+  },
+
+  // EUROPA - Otros países
+  {
+    id: 11,
+    name: "Belgrado",
+    countryLabel: "Serbia",
+    region: "Europa",
+    position: [44.7866, 20.4489],
+  },
+  {
+    id: 12,
+    name: "Reino Unido",
+    countryLabel: "Londres",
+    region: "Europa",
+    position: [51.5074, -0.1278],
+  },
+  {
+    id: 13,
+    name: "Albania",
+    countryLabel: "Tirana",
+    region: "Europa",
+    position: [41.3275, 19.8187],
+  },
+  {
+    id: 14,
+    name: "Agder",
+    countryLabel: "Noruega",
+    region: "Europa",
+    position: [58.1475, 7.9975],
+  },
+  {
+    id: 15,
+    name: "Eslovenia",
+    countryLabel: "Liubliana",
+    region: "Europa",
+    position: [46.0569, 14.5058],
+  },
+  {
+    id: 16,
+    name: "Aveiro",
+    countryLabel: "Portugal",
+    region: "Europa",
+    position: [40.6405, -8.6538],
+  },
+  {
+    id: 17,
+    name: "París",
+    countryLabel: "Francia",
+    region: "Europa",
+    position: [48.8566, 2.3522],
+  },
+  {
+    id: 18,
+    name: "Grenoble",
+    countryLabel: "Francia",
+    region: "Europa",
+    position: [45.1885, 5.7245],
+  },
+  {
+    id: 19,
+    name: "Lyon",
+    countryLabel: "Francia",
+    region: "Europa",
+    position: [45.764, 4.8357],
+  },
+  {
+    id: 20,
+    name: "Calabria",
+    countryLabel: "Italia",
+    region: "Europa",
+    position: [39.0, 16.6],
+  },
+
+  // COLOMBIA
+  {
+    id: 21,
+    name: "Medellín",
+    countryLabel: "Colombia",
+    region: "Colombia",
+    position: [6.2442, -75.5812],
+  },
+  {
+    id: 22,
+    name: "Bogotá",
+    countryLabel: "Colombia",
+    region: "Colombia",
+    position: [4.711, -74.0721],
+  },
+  {
+    id: 23,
+    name: "Cali",
+    countryLabel: "Colombia",
+    region: "Colombia",
+    position: [3.4516, -76.532],
+  },
+
+  // OTROS LATAM
+  {
+    id: 24,
+    name: "Panama City",
+    countryLabel: "Panamá",
+    region: "Otros",
+    position: [8.9824, -79.5199],
+  },
+  {
+    id: 25,
+    name: "Paraguay",
+    countryLabel: "Asunción",
+    region: "Otros",
+    position: [-25.2637, -57.5759],
+  },
+  {
+    id: 26,
+    name: "Brasil (frontera)",
+    countryLabel: "Foz do Iguaçu",
+    region: "Otros",
+    position: [-25.5163, -54.5854],
+  },
+
+  // CHILE
+  {
+    id: 27,
+    name: "Santiago",
+    countryLabel: "Chile",
+    region: "Chile",
+    position: [-33.4489, -70.6693],
+  },
+  {
+    id: 28,
+    name: "Valparaíso",
+    countryLabel: "Chile",
+    region: "Chile",
+    position: [-33.0472, -71.6127],
+  },
+  {
+    id: 29,
+    name: "Viña del Mar",
+    countryLabel: "Chile",
+    region: "Chile",
+    position: [-33.0245, -71.5518],
+  },
+
+  // MÉXICO
+  {
+    id: 30,
+    name: "Sonora",
+    countryLabel: "México (Hermosillo)",
+    region: "México",
+    position: [29.0729, -110.9559],
+  },
+  {
+    id: 31,
+    name: "Guadalajara",
+    countryLabel: "México",
+    region: "México",
+    position: [20.6597, -103.3496],
+  },
+  {
+    id: 32,
+    name: "Tijuana",
+    countryLabel: "México",
+    region: "México",
+    position: [32.5149, -117.0382],
+  },
+  {
+    id: 33,
+    name: "Sinaloa",
+    countryLabel: "México (Culiacán)",
+    region: "México",
+    position: [24.8091, -107.394],
+  },
+
+  // CANADÁ
+  {
+    id: 34,
+    name: "Montreal",
+    countryLabel: "Canadá",
+    region: "Canadá",
+    position: [45.5017, -73.5673],
+  },
+  {
+    id: 35,
+    name: "Quebec",
+    countryLabel: "Canadá",
+    region: "Canadá",
+    position: [46.8139, -71.208],
+  },
+];
+
 const customIcon = L.icon({
   iconUrl: "/images/deliveries/home_pin.png",
   iconSize: [30, 30],
@@ -30,38 +311,59 @@ const customIcon = L.icon({
   popupAnchor: [0, -40],
 });
 
-const deliveryPoints: {
-  id: number;
-  name: string;
-  position: [number, number];
-}[] = [
-  { id: 1, name: "Sucursal 1", position: [19.4326, -99.1332] },
-  { id: 2, name: "Sucursal 2", position: [19.4526, -99.1632] },
-  { id: 3, name: "Sucursal 3", position: [19.4626, -99.1032] },
-];
-
 // ==== Componente auxiliar para mover el mapa cuando cambia el centro ====
-const MapViewUpdater: React.FC<{ center: [number, number]; zoom?: number }> = ({
-  center,
-  zoom = 5,
-}) => {
+const MapViewUpdater: React.FC<{ center: [number, number] }> = ({ center }) => {
   const map = useMap();
 
   useEffect(() => {
     if (center[0] !== 0 || center[1] !== 0) {
-      map.setView(center, zoom);
+      map.setView(center);
     }
-  }, [center, zoom, map]);
+  }, [center, map]);
 
   return null;
 };
 
+// ==== Componente para escuchar el zoom actual del mapa ====
+const MapZoomHandler: React.FC<{ onZoomChange: (zoom: number) => void }> = ({
+  onZoomChange,
+}) => {
+  const map = useMapEvents({
+    zoom: () => {
+      onZoomChange(map.getZoom());
+    },
+  });
+
+  useEffect(() => {
+    onZoomChange(map.getZoom());
+  }, [map, onZoomChange]);
+
+  return null;
+};
+
+// Helper para país por defecto (España, centrado en Europa)
+const getDefaultCountry = (): Country => {
+  const byCode = COUNTRIES.find((c) => c.code === "es");
+  return byCode || COUNTRIES[0];
+};
+
+// Radio del círculo según zoom (para que se vea “de mapa”, no un manchón gigante)
+const getCityCircleRadius = (zoom: number) => {
+  if (zoom <= 3) return 200000; // 200 km aprox
+  if (zoom <= 5) return 120000;
+  if (zoom <= 7) return 70000;
+  return 40000; // zoom muy cerca: solo la ciudad
+};
+
 const DeliveriesMapClient = () => {
-  const [selectedCountry, setSelectedCountry] = useState<Country>(COUNTRIES[0]);
+  const defaultCountry = getDefaultCountry();
+
+  const [selectedCountry, setSelectedCountry] = useState<Country>(defaultCountry);
   const [isOpen, setIsOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState<[number, number]>(
-    COUNTRIES[0].latlng
+    defaultCountry.latlng
   );
+  const [mapZoom, setMapZoom] = useState<number>(4);
 
   // ref para detectar click fuera del dropdown
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -218,19 +520,51 @@ const DeliveriesMapClient = () => {
       <div className="relative z-10 w-4/5 h-96 rounded-lg overflow-hidden shadow-lg">
         <MapContainer
           center={mapCenter}
-          zoom={5}
+          zoom={mapZoom}
           className="w-full h-full"
+          minZoom={2}
         >
-          {/* actualiza la vista cuando cambia mapCenter */}
-          <MapViewUpdater center={mapCenter} zoom={5} />
+          <MapViewUpdater center={mapCenter} />
+          <MapZoomHandler onZoomChange={setMapZoom} />
 
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-          {deliveryPoints.map((point) => (
-            <Marker key={point.id} position={point.position} icon={customIcon}>
-              <Popup>{point.name}</Popup>
-            </Marker>
-          ))}
+          {/* Círculos que ENCIERRAN cada ciudad (no toda la región) */}
+          {CITY_TAGS.map((city) => {
+            const radius = getCityCircleRadius(mapZoom);
+            return (
+              <React.Fragment key={city.id}>
+                <Circle
+                  center={city.position}
+                  radius={radius}
+                  pathOptions={{
+                    color: "#1D4ED8", // azul tipo mapa
+                    weight: 1,
+                    fillColor: "#1D4ED8",
+                    fillOpacity: 0.12,
+                  }}
+                />
+                <Marker position={city.position} icon={customIcon}>
+                  {mapZoom >= 5 && (
+                    <Tooltip direction="top" offset={[0, -20]} permanent>
+                      <span className="text-xs font-semibold">
+                        {city.name}
+                      </span>
+                    </Tooltip>
+                  )}
+                  <Popup>
+                    <div>
+                      <strong>{city.name}</strong>
+                      <br />
+                      {city.countryLabel}
+                      <br />
+                      Entrega rápida disponible
+                    </div>
+                  </Popup>
+                </Marker>
+              </React.Fragment>
+            );
+          })}
         </MapContainer>
       </div>
     </section>

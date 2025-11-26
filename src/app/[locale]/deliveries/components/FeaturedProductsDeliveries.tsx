@@ -143,7 +143,6 @@ const ProductCarousel = () => {
 
   return (
     <section className="py-10 bg-[#EAF2F6] hidden lg:flex text-center">
-      <h2 className="text-3xl font-bold mb-6">Productos Encriptados</h2>
       <div className="max-w-6xl mx-auto">
         <Slider {...settings}>
           {products.map((product) => {
