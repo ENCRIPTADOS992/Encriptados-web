@@ -53,6 +53,7 @@
     "swiper": "^11.2.8",
     "swr": "^2.3.4",
     "tailwind-clip-path": "^1.0.0",
+    "world-countries": "^5.1.0",
     "yup": "^1.4.0",
     "zod": "^4.0.17",
     "zustand": "^5.0.1"
