@@ -29,16 +29,20 @@ const HowItWorksDeliveries = () => {
     <section className="py-16 bg-[#EAF2F6] flex flex-col items-center relative">
       {/* fondo degradado superior */}
       <div
-        className="
-          absolute top-0 left-1/2 -translate-x-1/2
-          bg-gradient-to-r from-black via-black to-[#35CDFB]
-          rounded-[44px]
-          z-0
-          w-[414px] h-[1340px]         
-          sm:w-[712px] sm:h-[454px]     
-          lg:w-[1272px] lg:h-[454px]   
-        "
-      />
+  className="
+    absolute top-0 left-0
+    w-full h-[1400px]                 
+    bg-gradient-to-r from-black via-black to-[#35CDFB]
+    rounded-none                     
+    z-0
+
+    sm:left-1/2 sm:-translate-x-1/2  
+    sm:w-[712px] sm:h-[454px]
+    sm:rounded-[44px]                
+    lg:w-[1272px] lg:h-[454px]       
+  "
+/>
+
 
       <div
   className="
@@ -76,7 +80,7 @@ const HowItWorksDeliveries = () => {
           grid grid-cols-1
           sm:grid-cols-3
           lg:grid-cols-3
-          gap-[6px]     
+          gap-6 sm:gap-[6px]  
           w-[374px] lg:w-[930px]
           w-[374px] sm:w-[672px]
           mx-auto
