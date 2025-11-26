@@ -12,6 +12,8 @@ import { JoinUsModalProvider } from "../context/JoinUsModalContext";
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import LogoCarousel from "./LogoCarousel";
 import RenatiEncryptedCellphone from "./RenatiEncryptedCellphone";
+import RenatiEncryptedCellphoneIpad from "./RenatiEncryptedCellphoneIpad";
+import RenatiEncryptedCellphoneMobil from "./RenatiEncryptedCellphoneMobil";
 import DownloadAppBanner from "./DownloadAppBanner";
 
 const DeliveriesPage = () => {
@@ -26,6 +28,8 @@ const DeliveriesPage = () => {
           <DeliveriesMap />
           <HowItWorksDeliveries />
           <RenatiEncryptedCellphone />
+          <RenatiEncryptedCellphoneIpad/>
+          <RenatiEncryptedCellphoneMobil />
           <FeaturedProductsDeliveries />
           <LogoCarousel />
           {/* <DownloadAppBanner/> */}
