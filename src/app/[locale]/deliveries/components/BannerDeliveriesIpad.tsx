@@ -29,7 +29,7 @@ const BannerDeliveriesIpad = () => {
         <div
           className="
             absolute z-0
-            top-[-40px] left-[554px]
+            top-[-40px] left-[484px]
             w-[270px] h-[350px]
           "
         >

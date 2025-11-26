@@ -14,6 +14,8 @@ import LogoCarousel from "./LogoCarousel";
 import RenatiEncryptedCellphone from "./RenatiEncryptedCellphone";
 import RenatiEncryptedCellphoneIpad from "./RenatiEncryptedCellphoneIpad";
 import RenatiEncryptedCellphoneMobil from "./RenatiEncryptedCellphoneMobil";
+import ProductCarouselTablet from "./ProductCarouselTablet";
+import ProductCarouselMobile from "./ProductCarouselMobile";
 import DownloadAppBanner from "./DownloadAppBanner";
 
 const DeliveriesPage = () => {
@@ -31,6 +33,8 @@ const DeliveriesPage = () => {
           <RenatiEncryptedCellphoneIpad/>
           <RenatiEncryptedCellphoneMobil />
           <FeaturedProductsDeliveries />
+          <ProductCarouselTablet/>
+          <ProductCarouselMobile/>
           <LogoCarousel />
           {/* <DownloadAppBanner/> */}
           {/* <FAQDeliveries /> */}

@@ -6,8 +6,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter, usePathname } from "next/navigation";
 
-console.log("[ProductCarousel] 📦 Módulo cargado");
-
 const products = [
   {
     id: 1,
@@ -75,37 +73,23 @@ const products = [
   },
 ];
 
-const ProductCarousel = () => {
+const ProductCarouselTablet = () => {
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("[ProductCarousel] ✅ Componente montado");
+    console.log("[ProductCarouselTablet] ✅ Componente montado");
   }, []);
 
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3, // 3 cards
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
   };
 
   const handleBuyClick = (
@@ -113,84 +97,93 @@ const ProductCarousel = () => {
     href: string,
     productName: string
   ) => {
-    e.preventDefault();       
-    e.stopPropagation();     
+    e.preventDefault();
+    e.stopPropagation();
 
     let finalHref = href;
     const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
     if (match) {
-      const locale = match[1]; 
+      const locale = match[1];
       if (!href.startsWith(`/${locale}/`)) {
-        finalHref = `/${locale}${href}`; 
+        finalHref = `/${locale}${href}`;
       }
     }
 
-
     try {
       router.push(finalHref);
-      console.log("[ProductCarousel] 🟢 router.push ejecutado");
+      console.log("[ProductCarouselTablet] 🟢 router.push ejecutado");
     } catch (error) {
-      console.error("[ProductCarousel] 🔴 Error en router.push", error);
+      console.error("[ProductCarouselTablet] 🔴 Error en router.push", error);
       if (typeof window !== "undefined") {
-        console.log(
-          "[ProductCarousel] 🔁 Fallback window.location.assign",
-          finalHref
-        );
         window.location.assign(finalHref);
       }
     }
   };
 
   return (
-    <section className="py-10 bg-[#EAF2F6] hidden lg:flex text-center">
-      <h2 className="text-3xl font-bold mb-6">Productos Encriptados</h2>
-      <div className="max-w-6xl mx-auto">
+    <section className="py-10 bg-[#EAF2F6] text-center hidden sm:block lg:hidden">
+      <div className="max-w-5xl mx-auto px-4">
         <Slider {...settings}>
-          {products.map((product) => {
-            
-            return (
-              <div key={product.id} className="px-3">
-                <div className="bg-white shadow-lg rounded-xl p-6 text-center flex flex-col justify-between items-center relative overflow-hidden h-[450px]">
-                  <p className="text-sm font-small tracking-widest text-[#102542] uppercase mb-2">
+          {products.map((product) => (
+            <div key={product.id} className="flex justify-center px-2">
+              <div
+                className="
+                relative
+                w-[227px] h-[353px]
+                rounded-[24px]
+                overflow-hidden
+              "
+                style={{
+                  background:
+                    "linear-gradient(180deg, #FFFFFF 0%, #A4EAFF 100%)",
+                }}
+              >
+                <div className="relative z-10 w-[196px] mx-auto mt-6 flex flex-col items-center text-center gap-3">
+                  <p className="w-full text-[10px] font-medium leading-[10px] tracking-[0.25em] text-[#102542] uppercase">
                     TELEFONO ENCRIPTADO
                   </p>
 
-                  <h3 className="text-lg text-[#102542] font-bold">
+                  <h3 className="w-full text-[14px] font-bold leading-[14px] tracking-[0.01em] text-[#102542]">
                     {product.name}
                   </h3>
-                  <p className="text-black-800 font-normal text-ml">
+
+                  <p className="w-full text-[14px] font-medium leading-[14px] tracking-[0.01em] text-[#102542]">
                     {product.price}
-                  </p>
-                  <p className="text-[#35CDFB] line-through text-sm">
-                    {product.discount}
                   </p>
 
                   <button
-                    type="button" 
-                    className="mt-3 bg-[#102542] text-white px-4 py-2 rounded-[30px] hover:bg-blue-600 transition"
-                    onClick={(e) => {
-                      handleBuyClick(e, product.href, product.name);
-                    }}
+                    type="button"
+                    className="
+                    mt-2
+                    bg-[#102542] text-white
+                    rounded-[100px]
+                    px-[44px] py-[13px]
+                    text-xs
+                    hover:bg-blue-600
+                    transition
+                  "
+                    onClick={(e) =>
+                      handleBuyClick(e, product.href, product.name)
+                    }
                   >
                     Comprar Ahora
                   </button>
+                </div>
 
-                  <div className="relative w-full flex justify-center items-end mt-auto">
-                    <div className="absolute bottom-[-25%] left-[-10%] w-[120%] h-60 bg-[#35CDFB] transform skew-y-6 rounded-[40px]" />
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="relative w-4/5 max-h-[230px] object-contain z-10"
-                    />
-                  </div>
+                <div className="absolute -bottom- left-1/2 -translate-x-1/2 w-[186px] h-[233px]">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-[196px] h-[233px] object-contain"
+                  />
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </Slider>
       </div>
     </section>
   );
 };
 
-export default ProductCarousel;
+export default ProductCarouselTablet;
