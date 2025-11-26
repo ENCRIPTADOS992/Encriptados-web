@@ -17,7 +17,6 @@ import L from "leaflet";
 import { CircleFlag } from "react-circle-flags";
 import rawCountries from "world-countries";
 
-// ==== Tipado de país y lista con coordenadas ====
 type Country = {
   code: string;
   name: string;
@@ -29,7 +28,7 @@ export const COUNTRIES: Country[] = rawCountries.map((country) => ({
   name: country.translations?.spa?.common || country.name.common,
   latlng: country.latlng
     ? [country.latlng[0], country.latlng[1]]
-    : [0, 0], // fallback
+    : [0, 0],
 }));
 
 type RegionId = "Europa" | "Colombia" | "Chile" | "México" | "Canadá" | "Otros";
@@ -42,9 +41,7 @@ type CityTag = {
   position: [number, number];
 };
 
-// ==== Ciudades de la lista con coordenadas aproximadas ====
 const CITY_TAGS: CityTag[] = [
-  // EUROPA - España
   {
     id: 1,
     name: "Bilbao",
@@ -116,7 +113,6 @@ const CITY_TAGS: CityTag[] = [
     position: [39.4699, -0.3763],
   },
 
-  // EUROPA - Otros países
   {
     id: 11,
     name: "Belgrado",
@@ -188,7 +184,6 @@ const CITY_TAGS: CityTag[] = [
     position: [39.0, 16.6],
   },
 
-  // COLOMBIA
   {
     id: 21,
     name: "Medellín",
@@ -211,7 +206,6 @@ const CITY_TAGS: CityTag[] = [
     position: [3.4516, -76.532],
   },
 
-  // OTROS LATAM
   {
     id: 24,
     name: "Panama City",
@@ -234,7 +228,6 @@ const CITY_TAGS: CityTag[] = [
     position: [-25.5163, -54.5854],
   },
 
-  // CHILE
   {
     id: 27,
     name: "Santiago",
@@ -257,7 +250,6 @@ const CITY_TAGS: CityTag[] = [
     position: [-33.0245, -71.5518],
   },
 
-  // MÉXICO
   {
     id: 30,
     name: "Sonora",
@@ -287,7 +279,6 @@ const CITY_TAGS: CityTag[] = [
     position: [24.8091, -107.394],
   },
 
-  // CANADÁ
   {
     id: 34,
     name: "Montreal",
@@ -311,7 +302,6 @@ const customIcon = L.icon({
   popupAnchor: [0, -40],
 });
 
-// ==== Componente auxiliar para mover el mapa cuando cambia el centro ====
 const MapViewUpdater: React.FC<{ center: [number, number] }> = ({ center }) => {
   const map = useMap();
 
@@ -324,7 +314,6 @@ const MapViewUpdater: React.FC<{ center: [number, number] }> = ({ center }) => {
   return null;
 };
 
-// ==== Componente para escuchar el zoom actual del mapa ====
 const MapZoomHandler: React.FC<{ onZoomChange: (zoom: number) => void }> = ({
   onZoomChange,
 }) => {
@@ -341,18 +330,16 @@ const MapZoomHandler: React.FC<{ onZoomChange: (zoom: number) => void }> = ({
   return null;
 };
 
-// Helper para país por defecto (España, centrado en Europa)
 const getDefaultCountry = (): Country => {
   const byCode = COUNTRIES.find((c) => c.code === "es");
   return byCode || COUNTRIES[0];
 };
 
-// Radio del círculo según zoom (para que se vea “de mapa”, no un manchón gigante)
 const getCityCircleRadius = (zoom: number) => {
-  if (zoom <= 3) return 200000; // 200 km aprox
+  if (zoom <= 3) return 200000; 
   if (zoom <= 5) return 120000;
   if (zoom <= 7) return 70000;
-  return 40000; // zoom muy cerca: solo la ciudad
+  return 40000; 
 };
 
 const DeliveriesMapClient = () => {
@@ -365,7 +352,6 @@ const DeliveriesMapClient = () => {
   );
   const [mapZoom, setMapZoom] = useState<number>(4);
 
-  // ref para detectar click fuera del dropdown
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   // Cerrar dropdown al hacer click fuera
