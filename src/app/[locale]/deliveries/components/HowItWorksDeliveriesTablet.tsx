@@ -24,14 +24,14 @@ const steps = [
   },
 ];
 
-const HowItWorksDeliveries: React.FC = () => {
+const HowItWorksDeliveriesTablet: React.FC = () => {
   return (
-    <section className="py-16 bg-[#EAF2F6] hidden lg:flex lg:flex-col lg:items-center relative">
-      {/* Fondo degradado superior (usa ya tus tamaños para lg) */}
+    <section className="py-12 bg-[#EAF2F6] hidden sm:flex lg:hidden flex-col items-center relative">
+      {/* Fondo tablet */}
       <div
         className="
           absolute top-0 left-1/2 -translate-x-1/2
-          w-[1272px] h-[454px]
+          w-[712px] h-[454px]
           bg-gradient-to-r from-black via-black to-[#35CDFB]
           rounded-[44px]
           z-0
@@ -43,32 +43,32 @@ const HowItWorksDeliveries: React.FC = () => {
         className="
           relative z-10 text-center
           w-full mx-auto
-          max-w-5xl px-8
+          max-w-[672px] px-6
           py-6 mb-8
         "
       >
         <h2
           className="
+            w-[348px]
+            h-[58px]
             text-white font-bold
-            text-4xl
-            leading-tight
-            whitespace-nowrap
+            mx-auto
+            text-[24px]
+            gap-1px
+            whitespace-normal
           "
         >
-          ¿Cómo funciona la{" "}
-          <span className="border-b-4 border-[#35CDFB] pb-1">
-            Entrega Rápida
-          </span>{" "}
-          de Encriptados?
+          ¿Cómo funciona la Entrega Rápida de Encriptados?
         </h2>
       </div>
 
-      {/* Tarjetas – escritorio */}
+      {/* Tarjetas – tablet */}
       <div
         className="
           relative z-10
           grid grid-cols-3
-          w-[930px]
+          gap-2
+          w-[672px]
           mx-auto
         "
       >
@@ -78,26 +78,25 @@ const HowItWorksDeliveries: React.FC = () => {
             className="
               bg-white rounded-[24px] shadow-lg overflow-hidden
               flex flex-col justify-between
-              w-[306px] h-[510px]
-              px-5 py-6
+              w-[222px] h-[370px]
+              px-4 py-4
             "
           >
-            {/* Texto */}
             <div
               className="
                 flex flex-col items-start
-                w-[268px]
-                h-[120px]
-                gap-[11px]
-                min-h-[120px]
+                w-[194px]
+                h-[87px]
+                gap-[2px]
+                
               "
             >
               <h3
                 className="
-                  font-semibold text-left
-                  text-[18px]
-                  mb-3
-                  min-h-[38px]
+                  font-bold
+                  text-[14px]
+                  w-[167px]
+                  mb-1 mt-0
                 "
               >
                 {step.title}
@@ -106,22 +105,22 @@ const HowItWorksDeliveries: React.FC = () => {
               <p
                 className="
                   text-gray-600
-                  text-[16px]
+                  text-[12px]
+                  w-[194px]
                 "
               >
                 {step.description}
               </p>
             </div>
 
-            {/* Imagen */}
-            <div className="w-full mt-8">
+            <div className="w-full mt-6">
               <img
                 src={step.image}
                 alt={step.title}
                 className="
                   mx-auto object-cover
-                  w-[259px] h-[298px]
-                  rounded-[16px]
+                  w-[194px] h-[215px]
+                  rounded-[18px]
                 "
               />
             </div>
@@ -132,4 +131,4 @@ const HowItWorksDeliveries: React.FC = () => {
   );
 };
 
-export default HowItWorksDeliveries;
+export default HowItWorksDeliveriesTablet;

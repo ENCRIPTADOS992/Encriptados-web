@@ -13,27 +13,26 @@ const steps = [
     title: "Contáctanos por Telegram",
     description:
       "Contáctanos por nuestro canal de Telegram y coordina la compra de tu celular encriptado",
-    image: "/images/deliveries/imagepeople.png",
+    image: "/images/deliveries/card2.png",
   },
   {
     id: 3,
     title: "Recoge tu celular encriptado",
     description:
       "Una vez coordinada la entrega, recoge tu celular encriptado y disfruta de comunicaciones seguras",
-    image: "/images/deliveries/image (6).png",
+    image: "/images/deliveries/card3.png",
   },
 ];
 
-const HowItWorksDeliveries: React.FC = () => {
+const HowItWorksDeliveriesMobile: React.FC = () => {
   return (
-    <section className="py-16 bg-[#EAF2F6] hidden lg:flex lg:flex-col lg:items-center relative">
-      {/* Fondo degradado superior (usa ya tus tamaños para lg) */}
+    <section className="py-12 bg-[#EAF2F6] flex sm:hidden flex-col items-center relative">
+      {/* Fondo mobile */}
       <div
         className="
-          absolute top-0 left-1/2 -translate-x-1/2
-          w-[1272px] h-[454px]
+          absolute
+          inset-0
           bg-gradient-to-r from-black via-black to-[#35CDFB]
-          rounded-[44px]
           z-0
         "
       />
@@ -43,32 +42,29 @@ const HowItWorksDeliveries: React.FC = () => {
         className="
           relative z-10 text-center
           w-full mx-auto
-          max-w-5xl px-8
+          max-w-[322px] px-4
           py-6 mb-8
         "
       >
         <h2
           className="
             text-white font-bold
-            text-4xl
+            text-[20px]
             leading-tight
-            whitespace-nowrap
+            whitespace-normal
           "
         >
-          ¿Cómo funciona la{" "}
-          <span className="border-b-4 border-[#35CDFB] pb-1">
-            Entrega Rápida
-          </span>{" "}
-          de Encriptados?
+          ¿Cómo funciona la Entrega Rápida de Encriptados?
         </h2>
       </div>
 
-      {/* Tarjetas – escritorio */}
+      {/* Tarjetas – mobile en columna */}
       <div
         className="
           relative z-10
-          grid grid-cols-3
-          w-[930px]
+          grid grid-cols-1
+          gap-6
+          w-[374px]
           mx-auto
         "
       >
@@ -76,28 +72,26 @@ const HowItWorksDeliveries: React.FC = () => {
           <div
             key={step.id}
             className="
-              bg-white rounded-[24px] shadow-lg overflow-hidden
-              flex flex-col justify-between
-              w-[306px] h-[510px]
-              px-5 py-6
+              bg-white rounded-[18px] shadow-lg overflow-hidden
+              flex flex-col
+              w-[374px] h-[370px]
+              px-4 py-4
             "
           >
-            {/* Texto */}
             <div
               className="
-                flex flex-col items-start
-                w-[268px]
-                h-[120px]
-                gap-[11px]
-                min-h-[120px]
-              "
+    flex flex-col
+    gap-2
+    w-[318px]
+    mx-auto
+  "
             >
               <h3
                 className="
-                  font-semibold text-left
+                  font-semibold
                   text-[18px]
-                  mb-3
-                  min-h-[38px]
+                  mb-1
+                  mt-4
                 "
               >
                 {step.title}
@@ -106,21 +100,21 @@ const HowItWorksDeliveries: React.FC = () => {
               <p
                 className="
                   text-gray-600
-                  text-[16px]
+                  text-[14px]
+                  mb-1
                 "
               >
                 {step.description}
               </p>
             </div>
 
-            {/* Imagen */}
-            <div className="w-full mt-8">
+            <div className="w-full mt-6">
               <img
                 src={step.image}
                 alt={step.title}
                 className="
                   mx-auto object-cover
-                  w-[259px] h-[298px]
+                  w-[318px] h-[215px]
                   rounded-[16px]
                 "
               />
@@ -132,4 +126,4 @@ const HowItWorksDeliveries: React.FC = () => {
   );
 };
 
-export default HowItWorksDeliveries;
+export default HowItWorksDeliveriesMobile;

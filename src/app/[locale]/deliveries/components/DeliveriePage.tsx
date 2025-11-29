@@ -5,6 +5,8 @@ import BannerDeliveriesIpad from "./BannerDeliveriesIpad";
 import BannerDeliveriesMobile from "./BannerDeliveriesMobile";
 import DeliveriesMap from "./DeliveriesMap";
 import HowItWorksDeliveries from "./HowItWorksDeliveries";
+import HowItWorksDeliveriesTablet from "./HowItWorksDeliveriesTablet";
+import HowItWorksDeliveriesMobile from "./HowItWorksDeliveriesMobile";
 import FeaturedProductsDeliveries from "./FeaturedProductsDeliveries";
 import ModalJoinUsDeliveries from "./ModalJoinUsDeliveries";
 import FAQDeliveries from "./FAQDeliveries";
@@ -29,6 +31,8 @@ const DeliveriesPage = () => {
           <BannerDeliveriesMobile/>
           <DeliveriesMap />
           <HowItWorksDeliveries />
+          <HowItWorksDeliveriesTablet />
+          <HowItWorksDeliveriesMobile />
           <RenatiEncryptedCellphone />
           <RenatiEncryptedCellphoneIpad/>
           <RenatiEncryptedCellphoneMobil />
