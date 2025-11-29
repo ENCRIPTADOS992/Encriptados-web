@@ -150,23 +150,20 @@ const ProductCarousel = () => {
             return (
               <div key={product.id} className="px-3">
                 <div className="bg-white shadow-lg rounded-xl p-6 text-center flex flex-col justify-between items-center relative overflow-hidden h-[450px]">
-                  <p className="text-sm font-small tracking-widest text-[#102542] uppercase mb-2">
-                    TELEFONO ENCRIPTADO
-                  </p>
-
-                  <h3 className="text-lg text-[#102542] font-bold">
-                    {product.name}
-                  </h3>
-                  <p className="text-black-800 font-normal text-ml">
-                    {product.price}
-                  </p>
-                  <p className="text-[#35CDFB] line-through text-sm">
-                    {product.discount}
-                  </p>
-
+                <div className="flex flex-col w-[196px] gap-1">
+                    <p className="text-[14px] font-small tracking-widest text-[#102542] uppercase">
+                      TELEFONO ENCRIPTADO
+                    </p>
+                    <h3 className="text-[18px] text-[#102542] font-bold">
+                      {product.name}
+                    </h3>
+                    <p className="text-[18px] text-black-800 font-normal">
+                      {product.price}
+                    </p>
+                </div>
                   <button
                     type="button" 
-                    className="mt-3 bg-[#102542] text-white px-4 py-2 rounded-[30px] hover:bg-blue-600 transition"
+                    className="mt-3 bg-[#102542] text-white px-4 py-2 rounded-[30px] hover:bg-blue-600 transition w-[193px] h-[44px]"
                     onClick={(e) => {
                       handleBuyClick(e, product.href, product.name);
                     }}
@@ -175,11 +172,11 @@ const ProductCarousel = () => {
                   </button>
 
                   <div className="relative w-full flex justify-center items-end mt-auto">
-                    <div className="absolute bottom-[-25%] left-[-10%] w-[120%] h-60 bg-[#35CDFB] transform skew-y-6 rounded-[40px]" />
+                    <div className="absolute bottom-[-25%] left-[-10%] w-[820%] h-60 bg-[#35CDFB] transform skew-y-6 rounded-[40px]" />
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="relative w-4/5 max-h-[230px] object-contain z-10"
+                      className="relative w-[294px] h-[351px] object-contain z-10"
                     />
                   </div>
                 </div>
