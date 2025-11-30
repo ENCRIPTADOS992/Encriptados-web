@@ -128,45 +128,44 @@ const ProductCarouselMobile = () => {
             <div key={product.id} className="px-2">
               <div className="bg-white shadow-lg rounded-xl p-5 text-center flex flex-col justify-between items-center relative overflow-hidden h-[420px] rounded-24px">
                 <div
-  className="
-    absolute
-    top-[24px]
-    left-1/2 -translate-x-1/2
-    flex flex-col
-    gap-1
-    w-[196px]
-    items-center
-    text-center
-  "
->
-  <p className="text-[12px] tracking-widest text-[#102542] uppercase mb-2">
-    TELEFONO ENCRIPTADO
-  </p>
+                  className="
+                    absolute
+                    top-[24px]
+                    left-1/2 -translate-x-1/2
+                    flex flex-col
+                    gap-1
+                    w-[196px]
+                    items-center
+                    text-center
+                  "
+                >
+                  <p className="text-[12px] tracking-widest text-[#102542] uppercase mb-2">
+                    TELEFONO ENCRIPTADO
+                  </p>
 
-  <h3 className="text-base text-[#102542] font-bold">
-    {product.name}
-  </h3>
+                  <h3 className="text-base text-[#102542] font-bold">
+                    {product.name}
+                  </h3>
 
-  <p className="text-black-800 font-normal text-sm">
-    {product.price}
-  </p>
+                  <p className="text-black-800 font-normal text-sm">
+                    {product.price}
+                  </p>
 
-  <button
-    type="button"
-    className="
-      w-full h-[34px] mt-3
-      bg-[#102542] text-white
-      px-5 py-2
-      rounded-[30px]
-      hover:bg-blue-600
-      transition text-sm
-    "
-    onClick={(e) => handleBuyClick(e, product.href, product.name)}
-  >
-    Comprar Ahora
-  </button>
-</div>
-
+                  <button
+                    type="button"
+                    className="
+                      w-full h-[34px] mt-3
+                      bg-[#102542] text-white
+                      px-5 py-2
+                      rounded-[30px]
+                      hover:bg-blue-600
+                      transition text-sm
+                    "
+                    onClick={(e) => handleBuyClick(e, product.href, product.name)}
+                  >
+                    Comprar Ahora
+                  </button>
+                </div>
 
                 <div className="relative w-full flex justify-center items-end mt-28">
                   <div className="absolute bottom-[-28%] left-[-20%] w-[980%] h-40 bg-[#35CDFB] transform skew-y-6 rounded-[40px]" />
