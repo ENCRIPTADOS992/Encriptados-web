@@ -4,6 +4,7 @@
 import React from "react";
 import Image from "next/image";
 import { CircleFlag } from "react-circle-flags";
+import { DataCostsByCountry } from "./DataCostsByCountry";
 
 const CardInfo = () => {
   return (
@@ -75,29 +76,7 @@ const CardInfo = () => {
             ))}
           </ul>
         </div>
-        <button
-          type="button"
-          className="
-            w-full md:w-auto
-            inline-flex items-center justify-center gap-2
-            rounded-[12px]
-            border border-[#C4EAD2]
-            bg-[#E8F9F0]
-            px-4 py-2
-            text-[13px] font-medium text-[#1E8A4C]
-            mb-6
-          "
-        >
-          <span className="relative w-4 h-4">
-            <Image
-              src="/images/encrypted-sim/icons/travel_explore.png"
-              alt="Explorar países"
-              fill
-              className="object-contain"
-            />
-          </span>
-          <span>Ver costos de GB por país</span>
-        </button>
+        <DataCostsByCountry />
 
         {/* Sin fecha límite */}
         <div className="flex items-center gap-1 text-[12px] mb-2">
@@ -176,15 +155,15 @@ const CardInfo = () => {
   <button
     type="button"
     className="
-      w-full                    /* mobile: ancho completo (~374px del card) */
-      h-[54px]                 /* mobile: alto 54px */
-      rounded-[50px]           /* mobile: radius 50px */
-      px-6                     /* aprox 24px horizontal */
+      w-full                    
+      h-[54px]                
+      rounded-[50px]           
+      px-6                    
       flex items-center justify-center gap-1
       bg-black text-white
       text-[14px] font-semibold
 
-      sm:flex-1                /* en sm+ volvemos al diseño anterior */
+      sm:flex-1               
       sm:h-[48px]
       sm:rounded-[999px]
       sm:px-4
