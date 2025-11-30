@@ -85,7 +85,7 @@ const ProductCarouselMobile = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,       // 👉 Mobile: 1 card
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -121,41 +121,59 @@ const ProductCarouselMobile = () => {
   };
 
   return (
-    <section className="py-10 bg-[#EAF2F6] text-center md:hidden">
-      <h2 className="text-2xl font-bold mb-6">Productos Encriptados</h2>
+    <section className="py-10 text-center md:hidden">
       <div className="max-w-md mx-auto">
         <Slider {...settings}>
           {products.map((product) => (
             <div key={product.id} className="px-2">
-              <div className="bg-white shadow-lg rounded-xl p-5 text-center flex flex-col justify-between items-center relative overflow-hidden h-[420px]">
-                <p className="text-[10px] tracking-widest text-[#102542] uppercase mb-2">
-                  TELEFONO ENCRIPTADO
-                </p>
+              <div className="bg-white shadow-lg rounded-xl p-5 text-center flex flex-col justify-between items-center relative overflow-hidden h-[420px] rounded-24px">
+                <div
+  className="
+    absolute
+    top-[24px]
+    left-1/2 -translate-x-1/2
+    flex flex-col
+    gap-1
+    w-[196px]
+    items-center
+    text-center
+  "
+>
+  <p className="text-[12px] tracking-widest text-[#102542] uppercase mb-2">
+    TELEFONO ENCRIPTADO
+  </p>
 
-                <h3 className="text-base text-[#102542] font-bold">
-                  {product.name}
-                </h3>
-                <p className="text-black-800 font-normal text-sm">
-                  {product.price}
-                </p>
-                <p className="text-[#35CDFB] line-through text-xs">
-                  {product.discount}
-                </p>
+  <h3 className="text-base text-[#102542] font-bold">
+    {product.name}
+  </h3>
 
-                <button
-                  type="button"
-                  className="mt-3 bg-[#102542] text-white px-5 py-2 rounded-[30px] hover:bg-blue-600 transition text-sm"
-                  onClick={(e) => handleBuyClick(e, product.href, product.name)}
-                >
-                  Comprar Ahora
-                </button>
+  <p className="text-black-800 font-normal text-sm">
+    {product.price}
+  </p>
 
-                <div className="relative w-full flex justify-center items-end mt-auto">
-                  <div className="absolute bottom-[-28%] left-[-20%] w-[140%] h-40 bg-[#35CDFB] transform skew-y-6 rounded-[40px]" />
+  <button
+    type="button"
+    className="
+      w-full h-[34px] mt-3
+      bg-[#102542] text-white
+      px-5 py-2
+      rounded-[30px]
+      hover:bg-blue-600
+      transition text-sm
+    "
+    onClick={(e) => handleBuyClick(e, product.href, product.name)}
+  >
+    Comprar Ahora
+  </button>
+</div>
+
+
+                <div className="relative w-full flex justify-center items-end mt-28">
+                  <div className="absolute bottom-[-28%] left-[-20%] w-[980%] h-40 bg-[#35CDFB] transform skew-y-6 rounded-[40px]" />
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="relative w-4/5 max-h-[200px] object-contain z-10"
+                    className="relative w-[278px] h-[330px] object-contain z-10"
                   />
                 </div>
               </div>
