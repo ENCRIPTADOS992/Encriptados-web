@@ -46,9 +46,9 @@ const BneSimPage = () => {
           <div className="p-4">
             <FaqsBne />
         </div>
-        <div className="max-w-[1100px] m-auto pb-20">
+        {/* <div className="max-w-[1100px] m-auto pb-20">
           <QRBanner title="Descarga la App para iOS & Android" />
-        </div>
+        </div> */}
       </div>
     </>
   );

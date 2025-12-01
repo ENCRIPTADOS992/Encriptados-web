@@ -232,6 +232,18 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       filters.simCountry || filters.regionOrCountry;
     const selectedCountryLabel = filters.simCountryLabel; 
 
+    if (selectedCountryCode?.toUpperCase() === "GLOBAL") {
+    const tag = v?.gb || v?.name || undefined;
+
+    return {
+      country: {
+        label: "Global",
+        flagUrl: "/images/icons/global.svg",
+      },
+      tag,
+    };
+  }
+    
     let flagCode: string | undefined;
     let countryLabel: string | undefined;
 

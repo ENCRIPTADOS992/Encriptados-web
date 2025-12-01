@@ -9,6 +9,34 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
 
+
+const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
+  return (
+    <span
+      className="
+        rounded-full flex items-center justify-center bg-white
+      "
+      style={{
+        width: size,
+        height: size,
+      }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width={size * 0.6}
+        height={size * 0.6}
+        fill="none"
+      >
+        <circle cx="12" cy="12" r="10.5" stroke="#3393F7" strokeWidth="1.5" />
+        <path
+          d="M6.5 10.5l1.2-.6 1 .5v1l1 1 .4 1.4-.3 1.2 1.4.6.5 1 .9.4h1l.4-1v-1l1-1 .5-1 .5-.5 1 .5h1l1-1v-1l-.5-1-.5-.5H17l-.5-1 .4-.9v-1l-1-.5-1 .5-.5 1-1 .5h-1l-1-.5-.5-1-1-.5-1 .5-.5 1-.5.5-.5 1z"
+          fill="#3393F7"
+        />
+      </svg>
+    </span>
+  );
+};
+
 interface CardSimProps {
   productImage: string;
   features: string[];
@@ -75,29 +103,35 @@ const CardProduct: React.FC<CardSimProps> = ({
         />
 
         {badges?.country?.label ? (
-  <div className="absolute left-2 bottom-2 flex items-center bg-white/90 rounded-full px-2 py-1 shadow-md">
-    <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center">
-      {badges.country.flagUrl ? (
-        <Image
-          src={badges.country.flagUrl}
-          alt={badges.country.label}
-          width={24}
-          height={24}
-          className="w-full h-full object-cover rounded-full"
-        />
-      ) : badges.country.code ? (
-        <CircleFlag
-          countryCode={badges.country.code.toLowerCase()}
-          className="w-full h-full"
-        />
-      ) : null}
-    </div>
+          <div className="absolute left-2 bottom-2 flex items-center bg-white/90 rounded-full px-2 py-1 shadow-md">
+            <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center">
+              {filters.regionOrCountryType === "country" ? (
+                badges.country.flagUrl ? (
+                  <Image
+                    src={badges.country.flagUrl}
+                    alt={badges.country.label}
+                    width={24}
+                    height={24}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : badges.country.code ? (
+                  <CircleFlag
+                    countryCode={badges.country.code.toLowerCase()}
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <RegionIcon size={24} />
+                )
+              ) : (
+                <RegionIcon size={24} />
+              )}
+            </div>
 
-    <span className="ml-2 text-[13px] font-bold text-black leading-none">
-      {badges.country.label}
-    </span>
-  </div>
-) : null}
+              <span className="ml-2 text-[13px] font-bold text-black leading-none">
+                {badges.country.label}
+              </span>
+            </div>
+        ) : null}
 
       </div>
 

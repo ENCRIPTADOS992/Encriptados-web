@@ -115,20 +115,19 @@ const WhereUseSimSection = () => {
                 `}
                       >
                         <span
-  className={`
+                          className={`
     relative w-6 h-6 mb-1
     transition
     ${isActive ? "filter-none opacity-100" : "grayscale opacity-60"}
   `}
->
-  <Image
-    src={option.icon}
-    alt={option.label}
-    fill
-    className="object-contain"
-  />
-</span>
-
+                        >
+                          <Image
+                            src={option.icon}
+                            alt={option.label}
+                            fill
+                            className="object-contain"
+                          />
+                        </span>
 
                         <span>{option.label}</span>
                       </button>
@@ -144,71 +143,43 @@ const WhereUseSimSection = () => {
                     Región/País
                   </p>
 
-                  <button
-                    type="button"
-                    className="
-              inline-flex items-center
-              w-[190px] h-[64px]
-              rounded-[12px]
-              border border-[#D0D0D0]
-              bg-[#EDEDED]
-              px-[14px]
-            "
-                  >
-                    <div className="flex items-center gap-2 h-[24px]">
-                      <span className="inline-flex w-[24px] h-[24px]">
-                        <CircleFlag
-                          countryCode="co"
-                          style={{ width: "24px", height: "24px" }}
-                        />
-                      </span>
-
-                      <span
-                        className="
-                  inline-flex items-center justify-center
-                  text-[12px] font-medium
-                  text-[#171717]
-                  w-[102px] h-[15px]
-                  text-center
-                "
-                      >
-                        Global / Colombia
-                      </span>
-                    </div>
-                  </button>
+                  <FilterRegionCountry
+                    filters={filters}
+                    updateFilters={updateFilters}
+                    service={activeTimService}
+                    variant="tim" // 👈 activamos el modo nuevo
+                  />
                 </div>
               )}
             </div>
 
             {/* DERECHA: Buscador fuera del grupo de botones */}
-             <div className="w-full lg:flex-1 flex justify-start lg:justify-end">
-  <div className="ml-auto w-[286px]">
-    <div
-      className="
+            <div className="w-full lg:flex-1 flex justify-start lg:justify-end">
+              <div className="ml-auto w-[286px]">
+                <div
+                  className="
         flex items-center justify-between
         w-full h-[64px]
         rounded-[50px]
         bg-[#EDEDED]
         px-6
       "
-    >
-      <SearchProduct
-  name="searchTimSim"
-  placeholder={tProducts("filterProducts.searchPlaceholder")}
-  containerClassName="w-full"
-  inputClassName="
+                >
+                  <SearchProduct
+                    name="searchTimSim"
+                    placeholder={tProducts("filterProducts.searchPlaceholder")}
+                    containerClassName="w-full"
+                    inputClassName="
     !bg-[#EDEDED]
     !text-[#171717]
     placeholder:!text-black
     shadow-none
     !pl-2
   "
-/>
-
-    </div>
-  </div>
-</div>
-
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

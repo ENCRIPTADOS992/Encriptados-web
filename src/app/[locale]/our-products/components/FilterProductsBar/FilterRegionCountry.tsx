@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-import SearchSvg from "@/shared/svgs/SearchSvg";
 
 import { CircleFlag } from "react-circle-flags";
 
@@ -29,18 +28,18 @@ const SIM_REGION_VALUES = [
 type SimRegion = (typeof SIM_REGION_VALUES)[number];
 
 const REGION_CODE_TO_SIM_REGION: Record<string, SimRegion> = {
-  "norteamerica": "norteamerica",
+  norteamerica: "norteamerica",
   "centro-sur-america": "centro-sur-america",
-  "europa": "europa",
-  "africa": "africa",
-  "asia": "asia",
-  "oceania": "oceania",
-  "global": "global",
+  europa: "europa",
+  africa: "africa",
+  asia: "asia",
+  oceania: "oceania",
+  global: "global",
 
   "north-america": "norteamerica",
   "central-south-america": "centro-sur-america",
-  "europe": "europa",
-  "worldwide": "global",
+  europe: "europa",
+  worldwide: "global",
 };
 
 function mapRegionCodeToSimRegion(code?: string): SimRegion | undefined {
@@ -72,6 +71,7 @@ interface FilterRegionCountryProps {
   filters: ProductFilters;
   updateFilters: (newFilters: Partial<ProductFilters>) => void;
   service: "esim_datos" | "recarga_datos" | "sim_fisica";
+  variant?: "dark" | "tim";
 }
 
 function formatMinFrom(minFrom: Region["minFrom"]) {
@@ -80,10 +80,16 @@ function formatMinFrom(minFrom: Region["minFrom"]) {
   return `Desde ${amount} ${currency}`;
 }
 
-const RegionIcon: React.FC<{ size?: number }> = ({ size = 36 }) => {
+const RegionIcon: React.FC<{ size?: number; variant?: "dark" | "tim" }> = ({
+  size = 36,
+  variant = "dark",
+}) => {
   return (
     <span
-      className="bg-[#1C1E21] rounded-full flex items-center justify-center"
+      className={`
+        rounded-full flex items-center justify-center
+        ${variant === "tim" ? "bg-white" : "bg-[#1C1E21]"}
+      `}
       style={{
         width: size,
         height: size,
@@ -96,7 +102,6 @@ const RegionIcon: React.FC<{ size?: number }> = ({ size = 36 }) => {
         fill="none"
       >
         <circle cx="12" cy="12" r="10.5" stroke="#3393F7" strokeWidth="1.5" />
-
         <path
           d="M6.5 10.5l1.2-.6 1 .5v1l1 1 .4 1.4-.3 1.2 1.4.6.5 1 .9.4h1l.4-1v-1l1-1 .5-1 .5-.5 1 .5h1l1-1v-1l-.5-1-.5-.5H17l-.5-1 .4-.9v-1l-1-.5-1 .5-.5 1-1 .5h-1l-1-.5-.5-1-1-.5-1 .5-.5 1-.5.5-.5 1z"
           fill="#3393F7"
@@ -110,6 +115,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
   filters,
   updateFilters,
   service,
+  variant = "dark",
 }) => {
   const t = useTranslations("OurProductsPage");
 
@@ -286,13 +292,13 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
       regionOrCountryType: "region",
       regionOrCountry: r.code,
       simCountry: undefined,
-      simRegion: undefined
+      simRegion: undefined,
     });
     setOpen(false);
   }
 
   function handleSelectCountry(c: Country) {
-    const iso2 = normalizeAlpha2(c.code) ?? c.code; 
+    const iso2 = normalizeAlpha2(c.code) ?? c.code;
     console.log("[FilterRegionCountry] seleccionaste país:", {
       country: c,
       iso2,
@@ -321,198 +327,268 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
     filters.simCountry,
     service,
   ]);
-
   return (
-    <div className="flex flex-col h-full">
+  <div className="flex flex-col h-full">
+    {variant === "dark" && (
       <span
         className="
-        mb-2
-        text-sm
-        font-semibold
-        text-[#7E7E7E]
-        block
-        pl-[4px]
-      "
+          mb-2
+          text-sm
+          font-semibold
+          text-[#7E7E7E]
+          block
+          pl-[4px]
+        "
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         {t("filterProducts.regionTitle") || "Región / País"}
       </span>
+    )}
 
-      <div
-        className="relative flex-1 min-w-0 max-w-full md:max-w-[120px] xl:max-w-[120px]"
-        ref={dropdownRef}
+    <div
+      ref={dropdownRef}
+      className={
+        variant === "tim"
+          ? "relative"
+          : "relative flex-1 min-w-0 max-w-full md:max-w-[120px] xl:max-w-[120px]"
+      }
+    >
+      {/* TRIGGER */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className={
+          variant === "tim"
+            ? `
+              inline-flex items-center
+              w-[190px] h-[64px]
+              rounded-[12px]
+              border border-[#D0D0D0]
+              bg-[#EDEDED]
+              px-[14px]
+            `
+            : `
+              flex items-center justify-between
+              w-full
+              md:w-[120px]
+              border
+              rounded-2xl shadow-md
+              px-4 py-4
+              transition duration-150 ease-in-out
+              ${
+                open
+                  ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
+                  : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
+              }
+            `
+        }
+        style={
+          variant === "tim"
+            ? undefined
+            : {
+                width: "100%",
+                minWidth: 0,
+                maxWidth: "100%",
+                boxSizing: "border-box",
+              }
+        }
       >
-        <button
-          type="button"
-          className={`
-    flex items-center justify-between
-    w-full
-    md:w-[120px]
-    border
-    rounded-2xl shadow-md
-    px-4 py-4
-    transition duration-150 ease-in-out
-    ${
-      open
-        ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
-        : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
-    }
-  `}
-          style={{
-            width: "100%",
-            minWidth: 0,
-            maxWidth: "100%",
-            boxSizing: "border-box",
-          }}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="flex items-center gap-x-2 truncate">
-            {selectedInfo.isCountry && selectedInfo.flagCode ? (
-              <CircleFlag
-                countryCode={selectedInfo.flagCode}
-                style={{
-                  width: "18px",
-                  height: "18px",
-                  flexShrink: 0,
-                }}
-              />
-            ) : (
-              <RegionIcon size={22} />
-            )}
-
-            <span className="uppercase truncate text-left">
-              {filters.regionOrCountryType === "country" &&
-              selectedInfo.code !== "global"
-                ? selectedInfo.code.toUpperCase()
-                : selectedInfo.label}
+        {variant === "tim" ? (
+          // 🔹 Versión TIM: botón gris claro
+          <div className="flex items-center gap-2 h-[24px]">
+            <span className="inline-flex w-[24px] h-[24px]">
+              {selectedInfo.isCountry && selectedInfo.flagCode ? (
+                <CircleFlag
+                  countryCode={selectedInfo.flagCode}
+                  style={{ width: "24px", height: "24px" }}
+                />
+              ) : (
+                <RegionIcon size={24} variant="tim" />
+              )}
             </span>
-          </span>
 
-          <svg
-            className={`
-      ml-2 w-4 h-4
-      ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
-    `}
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M7 10l5 5 5-5"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+            <span
+              className="
+                inline-flex items-center justify-center
+                text-[12px] font-medium
+                text-[#171717]
+                w-[102px] h-[15px]
+                text-center
+              "
+            >
+              {selectedInfo.label}
+            </span>
+          </div>
+        ) : (
+          // 🔸 Versión DARK original
+          <>
+            <span className="flex items-center gap-x-2 truncate">
+              {selectedInfo.isCountry && selectedInfo.flagCode ? (
+                <CircleFlag
+                  countryCode={selectedInfo.flagCode}
+                  style={{
+                    width: "18px",
+                    height: "18px",
+                    flexShrink: 0,
+                  }}
+                />
+              ) : (
+                <RegionIcon size={22} />
+              )}
 
-        {open && (
-          <div
-            className="
-      absolute z-20 mt-2
-      bg-[#222222]
-      border border-[#3E3E3E]
-      rounded-[12px]
-      shadow-xl
-      right-0
-    "
-            style={{
-              width: 518,
-              padding: "18px 24px",
-              boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor: "#3E3E3E",
-            }}
-          >
-            <div className="flex gap-3 mb-4">
-              <button
-                className={`
-          px-4 py-2 rounded-full text-sm font-semibold
-          transition
-          ${
-            filters.regionOrCountryType === "region"
-              ? "bg-[#3393F7] text-white"
-              : "bg-[#18191B] text-[#CCCCCC] border border-[#3393F7]"
-          }
-        `}
-                type="button"
-                onClick={() => {
-                  updateFilters({ regionOrCountryType: "region" });
-                  setSearchTerm("");
-                  setVisibleRegions(regions);
-                }}
-              >
-                Región
-              </button>
+              <span className="uppercase truncate text-left">
+                {filters.regionOrCountryType === "country" &&
+                selectedInfo.code !== "global"
+                  ? selectedInfo.code.toUpperCase()
+                  : selectedInfo.label}
+              </span>
+            </span>
 
-              <button
-                className={`
-          px-4 py-2 rounded-full text-sm font-semibold
-          transition
-          ${
-            filters.regionOrCountryType === "country"
-              ? "bg-[#3393F7] text-white"
-              : "bg-[#18191B] text-[#CCCCCC] border border-[#3393F7]"
-          }
-        `}
-                type="button"
-                onClick={() => {
-                  updateFilters({ regionOrCountryType: "country" });
-                  setSearchTerm("");
-                  setVisibleCountries(countries);
-                }}
-              >
-                País
-              </button>
-            </div>
-            {/* Lista dinámica según toggle */}
-            <div className="mb-4">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`
-                  w-full bg-[#18191B] text-white rounded-2xl
-                  pl-10 pr-4 py-3 text-sm outline-none border
-                  border-[#3E3E3E] placeholder-[#7E7E7E]
-                `}
-                placeholder={
-                  filters.regionOrCountryType === "region"
-                    ? "Buscar región..."
-                    : "Buscar país..."
-                }
+            <svg
+              className={`
+                ml-2 w-4 h-4
+                ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
+              `}
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-              {/* <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7E7E7E]">
-                <SearchSvg color="#7E7E7E" />
-              </div> */}
-            </div>
+            </svg>
+          </>
+        )}
+      </button>
 
-            <div className="mb-4 max-h-60 overflow-y-auto custom-scrollbar">
-              {filters.regionOrCountryType === "region" && (
-                <>
-                  <div
-                    className="font-semibold text-[#CCCCCC] text-sm mb-3"
-                    style={{ fontFamily: "Inter, sans-serif" }}
-                  >
-                    {t("filterProducts.regionTitle") || "Regiones"}
+      {open && (
+        <div
+          className={`
+            absolute z-20 mt-2
+            rounded-[12px]
+            shadow-xl
+            right-0
+            border
+            ${
+              variant === "tim"
+                ? "bg-white border-[#D0D0D0]"
+                : "bg-[#222222] border-[#3E3E3E]"
+            }
+          `}
+          style={{
+            width: 518,
+            padding: "18px 24px",
+            boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
+          }}
+        >
+          {/* Toggle Región / País */}
+          <div className="flex gap-3 mb-4">
+            <button
+              className={`
+                px-4 py-2 rounded-full text-sm font-semibold
+                transition
+                ${
+                  filters.regionOrCountryType === "region"
+                    ? "bg-[#3393F7] text-white"
+                    : "bg-transparent text-[#3393F7] border border-[#3393F7]"
+                }
+              `}
+              type="button"
+              onClick={() => {
+                updateFilters({ regionOrCountryType: "region" });
+                setSearchTerm("");
+                setVisibleRegions(regions);
+              }}
+            >
+              Región
+            </button>
+
+            <button
+              className={`
+                px-4 py-2 rounded-full text-sm font-semibold
+                transition
+                ${
+                  filters.regionOrCountryType === "country"
+                    ? "bg-[#3393F7] text-white"
+                    : "bg-transparent text-[#3393F7] border border-[#3393F7]"
+                }
+              `}
+              type="button"
+              onClick={() => {
+                updateFilters({ regionOrCountryType: "country" });
+                setSearchTerm("");
+                setVisibleCountries(countries);
+              }}
+            >
+              País
+            </button>
+          </div>
+
+          {/* Buscador */}
+          <div className="mb-4">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={`
+                w-full rounded-2xl
+                pl-10 pr-4 py-3 text-sm outline-none border
+                ${
+                  variant === "tim"
+                    ? "bg-[#F4F4F4] text-[#171717] border-[#D0D0D0] placeholder:text-[#9CA3AF]"
+                    : "bg-[#18191B] text-white border-[#3E3E3E] placeholder:text-[#7E7E7E]"
+                }
+              `}
+              placeholder={
+                filters.regionOrCountryType === "region"
+                  ? "Buscar región..."
+                  : "Buscar país..."
+              }
+            />
+          </div>
+
+          {/* Lista dinámica */}
+          <div className="mb-4 max-h-60 overflow-y-auto custom-scrollbar">
+            {filters.regionOrCountryType === "region" && (
+              <>
+                <div
+                  className={`
+                    font-semibold text-sm mb-3
+                    ${
+                      variant === "tim"
+                        ? "text-[#171717]"
+                        : "text-[#CCCCCC]"
+                    }
+                  `}
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  {t("filterProducts.regionTitle") || "Regiones"}
+                </div>
+
+                {loadingRegions && (
+                  <div className="text-[#7E7E7E] text-sm py-2">
+                    Cargando regiones...
                   </div>
-                  {loadingRegions && (
+                )}
+
+                {!loadingRegions &&
+                  loadingSearch &&
+                  searchTerm.length >= 2 && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      Cargando regiones...
+                      Buscando...
                     </div>
                   )}
 
-                  {!loadingRegions &&
-                    loadingSearch &&
-                    searchTerm.length >= 2 && (
-                      <div className="text-[#7E7E7E] text-sm py-2">
-                        Buscando...
-                      </div>
-                    )}
+                {!loadingRegions &&
+                  visibleRegions.map((r) => {
+                    const isActive =
+                      filters.regionOrCountry === r.code &&
+                      filters.regionOrCountryType === "region";
 
-                  {!loadingRegions &&
-                    visibleRegions.map((r) => (
+                    return (
                       <button
                         key={r.code}
                         type="button"
@@ -525,8 +601,11 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                           mb-2
                           transition
                           ${
-                            filters.regionOrCountry === r.code &&
-                            filters.regionOrCountryType === "region"
+                            variant === "tim"
+                              ? isActive
+                                ? "bg-[#F0F9FF] border-[#009DFF]"
+                                : "bg-white border-[#D0D0D0] hover:bg-[#F4F8FA]"
+                              : isActive
                               ? "bg-[#25272B] border-[#3393F7]"
                               : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
                           }
@@ -535,13 +614,31 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
                         onClick={() => handleSelectRegion(r)}
                       >
                         <span className="flex items-center gap-3 text-left">
-                          <RegionIcon size={36} />
+                          <RegionIcon size={36} variant={variant} />
 
                           <span className="flex flex-col text-left">
-                            <span className="font-bold text-[16px] text-white">
+                            <span
+                              className={`
+                                font-bold text-[16px]
+                                ${
+                                  variant === "tim"
+                                    ? "text-[#171717]"
+                                    : "text-white"
+                                }
+                              `}
+                            >
                               {r.name}
                             </span>
-                            <span className="text-xs text-[#CCCCCC]">
+                            <span
+                              className={`
+                                text-xs
+                                ${
+                                  variant === "tim"
+                                    ? "text-[#4B5563]"
+                                    : "text-[#CCCCCC]"
+                                }
+                              `}
+                            >
                               Desde $17.5
                             </span>
                           </span>
@@ -549,127 +646,164 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
 
                         <span className="w-5 h-5 flex items-center justify-center">
                           <span
-                            className={`block w-4 h-4 rounded-full border transition-all
-                      ${
-                        filters.regionOrCountry === r.code &&
-                        filters.regionOrCountryType === "region"
-                          ? "border-[#3393F7] bg-[#3393F7]"
-                          : "border-[#555] bg-[#232427]"
-                      }
+                            className={`
+                              block w-4 h-4 rounded-full border transition-all
+                              ${
+                                isActive
+                                  ? "border-[#3393F7] bg-[#3393F7]"
+                                  : variant === "tim"
+                                  ? "border-[#D0D0D0] bg-white"
+                                  : "border-[#555] bg-[#232427]"
+                              }
                             `}
                           >
-                            {filters.regionOrCountry === r.code &&
-                              filters.regionOrCountryType === "region" && (
-                                <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
-                              )}
+                            {isActive && (
+                              <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
+                            )}
                           </span>
                         </span>
                       </button>
-                    ))}
-                </>
-              )}
-              {filters.regionOrCountryType === "country" && (
-                <>
-                  <div
-                    className="font-semibold text-[#CCCCCC] text-sm mb-3"
-                    style={{ fontFamily: "Inter, sans-serif" }}
-                  >
-                    {t("filterProducts.countryTitle") || "Países"}
+                    );
+                  })}
+              </>
+            )}
+
+            {filters.regionOrCountryType === "country" && (
+              <>
+                <div
+                  className={`
+                    font-semibold text-sm mb-3
+                    ${
+                      variant === "tim"
+                        ? "text-[#171717]"
+                        : "text-[#CCCCCC]"
+                    }
+                  `}
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  {t("filterProducts.countryTitle") || "Países"}
+                </div>
+
+                {loadingCountries && (
+                  <div className="text-[#7E7E7E] text-sm py-2">
+                    Cargando países...
                   </div>
-                  {loadingCountries && (
+                )}
+
+                {!loadingCountries &&
+                  loadingSearch &&
+                  searchTerm.length >= 2 && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      Cargando países...
+                      Buscando...
                     </div>
                   )}
 
-                  {!loadingCountries &&
-                    loadingSearch &&
-                    searchTerm.length >= 2 && (
-                      <div className="text-[#7E7E7E] text-sm py-2">
-                        Buscando...
-                      </div>
-                    )}
+                {!loadingCountries &&
+                  visibleCountries.map((c) => {
+                    const iso2 = normalizeAlpha2(c.code);
+                    const isActive =
+                      filters.regionOrCountry === c.code &&
+                      filters.regionOrCountryType === "country";
 
-                  {!loadingCountries &&
-                    visibleCountries.map((c) => {
-                      const iso2 = normalizeAlpha2(c.code);
-
-                      return (
-                        <button
-                          key={c.code}
-                          type="button"
-                          className={`
-          flex items-center justify-between
-          w-full
-          rounded-xl
-          border
-          px-4 py-3
-          mb-2
-          transition
-          ${
-            filters.regionOrCountry === c.code &&
-            filters.regionOrCountryType === "country"
-              ? "bg-[#25272B] border-[#3393F7]"
-              : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
-          }
-        `}
-                          style={{ minHeight: 60 }}
-                          onClick={() => handleSelectCountry(c)}
-                        >
-                          <span className="flex items-center gap-3 text-left">
-                            {iso2 ? (
-                              <CircleFlag
-                                countryCode={iso2}
-                                style={{
-                                  width: "18px",
-                                  height: "18px",
-                                  flexShrink: 0,
-                                }}
-                              />
-                            ) : (
-                              <span className="text-2xl leading-none mr-2">
-                                {c.flag}
-                              </span>
-                            )}
-
-                            <span className="flex flex-col">
-                              <span className="font-bold text-[14px] text-white">
-                                {c.name}
-                              </span>
-                              <span className="text-xs text-[#CCCCCC]">
-                                Cobertura 4G/5G
-                              </span>
+                    return (
+                      <button
+                        key={c.code}
+                        type="button"
+                        className={`
+                          flex items-center justify-between
+                          w-full
+                          rounded-xl
+                          border
+                          px-4 py-3
+                          mb-2
+                          transition
+                          ${
+                            variant === "tim"
+                              ? isActive
+                                ? "bg-[#F0F9FF] border-[#009DFF]"
+                                : "bg-white border-[#D0D0D0] hover:bg-[#F4F8FA]"
+                              : isActive
+                              ? "bg-[#25272B] border-[#3393F7]"
+                              : "bg-[#18191B] border-[#333] hover:bg-[#232427]"
+                          }
+                        `}
+                        style={{ minHeight: 60 }}
+                        onClick={() => handleSelectCountry(c)}
+                      >
+                        <span className="flex items-center gap-3 text-left">
+                          {iso2 ? (
+                            <CircleFlag
+                              countryCode={iso2}
+                              style={{
+                                width: "18px",
+                                height: "18px",
+                                flexShrink: 0,
+                              }}
+                            />
+                          ) : (
+                            <span className="text-2xl leading-none mr-2">
+                              {c.flag}
                             </span>
-                          </span>
+                          )}
 
-                          <span className="w-5 h-5 flex items-center justify-center">
+                          <span className="flex flex-col">
                             <span
-                              className={`block w-4 h-4 rounded-full border transition-all
-              ${
-                filters.regionOrCountry === c.code &&
-                filters.regionOrCountryType === "country"
-                  ? "border-[#3393F7] bg-[#3393F7]"
-                  : "border-[#555] bg-[#232427]"
-              }
-            `}
+                              className={`
+                                font-bold text-[14px]
+                                ${
+                                  variant === "tim"
+                                    ? "text-[#171717]"
+                                    : "text-white"
+                                }
+                              `}
                             >
-                              {filters.regionOrCountry === c.code &&
-                                filters.regionOrCountryType === "country" && (
-                                  <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
-                                )}
+                              {c.name}
+                            </span>
+                            <span
+                              className={`
+                                text-xs
+                                ${
+                                  variant === "tim"
+                                    ? "text-[#4B5563]"
+                                    : "text-[#CCCCCC]"
+                                }
+                              `}
+                            >
+                              Cobertura 4G/5G
                             </span>
                           </span>
-                        </button>
-                      );
-                    })}
-                </>
-              )}
-            </div>
+                        </span>
+
+                        <span className="w-5 h-5 flex items-center justify-center">
+                          <span
+                            className={`
+                              block w-4 h-4 rounded-full border transition-all
+                              ${
+                                isActive
+                                  ? "border-[#3393F7] bg-[#3393F7]"
+                                  : variant === "tim"
+                                  ? "border-[#D0D0D0] bg-white"
+                                  : "border-[#555] bg-[#232427]"
+                              }
+                            `}
+                          >
+                            {isActive && (
+                              <span className="block m-auto w-2 h-2 rounded-full bg-white"></span>
+                            )}
+                          </span>
+                        </span>
+                      </button>
+                    );
+                  })}
+              </>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default FilterRegionCountry;
