@@ -41,6 +41,7 @@ export type Product = {
     image: string;
   }[];
  variants?: ProductVariant[];
+ plan_data_amount?: number;
 
 };
 

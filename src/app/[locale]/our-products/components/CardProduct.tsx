@@ -51,6 +51,8 @@ interface CardSimProps {
     country?: { label: string; code?: string; flagUrl?: string };
     tag?: string;
   };
+  provider?: string;           
+  planDataAmount?: number;
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -62,6 +64,8 @@ const CardProduct: React.FC<CardSimProps> = ({
   filters,
   checks,
   badges,
+  provider,         
+  planDataAmount,
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
@@ -89,6 +93,29 @@ const CardProduct: React.FC<CardSimProps> = ({
       if (!badges.tag) console.log("ℹ️ [CardProduct] sin tag", id, badges);
     }
   }, [badges, id]);
+
+    const displayPrice = (() => {
+      const normalizedProvider = provider?.toLowerCase().trim() ?? "";
+
+      const isSimTim =
+        normalizedProvider.includes("sim tim") || normalizedProvider.includes("tim");
+
+      if (isSimTim && planDataAmount != null) {
+        return `$ ${planDataAmount} USD`;
+      }
+
+      return priceRange;
+    })();
+
+    console.log("💰 [CardProduct] price debug =>", {
+    id,
+    headerTitle,
+    provider,
+    planDataAmount,
+    priceRange,
+    displayPrice,
+  });
+
 
   return (
     <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
@@ -176,7 +203,7 @@ const CardProduct: React.FC<CardSimProps> = ({
         <hr className="my-2 border-gray-200" />
 
         <div className="mt-auto flex flex-col gap-2">
-          <div className="text-lg font-bold">{priceRange}</div>
+          <div className="text-lg font-bold">{displayPrice}</div>
           <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-2">
             <button
               onClick={handleBuy}

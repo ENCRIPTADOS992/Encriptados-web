@@ -41,7 +41,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const selectedOption = parseInt(filters.selectedOption, 10);
   const { data, isFetching, isError } = useGetProducts(
     selectedOption,
-    filters.provider
+    filters.provider,
+    filters.simCountry
   );
 
   console.log("🎛️ [ListOfProducts] filtros actuales =>", filters);
@@ -292,6 +293,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 w-full max-w-7xl mx-auto">
           {filteredProducts.map((product, index) => {
             const isCategory40 = selectedOption === 40;
+            const isTimProvider =
+              (product.provider ?? "").toLowerCase().includes("tim");
             const isTim = filters.provider === "tim";
             const simName = (product.name ?? "").toLowerCase().trim();
             const isSim =
@@ -299,8 +302,22 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               simName === "esim" ||
               simName === "esim + datos";
             const showTimBadges = isCategory40 && isTim && isSim;
-
+            const variant = product.variants?.[0];
             const variantId = isTim ? product.variants?.[0]?.id : undefined;
+
+            const effectivePlanDataAmount =
+              isTimProvider
+                ? product.plan_data_amount ?? variant?.cost ?? undefined
+                : undefined;
+            console.log("💰 [ListOfProducts] price debug =>", {
+            id: product.id,
+            name: product.name,
+            provider: product.provider,
+            price: product.price,
+            plan_data_amount: product.plan_data_amount,
+            variantCost: variant?.cost,
+            effectivePlanDataAmount,
+          });
 
             const key =
               isTim && variantId
@@ -322,6 +339,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 filters={filters}
                 checks={product.checks || []}
                 badges={badges}
+                provider={product.provider}                 
+                planDataAmount={effectivePlanDataAmount}
               />
             );
           })}
