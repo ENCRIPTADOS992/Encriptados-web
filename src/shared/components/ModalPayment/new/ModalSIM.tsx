@@ -287,6 +287,7 @@ export default function ModalSIM() {
           ? undefined
           : 75
       }
+      minutesPlans={minutesPlans}
       selectedPlanId={selectedPlanId}
       onChangePlan={setSelectedPlanId}
       showEsimAddon={

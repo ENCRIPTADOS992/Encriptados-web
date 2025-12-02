@@ -14,6 +14,8 @@ type Variant = {
 
 type ProductLike = {
   name?: string;
+  headerTitle?: string;
+  provider?: string;
   price?: number | string;
   licensetime?: number | string;
   images?: { src: string }[];
@@ -135,6 +137,46 @@ const PurchaseHeader: React.FC<Props> = ({
     };
   }, []);
 
+  const providerNorm = (product?.provider || "").toLowerCase();
+  const titleNorm = (product?.name || product?.headerTitle || "").toLowerCase();
+
+  const isEncryptedProvider = providerNorm.includes("encript");
+
+  const isRecargaDatos =
+    titleNorm.includes("recarga") && titleNorm.includes("datos");
+
+  const showRechargeAmount =
+    isEncryptedProvider && isRecargaDatos;
+
+  const isEncryptedDataRecharge = React.useMemo(() => {
+    const p: any = product || {};
+
+    const prov = (p.provider || p.brand || "").toLowerCase();
+    const cfgType = (p.config_sim?.[0]?.type || "").toLowerCase();
+    const name = (p.name || "").toLowerCase();
+    const categoryName = (p.category?.name || "").toLowerCase();
+
+    const isEncrypted = prov.includes("encript");
+    const isDataSim = cfgType === "data";
+
+    const isDataRechargeByName =
+      name.includes("recarga") || name.includes("recharge");
+
+    const isDataRechargeByCategory =
+      categoryName.includes("recarga") || categoryName.includes("datos");
+
+    return (
+      isEncrypted &&
+      isDataSim &&
+      (isDataRechargeByName || isDataRechargeByCategory)
+    );
+  }, [product]);
+
+  const RECHARGE_AMOUNTS = [
+  { id: 10, label: "10 USD" },
+  { id: 25, label: "25 USD" },
+  { id: 50, label: "50 USD" },
+];
   return (
     <div className="w-full">
       {/* Título */}
@@ -190,7 +232,105 @@ const PurchaseHeader: React.FC<Props> = ({
               {unitPrice} <span className="font-normal">USD</span>
             </div>
           </div>
+          {/* Fila: Monto de recarga */}
+          {showRechargeAmount && (
+            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4 ">
+              <span className="text-[14px] text-[#3D3D3D]">Monto de recarga</span>
 
+              <div
+                className="
+                  justify-self-end
+                  translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5
+                  lg:translate-x-0 xl:translate-x-0
+                  max-[390px]:-translate-x-[-30px] 
+                "
+              >
+                <select
+                  className="
+                    h-[36px]
+                    rounded-[8px] bg-[#EBEBEB]
+                    px-[10px] text-[12px] text-black
+                    outline-none ring-0
+                    focus:ring-2 focus:ring-black/10
+                  "
+                  value={String(selectedPlanId ?? RECHARGE_AMOUNTS[0].id)}
+                  onChange={(e) => onChangePlan?.(Number(e.target.value))}
+                >
+                  {RECHARGE_AMOUNTS.map((opt) => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
+          {/* Fila: Plan (solo si hay minutesPlans) */}
+          {!!minutesPlans?.length && (
+            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
+              <span className="text-[14px] text-[#3D3D3D]">Minutos</span>
+              <div
+                ref={planRef}
+                className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
+              >
+                <button
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={openPlan}
+                  onClick={() => setOpenPlan((v) => !v)}
+                  className="group w-[80px] h-[36px] rounded-[8px] bg-[#EBEBEB]
+                             pl-[10px] pr-7 text-[12px] font-normal text-black
+                             outline-none ring-0 focus:ring-2 focus:ring-black/10
+                             flex items-center justify-between transition"
+                >
+                  <span className="truncate">
+                    {minutesPlans.find(
+                      (p) => p.id === (selectedPlanId ?? "__none__")
+                    )?.label ??
+                      minutesPlans[0]?.label ??
+                      "Plan"}
+                  </span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D]">
+                    ▾
+                  </span>
+                </button>
+
+                {openPlan && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 w-[160px]
+                               rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
+                               max-h-60 overflow-auto"
+                  >
+                    {minutesPlans.map((p) => {
+                      const isActive =
+                        (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
+                      return (
+                        <button
+                          key={String(p.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangePlan?.(p.id);
+                            setOpenPlan(false);
+                          }}
+                          className={`w-full px-3 py-2 text-left text-[12px] ${
+                            isActive
+                              ? "bg-black text-white"
+                              : "hover:bg-[#F2F2F2] text-[#141414]"
+                          }`}
+                        >
+                          {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
           {/* Fila: Cantidad */}
           <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
             <span className="text-[14px] text-[#3D3D3D]">Cantidad</span>
@@ -223,69 +363,73 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Licencia (ocultable) */}
           {shouldShowLicense && (
-        <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-          <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
+            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
+              <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
 
-          {showSelect ? (
-            <div
-              ref={licenseRef}
-              className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-            >
-              {/* Control */}
-              <button
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={openLicense}
-                onClick={() => setOpenLicense((v) => !v)}
-                className="group w-[120px] h-[32px] rounded-[8px] bg-[#EBEBEB] pl-[10px] pr-7 text-[12px] font-normal text-black outline-none ring-0 focus:ring-2 focus:ring-black/10 flex items-center justify-between transition"
-              >
-                <span className="truncate">
-                  {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ??
-                    variants[0]?.licensetime ?? currentMonths}{" "}
-                  Meses
-                </span>
-                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D] transition group-aria-expanded:rotate-180">
-                  ▾
-                </span>
-              </button>
-
-              {/* Menu */}
-              {openLicense && (
+              {showSelect ? (
                 <div
-                  role="listbox"
-                  tabIndex={-1}
-                  className="absolute top-full right-0 mt-2 z-50 w-auto min-w-[120px] sm:min-w-[130px] md:min-w-[130px] ipad:min-w-[130px] rounded-[10px] bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                  ref={licenseRef}
+                  className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
                 >
-                  {normVariants.map((v) => {
-                    const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
-                    return (
-                      <button
-                        key={v.id}
-                        role="option"
-                        aria-selected={isActive}
-                        onClick={() => {
-                          onChangeVariant?.(v.id);
-                          setOpenLicense(false);
-                        }}
-                        className={`w-full px-3 py-2 text-left text-[14px] whitespace-nowrap ${
-                          isActive ? "bg-black text-white" : "hover:bg-[#F2F2F2] text-[#141414]"
-                        }`}
-                      >
-                        {v.months} Meses
-                      </button>
-                    );
-                  })}
+                  {/* Control */}
+                  <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={openLicense}
+                    onClick={() => setOpenLicense((v) => !v)}
+                    className="group w-[120px] h-[32px] rounded-[8px] bg-[#EBEBEB] pl-[10px] pr-7 text-[12px] font-normal text-black outline-none ring-0 focus:ring-2 focus:ring-black/10 flex items-center justify-between transition"
+                  >
+                    <span className="truncate">
+                      {variants.find((v) => v.id === (selectedVariantId ?? -1))
+                        ?.licensetime ??
+                        variants[0]?.licensetime ??
+                        currentMonths}{" "}
+                      Meses
+                    </span>
+                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D] transition group-aria-expanded:rotate-180">
+                      ▾
+                    </span>
+                  </button>
+
+                  {/* Menu */}
+                  {openLicense && (
+                    <div
+                      role="listbox"
+                      tabIndex={-1}
+                      className="absolute top-full right-0 mt-2 z-50 w-auto min-w-[120px] sm:min-w-[130px] md:min-w-[130px] ipad:min-w-[130px] rounded-[10px] bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    >
+                      {normVariants.map((v) => {
+                        const isActive =
+                          (selectedVariantId ?? normVariants[0]?.id) === v.id;
+                        return (
+                          <button
+                            key={v.id}
+                            role="option"
+                            aria-selected={isActive}
+                            onClick={() => {
+                              onChangeVariant?.(v.id);
+                              setOpenLicense(false);
+                            }}
+                            className={`w-full px-3 py-2 text-left text-[14px] whitespace-nowrap ${
+                              isActive
+                                ? "bg-black text-white"
+                                : "hover:bg-[#F2F2F2] text-[#141414]"
+                            }`}
+                          >
+                            {v.months} Meses
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="justify-self-end w-[140px] h-[34px] bg-[#EBEBEB] rounded-[8px] px-[12px] flex items-center text-[14px] font-normal text-black select-none translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
+                  {currentMonths} Meses
                 </div>
               )}
             </div>
-          ) : (
-            <div className="justify-self-end w-[140px] h-[34px] bg-[#EBEBEB] rounded-[8px] px-[12px] flex items-center text-[14px] font-normal text-black select-none translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
-              {currentMonths} Meses
-            </div>
           )}
-        </div>
-      )}
-
 
           {/* Fila: Envío (si se provee) */}
           {typeof shipping === "number" && (
@@ -390,71 +534,6 @@ const PurchaseHeader: React.FC<Props> = ({
             >
               Ingresa código de promoción
             </button>
-          )}
-          {/* Fila: Plan (solo si hay minutesPlans) */}
-          {!!minutesPlans?.length && (
-            <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-              <span className="text-[14px] text-[#3D3D3D]">Plan</span>
-              <div
-                ref={planRef}
-                className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
-              >
-                <button
-                  type="button"
-                  aria-haspopup="listbox"
-                  aria-expanded={openPlan}
-                  onClick={() => setOpenPlan((v) => !v)}
-                  className="group w-[120px] h-[32px] rounded-[8px] bg-[#EBEBEB]
-                             pl-[10px] pr-7 text-[12px] font-normal text-black
-                             outline-none ring-0 focus:ring-2 focus:ring-black/10
-                             flex items-center justify-between transition"
-                >
-                  <span className="truncate">
-                    {minutesPlans.find(
-                      (p) => p.id === (selectedPlanId ?? "__none__")
-                    )?.label ??
-                      minutesPlans[0]?.label ??
-                      "Plan"}
-                  </span>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3D3D3D]">
-                    ▾
-                  </span>
-                </button>
-
-                {openPlan && (
-                  <div
-                    role="listbox"
-                    tabIndex={-1}
-                    className="absolute top-full right-0 mt-2 z-50 w-[160px]
-                               rounded-[10px] bg-white shadow-lg ring-1 ring-black/10
-                               max-h-60 overflow-auto"
-                  >
-                    {minutesPlans.map((p) => {
-                      const isActive =
-                        (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
-                      return (
-                        <button
-                          key={String(p.id)}
-                          role="option"
-                          aria-selected={isActive}
-                          onClick={() => {
-                            onChangePlan?.(p.id);
-                            setOpenPlan(false);
-                          }}
-                          className={`w-full px-3 py-2 text-left text-[12px] ${
-                            isActive
-                              ? "bg-black text-white"
-                              : "hover:bg-[#F2F2F2] text-[#141414]"
-                          }`}
-                        >
-                          {p.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
           )}
 
           {/* Upsell eSIM (data & minutes) */}
