@@ -24,6 +24,16 @@ type Variant = {
   price: number;
   sku?: string;
   image?: string;
+  name: string;
+  ussd?:string;        
+  gb?: string;         
+  cost: number;
+  days?:number      
+  minutes?:number 
+  minute_price?:number;
+  currency: string;    
+  label: string;       
+  purchase_url: string;
 };
 
 type ConfigSim = {
@@ -69,12 +79,14 @@ export default function ModalSIM() {
   const { params } = useModalPayment();
   const { productid } = (params || {}) as { productid?: string };
   const { payUserId } = useCheckout();
+  const [hideSimField, setHideSimField] = React.useState(false);
 
   const { data: product } = useQuery<ModalProduct>({
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
   });
+  console.log("[ModalSIM] product crudo =>", product);
 
   const formType: FormType = React.useMemo(() => {
     const prov = (product?.provider || product?.brand || "").toLowerCase();
@@ -92,40 +104,176 @@ export default function ModalSIM() {
 
   const isPhysical = formType === "encrypted_physical";
 
-  const minutesPlans = React.useMemo(() => {
-    if (formType !== "encrypted_minutes") return [];
-    const items = product?.config_sim ?? [];
-    return items.map((c, i) => ({
-      id: c.sku || c.code || i,
-      label: c.code ? `${c.code} Minutos` : c.sku || "Plan",
-      value: Number(c.code) || 0,
-    }));
-  }, [formType, product]);
-
   const [selectedPlanId, setSelectedPlanId] =
     React.useState<string | number | null>(null);
 
-  React.useEffect(() => {
-    setSelectedPlanId(minutesPlans[0]?.id ?? null);
-  }, [minutesPlans]);
-
-  const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(
-    null
-  );
   const [quantity, setQuantity] = React.useState(1);
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
 
-  const variants = product?.variants ?? [];
+  const variants: Variant[] = (product?.variants ?? []) as Variant[];
+
+  const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
+
+    React.useEffect(() => {
+      setSelectedVariant(variants[0] ?? null);
+    }, [product, variants]);
+
+  const minutesPlans = React.useMemo(() => {
+  console.log("[ModalSIM] minutesPlans → start", {
+    formType,
+    variants,
+    configSim: product?.config_sim,
+  });
+
+  if (formType !== "encrypted_minutes") {
+    console.log("[ModalSIM] minutesPlans → formType NO es encrypted_minutes");
+    return [];
+  }
+
+  const fromVariants =
+    (variants ?? [])
+      .map((v, i) => {
+        const minutes = typeof v.minutes === "number" ? v.minutes : undefined;
+        const cost = Number(v.cost ?? v.price ?? 0);
+
+        const plan = {
+          id: v.id ?? i,
+          label:
+            typeof minutes === "number" && minutes > 0
+              ? `${minutes} Min`
+              : v.label || v.name || "Plan",
+          value: !Number.isNaN(cost) ? cost : 0, // 👈 precio correcto
+        };
+
+        console.log("[ModalSIM] minutesPlans → fromVariants item", {
+          rawVariant: v,
+          plan,
+        });
+
+        return plan;
+      })
+      .filter((p) => p.value > 0);
+
+  console.log("[ModalSIM] minutesPlans → fromVariants result", fromVariants);
+
+  if (fromVariants.length > 0) {
+    console.log(
+      "[ModalSIM] minutesPlans → usando fromVariants (NO config_sim)"
+    );
+    return fromVariants;
+  }
+
+  // ⚠️ Solo fallback si NO hay variants
+  const items = product?.config_sim ?? [];
+  console.log("[ModalSIM] minutesPlans → from config_sim fallback", items);
+
+  const fromConfigSim = items
+    .map((c, i) => {
+      const numMinutes = c.code ? Number(c.code) : 0;
+      const price = Number(product?.price ?? 0); // 👈 AQUÍ EL CAMBIO
+
+      const plan = {
+        id: c.sku || c.code || i,
+        label: numMinutes > 0 ? `${numMinutes} Min` : c.sku || "Plan",
+        value: price, // 👈 usamos el price del producto (10), NO 1000
+      };
+
+      console.log("[ModalSIM] minutesPlans → fromConfigSim item", {
+        rawConfig: c,
+        plan,
+      });
+
+      return plan;
+    })
+    .filter((p) => p.value > 0);
+
+  console.log(
+    "[ModalSIM] minutesPlans → fromConfigSim result (fallback)",
+    fromConfigSim
+  );
+
+  return fromConfigSim;
+}, [formType, variants, product]);
+
 
   React.useEffect(() => {
-    setSelectedVariant(variants[0] ?? null);
-  }, [product]);
+  console.log("[ModalSIM] useEffect minutesPlans → setSelectedPlanId", {
+    minutesPlans,
+    firstId: minutesPlans[0]?.id ?? null,
+  });
+  setSelectedPlanId(minutesPlans[0]?.id ?? null);
+}, [minutesPlans]);
 
-  const unitPrice =
-    (variants.length
-      ? selectedVariant?.price ?? variants[0]?.price
-      : Number(product?.price)) || 0;
+
+  const unitPrice = React.useMemo(() => {
+  // Caso minutos
+  if (formType === "encrypted_minutes" && minutesPlans.length) {
+    const selected =
+      minutesPlans.find((p) => p.id === selectedPlanId) ?? minutesPlans[0];
+
+    const valueNumber = Number(selected.value || 0);
+
+    console.log("[ModalSIM] unitPrice → MINUTES", {
+      formType,
+      selectedPlanId,
+      selected,
+      minutesPlans,
+      unitPrice: valueNumber,
+    });
+
+    return valueNumber;
+  }
+
+  // Caso data
+  if (formType === "encrypted_data" && selectedPlanId != null) {
+    const valueNumber = Number(selectedPlanId) || 0;
+
+    console.log("[ModalSIM] unitPrice → DATA", {
+      formType,
+      selectedPlanId,
+      unitPrice: valueNumber,
+    });
+
+    return valueNumber;
+  }
+
+  // Caso con variants
+  if (variants.length) {
+    const v = selectedVariant ?? variants[0];
+    const valueNumber = Number(v.price ?? v.cost ?? product?.price ?? 0);
+
+    console.log("[ModalSIM] unitPrice → VARIANT", {
+      formType,
+      selectedVariant,
+      fallbackVariant: variants[0],
+      productPrice: product?.price,
+      unitPrice: valueNumber,
+    });
+
+    return valueNumber;
+  }
+
+  // Caso genérico
+  const valueNumber = Number(product?.price ?? 0);
+
+  console.log("[ModalSIM] unitPrice → PRODUCT PRICE", {
+    formType,
+    productPrice: product?.price,
+    unitPrice: valueNumber,
+  });
+
+  return valueNumber;
+}, [
+  formType,
+  minutesPlans,
+  selectedPlanId,
+  variants,
+  selectedVariant,
+  product,
+]);
+
+
 
   const onApplyCoupon = () =>
     setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
@@ -295,8 +443,13 @@ export default function ModalSIM() {
       }
       esimAddonPrice={7.5}
       esimAddonLabel="Lleva E-SIM por 7.50 USD"
+      onChangeEsimAddon={(checked) => setHideSimField(checked)}
     >
-      <SimForm onSubmit={handleSubmit} formType={formType} />
+    <SimForm 
+      onSubmit={handleSubmit} 
+      formType={formType} 
+      hideSimField={hideSimField} 
+    />
     </PurchaseScaffold>
   );
 }

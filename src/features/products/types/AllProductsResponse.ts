@@ -114,9 +114,13 @@ export interface ProductVariantScope {
 
 export interface ProductVariant {
   id: number;
-  name: string;        
+  name: string;
+  ussd?:string;        
   gb?: string;         
-  cost: number;        
+  cost: number;
+  days?:number      
+  minutes?:number 
+  minute_price?:number;
   currency: string;    
   label: string;       
   purchase_url: string;

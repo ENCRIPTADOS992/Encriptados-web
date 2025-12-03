@@ -35,12 +35,14 @@ type SimFormProps = {
   onSubmit: (data: SimFormValues) => void | Promise<void>;
   formType?: FormType;
   loading?: boolean;
+  hideSimField?: boolean; 
 };
 
 export default function SimForm({
   onSubmit,
   formType = "encrypted_generic",
-  loading = false, 
+  loading = false,
+  hideSimField = false
 }: SimFormProps) {
   const {
     register,
@@ -49,7 +51,6 @@ export default function SimForm({
     formState: { errors },
     setValue,
   } = useForm<SimFormValues>({
-
     defaultValues: {
       email: "",
       telegram: "",
@@ -85,11 +86,9 @@ export default function SimForm({
   const method = watch("method");
   const [terms, setTerms] = React.useState(true);
 
-  const {
-    status: stripeStatus,
-    error: mountError,
-  } = useStripeSplit(method === "card");
-
+  const { status: stripeStatus, error: mountError } = useStripeSplit(
+    method === "card"
+  );
 
   const emailOk = /\S+@\S+\.\S+/.test(email) && email.length <= 100;
   const phoneOk = phone.trim().length >= 7;
@@ -139,7 +138,25 @@ export default function SimForm({
           showSimNumber: false,
           reqSimNumber: false,
         };
-      case "encrypted_data":
+      case "encrypted_data": {
+        const showSimNumber = !hideSimField;   
+        return {
+          emailFullWidth: true,
+          showTelegram: false,
+          showFullName: false,
+          reqFullName: false,
+          showAddress: false,
+          reqAddress: false,
+          showCountry: false,
+          reqCountry: false,
+          showPostal: false,
+          reqPostal: false,
+          showPhone: false,
+          reqPhone: false,
+          showSimNumber,
+          reqSimNumber: showSimNumber,       
+        };
+      }
       case "encrypted_minutes":
         return {
           emailFullWidth: true,
@@ -175,7 +192,7 @@ export default function SimForm({
           reqSimNumber: false,
         };
     }
-  }, [formType]);
+  }, [formType,hideSimField]);
 
   const typeSpecificOk =
     formType === "encrypted_physical" || formType === "encrypted_generic"
@@ -184,17 +201,20 @@ export default function SimForm({
         country.trim() !== "" &&
         postalOk &&
         phoneOk
-      : formType === "encrypted_data" || formType === "encrypted_minutes"
-      ? simOk
+      : formType === "encrypted_data"
+      ? 
+        (!CFG.showSimNumber || simOk)
+      : formType === "encrypted_minutes"
+      ? 
+        simOk
       : true;
 
-    const methodSpecificOk =
-      method === "crypto"
-        ? true
-        : stripeStatus === "ready" && cardName.trim().length > 1;
+  const methodSpecificOk =
+    method === "crypto"
+      ? true
+      : stripeStatus === "ready" && cardName.trim().length > 1;
 
-    const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk;
-
+  const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk;
 
   const wrap = (invalid?: boolean) =>
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
@@ -202,19 +222,63 @@ export default function SimForm({
     }`;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+      {formType === "encrypted_esim" && (
+        <div className="mt-2 flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[15px]">
+          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#C98A00] text-[14px] font-bold text-[#C98A00]">
+            !
+          </span>
+          <span className="text-[14px] leading-[20px] text-[#C98A00]">
+            Este producto no contiene un número de teléfono por seguridad.
+          </span>
+        </div>
+      )}
+      {formType === "encrypted_physical" && (
+        <div className="mt-2 flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[15px]">
+          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#C98A00] text-[14px] font-bold text-[#C98A00]">
+            !
+          </span>
+          <span className="text-[14px] leading-[20px] text-[#C98A00]">
+            Este producto no contiene un número de teléfono por seguridad.
+          </span>
+        </div>
+      )}
+      <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80">
+        Datos de compra
+      </p>
+
       {/* Email (full width para eSIM/recargas)  Telegram opcional */}
       {CFG.emailFullWidth ? (
-        <div className={`${wrap(!!errors.email)} w-[416px] max-w-full`}>
-          <input
-            {...register("email", { required: true })}
-            placeholder="Ingresa tu Email"
-            type="email"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
+        CFG.showSimNumber ? (
+          <div className="flex gap-[6px]">
+            <div className={`${wrap(!!errors.email)} flex-1`}>
+              <input
+                {...register("email", { required: true })}
+                placeholder="Ingresa tu Email"
+                type="email"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+            <div className={`${wrap(!!errors.simNumber)} flex-1`}>
+              <input
+                {...register("simNumber", { required: CFG.reqSimNumber })}
+                placeholder="Número de SIM"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className={`${wrap(!!errors.email)} w-[312px]`}>
+            <input
+              {...register("email", { required: true })}
+              placeholder="Ingresa tu Email"
+              type="email"
+              className="w-full bg-transparent outline-none text-[14px]"
+            />
+          </div>
+        )
       ) : (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-1">
           <div className={wrap(!!errors.email)}>
             <input
               {...register("email", { required: true })}
@@ -238,24 +302,31 @@ export default function SimForm({
       )}
 
       {/* Número de SIM (solo recargas datos/minutos) */}
-      {CFG.showSimNumber && (
-  <div className={`${wrap(!!errors.simNumber)} w-[416px] max-w-full`}>
-    <input
-      {...register("simNumber", { required: CFG.reqSimNumber })}
-      placeholder="Número de SIM"
-      className="w-full bg-transparent outline-none text-[14px]"
-    />
-  </div>
-)}
-
-
+      {CFG.showSimNumber && !CFG.emailFullWidth && (
+        <div className={`${wrap(!!errors.simNumber)} w-[416px] max-w-full`}>
+          <input
+            {...register("simNumber", { required: CFG.reqSimNumber })}
+            placeholder="Número de SIM"
+            className="w-full bg-transparent outline-none text-[14px]"
+          />
+        </div>
+      )}
+      {CFG.showAddress && (
+        <div className={wrap(!!errors.address)}>
+          <input
+            {...register("address", { required: CFG.reqAddress })}
+            placeholder="Dirección de envío"
+            className="w-full bg-transparent outline-none text-[14px]"
+          />
+        </div>
+      )}
       {/* Nombre envío (solo físico/genérico) */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-1">
         {CFG.showFullName && (
           <div className={wrap(!!errors.fullName)}>
             <input
               {...register("fullName", { required: CFG.reqFullName })}
-              placeholder="Nombre de envío"
+              placeholder="Nombre completo"
               className="w-full bg-transparent outline-none text-[14px]"
             />
           </div>
@@ -284,10 +355,9 @@ export default function SimForm({
         )}
       </div>
 
-      {/* Código postal / Teléfono */}
       {/* Código postal / Teléfono (solo físico/genérico) */}
       {(CFG.showPostal || CFG.showPhone) && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-1">
           {CFG.showPostal ? (
             <div className={wrap(!!errors.postalCode)}>
               <input
@@ -371,7 +441,9 @@ export default function SimForm({
           <button
             type="button"
             aria-pressed={method === "crypto"}
-            onClick={() => setValue("method", "crypto", { shouldValidate: true })}
+            onClick={() =>
+              setValue("method", "crypto", { shouldValidate: true })
+            }
             className={[
               "w-full rounded-[8px] border flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2",
               "h-[78px] px-2 py-2 sm:h-[76px] sm:px-3 ipad:h-[60px] ipad:px-4",
@@ -393,9 +465,8 @@ export default function SimForm({
         </div>
       </div>
 
-
       {/* Campos de tarjeta cuando el método es "card" (mismo look) */}
-            {method === "card" && (
+      {method === "card" && (
         <div className="space-y-2">
           {/* Titular */}
           <div className={wrap()}>
@@ -431,9 +502,7 @@ export default function SimForm({
             />
           </div>
 
-          {(mountError) && (
-            <p className="text-red-600 text-sm">{mountError}</p>
-          )}
+          {mountError && <p className="text-red-600 text-sm">{mountError}</p>}
         </div>
       )}
 

@@ -42,6 +42,7 @@ type Props = {
   esimAddonPrice?: number;
   esimAddonLabel?: string;
   onTotalChange?: (total: number) => void;
+  onChangeEsimAddon?: (checked: boolean) => void;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -63,6 +64,8 @@ const PurchaseHeader: React.FC<Props> = ({
   showEsimAddon = false,
   esimAddonPrice = 0,
   esimAddonLabel = "Lleva E-SIM",
+  onTotalChange,
+  onChangeEsimAddon,
 }) => {
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
@@ -173,9 +176,13 @@ const PurchaseHeader: React.FC<Props> = ({
   }, [product]);
 
   const RECHARGE_AMOUNTS = [
-  { id: 10, label: "10 USD" },
   { id: 25, label: "25 USD" },
   { id: 50, label: "50 USD" },
+  { id: 100, label: "100 USD" },
+  { id: 150, label: "150 USD" },
+  { id: 200, label: "200 USD" },
+  { id: 250, label: "250 USD" },
+  { id: 500, label: "500 USD" },
 ];
   return (
     <div className="w-full">
@@ -190,7 +197,7 @@ const PurchaseHeader: React.FC<Props> = ({
         <div
           className="
     relative overflow-hidden mx-auto sm:mx-0 flex-none
-    h-[152px] w-[382px] rounded-t-[12px] max-[390px]:w-[360px]        /* móvil (xs) */
+    h-[152px] w-[382px] rounded-t-[12px] max-[390px]:w-[360px]        
     sm:h-[194px] sm:w-[282px] sm:rounded-[12px] /* sm */
     md:h-[194px] md:w-[282px] md:rounded-[12px] /* md */
     ipad:h-[194px] ipad:w-[282px] ipad:rounded-[12px] /* 744 */
@@ -209,7 +216,7 @@ const PurchaseHeader: React.FC<Props> = ({
         </div>
 
         {/* Derecha: info */}
-        <div className="mt-[22px] md:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[16px] px-3 sm:px-4 ipad:px-3 lg:px-4">
+        <div className="mt-[22px] md:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[12px] px-3 sm:px-4 ipad:px-3 lg:px-4">
           {/* Encabezado: nombre + precio */}
           <div className="flex items-center justify-between">
             <h3
@@ -221,21 +228,22 @@ const PurchaseHeader: React.FC<Props> = ({
             >
               {product?.name ?? "Producto"}
             </h3>
-            <div
+                        <div
               className="
-    text-[16px] font-normal text-[#141414]
-    translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
-    max-[390px]:-translate-x-[-30px]
-    sm:-mt-6 md:-mt-0 ipad:-mt-12 lg:mt-0 xl:mt-0
-  "
+                text-[16px] font-bold text-right text-[#141414]
+                translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0
+                max-[390px]:-translate-x-[-30px]
+                sm:-mt-6 md:-mt-0 ipad:-mt-12 lg:mt-0 xl:mt-0
+              "
             >
-              {unitPrice} <span className="font-normal">USD</span>
+
+              {unitPrice} <span className="font-bold">USD</span>
             </div>
           </div>
           {/* Fila: Monto de recarga */}
           {showRechargeAmount && (
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4 ">
-              <span className="text-[14px] text-[#3D3D3D]">Monto de recarga</span>
+              <span className="text-[16px] text-[#3D3D3D]">Monto de recarga</span>
 
               <div
                 className="
@@ -247,7 +255,7 @@ const PurchaseHeader: React.FC<Props> = ({
               >
                 <select
                   className="
-                    h-[36px]
+                    h-[38px]
                     rounded-[8px] bg-[#EBEBEB]
                     px-[10px] text-[12px] text-black
                     outline-none ring-0
@@ -269,7 +277,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Plan (solo si hay minutesPlans) */}
           {!!minutesPlans?.length && (
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-              <span className="text-[14px] text-[#3D3D3D]">Minutos</span>
+              <span className="text-[16px] text-[#3D3D3D]">Minutos</span>
               <div
                 ref={planRef}
                 className="relative z-[1000] justify-self-end translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
@@ -333,7 +341,7 @@ const PurchaseHeader: React.FC<Props> = ({
           )}
           {/* Fila: Cantidad */}
           <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-            <span className="text-[14px] text-[#3D3D3D]">Cantidad</span>
+            <span className="text-[16px] text-[#3D3D3D]">Cantidad</span>
             <div
               className="justify-self-end flex items-center bg-[#EBEBEB] rounded-[6px] h-[36px] px-[14px] gap-2 select-none
                 translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]"
@@ -364,7 +372,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Licencia (ocultable) */}
           {shouldShowLicense && (
             <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-              <span className="text-[14px] text-[#3D3D3D]">Licencia</span>
+              <span className="text-[16px] text-[#3D3D3D]">Licencia</span>
 
               {showSelect ? (
                 <div
@@ -452,12 +460,32 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Total a pagar */}
           <div className="grid grid-cols-[auto,1fr] items-center gap-x-3 sm:gap-x-4">
-            <span className="text-[14px] text-[#3D3D3D]">Total a pagar</span>
+            <span className="text-[16px] text-[#3D3D3D]">Total a pagar</span>
             <span className="justify-self-end text-[16px] font-bold text-[#141414] translate-x-20 sm:-translate-x-5 md:-translate-x-5 ipad:-translate-x-5 lg:translate-x-0 xl:translate-x-0 max-[390px]:-translate-x-[-30px]">
               {total} {currency}
             </span>
           </div>
-
+          {/* Upsell eSIM (data & minutes) */}
+          {showEsimAddon && (
+            <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+              <input
+                type="checkbox"
+                checked={includeEsimAddon}
+                onChange={(e) => {
+                  const checked = e.target.checked;
+                  setIncludeEsimAddon(checked);
+                  onChangeEsimAddon?.(checked);  
+                }}
+                className="w-[16px] h-[16px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+              />
+              <span className="select-none">
+                {esimAddonLabel.replace(
+                  "7.50",
+                  (esimAddonPrice ?? 0).toFixed(2)
+                )}
+              </span>
+            </label>
+          )}
           {/* Link / Input cupón */}
           {showCoupon ? (
             <div
@@ -534,24 +562,6 @@ const PurchaseHeader: React.FC<Props> = ({
             >
               Ingresa código de promoción
             </button>
-          )}
-
-          {/* Upsell eSIM (data & minutes) */}
-          {showEsimAddon && (
-            <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
-              <input
-                type="checkbox"
-                checked={includeEsimAddon}
-                onChange={(e) => setIncludeEsimAddon(e.target.checked)}
-                className="w-[16px] h-[16px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
-              />
-              <span className="select-none">
-                {esimAddonLabel.replace(
-                  "7.50",
-                  (esimAddonPrice ?? 0).toFixed(2)
-                )}
-              </span>
-            </label>
           )}
         </div>
       </div>
