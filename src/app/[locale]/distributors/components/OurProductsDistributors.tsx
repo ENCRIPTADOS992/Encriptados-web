@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
+import { useRouter } from "@/i18n/routing";
 
 const OurProductsDistributors = () => {
   const t = useTranslations("DistributorsPage.ourProducts");
@@ -26,6 +27,23 @@ const OurProductsDistributors = () => {
       altText: "App Distributors",
     },
   ];
+
+  const router = useRouter();
+
+  const redirectMap: Record<number, string> = {
+    1: "40",
+    2: "38",
+    3: "35",
+  };
+
+  const handleRedirect = (id: number) => {
+  const target = redirectMap[id];
+  if (!target) return;
+
+  // 🔥 Navega al home con el tab seleccionado y ancla a la sección
+  router.push(`/?selectedOption=${target}#buysimappsection` as any);
+};
+
 
   return (
     <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] py-10 md:py-16">
@@ -55,7 +73,8 @@ const OurProductsDistributors = () => {
             {distributors.map((distributor) => (
               <div
                 key={distributor.id}
-                className="bg-[#0E0E0E] relative rounded-2xl shadow-lg text-white font-bold text-center flex flex-col px-4 py-6 justify-center items-center min-h-[320px]"
+                onClick={() => handleRedirect(distributor.id)}
+                className="bg-[#0E0E0E] relative rounded-2xl shadow-lg text-white font-bold text-center flex flex-col px-4 py-6 justify-center items-center min-h-[320px] cursor-pointer hover:opacity-80 transition"
               >
                 <h1 className="mt-4 mb-4">{distributor.title}</h1>
                 <div className="flex justify-center items-center">

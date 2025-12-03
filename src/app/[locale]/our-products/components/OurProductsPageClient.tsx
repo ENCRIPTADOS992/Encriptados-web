@@ -42,7 +42,7 @@ const OurProductsPageClient = () => {
             {t("filterProducts.title")}
           </h1>
            
-          <div id="#buysimappsection">
+          <div id="buysimappsection">
             <FilterProductsBar filters={filters} updateFilters={updateFilters} />
             <ListOfProducts filters={filters} />
           </div>

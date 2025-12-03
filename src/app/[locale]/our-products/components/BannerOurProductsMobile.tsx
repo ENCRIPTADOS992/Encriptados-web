@@ -56,7 +56,7 @@ const BannerOurProductsMobile = () => {
         </p>
         <button
           onClick={() => {
-            scrollToSection("#buysimappsection");
+            scrollToSection("buysimappsection");
             setValue("selectedOption", "sim");
           }}
           className="mt-2 bg-white text-[#00485E] font-semibold px-6 py-3 rounded-full hover:bg-[#00b0dd] transition-colors flex items-center gap-2"

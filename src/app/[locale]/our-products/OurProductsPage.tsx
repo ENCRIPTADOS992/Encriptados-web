@@ -72,7 +72,7 @@ const showFloatingFilters = !isCardVisible;
               {t("filterProducts.title")}
             </h1>
 
-            <div id="#buysimappsection">
+            <div id="buysimappsection">
               <div ref={filterRef} id="filters-section">
                 <FilterProductsBar
                   filters={filters}

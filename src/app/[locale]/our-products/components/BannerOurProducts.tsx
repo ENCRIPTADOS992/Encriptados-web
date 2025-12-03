@@ -54,7 +54,7 @@ const BannerOurProducts = () => {
             <button
               type="button"
               onClick={() => {
-                scrollToSection("#buysimappsection");
+                scrollToSection("buysimappsection");
                 setValue("selectedOption", "sim");
               }}
               className="flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-full hover:bg-white/10 transition-colors"
