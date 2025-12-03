@@ -335,9 +335,9 @@ const Page = () => {
       <FAQSection faqs={Faqs}/>
       <FAQSectionMobile faqs={Faqs}/>
       <FAQSectionTablet faqs={Faqs}/>
-      {/* <DownloadAppSection />
+      <DownloadAppSection />
       <DownloadAppSectionMobile/>
-      <DownloadAppSectionTablet/> */}
+      <DownloadAppSectionTablet/>
     </div>
   );
 };

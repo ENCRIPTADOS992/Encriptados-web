@@ -3,6 +3,7 @@ import AppStore from "/public/images/our-products/svg/app-store.svg";
 import GooglePlay from "/public/images/our-products/svg/google-play.svg";
 import PhoneQr from "/public/images/our-products/phone-qr.png";
 import DownloadAPKNew from "../../../our-products/components/svgs/DownloadAPKNew";
+import DownloadQr from "/public/images/encrypted-sim/download.png";
 
 const Component: React.FC = () => {
   return (
@@ -61,15 +62,27 @@ const Component: React.FC = () => {
         </div>
 
         <div className="relative mx-auto w-full sm:max-w-[250px] max-w-[250px] aspect-[5/7]">
-          <div className="absolute left-1/2 -translate-x-1/2 w-[370px] h-[400px]  rounded-2xl flex items-center justify-center p-4">
+          <div className="absolute left-1/2 -translate-x-1/2 w-[370px] h-[400px] rounded-2xl flex items-center justify-center p-4 relative">
+            {/* Imagen del teléfono */}
             <Image
               src={PhoneQr}
-              alt="QR Code"
+              alt="Teléfono con app"
               width={260}
               height={260}
               className="w-full h-full"
               priority
             />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Image
+                src={DownloadQr}
+                alt="Código QR de descarga"
+                width={140}
+                height={140}
+                className="w-[240px] h-[240px] rounded-lg"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>
