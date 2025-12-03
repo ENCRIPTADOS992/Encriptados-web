@@ -165,15 +165,36 @@ const CardProduct: React.FC<CardSimProps> = ({
       {/* Contenido */}
       <div className="p-2 sm:p-4 flex flex-col">
         <div className="flex items-start justify-between mb-1">
-          <h2 className="text-lg md:text-xl font-bold truncate">
+          <h2
+            className="
+              text-[12px] leading-[12px] tracking-[0.01em] font-bold
+              md:text-lg md:leading-tight
+              truncate
+            "
+          >
             {headerTitle}
           </h2>
 
+
           {badges?.tag ? (
-            <div className="ml-2 rounded-full bg-sky-600 text-black text-[12px] md:text-xs font-bold px-2 py-1 leading-none h-fit self-start shadow-md">
+            <div
+              className="
+                ml-2
+                inline-flex items-center justify-center
+                rounded-full
+                bg-[#1CB9EC]
+                text-[10px] md:text-[11px]
+                font-semibold
+                h-[18px]
+                px-[9px]
+                shadow-md
+                whitespace-nowrap
+              "
+            >
               {badges.tag}
             </div>
           ) : null}
+
         </div>
 
         <ul className="space-y-1">
