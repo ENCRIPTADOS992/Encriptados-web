@@ -2,7 +2,7 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
-import "@szhsin/react-menu/dist/index.css"; // Asegúrate de incluir los estilos
+import "@szhsin/react-menu/dist/index.css";
 import { useTranslations } from "next-intl";
 
 interface Option {
@@ -31,11 +31,11 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={selectedItem || ""} // Usa el valor de selectedItem como defaultValue
+      defaultValue={selectedItem || ""}
       render={({ field: { onChange } }) => (
         <Menu
           gap={10}
-          menuClassName="bg-[#222222] border-none p-2 rounded-xl"
+          menuClassName="bg-[#222222] border-none p-2 rounded-xl max-h-[60vh] overflow-y-auto"
           menuButton={
             <MenuButton
               className={`flex items-center justify-between border rounded-2xl shadow-md p-4 w-full transition duration-150 ease-in-out ${
@@ -45,10 +45,8 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
               }`}
             >
               <span className="flex items-center gap-x-2">
-                {/* Mostrar el icono en el botón de selección si está presente */}
                 {selectedItem &&
                   options.find((option) => option.value === selectedItem)?.icon}
-                {/* Mostrar la etiqueta seleccionada o el placeholder */}
                 <span>
                   {selectedItem
                     ? options.find((option) => option.value === selectedItem)
@@ -83,7 +81,6 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
                   selectedItem === item.value ? "" : ""
                 }`}
               />
-              {/* Mostrar el icono de la opción */}
               {item.icon && <span className="mr-2">{item.icon}</span>}
               <span
                 className={`font-semibold py-2 ${

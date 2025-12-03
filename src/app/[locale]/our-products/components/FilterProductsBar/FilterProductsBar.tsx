@@ -238,8 +238,8 @@ export default function FilterProductsBar({
                   key={idx}
                   className={
                     isRegion
-                      ? "w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
-                      : "w-full sm:w-[200px] sm:flex-auto min-w-0"
+                      ? "relative w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
+                      : "relative w-full sm:w-[200px] sm:flex-auto min-w-0"
                   }
                 >
                   {child}
