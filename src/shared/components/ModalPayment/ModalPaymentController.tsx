@@ -123,27 +123,33 @@ const productid = (params as any)?.productid as string | undefined;
       panelClassName="
   bg-[#F7F9FB]
   rounded-none p-3
-  w-full h-full max-h-screen
+  w-full 
   overflow-x-hidden
-  sm:rounded-[16px] sm:h-auto sm:max-h-[90vh] sm:p-6 sm:w-[628px]
+  sm:rounded-[16px] sm:p-6 sm:w-[628px] sm:max-h-[90vh]
   md:w-[628px]
   ipad:bg-[#FAFAFA] ipad:w-[628px] ipad:rounded-[21px]
-  lg:w-[696px] lg:rounded-[21px] lg:overflow-hidden 
+  lg:w-[696px] lg:rounded-[21px]
 "
+
+
     > 
     <PurchaseKindProvider value={kind}>
-      <div
-        className="
-    max-h-full overflow-y-auto overflow-x-hidden overscroll-contain
-    pb-4 md:pb-6 lg:pb-8
-    lg:max-h-[calc(100vh-120px)] no-scrollbar-lg
-  "
-      >
-        <ModalStack className="ipad:w-full lg:w-full md:mx-0">
-          {renderByMode()}
-        </ModalStack>
-      </div>
-    </PurchaseKindProvider>
+  <div
+    className="
+      max-h-[70vh]     // o [65vh] / [75vh] según tu header/footer
+      overflow-y-auto
+      overflow-x-hidden
+      overscroll-contain
+      pb-4 md:pb-6 lg:pb-8
+      no-scrollbar-lg
+    "
+  >
+    <ModalStack className="ipad:w-full lg:w-full md:mx-0">
+      {renderByMode()}
+    </ModalStack>
+  </div>
+</PurchaseKindProvider>
+
     </ModalPayment>
   );
 }

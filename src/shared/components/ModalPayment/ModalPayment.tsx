@@ -1,7 +1,6 @@
-// src/shared/components/ModalPayment/ModalPayment.tsx
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 type Props = {
   onClose?: () => void;
@@ -12,34 +11,6 @@ type Props = {
   overlayClassName?: string;
 };
 
-function useIsMobile(maxWidth = 744) {
-  const getMatch = () => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(`(max-width:${maxWidth - 1}px)`).matches;
-  };
-
-  const [isMobile, setIsMobile] = React.useState(getMatch);
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia(`(max-width:${maxWidth - 1}px)`);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-
-    // set inicial por si cambió antes
-    setIsMobile(mq.matches);
-
-    if (mq.addEventListener) mq.addEventListener("change", handler);
-    else mq.addListener(handler); // legacy
-
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", handler);
-      else mq.removeListener(handler); // legacy
-    };
-  }, [maxWidth]);
-
-  return isMobile;
-}
-
 const ModalPayment: React.FC<Props> = ({
   onClose = () => {},
   visible = false,
@@ -48,107 +19,132 @@ const ModalPayment: React.FC<Props> = ({
   panelClassName,
   overlayClassName,
 }) => {
-  // Cerrar con ESC y bloquear scroll del body
-  // ✅ Llama SIEMPRE los hooks
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
+  console.log("[ModalPayment] render", {
+    visible,
+    theme,
+    hasChildren: !!children,
+  });
+
   useEffect(() => {
     if (!visible) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+
+    console.log("[ModalPayment] useEffect(visible) ON");
+
+    const onKey = (e: KeyboardEvent) => {
+      console.log("[ModalPayment] keydown", e.key);
+      if (e.key === "Escape") onClose();
+    };
+
     window.addEventListener("keydown", onKey);
+
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    console.log("[ModalPayment] body overflow cambiado", {
+      prev,
+      now: document.body.style.overflow,
+    });
+
     return () => {
+      console.log("[ModalPayment] cleanup visible OFF");
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
   }, [visible, onClose]);
 
-  const isDark = theme === "dark";
-  const isMobile = useIsMobile(744);
+  useEffect(() => {
+    if (!visible) return;
+    if (typeof window === "undefined") return;
 
-  if (!visible) return null;
+    const logLayout = (label: string) => {
+      if (!panelRef.current) {
+        console.log(`[ModalPayment] ${label} → panelRef NULL`);
+        return;
+      }
+
+      const rect = panelRef.current.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const viewportW = window.innerWidth;
+      const scrollHeight = panelRef.current.scrollHeight;
+      const clientHeight = panelRef.current.clientHeight;
+
+      console.log(`[ModalPayment] layout (${label})`, {
+        viewportW,
+        viewportH,
+        rect: {
+          top: rect.top,
+          bottom: rect.bottom,
+          height: rect.height,
+        },
+        panel: {
+          scrollHeight,
+          clientHeight,
+          offsetHeight: panelRef.current.offsetHeight,
+        },
+      });
+    };
+
+    logLayout("mount");
+    const t = setTimeout(() => logLayout("after-timeout-150ms"), 150);
+    return () => clearTimeout(t);
+  }, [visible]);
+
+  if (!visible) {
+    console.log("[ModalPayment] visible = false → no render");
+    return null;
+  }
+
+  const isDark = theme === "dark";
+
+  const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    const isOutside = e.target === e.currentTarget;
+    console.log("[ModalPayment] overlay click", {
+      isOutside,
+      targetTag: (e.target as HTMLElement).tagName,
+    });
+
+    if (isOutside) onClose();
+  };
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex ${
-        isMobile ? "items-end" : "items-center"
-      } justify-center
-      ${isDark ? "bg-black/70" : "bg-black/50"} backdrop-blur-sm ${
-        overlayClassName ?? ""
-      }`}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      className={[
+        "fixed inset-0 z-50",
+        // 👇 el overlay ocupa todo el viewport y ES el que tiene scroll
+        "flex items-start justify-center",
+        "overflow-y-auto",
+        "py-6 px-2 sm:px-4",
+        isDark ? "bg-black/70" : "bg-black/50",
+        "backdrop-blur-sm",
+        overlayClassName ?? "",
+      ].join(" ")}
+      style={{ WebkitOverflowScrolling: "touch" }}
+      onClick={handleOverlayClick}
     >
       <div
-        className={`w-full h-full flex ${
-          isMobile ? "items-end" : "items-center"
-        } justify-center px-2 sm:px-3 ipad:px-4`}
+        ref={panelRef}
+        className={[
+          "relative w-full max-w-[820px] mx-auto",
+          // 👇 SIN max-h, SIN overflow-y-auto: deja que crezca
+          isDark ? "bg-zinc-900 text-zinc-100" : "bg-white text-zinc-900",
+          "rounded-2xl p-4 lg:p-6 shadow-2xl",
+          panelClassName ?? "",
+        ].join(" ")}
       >
-        {/* ======= MOBILE: Bottom Sheet ======= */}
-        {isMobile ? (
-          <div
-            className={[
-              "relative w-full h-[60vh] max-h-[75vh] rounded-t-2xl rounded-b-none overflow-hidden p-3 shadow-2xl",
-              isDark ? "bg-zinc-900 text-zinc-100" : "bg-white text-zinc-900",
-              "translate-y-2 opacity-0 animate-[fadeInUp_160ms_ease-out_forwards]",
-              panelClassName ?? "",
-            ].join(" ")}
-          >
-            {/* Handle visual */}
-            <div
-              aria-hidden="true"
-              className="mx-auto mt-1 mb-2 h-1.5 w-10 rounded-full bg-black/20"
-            />
+        <button
+          onClick={() => {
+            console.log("[ModalPayment] botón cerrar clic");
+            onClose();
+          }}
+          className="absolute top-1.5 right-2 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10"
+          aria-label="Cerrar"
+        >
+          ✕
+        </button>
 
-            {/* Botón cerrar (ligeramente hacia dentro) */}
-            <button
-              onClick={onClose}
-              className="absolute top-0.5 right-1 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10"
-              aria-label="Cerrar"
-            >
-              ✕
-            </button>
-
-            {/* Área scrolleable interna */}
-            <div className="max-h-full overflow-auto [scrollbar-gutter:stable]">
-              {children}
-            </div>
-          </div>
-        ) : (
-          /* ======= IPAD / DESKTOP: SIN TOCAR tu layout ======= */
-          <div
-            className={[
-              "relative w-full h-full max-h-screen overflow-auto rounded-none p-3",
-              isDark ? "bg-white/0 text-zinc-100" : "bg-white text-zinc-900",
-              "ipad:rounded-2xl ipad:h-auto ipad:p-4 ipad:max-w-[560px]",
-              "lg:max-w-[820px] lg:p-6",
-              "translate-y-2 opacity-0 animate-[fadeInUp_160ms_ease-out_forwards]",
-              panelClassName ?? "",
-            ].join(" ")}
-          >
-            <button
-              onClick={onClose}
-              className="absolute top-1.5 right-2 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10"
-              aria-label="Cerrar"
-            >
-              ✕
-            </button>
-            {children}
-          </div>
-        )}
+        {children}
       </div>
-
-      {/* Keyframes */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
