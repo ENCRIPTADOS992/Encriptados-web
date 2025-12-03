@@ -35,14 +35,14 @@ type SimFormProps = {
   onSubmit: (data: SimFormValues) => void | Promise<void>;
   formType?: FormType;
   loading?: boolean;
-  hideSimField?: boolean; 
+  hideSimField?: boolean;
 };
 
 export default function SimForm({
   onSubmit,
   formType = "encrypted_generic",
   loading = false,
-  hideSimField = false
+  hideSimField = false,
 }: SimFormProps) {
   const {
     register,
@@ -139,7 +139,7 @@ export default function SimForm({
           reqSimNumber: false,
         };
       case "encrypted_data": {
-        const showSimNumber = !hideSimField;   
+        const showSimNumber = !hideSimField;
         return {
           emailFullWidth: true,
           showTelegram: false,
@@ -154,7 +154,7 @@ export default function SimForm({
           showPhone: false,
           reqPhone: false,
           showSimNumber,
-          reqSimNumber: showSimNumber,       
+          reqSimNumber: showSimNumber,
         };
       }
       case "encrypted_minutes":
@@ -192,7 +192,7 @@ export default function SimForm({
           reqSimNumber: false,
         };
     }
-  }, [formType,hideSimField]);
+  }, [formType, hideSimField]);
 
   const typeSpecificOk =
     formType === "encrypted_physical" || formType === "encrypted_generic"
@@ -202,11 +202,9 @@ export default function SimForm({
         postalOk &&
         phoneOk
       : formType === "encrypted_data"
-      ? 
-        (!CFG.showSimNumber || simOk)
+      ? !CFG.showSimNumber || simOk
       : formType === "encrypted_minutes"
-      ? 
-        simOk
+      ? simOk
       : true;
 
   const methodSpecificOk =
@@ -250,24 +248,45 @@ export default function SimForm({
       {/* Email (full width para eSIM/recargas)  Telegram opcional */}
       {CFG.emailFullWidth ? (
         CFG.showSimNumber ? (
-          <div className="flex gap-[6px]">
-            <div className={`${wrap(!!errors.email)} flex-1`}>
-              <input
-                {...register("email", { required: true })}
-                placeholder="Ingresa tu Email"
-                type="email"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
+          // EMAIL + SIM (recarga datos/minutos encriptada)
+          <div className="flex flex-col gap-[6px] sm:flex-row">
+            {/* Email */}
+            <div className="flex-1">
+              <div
+                className={`min-h-[42px] sm:min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
+                  errors.email
+                    ? "border-2 border-red-500"
+                    : "border-2 border-transparent"
+                }`}
+              >
+                <input
+                  {...register("email", { required: true })}
+                  placeholder="Ingresa tu Email"
+                  type="email"
+                  className="w-full bg-transparent outline-none text-[14px] py-2"
+                />
+              </div>
             </div>
-            <div className={`${wrap(!!errors.simNumber)} flex-1`}>
-              <input
-                {...register("simNumber", { required: CFG.reqSimNumber })}
-                placeholder="Número de SIM"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
+
+            {/* Número de SIM */}
+            <div className="flex-1">
+              <div
+                className={`min-h-[42px] sm:min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
+                  errors.simNumber
+                    ? "border-2 border-red-500"
+                    : "border-2 border-transparent"
+                }`}
+              >
+                <input
+                  {...register("simNumber", { required: CFG.reqSimNumber })}
+                  placeholder="Número de SIM"
+                  className="w-full bg-transparent outline-none text-[14px] py-2"
+                />
+              </div>
             </div>
           </div>
         ) : (
+          // resto se queda igual
           <div className={`${wrap(!!errors.email)} w-[312px]`}>
             <input
               {...register("email", { required: true })}
@@ -278,6 +297,7 @@ export default function SimForm({
           </div>
         )
       ) : (
+        // bloque original para encrypted_physical / generic
         <div className="grid grid-cols-2 gap-1">
           <div className={wrap(!!errors.email)}>
             <input
@@ -414,20 +434,23 @@ export default function SimForm({
           Método de pago
         </p>
 
-        <div className="grid grid-cols-2 gap-2 ipad:gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 ipad:gap-3">
+
           <button
             type="button"
             aria-pressed={method === "card"}
             onClick={() => setValue("method", "card", { shouldValidate: true })}
             className={[
-              "w-full rounded-[8px] border flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2",
-              "h-[78px] px-2 py-2 sm:h-[76px] sm:px-3 ipad:h-[60px] ipad:px-4",
+              "w-full border flex flex-row items-center justify-center gap-2",
+              "h-[46px] rounded-[6px] px-[24px] py-[4px]",
+              "sm:h-[76px] sm:rounded-[8px] sm:px-3 sm:py-2 ipad:h-[60px] ipad:px-4",
               method === "card"
                 ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
                 : "bg-[#EBEBEB] border border-transparent",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-1",
             ].join(" ")}
           >
+
             <img
               src="/images/home/add_card.png"
               alt=""
@@ -445,8 +468,9 @@ export default function SimForm({
               setValue("method", "crypto", { shouldValidate: true })
             }
             className={[
-              "w-full rounded-[8px] border flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2",
-              "h-[78px] px-2 py-2 sm:h-[76px] sm:px-3 ipad:h-[60px] ipad:px-4",
+              "w-full border flex flex-row items-center justify-center gap-2",
+              "h-[46px] rounded-[6px] px-[24px] py-[4px]",
+              "sm:h-[76px] sm:rounded-[8px] sm:px-3 sm:py-2 ipad:h-[60px] ipad:px-4",
               method === "crypto"
                 ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]"
                 : "bg-[#EBEBEB] border border-transparent",
