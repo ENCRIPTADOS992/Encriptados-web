@@ -41,7 +41,7 @@ const DeliveriesPage = () => {
           <ProductCarouselMobile/>
           <LogoCarousel />
           {/* <DownloadAppBanner/> */}
-          {/* <FAQDeliveries /> */}
+          <FAQDeliveries />
         </JoinUsModalProvider>
       </BasicFormProvider>
     </>

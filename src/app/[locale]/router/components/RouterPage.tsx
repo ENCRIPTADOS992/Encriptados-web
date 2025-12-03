@@ -27,6 +27,9 @@ import ProductBenefitsGridTablet from "./ProductBenefitsGridTablet";
 import FeaturedProducts from "./FeaturedProducts";
 import FeaturedProductsMobile from "./FeaturedProductsMobile";
 import FeaturedProductsTablet from "./FeaturedProductsTablet";
+import RouterBundleDesktop from "./RouterBundle";
+import RouterBundleTablet from "./RouterBundleTablet";
+import RouterBundleMobile from "./RouterBundleMobile";
 import FAQSection from "./FAQSection";
 import FAQSectionMobile from "./FAQSectionMobile";
 import FAQSectionTablet from "./FAQSectionTablet";
@@ -273,6 +276,20 @@ const featuresGrid = [
       <ProductBenefitsGridTablet
         title="Quédate tranquilo con el router Camaleon"
         benefits={benefits}
+      />
+       <RouterBundleDesktop
+        imageUrl="/images/router/router.png"
+        alt="Router Camaleón"
+      />
+
+      <RouterBundleTablet
+        imageUrl="/images/router/router.png"
+        alt="Router Camaleón"
+      />
+
+      <RouterBundleMobile
+        imageUrl="/images/router/router.png"
+        alt="Router Camaleón"
       />
       <FeaturedProducts
         left={{
