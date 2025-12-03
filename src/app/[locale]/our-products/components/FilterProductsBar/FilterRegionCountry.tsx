@@ -479,10 +479,12 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
             }
           `}
           style={{
-            width: 518,
+            width: "min(100vw - 52px, 518px)", 
+            maxWidth: "100vw",
             padding: "18px 24px",
             boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
           }}
+
         >
           {/* Toggle Región / País */}
           <div className="flex gap-3 mb-4">
