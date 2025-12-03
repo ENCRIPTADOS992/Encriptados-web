@@ -22,60 +22,69 @@ const DownloadAppSectionMobile = () => (
 
     {/* Imagen mockup con tamaño exacto */}
     <div className="w-full flex justify-center relative">
-  {/* Lateral izquierdo (detrás de la imagen) */}
-  <div
-    className="absolute left-0 pointer-events-none z-10"
-    style={{
-      top: "30%",
-      height: "70%",
-      width: "60px",
-      background:
-        "linear-gradient(to right, #000000 0%, #272727 80%, transparent 100%)",
-      WebkitMaskImage:
-        "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
-      maskImage:
-        "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
-      WebkitMaskSize: "100% 100%",
-      maskSize: "100% 100%",
-      WebkitMaskRepeat: "no-repeat",
-      maskRepeat: "no-repeat",
-    }}
-  />
+      {/* Lateral izquierdo (detrás de la imagen) */}
+      <div
+        className="absolute left-0 pointer-events-none z-10"
+        style={{
+          top: "30%",
+          height: "70%",
+          width: "60px",
+          background:
+            "linear-gradient(to right, #000000 0%, #272727 80%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
+          WebkitMaskSize: "100% 100%",
+          maskSize: "100% 100%",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+        }}
+      />
 
-  {/* Lateral derecho (detrás de la imagen) */}
-  <div
-    className="absolute right-0 pointer-events-none z-10"
-    style={{
-      top: "30%",
-      height: "70%",
-      width: "60px",
-      background:
-        "linear-gradient(to left, #000000 0%, #272727 80%, transparent 100%)",
-      WebkitMaskImage:
-        "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
-      maskImage:
-        "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
-      WebkitMaskSize: "100% 100%",
-      maskSize: "100% 100%",
-      WebkitMaskRepeat: "no-repeat",
-      maskRepeat: "no-repeat",
-    }}
-  />
+      {/* Lateral derecho (detrás de la imagen) */}
+      <div
+        className="absolute right-0 pointer-events-none z-10"
+        style={{
+          top: "30%",
+          height: "70%",
+          width: "60px",
+          background:
+            "linear-gradient(to left, #000000 0%, #272727 80%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 20%, black 100%)",
+          WebkitMaskSize: "100% 100%",
+          maskSize: "100% 100%",
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+        }}
+      />
 
-  {/* Tu mockup por encima */}
-  <img
-    src="/images/apps/armadillo-v2/iPhonePortrait.png"
-    alt="iPhone App Mockup"
-    className="relative z-20 object-contain select-none pointer-events-none"
-    draggable={false}
-    style={{
-      width: "339px",
-      height: "373px",
-      maxWidth: "100%",
-    }}
-  />
-</div>
+      {/* Mockup por encima */}
+      <img
+        src="/images/apps/armadillo-v2/iPhonePortrait.png"
+        alt="iPhone App Mockup"
+        className="relative z-20 object-contain select-none pointer-events-none"
+        draggable={false}
+        style={{
+          width: "339px",
+          height: "373px",
+          maxWidth: "100%",
+        }}
+      />
 
+      {/* QR superpuesto al centro */}
+      <div className="absolute inset-0 flex items-center justify-center z-30">
+        <img
+          src="/images/encrypted-sim/download.png"
+          alt="Código QR de descarga"
+          className="w-[240px] h-[240px] rounded-lg select-none pointer-events-none"
+          draggable={false}
+        />
+      </div>
+    </div>
   </section>
 );
 
