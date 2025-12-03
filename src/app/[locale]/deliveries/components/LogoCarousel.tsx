@@ -10,7 +10,6 @@ const logos = [
   { id: 4, image: "/images/deliveries/secure_MDMlogo_android.svg" },
   { id: 5, image: "/images/deliveries/securecryptlogo.png" },
   { id: 6, image: "/images/deliveries/securemdmlogoapple.png" },
-  { id: 7, image: "/images/deliveries/totalseclogo.png" },
   { id: 8, image: "/images/deliveries/VaultChatlogo.svg" },
 ];
 
