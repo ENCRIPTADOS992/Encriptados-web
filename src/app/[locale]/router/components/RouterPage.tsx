@@ -277,7 +277,7 @@ const featuresGrid = [
         title="Quédate tranquilo con el router Camaleon"
         benefits={benefits}
       />
-       <RouterBundleDesktop
+      <RouterBundleDesktop
         imageUrl="/images/router/router.png"
         alt="Router Camaleón"
       />
