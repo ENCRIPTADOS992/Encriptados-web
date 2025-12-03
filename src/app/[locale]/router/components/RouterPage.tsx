@@ -199,7 +199,7 @@ const featuresGrid = [
         onRadioChange={handleRadioChange}
         onBuy={productInfo.onBuy}
         onChat={productInfo.onChat}
-        productImage="/images/apps/chat-mail/banner.jpg"
+        productImage="/images/router/card_fondo.png"
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
@@ -217,7 +217,7 @@ const featuresGrid = [
         onRadioChange={handleRadioChange}
         onBuy={productInfo.onBuy}
         onChat={productInfo.onChat}
-        productImage="/images/apps/chat-mail/banner.jpg"
+        productImage="/images/router/card_fondo.png"
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
@@ -235,7 +235,7 @@ const featuresGrid = [
         onRadioChange={handleRadioChange}
         onBuy={productInfo.onBuy}
         onChat={productInfo.onChat}
-        productImage="/images/apps/chat-mail/banner.jpg"
+        productImage="/images/router/card_fondo.png"
         appStoreUrl="https://apps.apple.com/app/chatmail-app"
         googlePlayUrl="https://play.google.com/store/apps/details?id=com.chatmail"
       />
