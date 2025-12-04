@@ -28,9 +28,9 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
       <SectionWrapper>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentPosts.map((post, index) => (
-             <CardOfPost
+            <CardOfPost
               key={post.id || index}
-              id={post.id}          
+              id={post.id}
               image={post.image}
               title={post.title}
               description={post.description}
@@ -40,7 +40,13 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
         </div>
 
         {totalPages > 1 && (
-          <div className="flex justify-center mt-8 space-x-2">
+          <div
+            className="
+      flex flex-wrap justify-center
+      mt-8 gap-2
+      max-w-full
+    "
+          >
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i}
@@ -49,17 +55,18 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
                   e.preventDefault();
                   setCurrentPage(i + 1);
                 }}
-                className={`px-4 py-2 rounded-md border transition ${
-                  currentPage === i + 1
+                className={`px-3 py-2 rounded-md border text-sm transition
+          ${currentPage === i + 1
                     ? "bg-white text-black font-semibold"
                     : "bg-transparent text-white border-gray-600 hover:bg-gray-800"
-                }`}
+                  }`}
               >
                 {i + 1}
               </button>
             ))}
           </div>
         )}
+
       </SectionWrapper>
     </div>
   );

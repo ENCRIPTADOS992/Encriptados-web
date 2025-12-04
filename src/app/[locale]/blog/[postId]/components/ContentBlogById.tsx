@@ -14,6 +14,7 @@ type PostContent = {
 
 type PostCard = {
   imagen: string;
+  imagen_full?: string;
   titulo: string;
   descripcion: string;
 };
@@ -83,27 +84,30 @@ const ContentBlogById = () => {
   }
 
   return (
-    <SectionWrapper className="max-w-3xl bg-[#191919] rounded-2xl shadow-lg mt-6 p-4">
-      <div className="relative w-full h-56 sm:h-80 rounded-lg overflow-hidden mb-4">
-        <Image
-          src={post.card.imagen}
-          alt={post.card.titulo}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 50vw"
-          priority
-        />
-      </div>
-      <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-        {post.card.titulo}
-      </h1>
-      <div className="flex items-center text-gray-400 text-sm mb-8 gap-3">
-      </div>
-      <article
-        className="prose prose-invert max-w-none text-gray-200"
-        dangerouslySetInnerHTML={{ __html: post.contenido.cuerpo }}
-      />
-    </SectionWrapper>
+    <SectionWrapper className="w-full max-w-5xl mx-auto bg-[#191919] rounded-2xl shadow-lg mt-6 p-4">
+  <div className="relative w-full aspect-[1199/629] rounded-2xl overflow-hidden mb-6">
+    <Image
+      src={post.card.imagen_full || post.card.imagen}
+      alt={post.card.titulo}
+      fill
+      className="object-cover"
+      sizes="(max-width: 768px) 100vw, 800px"
+      priority
+    />
+  </div>
+
+  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+    {post.card.titulo}
+  </h1>
+
+  <div className="flex items-center text-gray-400 text-sm mb-8 gap-3" />
+
+  <article
+    className="prose prose-invert max-w-none text-gray-200"
+    dangerouslySetInnerHTML={{ __html: post.contenido.cuerpo }}
+  />
+</SectionWrapper>
+
   );
 };
 
