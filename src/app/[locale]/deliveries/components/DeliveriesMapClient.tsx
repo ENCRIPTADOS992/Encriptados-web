@@ -28,9 +28,7 @@ type Country = {
 export const COUNTRIES: Country[] = rawCountries.map((country) => ({
   code: country.cca2.toLowerCase(),
   name: country.translations?.spa?.common || country.name.common,
-  latlng: country.latlng
-    ? [country.latlng[0], country.latlng[1]]
-    : [0, 0],
+  latlng: country.latlng ? [country.latlng[0], country.latlng[1]] : [0, 0],
 }));
 
 type RegionId = "Europa" | "Colombia" | "Chile" | "México" | "Canadá" | "Otros";
@@ -331,16 +329,17 @@ const getDefaultCountry = (): Country => {
 };
 
 const getCityCircleRadius = (zoom: number) => {
-  if (zoom <= 3) return 80000; 
+  if (zoom <= 3) return 80000;
   if (zoom <= 5) return 40000;
   if (zoom <= 7) return 15000;
-  return 6000; 
+  return 6000;
 };
 
 const DeliveriesMapClient = () => {
   const defaultCountry = getDefaultCountry();
 
-  const [selectedCountry, setSelectedCountry] = useState<Country>(defaultCountry);
+  const [selectedCountry, setSelectedCountry] =
+    useState<Country>(defaultCountry);
   const [isOpen, setIsOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState<[number, number]>(
     defaultCountry.latlng
@@ -366,11 +365,10 @@ const DeliveriesMapClient = () => {
   }, [isOpen]);
 
   const customIcon = L.icon({
-  iconUrl: "/images/our-products/mundo.png",
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-});
-
+    iconUrl: "/images/our-products/mundo.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+  });
 
   return (
     <section className="relative w-full flex flex-col items-center py-10 bg-[#eaf2f6]">
@@ -538,9 +536,7 @@ const DeliveriesMapClient = () => {
                 <Marker position={city.position} icon={customIcon}>
                   {mapZoom >= 5 && (
                     <Tooltip direction="top" offset={[0, -20]} permanent>
-                      <span className="text-xs font-semibold">
-                        {city.name}
-                      </span>
+                      <span className="text-xs font-semibold">{city.name}</span>
                     </Tooltip>
                   )}
                   <Popup>
