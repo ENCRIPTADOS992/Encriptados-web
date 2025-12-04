@@ -11,8 +11,8 @@ import AboutUsBannerMobile from "./AboutUsBannerMobile";
 
 // // WHO WE ARE
 import WhoWeAreDesktop from "./WhoWeAre";
-// import WhoWeAreTablet from "./WhoWeAreTablet";
-// import WhoWeAreMobile from "./WhoWeAreMobile";
+import WhoWeAreTablet from "./WhoWeAreTablet";
+import WhoWeAreMobile from "./WhoWeAreMobile";
 
 // // OUR GOALS
 import OurGoalsDesktop from "./OurGoals";
@@ -81,11 +81,11 @@ export default function AboutUsPage() {
           <div className="hidden lg:block">
             <WhoWeAreDesktop />
           </div>
-          <div className="hidden md:block lg:hidden">
-            {/* <WhoWeAreTablet /> */}
+          <div className="hidden sm:block lg:hidden">
+            <WhoWeAreTablet />
           </div>
           <div className="block md:hidden">
-            {/* <WhoWeAreMobile /> */}
+            <WhoWeAreMobile />
           </div>
         </div>
       </div>

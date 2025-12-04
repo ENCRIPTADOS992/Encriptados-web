@@ -30,9 +30,8 @@ export default function AboutUsBannerTablet() {
           </div>
 
           <h1 className="text-white text-[20px] font-bold text-center leading-snug max-w-[320px] md:max-w-[420px] mx-auto">
-  {t("AboutUsPage.banner.description")}
-</h1>
-
+            {t("AboutUsPage.banner.description")}
+          </h1>
         </div>
 
         <Image
