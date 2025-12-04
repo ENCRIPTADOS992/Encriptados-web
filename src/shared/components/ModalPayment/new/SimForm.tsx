@@ -4,6 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
+import { confirmCardPayment } from "@/payments/stripeClient";
 
 const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
 
@@ -30,12 +31,18 @@ export type SimFormValues = {
   cvc: string;
   cardPostal: string;
 };
+type StripeConfirmFn = (
+  clientSecret: string,
+  billing?: { name?: string; email?: string; postal_code?: string }
+) => Promise<any>;
+
 
 type SimFormProps = {
   onSubmit: (data: SimFormValues) => void | Promise<void>;
   formType?: FormType;
   loading?: boolean;
   hideSimField?: boolean;
+  onStripeConfirmReady?: (fn: StripeConfirmFn | null) => void;
 };
 
 export default function SimForm({
@@ -43,6 +50,7 @@ export default function SimForm({
   formType = "encrypted_generic",
   loading = false,
   hideSimField = false,
+  onStripeConfirmReady,
 }: SimFormProps) {
   const {
     register,
@@ -76,19 +84,20 @@ export default function SimForm({
   const country = watch("country");
   const postalCode = watch("postalCode");
   const phone = watch("phone");
-
   const cardName = watch("cardName");
   const cardNumber = watch("cardNumber");
   const exp = watch("exp");
   const cvc = watch("cvc");
   const cardPostal = watch("cardPostal");
-
   const method = watch("method");
   const [terms, setTerms] = React.useState(true);
 
-  const { status: stripeStatus, error: mountError } = useStripeSplit(
-    method === "card"
-  );
+  const {
+    status: stripeStatus,
+    error: mountError,
+    stripeRef,
+    splitRef,
+  } = useStripeSplit(method === "card");
 
   const emailOk = /\S+@\S+\.\S+/.test(email) && email.length <= 100;
   const phoneOk = phone.trim().length >= 7;
@@ -218,6 +227,59 @@ export default function SimForm({
     `h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${
       invalid ? "border-2 border-red-500" : "border-2 border-transparent"
     }`;
+
+    React.useEffect(() => {
+  if (!onStripeConfirmReady) return;
+
+  console.log("[SimForm] useEffect check", {
+    method,
+    stripeStatus,
+    hasStripe: !!stripeRef.current,
+    hasNumber: !!splitRef.current?.number,
+  });
+
+  if (
+    method !== "card" ||
+    stripeStatus !== "ready" ||
+    !stripeRef.current ||
+    !splitRef.current?.number
+  ) {
+    console.log("[SimForm] Stripe NO listo, mandando null al padre");
+    onStripeConfirmReady(null);
+    return;
+  }
+
+  const fn: StripeConfirmFn = async (clientSecret, billing) => {
+    console.log("[SimForm] fn() llamado desde ModalSIM con:", {
+      clientSecret,
+      billing,
+    });
+
+    if (!stripeRef.current || !splitRef.current?.number) {
+      throw new Error("Stripe no está listo.");
+    }
+
+    return confirmCardPayment(
+      stripeRef.current,
+      clientSecret,
+      splitRef.current.number,
+      {
+        name: billing?.name,
+        email: billing?.email,
+        postal_code: billing?.postal_code,
+      }
+    );
+  };
+
+  console.log("[SimForm] registrando stripeConfirm fn en el padre");
+  onStripeConfirmReady(fn);
+
+  return () => {
+    console.log("[SimForm] limpiando stripeConfirm fn");
+    onStripeConfirmReady(null);
+  };
+}, [onStripeConfirmReady, method, stripeStatus, stripeRef, splitRef]);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">

@@ -73,6 +73,7 @@ type Shipping = {
   phone: string;
   method: "card" | "crypto";
   simNumber?: string;
+  cardPostal?: string
 };
 
 export default function ModalSIM() {
@@ -103,6 +104,38 @@ export default function ModalSIM() {
   }, [product]);
 
   const isPhysical = formType === "encrypted_physical";
+
+  type StripeConfirmFn = (
+    clientSecret: string,
+    billing?: { name?: string; email?: string; postal_code?: string }
+  ) => Promise<any>;
+
+  const [stripeConfirm, setStripeConfirm] =
+    React.useState<StripeConfirmFn | null>(null);
+
+  const handleStripeConfirmReady = React.useCallback(
+    (fn: StripeConfirmFn | null) => {
+      console.log("[ModalSIM] handleStripeConfirmReady called", {
+        incomingType: typeof fn,
+        incomingFn: fn,
+      });
+
+      if (!fn) {
+        setStripeConfirm(null);
+        return;
+      }
+
+      setStripeConfirm(() => fn);
+    },
+    []
+  );
+
+  React.useEffect(() => {
+    console.log("[ModalSIM] stripeConfirm updated", {
+      type: typeof stripeConfirm,
+      stripeConfirm,
+    });
+  }, [stripeConfirm]);
 
   const [selectedPlanId, setSelectedPlanId] =
     React.useState<string | number | null>(null);
@@ -273,13 +306,11 @@ export default function ModalSIM() {
   product,
 ]);
 
-
-
   const onApplyCoupon = () =>
     setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
   const handleSubmit = async (data: Shipping) => {
-    console.log("[ModalSIM] submit 👉", {
+  console.log("[ModalSIM] submit 👉", {
     formType,
     data,
     unitPrice,
@@ -288,6 +319,7 @@ export default function ModalSIM() {
     isPhysical,
     productid,
   });
+
   const shippingFee = isPhysical ? 75 : 0;
   const baseAmount = Number(unitPrice) * quantity - discount;
   const amountUsd = Math.max(baseAmount + shippingFee, 0);
@@ -364,14 +396,81 @@ export default function ModalSIM() {
 
     console.log("➡️ Tottoli checkout payload", payload);
     const res = await tottoliCheckout(payload);
+    console.log("[ModalSIM] respuesta tottoli", res);
 
-    if (res.payment.method === "stripe") {
-      window.location.href = res.payment.stripe.checkoutUrl;
-    } else if (res.payment.method === "cryptomus") {
-      window.location.href = res.payment.cryptomus.url;
-    } else {
-      console.error("[ModalSIM] método de pago inesperado", res.payment);
+    if (tottoliMethod === "card") {
+      const clientSecret = (res as any).client_secret as string | undefined;
+
+      console.log("[ModalSIM] Stripe PaymentIntent creado (Tottoli)", {
+        provider: res.provider,
+        provider_ref: (res as any).provider_ref,
+        client_secret: clientSecret,
+        stripeConfirmCurrent: stripeConfirm,
+        stripeConfirmType: typeof stripeConfirm,
+      });
+
+      if (!clientSecret) {
+        alert("Pedido creado, pero no se recibió client_secret para Stripe.");
+        return;
+      }
+
+      if (!stripeConfirm) {
+        console.warn("[ModalSIM] stripeConfirm todavía no está listo");
+        alert(
+          "Stripe todavía se está inicializando. Espera un momento y vuelve a intentar."
+        );
+        return;
+      }
+
+      const billing = {
+        name: data.fullName || undefined,
+        email: data.email,
+        postal_code: data.cardPostal || data.postalCode || undefined,
+      };
+
+      try {
+        const confirmRes = await stripeConfirm(clientSecret, billing);
+
+        console.log("[ModalSIM] resultado confirmCardPayment", confirmRes);
+
+        if (confirmRes?.status === "succeeded") {
+          alert("Pago realizado correctamente 🎉");
+          return;
+        }
+
+        if (confirmRes?.error) {
+          alert(confirmRes.error);
+          return;
+        }
+
+        alert("No se pudo completar el pago con la tarjeta.");
+      } catch (err: any) {
+        console.error("[ModalSIM] error confirmando pago Stripe", err);
+        alert(err?.message || "Error confirmando el pago con Stripe.");
+      }
+
+      return;
     }
+
+
+    if (tottoliMethod === "cryptomus") {
+      if ((res as any).provider === "cryptomus" && (res as any).payment_url) {
+        window.location.href = (res as any).payment_url;
+      } else {
+        console.warn(
+          "[ModalSIM] provider cryptomus pero sin payment_url en respuesta",
+          res
+        );
+        alert("Pedido creado, pero no se recibió URL de pago.");
+      }
+      return;
+    }
+
+    console.error("[ModalSIM] método Tottoli inesperado", {
+      tottoliMethod,
+      res,
+    });
+    alert("Método de pago Tottoli desconocido.");
     return;
   }
 
@@ -408,8 +507,6 @@ export default function ModalSIM() {
     }
   }
 };
-
-
 
   return (
     <PurchaseScaffold
@@ -449,6 +546,7 @@ export default function ModalSIM() {
       onSubmit={handleSubmit} 
       formType={formType} 
       hideSimField={hideSimField} 
+      onStripeConfirmReady={handleStripeConfirmReady}
     />
     </PurchaseScaffold>
   );

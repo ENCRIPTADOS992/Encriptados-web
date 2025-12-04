@@ -16,25 +16,19 @@ export interface TottoliCheckoutPayload {
   shipping_payload?: any;
 }
 
-interface TottoliStripeOk {
+export type TottoliProvider = "stripe" | "cryptomus";
+
+export interface TottoliOkResponse {
   ok: true;
   order_id: number;
-  payment: {
-    method: "stripe";
-    stripe: { checkoutUrl: string };
-  };
+  status: string;
+  provider: TottoliProvider;
+  provider_ref?: string;
+  client_secret?: string;
+  payment_url?: string | null;
 }
 
-interface TottoliCryptoOk {
-  ok: true;
-  order_id: number;
-  payment: {
-    method: "cryptomus";
-    cryptomus: { url: string };
-  };
-}
 
-type TottoliOkResponse = TottoliStripeOk | TottoliCryptoOk;
 
 export async function tottoliCheckout(
   payload: TottoliCheckoutPayload

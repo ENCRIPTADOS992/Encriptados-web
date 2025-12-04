@@ -23,40 +23,40 @@ const BannerSecureMdmNew = () => {
       p.name.toLowerCase().includes("secure mdm")
     ) || [];
 
-const secureMdmCards = filteredPhones.map((p) => {
-  const lower = (p.name || "").toLowerCase();
+  const secureMdmCards = filteredPhones.map((p) => {
+    const lower = (p.name || "").toLowerCase();
 
-  const img =
-    lower.includes("iphone")
-      ? "/images/home/iphone.png"
-      : lower.includes("android")
-      ? "/images/home/android.png"
-      : p.images?.[0]?.src ?? "/images/home/secure-mdm-placeholder.png";
+    const img =
+      lower.includes("iphone")
+        ? "/images/home/iphone.png"
+        : lower.includes("android")
+        ? "/images/home/android.png"
+        : p.images?.[0]?.src ?? "/images/home/secure-mdm-placeholder.png";
 
-  const v0 = p.variants?.[0];
+    const v0 = p.variants?.[0];
 
-  const currency = v0?.currency ?? "USD";
-  const variantCost = toNumber(v0?.cost ?? null);
-  const salePrice = toNumber(p.sale_price);
-  const regularPrice = toNumber(p.price);
-  const displayPrice = variantCost ?? salePrice ?? regularPrice ?? null;
+    const currency = v0?.currency ?? "USD";
+    const variantCost = toNumber(v0?.cost ?? null);
+    const salePrice = toNumber(p.sale_price);
+    const regularPrice = toNumber(p.price);
+    const displayPrice = variantCost ?? salePrice ?? regularPrice ?? null;
 
-  return {
-    id: p.id,
-    title: p.name,
-    image: img,
-    currency,
-    price: displayPrice,
-    buyUrl: "#",
-    infoUrl: "#",
-  };
-});
-
+    return {
+      id: p.id,
+      title: p.name,
+      image: img,
+      currency,
+      price: displayPrice,
+      buyUrl: "#",
+      infoUrl: "#",
+    };
+  });
 
   const twoCards = secureMdmCards.slice(0, 2);
 
   return (
-    <section className="w-full bg-black text-white py-14 px-">
+    // 👇 Solo visible en lg en adelante
+    <section className="hidden lg:block w-full bg-black text-white py-14">
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex flex-col md:flex-row gap-10 md:items-center">
         {/* Texto */}
         <div className="md:flex-[0_0_320px] w-full flex flex-col items-center md:mr-20">
@@ -71,7 +71,7 @@ const secureMdmCards = filteredPhones.map((p) => {
         {/* Slider */}
         <div className="md:w-1/2 flex flex-col items-center md:mr-20">
           <Swiper
-            spaceBetween={24}                
+            spaceBetween={24}
             centeredSlides={false}
             pagination={{ clickable: true, dynamicBullets: true }}
             autoplay={{
@@ -81,11 +81,9 @@ const secureMdmCards = filteredPhones.map((p) => {
             }}
             modules={[Pagination, Autoplay]}
             breakpoints={{
-              320: { slidesPerView: 1 },
-              768: { slidesPerView: 1 },
-              1024: { slidesPerView: 2 },     
+              1024: { slidesPerView: 2 },
             }}
-            className="w-full !overflow-visible" 
+            className="w-full !overflow-visible"
           >
             {twoCards.map((card) => (
               <SwiperSlide key={card.id} className="!w-auto flex justify-center">
