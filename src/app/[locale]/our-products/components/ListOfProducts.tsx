@@ -188,10 +188,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   ) {
     const osFilter = filters.os.trim().toLowerCase();
     const before = filteredProducts.length;
+
     filteredProducts = filteredProducts.filter((product) => {
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
       return brandNormalized === osFilter;
     });
+
     console.log("🔎 [Filtro OS]", {
       osFilter,
       before,
@@ -199,15 +201,20 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
+  // Filtro por licencia (usando licenseVariants)
   if (
     (selectedOption === 38 || selectedOption === 35) &&
     filters.license &&
     filters.license !== "all"
   ) {
     const before = filteredProducts.length;
-    filteredProducts = filteredProducts.filter(
-      (product) => String(product.licensetime) === String(filters.license)
+
+    filteredProducts = filteredProducts.filter((product) =>
+      (product.licenseVariants ?? []).some(
+        (v: any) => String(v.licensetime) === String(filters.license)
+      )
     );
+
     console.log("🔎 [Filtro Licencia]", {
       license: filters.license,
       before,
@@ -229,22 +236,21 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const buildTimBadges = (p: Product): TimBadges | undefined => {
     const v = p.variants?.[0];
 
-    const selectedCountryCode =
-      filters.simCountry || filters.regionOrCountry;
-    const selectedCountryLabel = filters.simCountryLabel; 
+    const selectedCountryCode = filters.simCountry || filters.regionOrCountry;
+    const selectedCountryLabel = filters.simCountryLabel;
 
     if (selectedCountryCode?.toUpperCase() === "GLOBAL") {
-    const tag = v?.gb || v?.name || undefined;
+      const tag = v?.gb || v?.name || undefined;
 
-    return {
-      country: {
-        label: "Global",
-        flagUrl: "/images/icons/global.svg",
-      },
-      tag,
-    };
-  }
-    
+      return {
+        country: {
+          label: "Global",
+          flagUrl: "/images/icons/global.svg",
+        },
+        tag,
+      };
+    }
+
     let flagCode: string | undefined;
     let countryLabel: string | undefined;
 
@@ -253,7 +259,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       flagCode = normalizedFromFilter;
 
       countryLabel =
-        selectedCountryLabel || 
+        selectedCountryLabel ||
         COUNTRY_LABEL_BY_CODE[selectedCountryCode.toUpperCase()] ||
         selectedCountryCode.toUpperCase();
     } else if (v) {
@@ -266,7 +272,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
           COUNTRY_LABEL_BY_CODE[normalizedCode.toUpperCase()]) ||
         rawCode;
     }
-
 
     const tag = v?.gb || v?.name || undefined;
 
@@ -293,8 +298,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 w-full max-w-7xl mx-auto">
           {filteredProducts.map((product, index) => {
             const isCategory40 = selectedOption === 40;
-            const isTimProvider =
-              (product.provider ?? "").toLowerCase().includes("tim");
+            const isTimProvider = (product.provider ?? "")
+              .toLowerCase()
+              .includes("tim");
             const isTim = filters.provider === "tim";
             const simName = (product.name ?? "").toLowerCase().trim();
             const isSim =
@@ -305,19 +311,36 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             const variant = product.variants?.[0];
             const variantId = isTim ? product.variants?.[0]?.id : undefined;
 
-            const effectivePlanDataAmount =
-              isTimProvider
-                ? product.plan_data_amount ?? variant?.cost ?? undefined
-                : undefined;
+            const effectivePlanDataAmount = isTimProvider
+              ? product.plan_data_amount ?? variant?.cost ?? undefined
+              : undefined;
             console.log("💰 [ListOfProducts] price debug =>", {
-            id: product.id,
-            name: product.name,
-            provider: product.provider,
-            price: product.price,
-            plan_data_amount: product.plan_data_amount,
-            variantCost: variant?.cost,
-            effectivePlanDataAmount,
-          });
+              id: product.id,
+              name: product.name,
+              provider: product.provider,
+              price: product.price,
+              plan_data_amount: product.plan_data_amount,
+              variantCost: variant?.cost,
+              effectivePlanDataAmount,
+            });
+
+            let priceToShow = Number(product.price);
+
+            if (
+              (selectedOption === 38 || selectedOption === 35) &&
+              filters.license &&
+              filters.license !== "all" &&
+              product.licenseVariants &&
+              product.licenseVariants.length > 0
+            ) {
+              const licenseVariant = product.licenseVariants.find(
+                (v: any) => String(v.licensetime) === String(filters.license)
+              );
+
+              if (licenseVariant?.price != null) {
+                priceToShow = Number(licenseVariant.price);
+              }
+            }
 
             const key =
               isTim && variantId
@@ -333,13 +356,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 priceDiscount={product.sale_price}
                 productImage={product.images[0]?.src ?? ""}
                 features={[]}
-                priceRange={`${product.price}$`}
+                priceRange={`${priceToShow}$`}
                 headerIcon={""}
                 headerTitle={product.name}
                 filters={filters}
                 checks={product.checks || []}
                 badges={badges}
-                provider={product.provider}                 
+                provider={product.provider}
                 planDataAmount={effectivePlanDataAmount}
               />
             );

@@ -20,51 +20,50 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
   const osOptions = useBrandsFromProducts(products);
   console.log("[FilterAppWithLicense] products:", products);
 
-    const licenseOptions = useMemo(() => {
-    if (!products || products.length === 0) {
-      return [{ label: "TODO", value: "all" }];
+  const licenseOptions = useMemo(() => {
+  if (!products || products.length === 0) {
+    return [{ label: "TODO", value: "all" }];
+  }
+
+  const filteredByBrand = products.filter((p) => {
+    const brand = p.brand as string | undefined;
+
+    if (filters.os && filters.os !== "all") {
+      return brand === filters.os;
     }
 
-    const filteredByBrand = products.filter((p) => {
-      const brand = (p as any).brand as string | undefined;
+    return true;
+  });
 
-      if (filters.os && filters.os !== "all") {
-        return brand === filters.os;
-      }
+  if (filteredByBrand.length === 0) {
+    return [{ label: "TODO", value: "all" }];
+  }
 
-      return true; 
+  const licenseSet = new Set<string>();
+
+  filteredByBrand.forEach((p) => {
+    p.licenseVariants?.forEach((v) => {
+      if (!v.licensetime || v.licensetime === "0") return;
+      licenseSet.add(String(v.licensetime));
     });
+  });
 
-    if (filteredByBrand.length === 0) {
-      return [{ label: "TODO", value: "all" }];
-    }
+  if (licenseSet.size === 0) {
+    return [{ label: "TODO", value: "all" }];
+  }
 
-    const set = new Set<string>();
+  const sorted = Array.from(licenseSet).sort(
+    (t1, t2) => Number(t1) - Number(t2)
+  );
 
-    filteredByBrand.forEach((p) => {
-      const lt = (p as any).licensetime as string | undefined;
-      if (lt && lt !== "0") {
-        set.add(lt);
-      }
-    });
-
-    const sorted = Array.from(set).sort(
-      (a, b) => Number(a) - Number(b)
-    );
-
-    if (sorted.length === 0) {
-      return [{ label: "TODO", value: "all" }];
-    }
-
-    return [
-      { label: "TODO", value: "all" },
-      ...sorted.map((val) => ({
-        label: `${val} mes${val === "1" ? "" : "es"}`,
-        value: val,
-      })),
-    ];
-  }, [products, filters.os]);
-
+  return [
+    { label: "TODO", value: "all" },
+    ...sorted.map((time) => ({
+      label: `${time} mes${time === "1" ? "" : "es"}`,
+      value: time,
+    })),
+  ];
+}, [products, filters.os]);
 
 
   return (

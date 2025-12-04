@@ -41,6 +41,7 @@ export type Product = {
     image: string;
   }[];
  variants?: ProductVariant[];
+ licenseVariants?: ProductLicenseVariant[];
  plan_data_amount?: number;
 
 };
@@ -125,4 +126,12 @@ export interface ProductVariant {
   label: string;       
   purchase_url: string;
   scope?: ProductVariantScope; 
+}
+
+export interface ProductLicenseVariant {
+  id: number;
+  licensetime: string;
+  price: number;
+  sku: string;
+  image: string;
 }

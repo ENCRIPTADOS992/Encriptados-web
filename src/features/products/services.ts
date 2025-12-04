@@ -28,7 +28,23 @@ export const getAllProducts = async (
       params,
     });
     const rawProducts = response.data.products;
-    return Object.values(rawProducts);
+    const products: Allproducts = Object.values(rawProducts).map((p: any) => {
+      const licenseVariants =
+        p.variants?.map((v: any) => ({
+          id: v.id,
+          licensetime: String(v.licensetime),
+          price: Number(v.price),
+          sku: v.sku,
+          image: v.image,
+        })) ?? [];
+
+      return {
+        ...p,
+        licenseVariants,
+      } as Product;
+    });
+
+    return products;
   } catch (error) {
     console.error("Error en getAllProducts:", error);
     throw error;
@@ -44,7 +60,9 @@ export const getProductById = async (
   lang: string = "es"
 ): Promise<ProductById> => {
   try {
-    const url = `${WP_API_BASE}/encriptados/v1/products/${encodeURIComponent(productId)}`;
+    const url = `${WP_API_BASE}/encriptados/v1/products/${encodeURIComponent(
+      productId
+    )}`;
     const response = await axios.get<ProductById>(url, {
       params: { lang },
     });
