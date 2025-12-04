@@ -9,6 +9,7 @@ import JoinUsBanner from "./JoinUsBanner";
 import ModalJoinUs from "./ModalJoinUs";
 import { JoinUsModalProvider } from "../context/JoinUsModalContext";
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
+import BeDistributorEncryptedMobile from "./BeDistributorEncryptedMobile";
 
 const DistributorsPage = () => {
   return (
@@ -19,7 +20,12 @@ const DistributorsPage = () => {
           <BannerDistributors />
           <BeDistributor />
           <EncryptedCommunication />
-          <BeDistributorEncrypted />
+          <div className="block md:hidden">
+            <BeDistributorEncryptedMobile />
+          </div>
+          <div className="hidden sm:block">
+            <BeDistributorEncrypted />
+          </div>
           <OurProductsDistributors />
           <JoinUsBanner />
         </JoinUsModalProvider>
