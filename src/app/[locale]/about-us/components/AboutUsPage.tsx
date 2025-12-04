@@ -63,7 +63,7 @@ export default function AboutUsPage() {
 
 
         {/* Imagen grande compartida (si aplica solo desktop, cámbialo a hidden md:block etc.) */}
-        <div className="relative z-10">
+        <div className="relative z-[5] hidden sm:block">
           <Image
             src={PeopleImage}
             alt="Phone in Hand"
@@ -73,6 +73,8 @@ export default function AboutUsPage() {
             priority
           />
         </div>
+
+
 
         {/* WhoWeAre por breakpoint */}
         <div className="relative z-10">
