@@ -18,14 +18,30 @@ type PostIdPageProps = {
   currentPostId: number | string;
 };
 
-const MAX_WIDTH = "max-w-[1239px]"; 
+const MAX_WIDTH = "max-w-[1239px]";
 
 const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostId }) => {
   return (
     <>
       <BannerPostById />
+
       <div className="w-full bg-black flex flex-col justify-center items-center py-10 md:py-16 px-4 gap-10">
-        <ContentBlogById />
+        {/* CONTENIDO + SIDEBAR (artículos anteriores) */}
+        <div
+          className={`w-full ${MAX_WIDTH} mx-auto flex flex-col md:flex-row items-start gap-8`}
+        >
+          {/* Columna izquierda: artículo */}
+          <div className="w-full md:flex-1">
+            <ContentBlogById />
+          </div>
+
+          {/* Columna derecha: artículos anteriores */}
+          <aside className="w-full md:w-[340px] lg:w-[380px]">
+            <PreviousPosts posts={allPosts} currentPostId={currentPostId} />
+          </aside>
+        </div>
+
+        {/* Banner "Habla con nosotros" debajo, ocupando el ancho */}
         <div
           className={`relative w-full ${MAX_WIDTH} mx-auto flex justify-center items-center overflow-hidden`}
         >
@@ -49,11 +65,6 @@ const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostId }) => {
 
           <div className="relative z-10 w-full flex justify-center">
             <TalkNowBanner />
-          </div>
-        </div>
-        <div className="w-full flex justify-center">
-          <div className={MAX_WIDTH + " w-full"}>
-            <PreviousPosts posts={allPosts} currentPostId={currentPostId} />
           </div>
         </div>
       </div>
