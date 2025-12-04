@@ -16,6 +16,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import L from "leaflet";
 import { CircleFlag } from "react-circle-flags";
 import rawCountries from "world-countries";
+import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
+import ReactDOMServer from "react-dom/server";
 
 type Country = {
   code: string;
@@ -295,13 +297,6 @@ const CITY_TAGS: CityTag[] = [
   },
 ];
 
-const customIcon = L.icon({
-  iconUrl: "/images/deliveries/home_pin.png",
-  iconSize: [30, 30],
-  iconAnchor: [20, 40],
-  popupAnchor: [0, -40],
-});
-
 const MapViewUpdater: React.FC<{ center: [number, number] }> = ({ center }) => {
   const map = useMap();
 
@@ -336,10 +331,10 @@ const getDefaultCountry = (): Country => {
 };
 
 const getCityCircleRadius = (zoom: number) => {
-  if (zoom <= 3) return 200000; 
-  if (zoom <= 5) return 120000;
-  if (zoom <= 7) return 70000;
-  return 40000; 
+  if (zoom <= 3) return 80000; 
+  if (zoom <= 5) return 40000;
+  if (zoom <= 7) return 15000;
+  return 6000; 
 };
 
 const DeliveriesMapClient = () => {
@@ -354,7 +349,6 @@ const DeliveriesMapClient = () => {
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // Cerrar dropdown al hacer click fuera
   useEffect(() => {
     if (!isOpen) return;
 
@@ -370,6 +364,13 @@ const DeliveriesMapClient = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
+
+  const customIcon = L.icon({
+  iconUrl: "/images/our-products/mundo.png",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+});
+
 
   return (
     <section className="relative w-full flex flex-col items-center py-10 bg-[#eaf2f6]">
@@ -482,7 +483,8 @@ const DeliveriesMapClient = () => {
                     type="button"
                     onClick={() => {
                       setSelectedCountry(country);
-                      setMapCenter(country.latlng); // <-- mover mapa al país
+                      setMapCenter(country.latlng);
+                      setMapZoom(5);
                       setIsOpen(false);
                     }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-100"
@@ -518,18 +520,21 @@ const DeliveriesMapClient = () => {
           {/* Círculos que ENCIERRAN cada ciudad (no toda la región) */}
           {CITY_TAGS.map((city) => {
             const radius = getCityCircleRadius(mapZoom);
+            const showCircle = mapZoom >= 7;
             return (
               <React.Fragment key={city.id}>
-                <Circle
-                  center={city.position}
-                  radius={radius}
-                  pathOptions={{
-                    color: "#1D4ED8", // azul tipo mapa
-                    weight: 1,
-                    fillColor: "#1D4ED8",
-                    fillOpacity: 0.12,
-                  }}
-                />
+                {showCircle && (
+                  <Circle
+                    center={city.position}
+                    radius={radius}
+                    pathOptions={{
+                      color: "#1D4ED8",
+                      weight: 1,
+                      fillColor: "#1D4ED8",
+                      fillOpacity: 0.12,
+                    }}
+                  />
+                )}
                 <Marker position={city.position} icon={customIcon}>
                   {mapZoom >= 5 && (
                     <Tooltip direction="top" offset={[0, -20]} permanent>
