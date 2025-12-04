@@ -16,8 +16,8 @@ import WhoWeAreMobile from "./WhoWeAreMobile";
 
 // // OUR GOALS
 import OurGoalsDesktop from "./OurGoals";
-// import OurGoalsTablet from "./OurGoalsTablet";
-// import OurGoalsMobile from "./OurGoalsMobile";
+import OurGoalsTablet from "./OurGoalsTablet";
+import OurGoalsMobile from "./OurGoalsMobile";
 
 // DOWNLOAD (ya tienes desktop/mobile)
 import DownloadBanner from "../../ambassadors/components/DownloadBanner";
@@ -61,7 +61,6 @@ export default function AboutUsPage() {
           </div>
         </div>
 
-
         {/* Imagen grande compartida (si aplica solo desktop, cámbialo a hidden md:block etc.) */}
         <div className="relative z-[5] hidden sm:block">
           <Image
@@ -73,8 +72,6 @@ export default function AboutUsPage() {
             priority
           />
         </div>
-
-
 
         {/* WhoWeAre por breakpoint */}
         <div className="relative z-10">
@@ -97,24 +94,27 @@ export default function AboutUsPage() {
           <Image
             src={SpiralLeft}
             alt="Spiral Background Left"
-            width={340}
-            height={340}
+            width={440}
+            height={440}
             style={{ objectFit: "cover" }}
             priority
           />
         </div>
 
         {/* OurGoals por breakpoint */}
+        <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-b from-black/80 via-black/60 to-black/85" />
+
+        {/* OurGoals por breakpoint */}
         <div className="relative z-10">
           <div className="hidden lg:block">
             <OurGoalsDesktop />
           </div>
-          <div className="hidden md:block lg:hidden">
-            {/* <OurGoalsTablet /> */}
+          <div className="hidden sm:block lg:hidden">
+            <OurGoalsTablet />
           </div>
           <div className="block md:hidden">
-            {/* <OurGoalsMobile /> */}
-          </div>
+            <OurGoalsMobile />
+            </div>
         </div>
 
         {/* Download banners (ya tienes desktop/mobile) */}
