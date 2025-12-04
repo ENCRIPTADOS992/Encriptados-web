@@ -1,74 +1,132 @@
+// app/(site)/about-us/AboutUsPage.tsx
+"use client";
+
 import React from "react";
-import AboutUsBanner from "./AboutUsBanner";
 import Image from "next/image";
-import WhoWeAre from "./WhoWeAre";
-import OurGoals from "./OurGoals";
+
+// BANNERS
+import AboutUsBannerDesktop from "./AboutUsBanner";
+import AboutUsBannerTablet from "./AboutUsBannerTablet";
+import AboutUsBannerMobile from "./AboutUsBannerMobile";
+
+// // WHO WE ARE
+import WhoWeAreDesktop from "./WhoWeAre";
+import WhoWeAreTablet from "./WhoWeAreTablet";
+import WhoWeAreMobile from "./WhoWeAreMobile";
+
+// // OUR GOALS
+import OurGoalsDesktop from "./OurGoals";
+// import OurGoalsTablet from "./OurGoalsTablet";
+// import OurGoalsMobile from "./OurGoalsMobile";
+
+// DOWNLOAD (ya tienes desktop/mobile)
 import DownloadBanner from "../../ambassadors/components/DownloadBanner";
 import DownloadBannerMobile from "../../ambassadors/components/DownloadBannerMobile";
 
-const AboutUsPage = () => {
-  const PeopleImage = "/images/about-us/peopleimage.png";
-  const Spiral = "/images/about-us/spiral.png";
-  const SpiralLeft = "/images/about-us/spiralleft.png";
+const PeopleImage = "/images/about-us/peopleimage.png";
+const Spiral = "/images/about-us/spiral.png";
+const SpiralLeft = "/images/about-us/spiralleft.png";
 
+export default function AboutUsPage() {
   return (
     <>
+      {/* Sección 1 */}
       <div className="w-full bg-gradient-to-b from-[#005340] via-[#073A4B] to-black relative py-9">
-        {/* Imagen del espiral en el fondo */}
-        <div className="absolute top-0 left-0 right-0 bottom-0 z-0">
+        {/* BG spiral */}
+        <div className="absolute inset-0 z-0">
           <Image
             src={Spiral}
             alt="Spiral Background"
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
             priority
           />
         </div>
 
-        {/* Contenido principal */}
-        <AboutUsBanner />
+        {/* Banner por breakpoint */}
+        <div className="relative z-10">
+          {/* Desktop */}
+          <div className="hidden lg:block">
+            <AboutUsBannerDesktop />
+          </div>
 
-        <Image
-          src={PeopleImage}
-          alt="Phone in Hand"
-          width={2000}
-          height={2000}
-          className="object-contain -translate-y-10 md:-translate-y-11 xl:-translate-y-20  "
-          priority
-        />
+          {/* Tablet (sm y md) */}
+          <div className="hidden sm:block lg:hidden">
+            <AboutUsBannerTablet />
+          </div>
 
-        <div>
-          <WhoWeAre />
+          {/* Mobile (<sm) */}
+          <div className="block sm:hidden">
+            <AboutUsBannerMobile />
+          </div>
+        </div>
+
+
+        {/* Imagen grande compartida (si aplica solo desktop, cámbialo a hidden md:block etc.) */}
+        <div className="relative z-[5] hidden sm:block">
+          <Image
+            src={PeopleImage}
+            alt="Phone in Hand"
+            width={2000}
+            height={2000}
+            className="object-contain -translate-y-10 md:-translate-y-11 xl:-translate-y-20"
+            priority
+          />
+        </div>
+
+
+
+        {/* WhoWeAre por breakpoint */}
+        <div className="relative z-10">
+          <div className="hidden lg:block">
+            <WhoWeAreDesktop />
+          </div>
+          <div className="hidden sm:block lg:hidden">
+            <WhoWeAreTablet />
+          </div>
+          <div className="block md:hidden">
+            <WhoWeAreMobile />
+          </div>
         </div>
       </div>
-      <div className="w-full bg-gradient-to-b from-[black] via-[#073A4B] to-black relative min-h-screen py-2">
+
+      {/* Sección 2 */}
+      <div className="w-full bg-gradient-to-b from-black via-[#073A4B] to-black relative min-h-screen py-2">
+        {/* BG spiral left */}
         <div className="absolute inset-0 z-0">
           <Image
             src={SpiralLeft}
-            alt="Spiral Background"
+            alt="Spiral Background Left"
             width={340}
             height={340}
-            objectFit="cover"
+            style={{ objectFit: "cover" }}
             priority
           />
         </div>
 
+        {/* OurGoals por breakpoint */}
         <div className="relative z-10">
-          <OurGoals />
+          <div className="hidden lg:block">
+            <OurGoalsDesktop />
+          </div>
+          <div className="hidden md:block lg:hidden">
+            {/* <OurGoalsTablet /> */}
+          </div>
+          <div className="block md:hidden">
+            {/* <OurGoalsMobile /> */}
+          </div>
         </div>
 
-        {/* Desktop only */}
-        <div className="hidden lg:block z-10">
-          <DownloadBanner />
-        </div>
-
-        {/* Mobile & tablet only */}
-        <div className="block lg:hidden z-10">
-          <DownloadBannerMobile />
+        {/* Download banners (ya tienes desktop/mobile) */}
+        <div className="relative z-10">
+          <div className="hidden lg:block">
+            <DownloadBanner />
+          </div>
+          <div className="block lg:hidden">
+            <DownloadBannerMobile />
+          </div>
         </div>
       </div>
     </>
   );
-};
-
-export default AboutUsPage;
+}

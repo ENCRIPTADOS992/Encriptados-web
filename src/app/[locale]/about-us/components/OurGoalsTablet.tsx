@@ -8,12 +8,12 @@ import Information from "../icons/Information";
 import World from "../icons/World";
 import Security from "../icons/Security";
 
-export default function OurGoalsDesktop() {
+export default function OurGoalsTablet() {
   const t = useTranslations();
 
   return (
-    <SectionWrapper className="py-20 hidden lg:block">
-      <div className="grid grid-cols-3 gap-6 max-w-6xl mx-auto">
+    <SectionWrapper className="py-16 hidden md:block lg:hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         <OurGoalCard
           title={t("AboutUsPage.cards.communicationCard.title")}
           description={t("AboutUsPage.cards.communicationCard.description")}
