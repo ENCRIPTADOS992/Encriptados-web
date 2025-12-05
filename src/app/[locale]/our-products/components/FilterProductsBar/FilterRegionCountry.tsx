@@ -395,22 +395,22 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
       >
         {variant === "tim" ? (
           // 🔹 Versión TIM: botón gris claro
-          <div className="flex items-center gap-2 h-[24px]">
-            <span className="inline-flex w-[24px] h-[24px]">
+          <div className="flex items-center gap-3 h-[36px]">
+            <span className="inline-flex w-[32px] h-[32px]">
               {selectedInfo.isCountry && selectedInfo.flagCode ? (
                 <CircleFlag
                   countryCode={selectedInfo.flagCode}
-                  style={{ width: "24px", height: "24px" }}
+                  style={{ width: "32px", height: "32px" }}
                 />
               ) : (
-                <RegionIcon size={24} variant="tim" />
+                <RegionIcon size={32} variant="tim" />
               )}
             </span>
 
             <span
               className="
-                inline-flex items-center justify-center
-                text-[12px] font-medium
+                inline-flex items-center 
+                text-[16px] font-semibold
                 text-[#171717]
                 w-[102px] h-[15px]
                 text-center
@@ -553,7 +553,13 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = ({
           </div>
 
           {/* Lista dinámica */}
-          <div className="mb-4 max-h-60 overflow-y-auto custom-scrollbar">
+          <div
+  className={`
+    mb-4 max-h-60 overflow-y-auto
+    ${variant === "tim" ? "custom-scrollbar-light" : "custom-scrollbar"}
+  `}
+>
+
             {filters.regionOrCountryType === "region" && (
               <>
                 <div

@@ -84,7 +84,6 @@ const WhereUseSimSection = () => {
                 <p className="text-[14px] font-medium text-[#7E7E7E] leading-[17px] mb-3">
                   Categoría
                 </p>
-
                 <div className="inline-flex rounded-[18px] gap-1">
                   {TIM_SERVICE_OPTIONS.map((option) => {
                     const isActive = activeTimService === option.id;
@@ -100,26 +99,26 @@ const WhereUseSimSection = () => {
                           })
                         }
                         className={`
-                  flex flex-col items-center justify-center text-center
-                  min-w-[127px] h-[64px]
-                  rounded-[12px]
-                  px-6
-                  text-[12px] font-semibold
-                  border-2
-                  transition
-                  ${
-                    isActive
-                      ? "bg-[#F0F9FF] border-[#009DFF] text-[#009DFF] shadow-sm"
-                      : "bg-[#D0D0D0] border-[#D0D0D0] text-[#374151] hover:bg-[#F0F9FF] hover:border-[#009DFF] hover:text-[#009DFF]"
-                  }
-                `}
+                          flex flex-col items-center justify-center text-center
+                          min-w-[127px] h-[64px]
+                          rounded-[12px]
+                          px-6
+                          text-[12px] font-semibold
+                          border-2
+                          transition
+                          ${
+                            isActive
+                              ? "bg-[#F0F9FF] border-[#009DFF] text-[#009DFF] shadow-sm"
+                              : "bg-[#D0D0D0] border-[#D0D0D0] text-[#374151] hover:bg-[#F0F9FF] hover:border-[#009DFF] hover:text-[#009DFF]"
+                          }
+                        `}
                       >
                         <span
                           className={`
-    relative w-6 h-6 mb-1
-    transition
-    ${isActive ? "filter-none opacity-100" : "grayscale opacity-60"}
-  `}
+                            relative w-6 h-6 mb-1
+                            transition
+                            ${isActive ? "filter-none opacity-100" : "grayscale opacity-60"}
+                          `}
                         >
                           <Image
                             src={option.icon}
@@ -147,38 +146,10 @@ const WhereUseSimSection = () => {
                     filters={filters}
                     updateFilters={updateFilters}
                     service={activeTimService}
-                    variant="tim" // 👈 activamos el modo nuevo
+                    variant="tim"
                   />
                 </div>
               )}
-            </div>
-
-            {/* DERECHA: Buscador fuera del grupo de botones */}
-            <div className="w-full lg:flex-1 flex justify-start lg:justify-end">
-              <div className="ml-auto w-[286px]">
-                <div
-                  className="
-        flex items-center justify-between
-        w-full h-[64px]
-        rounded-[50px]
-        bg-[#EDEDED]
-        px-6
-      "
-                >
-                  <SearchProduct
-                    name="searchTimSim"
-                    placeholder={tProducts("filterProducts.searchPlaceholder")}
-                    containerClassName="w-full"
-                    inputClassName="
-    !bg-[#EDEDED]
-    !text-[#171717]
-    placeholder:!text-black
-    shadow-none
-    !pl-2
-  "
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
