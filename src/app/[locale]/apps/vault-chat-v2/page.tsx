@@ -25,7 +25,7 @@ import DownloadAppSection from "../component/templateSoftware/DownloadAppSection
 import DownloadAppSectionMobile from "../component/templateSoftware/DownloadAppSectionMobile";
 import DownloadAppSectionTablet from "../component/templateSoftware/DownloadAppSectionTablet";
 import { plans } from "./consts/plans";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
@@ -50,6 +50,33 @@ const Page = () => {
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const buildSimMoreInfoUrl = (productId: string) => {
+    const basePath = `/our-products/sim-more-info?productId=${productId}`;
+    const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
+    if (!match) return basePath;
+
+    const locale = match[1];
+    if (basePath.startsWith(`/${locale}/`)) return basePath;
+
+    return `/${locale}${basePath}`;
+  };
+
+  const handleMoreInfo = (productId: string) => {
+    const href = buildSimMoreInfoUrl(productId);
+    console.log("[ChatMail Page] 👉 Navegando a más info:", { productId, href });
+    router.push(href);
+  };
+
+  const handleSimBuy = (productId: string) => {
+    console.log("🛒 [ChatMail Page] Comprar SIM", {
+      productid: productId,
+      languageCode: "es",
+    });
+    openModal({ productid: productId, languageCode: "es" });
+  };
   const productInfo = {
   title: "Silent Phone",
   price: "99$ USD",
@@ -305,17 +332,17 @@ const Page = () => {
           description:
             "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
-          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          onButtonClick: () => handleSimBuy("508"), 
           moreInfoLabel: "Más información",
-          onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/vault-chat-v2/sim.png",
+          onMoreInfo: () => handleMoreInfo("508"),
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
-          onButtonClick: () => alert("Ver más E-SIM"),
-          image: "/images/apps/vault-chat-v2/phone.png",
+          onButtonClick: () => handleMoreInfo("454"), 
+          image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
       <FeaturedProductsMobile
@@ -324,17 +351,17 @@ const Page = () => {
           description:
             "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
-          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          onButtonClick: () => handleSimBuy("508"),
           moreInfoLabel: "Más información",
-          onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/vault-chat-v2/sim.png",
+          onMoreInfo: () => handleMoreInfo("508"),
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
-          onButtonClick: () => alert("Ver más E-SIM"),
-          image: "/images/apps/vault-chat-v2/phone.png",
+          onButtonClick: () => handleMoreInfo("454"),
+          image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
       <FeaturedProductsTablet
@@ -343,17 +370,17 @@ const Page = () => {
           description:
             "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
-          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          onButtonClick: () => handleSimBuy("508"),
           moreInfoLabel: "Más información",
-          onMoreInfo: () => alert("Más información de SIM Card"),
-          image: "/images/apps/vault-chat-v2/sim.png",
+          onMoreInfo: () => handleMoreInfo("508"),
+          image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
-          onButtonClick: () => alert("Ver más E-SIM"),
-          image: "/images/apps/vault-chat-v2/phone.png",
+          onButtonClick: () => handleMoreInfo("454"),
+          image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
       <FAQSection faqs={Faqs} />
