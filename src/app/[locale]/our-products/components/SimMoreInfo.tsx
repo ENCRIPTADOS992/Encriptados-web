@@ -7,99 +7,62 @@ import SimBenefits from "../../encrypted-sim/components/SimBenefits";
 import SimSteps from "../../encrypted-sim/components/SimSteps";
 import AppDownload from "../../encrypted-sim/components/AppDownload";
 import FaqSims from "../../encrypted-sim/components/FaqSims";
+import FixedSimProducts from "../../encrypted-sim/components/FixedSimProducts";
+import OurObjetive from "../../encrypted-sim/components/OurObjetive";
+import BannerSecure from "../../encrypted-sim/components/BannerSecure";
+import PayForUse from "../../encrypted-sim/components/PayForUse";
+import WhyCallSim from "../../encrypted-sim/components/WhyCallSim/WhyCallSim";
+import BannerCoverage from "@/shared/BannerCoverage";
+import FeaturesListBlack from "../../encrypted-sim/components/FeaturesListBlack";
+import FixedSimProductDetail from "../../encrypted-sim/components/FixedSimProductDetail";
 
 const SimMoreInfo = () => {
   const t = useTranslations("EncryptedSimPage");
 
   return (
     <>
-      <div className="relative overflow-hidden">
-        <div
-          className="
-            hidden lg:block
-            pointer-events-none select-none
-            absolute
-            -left-[260px]
-            top-[220px]
-            w-[875px] h-[875px]
-            rounded-full
-            bg-[#01FFC2]
-            opacity-40
-            blur-[500px]
-            -z-10
-          "
-        />
-
-        <div
-          className="
-            hidden lg:block
-            pointer-events-none select-none
-            absolute
-            -right-[260px]
-            top-[520px]
-            w-[875px] h-[875px]
-            rounded-full
-            bg-[#C5E4FF]
-            opacity-200
-            blur-[200px]
-            -z-10
-          "
-        />
-
-        <div
-          className="
-            relative               
-            pt-6 pb-4
-            lg:pt-16 lg:pb-6
-            overflow-hidden        
-          "
-        >
-          <img
-            src="/images/encrypted-sim/icons/vector27.png"
-            alt="curve background"
-            className="
-              hidden lg:block
-              absolute
-              -top-[20px]          
-              left-1/2              
-              -translate-x-1/2
-              w-screen              
-              h-auto               
-              object-cover
-              rotate-360
-              pointer-events-none
-              select-none
-              z-0
-            "
-          />
-
-          <SectionWrapper>
-            <div className="relative z-10">
-              <CardInfo />
-            </div>
-          </SectionWrapper>
-        </div>
-          <div className="bg-[#F4F8FA] sm:bg-transparent py-8 sm:py-8">
-            <SectionWrapper>
-              <SimBenefits />
-            </SectionWrapper>
-          </div>
-
+      <div className="pt-16 pb-6 bg-[linear-gradient(to_right,_#EAF5FF_10%,_white_20%,_#C1F0FF_100%)]">
+        <FixedSimProductDetail />
       </div>
-      <div className="bg-[#F4F8FA] py-10 md:py-8">
+      <SectionWrapper className="mt-10 mb-16">
+        <h2 className="text-2xl mb-10 font-bold text-black">
+          {t("characteristics.title")}
+        </h2>
+      </SectionWrapper>
+      <FeaturesListBlack />
+      <div className="bg-[#f4f8fa] py-[8vh]">
         <SectionWrapper>
-          <SimSteps />
+          <OurObjetive />
         </SectionWrapper>
       </div>
-      <div className="bg-[#F4F8FA]">
+      <div className="bg-[#E7F4F8] py-[8vh] w-full">
+
         <SectionWrapper>
-          <AppDownload />
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
+            {t("comunicationTitle")}
+          </h2>
+          <BannerSecure />
         </SectionWrapper>
       </div>
-      <div className="bg-[#F4F8FA]">
+
+
+      <div className="bg-white py-[8vh]">
         <SectionWrapper>
-          <FaqSims />
+          <PayForUse />
         </SectionWrapper>
+      </div>
+
+      <div className="bg-white w-full py-[8vh]">
+        <SectionWrapper>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mt-16 mb-16">
+            {t("whyCallWithEncryptedSIM.title")}
+          </h2>
+          <WhyCallSim />
+        </SectionWrapper>
+      </div>
+
+      <div className="mt-16">
+        <BannerCoverage />
       </div>
     </>
   );
