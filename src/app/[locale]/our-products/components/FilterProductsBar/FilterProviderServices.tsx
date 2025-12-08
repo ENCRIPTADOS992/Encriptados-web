@@ -74,13 +74,17 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
         <MenuDropdownProductBar
           name="provider"
           options={[
-            { label: "TODO", value: "all", icon: "" },
             {
               label: " ",
               value: "encriptados",
-              icon: <EncryptedLogoSvg width={100} height={24} />,
+              icon: <EncryptedLogoSvg width={100} height={24} 
+              />
             },
-            { label: " ", value: "tim", icon: <TimSimIcon /> },
+            { label: " ", 
+              value: "tim", 
+              icon: <TimSimIcon 
+              /> 
+            },
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de provider:", value);
