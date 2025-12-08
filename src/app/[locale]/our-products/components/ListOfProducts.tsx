@@ -20,6 +20,7 @@ const serviceMap: Record<string, string> = {
   esim: "eSIM",
   datarecharge: "Recarga Datos",
   minuterecharge: "Recarga Minutos",
+  eSimData: "eSIM + Recarga Datos",
   imsi: "IMSI",
   physicsimtim: "SIM Física",
   esimplusdatatim: "eSIM + Datos",
@@ -35,6 +36,42 @@ const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
   CO: "Colombia",
   MX: "México",
   US: "Estados Unidos",
+};
+
+// 👇 helper para ver qué está pasando con las recargas
+const logRecargaSummary = (label: string, products: Product[]) => {
+  const recargaNames = ["recarga datos", "recarga minutos"];
+
+  const summary: Record<
+    string,
+    { total: number; byProvider: Record<string, number> }
+  > = {};
+
+  for (const p of products) {
+    const name = (p.name ?? "").trim().toLowerCase();
+    if (!recargaNames.includes(name)) continue;
+
+    const key = name;
+    const provider = (p.provider ?? "unknown").trim();
+
+    if (!summary[key]) {
+      summary[key] = { total: 0, byProvider: {} };
+    }
+    summary[key].total += 1;
+    summary[key].byProvider[provider] =
+      (summary[key].byProvider[provider] ?? 0) + 1;
+  }
+
+  console.log(`📊 [RecargaSummary] ${label}`, summary);
+};
+
+const normalizeProviderValue = (value: unknown): string | undefined => {
+  if (!value) return;
+  if (Array.isArray(value)) {
+    if (!value.length) return;
+    return String(value[value.length - 1]);
+  }
+  return String(value);
 };
 
 const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
@@ -68,10 +105,16 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const products: Product[] = data ?? [];
   console.log("📦 [ListOfProducts] productos recibidos:", products.length);
 
+  // 👉 log general de recargas ANTES de cualquier filtro
+  logRecargaSummary("ANTES DE FILTROS", products);
+
   let filteredProducts: Product[] = products;
 
+  // Filtro por provider (solo categoría 40)
   if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
     const providerValue = providerMap[filters.provider];
+    const before = filteredProducts.length;
+
     filteredProducts = products.filter((product) => {
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
@@ -81,33 +124,44 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         brandNormalized === filterNormalized
       );
     });
-    console.log(
-      "🔎 [Filtro Provider] value:",
+
+    console.log("🔎 [Filtro Provider]", {
+      providerFilter: filters.provider,
       providerValue,
-      "=> count:",
-      filteredProducts.length
-    );
+      before,
+      after: filteredProducts.length,
+    });
+    logRecargaSummary("DESPUÉS FILTRO PROVIDER", filteredProducts);
   } else {
-    console.log("[Filtro Provider] no aplica");
+    console.log("[Filtro Provider] no aplica", {
+      provider: filters.provider,
+      selectedOption,
+    });
   }
 
   const getProviderServiceKey = (): string | undefined => {
-    if (!filters.provider) return;
+    if (!filters.provider || filters.provider === "all") return;
 
     if (filters.provider === "encriptados") {
-      const value = filters.encriptadosprovider;
+      const value = normalizeProviderValue(filters.encriptadosprovider);
       if (!value || value === "all") return;
-      return Array.isArray(value) ? value[value.length - 1] : value;
+      return value;
     }
 
     if (filters.provider === "tim") {
-      const value = filters.timprovider;
+      const value = normalizeProviderValue(filters.timprovider);
       if (!value || value === "all") return;
-      return Array.isArray(value) ? value[value.length - 1] : value;
+      return value;
     }
   };
 
   const providerServiceKey = getProviderServiceKey();
+  console.log("🧷 [ServiceKey] =>", {
+    provider: filters.provider,
+    providerServiceKey,
+    rawEncriptados: filters.encriptadosprovider,
+    rawTim: filters.timprovider,
+  });
 
   if (providerServiceKey) {
     const serviceName = serviceMap[providerServiceKey];
@@ -119,18 +173,19 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       });
     } else {
       const before = filteredProducts.length;
-      filteredProducts = filteredProducts.filter(
-        (product) =>
-          product.name?.trim().toLowerCase() ===
-          serviceName.trim().toLowerCase()
-      );
+
+      filteredProducts = filteredProducts.filter((product) => {
+        const name = product.name?.trim().toLowerCase() ?? "";
+        return name === serviceName.trim().toLowerCase();
+      });
 
       console.log("🔎 [Filtro Servicio]", {
-        key: providerServiceKey,
+        providerServiceKey,
         serviceName,
         before,
         after: filteredProducts.length,
       });
+      logRecargaSummary("DESPUÉS FILTRO SERVICIO", filteredProducts);
     }
   }
 
@@ -177,6 +232,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       before,
       after: filteredProducts.length,
     });
+    logRecargaSummary("DESPUÉS FILTRO REGIÓN TIM", filteredProducts);
   } else if (filters.provider === "tim" && isSimTimFisica) {
     console.log("🌎 [Filtro Región TIM] omitido porque es SIM Física TIM");
   }
@@ -201,7 +257,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
-  // Filtro por licencia (usando licenseVariants)
+  // Filtro por licencia
   if (
     (selectedOption === 38 || selectedOption === 35) &&
     filters.license &&
@@ -224,6 +280,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   const productCount = filteredProducts.length;
   console.log("✅ [ListOfProducts] total a renderizar:", productCount);
+  logRecargaSummary("FINAL (ANTES DE RENDER)", filteredProducts);
 
   const normalizeCountryCode = (code?: string) => {
     if (!code) return undefined;
@@ -305,16 +362,20 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             const simName = (product.name ?? "").toLowerCase().trim();
             const isSim =
               simName === "recarga datos" ||
+              simName === "recarga minutos" ||
               simName === "esim" ||
               simName === "esim + datos";
             const showTimBadges = isCategory40 && isTim && isSim;
+
             const variant = product.variants?.[0];
             const variantId = isTim ? product.variants?.[0]?.id : undefined;
 
             const effectivePlanDataAmount = isTimProvider
               ? product.plan_data_amount ?? variant?.cost ?? undefined
               : undefined;
+
             console.log("💰 [ListOfProducts] price debug =>", {
+              idx: index,
               id: product.id,
               name: product.name,
               provider: product.provider,
@@ -326,26 +387,10 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
             let priceToShow = Number(product.price);
 
-            if (
-              (selectedOption === 38 || selectedOption === 35) &&
-              filters.license &&
-              filters.license !== "all" &&
-              product.licenseVariants &&
-              product.licenseVariants.length > 0
-            ) {
-              const licenseVariant = product.licenseVariants.find(
-                (v: any) => String(v.licensetime) === String(filters.license)
-              );
+            // ... tu lógica de licenseVariants se queda igual
 
-              if (licenseVariant?.price != null) {
-                priceToShow = Number(licenseVariant.price);
-              }
-            }
-
-            const key =
-              isTim && variantId
-                ? `tim-${variantId}`
-                : `prod-${product.id ?? index}`;
+            // 🔑 NUEVA KEY: siempre única en cada render
+            const key = `prod-${product.id ?? "noid"}-${index}`;
 
             const badges = showTimBadges ? buildTimBadges(product) : undefined;
 

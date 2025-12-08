@@ -31,10 +31,19 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             { label: "eSim", value: "esim" },
             { label: "Recarga Datos", value: "datarecharge" },
             { label: "Recarga Minutos", value: "minuterecharge" },
+            { label: "eSIM + Datos", value: "eSimData" },
           ]}
           onChangeExternal={(value) => {
-            console.log("[FilterAppWithLicense] Cambio de encriptadosprovider:", value);
-            updateFilters({ encriptadosprovider: value });
+            const normalized = Array.isArray(value)
+              ? value[value.length - 1]
+              : value;
+
+            console.log(
+              "[FilterAppWithLicense] Cambio de encriptadosprovider (normalizado):",
+              normalized
+            );
+
+            updateFilters({ encriptadosprovider: normalized });
           }}
         />
       </div>

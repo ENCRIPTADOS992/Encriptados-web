@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { CircleFlag } from "react-circle-flags";
 import SectionWrapper from "@/shared/components/SectionWrapper";
-import FilterRegionCountry from "@/app/[locale]/our-products/components/FilterProductsBar/FilterRegionCountry";
+import FilterRegionCountryTim from "@/app/[locale]/our-products/components/FilterProductsBar/FilterRegionCountryTim";
 import SearchProduct from "@/app/[locale]/our-products/components/FilterProductsBar/SearchProduct";
 import ListOfProducts from "@/app/[locale]/our-products/components/ListOfProducts";
 
@@ -142,11 +142,10 @@ const WhereUseSimSection = () => {
                     Región/País
                   </p>
 
-                  <FilterRegionCountry
+                  <FilterRegionCountryTim
                     filters={filters}
                     updateFilters={updateFilters}
                     service={activeTimService}
-                    variant="tim"
                   />
                 </div>
               )}
