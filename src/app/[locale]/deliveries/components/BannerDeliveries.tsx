@@ -1,6 +1,12 @@
 import React from "react";
 
 const BannerDeliveries = () => {
+  const handleScrollToMap = () => {
+    const el = document.getElementById("deliveries-map");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   return (
     <section
       className="
@@ -75,7 +81,11 @@ const BannerDeliveries = () => {
               Encuentra un punto de recogida cercano a ti
             </p>
           </div>
-          <button className="mt-6 bg-[#35CDFB] text-black px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-[#007acc] transition text-lg">
+          <button 
+          type="button"
+          className="mt-6 bg-[#35CDFB] text-black px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-[#007acc] transition text-lg"
+          onClick={handleScrollToMap}
+          >
             Ver Lugares de Entrega
           </button>
         </div>

@@ -2,6 +2,12 @@
 import React from "react";
 
 const BannerDeliveriesMobile = () => {
+  const handleScrollToMap = () => {
+    const el = document.getElementById("deliveries-map");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   return (
     <section
       className="
@@ -66,6 +72,7 @@ const BannerDeliveriesMobile = () => {
           </div>
 
           <button
+            type="button"
             className="
               bg-[#35CDFB] text-black font-semibold
               shadow-lg hover:bg-[#007acc] transition
@@ -74,6 +81,7 @@ const BannerDeliveriesMobile = () => {
               px-[44px] py-[10px]
               text-[14px]
             "
+            onClick={handleScrollToMap}
           >
             Ver Lugares de Entrega
           </button>

@@ -50,7 +50,10 @@ const DeliveriesPage = () => {
           <BannerDeliveries />
           <BannerDeliveriesIpad/>
           <BannerDeliveriesMobile/>
-          <DeliveriesMap />
+          <div id="deliveries-map">
+            <DeliveriesMap />
+          </div>
+
           <HowItWorksDeliveries />
           <HowItWorksDeliveriesTablet />
           <HowItWorksDeliveriesMobile />

@@ -1,6 +1,12 @@
 import React from "react";
 
 const BannerDeliveriesIpad = () => {
+  const handleScrollToMap = () => {
+    const el = document.getElementById("deliveries-map");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   return (
     <section
       className="
@@ -84,6 +90,7 @@ const BannerDeliveriesIpad = () => {
           </div>
 
           <button
+            type="button"
             className="
               bg-[#35CDFB] text-black font-semibold
               shadow-lg hover:bg-[#007acc] transition
@@ -92,6 +99,7 @@ const BannerDeliveriesIpad = () => {
               px-[44px] py-[10px]
               text-[16px]
             "
+            onClick={handleScrollToMap}
           >
             Ver Lugares de Entrega
           </button>

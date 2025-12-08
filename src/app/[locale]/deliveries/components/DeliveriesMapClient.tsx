@@ -365,7 +365,7 @@ const DeliveriesMapClient = () => {
   }, [isOpen]);
 
   const customIcon = L.icon({
-    iconUrl: "/images/our-products/mundo.png",
+    iconUrl: "/images/deliveries/encryptedlogo.png",
     iconSize: [32, 32],
     iconAnchor: [16, 32],
   });
@@ -406,7 +406,7 @@ const DeliveriesMapClient = () => {
       </div>
 
       {/* Buscador */}
-      <div
+      {/* <div
         className="
           relative z-30 mb-10
           w-[374px] mx-auto
@@ -437,7 +437,6 @@ const DeliveriesMapClient = () => {
             "
           />
 
-          {/* Selector de país */}
           <div ref={dropdownRef} className="relative">
             <button
               type="button"
@@ -499,8 +498,8 @@ const DeliveriesMapClient = () => {
               </div>
             )}
           </div>
-        </div>
-      </div>
+        </div> 
+      </div> */}
 
       {/* Mapa */}
       <div className="relative z-10 w-4/5 h-96 rounded-lg overflow-hidden shadow-lg">
