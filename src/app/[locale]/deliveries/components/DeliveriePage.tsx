@@ -20,6 +20,8 @@ import RenatiEncryptedCellphoneIpad from "./RenatiEncryptedCellphoneIpad";
 import RenatiEncryptedCellphoneMobil from "./RenatiEncryptedCellphoneMobil";
 import ProductCarouselTablet from "./ProductCarouselTablet";
 import ProductCarouselMobile from "./ProductCarouselMobile";
+import TelegramButton from "@/shared/components/TelegramButton";
+
 import DownloadAppBanner from "./DownloadAppBanner";
 
 const DeliveriesPage = () => {
@@ -53,7 +55,9 @@ const DeliveriesPage = () => {
           <div id="deliveries-map">
             <DeliveriesMap />
           </div>
-
+          <section className="w-full flex justify-center py-10">
+            <TelegramButton />
+          </section>
           <HowItWorksDeliveries />
           <HowItWorksDeliveriesTablet />
           <HowItWorksDeliveriesMobile />
@@ -70,7 +74,17 @@ const DeliveriesPage = () => {
           {/* <DownloadAppBanner/> */}
         </JoinUsModalProvider>
       </BasicFormProvider>
+      <div className="rotate-warning">
+        <div className="rotate-warning__box">
+          <p className="rotate-warning__title">Gira tu dispositivo</p>
+          <p className="rotate-warning__text">
+            Esta página está optimizada para verse en orientación vertical.
+            Por favor, gira tu teléfono para continuar.
+          </p>
+        </div>
+      </div>
     </>
+    
   );
 };
 

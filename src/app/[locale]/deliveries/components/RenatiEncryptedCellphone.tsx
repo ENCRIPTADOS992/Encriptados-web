@@ -62,9 +62,11 @@ const FeaturedProductCard = () => {
           />
           <h2 className="text-xl font-bold">Celular Encriptado Renati</h2>
 
-          <div className="mt-2">
-            <span className="text-m font-normal">$650.00</span>
+         <div className="mt-2 flex items-baseline gap-1">
+            <span className="text-xs font-normal">Desde:</span>
+            <span className="text-base font-normal">$650.00</span>
           </div>
+
 
           <button
             type="button"

@@ -97,8 +97,8 @@ html {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 .szh-menu {
@@ -164,13 +164,12 @@ html {
     display: none !important;
   }
 }
-/* Oculta la barra interna del modal SOLO en lg+ (sigue siendo scrollable) */
 @media (min-width: 1024px) {
   .no-scrollbar-lg {
-    -ms-overflow-style: none;  /* IE/Edge antiguo */
-    scrollbar-width: none;     /* Firefox */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;     
   }
-  .no-scrollbar-lg::-webkit-scrollbar { /* Chrome/Edge/Safari */
+  .no-scrollbar-lg::-webkit-scrollbar {
     display: none;
     width: 0;
     height: 0;
@@ -179,39 +178,69 @@ html {
 
 
 @layer components {
-  /* Contenedor de todos los sub‑filtros */
   .subfilters {
     @apply flex flex-wrap items-end gap-2;
   }
-  /* Cada “Item” de sub‑filtro (Servicios, Regiones, etc) */
   .subfilter-item {
-    /* ancho base 200px, puede crecer y encoger respetando ese width */
     @apply w-full sm:w-[200px] min-w-0 flex-auto;
   }
-  /* Sólo la Región tiene ancho fijo y no se encoge */
   .subfilter-region {
     @apply w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0;
   }
 }
 
 .custom-scrollbar {
-  /* Firefox */
   scrollbar-width: thin;
   scrollbar-color: #3393F7 #18191B;
 }
 
-/* WebKit (Chrome, Edge, Safari) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;           /* ancho de la barra */
+  width: 8px;           
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #18191B;  /* fondo del track */
+  background: #18191B; 
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #3393F7; /* color del thumb */
+  background-color: #3393F7; 
   border-radius: 4px;
-  border: 2px solid #18191B; /* espacio alrededor */
+  border: 2px solid #18191B; 
+}
+
+.rotate-warning {
+  display: none;
+}
+
+@media screen and (orientation: landscape) and (max-width: 1024px) {
+  .rotate-warning {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  .rotate-warning__box {
+    max-width: 320px;
+  }
+
+  .rotate-warning__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .rotate-warning__text {
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
 }

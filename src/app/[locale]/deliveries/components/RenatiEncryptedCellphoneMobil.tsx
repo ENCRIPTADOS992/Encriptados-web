@@ -71,7 +71,8 @@ const FeaturedProductCardMobile = () => {
             Celular Encriptado Renati
           </h2>
 
-          <div>
+          <div className="flex items-baseline gap-1">
+            <span className="text-[12px] font-normal">Desde:</span>
             <span className="text-[20px] font-medium">$650.00</span>
           </div>
 

@@ -11,13 +11,9 @@ import {
   Circle,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import L from "leaflet";
-import { CircleFlag } from "react-circle-flags";
 import rawCountries from "world-countries";
-import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
-import ReactDOMServer from "react-dom/server";
+
 
 type Country = {
   code: string;
@@ -396,13 +392,13 @@ const DeliveriesMapClient = () => {
             text-black text-center mt-2
             font-normal
             text-[12px] leading-[1] max-w-[374px] mx-auto
-            sm:text-[16px] sm:max-w-[590px]
-            lg:text-[20px] lg:max-w-[840px]
+            sm:text-[20px] sm:leading-[1] sm:max-w-[590px]
           "
         >
           Usa el mapa interactivo y encuentra nuestros puntos seleccionados de
           recogida más cercanos a tu ubicación
         </p>
+
       </div>
 
       {/* Buscador */}
@@ -508,6 +504,7 @@ const DeliveriesMapClient = () => {
           zoom={mapZoom}
           className="w-full h-full"
           minZoom={2}
+          zoomControl={false}
         >
           <MapViewUpdater center={mapCenter} />
           <MapZoomHandler onZoomChange={setMapZoom} />
