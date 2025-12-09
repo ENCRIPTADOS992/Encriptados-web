@@ -111,7 +111,6 @@ const ModalPayment: React.FC<Props> = ({
     <div
       className={[
         "fixed inset-0 z-50",
-        // 👇 el overlay ocupa todo el viewport y ES el que tiene scroll
         "flex items-start justify-center",
         "overflow-y-auto",
         "py-6 px-2 sm:px-4",
@@ -126,7 +125,7 @@ const ModalPayment: React.FC<Props> = ({
         ref={panelRef}
         className={[
           "relative w-full max-w-[820px] mx-auto",
-          // 👇 SIN max-h, SIN overflow-y-auto: deja que crezca
+          "flex flex-col min-h-0",
           isDark ? "bg-zinc-900 text-zinc-100" : "bg-white text-zinc-900",
           "rounded-2xl p-4 lg:p-6 shadow-2xl",
           panelClassName ?? "",
@@ -145,6 +144,7 @@ const ModalPayment: React.FC<Props> = ({
 
         {children}
       </div>
+
     </div>
   );
 };
