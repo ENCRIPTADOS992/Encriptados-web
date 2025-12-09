@@ -1,7 +1,7 @@
 // src/app/[locale]/apps/component/templateApps/StickyPriceBannerTablet.tsx
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 type StickyPriceBannerTabletProps = {
   visible: boolean;
@@ -20,7 +20,9 @@ const StickyPriceBannerTablet: React.FC<StickyPriceBannerTabletProps> = ({
   visible,
   productInfo,
 }) => {
-  if (!visible) return null;
+  const [dismissed, setDismissed] = useState(false);
+  
+  if (!visible || dismissed) return null;
 
   return (
     <div

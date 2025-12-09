@@ -238,8 +238,6 @@ const Page = () => {
           appStoreUrl="https://apps.apple.com/app/armadillo-app"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.armadillo"
         />
-
-
         <ProductSectionMobile
           title="Silent Phone "
           description="Es una app diseñada por las mejores mentes en tecnología móvil, centrado en mantener tus datos seguros en todo momento"
