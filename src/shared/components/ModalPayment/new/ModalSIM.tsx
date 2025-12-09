@@ -61,7 +61,9 @@ type FormType =
   | "encrypted_esim"
   | "encrypted_data"
   | "encrypted_minutes"
-  | "encrypted_generic";
+  | "encrypted_generic"
+  | "encrypted_esimData";
+
 
 type Shipping = {
   email: string;
@@ -90,18 +92,74 @@ export default function ModalSIM() {
   console.log("[ModalSIM] product crudo =>", product);
 
   const formType: FormType = React.useMemo(() => {
-    const prov = (product?.provider || product?.brand || "").toLowerCase();
-    const cfg = (product?.config_sim?.[0]?.type || "").toLowerCase();
-    const ship = (product?.shipping || "").toLowerCase();
-    const phys = (product?.type_product || "").toLowerCase();
+  const provRaw = product?.provider ?? product?.brand ?? "";
+  const cfgRaw = product?.config_sim?.[0]?.type ?? "";
+  const shipRaw = product?.shipping ?? "";
+  const physRaw = product?.type_product ?? "";
+  const nameRaw = product?.name ?? "";
 
-    if (!prov.includes("encript")) return "encrypted_generic";
-    if (cfg === "esim") return "encrypted_esim";
-    if (cfg === "data") return "encrypted_data";
-    if (cfg === "minutes") return "encrypted_minutes";
-    if (ship === "si" || phys === "fisico") return "encrypted_physical";
-    return "encrypted_generic";
-  }, [product]);
+  const prov = provRaw.toLowerCase();
+  const cfg = cfgRaw.toLowerCase();
+  const ship = shipRaw.toLowerCase();
+  const phys = physRaw.toLowerCase();
+  const name = nameRaw.toLowerCase();
+
+  console.log("[ModalSIM][formType] INPUTS", {
+    id: product?.id,
+    nameRaw,
+    provRaw,
+    cfgRaw,
+    shipRaw,
+    physRaw,
+    normalized: { prov, cfg, ship, phys, name },
+    configSim: product?.config_sim,
+  });
+
+  if (
+    prov.includes("encript") &&
+    name.includes("esim + recarga datos")
+  ) {
+    console.log(
+      "[ModalSIM][formType] override => encrypted_esimData por nombre",
+      { id: product?.id, nameRaw }
+    );
+    return "encrypted_esimData";
+  }
+
+  let type: FormType = "encrypted_generic";
+
+  if (!prov.includes("encript")) {
+    type = "encrypted_generic";
+  } else if (cfg === "esim") {
+    type = "encrypted_esim";
+  } else if (cfg === "data") {
+    type = "encrypted_data";
+  } else if (cfg === "minutes") {
+    type = "encrypted_minutes";
+  } else if (cfg.replace(/[^a-z]/g, "") === "esimdata") {
+    type = "encrypted_esimData";
+  } else if (ship === "si" || phys === "fisico") {
+    type = "encrypted_physical";
+  }
+
+  console.log("[ModalSIM][formType] RESUELTO =>", {
+    id: product?.id,
+    nameRaw,
+    type,
+  });
+
+  return type;
+}, [product]);
+
+  
+  const isEsimDataCombo = formType === "encrypted_esimData";
+
+  React.useEffect(() => {
+  if (isEsimDataCombo) {
+    setHideSimField(true);
+  }
+}, [isEsimDataCombo]);
+
 
   const isPhysical = formType === "encrypted_physical";
 
@@ -176,7 +234,7 @@ export default function ModalSIM() {
             typeof minutes === "number" && minutes > 0
               ? `${minutes} Min`
               : v.label || v.name || "Plan",
-          value: !Number.isNaN(cost) ? cost : 0, // 👈 precio correcto
+          value: !Number.isNaN(cost) ? cost : 0,
         };
 
         console.log("[ModalSIM] minutesPlans → fromVariants item", {
@@ -197,19 +255,18 @@ export default function ModalSIM() {
     return fromVariants;
   }
 
-  // ⚠️ Solo fallback si NO hay variants
   const items = product?.config_sim ?? [];
   console.log("[ModalSIM] minutesPlans → from config_sim fallback", items);
 
   const fromConfigSim = items
     .map((c, i) => {
       const numMinutes = c.code ? Number(c.code) : 0;
-      const price = Number(product?.price ?? 0); // 👈 AQUÍ EL CAMBIO
+      const price = Number(product?.price ?? 0); 
 
       const plan = {
         id: c.sku || c.code || i,
         label: numMinutes > 0 ? `${numMinutes} Min` : c.sku || "Plan",
-        value: price, // 👈 usamos el price del producto (10), NO 1000
+        value: price, 
       };
 
       console.log("[ModalSIM] minutesPlans → fromConfigSim item", {
@@ -240,7 +297,6 @@ export default function ModalSIM() {
 
 
   const unitPrice = React.useMemo(() => {
-  // Caso minutos
   if (formType === "encrypted_minutes" && minutesPlans.length) {
     const selected =
       minutesPlans.find((p) => p.id === selectedPlanId) ?? minutesPlans[0];
@@ -258,7 +314,6 @@ export default function ModalSIM() {
     return valueNumber;
   }
 
-  // Caso data
   if (formType === "encrypted_data" && selectedPlanId != null) {
     const valueNumber = Number(selectedPlanId) || 0;
 
@@ -271,7 +326,6 @@ export default function ModalSIM() {
     return valueNumber;
   }
 
-  // Caso con variants
   if (variants.length) {
     const v = selectedVariant ?? variants[0];
     const valueNumber = Number(v.price ?? v.cost ?? product?.price ?? 0);
@@ -287,7 +341,6 @@ export default function ModalSIM() {
     return valueNumber;
   }
 
-  // Caso genérico
   const valueNumber = Number(product?.price ?? 0);
 
   console.log("[ModalSIM] unitPrice → PRODUCT PRICE", {
@@ -339,7 +392,8 @@ export default function ModalSIM() {
       formType === "encrypted_esim" ||
       formType === "encrypted_data" ||
       formType === "encrypted_minutes" ||
-      formType === "encrypted_physical"
+      formType === "encrypted_physical" ||
+      formType === "encrypted_esimData"
     );
 
   console.log("[ModalSIM] provider / flags", {
@@ -380,7 +434,7 @@ export default function ModalSIM() {
         product: "minutes",
         sim_number: data.simNumber,
       };
-    } else {
+      } else {
       payload = {
         ...common,
         product: "sim_physical",
@@ -508,6 +562,16 @@ export default function ModalSIM() {
   }
 };
 
+const finalUnitPrice = React.useMemo(() => {
+  const base = unitPrice;
+  if (formType === "encrypted_esimData") {
+    return base + 7.5; 
+  }
+  return base;
+}, [unitPrice, formType]);
+
+const baseAmount = Number(finalUnitPrice) * quantity - discount;
+
   return (
     <PurchaseScaffold
       mode="sim"
@@ -528,7 +592,8 @@ export default function ModalSIM() {
       shipping={
         formType === "encrypted_data" ||
         formType === "encrypted_minutes" ||
-        formType === "encrypted_esim"
+        formType === "encrypted_esim" ||
+        formType === "encrypted_esimData"
           ? undefined
           : 75
       }
@@ -536,7 +601,7 @@ export default function ModalSIM() {
       selectedPlanId={selectedPlanId}
       onChangePlan={setSelectedPlanId}
       showEsimAddon={
-        formType === "encrypted_data" || formType === "encrypted_minutes"
+        formType === "encrypted_data" || formType === "encrypted_minutes" && !isEsimDataCombo
       }
       esimAddonPrice={7.5}
       esimAddonLabel="Lleva E-SIM por 7.50 USD"
@@ -545,7 +610,7 @@ export default function ModalSIM() {
     <SimForm 
       onSubmit={handleSubmit} 
       formType={formType} 
-      hideSimField={hideSimField} 
+      hideSimField={hideSimField || isEsimDataCombo} 
       onStripeConfirmReady={handleStripeConfirmReady}
     />
     </PurchaseScaffold>

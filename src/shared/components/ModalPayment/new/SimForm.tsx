@@ -13,7 +13,8 @@ type FormType =
   | "encrypted_esim"
   | "encrypted_data"
   | "encrypted_minutes"
-  | "encrypted_generic";
+  | "encrypted_generic"
+  | "encrypted_esimData";
 
 export type SimFormValues = {
   email: string;
@@ -183,6 +184,24 @@ export default function SimForm({
           showSimNumber: true,
           reqSimNumber: true,
         };
+      case "encrypted_esimData":
+        return {
+          emailFullWidth: true,
+          showTelegram: false,
+          showFullName: false,
+          reqFullName: false,
+          showAddress: false,
+          reqAddress: false,
+          showCountry: false,
+          reqCountry: false,
+          showPostal: false,
+          reqPostal: false,
+          showPhone: false,
+          reqPhone: false,
+          showSimNumber: false, 
+          reqSimNumber: false, 
+        };
+
       default:
         return {
           emailFullWidth: false,
