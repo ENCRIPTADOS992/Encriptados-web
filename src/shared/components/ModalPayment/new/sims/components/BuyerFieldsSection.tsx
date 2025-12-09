@@ -30,9 +30,9 @@ export function BuyerFieldsSection({
   const { emailFullWidth } = cfg;
 
   const gridForPairs =
-    formType === "encrypted_physical"
-      ? TWO_COL_GRID_ALWAYS_2
-      : TWO_COL_GRID;
+    cfg.showAddress
+      ? TWO_COL_GRID_ALWAYS_2   
+      : TWO_COL_GRID; 
 
 
   return (
