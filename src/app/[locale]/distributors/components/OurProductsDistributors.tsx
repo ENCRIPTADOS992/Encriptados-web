@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
-import { useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 
 const OurProductsDistributors = () => {
   const t = useTranslations("DistributorsPage.ourProducts");
@@ -46,17 +46,57 @@ const OurProductsDistributors = () => {
 
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] py-10 md:py-16">
-      <SectionWrapper>
+    <div className="w-full bg-black relative overflow-hidden py-10 md:py-16">
+      <div
+        className="absolute pointer-events-none z-0"
+        style={{
+          width: 380,
+          height: 260,
+          left: "30%",
+          top: "55%",
+          transform: "translate(-50%, -50%)",
+          background: "#01FFC2",
+          opacity: 0.4,
+          filter: "blur(140px)",
+          borderRadius: "50%",
+        }}
+      />
+      <div
+        className="absolute pointer-events-none z-0"
+        style={{
+          width: 380,
+          height: 260,
+          left: "70%",
+          top: "55%",
+          transform: "translate(-50%, -50%)",
+          background: "#10B4E7",
+          opacity: 0.5,
+          filter: "blur(140px)",
+          borderRadius: "50%",
+        }}
+      />
+      <SectionWrapper className="relative z-10">
         {/* Título flotante */}
         <div className="flex min-h-[100px] items-center justify-center p-4">
-          <div className="relative inline-block">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00FFFF] to-[#0080FF] opacity-75 blur-sm rounded-full" />
-            <div className="relative px-6 py-2 bg-[#0E0E0E] rounded-full leading-none border border-transparent bg-clip-padding">
-              <span className="bg-gradient-to-r from-[#00FFFF] to-[#0080FF] bg-clip-text text-transparent font-sans text-sm font-medium">
-                {t("title")}
-              </span>
-            </div>
+          <div
+            className="inline-block px-6 py-2 rounded-full leading-none"
+            style={{
+              background:
+                "linear-gradient(#0E0E0E,#0E0E0E) padding-box, linear-gradient(90deg,#00FFB2 0%, #35CDFB 100%) border-box",
+              border: "2px solid transparent",
+            }}
+          >
+            <span
+              className="font-sans text-sm font-medium"
+              style={{
+                background: "linear-gradient(90deg,#00FFB2 0%, #35CDFB 100%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              {t("title")}
+            </span>
           </div>
         </div>
 
@@ -69,12 +109,11 @@ const OurProductsDistributors = () => {
 
         {/* Grid: 3 columnas SIEMPRE */}
         <div className="w-full flex justify-center">
-          <div className="grid grid-cols-3 gap-6 w-full max-w-5xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
             {distributors.map((distributor) => (
               <div
                 key={distributor.id}
-                onClick={() => handleRedirect(distributor.id)}
-                className="bg-[#0E0E0E] relative rounded-2xl shadow-lg text-white font-bold text-center flex flex-col px-4 py-6 justify-center items-center min-h-[320px] cursor-pointer hover:opacity-80 transition"
+                className="relative rounded-[28px] shadow-lg text-white font-bold text-center flex flex-col px-6 py-8 md:px-8 md:py-10 justify-between items-center min-h-[360px] bg-gradient-to-b from-[#111111] to-[#0E0E0E]"
               >
                 <h1 className="mt-4 mb-4">{distributor.title}</h1>
                 <div className="flex justify-center items-center">
@@ -86,10 +125,13 @@ const OurProductsDistributors = () => {
                     className="rounded-lg translate-y-6"
                   />
                 </div>
-                <div className="absolute inset-0 flex justify-center items-end">
-                  <p className="px-2 py-1 text-xs mb-4 text-[#35CDFB] font-normal">
+                <div className="w-full flex justify-center items-end mt-6">
+                  <Link
+                    href={`/?selectedOption=${redirectMap[distributor.id]}#buysimappsection` as any}
+                    className="px-5 py-2 rounded-full text-xs font-normal text-white bg-[#1CB9EC] hover:bg-[#12b4e7] shadow-md"
+                  >
                     {t("seeProducts")}
-                  </p>
+                  </Link>
                 </div>
               </div>
             ))}

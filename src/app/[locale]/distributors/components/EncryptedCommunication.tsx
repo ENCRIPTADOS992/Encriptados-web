@@ -10,29 +10,13 @@ const EncryptedCommunication = () => {
 
   return (
 <div className="w-full min-h-screen bg-black relative flex flex-col items-center justify-center py-16 overflow-hidden">
-  {/* ELIPSE AZUL */}
+  {/* ELIPSE VERDE IZQUIERDA */}
   <div
     className="absolute pointer-events-none z-0"
     style={{
       width: 500,
       height: 500,
       left: '20%', 
-      top: '55%',
-      transform: 'translateY(-50%)',
-      background: '#10B4E7',
-      opacity: 0.50,
-      filter: 'blur(180px)',
-      borderRadius: '50%',
-    }}
-  />
-
-  {/* ELIPSE VERDE */}
-  <div
-    className="absolute pointer-events-none z-0"
-    style={{
-      width: 300,
-      height: 200,
-      left: '60%',
       top: '55%',
       transform: 'translateY(-50%)',
       background: '#01FFC2',
@@ -42,16 +26,44 @@ const EncryptedCommunication = () => {
     }}
   />
 
+  {/* ELIPSE AZUL DERECHA */}
+  <div
+    className="absolute pointer-events-none z-0"
+    style={{
+      width: 300,
+      height: 200,
+      left: '60%',
+      top: '55%',
+      transform: 'translateY(-50%)',
+      background: '#10B4E7',
+      opacity: 0.50,
+      filter: 'blur(180px)',
+      borderRadius: '50%',
+    }}
+  />
+
   <SectionWrapper className="relative z-10">
     {/* Botón flotante */}
     <div className="flex min-h-[100px] items-center justify-center p-4">
-      <div className="relative inline-block">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00FFFF] to-[#0080FF] opacity-75 blur-sm rounded-full" />
-        <div className="relative px-6 py-2 bg-[#0E0E0E] rounded-full leading-none border border-transparent bg-clip-padding">
-          <span className="bg-gradient-to-r from-[#00FFFF] to-[#0080FF] bg-clip-text text-transparent font-sans text-xs sm:text-sm font-medium">
-            {t("knowsBenefits.title")}
-          </span>
-        </div>
+      <div
+        className="inline-block px-6 py-2 rounded-full leading-none"
+        style={{
+          background:
+            "linear-gradient(#0E0E0E,#0E0E0E) padding-box, linear-gradient(90deg,#00FFB2 0%, #35CDFB 100%) border-box",
+          border: "2px solid transparent",
+        }}
+      >
+        <span
+          className="font-sans text-xs sm:text-sm font-medium"
+          style={{
+            background: "linear-gradient(90deg,#00FFB2 0%, #35CDFB 100%)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          {t("knowsBenefits.title")}
+        </span>
       </div>
     </div>
 
@@ -67,7 +79,7 @@ const EncryptedCommunication = () => {
           </h1>
         </div>
         {/* Grid de tarjetas */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
               title: t("benefitsCards.card1.title"),

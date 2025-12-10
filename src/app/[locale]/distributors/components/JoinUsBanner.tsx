@@ -11,8 +11,8 @@ const JoinUsBanner = () => {
   const BannerDistributorsImage = "/images/distributors/black-white-man.png";
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] flex justify-center items-center py-10 md:py-16 px-2 md:px-4">
-      <SectionWrapper>
+    <div className="w-full bg-black relative overflow-hidden py-10 md:py-16 px-2 md:px-4">
+      <SectionWrapper className="relative z-10">
         <div
           className="
             p-6 mt-24 md:p-10 rounded-3xl

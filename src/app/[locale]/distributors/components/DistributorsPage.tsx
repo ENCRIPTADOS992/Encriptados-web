@@ -20,10 +20,10 @@ const DistributorsPage = () => {
           <BannerDistributors />
           <BeDistributor />
           <EncryptedCommunication />
-          <div className="block md:hidden">
+          <div className="block sm:hidden">
             <BeDistributorEncryptedMobile />
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden md:block">
             <BeDistributorEncrypted />
           </div>
           <OurProductsDistributors />

@@ -12,7 +12,7 @@ export default function BeDistributorEncryptedMobile() {
     const ManHow = "/images/distributors/man-how.png";
 
     return (
-        <div className="w-full bg-gradient-to-b from-[#00372B] via-black to-[#022530] md:hidden flex justify-center py-10 px-4">
+        <div className="w-full bg-black flex justify-center py-10 px-4">
             <SectionWrapper>
                 <div className="max-w-sm mx-auto bg-black rounded-3xl overflow-hidden relative flex flex-col items-center text-center px-6 pt-8 pb-0">
                     <div

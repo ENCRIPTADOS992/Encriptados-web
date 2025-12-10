@@ -12,18 +12,18 @@ export default function BeDistributorEncrypted() {
   const ManHow = "/images/distributors/man-how.png";
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] flex justify-center items-center py-10 md:py-16">
-      <SectionWrapper>
+    <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] flex justify-center items-center py-0 md:py-0">
+      <SectionWrapper className="!max-w-none !px-0 !mx-0">
         {/* Card completa */}
         <div className="w-full flex flex-row bg-black overflow-hidden">
           {/* Columna izquierda: imagen */}
-          <div className="relative w-1/2 min-h-[260px] flex items-center justify-center bg-black">
+          <div className="relative w-1/2 h-[320px] md:h-[380px] lg:h-[500px] flex items-center justify-end bg-[#0E0E0E]">
             <Image
               alt="Distributor"
               src={ManHow}
-              width={520}
-              height={520}
-              className="w-full max-w-[320px] md:max-w-[360px] h-auto object-contain"
+              fill
+              className="object-contain"
+              style={{ objectPosition: "right center" }}
             />
           </div>
 
@@ -35,7 +35,7 @@ export default function BeDistributorEncrypted() {
             />
             <div className="absolute inset-0 bg-black/70" />
 
-            <div className="relative z-10 px-6 py-8 md:px-10 lg:px-14 flex flex-col gap-4">
+            <div className="relative z-10 px-6 py-8 md:px-10 lg:px-14 flex flex-col gap-4 w-full max-w-[400px]">
               <h1 className="font-bold text-white text-2xl md:text-3xl lg:text-4xl leading-tight">
                 {t("beEncryptedDistributor.title")}
               </h1>

@@ -27,8 +27,36 @@ const BannerDistributors = () => {
   }, []);
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] flex justify-center items-center py-10 md:py-16 px-4">
-      <SectionWrapper>
+    <div className="w-full bg-black relative flex justify-center items-center py-10 md:py-16 px-4 overflow-hidden">
+      <div
+        className="absolute pointer-events-none z-0"
+        style={{
+          width: 360,
+          height: 240,
+          left: "8%",
+          top: "55%",
+          transform: "translateY(-50%)",
+          background: "#01FFC2",
+          opacity: 0.4,
+          filter: "blur(140px)",
+          borderRadius: "50%",
+        }}
+      />
+      <div
+        className="absolute pointer-events-none z-0"
+        style={{
+          width: 420,
+          height: 300,
+          left: "86%",
+          top: "55%",
+          transform: "translate(-50%, -50%)",
+          background: "#10B4E7",
+          opacity: 0.5,
+          filter: "blur(140px)",
+          borderRadius: "50%",
+        }}
+      />
+      <SectionWrapper className="relative z-10">
       <div
         className={`p-6 md:p-10 rounded-3xl w-full max-w-[1200px] md:h-[550px] h-100%  flex-col gap-y-4 flex justify-center items-center ${
           isMobile ? "bg-[#151515]" : ""
