@@ -13,8 +13,7 @@ export default function WhoWeAreTablet() {
       >
         {/* Título */}
         <h1
-          className="bg-gradient-to-r from-[#45D4FF] to-[#A8EBFF]
-          bg-clip-text text-transparent font-bold text-[44px]
+          className="text-[#5CDAFF] font-bold text-[44px]
           leading-[44px] w-[185px] text-left"
         >
           {t("AboutUsPage.aboutUs.title")}

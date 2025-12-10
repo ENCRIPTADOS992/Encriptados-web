@@ -13,18 +13,17 @@ export default function OurGoalsDesktop() {
 
   return (
     <SectionWrapper className="py-20 hidden lg:block">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-full">
         {/* Título sección */}
         <h2
-          className="bg-gradient-to-r from-[#45D4FF] to-[#A8EBFF]
-      bg-clip-text text-transparent font-bold text-[34px] leading-[34px]
-      w-[314px] text-center mb-10"
+          className="text-white font-bold text-[28px] xl:text-[34px] leading-tight
+      text-center mb-10"
         >
           Nuestros objetivos
         </h2>
 
-        {/* Cards pegadas (máx 1px de separación) */}
-        <div className="flex flex-row justify-center gap-[10px]">
+        {/* Cards */}
+        <div className="flex flex-row justify-center gap-3 xl:gap-[10px] w-full max-w-[1100px]">
           {/* Card 1 */}
           <OurGoalCard
             title={t("AboutUsPage.cards.communicationCard.title")}

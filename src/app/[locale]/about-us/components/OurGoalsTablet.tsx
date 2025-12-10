@@ -14,9 +14,8 @@ export default function OurGoalsTablet() {
       <div className="flex flex-col items-center">
 
         <h2
-          className="bg-gradient-to-r from-[#45D4FF] to-[#A8EBFF]
-          bg-clip-text text-transparent font-bold text-[28px] leading-[28px]
-          w-[260px] text-center mb-8"
+          className="text-white font-bold text-[28px] leading-[28px]
+          text-center mb-8"
         >
           Nuestros objetivos
         </h2>

@@ -7,14 +7,14 @@ export default function WhoWeAreDesktop() {
   const t = useTranslations();
   return (
     <SectionWrapper className="py-20 hidden lg:block">
-      <div className="flex flex-row justify-center gap-[55px] w-[1058px] h-[216px] lg:ml-[98px]">
+      <div className="flex flex-row justify-center items-start gap-8 xl:gap-[55px] w-full max-w-[1058px] mx-auto">
         {/* Título */}
-        <h1 className="text-[#5CDAFF] font-bold text-[74px] text-left w-6/14 leading-tight">
+        <h1 className="text-[#5CDAFF] font-bold text-[56px] xl:text-[74px] text-left w-2/5 leading-tight flex-shrink-0">
           {t("AboutUsPage.aboutUs.title")}
         </h1>
 
         {/* Descripción */}
-        <p className="text-white text-lg xl:text-[22px] text-justify w-6/14">
+        <p className="text-white text-lg xl:text-[22px] text-justify w-3/5">
           {t("AboutUsPage.aboutUs.description")}
         </p>
       </div>

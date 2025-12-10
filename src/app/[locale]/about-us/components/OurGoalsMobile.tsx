@@ -11,8 +11,8 @@ export default function OurGoalsMobile() {
   const t = useTranslations();
 
   return (
-    <SectionWrapper className="py-12 block md:hidden">
-      <h2 className="text-white text-[24px] font-bold text-center mb-6">
+    <SectionWrapper className="py-12 block sm:hidden">
+      <h2 className="text-white text-[22px] xs:text-[24px] font-bold text-center mb-6 px-4">
         Nuestros objetivos
       </h2>
 

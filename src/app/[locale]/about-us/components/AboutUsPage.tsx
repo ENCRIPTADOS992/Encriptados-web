@@ -61,16 +61,18 @@ export default function AboutUsPage() {
           </div>
         </div>
 
-        {/* Imagen grande compartida (si aplica solo desktop, cámbialo a hidden md:block etc.) */}
-        <div className="relative z-[5] hidden sm:block">
-          <Image
-            src={PeopleImage}
-            alt="Phone in Hand"
-            width={2000}
-            height={2000}
-            className="object-contain -translate-y-10 md:-translate-y-11 xl:-translate-y-20"
-            priority
-          />
+        {/* Imagen de personas - solo visible en tablet y desktop */}
+        <div className="relative w-full hidden sm:block -mt-12 md:-mt-14 lg:-mt-16">
+          <div className="w-full">
+            <Image
+              src={PeopleImage}
+              alt="Team members"
+              width={2000}
+              height={600}
+              className="object-cover w-full"
+              priority
+            />
+          </div>
         </div>
 
         {/* WhoWeAre por breakpoint */}
@@ -81,7 +83,7 @@ export default function AboutUsPage() {
           <div className="hidden sm:block lg:hidden">
             <WhoWeAreTablet />
           </div>
-          <div className="block md:hidden">
+          <div className="block sm:hidden">
             <WhoWeAreMobile />
           </div>
         </div>
@@ -112,9 +114,9 @@ export default function AboutUsPage() {
           <div className="hidden sm:block lg:hidden">
             <OurGoalsTablet />
           </div>
-          <div className="block md:hidden">
+          <div className="block sm:hidden">
             <OurGoalsMobile />
-            </div>
+          </div>
         </div>
 
         {/* Download banners (ya tienes desktop/mobile) */}
