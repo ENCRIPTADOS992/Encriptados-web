@@ -17,29 +17,29 @@ const FormWhereToFind = () => {
 
   return (
     <div className="bg-[#041A20] overflow-x-hidden">
-      <SectionWrapper className="flex flex-row justify-between items-center py-8 gap-2 sm:gap-6">
+      <SectionWrapper className="flex flex-col lg:flex-row justify-between items-center py-8 gap-4 sm:gap-6 lg:gap-0 lg:px-0 xl:px-0 2xl:px-0 lg:max-w-none lg:mx-0">
         {/* Imagen izquierda */}
-        <div className="hidden lg:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[80px] sm:h-[180px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[400px] lg:-ml-16">
+        <div className="hidden lg:block relative flex-shrink-0 lg:w-[18vw] lg:h-[55vh] lg:ml-0">
           <Image
             alt="Man"
             src={Man}
             layout="fill"
-            objectFit="cover"
-            className="rounded-xl shadow-xl relative lg:left-6"
+            objectFit="contain"
+            className=""
           />
         </div>
 
         {/* Card central */}
         <div
           className="
-          flex-1 
+          flex-1 w-full
           bg-gradient-to-b from-black via-[#001F28] to-[#050505]
           rounded-xl md:rounded-[44px]
-          p-6 sm:p-6 md:p-10
-          mx-2
+          p-8 sm:p-10 md:p-12 lg:p-14
+          mx-3 sm:mx-4 md:mx-6 lg:mx-0
           space-y-4 sm:space-y-6 md:space-y-8
           min-w-0
-          max-w-full
+          max-w-full lg:max-w-none
         "
         >
           <div className="flex items-center justify-center">
@@ -54,19 +54,19 @@ const FormWhereToFind = () => {
             name="country"
           />
           {watch("country") ? (
-            <div className="bg-[#040404] border-[#505050] border-2 p-3 sm:p-5 rounded-2xl">
+            <div className="bg-[#040404] border-[#505050] border-1 p-10 sm:p-14 md:p-16 rounded-2xl">
               <CountriesRadar />
             </div>
           ) : null}
         </div>
         {/* Imagen derecha */}
-        <div className="hidden lg:block relative flex-shrink-0 w-[80px] h-[120px] sm:w-[120px] sm:h-[190px] md:w-[150px] md:h-[220px] lg:w-[200px] lg:h-[300px] lg:-ml-10">
+        <div className="hidden lg:block relative flex-shrink-0 lg:w-[18vw] lg:h-[45vh] lg:mr-0">
           <Image
             alt="Woman"
             src={Woman}
             layout="fill"
-            objectFit="cover"
-            className="rounded-xl shadow-xl"
+            objectFit="contain"
+            className=""
           />
         </div>
       </SectionWrapper>

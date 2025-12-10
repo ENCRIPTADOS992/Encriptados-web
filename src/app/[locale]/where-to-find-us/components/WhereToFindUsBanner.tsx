@@ -32,17 +32,13 @@ export default function Component() {
             <p className="text-base text-white sm:text-lg md:text-xl mb-4 lg:mb-7">
               {t("WhereToFindUs.banner.titleEasyToBuyLicense")}
             </p>
-            <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl">
-              {t("WhereToFindUs.banner.moreThanTitle")}{" "}
-              <span className="font-extrabold text-[#35CDFB] text-2xl sm:text-4xl md:text-5xl lg:text-6xl mt-2">
-                36.732
-              </span>{" "}
-              {t("WhereToFindUs.banner.pointsOfPay")}
+            <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl leading-tight text-center lg:text-left">
+              {t("WhereToFindUs.banner.moreThanTitle")} {" "}
+              <span className="font-extrabold text-[#35CDFB] text-2xl sm:text-4xl md:text-5xl lg:text-6xl">36.732</span>{" "}
+              <span className="whitespace-nowrap">{t("WhereToFindUs.banner.pointsOfPay")}</span>
+              <br />
+              <span className="text-2xl font-bold text-[#04FFB2] sm:text-3xl md:text-4xl lg:text-5xl">{t("WhereToFindUs.banner.forYou")}</span>
             </h1>
-
-            <span className="text-2xl font-bold text-[#04FFB2] sm:text-3xl md:text-4xl lg:text-5xl mt-4">
-              {t("WhereToFindUs.banner.forYou")}
-            </span>
           </div>
         </div>
 

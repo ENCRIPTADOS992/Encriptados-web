@@ -6,7 +6,7 @@ export default function HowToBuyMobile() {
     const t = useTranslations();
 
     return (
-        <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black px-4 py-8 md:hidden">
+        <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black px-4 py-8 lg:hidden">
             <h1 className="text-white font-bold text-3xl text-center py-8">
                 {t("WhereToFindUs.howToBuy.howToBuyTitle")}
             </h1>
