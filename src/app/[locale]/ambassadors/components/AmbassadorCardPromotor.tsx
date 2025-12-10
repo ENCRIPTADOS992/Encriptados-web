@@ -2,6 +2,7 @@
 import TelegramButton from "@/shared/components/TelegramButton";
 import { Check, Briefcase } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
 
 interface AmbassadorCardProps {
   image?: string;
@@ -31,9 +32,9 @@ export default function AmbassadorCardPromotor({
 
   
   return (
-    <div className="w-full max-w-md  text-white rounded-2xl overflow-hidden shadow-lg">
-      <div className="relative h-[300px] overflow-hidden">
-        <img src={image} alt="" className="w-full h-full object-cover" />
+    <div className="w-full max-w-md text-white rounded-2xl overflow-hidden shadow-lg">
+      <div className="relative h-[240px] sm:h-[300px] overflow-hidden">
+        <Image src={image} alt="Promotor" fill className="object-cover" sizes="(min-width:1024px) 384px, (min-width:768px) 360px, 100vw" />
       </div>
       <div className="p-6 space-y-6 bg-[#151515]">
         <div className="flex items-center gap-2">

@@ -43,6 +43,7 @@ export default function AmbassadorBanner() {
                 height={400}
                 className="mx-auto w-full max-w-xs object-contain sm:max-w-sm md:max-w-full"
                 priority
+                sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw"
               />
             </div>
           </div>

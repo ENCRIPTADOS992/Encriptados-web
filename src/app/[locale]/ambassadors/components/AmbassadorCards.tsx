@@ -12,10 +12,10 @@ const AmbassadorCards = () => {
 
   return (
     <div
-      className="relative flex justify-center items-center bg-cover bg-center w-full"
+      className="relative bg-cover bg-center w-full"
       style={{ backgroundImage: `url(${BackgroundSpiral})` }}
     >
-      <div className="flex flex-wrap gap-5 mt-4 justify-center z-10 px-4">
+      <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 justify-items-center px-4 sm:px-6 lg:px-0 mt-6 z-10">
         <AmbassadorCardPromotor
           company={t("AmbassadorsPage.partnerCards.promotor.encryptedTag")}
           title={t("AmbassadorsPage.partnerCards.promotor.promotorTitle")}
