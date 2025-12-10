@@ -1,34 +1,49 @@
-const SimMoreInfoHeroTablet = () => {
+export const SimMoreInfoHeroTablet = () => {
   return (
     <section className="bg-[#010101] text-white hidden sm:block lg:hidden">
-      <div className="mx-auto max-w-4xl px-6 py-10 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-        {/* Texto + ícono */}
-        <div className="flex items-start gap-3 md:w-1/2">
+      <div className="relative mx-auto max-w-[744px] h-[147px] px-6 flex items-center justify-between overflow-hidden">
+        {/* Ícono + texto */}
+        <div className="flex items-start gap-3 z-10">
           <img
             src="/images/our-products/Group 480956507.png"
             alt="Ícono seguridad"
-            className="w-[40px] h-[40px] mt-1 flex-shrink-0"
+            className="w-[42px] h-[42px] mt-1"
           />
-          <h1 className="font-inter font-bold text-[28px] md:text-[30px] leading-[1.2]">
+
+          <h1 className="font-inter font-bold text-[24px] leading-[1.2] max-w-[300px]">
             Seguridad encriptada en tus comunicaciones
           </h1>
         </div>
 
-        {/* Imágenes a la derecha / abajo */}
-        <div className="relative w-full md:w-1/2 h-[260px]">
-          <div className="absolute top-[24px] left-[10%] w-[170px] h-[190px] bg-white rounded-3xl opacity-80" />
+        {/* Bloque visual derecho (MISMA LÓGICA QUE DESKTOP) */}
+        <div className="relative w-[320px] h-[147px] flex-shrink-0">
+          {/* Tarjeta blanca */}
+          <div className="absolute top-[16px] -left-[48px] w-[150px] h-[160px] bg-white rounded-3xl opacity-80" />
 
-          <img
-            src="/images/our-products/b198b560787a72b14fb6394f2ff13a96bb052654.png"
-            alt="Edificios"
-            className="absolute -top-[110px] right-[5%] w-[260px] h-[260px] object-cover rounded-full opacity-80"
-          />
+          {/* Contenedor fondo + hombre */}
+          <div className="absolute -top-[85px] right-[40px] w-[260px] h-[260px]">
+            {/* Fondo */}
+            <img
+              src="/images/our-products/fondo_edificio.png"
+              alt="Edificios"
+              className="w-full h-full object-cover rounded-full"
+            />
 
-          <img
-            src="/images/our-products/e9c83d58fd547770ff45021f31ef2be160f87e3a.png"
-            alt="Usuario hablando"
-            className="absolute -top-[20px] right-[18%] w-[210px] h-[220px] object-contain rotate-180"
-          />
+            {/* Hombre centrado, proporcionado */}
+            <img
+              src="/images/our-products/hombre_llamada.png"
+              alt="Usuario hablando"
+              className="
+                absolute
+                inset-0
+                w-[360px]
+                h-[360px]
+                object-contain
+                scale-[1.1]
+                -translate-y-[6%]
+              "
+            />
+          </div>
         </div>
       </div>
     </section>

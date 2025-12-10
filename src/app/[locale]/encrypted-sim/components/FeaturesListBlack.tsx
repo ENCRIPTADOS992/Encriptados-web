@@ -15,10 +15,7 @@ import MSIMask from "../svgs/MSIMack";
 import RedProviderSvg from "../svgs/RedProviderSvg";
 import WithOutNumberSvg from "../svgs/WithOutNumberSvg";
 import ListOfCardsSim from "@/shared/components/ListOfCards/ListOfCardsSim";
-import ListOfCardsStandard from "@/shared/components/ListOfCards/ListOfCardsStandard";
 import SectionWrapper from "@/shared/components/SectionWrapper";
-
-
 
 const FeaturesListBlack = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -89,21 +86,15 @@ const FeaturesListBlack = () => {
     },
   ];
 
-  return (
-    <div className="space-y-20">
-      <SectionWrapper>
-        <ListOfCardsSim items={simCards} />
-      </SectionWrapper>
+  const allCards = [...simCards, ...standardCards];
 
-      <div className="w-full bg-black">
-        {/* Sólo este SectionWrapper interna limita el contenido */}
-        <div className="py-20">
-          <SectionWrapper>
-            <ListOfCardsStandard items={standardCards} />
-          </SectionWrapper>
-        </div>
-      </div>
+  return (
+    <div className="space-y-10">
+      <SectionWrapper>
+        <ListOfCardsSim items={allCards} />
+      </SectionWrapper>
     </div>
   );
 };
+
 export default FeaturesListBlack;

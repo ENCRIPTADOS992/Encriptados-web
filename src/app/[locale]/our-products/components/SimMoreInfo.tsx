@@ -10,6 +10,10 @@ import BannerCoverage from "@/shared/BannerCoverage";
 import FeaturesListBlack from "../../encrypted-sim/components/FeaturesListBlack";
 import FixedSimProductDetail from "../../encrypted-sim/components/FixedSimProductDetail";
 import { SimMoreInfoHeroDesktop } from "./SimMoreInfoHeroDesktop";
+import { SimMoreInfoHeroTablet } from "./SimMoreInfoHeroTablet";
+import { BannerCoverageDesktop } from "./BannerCoverageDesktop";
+import { BannerCoverageTablet } from "./BannerCoverageTablet";
+import { BannerCoverageMobile } from "./BannerCoverageMobile";
 
 const SimMoreInfo = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -18,6 +22,7 @@ const SimMoreInfo = () => {
     <>
       {/* Hero desktop */}
       <SimMoreInfoHeroDesktop />
+      <SimMoreInfoHeroTablet />
 
       {/* Resto de la página */}
       <div className="pt-16 pb-6 bg-[linear-gradient(to_right,_#EAF5FF_10%,_white_20%,_#C1F0FF_100%)]">
@@ -29,16 +34,23 @@ const SimMoreInfo = () => {
           {t("characteristics.title")}
         </h2>
       </SectionWrapper>
+      <SectionWrapper>
+        <BannerCoverageDesktop />
+        <BannerCoverageTablet />
+        <BannerCoverageMobile />
+      </SectionWrapper>
+      <div className="bg-[#f4f8fa]">
+        <SectionWrapper>
+          <FeaturesListBlack />
+        </SectionWrapper>
 
-      <FeaturesListBlack />
-
-      <div className="bg-[#f4f8fa] py-[8vh]">
+      <div className="bg-[#f4f8fa] py-[8vh] mt-20">
         <SectionWrapper>
           <OurObjetive />
         </SectionWrapper>
       </div>
-
-      <div className="bg-[#E7F4F8] py-[8vh] w-full">
+      </div>
+      <div className="bg-[#f4f8fa] py-[8vh] w-full">
         <SectionWrapper>
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
             {t("comunicationTitle")}

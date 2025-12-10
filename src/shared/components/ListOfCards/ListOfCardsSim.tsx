@@ -15,7 +15,7 @@ interface ListOfCardsSimProps {
 
 const ListOfCardsSim: React.FC<ListOfCardsSimProps> = ({ items }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+    <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
       {items.map((item, index) => (
         <CardFeatureSim
           key={index}

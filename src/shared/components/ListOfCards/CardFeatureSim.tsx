@@ -1,4 +1,3 @@
-// src/shared/components/CardFeatureSim.tsx
 "use client";
 
 import React from "react";
@@ -15,15 +14,24 @@ const CardFeatureSim: React.FC<CardFeatureSimProps> = ({
   description,
 }) => {
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="w-full bg-black rounded-[40px] aspect-square flex justify-center items-center">
-        <div className="bg-gradient-to-b from-[#00C0F9] to-[#00DF91] p-4 rounded-xl">
+    <article className="flex h-full flex-col rounded-2xl bg-white px-6 py-6 mt-5">
+      {/* Icono */}
+      <div className="mb-4">
+        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f4f8fa] shadow-sm">
           {icon}
         </div>
       </div>
-      <h3 className="text-lg font-bold text-black mt-4">{title}</h3>
-      <p className="text-sm text-[#7E7E7E] mt-1">{description}</p>
-    </div>
+
+      {/* Título */}
+      <h3 className="mb-2 text-base font-semibold text-[#111827]">
+        {title}
+      </h3>
+
+      {/* Descripción */}
+      <p className="text-sm leading-snug text-[#6B7280]">
+        {description}
+      </p>
+    </article>
   );
 };
 
