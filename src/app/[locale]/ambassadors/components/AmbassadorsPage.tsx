@@ -9,10 +9,10 @@ import DownloadBannerMobile from "./DownloadBannerMobile";
 const AmbassadorsPage = () => {
   const t = useTranslations();
   return (
-    <div className="w-full bg-gradient-to-b from-[#005340] via-[#073A4B] to-black relative py-9">
+    <div className="w-full bg-gradient-to-b from-[#005340] via-[#073A4B] to-black relative py-9 overflow-x-hidden">
       <AmbassadorBanner />
-      <SectionWrapper className="mt-8 mb-20">
-        <div className="flex items-center justify-center mb-5">
+      <SectionWrapper className="mt-12 mb-10">
+        <div className="flex items-center justify-center mb-2">
           <h1 className="text-white font-bold text-xl sm:text-3xl lg:text-4xl text-center">
             {t("AmbassadorsPage.partnerCards.title")}
           </h1>

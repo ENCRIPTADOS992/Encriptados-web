@@ -12,8 +12,7 @@ const AmbassadorCards = () => {
 
   return (
     <div
-      className="relative bg-cover bg-center w-full"
-      style={{ backgroundImage: `url(${BackgroundSpiral})` }}
+      className="relative w-full overflow-visible py-6 md:py-8 lg:py-10"
     >
       <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 justify-items-center px-4 sm:px-6 lg:px-0 mt-6 z-10">
         <AmbassadorCardPromotor
