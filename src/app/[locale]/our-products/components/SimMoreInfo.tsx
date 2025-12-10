@@ -28,12 +28,6 @@ const SimMoreInfo = () => {
       <div className="pt-16 pb-6 bg-[linear-gradient(to_right,_#EAF5FF_10%,_white_20%,_#C1F0FF_100%)]">
         <FixedSimProductDetail />
       </div>
-
-      <SectionWrapper className="mt-10 mb-16">
-        <h2 className="text-2xl mb-10 font-bold text-black">
-          {t("characteristics.title")}
-        </h2>
-      </SectionWrapper>
       <SectionWrapper>
         <BannerCoverageDesktop />
         <BannerCoverageTablet />
