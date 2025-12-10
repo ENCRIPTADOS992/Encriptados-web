@@ -73,7 +73,7 @@ const BlogPage = () => {
         <div>
           <DownloadAppBanner />
         </div>
-        <div className="bg-[#151515] py-3 relative z-20"></div>
+        
         {/* <SubscribeBanner /> */}
       </BasicFormProvider>
     </>

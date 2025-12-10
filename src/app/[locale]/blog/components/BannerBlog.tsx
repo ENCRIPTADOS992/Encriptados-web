@@ -19,12 +19,12 @@ const BannerBlog = () => {
       <div className="absolute inset-0 bg-black opacity-80 z-10"></div>
 
       <div>
-        <h1 className="relative z-20 text-white text-3xl lg:text-4xl text-center  ">
+        <h2 className="relative z-20 text-white text-sm md:text-base text-center">
           {t("ourBlogTitleBanner")}
-        </h1>
+        </h2>
         <div className="flex justify-center items-center">
-          <div className="w-[450px] mt-4">
-            <h1 className="relative z-20 text-white  text-lg lg:text-3xl  text-center font-bold">
+          <div className="w-[450px] mt-2 md:mt-4">
+            <h1 className="relative z-20 text-white text-2xl md:text-4xl text-center font-bold">
               {t("ourBlogDescriptionBanner")}
             </h1>
           </div>
