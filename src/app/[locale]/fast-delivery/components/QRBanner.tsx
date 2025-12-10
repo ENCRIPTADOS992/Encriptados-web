@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 
-import { useTranslations } from "use-intl";
+import { useTranslations } from "next-intl";
 import AppleSvg from "@/shared/svgs/AppleSvg";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 

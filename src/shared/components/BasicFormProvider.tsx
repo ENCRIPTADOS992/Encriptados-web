@@ -12,7 +12,7 @@ import * as yup from "yup";
 interface ISubmitModulesForm<T> {
   children: React.ReactNode;
   schema?: yup.ObjectSchema<DeepPartial<T>>;
-  submit?: (data: T, methods?: UseFormReturn<DeepPartial<T>, any, any>) => void;
+  submit?: (data: any, methods?: UseFormReturn<DeepPartial<T>, any, any>) => void;
   onError?: (handler: FieldErrors<any>) => void;
   defaultValue?: any;
   values?: any;
