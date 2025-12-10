@@ -39,14 +39,10 @@ export default function CardOfPost({
         </p>
         <div className="flex items-center justify-between pt-4">
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-200">
-              <Image
-                alt={author}
-                className="object-cover"
-                height={24}
-                src="/placeholder.svg"
-                width={24}
-              />
+            <div className="h-6 w-6 rounded-full bg-[#0E0E0E] flex items-center justify-center border border-[#3E3E3E]">
+              <span className="text-[10px] font-semibold text-white">
+                {(author?.[0] || "?").toUpperCase()}
+              </span>
             </div>
             <span className="text-sm text-gray-600">{author}</span>
           </div>
