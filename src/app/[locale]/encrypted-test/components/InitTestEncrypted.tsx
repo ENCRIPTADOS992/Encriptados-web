@@ -1,28 +1,27 @@
 "use client";
 import React from "react";
-
-import PhoneSecureEncrypted from "../icons/PhoneSecureEncrypted";
-import KeySecureEncrypted from "../icons/KeySecureEncrypted";
-import { useRouter } from "next/navigation";
-import SectionWrapper from "@/shared/components/SectionWrapper";
+import SecurityTestSection from "./SecurityTestSection";
+import { useTranslations } from "next-intl";
 
 const InitTestEncrypted = () => {
-  const router = useRouter();
+  const t = useTranslations("EncryptedTestPage");
   return (
-    <>
-      <div className="bg-black pt-14 pb-14">
-        <SectionWrapper>
-          <div className="flex flex-col gap-10">
-            <PhoneSecureEncrypted
-              onTestInit={() => router.push("encrypted-test/phone")}
-            />
-            <KeySecureEncrypted
-              onTestInit={() => router.push("encrypted-test/password")}
-            />
-          </div>
-        </SectionWrapper>
-      </div>
-    </>
+    <div className="w-full flex flex-col gap-20">
+      <SecurityTestSection
+        variant="desktop"
+        title={t("tryOurPhoneSecure.title")}
+        description={t("tryOurPhoneSecure.description")}
+        href="encrypted-test/phone"
+        iconSrc="/icons/icono-grande.svg"
+      />
+      <SecurityTestSection
+        variant="desktop"
+        title={t("tryPassowordSecure.title")}
+        description={t("tryPassowordSecure.description")}
+        href="encrypted-test/password"
+        iconSrc="/icons/key_vertical.svg"
+      />
+    </div>
   );
 };
 

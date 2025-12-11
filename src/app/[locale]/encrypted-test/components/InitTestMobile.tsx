@@ -1,39 +1,26 @@
 "use client";
 import React from "react";
-import PhoneSecureEncrypted from "../icons/PhoneSecureEncrypted";
-import KeySecureEncrypted from "../icons/KeySecureEncrypted";
-import { useRouter } from "next/navigation";
-import SectionWrapper from "@/shared/components/SectionWrapper";
+import SecurityTestSection from "./SecurityTestSection";
+import { useTranslations } from "next-intl";
 
 const InitTestMobile = () => {
-  const router = useRouter();
-
+  const t = useTranslations("EncryptedTestPage");
   return (
-    <div className="bg-black py-8">
-      <SectionWrapper>
-        <div className="flex flex-col">
-          {/* Card Teléfono */}
-          <div
-            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-2 "
-          >
-            <PhoneSecureEncrypted
-              onTestInit={() => {
-                router.push("encrypted-test/phone");
-              }}
-            />
-          </div>
-          {/* Card Contraseña */}
-          <div
-            className="flex flex-row items-center justify-between bg-black rounded-2xl px-4 py-2"
-          >
-            <KeySecureEncrypted
-              onTestInit={() => {
-                router.push("encrypted-test/phone");
-              }}
-            />
-          </div>
-        </div>
-      </SectionWrapper>
+    <div className="w-full flex flex-col gap-8">
+      <SecurityTestSection
+        variant="mobile"
+        title={t("tryOurPhoneSecure.title")}
+        description={t("tryOurPhoneSecure.description")}
+        href="encrypted-test/phone"
+        iconSrc="/icons/icono-grande.svg"
+      />
+      <SecurityTestSection
+        variant="mobile"
+        title={t("tryPassowordSecure.title")}
+        description={t("tryPassowordSecure.description")}
+        href="encrypted-test/password"
+        iconSrc="/icons/key_vertical.svg"
+      />
     </div>
   );
 };

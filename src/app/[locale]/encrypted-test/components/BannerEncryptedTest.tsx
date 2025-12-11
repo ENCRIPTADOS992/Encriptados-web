@@ -14,11 +14,13 @@ const BannerEncryptedTest = () => {
       <Image
         src={EncryptedTest}
         alt="Encrypted Test Banner"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={100}
-        className="-z-10"
+        style={{ objectFit: "cover" }}
+        className="z-0"
       />
+
+      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-b from-transparent to-black z-[5] pointer-events-none" />
 
       <SectionWrapper className="absolute inset-0 flex flex-col items-center justify-center gap-y-4 md:gap-y-7 z-10 p-4">
         <ButtonGradientClasic title={t("banner.securityTestTitle")} />
