@@ -1,113 +1,37 @@
 "use client";
 
 import React from "react";
-
+import Image from "next/image";
 import FiltersOffers from "./FiltersOffers";
-
-import CharacteristicDatasSvg from "/public/images/encrypted-sim/icons/characteristic-data.svg";
-import CharacteristicSpeedSvg from "/public/images/encrypted-sim/icons/characteristic-speed.svg";
-import CharacteristicAppSvg from "/public/images/encrypted-sim/icons/characteristic-app.svg";
-import LogoSvg1 from "/public/images/encrypted-sim/icons/encriptados_logo.svg";
-import CharacteristicAnonimitySvg from "/public/images/encrypted-sim/icons/characteristic-anonymity.svg";
-import CharacteristicReplaceSvg from "/public/images/encrypted-sim/icons/characteristic-replace.svg";
-import CharacteristicVoiceSvg from "/public/images/encrypted-sim/icons/characteristic-voice.svg";
-import EncryptedSimData from "/public/images/encrypted-sim/Encrypted_sim_card.png";
-import EncryptedSimMinutes from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.png";
-import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";
-import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
 import { useTranslations } from "next-intl";
-import CardSim from "@/app/[locale]/encrypted-sim/components/CardSim";
+import { useFormContext } from "react-hook-form";
+import { useGetProducts } from "@/features/products/queries/useGetProducts";
+import type { Product } from "@/features/products/types/AllProductsResponse";
+
+const CATEGORY_BY_OFFER: Record<string, number> = {
+  sims: 40,
+  apps: 38,
+  system: 35,
+};
 
 const ListOfOffers = () => {
   const o = useTranslations("OffersPage");
+  const { watch } = useFormContext();
+  const current = watch("currentoffer") ?? "sims";
+  const categoryId = CATEGORY_BY_OFFER[current] ?? 40;
 
-  const t = useTranslations("EncryptedSimPage");
+  const { data, isFetching } = useGetProducts(categoryId, "encriptados");
+  const products = (data ?? []) as Product[];
 
-  const commonFeatures = [
-    {
-      icon: CharacteristicDatasSvg,
-      alt: t("commonFeatures.dataMobile"),
-      description: t("commonFeatures.dataMobile"),
-    },
-    {
-      icon: CharacteristicSpeedSvg,
-      alt: t("commonFeatures.speed"),
-      description: t("commonFeatures.speed"),
-    },
-    {
-      icon: CharacteristicAppSvg,
-      alt: t("commonFeatures.appAvailable"),
-      description: t("commonFeatures.appAvailable"),
-    },
-  ];
-
-  const cardData = [
-    {
-      logoSrc: LogoSvg1,
-      title: t("products.data.title"),
-      description: t("products.data.description"),
-      features: commonFeatures,
-      productImage: EncryptedSimData,
-      featuresCardSim: [
-        t("products.data.featuresCardSim.0"),
-        t("products.data.featuresCardSim.1"),
-        t("products.data.featuresCardSim.2"),
-        t("products.data.featuresCardSim.3"),
-      ],
-      priceRange: t("products.data.priceRange"),
-      headerIcon: IconDataSvg,
-      headerTitle: t("products.data.headerTitle"),
-    },
-    {
-      logoSrc: LogoSvg1,
-      title: t("products.minutes.title"),
-      description: t("products.minutes.description"),
-      features: [
-        {
-          icon: CharacteristicAnonimitySvg,
-          alt: t("commonFeatures.privacyAnonymity"),
-          description: t("commonFeatures.privacyAnonymity"),
-        },
-        {
-          icon: CharacteristicReplaceSvg,
-          alt: t("commonFeatures.substituteNumber"),
-          description: t("commonFeatures.substituteNumber"),
-        },
-        {
-          icon: CharacteristicVoiceSvg,
-          alt: t("commonFeatures.callback"),
-          description: t("commonFeatures.callback"),
-        },
-        {
-          icon: CharacteristicVoiceSvg,
-          alt: t("commonFeatures.voiceFilters"),
-          description: t("commonFeatures.voiceFilters"),
-        },
-        {
-          icon: CharacteristicAppSvg,
-          alt: t("commonFeatures.appAvailable"),
-          description: t("commonFeatures.appAvailable"),
-        },
-      ],
-      productImage: EncryptedSimMinutes,
-      featuresCardSim: [
-        t("products.minutes.featuresCardSim.0"),
-        t("products.minutes.featuresCardSim.1"),
-        t("products.minutes.featuresCardSim.2"),
-        t("products.minutes.featuresCardSim.3"),
-        t("products.minutes.featuresCardSim.4"),
-      ],
-      priceRange: t("products.minutes.priceRange"),
-      headerIcon: IcomMinutesSvg,
-      headerTitle: t("products.minutes.headerTitle"),
-    },
-  ];
+  const discounted = products.filter((p) => {
+    const price = parseFloat(p.price ?? "0");
+    const sale = parseFloat(p.sale_price ?? "0");
+    return Boolean(p.on_sale) || (sale > 0 && sale < price);
+  });
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto text-center">
-      <h1 className="text-white font-bold mb-4 text-xl sm:text-2xl md:text-3xl ">
-        {o("exclusiveOffersTitle")}
-      </h1>
+      <h1 className="text-white font-bold mb-4 text-xl sm:text-2xl md:text-3xl ">{o("exclusiveOffersTitle")}</h1>
       <div className="w-full sm:w-1/2 md:w-5/12">
         <FiltersOffers
           items={[
@@ -121,24 +45,39 @@ const ListOfOffers = () => {
 
       <div className="flex items-center justify-center">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-black mt-9">
-          {cardData.map((card, index) => (
-            <CardSim
-              key={index}
-              productImage={card.productImage}
-              features={card.featuresCardSim}
-              priceRange={card.priceRange}
-              headerIcon={card.headerIcon}
-              headerTitle={card.headerTitle}
-              // advantages={[
-              //   {
-              //     content: "Prueba ventajas",
-              //     title: "Prueba ventajas",
-              //     image: "",
-              //     id: 2,
-              //   },
-              // ]}
-            />
-          ))}
+          {isFetching && (
+            <div className="col-span-full text-white">Cargando ofertas…</div>
+          )}
+          {!isFetching && discounted.length === 0 && (
+            <div className="col-span-full text-white">No hay productos en oferta</div>
+          )}
+          {!isFetching && discounted.map((p, index) => {
+            const filters = {
+              selectedOption: String(categoryId),
+              provider: "encriptados",
+              os: "all",
+              license: "all",
+              encriptadosprovider: "all",
+              timprovider: "all",
+            } as any;
+            return (
+              <CardProduct
+                key={`offer-${p.id}-${index}`}
+                id={p.id}
+                priceDiscount={p.sale_price}
+                productImage={p.images?.[0]?.src ?? ""}
+                features={[]}
+                priceRange={`${p.price}$`}
+                headerIcon={""}
+                headerTitle={p.name}
+                filters={filters}
+                checks={p.checks || []}
+                badges={undefined}
+                provider={p.provider}
+                planDataAmount={p.plan_data_amount}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
