@@ -15,8 +15,36 @@ const OffersPage = () => {
           </div>
         </div>
 
-        <div className="w-full bg-gradient-to-b from-[#00372B] via-black to-[#022530] flex justify-center items-center py-10 md:py-16 px-4">
-          <div>
+        <div className="w-full bg-black relative overflow-hidden py-10 md:py-16">
+          <div
+            className="absolute pointer-events-none z-0"
+            style={{
+              width: 380,
+              height: 260,
+              left: "12%",
+              top: "55%",
+              transform: "translate(-50%, -50%)",
+              background: "#01FFC2",
+              opacity: 0.4,
+              filter: "blur(140px)",
+              borderRadius: "50%",
+            }}
+          />
+          <div
+            className="absolute pointer-events-none z-0"
+            style={{
+              width: 380,
+              height: 260,
+              left: "88%",
+              top: "55%",
+              transform: "translate(-50%, -50%)",
+              background: "#10B4E7",
+              opacity: 0.5,
+              filter: "blur(140px)",
+              borderRadius: "50%",
+            }}
+          />
+          <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 relative z-10">
             <CardSection />
           </div>
         </div>

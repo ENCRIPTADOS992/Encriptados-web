@@ -25,8 +25,8 @@ export default function FiltersOffers({
   const selectedItem = watch(name);
 
   return (
-    <div className="w-full bg-[#141414] rounded-full p-4">
-      <div className="flex gap-x-1">
+    <div className="w-full max-w-[720px] min-w-[320px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-2 sm:px-3 h-14 sm:h-16 overflow-hidden mx-auto">
+      <div className="flex items-center h-full gap-1">
         {items?.map((item, index) => (
           <Controller
             key={index}
@@ -37,11 +37,11 @@ export default function FiltersOffers({
               <button
                 type="button"
                 onClick={() => onChange(item.value)}
-                className={`flex-1 px-4 py-3 text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors
+                className={`basis-1/3 grow-0 shrink-0 h-10 sm:h-12 text-center px-0 text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap
                   ${
                     selectedItem === item.value
                       ? "bg-[#2A2A2A] text-white"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                      : "text-[#CFCFCF] hover:bg-white/5"
                   }`}
               >
                 {item.icon && <span className="mr-2">{item.icon}</span>}
