@@ -61,7 +61,7 @@ export default function OurGoalsTablet() {
             description={t("AboutUsPage.cards.informationCard.description")}
             icon={
               <Image
-                src="/images/about-us/key_visualizer.png "
+                src="/images/about-us/key_visualizer.png"
                 alt="information icon"
                 width={26}
                 height={26}

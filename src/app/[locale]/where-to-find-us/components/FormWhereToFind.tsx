@@ -17,7 +17,7 @@ const FormWhereToFind = () => {
 
   return (
     <div className="bg-[#041A20] overflow-x-hidden">
-      <SectionWrapper className="!max-w-none !w-screen !px-0 !mx-0 !lg:px-0 !xl:px-0 !2xl:px-0 !lg:mx-0 flex flex-col lg:flex-row justify-between items-center py-8 gap-4 sm:gap-6 lg:gap-0">
+      <SectionWrapper className="!max-w-none !w-screen px-2.5 mx-0 lg:px-8 lg:mx-0 flex flex-col lg:flex-row justify-between items-center py-8 gap-4 sm:gap-6 lg:gap-0">
         {/* Imagen izquierda */}
         <div className="hidden lg:block relative flex-shrink-0 lg:w-[18vw] lg:h-[55vh] lg:ml-0">
           <Image
@@ -33,13 +33,12 @@ const FormWhereToFind = () => {
         {/* Card central */}
         <div
           className="
-          flex-none w-full max-w-[800px] mx-auto
+          flex-none w-full max-w-[800px] lg:w-[calc(100vw-36vw)] mx-2.5 my-2.5 md:mx-auto md:my-4
           bg-gradient-to-b from-black via-[#001F28] to-[#050505]
           rounded-xl md:rounded-[44px]
           p-8 sm:p-10 md:p-12 lg:p-14
           space-y-4 sm:space-y-6 md:space-y-8
         "
-          style={{ width: "min(800px, calc(100vw - 36vw))" }}
         >
           <div className="flex items-center justify-center">
             <SearchFormIcon className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-[#19DBFA]" />
