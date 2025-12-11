@@ -9,10 +9,14 @@ const OffersPage = () => {
     <>
       <BasicFormProvider defaultValue={{ currentoffer: "sims" }}>
         <OffersBanner />
-        <div className="w-full bg-gradient-to-b from-[#00372B] via-black to-[#022530] flex justify-center items-center py-10 md:py-16 px-4">
+        <div className="w-full bg-black flex justify-center items-center py-10 md:py-16 px-4">
           <div>
             <ListOfOffers />
+          </div>
+        </div>
 
+        <div className="w-full bg-gradient-to-b from-[#00372B] via-black to-[#022530] flex justify-center items-center py-10 md:py-16 px-4">
+          <div>
             <CardSection />
           </div>
         </div>

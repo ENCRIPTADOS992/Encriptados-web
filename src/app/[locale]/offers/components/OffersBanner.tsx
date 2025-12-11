@@ -6,7 +6,7 @@ const OffersBanner = () => {
   const t = useTranslations("OffersPage");
 
   return (
-    <section className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden">
+    <section className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden bg-black">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/fondo.png')" }}
@@ -16,7 +16,7 @@ const OffersBanner = () => {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.2) 55%, transparent 70%)",
+            "linear-gradient(to right, rgba(0, 0, 0, 0.9) 30%, rgba(41, 171, 226, 0.3) 100%)",
         }}
       />
 
