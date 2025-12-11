@@ -784,6 +784,11 @@
     "articleTitle": "Artículos Relacionados"
   },
   "OffersPage": {
+    "banner": {
+      "titleOffers": "Ofertas",
+      "titleEncrypted": "Encriptadas",
+      "description": "Compra tus ESIMS, Apps y Sistemas encriptados con descuento"
+    },
     "exclusiveOffersTitle": "Ofertas Exclusivas",
     "menu": {
       "sims": "SIMS",

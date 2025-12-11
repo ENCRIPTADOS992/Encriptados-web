@@ -28,6 +28,8 @@ export const getAllProducts = async (
       params,
     });
     const rawProducts = response.data.products;
+    console.log("🛰️ [getAllProducts] params:", params);
+    console.log("🛰️ [getAllProducts] raw products object keys:", Object.keys(rawProducts));
     const products: Allproducts = Object.values(rawProducts).map((p: any) => {
       const licenseVariants =
         p.variants?.map((v: any) => ({
@@ -43,6 +45,11 @@ export const getAllProducts = async (
         licenseVariants,
       } as Product;
     });
+
+    console.log("📦 [getAllProducts] mapped products length:", products.length);
+    if (products.length) {
+      console.log("📦 [getAllProducts] first product sample:", products[0]);
+    }
 
     return products;
   } catch (error) {

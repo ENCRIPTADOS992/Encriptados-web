@@ -740,6 +740,11 @@
     }
   },
   "OffersPage": {
+    "banner": {
+      "titleOffers": "Offres",
+      "titleEncrypted": "Cryptées",
+      "description": "Achetez vos eSIMs, applications et systèmes chiffrés avec remise"
+    },
     "exclusiveOffersTitle": "Offres Exclusives",
     "menu": {
       "sims": "SIMS",

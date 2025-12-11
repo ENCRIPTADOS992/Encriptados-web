@@ -748,6 +748,11 @@
     }
   },
   "OffersPage": {
+    "banner": {
+      "titleOffers": "Encrypted",
+      "titleEncrypted": "Offers",
+      "description": "Buy your eSIMs, apps and encrypted systems with discount"
+    },
     "exclusiveOffersTitle": "Exclusive Offers",
     "menu": {
       "sims": "SIMS",

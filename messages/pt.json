@@ -739,6 +739,11 @@
     }
   },
   "OffersPage": {
+    "banner": {
+      "titleOffers": "Ofertas",
+      "titleEncrypted": "Criptadas",
+      "description": "Compre suas eSIMs, apps e sistemas criptografados com desconto"
+    },
     "exclusiveOffersTitle": "Ofertas Exclusivas",
     "menu": {
       "sims": "SIMS",

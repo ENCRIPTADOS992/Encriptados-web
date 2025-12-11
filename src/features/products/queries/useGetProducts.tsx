@@ -14,11 +14,13 @@ export const useGetProducts = (
 
   return useQuery<Allproducts>({
     queryKey: ["products", categoryId, provider, country, locale],
-    queryFn: () =>
-      getAllProducts(categoryId, locale, {
-        simCountry: country ?? null,   
-      }),
+    queryFn: async () => {
+      const res = await getAllProducts(categoryId, locale, {
+        simCountry: country ?? null,
+      });
+      console.log("✅ [useGetProducts] productos recibidos:", res);
+      return res;
+    },
     enabled,
   });
 };
-
