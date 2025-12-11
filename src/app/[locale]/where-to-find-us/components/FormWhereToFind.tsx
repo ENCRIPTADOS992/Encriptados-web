@@ -17,9 +17,9 @@ const FormWhereToFind = () => {
 
   return (
     <div className="bg-[#041A20] overflow-x-hidden">
-      <SectionWrapper className="!max-w-none !w-screen px-2.5 mx-0 lg:px-8 lg:mx-0 flex flex-col lg:flex-row justify-between items-center py-8 gap-4 sm:gap-6 lg:gap-0">
+      <SectionWrapper className="relative !max-w-none !w-screen px-2.5 mx-0 lg:px-8 lg:mx-0 flex flex-col lg:flex-row justify-between items-center py-8 gap-4 sm:gap-6 lg:gap-0">
         {/* Imagen izquierda */}
-        <div className="hidden lg:block relative flex-shrink-0 lg:w-[18vw] lg:h-[55vh] lg:ml-0">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[clamp(160px,22vw,340px)] h-[clamp(220px,38vh,460px)] pointer-events-none z-0">
           <Image
             alt="Man"
             src={Man}
@@ -33,7 +33,7 @@ const FormWhereToFind = () => {
         {/* Card central */}
         <div
           className="
-          flex-none w-full max-w-[800px] lg:w-[calc(100vw-36vw)] mx-2.5 my-2.5 md:mx-auto md:my-4
+          relative z-10 flex-none w-full max-w-[800px] lg:w-[calc(100vw-36vw)] mx-2.5 my-2.5 md:mx-auto md:my-4
           bg-gradient-to-b from-black via-[#001F28] to-[#050505]
           rounded-xl md:rounded-[44px]
           p-8 sm:p-10 md:p-12 lg:p-14
@@ -58,7 +58,7 @@ const FormWhereToFind = () => {
           ) : null}
         </div>
         {/* Imagen derecha */}
-        <div className="hidden lg:block relative flex-shrink-0 lg:w-[18vw] lg:h-[45vh] lg:mr-0">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[clamp(160px,22vw,340px)] h-[clamp(200px,34vh,420px)] pointer-events-none z-0">
           <Image
             alt="Woman"
             src={Woman}
