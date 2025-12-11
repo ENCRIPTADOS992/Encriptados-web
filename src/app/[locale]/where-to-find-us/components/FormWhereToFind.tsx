@@ -19,7 +19,7 @@ const FormWhereToFind = () => {
     <div className="bg-[#041A20] overflow-x-hidden">
       <SectionWrapper className="relative !max-w-none !w-screen px-2.5 mx-0 lg:px-8 lg:mx-0 flex flex-col lg:flex-row justify-between items-center py-8 gap-4 sm:gap-6 lg:gap-0">
         {/* Imagen izquierda */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[clamp(160px,22vw,340px)] h-[clamp(220px,38vh,460px)] pointer-events-none z-0">
+        <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-[clamp(160px,22vw,340px)] h-[clamp(220px,38vh,460px)] pointer-events-none z-0">
           <Image
             alt="Man"
             src={Man}
@@ -58,7 +58,7 @@ const FormWhereToFind = () => {
           ) : null}
         </div>
         {/* Imagen derecha */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[clamp(160px,22vw,340px)] h-[clamp(200px,34vh,420px)] pointer-events-none z-0">
+        <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[clamp(160px,22vw,340px)] h-[clamp(200px,34vh,420px)] pointer-events-none z-0">
           <Image
             alt="Woman"
             src={Woman}
