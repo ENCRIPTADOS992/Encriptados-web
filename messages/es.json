@@ -127,7 +127,8 @@
     "simEsims": {
       "encryptedSim": "SIM Encriptada",
       "physicSim": "SIM Fisica",
-      "globalSim": "SIM Global"
+      "globalSim": "SIM Global",
+      "simTim": "SIM TIM"
     },
     "encryptedSims": {
       "title": "Apps Encriptadas"

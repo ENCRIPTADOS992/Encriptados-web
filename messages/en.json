@@ -169,7 +169,8 @@
     "simEsims": {
       "encryptedSim": "Encrypted SIM",
       "physicSim": "Physical SIM",
-      "globalSim": "Global SIM"
+      "globalSim": "Global SIM",
+      "simTim": "TIM SIM"
     },
     "encryptedSims": {
       "title": "Encrypted Apps"

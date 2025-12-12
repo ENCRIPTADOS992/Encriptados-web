@@ -165,7 +165,8 @@
     "simEsims": {
       "encryptedSim": "SIM Chiffrée",
       "physicSim": "SIM Physique",
-      "globalSim": "SIM Globale"
+      "globalSim": "SIM Globale",
+      "simTim": "SIM TIM"
     },
     "encryptedSims": {
       "title": "Applications Encryptees"
