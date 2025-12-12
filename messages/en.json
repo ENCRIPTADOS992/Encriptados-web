@@ -155,6 +155,16 @@
     }
   },
   "FooterMenu": {
+    "lead": "Encriptados offers high-quality products to keep your anonymity and security on the internet",
+    "downloadAppTitle": "Download the Application",
+    "downloadAppDescription": "Available for all operating systems",
+    "headings": {
+      "simEsims": "SIM - eSIMs",
+      "apps": "Applications",
+      "systems": "Systems",
+      "routers": "Routers"
+    },
+    "paymentMethodsTitle": "Payment methods:",
     "downloadApp": "Download the app for your mobile device here:",
     "simEsims": {
       "encryptedSim": "Encrypted SIM",

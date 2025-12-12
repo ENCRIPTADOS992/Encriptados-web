@@ -113,6 +113,16 @@
     }
   },
   "FooterMenu": {
+    "lead": "Encriptados te ofrece productos de alta calidad para mantener tu anonimato y seguridad en internet",
+    "downloadAppTitle": "Descarga la Aplicación",
+    "downloadAppDescription": "Disponible para todos los sistemas operativos",
+    "headings": {
+      "simEsims": "SIM - eSIMs",
+      "apps": "Aplicaciones",
+      "systems": "Sistemas",
+      "routers": "Routers"
+    },
+    "paymentMethodsTitle": "Métodos de pago:",
     "downloadApp": "Descarga la aplicación para tu dispositivo móvil aquí:",
     "simEsims": {
       "encryptedSim": "SIM Encriptada",
