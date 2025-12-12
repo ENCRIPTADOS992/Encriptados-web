@@ -114,6 +114,12 @@ export default function FooterEncrypted() {
     "Salt": "/apps/salt",
     "Nord VPN": "/apps/nord-vpn",
   };
+  const APPS_NAME_MAP: Record<string, string> = {
+    "Silent Circle": "Silent phone",
+    "Vnclagoon": "VncLagon",
+    "Threema Work": "Threema Works",
+    "NordVPN": "Nord VPN",
+  };
 
   const SYSTEMS_LINKS: Record<string, string> = {
     "Secure MDM iphone": "/apps/secure-mdm-iphone",
@@ -126,6 +132,10 @@ export default function FooterEncrypted() {
     "UltraX": "/apps/ultrax",
     "Intact": "/apps/intact-phone",
     "DecSecure": "/apps/dec-secure",
+    "Secure Crypt": "/apps/secure-crypt",
+  };
+  const SYSTEMS_NAME_MAP: Record<string, string> = {
+    "DEC Secure": "DecSecure",
   };
 
   const SIMS_LINKS: Record<string, string> = {
@@ -134,32 +144,33 @@ export default function FooterEncrypted() {
   };
 
   const simEsimsLinks = [
-    { name: "SIM Encriptada", href: "#" },
-    { name: "SIM Física", href: "#" },
-    { name: "SIM Global", href: "#" },
-    { name: "BNE SIM", href: "#" },
-    { name: "MAYA SIM", href: "#" },
+    { name: "SIM Encriptada", href: "/sim-encriptada" },
+    { name: "SIM TIM", href: "/tim-sim" },
   ];
   const aplicacionesLinks = [
-    { name: "Silent Circle", href: "#" },
-    { name: "Vnclagoon", href: "#" },
-    { name: "Threema", href: "#" },
-    { name: "Threema Work", href: "#" },
-    { name: "NordVPN", href: "#" },
-    { name: "Salt", href: "#" },
-    { name: "VaultChat", href: "#" },
-    { name: "Armadillo", href: "#" },
+    { name: "Silent phone", href: "/apps/silent-circle" },
+    { name: "VaultChat", href: "/apps/vault-chat" },
+    { name: "Armadillo", href: "/apps/armadillo" },
+    { name: "Threema", href: "/apps/threema" },
+    { name: "ThreemaWork", href: "/apps/threema-work" },
+    { name: "VNClagoon", href: "/apps/vnc-lagoon" },
+    { name: "Salt", href: "/apps/salt" },
+    { name: "Nord VPN", href: "/apps/nord-vpn" },
   ];
   const sistemasLinks = [
-    { name: "Secure Crypt", href: "#" },
-    { name: "Armadillo", href: "#" },
-    { name: "UltraX", href: "#" },
-    { name: "Tribu", href: "#" },
-    { name: "Intact", href: "#" },
-    { name: "DEC Secure", href: "#" },
-    { name: "TotalSec", href: "#" },
+    { name: "Secure MDM iPhone", href: "/apps/secure-mdm-iphone" },
+    { name: "Secure MDM Android", href: "/apps/secure-mdm-android" },
+    { name: "Cryptcom", href: "/apps/cryptcom" },
+    { name: "Renati", href: "/apps/renati" },
+    { name: "ChatMail", href: "/apps/chat-mail" },
+    { name: "Armadillo", href: "/apps/armadillo-v2" },
+    { name: "VaultChat", href: "/apps/vault-chat-v2" },
+    { name: "Ultra X", href: "/apps/ultrax" },
+    { name: "Intact Phone", href: "/apps/intact-phone" },
+    { name: "DEC Secure", href: "/apps/dec-secure" },
+    { name: "SecureCrypt", href: "/apps/secureCrypt" },
   ];
-  const routersLinks = [{ name: "Router Camaleón", href: "#" }];
+  const routersLinks = [{ name: "Router Camaleón", href: "/router" }];
 
 
   return (
