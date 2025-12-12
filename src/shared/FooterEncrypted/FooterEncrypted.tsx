@@ -170,7 +170,7 @@ export default function FooterEncrypted() {
           <div className="flex flex-col gap-6 items-center text-center md:items-start md:text-left lg:w-[220px] flex-shrink-0">
             <Image src="/images/footer/encriptados-logo-201.png" alt="Encriptados Logo" width={180} height={30} className="h-6 w-auto" />
             <p className="text-[#787878] text-sm leading-relaxed">{t("lead")}</p>
-            <Link href="https://youtube.com" target="_blank" className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity">
+            <Link href="https://www.youtube.com/@encriptados_io" target="_blank" className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity">
               <Image src="/images/footer/logo-youtube.png" alt="YouTube" width={180} height={50} className="h-8 md:h-7 lg:h-10 w-auto" />
             </Link>
             <Image src="/images/footer/qr.png" alt="QR Code Telegram" width={150} height={150} className="w-28 md:w-24 h-auto hidden md:block" />
