@@ -244,9 +244,9 @@ export default function FooterEncrypted() {
 
         <div className="mt-10">
           <div className="w-full h-px bg-[#2C2C2C] scale-y-[0.5] origin-top"></div>
-          <div className="py-4 flex flex-col md:flex-row flex-wrap items-center gap-4 justify-center">
+          <div className="py-4 flex flex-col md:flex-row flex-wrap items-center gap-3 md:gap-6 justify-center md:justify-center">
             <span className="text-[#787878] text-sm">{t("paymentMethodsTitle")}</span>
-            <div className="flex flex-wrap items-center justify-center w-full max-w-[320px] sm:max-w-none gap-2 sm:gap-4 bg-[#000000] rounded-xl p-1 sm:p-2">
+            <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start w-full md:w-auto max-w-[320px] md:max-w-none gap-2 sm:gap-3 md:gap-6 lg:gap-8 bg-[#000000] rounded-xl p-1 sm:p-2">
               {paymentMethods.map(({ key, icon }) => (
                 <div key={key} className="rounded flex items-center justify-center p-0.5 sm:p-1 h-7 sm:h-9 [&>svg]:h-full [&>svg]:w-auto [&>img]:h-full [&>img]:w-auto">{icon}</div>
               ))}
