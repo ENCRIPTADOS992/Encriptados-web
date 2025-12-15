@@ -83,12 +83,12 @@ const BannerSecureMdmNew = () => {
             breakpoints={{
               1024: { slidesPerView: 2 },
             }}
-            className="w-full !overflow-visible"
+            className="w-full overflow-hidden"
           >
             {twoCards.map((card) => (
-              <SwiperSlide key={card.id} className="!w-auto flex justify-center">
-                <div className="w-[325px] h-[374px] rounded-2xl bg-[#161616] border border-[#222] overflow-hidden p-5 flex flex-col">
-                  <div className="relative w-[285px] h-[180px] rounded-[14px] bg-[#0D0D0D]">
+              <SwiperSlide key={card.id} className="flex justify-center">
+                <div className="w-full max-w-[325px] h-[374px] rounded-2xl bg-[#161616] border border-[#222] overflow-hidden p-5 flex flex-col">
+                  <div className="relative w-full max-w-[285px] h-[180px] rounded-[14px] bg-[#0D0D0D]">
                     <img
                       src={card.image}
                       alt={card.title}
@@ -96,7 +96,7 @@ const BannerSecureMdmNew = () => {
                     />
                   </div>
 
-                  <div className="mt-[24px] w-[263px] flex flex-col gap-[24px]">
+                  <div className="mt-[24px] w-full max-w-[263px] flex flex-col gap-[24px]">
                     <div className="space-y-1">
                       <h3 className="text-[16px] font-semibold leading-[1.2]">
                         {card.title}

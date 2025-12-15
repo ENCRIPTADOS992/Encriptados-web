@@ -17,13 +17,13 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        mobile: { max: "770px" },
-        tablet: { min: "771px", max: "1369px" },
+        mobile: { max: "800px" },
+        tablet: { min: "801px", max: "1369px" },
         desktop: { min: "1370px" },
         "xs": "375px",
         "lg-custom": "1358px", 
         sm: '600px',
-        md: '820px',
+        md: '800px',
         lg: '1024px',
         xl: '1280px',
       },
