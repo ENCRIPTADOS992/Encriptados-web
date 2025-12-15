@@ -26,7 +26,7 @@ Este documento presenta un plan detallado paso a paso para implementar el sistem
 
 | # | Página | Ruta | Estado | Prioridad |
 |---|--------|------|--------|-----------|
-| 1 | Home | `/` | ⏳ | 🔴 Alta |
+| 1 | Home | `/` | ✅ | 🔴 Alta |
 | 2 | About Us | `/about-us` | ⏳ | 🟡 Media |
 | 3 | Ambassadors | `/ambassadors` | ⏳ | 🟢 Baja |
 | 4 | Apps | `/apps` | ⏳ | 🟡 Media |
@@ -793,8 +793,8 @@ findButtons('./src/app');
 - [ ] Testing de componentes globales
 
 ### Páginas Alta Prioridad
-- [ ] Home
-- [ ] Our Products
+- [x] Home
+- [x] Our Products (incluye componentes Hero, Banners, productos)
 - [ ] Encrypted SIM
 - [ ] TIM SIM
 - [ ] Dashboard

@@ -3,6 +3,9 @@
 import React from "react";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import type { Product } from "@/features/products/types/AllProductsResponse";
+import Typography from "@/shared/components/Typography";
+import Paragraph from "@/shared/components/Paragraph";
+import Button from "@/shared/components/Button";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -55,17 +58,22 @@ const BannerSecureMdmNew = () => {
   const twoCards = secureMdmCards.slice(0, 2);
 
   return (
-    // 👇 Solo visible en lg en adelante
-    <section className="hidden lg:block w-full bg-black text-white py-14">
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 flex flex-col md:flex-row gap-10 md:items-center">
+    <section className="hidden md:block w-full bg-black text-white py-8 md:py-10 lg:py-14">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-14 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 lg:items-center">
         {/* Texto */}
-        <div className="md:flex-[0_0_320px] w-full flex flex-col items-center md:mr-20">
-          <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 py-1 rounded-full text-xs font-semibold">
+        <div className="lg:flex-[0_0_320px] w-full flex flex-col items-center md:items-start lg:mr-12 xl:mr-20 space-y-3 md:space-y-4">
+          <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-3 sm:px-4 py-1 rounded-full text-xs font-semibold">
             Seguridad de inicio a fin
           </div>
-          <h2 className="text-3xl font-bold leading-snug">
-            Sistemas encriptados <br /> con seguridad cifrada
-          </h2>
+          
+          <Typography 
+            variant="h2" 
+            as="h2" 
+            className="text-2xl md:text-3xl lg:text-[38px] leading-tight md:leading-snug text-center md:text-left"
+          >
+            Sistemas encriptados <br className="hidden md:block" /> 
+            <span className="md:inline"> </span>con seguridad cifrada
+          </Typography>
         </div>
 
         {/* Slider */}
@@ -87,41 +95,54 @@ const BannerSecureMdmNew = () => {
           >
             {twoCards.map((card) => (
               <SwiperSlide key={card.id} className="flex justify-center">
-                <div className="w-full max-w-[325px] h-[374px] rounded-2xl bg-[#161616] border border-[#222] overflow-hidden p-5 flex flex-col">
-                  <div className="relative w-full max-w-[285px] h-[180px] rounded-[14px] bg-[#0D0D0D]">
+                <div className="w-full max-w-[300px] md:max-w-[325px] h-[360px] md:h-[374px] rounded-xl md:rounded-2xl bg-[#161616] border border-[#222] overflow-hidden p-4 md:p-5 flex flex-col">
+                  <div className="relative w-full max-w-[268px] md:max-w-[285px] h-[160px] md:h-[180px] rounded-xl md:rounded-[14px] bg-[#0D0D0D]">
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="absolute top-[31px] left-1/2 -translate-x-1/2 w-[182px] h-[120px] object-contain"
+                      className="absolute top-[28px] md:top-[31px] left-1/2 -translate-x-1/2 w-[170px] md:w-[182px] h-[110px] md:h-[120px] object-contain"
                     />
                   </div>
 
-                  <div className="mt-[24px] w-full max-w-[263px] flex flex-col gap-[24px]">
+                  <div className="mt-4 md:mt-6 w-full flex flex-col gap-4 md:gap-6">
                     <div className="space-y-1">
-                      <h3 className="text-[16px] font-semibold leading-[1.2]">
+                      <Typography 
+                        variant="body-lg" 
+                        className="text-base font-semibold leading-tight"
+                      >
                         {card.title}
-                      </h3>
-                      <p className="text-[14px] text-gray-300">
+                      </Typography>
+                      
+                      <Paragraph 
+                        variant="caption" 
+                        color="secondary" 
+                        spacing="tight"
+                        className="text-sm"
+                      >
                         {card.price !== null
                           ? `Desde ${card.price} ${card.currency}`
                           : "Consulta nuestros precios"}
-                      </p>
+                      </Paragraph>
                     </div>
 
-                    <div className="flex items-center gap-[12px]">
-                      <a
-                        href={card.buyUrl}
-                        className="w-[124px] h-[44px] rounded-[8px] p-[10px] bg-[#10B4E7] text-black text-[14px] font-semibold hover:opacity-90 transition inline-flex items-center justify-center"
+                    <div className="flex items-center gap-3">
+                      <Button
+                        intent="primary"
+                        size="md"
+                        onClick={() => window.location.href = card.buyUrl}
+                        className="flex-1 max-w-[124px]"
                       >
                         Comprar
-                      </a>
+                      </Button>
 
-                      <a
-                        href={card.infoUrl}
-                        className="w-[110px] h-[17px] inline-flex items-center text-[14px] leading-[17px] text-white/90 hover:text-white"
+                      <Button
+                        intent="link"
+                        size="sm"
+                        onClick={() => window.location.href = card.infoUrl}
+                        className="text-white/90 hover:text-white text-sm"
                       >
                         Más información
-                      </a>
+                      </Button>
                     </div>
                   </div>
                 </div>

@@ -5,6 +5,9 @@ import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import CardProductItem from "./CardProductItem";
+import Typography from "@/shared/components/Typography";
+import Paragraph from "@/shared/components/Paragraph";
+import Button from "@/shared/components/Button";
 
 const SilentCircleBanner: React.FC = () => {
   const searchParams = useSearchParams();
@@ -50,27 +53,35 @@ const SilentCircleBanner: React.FC = () => {
 
   return (
     <>
-      {/* —— MÓVIL únicamente —— */}
+      {/* Versión Móvil */}
       <div
-        className="block sm:hidden relative overflow-hidden w-screen left-1/2 -translate-x-1/2 text-white py-8 rounded-none"
+        className="block sm:hidden relative overflow-hidden w-screen left-1/2 -translate-x-1/2 text-white py-6 xs:py-8 rounded-none"
         style={{
           background:
             "linear-gradient(180deg, black 0%, black 60%, #FF0000 100%)",
         }}
       >
         {/* Contenido de texto */}
-        <div className="relative z-10 px-4 space-y-4 text-center">
-          <span className="inline-block bg-[#CB0808] px-4 py-1 rounded-full text-sm font-semibold">
+        <div className="relative z-10 px-4 xs:px-6 space-y-3 xs:space-y-4 text-center">
+          <span className="inline-block bg-[#CB0808] px-3 xs:px-4 py-1 rounded-full text-xs xs:text-sm font-semibold">
             Silent Circle
           </span>
-          <h2 className="text-2xl font-bold">Silent Phone</h2>
-          <p className="text-sm text-gray-300">
+          
+          <Typography variant="h3" as="h2" className="text-xl xs:text-2xl">
+            Silent Phone
+          </Typography>
+          
+          <Paragraph 
+            variant="body" 
+            color="secondary" 
+            className="text-sm xs:text-base text-center max-w-md mx-auto"
+          >
             Desarrollada por expertos en tecnología móvil, esta app protege tus
             datos con máxima seguridad en todo momento.
-          </p>
+          </Paragraph>
         </div>
 
-        <div className="relative z-10 px-4 mt-4">
+        <div className="relative z-10 px-4 xs:px-6 mt-4">
           <Image
             src="/images/our-products/aef4b25c090984d368c3328bbcfd54545ac75eef.png"
             alt="Silent Circle ilustración"
@@ -80,28 +91,31 @@ const SilentCircleBanner: React.FC = () => {
           />
         </div>
 
-        <p className="text-xl font-semibold text-center mt-4">
+        <Typography 
+          variant="h5" 
+          className="text-lg xs:text-xl text-center mt-4 px-4 xs:px-6"
+        >
           Compra aquí tu Silent Phone fácil y sin complicaciones
-        </p>
+        </Typography>
 
-        {/* Card + botón "Más información" */}
+        {/* Card + botón */}
         {silentProduct && (
-          <div className="relative z-10 mt-6 px-4 space-y-3">
+          <div className="relative z-10 mt-6 px-4 xs:px-6 space-y-3">
             <CardProductItem product={silentProduct} />
 
-            <button
-              type="button"
+            <Button
+              intent="link"
               onClick={handleMoreInfo}
-              className="w-full text-sm font-semibold underline text-white mt-2"
+              className="w-full text-sm font-semibold underline text-white justify-center"
             >
               Más información
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
-      {/* —— TABLET+ (resto pantallas) —— */}
-      <div className="hidden sm:block relative overflow-hidden w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 rounded-3xl bg-[#101010] text-white">
+      {/* Versión Tablet+ */}
+      <div className="hidden sm:block relative overflow-hidden w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 rounded-2xl sm:rounded-3xl bg-[#101010] text-white">
         {/* Fondo */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -119,34 +133,44 @@ const SilentCircleBanner: React.FC = () => {
         </div>
 
         {/* Contenido */}
-        <div className="relative z-10 flex flex-col sm:flex-row items-center sm:justify-between gap-4 sm:gap-6">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center lg:justify-between gap-4 sm:gap-6">
           {/* Texto */}
-          <div className="w-full sm:w-1/2 sm:ml-8 lg:ml-12 text-center sm:text-left space-y-4">
-            <span className="inline-block bg-[#CB0808] px-6 py-1 rounded-full text-sm font-semibold">
+          <div className="w-full lg:w-1/2 sm:ml-4 md:ml-8 lg:ml-12 text-center lg:text-left space-y-3 sm:space-y-4">
+            <span className="inline-block bg-[#CB0808] px-4 sm:px-6 py-1 rounded-full text-xs sm:text-sm font-semibold">
               Silent Circle
             </span>
-            <h2 className="text-2xl sm:text-xl md:text-2xl font-bold">
+            
+            <Typography 
+              variant="h3" 
+              as="h2" 
+              className="text-xl sm:text-2xl md:text-[30px]"
+            >
               Silent Phone
-            </h2>
-            <p className="text-sm sm:text-xs md:text-sm text-gray-300 max-w-md">
+            </Typography>
+            
+            <Paragraph 
+              variant="body" 
+              color="secondary" 
+              className="text-sm sm:text-base max-w-md mx-auto lg:mx-0"
+            >
               Desarrollada por expertos en tecnología móvil, esta app protege
               tus datos con máxima seguridad en todo momento.
-            </p>
+            </Paragraph>
           </div>
 
-          {/* Card + botón "Más información" */}
+          {/* Card + botón */}
           {silentProduct && (
-            <div className="w-full sm:w-2/5 flex justify-center sm:justify-end mt-4 sm:mt-0 mr-0 sm:mr-8 lg:mr-20">
+            <div className="w-full lg:w-2/5 flex justify-center lg:justify-end mt-4 lg:mt-0 mr-0 sm:mr-4 md:mr-8 lg:mr-20">
               <div className="w-full max-w-sm space-y-3">
                 <CardProductItem product={silentProduct} />
 
-                <button
-                  type="button"
+                <Button
+                  intent="link"
                   onClick={handleMoreInfo}
-                  className="text-xs md:text-sm font-semibold underline text-white w-full text-right"
+                  className="text-xs md:text-sm font-semibold underline text-white w-full text-right justify-end"
                 >
                   Más información
-                </button>
+                </Button>
               </div>
             </div>
           )}

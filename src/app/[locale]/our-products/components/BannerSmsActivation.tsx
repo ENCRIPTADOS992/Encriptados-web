@@ -4,6 +4,8 @@ import Image from "next/image";
 import React from "react";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import Button from "@/shared/components/Button";
+import Typography from "@/shared/components/Typography";
+import Paragraph from "@/shared/components/Paragraph";
 import { useTranslations } from "next-intl";
 
 const BannerSmsActivation = () => {
@@ -14,11 +16,11 @@ const BannerSmsActivation = () => {
   };
 
   return (
-    <section className="relative overflow-hidden w-screen left-1/2 -translate-x-1/2 sm:w-full sm:left-0 sm:translate-x-0 bg-[#0B0B0B] text-white py-6 rounded-none sm:rounded-3xl">
+    <section className="relative overflow-hidden w-screen left-1/2 -translate-x-1/2 sm:w-full sm:left-0 sm:translate-x-0 bg-[#0B0B0B] text-white py-6 sm:py-8 md:py-10 rounded-none sm:rounded-2xl md:rounded-3xl">
 
       {/* Desktop: imagen absoluta a la derecha */}
       <div
-        className="hidden sm:block absolute inset-y-0 right-20 w-2/5 overflow-hidden rounded-tr-3xl"
+        className="hidden md:block absolute inset-y-0 right-12 md:right-16 lg:right-20 w-2/5 overflow-hidden rounded-tr-2xl md:rounded-tr-3xl"
         style={{
           WebkitMaskImage:
             "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)",
@@ -36,55 +38,64 @@ const BannerSmsActivation = () => {
       </div>
 
       {/* Contenido */}
-       <div className="relative z-10 flex flex-col sm:flex-row items-center lg:items-center gap-10 px-6 sm:px-12 lg:px-16">
+      <div className="relative z-10 flex flex-col md:flex-row items-center md:items-center gap-6 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-12 lg:px-16">
         {/* Texto */}
-        <div className="flex-1 space-y-6 text-center sm:text-left">
-          <h2 className="text-2xl sm:text-2xl font-bold leading-snug">
+        <div className="flex-1 space-y-4 sm:space-y-5 md:space-y-6 text-center md:text-left max-w-lg md:max-w-none">
+          <Typography 
+            variant="h3" 
+            as="h2" 
+            className="text-xl sm:text-2xl md:text-[30px] leading-snug"
+          >
             Activa APPs por SMS
-            <br className="hidden sm:inline" />
-            con Encriptados
-          </h2>
-          <p className="text-[#9CA3AF] text-sm">
+            <br className="hidden md:inline" />
+            <span className="md:inline"> </span>con Encriptados
+          </Typography>
+          
+          <Paragraph 
+            variant="body" 
+            color="secondary" 
+            className="text-sm sm:text-base text-[#9CA3AF]"
+          >
             Regístrate en cualquier aplicación
-            <br className="hidden sm:inline" />
-            con un número de teléfono virtual
-          </p>
-          <p className="text-[#9CA3AF] italic text-xs flex items-center gap-2 justify-center sm:justify-start">
+            <br className="hidden md:inline" />
+            <span className="md:inline"> </span>con un número de teléfono virtual
+          </Paragraph>
+          
+          <Paragraph 
+            variant="small" 
+            className="text-xs italic text-[#9CA3AF] flex items-center gap-2 justify-center md:justify-start"
+          >
             <Image
               src="/images/our-products/emojione_flag-for-colombia.png"
               alt="Bandera de Colombia"
-              width={20}
-              height={14}
+              width={18}
+              height={13}
+              className="sm:w-5 sm:h-[14px]"
               priority
             />
             <span>*Se genera un número colombiano</span>
-          </p>
-          {/* Contenedor del botón */}
-          <div
-            className="
-              flex 
-              justify-center sm:justify-start 
-              w-full sm:w-auto 
-              max-w-xs sm:max-w-none 
-              mx-auto sm:mx-0
-            "
-          >
+          </Paragraph>
+          
+          {/* Botón CTA */}
+          <div className="flex justify-center md:justify-start w-full md:w-auto pt-2">
             <Button
-              size="medium"
+              intent="primary"
+              size="md"
               rounded="lg"
-              customStyles="!bg-[#00CCFF] !text-black !rounded-lg text-sm px-8 py-3 w-fit"
               onClick={handleBuyClick}
+              className="!bg-[#00CCFF] !text-black hover:!bg-[#00B8E6] px-6 sm:px-8 w-fit"
             >
               Comprar ahora
             </Button>
           </div>
         </div>
+        
         {/* Spacer para desktop */}
         <div className="flex-1 hidden lg:block" />
       </div>
 
-      {/* Móvil: imagen debajo del texto, full width */}
-      <div className="block sm:hidden relative w-full h-80 overflow-hidden">
+      {/* Móvil: imagen debajo del texto */}
+      <div className="block md:hidden relative w-full h-64 sm:h-80 overflow-hidden mt-4">
         <div className="absolute inset-x-0 bottom-0 h-full">
           <Image
             src="/images/our-products/Wire 2025-06-18 at 11_48.png"

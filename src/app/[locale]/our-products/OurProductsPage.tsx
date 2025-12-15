@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import FilterProductsBar from "./components/FilterProductsBar/FilterProductsBar";
 import CardOurProducts from "./components/CardOurProducts";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import Typography from "@/shared/components/Typography";
 
 
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
@@ -68,9 +69,13 @@ const showFloatingFilters = !isCardVisible;
       </div>
         <div className="bg-[#000]">
           <SectionWrapper className="bg-black py-1">
-            <h1 className="bg-gradient-to-r text-3xl justify-center font-bold mt-[10px] flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-7 text-center">
+            <Typography 
+              variant="h2" 
+              as="h1" 
+              className="bg-gradient-to-r text-2xl sm:text-3xl md:text-[38px] justify-center font-bold mt-2 sm:mt-4 flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-6 sm:mb-7 text-center"
+            >
               {t("filterProducts.title")}
-            </h1>
+            </Typography>
 
             <div id="buysimappsection">
               <div ref={filterRef} id="filters-section">
