@@ -7,29 +7,29 @@ const OurObjetive = () => {
 
   const t = useTranslations("EncryptedSimPage");
   return (
-    <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-6 items-center text-center lg:text-left">
+    <div className="flex flex-col lg:flex-row justify-center lg:justify-between gap-8 lg:gap-12 items-center">
       {/* Texto */}
-      <div className="w-full lg:w-5/12">
-        <div className="w-[467px] h-[196px]">
-          <h1 className="text-[36px] sm:text-2xl lg:text-[38px] font-bold text-gray-900">
-            {t("ourObjetiveTitle")}
-          </h1>
+      <div className="w-full lg:w-1/2 max-w-xl px-4 lg:px-0">
+        <h1 className="text-2xl sm:text-3xl lg:text-[38px] font-bold text-gray-900 text-center lg:text-left mb-4">
+          {t("ourObjetiveTitle")}
+        </h1>
 
-        <p className="mt-4 text-xs sm:text-sm lg:text-base font-bold text-gray-900">
+        <p className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 text-center lg:text-left">
           {t("ourObjetiveDescription")}
         </p>
-        </div>
       </div>
 
       {/* Imagen */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 flex justify-center items-center h-[380px] w-[480px]">
-        <Image
-          alt="SimCard"
-          width={334}
-          height={314}
-          src={FloatSimCard}
-          className="max-w-full h-auto"
-        />
+      <div className="w-full lg:w-1/2 max-w-xl">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 flex justify-center items-center mx-auto">
+          <Image
+            alt="SimCard"
+            src={FloatSimCard}
+            width={334}
+            height={314}
+            className="w-full h-auto max-w-[334px]"
+          />
+        </div>
       </div>
     </div>
   );

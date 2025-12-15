@@ -5,7 +5,7 @@ const CustomShapeDivider: React.FC = () => {
     <div className="custom-shape-divider-bottom relative ">
       <svg
         className="relative
-         bottom-0 w-full h-[300px] transform rotate-180"
+         bottom-0 w-full h-[200px] sm:h-[240px] md:h-[300px] transform rotate-180"
         viewBox="0 0 1200 250"
         preserveAspectRatio="none"
       >

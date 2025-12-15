@@ -33,18 +33,18 @@ const CardSim: React.FC<CardSimProps> = ({
   onBuy,
 }) => {
   return (
-    <div className="w-full max-w-sm mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
+    <div className="w-full md:max-w-sm md:mx-auto bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
       {/* ------------------------------------------------------
-          PARTE SUPERIOR: imagen de la SIM + “+200 países” / “5G LTE”
+          PARTE SUPERIOR: imagen de la SIM + "+200 países" / "5G LTE"
       ------------------------------------------------------ */}
       <div className="p-2 bg-[#5D5D5D]">
-        <Image
-          src={productImage}
-          width={200}
-          height={200}
-          alt="Sim Card"
-          className="w-full h-48 object-contain"
-        />
+        <div className="w-full aspect-[4/3] flex items-center justify-center">
+          <Image
+            src={productImage}
+            alt="Sim Card"
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
         <div className="p-2">
           <div className="flex justify-end gap-2 mb-1 text-sm text-gray-600">
             <div className="bg-[#FFFFFF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1">

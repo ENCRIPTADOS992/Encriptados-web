@@ -19,7 +19,7 @@ const EncryptedSimBanner = () => {
           width={740}
           height={740}
           alt="imagen"
-          className="ls:w-full sm:w-1/3 md:w-full w-1/2 object-contain m-auto"
+          className="xs:w-full sm:w-1/3 md:w-full w-1/2 object-contain m-auto"
         />
       </div>
 
@@ -50,7 +50,7 @@ const EncryptedSimBanner = () => {
           width={740}
           height={740}
           alt="imagen"
-          className="ls:w-full sm:w-1/3 md:w-full w-1/2 object-contain m-auto"
+          className="xs:w-full sm:w-1/3 md:w-full w-1/2 object-contain m-auto"
         />
       </div>
     </div>

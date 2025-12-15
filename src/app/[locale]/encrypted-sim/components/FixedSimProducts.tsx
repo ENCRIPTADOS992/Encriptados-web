@@ -232,12 +232,12 @@ const FixedSimProducts: React.FC = () => {
             sm:shadow-none
             gap-6
             flex flex-col
-            sm:flex-row
+            md:flex-row
             my-0
             rounded-3xl
-            sm:p-0 ls:p-0
+            sm:p-0 xs:p-0
             p-4
-            py-10 sm:py-0 ls:py-0
+            py-10 sm:py-0 xs:py-0
           `}
         >
           {/* IZQUIERDA: CardDescription */}
