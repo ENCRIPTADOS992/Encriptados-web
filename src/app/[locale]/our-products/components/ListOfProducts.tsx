@@ -278,6 +278,104 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
+  // Filtro por búsqueda de texto
+  if (filters.searchQuery && filters.searchQuery.trim() !== "") {
+    const searchTerm = filters.searchQuery.trim().toLowerCase();
+    const before = filteredProducts.length;
+
+    // Función para normalizar texto (remover acentos y caracteres especiales)
+    const normalizeText = (text: string): string => {
+      return text
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    };
+
+    const normalizedSearchTerm = normalizeText(searchTerm);
+    const searchWords = normalizedSearchTerm.split(" ").filter(w => w.length > 0);
+
+    filteredProducts = filteredProducts.filter((product) => {
+      // Campos principales de búsqueda
+      const searchableFields = [
+        product.name ?? "",
+        product.description ?? "",
+        product.provider ?? "",
+        product.brand ?? "",
+        product.type_product ?? "",
+        product.activation ?? "",
+        product.purchase_note ?? "",
+        product.sku ?? "",
+      ];
+
+      // Agregar checks si existen
+      if (product.checks && product.checks.length > 0) {
+        searchableFields.push(...product.checks.map(c => c.name ?? ""));
+      }
+
+      // Agregar FAQs si existen
+      if (product.faqs && product.faqs.length > 0) {
+        product.faqs.forEach(faq => {
+          searchableFields.push(faq.name ?? "", faq.description ?? "");
+        });
+      }
+
+      // Agregar advantages si existen
+      if (product.advantages && product.advantages.length > 0) {
+        product.advantages.forEach(adv => {
+          searchableFields.push(adv.name ?? "", adv.description ?? "");
+        });
+      }
+
+      // Agregar features si existen
+      if (product.features && product.features.length > 0) {
+        product.features.forEach(feat => {
+          searchableFields.push(feat.name ?? "", feat.description ?? "");
+        });
+      }
+
+      // Agregar información de variants si existen
+      if (product.variants && product.variants.length > 0) {
+        product.variants.forEach(variant => {
+          searchableFields.push(
+            variant.name ?? "",
+            variant.label ?? "",
+            variant.gb ?? "",
+            variant.scope?.code ?? "",
+            variant.scope?.type ?? ""
+          );
+        });
+      }
+
+      // Combinar todos los campos en un solo texto normalizado
+      const combinedText = normalizeText(searchableFields.join(" "));
+
+      // Buscar si todas las palabras de búsqueda están presentes
+      const matchesAllWords = searchWords.every(word => 
+        combinedText.includes(word)
+      );
+
+      // También hacer búsqueda exacta sin normalizar para mayor precisión
+      const exactSearchTerm = searchTerm.toLowerCase();
+      const exactMatch = searchableFields.some(field => 
+        field.toLowerCase().includes(exactSearchTerm)
+      );
+
+      return matchesAllWords || exactMatch;
+    });
+
+    console.log("🔍 [Filtro Búsqueda]", {
+      searchQuery: filters.searchQuery,
+      searchTerm,
+      normalizedSearchTerm,
+      searchWords,
+      before,
+      after: filteredProducts.length,
+    });
+  }
+
   const productCount = filteredProducts.length;
   console.log("✅ [ListOfProducts] total a renderizar:", productCount);
   logRecargaSummary("FINAL (ANTES DE RENDER)", filteredProducts);

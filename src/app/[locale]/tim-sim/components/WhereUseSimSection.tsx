@@ -7,7 +7,6 @@ import Image from "next/image";
 import { CircleFlag } from "react-circle-flags";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import FilterRegionCountryTim from "@/app/[locale]/our-products/components/FilterProductsBar/FilterRegionCountryTim";
-import SearchProduct from "@/app/[locale]/our-products/components/FilterProductsBar/SearchProduct";
 import ListOfProducts from "@/app/[locale]/our-products/components/ListOfProducts";
 
 import { ProductFilters } from "@/features/products/types/ProductFilters";
@@ -75,73 +74,68 @@ const WhereUseSimSection = () => {
           </p>
         </div>
 
-        <div className="w-full bg-white rounded-[24px] md:rounded-[32px] px-4 md:px-8 py-5 mb-10 shadow-sm">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            {/* IZQUIERDA: Categoría + Región/País (grupo 563px) */}
-            <div className="flex flex-col gap-6 lg:flex-row lg:gap-[54px] lg:w-[623px]">
-              {/* Categoría */}
-              <div className="w-full lg:w-[379px]">
-                <p className="text-[14px] font-medium text-[#7E7E7E] leading-[17px] mb-3">
-                  Categoría
-                </p>
-                <div className="inline-flex rounded-[18px] gap-1">
-                  {TIM_SERVICE_OPTIONS.map((option) => {
-                    const isActive = activeTimService === option.id;
+        <div className="w-full bg-white rounded-[24px] md:rounded-[32px] px-3 sm:px-4 md:px-8 py-5 sm:py-6 mb-10 shadow-lg">
+          {/* Layout responsive: Móvil (columna) | Tablet (2 filas) | Desktop (1 fila) */}
+          <div className="flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-6">
+            
+            {/* Categoría */}
+            <div className="w-full lg:w-auto lg:flex-1">
+              <p className="text-sm font-medium text-[#7E7E7E] mb-3">
+                Categoría
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {TIM_SERVICE_OPTIONS.map((option) => {
+                  const isActive = activeTimService === option.id;
 
-                    return (
-                      <button
-                        key={option.id}
-                        type="button"
-                        onClick={() =>
-                          updateFilters({
-                            timService: option.id,
-                            timprovider: option.timprovider,
-                          })
+                  return (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() =>
+                        updateFilters({
+                          timService: option.id,
+                          timprovider: option.timprovider,
+                        })
+                      }
+                      className={`
+                        flex flex-col items-center justify-center
+                        py-3 sm:py-4 px-1 sm:px-3
+                        rounded-xl sm:rounded-[18px]
+                        border-2
+                        transition-all
+                        ${
+                          isActive
+                            ? "bg-[#E8F4FF] border-[#00A3FF] text-[#00A3FF]"
+                            : "bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:border-[#00A3FF]"
                         }
-                        className={`
-                          flex flex-col items-center justify-center text-center
-                          min-w-[127px] h-[64px]
-                          rounded-[12px]
-                          px-6
-                          text-[12px] font-semibold
-                          border-2
-                          transition
-                          ${
-                            isActive
-                              ? "bg-[#F0F9FF] border-[#009DFF] text-[#009DFF] shadow-sm"
-                              : "bg-[#D0D0D0] border-[#D0D0D0] text-[#374151] hover:bg-[#F0F9FF] hover:border-[#009DFF] hover:text-[#009DFF]"
-                          }
-                        `}
-                      >
-                        <span
-                          className={`
-                            relative w-6 h-6 mb-1
-                            transition
-                            ${isActive ? "filter-none opacity-100" : "grayscale opacity-60"}
-                          `}
-                        >
-                          <Image
-                            src={option.icon}
-                            alt={option.label}
-                            fill
-                            className="object-contain"
-                          />
-                        </span>
-
-                        <span>{option.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+                      `}
+                    >
+                      <span className={`relative w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2 transition ${isActive ? "filter-none opacity-100" : "opacity-60"}`}>
+                        <Image
+                          src={option.icon}
+                          alt={option.label}
+                          fill
+                          className="object-contain"
+                        />
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">
+                        {option.label}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
+            {/* Región/País y Buscar (lado a lado en tablet+, apilados en móvil) */}
+            <div className="w-full lg:w-auto lg:flex-1 flex flex-col sm:flex-row gap-4">
+              
               {/* Región / País */}
               {shouldShowTimRegion && (
-                <div className="w-full lg:w-[190px]">
-                  <p className="text-[14px] font-medium text-[#7E7E7E] leading-[17px] mb-3">
+                <div className="w-full sm:flex-1">
+                  <p className="text-sm font-medium text-[#7E7E7E] mb-3">
                     Región/País
                   </p>
-
                   <FilterRegionCountryTim
                     filters={filters}
                     updateFilters={updateFilters}
@@ -149,6 +143,40 @@ const WhereUseSimSection = () => {
                   />
                 </div>
               )}
+
+              {/* Buscar */}
+              <div className="w-full sm:flex-1 lg:w-auto lg:min-w-[280px]">
+                <p className={`text-sm font-medium text-[#7E7E7E] mb-3 ${shouldShowTimRegion ? 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : ''}`} aria-hidden={shouldShowTimRegion ? "true" : "false"}>
+                  Buscar
+                </p>
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    placeholder="Buscar SIM (ej: SIM Física, eSIM, Recarga...)" 
+                    value={filters.searchQuery || ""}
+                    className="w-full h-[48px] sm:h-[56px] pl-4 pr-20 bg-[#F5F5F5] border-2 border-transparent rounded-xl sm:rounded-[24px] text-sm sm:text-base focus:outline-none focus:border-[#00A3FF] transition-all"
+                    onChange={(e) => updateFilters({ searchQuery: e.target.value })}
+                  />
+                  {filters.searchQuery && (
+                    <button 
+                      type="button" 
+                      onClick={() => updateFilters({ searchQuery: "" })}
+                      className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors p-1"
+                      title="Limpiar búsqueda"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  )}
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

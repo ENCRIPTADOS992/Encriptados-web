@@ -28,8 +28,27 @@ const config: Config = {
         xl: '1280px',
       },
       fontFamily: {
-        sans: ["Roboto", "Helvetica", "Arial", "sans-serif"], 
-      },     
+        sans: ["Inter", "Roboto", "Helvetica", "Arial", "sans-serif"], 
+      },
+      fontSize: {
+        'promo': ['54px', { lineHeight: '1.2', fontWeight: '700' }],
+        'h1': ['44px', { lineHeight: '1.3', fontWeight: '700' }],
+        'h2': ['38px', { lineHeight: '1.3', fontWeight: '700' }],
+        'h3': ['30px', { lineHeight: '1.4', fontWeight: '500' }],
+        'h4': ['24px', { lineHeight: '1.5', fontWeight: '500' }],
+        'h5': ['22px', { lineHeight: '1.5', fontWeight: '500' }],
+      },
+      colors: {
+        primary: '#0AAEE1',
+        secondary: '#35CDFB',
+        'text-primary': '#F7F7F7',
+        'text-secondary': '#CCCCCC',
+        'text-black': '#000000',
+        'bg-secondary': '#161616',
+        'bg-alternate': '#222222',
+        'bg-alternate-2': '#032029',
+        'stroke-border': '#3E3E3E',
+      },
       backgroundImage: {
         "cyan-gradient":
           "linear-gradient(360deg, rgba(211,245,255,1) 0%, rgba(244,248,250,1) 29%)",
