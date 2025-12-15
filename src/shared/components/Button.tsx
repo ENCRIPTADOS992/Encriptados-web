@@ -78,7 +78,7 @@ const buttonStyles = cva(
 );
 
 interface ButtonProps extends VariantProps<typeof buttonStyles> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
   onClick?: () => void;
