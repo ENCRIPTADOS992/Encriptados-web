@@ -5,6 +5,8 @@ import React from 'react';
 import { Typography } from '@/shared/components/Typography';
 import { Paragraph } from '@/shared/components/Paragraph';
 import Button from '@/shared/components/Button';
+// Material Design Icons
+import { MdShoppingCart, MdArrowForward, MdCheck, MdAdd, MdDownload, MdLock, MdPhone, MdEmail, MdSearch, MdMenu } from 'react-icons/md';
 
 export default function TestDesignSystem() {
   return (
@@ -116,11 +118,11 @@ export default function TestDesignSystem() {
         <div className="space-y-3">
           <h3 className="text-lg font-semibold">Dark & Outline Dark:</h3>
           <div className="flex flex-wrap gap-3">
-            <Button intent="dark">
-              Comprar 🛍️
+            <Button intent="dark" icon={<MdShoppingCart />}>
+              Comprar
             </Button>
             
-            <Button intent="outlineDark">
+            <Button intent="outlineDark" icon={<MdArrowForward />} iconPosition="right">
               Más información
             </Button>
           </div>
@@ -206,6 +208,54 @@ export default function TestDesignSystem() {
         </div>
 
         <div className="space-y-3">
+          <h3 className="text-lg font-semibold">Buttons with Material Design Icons:</h3>
+          <div className="flex flex-wrap gap-3">
+            <Button intent="primary" icon={<MdShoppingCart />} iconPosition="left">
+              Comprar
+            </Button>
+            
+            <Button intent="secondary" icon={<MdArrowForward />} iconPosition="right">
+              Continuar
+            </Button>
+            
+            <Button intent="dark" icon={<MdShoppingCart />}>
+              Comprar
+            </Button>
+            
+            <Button intent="outlineDark" icon={<MdDownload />}>
+              Descargar
+            </Button>
+            
+            <Button intent="light" icon={<MdCheck />}>
+              Confirmar
+            </Button>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold">Icon Buttons (Solo icono):</h3>
+          <div className="flex flex-wrap gap-3 items-center">
+            <Button intent="primary" icon={<MdAdd />} className="!px-2" />
+            <Button intent="secondary" icon={<MdSearch />} className="!px-2" />
+            <Button intent="dark" icon={<MdMenu />} className="!px-2" />
+            <Button intent="outlineDark" icon={<MdLock />} className="!px-2" />
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold">Icon Positions:</h3>
+          <div className="flex flex-wrap gap-3">
+            <Button intent="primary" icon={<MdPhone />} iconPosition="left">
+              Llamar
+            </Button>
+            
+            <Button intent="primary" icon={<MdEmail />} iconPosition="right">
+              Contactar
+            </Button>
+          </div>
+        </div>
+
+        <div className="space-y-3">
           <h3 className="text-lg font-semibold">Legacy Variants (Deprecated):</h3>
           <div className="flex flex-wrap gap-3">
             <Button intent="blueT">
@@ -264,14 +314,73 @@ export default function TestDesignSystem() {
           </Paragraph>
           
           <div className="flex gap-4 justify-center">
-            <Button intent="primary" size="lg">
+            <Button intent="primary" size="lg" icon={<MdArrowForward />} iconPosition="right">
               Comenzar Ahora
             </Button>
             
-            <Button intent="outlineDark" size="lg">
+            <Button intent="outlineDark" size="lg" icon={<MdLock />} iconPosition="left">
               Más Información
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Material Icons Reference */}
+      <section className="space-y-4 border-t pt-8">
+        <h2 className="text-2xl font-bold mb-6">Material Design Icons Reference</h2>
+        
+        <Paragraph variant="body" color="black">
+          Usando <code className="bg-gray-200 px-2 py-1 rounded">react-icons/md</code> para Material Design Icons
+        </Paragraph>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdShoppingCart size={32} />
+            <span className="text-xs text-center">MdShoppingCart</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdArrowForward size={32} />
+            <span className="text-xs text-center">MdArrowForward</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdCheck size={32} />
+            <span className="text-xs text-center">MdCheck</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdDownload size={32} />
+            <span className="text-xs text-center">MdDownload</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdLock size={32} />
+            <span className="text-xs text-center">MdLock</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdPhone size={32} />
+            <span className="text-xs text-center">MdPhone</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdEmail size={32} />
+            <span className="text-xs text-center">MdEmail</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 p-4 border rounded">
+            <MdSearch size={32} />
+            <span className="text-xs text-center">MdSearch</span>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 p-4 rounded-lg mt-6">
+          <h4 className="font-semibold mb-2">📦 Librería instalada:</h4>
+          <code className="text-sm">pnpm add react-icons</code>
+          
+          <h4 className="font-semibold mt-4 mb-2">🔗 Más iconos:</h4>
+          <a 
+            href="https://react-icons.github.io/react-icons/icons/md/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline text-sm"
+          >
+            Ver todos los Material Design Icons →
+          </a>
         </div>
       </section>
     </div>
