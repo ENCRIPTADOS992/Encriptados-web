@@ -178,7 +178,7 @@ export default function FooterEncrypted() {
       <SectionWrapper className="!max-w-none !w-full !px-0 pt-16 !pb-0">
         <div className="w-full">
         <div className="w-full max-w-[1440px] mx-auto flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-row gap-6 lg:gap-10 px-4 sm:px-6 md:px-12">
-          <div className="flex flex-col gap-6 items-center text-center md:items-start md:text-left lg:w-[220px] flex-shrink-0">
+          <div className="flex flex-col gap-6 items-center text-center md:items-start md:text-left lg:w-[230px] tablet:w-[480px] flex-shrink-0">
             <Image src="/images/footer/encriptados-logo-201.png" alt="Encriptados Logo" width={180} height={30} className="h-6 w-auto" />
             <p className="text-[#787878] text-sm leading-relaxed">{t("lead")}</p>
             <Link href="https://www.youtube.com/@encriptados_io" target="_blank" className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity">
@@ -257,7 +257,7 @@ export default function FooterEncrypted() {
           <div className="w-full h-px bg-[#2C2C2C] scale-y-[0.5] origin-top"></div>
           <div className="py-4 flex flex-col md:flex-row flex-wrap items-center gap-3 md:gap-6 justify-center md:justify-center">
             <span className="text-[#787878] text-sm">{t("paymentMethodsTitle")}</span>
-            <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start w-full md:w-auto max-w-[320px] md:max-w-none gap-2 sm:gap-3 md:gap-6 lg:gap-8 bg-[#000000] rounded-xl p-1 sm:p-2">
+            <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start w-full md:w-auto max-w-[360px] md:max-w-none gap-2 sm:gap-3 md:gap-6 lg:gap-8 bg-[#000000] rounded-xl p-1 sm:p-2">
               {paymentMethods.map(({ key, icon }) => (
                 <div key={key} className="rounded flex items-center justify-center p-0.5 sm:p-1 h-7 sm:h-9 [&>svg]:h-full [&>svg]:w-auto [&>img]:h-full [&>img]:w-auto">{icon}</div>
               ))}

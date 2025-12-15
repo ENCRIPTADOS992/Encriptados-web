@@ -17,8 +17,8 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        mobile: { max: "697px" },
-        tablet: { min: "698px", max: "1369px" },
+        mobile: { max: "770px" },
+        tablet: { min: "771px", max: "1369px" },
         desktop: { min: "1370px" },
         "xs": "375px",
         "lg-custom": "1358px", 
