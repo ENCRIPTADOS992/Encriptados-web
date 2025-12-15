@@ -27,7 +27,7 @@ Este documento presenta un plan detallado paso a paso para implementar el sistem
 | # | Página | Ruta | Estado | Prioridad |
 |---|--------|------|--------|-----------|
 | 1 | Home | `/` | ✅ | 🔴 Alta |
-| 2 | About Us | `/about-us` | ⏳ | 🟡 Media |
+| 2 | About Us | `/about-us` | ✅ | 🟡 Media |
 | 3 | Ambassadors | `/ambassadors` | ⏳ | 🟢 Baja |
 | 4 | Apps | `/apps` | ⏳ | 🟡 Media |
 | 5 | Become Partner | `/become-an-encrypted-partner` | ⏳ | 🟢 Baja |
@@ -802,7 +802,7 @@ findButtons('./src/app');
 - [ ] Offers
 
 ### Páginas Media Prioridad
-- [ ] About Us
+- [x] About Us
 - [ ] Apps
 - [ ] Blog
 - [ ] Deliveries
