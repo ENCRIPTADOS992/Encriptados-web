@@ -207,7 +207,7 @@ export default function FooterEncrypted() {
             </div>
           </div>
 
-          <div className="hidden lg:grid lg:grid-cols-4 lg:gap-8 flex-shrink-0">
+          <div className="mobile:hidden tablet:hidden desktop:grid desktop:grid-cols-4 desktop:gap-8 flex-shrink-0">
             <div className="flex flex-col gap-3">
               <h3 className="text-white font-semibold text-sm">{t("headings.simEsims")}</h3>
               <ul className="flex flex-col gap-2">{simEsimsLinks.map((l) => (<li key={l.name}><Link href={l.href} className="text-[#787878] hover:text-white text-sm transition-colors">{l.name}</Link></li>))}</ul>
@@ -227,7 +227,7 @@ export default function FooterEncrypted() {
           </div>
         </div>
 
-        <div className="hidden md:block lg:hidden mt-10">
+        <div className="mobile:hidden tablet:block desktop:hidden mt-10">
           <div className="w-full h-px bg-[#2C2C2C] scale-y-[0.5] origin-top"></div>
           <div className="py-8">
           <div className="grid grid-cols-4 gap-8 justify-items-center">
@@ -239,7 +239,7 @@ export default function FooterEncrypted() {
           </div>
         </div>
 
-        <div className="md:hidden mt-8">
+        <div className="mobile:block tablet:hidden desktop:hidden mt-8">
           <div className="grid grid-cols-2 justify-items-center gap-2 sm:gap-x-8 sm:gap-y-6">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3"><h3 className="text-white font-semibold text-sm">{t("headings.simEsims")}</h3><ul className="flex flex-col gap-2">{simEsimsLinks.map((l) => (<li key={l.name}><Link href={l.href} className="text-[#787878] hover:text-white text-sm transition-colors">{l.name}</Link></li>))}</ul></div>
