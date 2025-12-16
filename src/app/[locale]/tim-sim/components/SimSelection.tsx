@@ -19,7 +19,7 @@ interface SimSelectionProps {
 }
 
 const SimSelection = ({ locale }: SimSelectionProps) => {
-  const t = useTranslations('megaMenu.items.timSim.simSelection');
+  const t = useTranslations('BneSimPage.simSelection');
   const [selectedOption, setSelectedOption] = useState<string>('physical');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
 
