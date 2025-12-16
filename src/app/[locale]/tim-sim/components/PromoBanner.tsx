@@ -29,29 +29,11 @@ const PromoBanner: React.FC = () => {
       >
         {/* Texto */}
         <div className="max-w-[520px] flex-shrink-0">
-          <h2
-            className="
-      font-inter
-      font-bold
-      text-[32px]
-      lg:text-[44px]
-      leading-none
-      text-[#020202]
-      mb-6
-    "
-          >
+          <h2 className="text-[30px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.3] text-[#020202] mb-6">
             {t("PromoBanner.title")}
           </h2>
 
-          <p
-            className="
-      font-inter
-      text-[16px]
-      lg:text-[18px]
-      text-[#020202]
-      max-w-[457px]
-    "
-          >
+          <p className="text-base sm:text-lg leading-relaxed text-[#020202] max-w-[457px]">
             {t("PromoBanner.description")}
           </p>
         </div>
@@ -74,7 +56,7 @@ const PromoBanner: React.FC = () => {
         >
           <Image
             src={BneSimImg}
-            alt="Hombre usando smartphone"
+            alt="Persona usando smartphone con SIM TIM internacional"
             fill
             className="object-contain"
             priority

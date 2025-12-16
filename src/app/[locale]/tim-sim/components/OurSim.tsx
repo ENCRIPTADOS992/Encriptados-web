@@ -8,11 +8,11 @@ import { useTranslations } from "next-intl";
 const OurSim: React.FC = () => {
   const t = useTranslations("BneSimPage");
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-6 max-w-[1100px] mx-auto">
-      <div className="w-[545px] space-y-[33px]">
-        <h2 className="text-[48px] font-bold">{t("whyChooseSim")}</h2>
-        <p className="font-semibold text-[28px]">{t("anonTitle")}</p>
-        <p className="text-[28px]">{t("anonDescription")}</p>
+    <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8 max-w-[1100px] mx-auto">
+      <div className="w-full lg:w-[545px] space-y-6">
+        <h2 className="text-[30px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.3] text-[#333333]">{t("whyChooseSim")}</h2>
+        <h3 className="text-[22px] sm:text-[24px] lg:text-[30px] font-semibold leading-[1.4] text-[#333333]">{t("anonTitle")}</h3>
+        <p className="text-base sm:text-lg leading-relaxed text-[#333333]">{t("anonDescription")}</p>
       </div>
 
       <div className="ls:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">

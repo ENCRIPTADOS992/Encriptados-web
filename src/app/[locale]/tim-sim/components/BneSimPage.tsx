@@ -27,7 +27,7 @@ const BneSimPage = () => {
         >
           <WhereUseSimSection />
         </BasicFormProvider>
-        <div className="mb-20 px-6">
+        <div className="py-12 md:py-16 lg:py-20 px-4 md:px-6">
           <OurSim />
         </div>
         <div
@@ -36,13 +36,13 @@ const BneSimPage = () => {
             from-[#009DFF]
             via-[#009DFF]
             to-[#7ECDFD]
-            py-20
+            py-16 md:py-20 lg:py-24
             px-4
           "
         >
           <PromoBanner />
         </div>
-        <div className="relative py-20 z-10">
+        <div className="relative py-16 md:py-20 lg:py-24 z-10">
           <BannerAnonymous />
         </div>
         <div className="relative -translate-y-[400px] -mb-[400px] z-0">
@@ -54,14 +54,14 @@ const BneSimPage = () => {
             from-[#020202]    
             via-[#020202]   
             to-[#009DFF]     
-            py-32
+            py-20 md:py-24 lg:py-32
             px-4
           "
         >
           <OurBne />
         </div>
 
-        <div className="p-4">
+        <div className="py-12 md:py-16 px-4">
           <FaqsBne />
         </div>
         {/* <div className="max-w-[1100px] m-auto pb-20">

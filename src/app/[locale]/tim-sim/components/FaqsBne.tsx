@@ -62,6 +62,8 @@ const TimSimFaq: React.FC = () => {
         key={item.id}
         type="button"
         onClick={() => setOpenId(isOpen ? null : item.id)}
+        aria-expanded={isOpen}
+        aria-label={`Pregunta: ${item.question}`}
         className="
           w-full text-left
           bg-white
@@ -71,6 +73,7 @@ const TimSimFaq: React.FC = () => {
           py-3 md:py-4
           transition
           hover:shadow-md
+          focus:outline-none focus:ring-2 focus:ring-[#19BBFF] focus:ring-offset-2
         "
       >
         <div className="flex items-center justify-between gap-4">
@@ -95,7 +98,7 @@ const TimSimFaq: React.FC = () => {
     <section className="py-12 lg:py-16 bg-[#F4F8FA]">
       <div className="max-w-[1100px] mx-auto px-4 md:px-6">
         {/* Título */}
-        <h2 className="text-center text-[22px] sm:text-[26px] md:text-[30px] font-bold mb-8 md:mb-10">
+        <h2 className="text-center text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] mb-8 md:mb-10 text-[#333333]">
           Preguntas{" "}
           <span className="text-[#19BBFF]">frecuentes</span>
         </h2>

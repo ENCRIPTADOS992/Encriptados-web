@@ -16,10 +16,10 @@ const OurBneCard: React.FC<CardProps> = ({
   imageAlt,
 }) => {
   return (
-    <div className="w-full bg-white rounded-2xl shadow-lg px-6 pt-6 flex flex-col justify-between">
+    <article className="w-full bg-white rounded-2xl shadow-lg px-6 pt-6 flex flex-col justify-between">
       <div className="mb-4">
-        <h2 className="text-xl font-bold">{title}</h2>
-        <p className="text-gray-600">{description}</p>
+        <h3 className="text-[22px] font-bold leading-[1.5] text-[#333333]">{title}</h3>
+        <p className="text-base leading-relaxed text-[#555555] mt-2">{description}</p>
       </div>
       <div className="rounded-lg overflow-hidden">
         <Image
@@ -27,10 +27,10 @@ const OurBneCard: React.FC<CardProps> = ({
           alt={imageAlt}
           width={500}
           height={500}
-          className=""
+          className="w-full h-auto"
         />
       </div>
-    </div>
+    </article>
   );
 };
 

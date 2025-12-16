@@ -27,20 +27,20 @@ const BannerConnectBne: React.FC = () => {
             {/* 📌 Imagen ajustada en móvil */}
             <Image
               src="/images/bne-sim/Frame 480956513.png"
-              alt="SIM TIM Logo"
+              alt="Logotipo de SIM TIM"
               width={120}
               height={25}
               priority
               className="mb-4 md:w-[150px] md:h-[30px] md:mx-0 mx-auto"
             />
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight md:text-left text-center">
+            <h1 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold mb-6 leading-[1.3] md:text-left text-center">
               {t('headline')} <br />
               <span className="text-[#10b4e7]">{t('headline1')}</span>
               <span className="text-[#10b4e7]">{t('headline2')}</span>
-            </h2>
+            </h1>
 
-            <p className="text-lg sm:text-xl md:text-2xl md:text-left text-center">
+            <p className="text-base sm:text-lg leading-relaxed md:text-left text-center">
               {t('subheadline')} <br /> {t('subheadline2')}
             </p>
           </div>
@@ -61,7 +61,7 @@ const BannerConnectBne: React.FC = () => {
           {/* Imagen de la persona */}
           <Image
             src="/images/bne-sim/image-banner-bne.png"
-            alt="Person"
+            alt="Persona con tecnología SIM TIM"
             width={450}
             height={550}
             priority
@@ -69,9 +69,10 @@ const BannerConnectBne: React.FC = () => {
               h-auto object-cover 
               absolute bottom-[85px] sm:bottom-0 
               left-[10%] sm:left-1/2 transform -translate-x-[40%] sm:-translate-x-1/2
-              z-[1] md:z-10 /* 📌
+              z-[1] md:z-10
               scale-150 sm:scale-100
               opacity-50 md:opacity-100
+              max-w-[300px] max-h-[400px] md:max-w-[400px] md:max-h-[500px] lg:max-w-[450px] lg:max-h-[550px]
             "
           />
 
@@ -94,28 +95,28 @@ const BannerConnectBne: React.FC = () => {
             {/* Contenedor principal (relative) */}
             <div className="relative w-full h-full z-20">
               {/* Etiqueta 1 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '80px', left: '160px' }}>
+              <div className="absolute hidden md:hidden lg:block" style={{ top: '80px', left: '160px' }} aria-hidden="true">
                 <Image
                   src="/images/bne-sim/Frame 480955929.png"
-                  alt="Total anonimato"
+                  alt="Etiqueta decorativa: Total anonimato en tus comunicaciones"
                   width={170}
                   height={44}
                 />
               </div>
               {/* Etiqueta 2 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '180px', left: '80px' }}>
+              <div className="absolute hidden md:hidden lg:block" style={{ top: '180px', left: '80px' }} aria-hidden="true">
                 <Image
                   src="/images/bne-sim/Frame 480955935.png"
-                  alt="Sin recargos Roaming"
+                  alt="Etiqueta decorativa: Sin recargos de Roaming internacional"
                   width={230}
                   height={44}
                 />
               </div>
               {/* Etiqueta 3 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '300px', left: '120px' }}>
+              <div className="absolute hidden md:hidden lg:block" style={{ top: '300px', left: '120px' }} aria-hidden="true">
                 <Image
                   src="/images/bne-sim/Frame 480955934.png"
-                  alt="Compatible iOS y Android"
+                  alt="Etiqueta decorativa: Compatible con iOS y Android"
                   width={210}
                   height={44}
                 />
@@ -125,28 +126,28 @@ const BannerConnectBne: React.FC = () => {
             {/* Columna Derecha */}
             <div className="relative w-full h-full z-20">
               {/* Etiqueta 1 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '80px', left: '90px' }}>
+              <div className="absolute hidden md:hidden lg:block" style={{ top: '80px', left: '90px' }} aria-hidden="true">
                 <Image
                   src="/images/bne-sim/Frame 480955952.png"
-                  alt="Total anonimato"
+                  alt="Etiqueta decorativa: Beneficio de privacidad total"
                   width={180}
                   height={44}
                 />
               </div>
               {/* Etiqueta 2 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '180px', left: '140px' }}>
+              <div className="absolute hidden md:hidden lg:block" style={{ top: '180px', left: '140px' }} aria-hidden="true">
                 <Image
                   src="/images/bne-sim/Frame 480955936.png"
-                  alt="Sin recargos Roaming"
+                  alt="Etiqueta decorativa: Beneficio sin cargos adicionales"
                   width={250}
                   height={44}
                 />
               </div>
               {/* Etiqueta 3 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '300px', left: '90px' }}>
+              <div className="absolute hidden md:hidden lg:block" style={{ top: '300px', left: '90px' }} aria-hidden="true">
                 <Image
                   src="/images/bne-sim/Frame 480956514.png"
-                  alt="Compatible iOS y Android"
+                  alt="Etiqueta decorativa: Compatibilidad multiplataforma"
                   width={230}
                   height={44}
                 />

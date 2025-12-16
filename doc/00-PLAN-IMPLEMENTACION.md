@@ -47,7 +47,7 @@ Este documento presenta un plan detallado paso a paso para implementar el sistem
 | 19 | Router | `/router` | ⏳ | 🟡 Media |
 | 20 | Security Test | `/security-test` | ⏳ | 🟢 Baja |
 | 21 | Test | `/test` | ⏳ | 🟢 Baja |
-| 22 | TIM SIM | `/tim-sim` | ⏳ | 🔴 Alta |
+| 22 | TIM SIM | `/tim-sim` | ✅ | 🔴 Alta |
 | 23 | Where to Find Encrypted | `/where-to-find-encrypted` | ⏳ | 🟡 Media |
 | 24 | Where to Find Us | `/where-to-find-us` | ✅ | 🟡 Media |
 | 25 | Header (Global) | `shared/components` | ⏳ | 🔴 Alta |
@@ -645,7 +645,7 @@ npx storybook@latest init
 | **Clases de tipografía únicas** | ~100+ | <20 | ⏳ |
 | **Tiempo de carga (LCP)** | 3.5s | <2.5s | ⏳ |
 | **Score de accesibilidad** | 85 | >95 | ⏳ |
-| **Páginas migradas** | 0/26 | 26/26 | 9/26 |
+| **Páginas migradas** | 0/26 | 26/26 | 10/26 |
 
 ---
 

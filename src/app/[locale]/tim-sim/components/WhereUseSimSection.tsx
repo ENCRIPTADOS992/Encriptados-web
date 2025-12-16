@@ -65,10 +65,10 @@ const WhereUseSimSection = () => {
     <section className="py-10 lg:py-16 bg-[#F4F8FA]">
       <SectionWrapper>
         <div className="flex flex-col items-center text-center mb-8 lg:mb-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            ¿Donde vas a usar tu SIM?
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg max-w-[720px] text-[#4B5563]">
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] mb-4 text-[#333333]">
+            ¿Dónde vas a usar tu SIM?
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed max-w-[720px] text-[#555555]">
             Conéctate a Internet con tu SIM o eSIM en más de 200 países.
             Disfruta de internet seguro y con total anonimato.
           </p>

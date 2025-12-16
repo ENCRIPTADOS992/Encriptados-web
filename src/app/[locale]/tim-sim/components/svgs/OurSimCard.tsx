@@ -18,17 +18,17 @@ const OurSimCard: React.FC<OurSimCardProps> = ({
   classCard,
 }) => {
   return (
-    <div
+    <article
       className={`${bgColor} ${textColor} ${classCard} p-8 rounded-3xl w-[260px] min-h-[360px]`}
     >
       <div className="flex flex-col justify-between h-full max-w-[228px]">
-        <Image src={icon} alt="icon" width={50} height={50} className="mb-10" />
-        <h2 className="font-bold text-[26px] leading-[26px]">{title}</h2>
-        <p className="text-[12px] mt-4 mb-10 break-words">
+        <Image src={icon} alt="" width={50} height={50} className="mb-10" aria-hidden="true" />
+        <h3 className="font-bold text-[22px] leading-[1.5]">{title}</h3>
+        <p className="text-sm leading-relaxed mt-4 mb-10 break-words">
           {description}
         </p>
       </div>
-    </div>
+    </article>
   );
 };
 
