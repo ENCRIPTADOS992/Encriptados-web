@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Button from "@/shared/components/Button";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
@@ -25,7 +26,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
   id,
   languageCode,
 }) => {
-
+  const t = useTranslations("EncryptedSimPage.CardSim");
   const { openModal } = useModalPayment();
 
   return (
@@ -61,7 +62,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
           customStyles="text-sm font-normal"
           onClick={() => openModal({ productid: id.toString(), languageCode })}
         >
-          Comprar ahora
+          {t("buyNow")}
         </Button>
 
         <TelegramButton />

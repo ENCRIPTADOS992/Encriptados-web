@@ -1,6 +1,7 @@
 // ../../encrypted-sim/components/CardInfo.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import React from "react";
 import Image from "next/image";
 import { CircleFlag } from "react-circle-flags";

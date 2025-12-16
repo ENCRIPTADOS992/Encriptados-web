@@ -1,6 +1,7 @@
 // src/app/[locale]/encrypted-sim/components/CardSim.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Button from "@/shared/components/Button";
 import TravelSvg from "/public/images/encrypted-sim/icons/travel_explore.svg";
@@ -32,6 +33,8 @@ const CardSim: React.FC<CardSimProps> = ({
   headerTitle,
   onBuy,
 }) => {
+  const t = useTranslations("EncryptedSimPage.CardSim");
+  
   return (
     <div className="w-full md:max-w-sm md:mx-auto bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
       {/* ------------------------------------------------------
@@ -49,11 +52,11 @@ const CardSim: React.FC<CardSimProps> = ({
           <div className="flex justify-end gap-2 mb-1 text-sm text-gray-600">
             <div className="bg-[#FFFFFF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1">
               <Image src={TravelSvg} alt="Icon" className="w-4 h-4" />
-              <span>+200 países disponibles</span>
+              <span>{t("availableCountries")}</span>
             </div>
 
             <div className="bg-[#81E2FF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1">
-              <span>5G LTE</span>
+              <span>{t("lteSpeed")}</span>
               <Image src={WifiSvg} alt="Icon" className="w-4 h-4" />
             </div>
           </div>
@@ -106,7 +109,7 @@ const CardSim: React.FC<CardSimProps> = ({
                 className="w-6 h-6 text-yellow-400"
               />
               <span className="ml-1 text-sm text-gray-600 font-semibold">
-                5/5
+                {t("rating")}
               </span>
             </div>
           </div>
@@ -124,7 +127,7 @@ const CardSim: React.FC<CardSimProps> = ({
             }
             iconPosition="right"
           >
-            Comprar Ahora
+            {t("buyNow")}
           </Button>
         </div>
       </div>
