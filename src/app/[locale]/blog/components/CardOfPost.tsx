@@ -30,14 +30,14 @@ export default function CardOfPost({
           style={{ objectFit: "cover" }}
         />
       </div>
-      <div className="flex flex-col justify-between flex-grow p-4">
-        <h3 className="line-clamp-2 text-base font-semibold leading-tight text-gray-900">
+      <div className="flex flex-col justify-between flex-grow p-6">
+        <h3 className="line-clamp-2 text-[22px] leading-[1.5] font-medium text-gray-900 mb-3">
           {title}
         </h3>
-        <p className="line-clamp-2 text-sm leading-normal text-gray-600">
+        <p className="line-clamp-2 text-base leading-relaxed text-gray-600 mb-4">
           {description}
         </p>
-        <div className="flex items-center justify-between pt-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded-full bg-[#0E0E0E] flex items-center justify-center border border-[#3E3E3E]">
               <span className="text-[10px] font-semibold text-white">

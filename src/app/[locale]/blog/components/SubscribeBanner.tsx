@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function SubscribeBanner() {
   const t = useTranslations("BlogPage");
   return (
-    <div className="bg-[#151515] p-4 sm:p-6 md:p-8 lg:p-12">
+    <div className="bg-[#151515] py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-8 rounded-3xl overflow-hidden relative">
           {/* Imagen */}
@@ -25,10 +25,10 @@ export default function SubscribeBanner() {
           </div>
           {/* Contenido */}
           <div className="w-full lg:w-5/12 lg:-translate-x-16 bg-[#35CDFB] p-6 sm:p-8 lg:p-12 rounded-2xl z-10">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white text-center lg:text-left">
+            <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center lg:text-left mb-4">
               {t("saveTitle")}
-            </h1>
-            <p className="text-base sm:text-lg mb-6 text-white text-center lg:text-left">
+            </h2>
+            <p className="text-lg leading-relaxed text-white text-center lg:text-left mb-6">
               {t("saveDescription")}
             </p>
 

@@ -50,8 +50,8 @@ const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostId }) =
   }
 
   return (
-    <div className="w-full py-8">
-      <h3 className="text-xl text-white mb-6 font-bold">
+    <div className="w-full py-12 md:py-16">
+      <h3 className="text-[24px] leading-[1.5] font-bold text-white mb-8">
         Artículos anteriores
       </h3>
 

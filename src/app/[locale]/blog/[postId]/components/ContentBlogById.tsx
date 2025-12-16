@@ -84,8 +84,8 @@ const ContentBlogById = () => {
   }
 
   return (
-    <SectionWrapper className="w-full max-w-5xl mx-auto bg-[#191919] rounded-2xl shadow-lg mt-6 p-4">
-  <div className="relative w-full aspect-[1199/629] rounded-2xl overflow-hidden mb-6">
+    <SectionWrapper className="w-full max-w-5xl mx-auto bg-[#191919] rounded-2xl shadow-lg mt-8 p-6 md:p-8 lg:p-12">
+  <div className="relative w-full aspect-[1199/629] rounded-2xl overflow-hidden mb-8">
     <Image
       src={post.card.imagen_full || post.card.imagen}
       alt={post.card.titulo}
@@ -96,14 +96,14 @@ const ContentBlogById = () => {
     />
   </div>
 
-  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+  <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white mb-6">
     {post.card.titulo}
-  </h1>
+  </h2>
 
   <div className="flex items-center text-gray-400 text-sm mb-8 gap-3" />
 
   <article
-    className="prose prose-invert max-w-none text-gray-200"
+    className="prose prose-invert max-w-none text-gray-200 prose-headings:font-bold prose-h2:text-[30px] prose-h2:leading-[1.4] prose-h3:text-[24px] prose-h3:leading-[1.5] prose-p:text-base prose-p:leading-relaxed"
     dangerouslySetInnerHTML={{ __html: post.contenido.cuerpo }}
   />
 </SectionWrapper>

@@ -7,7 +7,7 @@ export default function TalkNowBanner() {
   const t = useTranslations("BlogPage");
 
   return (
-    <div className="bg-[#232323] px-4 py-8 md:px-8 md:py-12 rounded-2xl">
+    <div className="bg-[#232323] py-12 md:py-16 px-4 md:px-8 rounded-2xl">
       <SectionWrapper>
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-12">
           <Image
@@ -17,12 +17,11 @@ export default function TalkNowBanner() {
             alt="Soporte en línea"
             objectFit="cover"
             className="rounded-xl"
-            // Quita layout="" si usas Next 13+ con "next/image"
           />
 
           {/* Text Content */}
           <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
-            <h2 className="max-w-md text-2xl font-bold text-white md:text-3xl">
+            <h2 className="max-w-md text-[30px] md:text-[38px] leading-[1.3] font-bold text-white">
               {t("talkWithSupport")}
             </h2>
             <a

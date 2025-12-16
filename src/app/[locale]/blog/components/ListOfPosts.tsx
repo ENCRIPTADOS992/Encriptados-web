@@ -24,7 +24,7 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
   const currentPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   return (
-    <div className="bg-black py-8">
+    <div className="bg-black py-12 md:py-16 lg:py-20">
       <SectionWrapper>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentPosts.map((post, index) => (

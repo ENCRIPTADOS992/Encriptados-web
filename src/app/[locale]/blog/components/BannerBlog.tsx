@@ -18,13 +18,13 @@ const BannerBlog = () => {
       />
       <div className="absolute inset-0 bg-black opacity-80 z-10"></div>
 
-      <div>
-        <h2 className="relative z-20 text-white text-sm md:text-base text-center">
+      <div className="max-w-3xl mx-auto px-4">
+        <p className="relative z-20 text-lg leading-relaxed text-white text-center mb-4">
           {t("ourBlogTitleBanner")}
-        </h2>
+        </p>
         <div className="flex justify-center items-center">
-          <div className="w-[450px] mt-2 md:mt-4">
-            <h1 className="relative z-20 text-white text-2xl md:text-4xl text-center font-bold">
+          <div className="w-full max-w-[550px]">
+            <h1 className="relative z-20 text-[30px] md:text-[38px] lg:text-[44px] leading-[1.3] font-bold text-white text-center">
               {t("ourBlogDescriptionBanner")}
             </h1>
           </div>

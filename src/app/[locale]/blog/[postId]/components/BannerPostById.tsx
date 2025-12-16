@@ -19,8 +19,8 @@ const BannerPostById = () => {
       />
       <div className="absolute inset-0 bg-black opacity-60 z-10"></div>
       <SectionWrapper className="relative z-20 flex justify-center items-center h-full">
-        <div className="w-full md:w-[800px] mt-4">
-          <h1 className="text-white text-4xl text-center font-bold">
+        <div className="w-full max-w-3xl px-4">
+          <h1 className="text-[30px] md:text-[38px] lg:text-[44px] leading-[1.3] font-bold text-white text-center">
             {t("optimizeBanner.title")}
           </h1>
         </div>
