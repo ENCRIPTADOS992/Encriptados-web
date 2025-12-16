@@ -43,11 +43,11 @@ const PayForUse = () => {
         />
 
         {/* Texto encima */}
-        <div className="absolute inset-x-0 top-0 z-20 px-6 sm:px-8 pt-6 sm:pt-8 space-y-2 sm:space-y-3">
-          <h2 className="text-2xl sm:text-3xl lg:text-[38px] font-semibold text-black leading-tight">
+        <div className="absolute inset-x-0 top-0 z-20 px-6 sm:px-8 pt-6 sm:pt-8 space-y-3 sm:space-y-4">
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-black">
             {t("payOnlyForWhatYouUseTitle")}
           </h2>
-          <p className="text-base sm:text-lg lg:text-[20px] text-black leading-snug">
+          <p className="text-base sm:text-lg leading-relaxed text-black">
             {t("payOnlyForWhatYouUseDescription")}
           </p>
         </div>

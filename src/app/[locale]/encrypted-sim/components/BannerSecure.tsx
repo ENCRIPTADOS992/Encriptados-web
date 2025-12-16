@@ -39,7 +39,7 @@ const BannerSecure = () => {
               lg:px-8 lg:py-0
             "
           >
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#010101] text-center lg:text-left">
+            <h2 className="text-[22px] sm:text-[24px] lg:text-[30px] font-bold leading-[1.4] text-[#010101] text-center lg:text-left">
               {t("secureAndEasyToUse")}
             </h2>
           </div>
@@ -61,7 +61,7 @@ const BannerSecure = () => {
               lg:px-8 lg:py-0
             "
           >
-            <p className="text-sm sm:text-base lg:text-[17px] leading-snug text-[#6E6E6E] text-center lg:text-left">
+            <p className="text-base leading-relaxed text-[#6E6E6E] text-center lg:text-left">
               {t("secureAndEasyToUseDescription")}
             </p>
           </div>

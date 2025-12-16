@@ -32,15 +32,15 @@ const EncryptedSim = () => {
           <BannerConnect />
         </div>
 
-        <div className="flex justify-center  ">
-          <div className="w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-6/12 py-9">
+        <div className="flex justify-center">
+          <div className="w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-6/12 py-12 md:py-16">
             <BasicFormProvider>
-              <div className=" p-4 ">
-                <h1 className="bg-gradient-to-r text-3xl text-center justify-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent mb-4 ">
+              <div className="p-4">
+                <h2 className="bg-gradient-to-r text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent leading-[1.3] mb-6">
                   Cobertura en más de 200 países
-                </h1>
-                <div className=" flex justify-center text-center mb-4">
-                  <p className="text-lg mb-4  text-[#012029]">
+                </h2>
+                <div className="flex justify-center text-center mb-6">
+                  <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
                     Consulta el costo del gigabyte según el país y el perfil
                     recomendado, así optimizas el consumo de tus datos al mejor
                     precio
@@ -71,9 +71,9 @@ const EncryptedSim = () => {
           </div>
         </div>
 
-        <div>
-          <div className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 justify-center mx-auto mt-16 items-center p-4 text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#333333] mt-16 mb-16">
+        <div className="py-16 md:py-20">
+          <div className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 justify-center mx-auto items-center px-4 text-center">
+            <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] mb-12 md:mb-16">
               {t("improveYourSecurity.titleImproveYourSecurity")}
             </h2>
           </div>
@@ -89,9 +89,9 @@ const EncryptedSim = () => {
         </div>
       </div>
 
-      <div className="bg-[#E7F4F8] py-8 sm:py-12 lg:py-16">
-        <div className="flex justify-center px-4 mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-[#333333] max-w-[1100px]">
+      <div className="bg-[#E7F4F8] py-12 md:py-16 lg:py-20">
+        <div className="flex justify-center px-4 mb-12 md:mb-16">
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-center text-[#333333] max-w-[1100px]">
             {t("comunicationTitle")}
           </h2>
         </div>
@@ -100,26 +100,26 @@ const EncryptedSim = () => {
         </div>
       </div>
 
-      <div className="w-full py-8 sm:py-12 lg:py-16 px-4">
+      <div className="w-full py-12 md:py-16 lg:py-20 px-4">
         <div className="max-w-[1100px] mx-auto">
           <PayForUse />
         </div>
       </div>
 
-      <div className="max-w-[1100px] m-auto p-4">
+      <div className="max-w-[1100px] m-auto px-4 py-16 md:py-20">
         <div>
-          <h2 className=" text-3xl sm:text-4xl font-bold text-center text-[#333333] mt-16 mb-16">
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-center text-[#333333] mb-12 md:mb-16">
             {t("whyCallWithEncryptedSIM.title")}
           </h2>
         </div>
-        <div className=" flex justify-center">
+        <div className="flex justify-center">
           <div>
             <WhyCallSim />
           </div>
         </div>
       </div>
 
-      <div className="mt-16">
+      <div className="pt-12 md:pt-16">
         <BannerCoverage />
       </div>
     </>

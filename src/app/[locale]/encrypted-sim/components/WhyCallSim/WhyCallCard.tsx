@@ -14,16 +14,16 @@ const WhyCallCard: React.FC<WhyCallCardProps> = ({
   textColor,
 }) => {
   return (
-    <div className={`${bgColor} p-10 rounded-[2rem] shadow-md`}>
-      <div>{icon}</div>
+    <article className={`${bgColor} p-8 md:p-10 rounded-[2rem] shadow-md`}>
+      <div aria-hidden="true">{icon}</div>
       <div className="flex items-center space-x-4">
-        <div
-          className={`text-lg sm:text-xl md:text-2xl lg:text-2xl font-semibold mt-4 ${textColor}`}
+        <h3
+          className={`text-[22px] font-medium leading-[1.5] mt-5 ${textColor}`}
         >
           {title}
-        </div>
+        </h3>
       </div>
-    </div>
+    </article>
   );
 };
 
