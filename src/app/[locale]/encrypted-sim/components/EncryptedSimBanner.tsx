@@ -13,13 +13,13 @@ const EncryptedSimBanner = () => {
   return (
     <div className="flex flex-col md:flex-row w-full py-0 xl:py-0 bg-white">
       {/* Imagen de la izquierda */}
-      <div className="w-full md:w-1/5 relative overflow-hidden self-end mb-0 object-contain md:max-w-[180px] lg:max-w-none">
+      <div className="w-full md:w-1/5 relative overflow-hidden self-end mb-0 object-contain">
         <Image
           src={Women}
           width={740}
           height={740}
           alt="Mujer usando tecnología encriptada"
-          className="xs:w-full sm:w-1/3 md:w-full w-1/2 object-contain m-auto md:max-h-[300px] lg:max-h-none"
+          className="w-1/2 sm:w-1/3 md:w-full object-contain m-auto max-w-[180px] max-h-[250px] md:max-w-[160px] md:max-h-[220px] lg:max-w-[220px] lg:max-h-[320px] xl:max-w-none xl:max-h-none"
         />
       </div>
 
@@ -33,7 +33,7 @@ const EncryptedSimBanner = () => {
           width={740}
           height={740}
           alt="Tarjeta SIM encriptada"
-          className="h-[35%] object-contain max-h-[200px] md:max-h-[250px] lg:max-h-[300px]"
+          className="w-full object-contain max-w-[250px] max-h-[200px] md:max-w-[220px] md:max-h-[180px] lg:max-w-[320px] lg:max-h-[260px] xl:max-w-[450px] xl:max-h-[360px]"
         />
         <h1 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] w-11/12">
           {t("encryptedTitle")}
@@ -44,13 +44,13 @@ const EncryptedSimBanner = () => {
       </div>
 
       {/* Imagen de la derecha */}
-      <div className="w-full md:w-1/5 relative overflow-hidden self-end mb-0 object-contain md:max-w-[180px] lg:max-w-none">
+      <div className="w-full md:w-1/5 relative overflow-hidden self-end mb-0 object-contain">
         <Image
           src={Man}
           width={740}
           height={740}
           alt="Hombre usando tecnología encriptada"
-          className="xs:w-full sm:w-1/3 md:w-full w-1/2 object-contain m-auto md:max-h-[300px] lg:max-h-none"
+          className="w-1/2 sm:w-1/3 md:w-full object-contain m-auto max-w-[180px] max-h-[250px] md:max-w-[160px] md:max-h-[220px] lg:max-w-[220px] lg:max-h-[320px] xl:max-w-none xl:max-h-none"
         />
       </div>
     </div>

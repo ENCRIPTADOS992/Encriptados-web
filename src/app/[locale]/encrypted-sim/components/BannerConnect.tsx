@@ -18,7 +18,7 @@ const BannerConnect = () => {
           {t("addYourSimSubtitle")}
         </p>
       </div>
-      <div className="w-full lg:w-auto h-[250px] md:h-[280px] lg:h-[350px] min-w-[250px] md:max-w-[320px] lg:min-w-[350px] lg:max-w-none mt-6 lg:mt-0 relative rounded-3xl overflow-hidden">
+      <div className="w-full lg:w-auto h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] min-w-[250px] md:max-w-[400px] lg:max-w-[450px] xl:min-w-[500px] xl:max-w-none mt-6 lg:mt-0 relative rounded-3xl overflow-hidden">
         <Image
           quality={100}
           title="Personas conectadas con seguridad"
