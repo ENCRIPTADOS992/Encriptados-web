@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 const InitTestMobile = () => {
   const t = useTranslations("EncryptedTestPage");
   return (
-    <div className="w-full flex flex-col gap-8">
+    <div className="w-full flex flex-col py-12 md:py-16">
       <SecurityTestSection
         variant="mobile"
         title={t("tryOurPhoneSecure.title")}

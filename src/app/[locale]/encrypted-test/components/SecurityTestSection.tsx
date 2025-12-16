@@ -32,14 +32,19 @@ export default function SecurityTestSection({ variant, title, description, iconS
           </div>
 
           <div className={`${isMobile ? "text-center" : "text-center md:text-left"}`}>
-            <h2 className="font-bold text-white leading-tight mb-[clamp(12px,1.5vw,16px)] text-[clamp(22px,2.5vw,40px)]">{title}</h2>
-            <p className="text-gray-400 text-[clamp(14px,1.2vw,16px)]">{description}</p>
+            <h2 className="font-bold text-white leading-[1.3] mb-4 md:mb-5 text-[24px] sm:text-[30px] lg:text-[38px]">{title}</h2>
+            <p className="text-gray-300 text-base leading-relaxed">{description}</p>
           </div>
 
           <div className={`flex ${isMobile ? "justify-center" : "justify-center md:justify-end"}`}>
-            <button type="button" onClick={() => router.push(href)} className={`flex items-center gap-3 bg-white text-[#0a0a0a] px-[clamp(16px,2vw,24px)] py-[clamp(10px,1.4vw,14px)] rounded-full font-medium hover:bg-gray-100 transition-colors ${isMobile ? "w-full max-w-xs justify-center" : ""}`}>
-              <span>{t("initTest")}</span>
-              <Image src="/icons/icono-boton.svg" alt="" width={24} height={24} />
+            <button 
+              type="button" 
+              onClick={() => router.push(href)} 
+              className={`flex items-center gap-3 bg-white text-[#0a0a0a] px-6 md:px-8 py-3 md:py-3.5 rounded-full font-medium hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black ${isMobile ? "w-full max-w-xs justify-center" : ""}`}
+              aria-label={`${t("initTest")} - ${title}`}
+            >
+              <span className="text-base">{t("initTest")}</span>
+              <Image src="/icons/icono-boton.svg" alt="" width={24} height={24} aria-hidden="true" />
             </button>
           </div>
         </div>

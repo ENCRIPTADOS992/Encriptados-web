@@ -24,8 +24,10 @@ const BannerEncryptedTest = () => {
 
       <SectionWrapper className="absolute inset-0 flex flex-col items-center justify-center gap-y-4 md:gap-y-7 z-10 p-4">
         <ButtonGradientClasic title={t("banner.securityTestTitle")} />
-        <WorldIconTest />
-        <h1 className="text-white text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold w-full max-w-[350px] md:max-w-[450px] text-center">
+        <div aria-label="Icono de seguridad global">
+          <WorldIconTest />
+        </div>
+        <h1 className="text-white text-[30px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.3] w-full max-w-[350px] md:max-w-[450px] text-center">
           {t("banner.securityTestDescription")}
         </h1>
       </SectionWrapper>
