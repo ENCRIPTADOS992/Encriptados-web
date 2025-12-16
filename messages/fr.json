@@ -131,7 +131,6 @@
       "fr": "Français",
       "en": "Anglais"
     },
-
     "menuItems": {
       "simShop": "Magasin de SIMS",
       "products": {
@@ -236,7 +235,6 @@
     "encryptedTitleButon": "Carte SIM Cryptée",
     "encryptedTitle": "La SIM Cryptée vous offre la plus grande sécurité et anonymat partout dans le monde",
     "encryptedDescription": "Sécurité et confidentialité dans vos communications, passez des appels anonymes et non traçables, et protégez-vous contre les IMSI Catchers",
-
     "CardSim": {
       "headerTitle": "Recharge de Données",
       "availableCountries": "+200 pays disponibles",
@@ -251,11 +249,9 @@
       "rating": "5/5",
       "buyNow": "Acheter Maintenant"
     },
-
     "characteristics": {
       "title": "Caractéristiques principales"
     },
-
     "commonFeatures": {
       "dataMobile": "Données mobiles",
       "speed": "Vitesse 4/5G LTE",
@@ -334,7 +330,6 @@
         "headerTitle": "SIM Physique"
       }
     },
-
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Améliorez votre sécurité avec ces fonctionnalités",
       "untraceable": {
@@ -357,7 +352,6 @@
         "title": "Filtres vocaux",
         "description": "Utilisez 7 filtres vocaux différents pour plus d'anonymat dans vos appels"
       },
-
       "callback": {
         "title": "Rappel",
         "description": "Générez un numéro aléatoire pour chaque appel qui apparaîtra dans l'identifiant du destinataire"
@@ -378,7 +372,6 @@
         "title": "Masquez l'IMSI",
         "description": "Cachez votre IMSI pour éviter les interceptions ou les antennes factices comme les IMSI Catchers"
       },
-
       "providerPrivateRed": {
         "title": "Fournisseur de réseau privé",
         "description": "Nous sommes un MVNO privé avec une totale discrétion dans l'utilisation de vos données personnelles"
@@ -402,7 +395,6 @@
       "card2": "Anonymat dans les appels grâce à des outils : substitution d'ID, rappel et filtre vocal",
       "card3": "La SIM génère un numéro de remplacement aléatoire à chaque appel pour plus d'anonymat"
     },
-
     "coverageMoreThan200CountriesTitle": "Couverture dans plus de 200 pays",
     "coverageMoreThan200CountriesDescription": "Communication sécurisée sans frontières",
     "downloadAppTitle": "Téléchargez l'application pour iOS et Android",
@@ -430,7 +422,6 @@
       "unlimitedDataTitle": "Données illimitées",
       "unlimitedDataDescription": "Trouvez des forfaits illimités pour que les gigas ne soient pas un problème. Restez connecté"
     },
-
     "howItWorks": {
       "title": "Voici comment ça fonctionne",
       "chooseRegionTitle": "Choisissez la région où vous souhaitez utiliser votre",
@@ -454,6 +445,32 @@
     "whyChooseSim": "Pourquoi choisir notre SIM ?",
     "anonTitle": "Aucune donnée enregistrée, anonymat garanti !",
     "anonDescription": "Les données qui ne sont pas stockées ne peuvent pas être divulguées. C'est notre philosophie de ne pas collecter d'informations personnelles ni d'enregistrements de nos clients.",
+    "simSelection": {
+      "mainTitle": "Où allez-vous utiliser votre SIM?",
+      "subtitle": "Connectez-vous à Internet avec votre SIM ou eSIM dans plus de 200 pays. Profitez d'Internet sécurisé avec un anonymat total.",
+      "category": "Catégorie",
+      "physicalSim": "SIM Physique",
+      "recharge": "Recharger",
+      "esimData": "eSIM + Données",
+      "region": "Région/Pays",
+      "search": "Rechercher",
+      "back": "Retour",
+      "productsFound": "produits trouvés",
+      "noProducts": "0 produits trouvés",
+      "selectRegionCountry": "Choisissez une région ou un pays",
+      "country": "Pays",
+      "applyFilter": "Appliquer le filtre",
+      "loadingRegions": "Chargement des régions...",
+      "loadingCountries": "Chargement des pays...",
+      "searching": "Recherche...",
+      "from": "Dès",
+      "countries": "pays",
+      "coverage": "Couverture 4G/5G",
+      "product": "produit",
+      "products": "produits",
+      "found": "trouvé",
+      "founds": "trouvés"
+    },
     "OurSimCard": {
       "title": "Pas de frais d'itinérance",
       "description": "Notre SIM vous permet de vous connecter à un opérateur local et d'éviter les frais élevés d'itinérance",
@@ -543,6 +560,10 @@
       "licenseTitle": "Durée de licence",
       "selectPlacerholder": "Sélectionner",
       "searchPlaceholder": "Chercher"
+    },
+    "productCard": {
+      "buy": "Acheter",
+      "moreInfo": "Plus d'informations"
     }
   },
   "DistributorsPage": {
@@ -832,7 +853,20 @@
         },
         "timSim": {
           "title": "SIM TIM",
-          "description": "Découvrez comment fonctionne la SIM TIM"
+          "description": "Découvrez comment fonctionne la SIM TIM",
+          "simSelection": {
+            "mainTitle": "Où allez-vous utiliser votre SIM ?",
+            "subtitle": "Connectez-vous à Internet avec votre SIM ou eSIM dans plus de 200 pays. Profitez d'un internet sécurisé et en totale anonymat.",
+            "category": "Catégorie",
+            "physicalSim": "SIM Physique",
+            "recharge": "Recharger",
+            "esimData": "eSIM + Données",
+            "region": "Région/Pays",
+            "search": "Rechercher",
+            "back": "Retour",
+            "productsFound": "produits trouvés",
+            "noProducts": "0 produits trouvés"
+          }
         }
       }
     },
@@ -1586,7 +1620,10 @@
       "Interface unifiée",
       "Chats de groupe chiffrés"
     ],
-    "plans": ["Licence 3 Mois", "Licence 6 Mois"],
+    "plans": [
+      "Licence 3 Mois",
+      "Licence 6 Mois"
+    ],
     "buttons": {
       "buyNow": "Acheter maintenant",
       "supportChat": "Chat d'assistance"
@@ -1785,7 +1822,11 @@
       "Applications blockchain",
       "Suppression à distance et bouton panique"
     ],
-    "plans": ["Téléphone crypté", "Licence 3 mois", "Licence 6 mois"],
+    "plans": [
+      "Téléphone crypté",
+      "Licence 3 mois",
+      "Licence 6 mois"
+    ],
     "buttons": {
       "buyNow": "Acheter maintenant",
       "supportChat": "Chat support"
@@ -1906,7 +1947,10 @@
       "Verrouillage et effacement à distance",
       "Messages et appels chiffrés"
     ],
-    "plans": ["Licence 3 mois", "Licence 6 mois"],
+    "plans": [
+      "Licence 3 mois",
+      "Licence 6 mois"
+    ],
     "buttons": {
       "buyNow": "Acheter maintenant",
       "supportChat": "Chat support"

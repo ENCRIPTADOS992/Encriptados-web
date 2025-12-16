@@ -1,9 +1,9 @@
 import BneSimPage from "./components/BneSimPage";
 
-const Page = () => {
+const Page = ({ params }: { params: { locale: string } }) => {
   return (
     <>
-      <BneSimPage />
+      <BneSimPage locale={params.locale} />
     </>
   );
 };

@@ -11,7 +11,11 @@ import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import StepperBuy from "@/shared/components/StepperBuy/StepperBuy";
 import WhereUseSimSection from "./WhereUseSimSection";
 
-const BneSimPage = () => {
+interface BneSimPageProps {
+  locale: string;
+}
+
+const BneSimPage = ({ locale }: BneSimPageProps) => {
   return (
     <>
       <div className="w-full bg-[#f4f8fa]">
@@ -25,7 +29,7 @@ const BneSimPage = () => {
           }}
           submit={() => {}}
         >
-          <WhereUseSimSection />
+          <WhereUseSimSection locale={locale} />
         </BasicFormProvider>
         <div className="py-12 md:py-16 lg:py-20 px-4 md:px-6">
           <OurSim />

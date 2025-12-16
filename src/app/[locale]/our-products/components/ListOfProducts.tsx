@@ -10,6 +10,8 @@ interface ListOfProductsProps {
   filters: ProductFilters;
 }
 
+import { useTranslations } from 'next-intl';
+
 const providerMap: Record<string, string> = {
   encriptados: "Sim Encriptados",
   tim: "Sim TIM",
@@ -75,6 +77,7 @@ const normalizeProviderValue = (value: unknown): string | undefined => {
 };
 
 const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
+  const t = useTranslations('BneSimPage.simSelection');
   const selectedOption = parseInt(filters.selectedOption, 10);
   const { data, isFetching, isError } = useGetProducts(
     selectedOption,
@@ -164,24 +167,47 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   });
 
   if (providerServiceKey) {
-    const serviceName = serviceMap[providerServiceKey];
+    const before = filteredProducts.length;
+    
+    // Mapeo independiente del idioma usando patrones de nombre
+    const namePatterns: Record<string, RegExp[]> = {
+      physicsimtim: [
+        /^sim\s+(f[ií]sica?|physics?|physique|fisica|f[ií]sico)/i
+      ],
+      esimplusdatatim: [
+        /^esim\s*\+?\s*dat(a|os|données|i|ados)/i,
+        /^esim.*donn[ée]es/i,
+        /^esim.*\+.*dat/i,
+        /^esim.*dados/i
+      ],
+      datarechargetim: [
+        /^(dat(a|os|données|i|ados)\s+)?(recarga|recharge|ricarica)/i,
+        /^(recharge|ricarica|recarga)\s+dat(a|os|données|i|ados)/i
+      ],
+      minuterecharge: [/^(minutos?\s+)?(recarga|recharge|ricarica)/i, /^(recharge|ricarica)\s+minutes?/i],
+    };
 
-    if (!serviceName) {
-      console.warn("⚠️ [Filtro Servicio] key sin mapping en serviceMap", {
+    const patterns = namePatterns[providerServiceKey];
+    
+    if (!patterns) {
+      console.warn("⚠️ [Filtro Servicio] key sin patterns definidos", {
         providerServiceKey,
-        serviceMapKeys: Object.keys(serviceMap),
+        availableKeys: Object.keys(namePatterns),
       });
     } else {
-      const before = filteredProducts.length;
+      console.log("🔍 [DEBUG] Filtrando con patrones para:", providerServiceKey);
+      console.log("🔍 [DEBUG] Nombres disponibles:", filteredProducts.map(p => p.name).filter(Boolean));
 
       filteredProducts = filteredProducts.filter((product) => {
-        const name = product.name?.trim().toLowerCase() ?? "";
-        return name === serviceName.trim().toLowerCase();
+        const name = product.name?.trim() ?? "";
+        const matches = patterns.some(pattern => pattern.test(name));
+        console.log(`${matches ? '✅' : '❌'} [DEBUG] "${name}" ${matches ? 'COINCIDE' : 'NO coincide'} con patrones de ${providerServiceKey}`);
+        return matches;
       });
 
       console.log("🔎 [Filtro Servicio]", {
         providerServiceKey,
-        serviceName,
+        patterns: patterns.map(p => p.toString()),
         before,
         after: filteredProducts.length,
       });
@@ -445,8 +471,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   return (
     <>
       <div className="md:w-11/12 lg:w-full xl:w-[1272px] w-full mx-auto mb-4 font-bold">
-        {productCount} producto{productCount !== 1 ? "s" : ""} encontrado
-        {productCount !== 1 ? "s" : ""}
+        {productCount} {productCount !== 1 ? t('products') : t('product')} {productCount !== 1 ? t('founds') : t('found')}
       </div>
 
       <div className="flex items-center justify-between">
