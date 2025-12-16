@@ -471,6 +471,33 @@
       "found": "encontrado",
       "founds": "encontrados"
     },
+    "faqs": {
+      "title": "Perguntas frequentes",
+      "q1": {
+        "question": "Quais dispositivos são compatíveis com o SIM?",
+        "answer": "O SIM funciona com a maioria dos telefones e tablets desbloqueados. Você só precisa garantir que seu dispositivo suporte a banda de sua operadora local."
+      },
+      "q2": {
+        "question": "Como ativar meu SIM depois de comprá-lo?",
+        "answer": "Você receberá instruções detalhadas por e-mail e dentro do app. Geralmente basta escanear um código ou seguir um guia rápido."
+      },
+      "q3": {
+        "question": "Posso usá-lo em vários países?",
+        "answer": "Sim. Dependendo do plano contratado, você poderá usar o SIM em diferentes países sem mudar de número ou perder seu saldo de dados."
+      },
+      "q4": {
+        "question": "Minhas informações pessoais são registradas?",
+        "answer": "Não solicitamos informações sensíveis desnecessárias. Nossa abordagem é manter sua navegação o mais privada possível."
+      },
+      "q5": {
+        "question": "O que acontece se eu esgotar meus dados?",
+        "answer": "Você pode recarregar seu plano do app ou da web a qualquer momento, sem perder seu SIM ou precisar reativá-lo."
+      },
+      "q6": {
+        "question": "Há suporte se eu tiver problemas com a ativação?",
+        "answer": "Sim. Temos suporte via chat e e-mail para ajudá-lo com a instalação, ativação e uso do seu SIM."
+      }
+    },
     "OurSimCard": {
       "title": "Sem tarifas de roaming",
       "description": "Nosso SIM permite que você se conecte a uma operadora local e evite altas tarifas de roaming",
@@ -564,6 +591,33 @@
     "productCard": {
       "buy": "Comprar",
       "moreInfo": "Mais informa\u00e7\u00f5es"
+    },
+    "faqs": {
+      "title": "Perguntas frequentes",
+      "q1": {
+        "question": "Quais dispositivos s\u00e3o compat\u00edveis com o SIM?",
+        "answer": "O SIM funciona com a maioria dos telefones e tablets desbloqueados. Voc\u00ea s\u00f3 precisa que seu dispositivo suporte a banda da sua operadora local."
+      },
+      "q2": {
+        "question": "Como ativo meu SIM ap\u00f3s compr\u00e1-lo?",
+        "answer": "Voc\u00ea receber\u00e1 instru\u00e7\u00f5es passo a passo por e-mail e dentro do aplicativo. Geralmente voc\u00ea s\u00f3 precisa escanear um c\u00f3digo ou seguir um guia r\u00e1pido."
+      },
+      "q3": {
+        "question": "Posso us\u00e1-lo em v\u00e1rios pa\u00edses?",
+        "answer": "Sim. Dependendo do plano contratado, voc\u00ea poder\u00e1 usar o SIM em diferentes pa\u00edses sem trocar de n\u00famero ou perder seu saldo de dados."
+      },
+      "q4": {
+        "question": "Minhas informa\u00e7\u00f5es pessoais s\u00e3o registradas?",
+        "answer": "N\u00e3o pedimos informa\u00e7\u00f5es sens\u00edveis desnecess\u00e1rias. Nosso foco \u00e9 manter sua navega\u00e7\u00e3o o mais privada poss\u00edvel."
+      },
+      "q5": {
+        "question": "O que acontece se eu esgotar meus dados?",
+        "answer": "Voc\u00ea pode recarregar seu plano do aplicativo ou site a qualquer momento, sem perder seu SIM ou precisar reativ\u00e1-lo."
+      },
+      "q6": {
+        "question": "H\u00e1 suporte se eu tiver problemas com a ativa\u00e7\u00e3o?",
+        "answer": "Sim. Temos suporte por chat e e-mail para ajud\u00e1-lo com a instala\u00e7\u00e3o, ativa\u00e7\u00e3o e uso do seu SIM."
+      }
     }
   },
   "DistributorsPage": {

@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type FaqItem = {
   id: string;
@@ -9,50 +10,45 @@ type FaqItem = {
   answer: string;
 };
 
-const leftColumn: FaqItem[] = [
-  {
-    id: "q1",
-    question: "¿Qué dispositivos son compatibles con la SIM?",
-    answer:
-      "La SIM funciona con la mayoría de teléfonos y tablets desbloqueados. Solo necesitas que tu dispositivo admita la banda de tu operador local.",
-  },
-  {
-    id: "q2",
-    question: "¿Cómo activo mi SIM después de comprarla?",
-    answer:
-      "Recibirás instrucciones paso a paso por correo y dentro de la app. Generalmente solo debes escanear un código o seguir una guía rápida.",
-  },
-  {
-    id: "q3",
-    question: "¿Puedo usarla en varios países?",
-    answer:
-      "Sí. Dependiendo del plan contratado, podrás usar la SIM en diferentes países sin cambiar de número ni perder tu saldo de datos.",
-  },
-];
-
-const rightColumn: FaqItem[] = [
-  {
-    id: "q4",
-    question: "¿Mi información personal queda registrada?",
-    answer:
-      "No pedimos información sensible innecesaria. Nuestro enfoque está en mantener tu navegación lo más privada posible.",
-  },
-  {
-    id: "q5",
-    question: "¿Qué pasa si agoto mis datos?",
-    answer:
-      "Puedes recargar tu plan desde la app o desde la web en cualquier momento, sin perder tu SIM ni necesidad de volver a activarla.",
-  },
-  {
-    id: "q6",
-    question: "¿Hay soporte si tengo problemas con la activación?",
-    answer:
-      "Sí. Contamos con soporte vía chat y correo para ayudarte con la instalación, activación y uso de tu SIM.",
-  },
-];
-
 const TimSimFaq: React.FC = () => {
-  const [openId, setOpenId] = useState<string | null>(leftColumn[0].id);
+  const t = useTranslations('BneSimPage.faqs');
+  const [openId, setOpenId] = useState<string | null>("q1");
+
+  const leftColumn: FaqItem[] = [
+    {
+      id: "q1",
+      question: t('q1.question'),
+      answer: t('q1.answer'),
+    },
+    {
+      id: "q2",
+      question: t('q2.question'),
+      answer: t('q2.answer'),
+    },
+    {
+      id: "q3",
+      question: t('q3.question'),
+      answer: t('q3.answer'),
+    },
+  ];
+
+  const rightColumn: FaqItem[] = [
+    {
+      id: "q4",
+      question: t('q4.question'),
+      answer: t('q4.answer'),
+    },
+    {
+      id: "q5",
+      question: t('q5.question'),
+      answer: t('q5.answer'),
+    },
+    {
+      id: "q6",
+      question: t('q6.question'),
+      answer: t('q6.answer'),
+    },
+  ];
 
   const renderItem = (item: FaqItem) => {
     const isOpen = openId === item.id;
@@ -99,8 +95,8 @@ const TimSimFaq: React.FC = () => {
       <div className="max-w-[1100px] mx-auto px-4 md:px-6">
         {/* Título */}
         <h2 className="text-center text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] mb-8 md:mb-10 text-[#333333]">
-          Preguntas{" "}
-          <span className="text-[#19BBFF]">frecuentes</span>
+          {t('title').split(' ')[0]}{" "}
+          <span className="text-[#19BBFF]">{t('title').split(' ').slice(1).join(' ')}</span>
         </h2>
 
         {/* Grid de FAQs */}
@@ -114,3 +110,4 @@ const TimSimFaq: React.FC = () => {
 };
 
 export default TimSimFaq;
+export { TimSimFaq as FaqsBne };

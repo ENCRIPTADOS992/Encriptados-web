@@ -471,6 +471,33 @@
       "found": "trouvé",
       "founds": "trouvés"
     },
+    "faqs": {
+      "title": "Questions fréquentes",
+      "q1": {
+        "question": "Quels appareils sont compatibles avec la SIM ?",
+        "answer": "La SIM fonctionne avec la plupart des téléphones et tablettes débloqués. Vous devez simplement vous assurer que votre appareil prend en charge la bande de votre opérateur local."
+      },
+      "q2": {
+        "question": "Comment activer ma SIM après l'achat ?",
+        "answer": "Vous recevrez des instructions détaillées par e-mail et dans l'application. Généralement, il suffit de scanner un code ou de suivre un guide rapide."
+      },
+      "q3": {
+        "question": "Puis-je l'utiliser dans plusieurs pays ?",
+        "answer": "Oui. Selon le plan souscrit, vous pourrez utiliser la SIM dans différents pays sans changer de numéro ni perdre votre solde de données."
+      },
+      "q4": {
+        "question": "Mes informations personnelles sont-elles enregistrées ?",
+        "answer": "Nous ne demandons pas d'informations sensibles inutiles. Notre approche consiste à maintenir votre navigation aussi privée que possible."
+      },
+      "q5": {
+        "question": "Que se passe-t-il si j'épuise mes données ?",
+        "answer": "Vous pouvez recharger votre plan depuis l'application ou depuis le web à tout moment, sans perdre votre SIM ni avoir besoin de la réactiver."
+      },
+      "q6": {
+        "question": "Y a-t-il un support en cas de problèmes d'activation ?",
+        "answer": "Oui. Nous disposons d'un support par chat et par e-mail pour vous aider avec l'installation, l'activation et l'utilisation de votre SIM."
+      }
+    },
     "OurSimCard": {
       "title": "Pas de frais d'itinérance",
       "description": "Notre SIM vous permet de vous connecter à un opérateur local et d'éviter les frais élevés d'itinérance",
@@ -564,6 +591,33 @@
     "productCard": {
       "buy": "Acheter",
       "moreInfo": "Plus d'informations"
+    },
+    "faqs": {
+      "title": "Questions fr\u00e9quentes",
+      "q1": {
+        "question": "Quels appareils sont compatibles avec la carte SIM?",
+        "answer": "La carte SIM fonctionne avec la plupart des t\u00e9l\u00e9phones et tablettes d\u00e9verrouill\u00e9s. Vous avez seulement besoin que votre appareil prenne en charge la bande de votre op\u00e9rateur local."
+      },
+      "q2": {
+        "question": "Comment activer ma carte SIM apr\u00e8s l'achat?",
+        "answer": "Vous recevrez des instructions \u00e9tape par \u00e9tape par e-mail et dans l'application. G\u00e9n\u00e9ralement, il vous suffit de scanner un code ou de suivre un guide rapide."
+      },
+      "q3": {
+        "question": "Puis-je l'utiliser dans plusieurs pays?",
+        "answer": "Oui. Selon le forfait contract\u00e9, vous pourrez utiliser la carte SIM dans diff\u00e9rents pays sans changer de num\u00e9ro ni perdre votre solde de donn\u00e9es."
+      },
+      "q4": {
+        "question": "Mes informations personnelles sont-elles enregistr\u00e9es?",
+        "answer": "Nous ne demandons pas d'informations sensibles inutiles. Notre objectif est de garder votre navigation aussi priv\u00e9e que possible."
+      },
+      "q5": {
+        "question": "Que se passe-t-il si j'\u00e9puise mes donn\u00e9es?",
+        "answer": "Vous pouvez recharger votre forfait depuis l'application ou le site Web \u00e0 tout moment, sans perdre votre carte SIM ni avoir besoin de la r\u00e9activer."
+      },
+      "q6": {
+        "question": "Y a-t-il un support si j'ai des probl\u00e8mes d'activation?",
+        "answer": "Oui. Nous avons un support par chat et e-mail pour vous aider avec l'installation, l'activation et l'utilisation de votre carte SIM."
+      }
     }
   },
   "DistributorsPage": {

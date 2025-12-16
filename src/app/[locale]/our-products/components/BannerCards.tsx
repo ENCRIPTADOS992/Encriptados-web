@@ -10,7 +10,7 @@ import Slider from "react-slick";
 import { useEffect, useState } from "react";
 
 const BannerCards: React.FC = () => {
-  const t = useTranslations("BneSimPage");
+  const t = useTranslations("BneSimPage.OurSimCard");
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -58,29 +58,29 @@ const BannerCards: React.FC = () => {
       bgColor: "bg-custom-gradient-our-sim-black",
       textColor: "text-white",
       icon: CellTowerSvg,
-      title: t("OurSimCard.title"),
-      description: t("OurSimCard.description"),
+      title: t("title"),
+      description: t("description"),
     },
     {
       bgColor: "bg-custom-gradient-our-sim-blue",
       textColor: "text-black",
       icon: AdsClickSvg,
-      title: t("OurSimCard.title2"),
-      description: t("OurSimCard.description2"),
+      title: t("title2"),
+      description: t("description2"),
     },
     {
       bgColor: "bg-custom-gradient-our-sim-black",
       textColor: "text-white",
       icon: CellTowerSvg,
-      title: t("OurSimCard.title4"),
-      description: t("OurSimCard.description4"),
+      title: t("title4"),
+      description: t("description4"),
     },
     {
       bgColor: "bg-custom-gradient-our-sim-blue",
       textColor: "text-black",
       icon: Rotate_rightSvg,
-      title: t("OurSimCard.title3"),
-      description: t("OurSimCard.description3"),
+      title: t("title3"),
+      description: t("description3"),
     },
   ];
 

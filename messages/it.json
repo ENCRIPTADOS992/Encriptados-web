@@ -471,6 +471,33 @@
       "found": "trovato",
       "founds": "trovati"
     },
+    "faqs": {
+      "title": "Domande frequenti",
+      "q1": {
+        "question": "Che dispositivi sono compatibili con la SIM?",
+        "answer": "La SIM funziona con la maggior parte dei telefoni e tablet sbloccati. Devi solo verificare che il tuo dispositivo supporti la banda del tuo operatore locale."
+      },
+      "q2": {
+        "question": "Come attivo la mia SIM dopo l'acquisto?",
+        "answer": "Riceverai istruzioni dettagliate via email e nell'app. Di solito basta scansionare un codice o seguire una guida rapida."
+      },
+      "q3": {
+        "question": "Posso usarla in diversi paesi?",
+        "answer": "Sì. A seconda del piano contrattato, potrai utilizzare la SIM in diversi paesi senza cambiare numero o perdere il tuo saldo dati."
+      },
+      "q4": {
+        "question": "Le mie informazioni personali vengono registrate?",
+        "answer": "Non chiediamo informazioni sensibili non necessarie. Il nostro approccio si concentra sul mantenere la tua navigazione il più privata possibile."
+      },
+      "q5": {
+        "question": "Cosa succede se esaurisco i miei dati?",
+        "answer": "Puoi ricaricare il tuo piano dall'app o dal web in qualsiasi momento, senza perdere la SIM o dover riattivarla."
+      },
+      "q6": {
+        "question": "C'è supporto se ho problemi con l'attivazione?",
+        "answer": "Sì. Abbiamo supporto tramite chat ed email per aiutarti con l'installazione, l'attivazione e l'uso della tua SIM."
+      }
+    },
     "OurSimCard": {
       "title": "Nessun costo di roaming",
       "description": "La nostra SIM ti permette di connetterti a un operatore locale e di evitare le alte tariffe di roaming",
@@ -564,6 +591,33 @@
     "productCard": {
       "buy": "Acquista",
       "moreInfo": "Maggiori informazioni"
+    },
+    "faqs": {
+      "title": "Domande frequenti",
+      "q1": {
+        "question": "Quali dispositivi sono compatibili con la SIM?",
+        "answer": "La SIM funziona con la maggior parte dei telefoni e tablet sbloccati. Hai solo bisogno che il tuo dispositivo supporti la banda del tuo operatore locale."
+      },
+      "q2": {
+        "question": "Come attivo la mia SIM dopo l'acquisto?",
+        "answer": "Riceverai istruzioni passo dopo passo via email e nell'app. Di solito devi solo scansionare un codice o seguire una guida rapida."
+      },
+      "q3": {
+        "question": "Posso usarla in pi\u00f9 paesi?",
+        "answer": "S\u00ec. A seconda del piano contrattato, potrai utilizzare la SIM in diversi paesi senza cambiare numero o perdere il tuo saldo dati."
+      },
+      "q4": {
+        "question": "Le mie informazioni personali vengono registrate?",
+        "answer": "Non chiediamo informazioni sensibili non necessarie. Il nostro obiettivo \u00e8 mantenere la tua navigazione il pi\u00f9 privata possibile."
+      },
+      "q5": {
+        "question": "Cosa succede se esaurisco i miei dati?",
+        "answer": "Puoi ricaricare il tuo piano dall'app o dal sito web in qualsiasi momento, senza perdere la tua SIM o dover riattivarla."
+      },
+      "q6": {
+        "question": "C'\u00e8 supporto se ho problemi con l'attivazione?",
+        "answer": "S\u00ec. Abbiamo supporto tramite chat ed email per aiutarti con l'installazione, l'attivazione e l'uso della tua SIM."
+      }
     }
   },
   "DistributorsPage": {

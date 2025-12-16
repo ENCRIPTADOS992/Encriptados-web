@@ -481,6 +481,33 @@
       "found": "encontrado",
       "founds": "encontrados"
     },
+    "faqs": {
+      "title": "Preguntas frecuentes",
+      "q1": {
+        "question": "¿Qué dispositivos son compatibles con la SIM?",
+        "answer": "La SIM funciona con la mayoría de teléfonos y tablets desbloqueados. Solo necesitas que tu dispositivo admita la banda de tu operador local."
+      },
+      "q2": {
+        "question": "¿Cómo activo mi SIM después de comprarla?",
+        "answer": "Recibirás instrucciones paso a paso por correo y dentro de la app. Generalmente solo debes escanear un código o seguir una guía rápida."
+      },
+      "q3": {
+        "question": "¿Puedo usarla en varios países?",
+        "answer": "Sí. Dependiendo del plan contratado, podrás usar la SIM en diferentes países sin cambiar de número ni perder tu saldo de datos."
+      },
+      "q4": {
+        "question": "¿Mi información personal queda registrada?",
+        "answer": "No pedimos información sensible innecesaria. Nuestro enfoque está en mantener tu navegación lo más privada posible."
+      },
+      "q5": {
+        "question": "¿Qué pasa si agoto mis datos?",
+        "answer": "Puedes recargar tu plan desde la app o desde la web en cualquier momento, sin perder tu SIM ni necesidad de volver a activarla."
+      },
+      "q6": {
+        "question": "¿Hay soporte si tengo problemas con la activación?",
+        "answer": "Sí. Contamos con soporte vía chat y correo para ayudarte con la instalación, activación y uso de tu SIM."
+      }
+    },
     "OurSimCard": {
       "title": "Sin cargos de roaming",
       "description": "Nuestra SIM te permite conectarte a un operador local y evitar altas tarifas de roaming",
