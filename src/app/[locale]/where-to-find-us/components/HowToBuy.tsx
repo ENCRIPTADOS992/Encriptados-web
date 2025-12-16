@@ -6,10 +6,10 @@ export default function HowToBuy() {
   const t = useTranslations();
 
   return (
-    <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black px-4 py-8 md:px-8 md:py-12">
-      <h1 className="text-white font-bold text-3xl md:text-4xl text-center py-8 md:py-12">
+    <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black px-4 py-12 md:py-16 lg:py-20">
+      <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center mb-8">
         {t("WhereToFindUs.howToBuy.howToBuyTitle")}
-      </h1>
+      </h2>
       <SectionWrapper>
         <div
           className="
@@ -37,12 +37,11 @@ export default function HowToBuy() {
                 <h2
                   className="
                     font-bold
-                    text-[28px]
-                    sm:text-[32px]
-                    md:text-[34px]
-                    lg:text-[46px]
-                    xl:text-[60px]
-                    leading-[110%] sm:leading-[100%]
+                    text-[30px]
+                    sm:text-[38px]
+                    md:text-[44px]
+                    lg:text-[54px]
+                    leading-[1.2]
                     text-[#EBF5FA]
                   "
                 >
@@ -89,12 +88,10 @@ export default function HowToBuy() {
                 <h2
                   className="
                     font-bold
-                    text-[20px]
-                    sm:text-[22px]
-                    md:text-[26px]
-                    lg:text-[32px]
-                    xl:text-[40px]
-                    leading-[100%]
+                    text-[22px]
+                    sm:text-[24px]
+                    md:text-[30px]
+                    leading-[1.4]
                     text-black
                   "
                 >
@@ -129,12 +126,10 @@ export default function HowToBuy() {
                 <h2
                   className="
                     font-bold
-                    text-[20px]
-                    sm:text-[22px]
-                    md:text-[26px]
-                    lg:text-[32px]
-                    xl:text-[40px]
-                    leading-[100%]
+                    text-[22px]
+                    sm:text-[24px]
+                    md:text-[30px]
+                    leading-[1.4]
                     text-black
                   "
                 >

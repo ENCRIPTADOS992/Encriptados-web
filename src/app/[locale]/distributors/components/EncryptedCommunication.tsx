@@ -9,7 +9,7 @@ const EncryptedCommunication = () => {
   const t = useTranslations("DistributorsPage");
 
   return (
-<div className="w-full min-h-screen bg-black relative flex flex-col items-center justify-center py-16 overflow-hidden">
+<div className="w-full min-h-screen bg-black relative flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 overflow-hidden">
   {/* ELIPSE VERDE IZQUIERDA */}
   <div
     className="absolute pointer-events-none z-0"
@@ -71,12 +71,11 @@ const EncryptedCommunication = () => {
     <div className="w-full flex flex-col items-center">
       <div className="w-full max-w-2xl flex flex-col items-center">
         <div className="w-full flex justify-center">
-          <h1
-            className="text-white font-bold text-center mb-6 w-full max-w-[497px] text-[30px] leading-[100%] mx-auto"
-            style={{ fontFamily: "Inter, sans-serif" }} 
+          <h2
+            className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center mb-8 w-full max-w-[497px] mx-auto"
           >
             {t("knowsBenefits.subtitle")}
-          </h1>
+          </h2>
         </div>
         {/* Grid de tarjetas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -105,10 +104,10 @@ const EncryptedCommunication = () => {
               <div className="mb-4">
                 <ShieldDistributors />
               </div>
-              <div className="text-white font-bold text-[20px] md:text-[22px] leading-[100%] mb-2 max-w-[345px]">
+              <div className="text-[22px] leading-[1.5] font-medium text-white mb-3 max-w-[345px]">
                 {card.title}
               </div>
-              <div className="text-white/60 text-[15px] md:text-[18px] leading-[100%] max-w-[345px]">
+              <div className="text-base leading-relaxed text-white/60 max-w-[345px]">
                 {card.description}
               </div>
             </div>

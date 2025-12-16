@@ -46,7 +46,7 @@ const OurProductsDistributors = () => {
 
 
   return (
-    <div className="w-full bg-black relative overflow-hidden py-10 md:py-16">
+    <div className="w-full bg-black relative overflow-hidden py-12 md:py-16 lg:py-20">
       <div
         className="absolute pointer-events-none z-0"
         style={{
@@ -102,9 +102,9 @@ const OurProductsDistributors = () => {
 
         {/* Subtítulo */}
         <div className="w-full flex justify-center">
-          <h1 className="text-white text-2xl md:text-3xl text-center font-bold max-w-xl mb-12">
+          <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center max-w-xl mb-8">
             {t("subtitle")}
-          </h1>
+          </h2>
         </div>
 
         {/* Grid: 3 columnas SIEMPRE */}
@@ -115,7 +115,7 @@ const OurProductsDistributors = () => {
                 key={distributor.id}
                 className="relative rounded-[28px] shadow-lg text-white font-bold text-center flex flex-col px-6 py-8 md:px-8 md:py-10 justify-between items-center min-h-[360px] bg-gradient-to-b from-[#111111] to-[#0E0E0E]"
               >
-                <h1 className="mt-4 mb-4">{distributor.title}</h1>
+                <h3 className="text-[22px] leading-[1.5] font-medium text-white mt-4 mb-4">{distributor.title}</h3>
                 <div className="flex justify-center items-center">
                   <Image
                     width={180}

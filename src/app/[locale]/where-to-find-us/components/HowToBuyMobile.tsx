@@ -6,10 +6,10 @@ export default function HowToBuyMobile() {
     const t = useTranslations();
 
     return (
-        <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black px-4 py-8 lg:hidden">
-            <h1 className="text-white font-bold text-3xl text-center py-8">
+        <div className="bg-gradient-to-b from-[#041A20] via-[#041A20] to-black px-4 py-12 lg:hidden">
+            <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center mb-8">
                 {t("WhereToFindUs.howToBuy.howToBuyTitle")}
-            </h1>
+            </h2>
 
             <SectionWrapper>
                 <div className="max-w-sm mx-auto flex flex-col gap-4">
@@ -31,8 +31,8 @@ export default function HowToBuyMobile() {
                             className="
                             mt-5
                             font-bold
-                            text-[26px]
-                            leading-[110%]
+                            text-[30px]
+                            leading-[1.4]
                             text-black
                             "
                         >
@@ -71,7 +71,7 @@ export default function HowToBuyMobile() {
                                     mt-4
                                     font-bold
                                     text-[24px]
-                                    leading-[110%]
+                                    leading-[1.5]
                                     text-black
                                 "
                             >
@@ -112,7 +112,7 @@ export default function HowToBuyMobile() {
                                     mt-4
                                     font-bold
                                     text-[24px]
-                                    leading-[110%]
+                                    leading-[1.5]
                                     text-black
                                 "
                             >

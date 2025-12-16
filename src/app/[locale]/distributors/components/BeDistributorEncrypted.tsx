@@ -36,10 +36,10 @@ export default function BeDistributorEncrypted() {
             <div className="absolute inset-0 bg-black/70" />
 
             <div className="relative z-10 px-6 py-8 md:px-10 lg:px-14 flex flex-col gap-4 w-full max-w-[400px]">
-              <h1 className="font-bold text-white text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white">
                 {t("beEncryptedDistributor.title")}
-              </h1>
-              <p className="text-white text-sm md:text-base">
+              </h2>
+              <p className="text-base leading-relaxed text-white">
                 {t("beEncryptedDistributor.description")}
               </p>
               <div className="mt-4 max-w-xs">

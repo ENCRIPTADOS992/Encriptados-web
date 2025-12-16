@@ -27,7 +27,7 @@ const BannerDistributors = () => {
   }, []);
 
   return (
-    <div className="w-full bg-black relative flex justify-center items-center py-10 md:py-16 px-4 overflow-hidden">
+    <div className="w-full bg-black relative flex justify-center items-center py-12 md:py-16 lg:py-20 px-4 overflow-hidden">
       <div
         className="absolute pointer-events-none z-0"
         style={{
@@ -69,11 +69,11 @@ const BannerDistributors = () => {
 
       >
         <Bag />
-        <h1 className="text-white text-xl sm:text-2xl md:text-4xl w-10/12 md:w-8/12 font-bold text-center">
+        <h1 className="text-[30px] md:text-[38px] lg:text-[44px] leading-[1.3] font-bold text-white text-center w-10/12 md:w-8/12">
           {t("becomeOurAllyBannerTitle")}
         </h1>
 
-        <p className="text-[#FFFFFF] text-sm sm:text-base md:text-lg text-center w-10/12 md:w-8/12">
+        <p className="text-lg leading-relaxed text-[#FFFFFF] text-center w-10/12 md:w-8/12 mb-6">
           {t("becomeOurAllyBannerDescription")}
         </p>
 

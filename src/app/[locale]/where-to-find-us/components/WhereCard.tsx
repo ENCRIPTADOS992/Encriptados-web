@@ -22,9 +22,9 @@ export default function WhereCard({
       <div
         className={`flex-1 rounded-2xl bg-gradient-to-br ${leftGradient} p-6 text-white`}
       >
-        <h3 className="text-sm font-medium text-gray-200">{leftTitle}</h3>
-        <div className="mt-2 flex items-baseline gap-1">
-          <span className="text-4xl font-bold tracking-tight">
+        <h3 className="text-[22px] leading-[1.5] font-medium text-gray-200">{leftTitle}</h3>
+        <div className="mt-3 flex items-baseline gap-1">
+          <span className="text-[44px] leading-[1.3] font-bold tracking-tight">
             {leftNumber}
           </span>
           <svg
@@ -41,15 +41,15 @@ export default function WhereCard({
           </svg>
         </div>
         <hr className="my-4 border-[#0C3E24]" />
-        <p className="mt-4 text-sm text-gray-300">{leftDescription}</p>
+        <p className="text-base leading-relaxed text-gray-300">{leftDescription}</p>
       </div>
 
       <div
         className={`flex-1 rounded-2xl bg-gradient-to-br ${rightGradient} p-6 text-white`}
       >
-        <h3 className="text-sm font-medium text-gray-200">{rightTitle}</h3>
-        <div className="mt-2 flex items-baseline gap-1">
-          <span className="text-4xl font-bold tracking-tight">
+        <h3 className="text-[22px] leading-[1.5] font-medium text-gray-200">{rightTitle}</h3>
+        <div className="mt-3 flex items-baseline gap-1">
+          <span className="text-[44px] leading-[1.3] font-bold tracking-tight">
             {rightNumber}
           </span>
           <svg
@@ -66,7 +66,7 @@ export default function WhereCard({
           </svg>
         </div>
         <hr className="my-4 border-[#162E6A]" />
-        <p className="mt-4 text-sm text-gray-300">{rightDescription}</p>
+        <p className="text-base leading-relaxed text-gray-300">{rightDescription}</p>
       </div>
     </div>
   );

@@ -43,9 +43,9 @@ const FormWhereToFind = () => {
           <div className="flex items-center justify-center">
             <SearchFormIcon className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-[#19DBFA]" />
           </div>
-          <h1 className="text-white font-bold text-center text-lg sm:text-2xl md:text-3xl">
+          <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center">
             {t("WhereToFindUs.findATM.title")}
-          </h1>
+          </h2>
           <SearchInput
             inputClassName="bg-[#040403] border-[#505050] text-white"
             placeholder="Busca por pais"

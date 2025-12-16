@@ -12,7 +12,7 @@ export default function BeDistributorEncryptedMobile() {
     const ManHow = "/images/distributors/man-how.png";
 
     return (
-        <div className="w-full bg-black flex justify-center py-10 px-4">
+        <div className="w-full bg-black flex justify-center py-12 px-4">
             <SectionWrapper>
                 <div className="max-w-sm mx-auto bg-black rounded-3xl overflow-hidden relative flex flex-col items-center text-center px-6 pt-8 pb-0">
                     <div
@@ -23,11 +23,11 @@ export default function BeDistributorEncryptedMobile() {
 
                     {/* Texto + botón */}
                     <div className="relative z-10 flex flex-col items-center gap-4">
-                        <h1 className="font-bold text-white text-lg">
+                        <h2 className="text-[24px] leading-[1.5] font-bold text-white">
                             {t("beEncryptedDistributor.title")}
-                        </h1>
+                        </h2>
 
-                        <p className="text-white text-xs leading-relaxed">
+                        <p className="text-base leading-relaxed text-white">
                             {t("beEncryptedDistributor.description")}
                         </p>
 

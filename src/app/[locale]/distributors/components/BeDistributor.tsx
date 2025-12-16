@@ -9,17 +9,17 @@ const BeDistributor = () => {
   const ManDistributor = "/images/distributors/girlandman.png";
 
   return (
-    <div className="w-full bg-black flex justify-center items-center py-10 md:py-16">
+    <div className="w-full bg-black flex justify-center items-center py-12 md:py-16 lg:py-20">
       <SectionWrapper>
         <div className="w-full flex flex-col sm:flex-row gap-5 items-center">
           {/* Tarjeta de contenido */}
           <div className="w-full sm:w-1/2 bg-gradient-to-r from-[#35CDFB] via-[#35CDFB] to-[#00FFB2] p-0.5 rounded-2xl flex flex-col justify-center">
             <div className="bg-[#0E0E0E] rounded-xl p-4 sm:p-8 md:p-12 h-full">
               <ArrowDistributors />
-              <h1 className="text-white text-lg sm:text-3xl md:text-4xl font-bold mt-2">
+              <h2 className="text-[24px] md:text-[30px] lg:text-[38px] leading-[1.3] font-bold text-white mt-4">
                 {t("toBeADistributor.title")}
-              </h1>
-              <p className="text-[#9F9F9F] text-base mt-6 sm:mt-8 md:mt-10 sm:text-base md:text-lg">
+              </h2>
+              <p className="text-base leading-relaxed text-[#9F9F9F] mt-6">
                 {t("toBeADistributor.description")}
               </p>
             </div>

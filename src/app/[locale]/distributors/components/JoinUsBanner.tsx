@@ -11,7 +11,7 @@ const JoinUsBanner = () => {
   const BannerDistributorsImage = "/images/distributors/black-white-man.png";
 
   return (
-    <div className="w-full bg-black relative overflow-hidden py-10 md:py-16 px-2 md:px-4">
+    <div className="w-full bg-black relative overflow-hidden py-12 md:py-16 lg:py-20 px-2 md:px-4">
       <SectionWrapper className="relative z-10">
         <div
           className="
@@ -27,10 +27,10 @@ const JoinUsBanner = () => {
           }}
         >
           <EncryptedBgIcon />
-          <h1 className="text-white text-xl sm:text-2xl md:text-3xl w-11/12 md:w-8/12 font-bold text-center">
+          <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white text-center w-11/12 md:w-8/12">
             {title("bannerJoinUs")}
-          </h1>
-          <div className="flex items-center justify-center w-full">
+          </h2>
+          <div className="flex items-center justify-center w-full mt-6">
             <TelegramButton />
           </div>
         </div>

@@ -27,17 +27,17 @@ export default function Component() {
       {/* Contenedor principal */}
       <SectionWrapper className="relative z-10 flex h-full min-h-[300px] flex-col items-center justify-between mx-1 py-8 sm:px-6 lg:flex-row lg:px-8">
         {/* Sección de texto */}
-        <div className="flex flex-col text-center lg:text-left  mt-10 sm:mt-14">
+        <div className="flex flex-col text-center lg:text-left mt-10 sm:mt-14">
           <div className="px-2">
-            <p className="text-base text-white sm:text-lg md:text-xl mb-4 lg:mb-7">
+            <p className="text-lg leading-relaxed text-white mb-6">
               {t("WhereToFindUs.banner.titleEasyToBuyLicense")}
             </p>
-            <h1 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl leading-tight text-center lg:text-left">
+            <h1 className="text-[30px] md:text-[38px] lg:text-[44px] leading-[1.3] font-bold text-white text-center lg:text-left">
               {t("WhereToFindUs.banner.moreThanTitle")} {" "}
-              <span className="font-extrabold text-[#35CDFB] text-2xl sm:text-4xl md:text-5xl lg:text-6xl">36.732</span>{" "}
+              <span className="font-bold text-[#35CDFB] text-[40px] md:text-[48px] lg:text-[54px]">36.732</span>{" "}
               <span className="whitespace-nowrap">{t("WhereToFindUs.banner.pointsOfPay")}</span>
               <br />
-              <span className="text-2xl font-bold text-[#04FFB2] sm:text-3xl md:text-4xl lg:text-5xl">{t("WhereToFindUs.banner.forYou")}</span>
+              <span className="font-bold text-[#04FFB2] text-[30px] md:text-[38px] lg:text-[44px]">{t("WhereToFindUs.banner.forYou")}</span>
             </h1>
           </div>
         </div>

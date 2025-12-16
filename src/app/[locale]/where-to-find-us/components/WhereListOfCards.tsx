@@ -23,15 +23,15 @@ const WhereListOfCards = () => {
       {/* Capa de gradiente */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-[#031B20]"></div>
       {/* Contenido */}
-      <SectionWrapper className="relative z-10 h-full py-20 sm:py-32 md:py-44 flex flex-col items-center">
+      <SectionWrapper className="relative z-10 h-full py-16 md:py-20 lg:py-24 flex flex-col items-center">
         {/* Contenedor del texto */}
         <div className="w-full text-center mb-8">
-          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold p-4 rounded">
+          <h2 className="text-[30px] md:text-[38px] lg:text-[44px] leading-[1.3] font-bold text-white">
             {t("WhereToFindUs.whereCards.title")}{" "}
             <span className="text-[#6ADDFF]">
               {t("WhereToFindUs.whereCards.titleEncrypted")}
             </span>
-          </h1>
+          </h2>
         </div>
         {/* Tarjetas */}
         <WhereCard
