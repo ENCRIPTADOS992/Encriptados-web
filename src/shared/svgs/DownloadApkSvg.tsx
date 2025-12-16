@@ -1,10 +1,13 @@
 import React from "react";
 
-const DownloadApkSvg = () => {
+interface DownloadApkSvgProps {
+  className?: string;
+}
+
+const DownloadApkSvg: React.FC<DownloadApkSvgProps> = ({ className = "w-full h-auto max-w-[148px]" }) => {
   return (
     <svg
-      width="186"
-      height="55"
+      className={className}
       viewBox="0 0 186 55"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

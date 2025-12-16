@@ -24,7 +24,7 @@ const DownloadAppSectionMobile = () => (
     <div className="w-full flex justify-center relative">
       {/* Lateral izquierdo (detrás de la imagen) */}
       <div
-        className="absolute left-0 pointer-events-none z-10"
+        className="absolute left-0 pointer-events-none z-0"
         style={{
           top: "30%",
           height: "70%",
@@ -44,7 +44,7 @@ const DownloadAppSectionMobile = () => (
 
       {/* Lateral derecho (detrás de la imagen) */}
       <div
-        className="absolute right-0 pointer-events-none z-10"
+        className="absolute right-0 pointer-events-none z-0"
         style={{
           top: "30%",
           height: "70%",
@@ -66,7 +66,7 @@ const DownloadAppSectionMobile = () => (
       <img
         src="/images/apps/armadillo-v2/iPhonePortrait.png"
         alt=""
-        className="relative z-0 object-contain select-none pointer-events-none"
+        className="relative z-10 object-contain select-none pointer-events-none"
         draggable={false}
         style={{
           width: "339px",
@@ -77,7 +77,7 @@ const DownloadAppSectionMobile = () => (
       />
 
       {/* QR superpuesto al centro */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
+      <div className="absolute inset-0 flex items-center justify-center z-20">
         <img
           src="/images/encrypted-sim/download.png"
           alt="Código QR de descarga"

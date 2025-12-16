@@ -1,10 +1,8 @@
 import * as React from "react";
-const PlayStoreSvg: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => (
+const PlayStoreSvg: React.FC<React.SVGProps<SVGSVGElement>> = ({ className = "w-full h-auto max-w-[148px]", ...props }) => (
    <svg
     className={className}
     {...props}
-    width="187"
-    height="55"
     viewBox="0 0 187 55"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

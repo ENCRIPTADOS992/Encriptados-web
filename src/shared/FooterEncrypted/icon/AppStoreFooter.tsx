@@ -1,10 +1,13 @@
 import React from "react";
 
-const AppStoreFooter = () => {
+interface AppStoreFooterProps {
+  className?: string;
+}
+
+const AppStoreFooter: React.FC<AppStoreFooterProps> = ({ className = "w-full h-auto max-w-[148px]" }) => {
   return (
     <svg
-      width="188"
-      height="56"
+      className={className}
       viewBox="0 0 188 56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
