@@ -7,9 +7,10 @@ import {
   useRegionCountryFilter,
   UseRegionCountryFilterArgs,
   normalizeAlpha2,
+  formatMinFrom,
 } from "@/shared/hooks/useRegionCountryFilter";
 
-type FilterRegionCountryTimProps = UseRegionCountryFilterArgs;
+interface FilterRegionCountryTimProps extends UseRegionCountryFilterArgs {}
 
 const RegionIconTim: React.FC<{ size?: number; active?: boolean }> = ({
   size = 36,
@@ -32,7 +33,7 @@ const RegionIconTim: React.FC<{ size?: number; active?: boolean }> = ({
 const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
   props
 ) => {
-  const t = useTranslations("BneSimPage.simSelection");
+  const t = useTranslations("OurProductsPage");
   const {
     open,
     setOpen,
@@ -115,7 +116,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
             {/* Título + botón cerrar */}
             <div className="mb-3 flex items-center justify-between">
               <p className="text-[14px] font-semibold text-[#111827]">
-                {t('selectRegionCountry')}
+                Elige una región o país
               </p>
 
               <button
@@ -151,7 +152,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     bg-[#F4F4F4] text-[#171717] border-[#D0D0D0]
                     placeholder:text-[#9CA3AF]
                   "
-                  placeholder={t('search')}
+                  placeholder="Buscar"
                 />
 
                 {/* Lupa a la DERECHA */}
@@ -180,7 +181,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                 <button
                   className={`
                     px-4 py-2 rounded-full text-sm font-semibold
-                    transition h-[38px] w-auto min-w-[100px]
+                    transition h-[38px] w-[100px]
                     ${
                       filters.regionOrCountryType === "country"
                         ? "bg-[#009DFF] text-white"
@@ -193,13 +194,13 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     setSearchTerm("");
                   }}
                 >
-                  {t('country')}
+                  País
                 </button>
 
                 <button
                   className={`
                     px-4 py-2 rounded-full text-sm font-semibold
-                    transition h-[38px] w-auto min-w-[100px]
+                    transition h-[38px] w-[100px]
                     ${
                       filters.regionOrCountryType === "region"
                         ? "bg-[#009DFF] text-white"
@@ -212,11 +213,11 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     setSearchTerm("");
                   }}
                 >
-                  {t('region')}
+                  Región
                 </button>
               </div>
 
-              {/* Enlace Aplicar filtro */}
+              {/* Enlacee Aplicar filtro */}
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -226,7 +227,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                   hover:underline underline-offset-2
                 "
               >
-                {t('applyFilter')} ({selectedCount})
+                Aplicar filtro ({selectedCount})
               </button>
             </div>
 
@@ -236,7 +237,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                 <>
                   {loadingRegions && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      {t('loadingRegions')}
+                      Cargando regiones...
                     </div>
                   )}
 
@@ -244,7 +245,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     loadingSearch &&
                     searchTerm.length >= 2 && (
                       <div className="text-[#7E7E7E] text-sm py-2">
-                        {t('searching')}
+                        Buscando...
                       </div>
                     )}
 
@@ -292,12 +293,12 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                                 {typeof countriesCount === "number" &&
                                   countriesCount > 0 && (
                                     <span className="font-normal text-[#6B7280]">
-                                      ({countriesCount} {t('countries')})
+                                      ({countriesCount} países)
                                     </span>
                                   )}
                               </span>
                               <span className="text-[13px] text-[#6B7280]">
-                                {r.minFrom ? `${t('from')} ${r.minFrom.amount} ${r.minFrom.currency}` : "—"}
+                                {formatMinFrom(r.minFrom)}
                               </span>
                             </span>
                           </span>
@@ -305,7 +306,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                           <span className="w-5 h-5 flex items-center justify-center">
                             <span
                               className={`
-                                w-4 h-4 rounded-full border transition-all flex items-center justify-center
+                                block w-4 h-4 rounded-full border transition-all
                                 ${
                                   isActive
                                     ? "border-[#009DFF] bg-[#009DFF]"
@@ -314,7 +315,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                               `}
                             >
                               {isActive && (
-                                <span className="w-2 h-2 rounded-full bg-white" />
+                                <span className="block m-auto w-2 h-2 rounded-full bg-white" />
                               )}
                             </span>
                           </span>
@@ -328,7 +329,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                 <>
                   {loadingCountries && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      {t('loadingCountries')}
+                      Cargando países...
                     </div>
                   )}
 
@@ -336,7 +337,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     loadingSearch &&
                     searchTerm.length >= 2 && (
                       <div className="text-[#7E7E7E] text-sm py-2">
-                        {t('searching')}
+                        Buscando...
                       </div>
                     )}
 
@@ -392,7 +393,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                                 {c.name}
                               </span>
                               <span className="text-[13px] text-[#6B7280]">
-                                {t('coverage')}
+                                Cobertura 4G/5G
                               </span>
                             </span>
                           </span>
@@ -400,7 +401,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                           <span className="w-5 h-5 flex items-center justify-center">
                             <span
                               className={`
-                                w-4 h-4 rounded-full border transition-all flex items-center justify-center
+                                block w-4 h-4 rounded-full border transition-all
                                 ${
                                   isActive
                                     ? "border-[#009DFF] bg-[#009DFF]"
@@ -409,7 +410,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                               `}
                             >
                               {isActive && (
-                                <span className="w-2 h-2 rounded-full bg-white" />
+                                <span className="block m-auto w-2 h-2 rounded-full bg-white" />
                               )}
                             </span>
                           </span>
