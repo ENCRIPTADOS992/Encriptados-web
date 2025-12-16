@@ -280,7 +280,7 @@ export function useTranslatedProductsCategories(): any {
         defaultValue: "Router de encriptación",
       }),
       link: "",
-      image: "/images/mega-menu/Camaleon_Reuter.png",
+      image: "/images/mega-menu/camaleon_reuter.png",
       items: [
         {
           title: t("router.items.routerCamaleon.title", {
@@ -309,7 +309,7 @@ export function useTranslatedOthersCategories(): any[] {
       description: t2("distributors.description", {
         defaultValue: "Conviértete en distribuidor de nuestros productos",
       }),
-      image: "/images/mega-menu/Distribuidores.jpeg",
+      image: "/images/mega-menu/distribuidores.jpeg",
       link: "/distributors",
       items: [],
     },
@@ -319,7 +319,7 @@ export function useTranslatedOthersCategories(): any[] {
         defaultValue: "Últimas noticias y actualizaciones",
       }),
       link: "/blog",
-      image: "/images/mega-menu/Blog.jpeg",
+      image: "/images/mega-menu/blog.jpeg",
       items: [],
     },
     {
