@@ -600,35 +600,6 @@
       "moreInfo": "More information"
     }
   },
-  "BneSimPage": {
-    "faqs": {
-      "title": "Frequently Asked Questions",
-      "q1": {
-        "question": "Which devices are compatible with the SIM?",
-        "answer": "The SIM works with most unlocked phones and tablets. You just need your device to support your local operator's band."
-      },
-      "q2": {
-        "question": "How do I activate my SIM after purchasing it?",
-        "answer": "You will receive step-by-step instructions via email and within the app. Usually you just need to scan a code or follow a quick guide."
-      },
-      "q3": {
-        "question": "Can I use it in multiple countries?",
-        "answer": "Yes. Depending on the plan you contract, you can use the SIM in different countries without changing your number or losing your data balance."
-      },
-      "q4": {
-        "question": "Is my personal information recorded?",
-        "answer": "We don't ask for unnecessary sensitive information. Our focus is on keeping your browsing as private as possible."
-      },
-      "q5": {
-        "question": "What happens if I run out of data?",
-        "answer": "You can recharge your plan from the app or website at any time, without losing your SIM or needing to reactivate it."
-      },
-      "q6": {
-        "question": "Is there support if I have activation problems?",
-        "answer": "Yes. We have chat and email support to help you with installation, activation and use of your SIM."
-      }
-    }
-  },
   "DistributorsPage": {
     "banner": {
       "becomeOurAllyBannerTitle": "Become our business ally and sell our products",
