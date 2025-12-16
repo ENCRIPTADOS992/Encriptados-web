@@ -10,31 +10,23 @@ const HeroVideoSectionMobile: React.FC<HeroVideoSectionMobileProps> = ({
   videoUrl,
 }) => {
   return (
-    <section className="w-full bg-white py-8 px-0 block sm:hidden mt-[70px]">
-      <div className="w-full flex flex-col items-center px-3">
+    <section className="w-full bg-white py-12 px-4 block sm:hidden">
+      <div className="w-full max-w-[430px] mx-auto flex flex-col items-center gap-6">
         {/* Título arriba */}
-        <h1
-  className="
-    font-inter font-bold text-[24px] leading-[100%]
-    text-center text-[#000000]
-    w-[374px] h-[87px]
-    mb-5 whitespace-pre-line
-  "
->
-  {title}
-</h1>
+        <h2 className="font-bold text-[30px] leading-[1.4] text-center text-[#333333]">
+          {title}
+        </h2>
 
         {/* Video abajo */}
-        <div className="w-full rounded-[18px] overflow-hidden bg-black" style={{ maxWidth: 374, height: 210 }}>
+        <div className="w-full rounded-2xl overflow-hidden bg-black aspect-video">
           <iframe
-            width="374"
-            height="206"
             src={videoUrl}
-            title="YouTube video"
+            title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="w-full h-full border-0 rounded-[14px]"
+            className="w-full h-full border-0"
             loading="lazy"
+            aria-label={`Video: ${title}`}
           ></iframe>
         </div>
       </div>

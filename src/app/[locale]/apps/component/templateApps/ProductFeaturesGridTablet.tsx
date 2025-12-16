@@ -16,34 +16,35 @@ const ProductFeaturesGridTablet: React.FC<ProductFeaturesGridProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full hidden sm:flex lg:hidden justify-center bg-[#F6FAFC] py-10 mt-[50px]">
-      <div className="w-full max-w-[712px] mx-auto">
-        <h3 className="text-[16px] font-bold leading-[100%] text-[#101010] mb-8">
+    <section className="w-full hidden sm:flex lg:hidden justify-center bg-[#F6FAFC] py-16">
+      <div className="w-full max-w-[712px] mx-auto px-4">
+        <h3 className="text-[30px] leading-[1.4] font-bold text-[#333333] mb-8">
           {title}
         </h3>
-        <div className="grid grid-cols-2 gap-x-[24px] gap-y-[24px]">
+        <div className="grid grid-cols-2 gap-6">
           {features.map((feature, idx) => (
             <div
               key={idx}
-              className="flex flex-col items-center w-[344px] rounded-[11.3px]"
+              className="flex flex-col items-center w-full rounded-xl"
             >
               {/* Imagen */}
-              <div className="w-[344px] h-[220px] rounded-[11.3px] bg-white flex justify-center items-start">
+              <div className="w-full h-[220px] rounded-xl bg-white flex justify-center items-center shadow-md">
                 <img
                   src={feature.image}
-                  alt={feature.title}
-                  className="w-[174px] h-[179px] mt-[20px] object-contain"
+                  alt=""
+                  className="w-[174px] h-[179px] object-contain"
                   draggable={false}
                   loading="lazy"
+                  aria-hidden="true"
                 />
               </div>
 
               {/* Texto */}
-              <div className="flex flex-col w-[344px] gap-[12px] mt-[30px]">
-                <h4 className="font-inter font-semibold text-[14px] leading-[17px] text-[#101010]">
+              <div className="flex flex-col w-full gap-3 mt-6">
+                <h4 className="font-medium text-[22px] leading-[1.5] text-[#333333]">
                   {feature.title}
                 </h4>
-                <p className="font-inter font-light text-[12px] leading-[15px] text-[#101010]/70 text-justify">
+                <p className="text-base leading-relaxed text-[#555555]">
                   {feature.description}
                 </p>
               </div>

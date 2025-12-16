@@ -42,39 +42,39 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
   console.log("Props.selectedRadio:", selectedRadio);
 
   return (
-    <section className="w-full flex justify-center bg-white sm:hidden">
-      <div className="w-full flex flex-col px-3 py-5 gap-5">
+    <section className="w-full flex justify-center bg-white sm:hidden py-12">
+      <div className="w-full flex flex-col px-4 gap-6">
         {/* Imagen centrada */}
         <div className="w-full flex justify-center">
           <img
             src={productImage}
             alt={`${title} screenshot`}
-            className="rounded-[18px] w-full max-w-[430px] h-auto object-contain"
+            className="rounded-2xl w-full max-w-[430px] h-auto object-contain"
             draggable={false}
+            aria-hidden="true"
           />
         </div>
 
         {/* Bloque alineado a la izquierda */}
-        <div className="flex flex-col w-[374px] gap-[18px]">
-          <div className="flex flex-col w-[374px] gap-[12px]">
-            <h2 className="font-bold text-[24px] text-[#131313]">{title}</h2>
-            <p className="text-[14px] text-[#000000]">{description}</p>
+        <div className="flex flex-col w-full max-w-[430px] mx-auto gap-6">
+          <div className="flex flex-col w-full gap-3">
+            <h2 className="font-bold text-[30px] leading-[1.4] text-[#333333]">{title}</h2>
+            <p className="text-base leading-relaxed text-[#555555]">{description}</p>
           </div>
 
-          <div className="flex flex-wrap gap-2 justify-start w-full mb-1">
+          <div className="flex flex-col gap-3 justify-start w-full">
             {features.map((f, i) => (
-              <div key={i} className="flex items-center gap-2 mb-1">
-                <Check width={20} height={20} color="#1C1B1F" />
-                <span className="text-[16px]">{f}</span>
+              <div key={i} className="flex items-center gap-3">
+                <Check width={20} height={20} color="#333333" aria-hidden="true" />
+                <span className="text-base leading-relaxed text-[#333333]">{f}</span>
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap gap-2 w-full mt-2 ">
+          <div className="flex flex-col gap-3 w-full">
             {radioOptions.map((option) => (
               <label
                 key={option}
-                className="flex items-center gap-1 text-[14px] mb-1"
-                style={{ maxWidth: "90vw" }}
+                className="flex items-center gap-2 text-base cursor-pointer"
               >
                 <input
                   type="radio"
@@ -85,6 +85,8 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
                     console.log("onChange option:", option);
                     onRadioChange(option);
                   }}
+                  className="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label={`Plan ${option}`}
                 />
                 {option}
               </label>
@@ -92,22 +94,23 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
           </div>
         </div>
 
-        <div className="flex flex-col items-start mb-3 leading-tight">
-          <span className="text-[12px] text-[#000000] mb-[12px]">Desde</span>
-          <span className="font-bold text-[28px] text-[#000000] leading-none">
+        <div className="flex flex-col items-start leading-tight w-full max-w-[430px] mx-auto">
+          <span className="text-sm text-[#555555] mb-3">Desde</span>
+          <span className="font-bold text-[32px] leading-none text-[#333333]">
             {price}
           </span>
         </div>
 
-        <div className="flex flex-col gap-2 w-full mb-3">
+        <div className="flex flex-col gap-3 w-full max-w-[430px] mx-auto">
           <Button
             type="primary"
-            className="w-full justify-center h-[54px] rounded-[50px] px-[20px]"
+            className="w-full justify-center h-[54px] rounded-full px-6 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            aria-label={`Comprar ${title}`}
           >
             <p>Comprar ahora</p>
-            <ShoppingCart color="white" height={18} width={18} />
+            <ShoppingCart color="white" height={18} width={18} aria-hidden="true" />
           </Button>
-          <TelegramButton className="w-full h-[54px] rounded-[50px] px-[20px] min-w-0" />
+          <TelegramButton className="w-full h-[54px] rounded-full px-6 min-w-0 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" />
         </div>
       </div>
     </section>

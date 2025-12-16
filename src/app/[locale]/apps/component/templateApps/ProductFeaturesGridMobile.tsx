@@ -16,25 +16,25 @@ const ProductFeaturesGridMobile: React.FC<ProductFeaturesGridMobileProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full bg-[#F6FAFC] py-6 px-0 block sm:hidden mt-[60px]">
-      <h3 className="text-[20px] font-bold text-[#101010] text-center mb-4 px-2">
+    <section className="w-full bg-[#F6FAFC] py-12 px-4 block sm:hidden">
+      <h3 className="text-[30px] leading-[1.4] font-bold text-[#333333] text-center mb-6">
         {title}
       </h3>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-8">
         {features.map((feature, idx) => (
-          <div key={idx} className="flex flex-col items-center w-full">
+          <div key={idx} className="flex flex-col items-center w-full max-w-[430px] mx-auto">
             {/* Cuadro blanco solo para la imagen */}
             <div
-              className="bg-white rounded-[20px] mx-auto flex items-center justify-center"
+              className="bg-white rounded-2xl mx-auto flex items-center justify-center shadow-md"
               style={{
-                width: "374px",
+                width: "100%",
+                maxWidth: "374px",
                 height: "289px",
-                boxShadow: "0px 2px 16px 0px rgba(40, 74, 107, 0.08)",
               }}
             >
               <img
                 src={feature.image}
-                alt={feature.title}
+                alt=""
                 style={{
                   width: "176px",
                   height: "253px",
@@ -42,19 +42,14 @@ const ProductFeaturesGridMobile: React.FC<ProductFeaturesGridMobileProps> = ({
                 }}
                 draggable={false}
                 loading="lazy"
+                aria-hidden="true"
               />
             </div>
             {/* Título y descripción fuera del cuadro */}
-            <h4
-              className="font-inter font-semibold text-[18px] text-[#101010] mt-6 mb-2 leading-[22px] px-2 w-full"
-              style={{ maxWidth: 374 }}
-            >
+            <h4 className="font-medium text-[22px] leading-[1.5] text-[#333333] mt-6 mb-3 w-full">
               {feature.title}
             </h4>
-            <p
-              className="font-inter font-light text-[14px] text-[#101010] mt-5 opacity-70 leading-[1.2] text-justify w-full px-2"
-              style={{ maxWidth: 374 }}
-            >
+            <p className="text-base leading-relaxed text-[#555555] w-full">
               {feature.description}
             </p>
           </div>

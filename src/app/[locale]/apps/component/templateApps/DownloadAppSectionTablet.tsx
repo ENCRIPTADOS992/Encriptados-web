@@ -18,14 +18,8 @@ const DownloadAppSectionTablet = () => (
       }}
     >
       {/* Bloque de texto */}
-      <div
-        className="flex flex-col z-10"
-        style={{
-          width: 277,
-          gap: 18,
-        }}
-      >
-        <h2 className="font-inter font-bold text-white text-[26px] leading-[110%]">
+      <div className="flex flex-col z-10 w-[277px] gap-6">
+        <h2 className="font-bold text-white text-[38px] leading-[1.3]">
           Descarga la App <br />
           para iOS &amp; Android
         </h2>
@@ -33,32 +27,27 @@ const DownloadAppSectionTablet = () => (
           <AppStoreFooter />
           <PlayStoreSvg />
         </div>
-        <span className="block text-white text-[14px] font-normal opacity-80">
+        <span className="block text-white text-lg leading-relaxed text-white/80">
           O escanea el código QR con tu cámara
         </span>
       </div>
 
       {/* Imagen con QR superpuesto */}
-      <div
-        className="flex items-center justify-center"
-        style={{
-          width: 247,
-          height: 271,
-        }}
-      >
+      <div className="flex items-center justify-center w-[247px] h-[271px]">
         <div className="relative w-[247px] h-[271px]">
           {/* Mockup del iPhone */}
           <Image
             src={PhoneTablet}
-            alt="iPhone App Mockup"
+            alt=""
             width={247}
             height={271}
-            className="w-[247px] h-[271px] object-contain pointer-events-none select-none"
+            className="w-[247px] h-[271px] object-contain pointer-events-none select-none z-0"
             draggable={false}
+            aria-hidden="true"
           />
 
           {/* QR superpuesto al centro */}
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <Image
               src={DownloadQr}
               alt="Código QR de descarga"

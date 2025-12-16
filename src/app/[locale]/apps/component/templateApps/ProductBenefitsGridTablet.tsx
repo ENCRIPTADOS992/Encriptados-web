@@ -16,41 +16,31 @@ const ProductBenefitsGridTablet: React.FC<ProductBenefitsGridProps> = ({
   benefits,
 }) => {
   return (
-    <section className="w-full hidden sm:flex lg:hidden justify-center mt-[90px]">
-      <div className="bg-[#000000] w-[718px] h-[800px] rounded-[44px] pt-[62px] pr-[24px] pb-[62px] pl-[24px]">
-        <div className="w-[670px] mx-auto flex flex-col items-center gap-[6px]">
-          <h2
-            className="
-    font-inter font-bold text-[24px] leading-[100%]
-    text-center text-white w-[414px] h-[58px]
-  "
-          >
+    <section className="w-full hidden sm:flex lg:hidden justify-center py-20">
+      <div className="bg-[#000000] w-full max-w-[718px] rounded-[44px] p-12">
+        <div className="w-full mx-auto flex flex-col items-center gap-6">
+          <h2 className="font-bold text-[38px] leading-[1.3] text-center text-white">
             {title}
           </h2>
 
-          <div className="grid grid-cols-3 gap-[6px] mt-[30px]">
+          <div className="grid grid-cols-3 gap-4 mt-6">
             {benefits.map((benefit, idx) => (
               <div
                 key={idx}
-                className="
-                  flex flex-col items-start
-                  bg-[#101010] rounded-[12px]
-                  w-[220.67px] h-[284px]
-                  pt-[24px] pr-[24px] pb-[34px] pl-[24px]
-                  gap-[12px]
-                "
+                className="flex flex-col items-start bg-[#101010] rounded-xl p-6 gap-4"
               >
                 <img
                   src={benefit.icon}
-                  alt={benefit.title}
+                  alt=""
                   className="w-[34px] h-[34px]"
                   draggable={false}
                   loading="lazy"
+                  aria-hidden="true"
                 />
-                <h4 className="font-inter font-semibold text-[14px] text-white leading-[17px]">
+                <h4 className="font-medium text-[22px] leading-[1.5] text-white">
                   {benefit.title}
                 </h4>
-                <p className="font-inter font-light text-[12px] leading-[15px] text-white/60 text-left">
+                <p className="text-base leading-relaxed text-white/80">
                   {benefit.description}
                 </p>
               </div>

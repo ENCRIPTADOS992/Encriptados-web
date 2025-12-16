@@ -16,36 +16,32 @@ const ProductBenefitsGridMobile: React.FC<ProductBenefitsGridMobileProps> = ({
   benefits,
 }) => {
   return (
-    <section className="w-full bg-[#000000] block sm:hidden py-[64px] px-[20px] mt-[70px]">
-      <div className="flex flex-col items-center gap-[24px] w-full max-w-[414px] mx-auto">
+    <section className="w-full bg-[#000000] block sm:hidden py-16 px-4">
+      <div className="flex flex-col items-center gap-8 w-full max-w-[430px] mx-auto">
         {/* Título */}
-        <h2 className="w-[292px] h-[48px] font-inter font-bold text-[20px] leading-[100%] text-center text-white">
+        <h2 className="font-bold text-[38px] leading-[1.3] text-center text-white">
           {title}
         </h2>
 
         {/* Grid de tarjetas centradas */}
-        <div className="flex flex-col items-center justify-center gap-[4px] w-full">
+        <div className="flex flex-col items-center justify-center gap-4 w-full">
           {benefits.map((benefit, idx) => (
             <div
               key={idx}
-              className="
-                flex flex-col bg-[#101010] rounded-[12px]
-                w-full max-w-[374px] h-[260px]
-                pt-[24px] pr-[24px] pb-[34px] pl-[24px]
-                gap-[14px] mx-auto
-              "
+              className="flex flex-col bg-[#101010] rounded-xl w-full p-6 gap-4"
             >
               <img
                 src={benefit.icon}
-                alt={benefit.title}
+                alt=""
                 className="w-[44px] h-[44px]"
                 draggable={false}
                 loading="lazy"
+                aria-hidden="true"
               />
-              <h4 className="font-inter font-semibold text-[18px] text-white leading-[22px]">
+              <h4 className="font-medium text-[22px] leading-[1.5] text-white">
                 {benefit.title}
               </h4>
-              <p className="font-inter text-[14px] text-white/70 leading-[20px] text-justify">
+              <p className="text-base leading-relaxed text-white/80">
                 {benefit.description}
               </p>
             </div>
