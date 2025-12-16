@@ -16,13 +16,13 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
   benefits,
 }) => {
   return (
-    <section className="hidden lg:flex w-full justify-center mt-[90px]">
+    <section className="hidden lg:flex w-full justify-center py-16 md:py-20 lg:py-24">
       {/* Fondo negro con medidas exactas */}
-      <div className="bg-[#000000] w-[1272px] h-[840px] rounded-[44px] py-[64px] px-[64px] mx-auto">
+      <div className="bg-[#000000] w-full max-w-[1272px] rounded-[44px] py-16 px-16 mx-auto">
         {/* Contenido interno con separación de Figma */}
-        <div className="flex flex-col items-center gap-[44px] h-full">
+        <div className="flex flex-col items-center gap-12 h-full">
           {/* Título */}
-          <h2 className="w-[891px] text-center text-white font-inter font-bold text-[30px] leading-[100%] mt-[42px]">
+          <h2 className="max-w-[891px] text-center text-white font-bold text-[38px] leading-[1.3] mb-4">
             {title}
           </h2>
 
@@ -30,30 +30,31 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
           <div
             className="
               grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
-              gap-[12px] w-[927px]
+              gap-4 w-full max-w-[927px]
             "
           >
             {benefits.map((benefit, idx) => (
               <div
                 key={idx}
                 className="
-                  flex flex-col bg-[#101010] rounded-[12px]
-                  w-[303px] h-[264px]
-                  p-[24px] pb-[34px] gap-[12px]
+                  flex flex-col bg-[#101010] rounded-xl
+                  w-full max-w-[303px]
+                  p-6 gap-3
                   shadow-lg items-start
                 "
               >
                 <img
                   src={benefit.icon}
                   alt={benefit.title}
-                  className="w-[34px] h-[34px]"
+                  className="w-10 h-10 mb-2"
                   draggable={false}
                   loading="lazy"
+                  aria-hidden="true"
                 />
-                <h4 className="font-inter font-semibold text-[18px] text-white">
+                <h4 className="font-medium text-[22px] text-white leading-[1.5] mb-2">
                   {benefit.title}
                 </h4>
-                <p className="font-inter text-[14px] text-white/60">
+                <p className="text-base text-white/80 leading-relaxed">
                   {benefit.description}
                 </p>
               </div>

@@ -16,12 +16,12 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-10 ">
-      <div className="w-full max-w-[1272px] mx-auto">
-        <h3 className="text-[24px] font-bold leading-[100%] text-[#101010] mb-8">
+    <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-12 md:py-16 lg:py-20">
+      <div className="w-full max-w-[1272px] mx-auto px-4">
+        <h3 className="text-[30px] font-bold leading-[1.4] text-[#333333] mb-8">
           {title}
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {features.map((feature, idx) => (
             <div key={idx} className="flex flex-col items-stretch h-full">
               <div className="bg-white rounded-[14.84px] flex flex-col items-center justify-center w-[306px] h-[289px]">
@@ -32,13 +32,14 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
                   draggable={false}
                   loading="lazy"
                   style={{ margin: "0 auto" }}
+                  aria-hidden="true"
                 />
               </div>
               <div className="flex flex-col flex-1 pt-4">
-                <h4 className="font-inter font-semibold text-[18px] text-[#101010] mb-2 min-h-[44px] leading-[22px]">
+                <h4 className="font-medium text-[22px] text-[#333333] mb-3 leading-[1.5]">
                   {feature.title}
                 </h4>
-                <p className="font-inter font-light text-[14px] text-[#101010] opacity-70 leading-[1.2] text-justify">
+                <p className="text-base text-[#555555] leading-relaxed">
                   {feature.description}
                 </p>
               </div>
