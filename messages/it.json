@@ -235,7 +235,6 @@
     "encryptedTitleButon": "SIM Card Criptata",
     "encryptedTitle": "La SIM Criptata ti offre la massima sicurezza e anonimato ovunque nel mondo",
     "encryptedDescription": "Sicurezza e privacy nelle tue comunicazioni, effettua chiamate anonime e irrintracciabili e proteggiti dagli IMSI Catcher",
-
     "CardSim": {
       "headerTitle": "Ricarica Dati",
       "availableCountries": "+200 paesi disponibili",
@@ -250,11 +249,9 @@
       "rating": "5/5",
       "buyNow": "Acquista Ora"
     },
-
     "characteristics": {
       "title": "Caratteristiche principali"
     },
-
     "commonFeatures": {
       "dataMobile": "Dati mobili",
       "speed": "Velocità 4/5G LTE",
@@ -333,7 +330,6 @@
         "headerTitle": "SIM Fisica"
       }
     },
-
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Migliora la tua sicurezza con queste caratteristiche",
       "untraceable": {
@@ -356,7 +352,6 @@
         "title": "Filtri vocali",
         "description": "Usa 7 filtri vocali diversi per una maggiore anonimato nelle tue chiamate"
       },
-
       "callback": {
         "title": "Richiamata",
         "description": "Genera un numero casuale per ogni chiamata che apparirà nell'identificatore del destinatario"
@@ -377,7 +372,6 @@
         "title": "Maschera l'IMSI",
         "description": "Nascondi il tuo IMSI per evitare intercettazioni o antenne false come gli IMSI Catchers"
       },
-
       "providerPrivateRed": {
         "title": "Fornitore di rete privata",
         "description": "Siamo un MVNO privato con totale discrezione nell'uso dei tuoi dati personali"
@@ -401,7 +395,6 @@
       "card2": "Anonimato nelle chiamate tramite strumenti: sostituzione dell'ID, Callback e filtro vocale",
       "card3": "La SIM genera un numero sostitutivo casuale per ogni chiamata per maggiore anonimato"
     },
-
     "coverageMoreThan200CountriesTitle": "Copertura in oltre 200 paesi",
     "coverageMoreThan200CountriesDescription": "Comunicazione sicura e senza confini",
     "downloadAppTitle": "Scarica l'app per iOS e Android",
@@ -429,7 +422,6 @@
       "unlimitedDataTitle": "Dati illimitati",
       "unlimitedDataDescription": "Trova piani illimitati in modo che i gigabyte non siano un problema. Rimani connesso"
     },
-
     "howItWorks": {
       "title": "Ecco come funziona",
       "chooseRegionTitle": "Scegli la regione in cui vuoi utilizzare la tua",
@@ -453,6 +445,32 @@
     "whyChooseSim": "Perché scegliere la nostra SIM?",
     "anonTitle": "Nessun registro dati, anonimato garantito!",
     "anonDescription": "I dati che non vengono memorizzati non possono essere divulgati o rivelati. Fa parte della nostra filosofia non raccogliere informazioni personali né registri dei nostri clienti.",
+    "simSelection": {
+      "mainTitle": "Dove userai la tua SIM?",
+      "subtitle": "Connettiti a Internet con la tua SIM o eSIM in oltre 200 paesi. Goditi Internet sicuro con totale anonimato.",
+      "category": "Categoria",
+      "physicalSim": "SIM Fisica",
+      "recharge": "Ricarica",
+      "esimData": "eSIM + Dati",
+      "region": "Regione/Paese",
+      "search": "Cerca",
+      "back": "Indietro",
+      "productsFound": "prodotti trovati",
+      "noProducts": "0 prodotti trovati",
+      "selectRegionCountry": "Scegli una regione o un paese",
+      "country": "Paese",
+      "applyFilter": "Applica filtro",
+      "loadingRegions": "Caricamento regioni...",
+      "loadingCountries": "Caricamento paesi...",
+      "searching": "Ricerca...",
+      "from": "Da",
+      "countries": "paesi",
+      "coverage": "Copertura 4G/5G",
+      "product": "prodotto",
+      "products": "prodotti",
+      "found": "trovato",
+      "founds": "trovati"
+    },
     "OurSimCard": {
       "title": "Nessun costo di roaming",
       "description": "La nostra SIM ti permette di connetterti a un operatore locale e di evitare le alte tariffe di roaming",
@@ -542,6 +560,10 @@
       "licenseTitle": "Durata della licenza",
       "selectPlacerholder": "Seleziona",
       "searchPlaceholder": "Cerca"
+    },
+    "productCard": {
+      "buy": "Acquista",
+      "moreInfo": "Maggiori informazioni"
     }
   },
   "DistributorsPage": {
@@ -831,7 +853,20 @@
         },
         "timSim": {
           "title": "SIM TIM",
-          "description": "Scopri come funziona la SIM TIM"
+          "description": "Scopri come funziona la SIM TIM",
+          "simSelection": {
+            "mainTitle": "Dove userai la tua SIM?",
+            "subtitle": "Connettiti a Internet con la tua SIM o eSIM in oltre 200 paesi. Goditi internet sicuro e in totale anonimato.",
+            "category": "Categoria",
+            "physicalSim": "SIM Fisica",
+            "recharge": "Ricarica",
+            "esimData": "eSIM + Dati",
+            "region": "Regione/Paese",
+            "search": "Cerca",
+            "back": "Indietro",
+            "productsFound": "prodotti trovati",
+            "noProducts": "0 prodotti trovati"
+          }
         }
       }
     },
@@ -1585,7 +1620,10 @@
       "Interfaccia unificata",
       "Chat di gruppo crittografate"
     ],
-    "plans": ["Licenza 3 Mesi", "Licenza 6 Mesi"],
+    "plans": [
+      "Licenza 3 Mesi",
+      "Licenza 6 Mesi"
+    ],
     "buttons": {
       "buyNow": "Compra ora",
       "supportChat": "Chat di supporto"
@@ -1784,7 +1822,11 @@
       "Applicazioni blockchain",
       "Cancellazione remota e pulsante di panico"
     ],
-    "plans": ["Telefono Criptato", "Licenza 3 mesi", "Licenza 6 mesi"],
+    "plans": [
+      "Telefono Criptato",
+      "Licenza 3 mesi",
+      "Licenza 6 mesi"
+    ],
     "buttons": {
       "buyNow": "Acquista ora",
       "supportChat": "Chat di supporto"
@@ -1905,7 +1947,10 @@
       "Blocco e cancellazione remota",
       "Messaggi e chiamate crittografate"
     ],
-    "plans": ["Licenza 3 mesi", "Licenza 6 mesi"],
+    "plans": [
+      "Licenza 3 mesi",
+      "Licenza 6 mesi"
+    ],
     "buttons": {
       "buyNow": "Acquista ora",
       "supportChat": "Chat di supporto"

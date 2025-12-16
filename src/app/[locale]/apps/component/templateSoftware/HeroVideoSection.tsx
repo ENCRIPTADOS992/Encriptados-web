@@ -11,28 +11,27 @@ const HeroVideoSection: React.FC<HeroVideoSectionProps> = ({
 }) => {
   return (
     <section
-      className="w-full hidden lg:flex justify-center bg-white py-10 mt-[90px]"
-      style={{ maxHeight: 350 }}
+      className="w-full hidden lg:flex justify-center bg-white py-16 md:py-20 lg:py-24"
     >
-      <div className="w-full max-w-[1272px] flex items-center mx-auto gap-6">
+      <div className="w-full max-w-[1272px] flex items-center mx-auto gap-8 px-4">
 
         {/* Título grande a la izquierda */}
         <div className="w-[540px]">
-          <h1 className="font-inter font-bold text-[44px] leading-[100%] text-[#101010]">
+          <h2 className="font-bold text-[44px] leading-[1.3] text-[#333333]">
             {title}
-          </h1>
+          </h2>
         </div>
         {/* Video o imagen a la derecha */}
         <div className="flex-shrink-0 ml-auto">
-          <div className="rounded-[14px] overflow-hidden w-[627px] h-[346px] bg-black">
+          <div className="rounded-2xl overflow-hidden w-[627px] h-[346px] bg-black">
             <iframe
               width="627"
               height="346"
               src={videoUrl}
-              title="YouTube video"
+              title="Vídeo de YouTube"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              className="w-full h-full rounded-[14px] border-0"
+              className="w-full h-full rounded-2xl border-0"
               loading="lazy"
             ></iframe>
           </div>

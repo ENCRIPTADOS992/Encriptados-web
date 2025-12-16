@@ -3,7 +3,7 @@ import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import { Check } from "lucide-react";
-import Button from "../../shared/Button";
+import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -78,22 +78,22 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         {/* Columna izquierda */}
         <div className="flex flex-col w-[455px] gap-y-[20px]">
           {/* Título + Descripción */}
-          <div className="flex flex-col w-[413px] gap-[12px]">
-            <h2 className="font-inter font-bold text-[28px] leading-[100%] text-[#131313]">
+          <div className="flex flex-col max-w-[413px] gap-4">
+            <h1 className="text-[38px] leading-[1.3] font-bold text-[#131313]">
               {title}
-            </h2>
-            <p className="font-inter font-normal text-[14px] leading-[100%] text-[#000000]">
+            </h1>
+            <p className="text-base leading-relaxed text-[#555555]">
               {description}
             </p>
           </div>
 
           {/* Features/Checks */}
-          <div className="flex flex-col gap-[8px]">
+          <div className="flex flex-col gap-3">
             {features.length > 0 ? (
               features.map((f, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <Check width={28} height={28} color="#1C1B1F" />
-                  <span className="text-[16px] text-[#131313]">{f}</span>
+                <div key={i} className="flex items-center gap-3">
+                  <Check width={28} height={28} color="#1C1B1F" aria-hidden="true" />
+                  <span className="text-base leading-relaxed text-[#131313]">{f}</span>
                 </div>
               ))
             ) : loading ? (
@@ -102,12 +102,11 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           </div>
 
           {/* Radios */}
-          <div className="flex flex-row flex-wrap gap-[18px]">
+          <div className="flex flex-row flex-wrap gap-4">
             {radioOptions.map((option) => (
               <label
                 key={option}
-                className="flex items-center gap-1 cursor-pointer font-inter font-normal text-[16px] text-[#131313] whitespace-nowrap"
-                style={{ maxWidth: "calc(100% - 20px)" }}
+                className="flex items-center gap-2 cursor-pointer text-base text-[#333333] whitespace-nowrap hover:text-primary transition-colors"
               >
                 <input
                   type="radio"
@@ -115,6 +114,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                   value={option}
                   checked={selectedRadio === option}
                   onChange={() => onRadioChange(option)}
+                  className="w-4 h-4 text-primary focus:ring-primary focus:ring-2"
+                  aria-label={`Seleccionar plan ${option}`}
                 />
                 <span className="whitespace-nowrap">{option}</span>
               </label>
@@ -124,24 +125,24 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           <hr className="my-[18px] border-[#E0E0E0]" />
 
           {/* Precio + Botones */}
-          <div className="flex flex-col gap-[22px]">
+          <div className="flex flex-col gap-6">
             <div>
-              <span className="block text-[14px] text-[#000000] leading-[100%] mb-[2px]">
+              <span className="block text-sm text-[#787878] leading-normal mb-1">
                 Desde
               </span>
-              <span className="block font-inter font-bold text-[24px] leading-[100%] text-[#000000]">
+              <span className="block text-[30px] leading-[1.4] font-bold text-[#131313]">
                 {price}
               </span>
             </div>
             <div className="flex gap-3">
               <Button
-                type="primary"
-                className="md:w-full md:justify-center"
+                intent="dark"
+                size="md"
                 onClick={handleBuy}
-                disabled={!productId}
+                icon={<ShoppingCart color="white" height={20} width={20} />}
+                iconPosition="right"
               >
-                <p className="font-medium text-base">Comprar ahora</p>
-                <ShoppingCart color="white" height={20} width={20} />
+                Comprar ahora
               </Button>
               <TelegramButton />
             </div>

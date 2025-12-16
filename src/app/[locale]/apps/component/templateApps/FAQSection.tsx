@@ -25,7 +25,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
         {faqs.map((faq, idx) => (
           <div
             key={idx}
-            className="bg-[#F9F9F9] border border-[#E5E5E5] rounded-xl px-6 py-5 flex flex-col"
+            className="bg-[#F9F9F9] rounded-xl px-6 py-5 flex flex-col"
           >
             <button
               className="w-full flex justify-between items-center text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg p-2"

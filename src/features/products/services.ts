@@ -21,6 +21,10 @@ export const getAllProducts = async (
       params.sim_country = options.simCountry;
     }
 
+    console.log("🚀 [getAllProducts] Iniciando petición...");
+    console.log("🚀 [getAllProducts] URL:", `${WP_API_BASE}/encriptados/v1/products/by-category-language`);
+    console.log("🚀 [getAllProducts] Params enviados:", params);
+    
     const response = await axios.get<{
       message: string;
       products: Record<string, Product>;
@@ -28,8 +32,9 @@ export const getAllProducts = async (
       params,
     });
     const rawProducts = response.data.products;
-    console.log("🛰️ [getAllProducts] params:", params);
-    console.log("🛰️ [getAllProducts] raw products object keys:", Object.keys(rawProducts));
+    console.log("🛰️ [getAllProducts] respuesta recibida");
+    console.log("🛰️ [getAllProducts] message:", response.data.message);
+    console.log("🛰️ [getAllProducts] cantidad de productos (keys):", Object.keys(rawProducts).length);
     const products: Allproducts = Object.values(rawProducts).map((p: any) => {
       const licenseVariants =
         p.variants?.map((v: any) => ({

@@ -25,7 +25,7 @@ const FAQSectionMobile: React.FC<FAQSectionMobileProps> = ({
         {faqs.map((faq, idx) => (
           <div key={idx} className="w-full">
             <button
-              className={`flex justify-between items-center w-full bg-[#F9F9F9] border border-[#F1F1F1] rounded-xl px-6 py-4 min-h-[84px] transition-shadow duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${openIndex === idx ? "shadow-lg" : ""}`}
+              className={`flex justify-between items-center w-full bg-[#F9F9F9] rounded-xl px-6 py-4 min-h-[84px] transition-shadow duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${openIndex === idx ? "shadow-lg" : ""}`}
               onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
               aria-expanded={openIndex === idx}
               aria-controls={`faq-answer-mobile-${idx}`}

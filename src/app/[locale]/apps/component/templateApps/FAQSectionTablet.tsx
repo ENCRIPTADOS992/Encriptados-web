@@ -23,7 +23,7 @@ const FAQSectionTablet: React.FC<FAQSectionTabletProps> = ({
       </h2>
       <div className="w-full max-w-[713px] flex flex-col gap-4">
         {faqs.map((faq, idx) => (
-          <div key={idx} className="bg-[#F9F9F9] border border-[#F1F1F1] rounded-xl flex flex-col p-6 min-h-[84px]">
+          <div key={idx} className="bg-[#F9F9F9] rounded-xl flex flex-col p-6 min-h-[84px]">
             <button
               className="w-full flex items-center justify-between text-left focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg"
               onClick={() => setOpenIndex(openIndex === idx ? null : idx)}

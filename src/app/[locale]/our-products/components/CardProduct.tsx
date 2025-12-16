@@ -8,6 +8,7 @@ import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
+import { useTranslations } from "next-intl";
 
 
 const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
@@ -69,6 +70,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
+  const t = useTranslations("OurProductsPage.productCard");
 
   console.log("🧩 [CardProduct] props =>", {
     id,
@@ -230,8 +232,7 @@ const CardProduct: React.FC<CardSimProps> = ({
               onClick={handleBuy}
               type="button"
               className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center justify-center gap-2"
-            >
-              Comprar
+            >{t("buy")}
               <LocalMallSvgNew />
             </button>
             <span
@@ -246,7 +247,7 @@ const CardProduct: React.FC<CardSimProps> = ({
               }}
               className="cursor-pointer text-xs text-black hover:underline"
             >
-              Más información
+              {t("moreInfo")}
             </span>
           </div>
         </div>

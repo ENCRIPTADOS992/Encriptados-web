@@ -2,7 +2,7 @@ import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import { Check } from "lucide-react";
-import Button from "../../shared/Button";
+import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 
@@ -95,14 +95,15 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
             </div>
             <div className="flex gap-3">
               <Button
-                type="primary"
-                className="flex items-center justify-center w-[180px] h-[48px] px-6 text-base gap-2 whitespace-nowrap focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                aria-label={`Comprar ${title}`}
+                intent="dark"
+                size="md"
+                onClick={onBuy}
+                icon={<ShoppingCart color="white" height={20} width={20} />}
+                iconPosition="right"
               >
-                <span className="font-medium text-base">Comprar ahora</span>
-                <ShoppingCart color="white" height={18} width={18} aria-hidden="true" />
+                Comprar
               </Button>
-              <TelegramButton className="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" />
+              <TelegramButton />
             </div>
           </div>
         </div>

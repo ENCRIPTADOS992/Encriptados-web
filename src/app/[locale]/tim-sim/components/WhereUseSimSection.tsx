@@ -15,32 +15,36 @@ type TimServiceType = "esim_datos" | "recarga_datos" | "sim_fisica";
 
 const TIM_SERVICE_OPTIONS: {
   id: TimServiceType;
-  label: string;
+  translationKey: string;
   timprovider: string;
   icon: string;
 }[] = [
   {
     id: "sim_fisica",
-    label: "SIM Física",
+    translationKey: "physicalSim",
     timprovider: "physicsimtim",
     icon: "/images/encrypted-sim/icons/sim_card.png",
   },
   {
     id: "recarga_datos",
-    label: "Recargar",
+    translationKey: "recharge",
     timprovider: "datarechargetim",
     icon: "/images/encrypted-sim/icons/currency_exchange.png",
   },
   {
     id: "esim_datos",
-    label: "eSIM + Datos",
+    translationKey: "esimData",
     timprovider: "esimplusdatatim",
     icon: "/images/encrypted-sim/icons/apps.png",
   },
 ];
 
-const WhereUseSimSection = () => {
-  const t = useTranslations("BneSimPage");
+interface WhereUseSimSectionProps {
+  locale: string;
+}
+
+const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
+  const t = useTranslations("BneSimPage.simSelection");
   const tProducts = useTranslations("OurProductsPage");
 
   const [filters, setFilters] = useState<ProductFilters>({
@@ -49,6 +53,8 @@ const WhereUseSimSection = () => {
     timService: "sim_fisica",
     timprovider: "physicsimtim",
     regionOrCountry: "GLOBAL",
+    regionOrCountryType: "region",
+    simRegion: "global",
   } as ProductFilters);
 
   const updateFilters = (partial: Partial<ProductFilters>) =>
@@ -66,11 +72,10 @@ const WhereUseSimSection = () => {
       <SectionWrapper>
         <div className="flex flex-col items-center text-center mb-8 lg:mb-10">
           <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] mb-4 text-[#333333]">
-            ¿Dónde vas a usar tu SIM?
+            {t('mainTitle')}
           </h2>
           <p className="text-base sm:text-lg leading-relaxed max-w-[720px] text-[#555555]">
-            Conéctate a Internet con tu SIM o eSIM en más de 200 países.
-            Disfruta de internet seguro y con total anonimato.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -81,7 +86,7 @@ const WhereUseSimSection = () => {
             {/* Categoría */}
             <div className="w-full lg:w-auto lg:flex-1">
               <p className="text-sm font-medium text-[#7E7E7E] mb-3">
-                Categoría
+                {t('category')}
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {TIM_SERVICE_OPTIONS.map((option) => {
@@ -98,6 +103,7 @@ const WhereUseSimSection = () => {
                         })
                       }
                       className={`
+                        group
                         flex flex-col items-center justify-center
                         py-3 sm:py-4 px-1 sm:px-3
                         rounded-xl sm:rounded-[18px]
@@ -106,27 +112,24 @@ const WhereUseSimSection = () => {
                         ${
                           isActive
                             ? "bg-[#E8F4FF] border-[#00A3FF] text-[#00A3FF]"
-                            : "bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:border-[#00A3FF]"
+                            : "bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:bg-[#E8F4FF] hover:border-[#00A3FF] hover:text-[#00A3FF]"
                         }
                       `}
                     >
                       <span className="relative w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2">
                         <Image
                           src={option.icon}
-                          alt={option.label}
+                          alt={option.translationKey}
                           fill
                           className={`object-contain transition-all ${
                             isActive 
-                              ? "brightness-0 saturate-100 opacity-100" 
-                              : "opacity-60 grayscale"
+                              ? "[filter:brightness(0)_saturate(100%)_invert(52%)_sepia(97%)_saturate(1655%)_hue-rotate(179deg)_brightness(103%)_contrast(101%)]" 
+                              : "[filter:grayscale(100%)_opacity(0.6)] group-hover:[filter:brightness(0)_saturate(100%)_invert(52%)_sepia(97%)_saturate(1655%)_hue-rotate(179deg)_brightness(103%)_contrast(101%)]"
                           }`}
-                          style={isActive ? {
-                            filter: 'invert(47%) sepia(92%) saturate(2574%) hue-rotate(180deg) brightness(102%) contrast(101%)'
-                          } : {}}
                         />
                       </span>
                       <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">
-                        {option.label}
+                        {t(option.translationKey as any)}
                       </span>
                     </button>
                   );
@@ -138,7 +141,7 @@ const WhereUseSimSection = () => {
             {shouldShowTimRegion && (
               <div className="w-full lg:flex-1">
                 <p className="text-sm font-medium text-[#7E7E7E] mb-3">
-                  Región/País
+                  {t('region')}
                 </p>
                 <FilterRegionCountryTim
                   filters={filters}

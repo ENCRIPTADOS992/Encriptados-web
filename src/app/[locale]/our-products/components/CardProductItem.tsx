@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import type { Product } from "@/features/products/types/AllProductsResponse";
 import { FC, useState, MouseEvent } from "react";
+import { useTranslations } from "next-intl";
 
 interface CardProductItemProps {
   product: Product;
@@ -20,6 +21,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
   const [period, setPeriod] = useState(periodOptions[0] || "");
   const { openModal } = useModalPayment();
   const router = useRouter();
+  const t = useTranslations("OurProductsPage.productCard");
 
   const handleMoreInfo = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -86,14 +88,14 @@ const CardProductItem: FC<CardProductItemProps> = ({
           }
           type="button"
           className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-lg transition-colors"
-        >
-          Comprar ahora
+        >{t("buy")}
         </button>
 
         <button
           onClick={handleMoreInfo}
           className="text-sm text-[#10B4E7] underline text-center hover:text-[#7EE0FF]"
         >
+          {t("moreInfo")}
           Más información
         </button>
       </div>

@@ -16,72 +16,38 @@ const SecurityFeaturesMobile: React.FC<SecurityFeaturesMobileProps> = ({
   features,
   imageUrl,
 }) => (
-  <section className="flex flex-col items-center py-6 bg-black sm:hidden">
-    <h2
-      className="
-        mt-[32px]
-          font-inter font-bold text-[24px] leading-[100%]
-          tracking-[0px] text-white text-center
-          w-[329px] h-[58px] mx-auto mb-8
-        "
-    >
-      {title}
-    </h2>
-    {/* Grid de cards: 1 columna */}
-    <div className="grid grid-cols-1 gap-[14px] px-6 py-8">
-      {features.map((feat, idx) => (
-        <div
-          key={idx}
-          className="
-        bg-[#101010]
-        w-full
-        h-[240px]
-        rounded-[12px]
-        px-[24px]
-        pt-[24px]
-        pb-[34px]
-        flex
-        flex-col
-        gap-[14px]
-      "
-        >
-          {/* Icono check */}
-          <img
-            src="/images/apps/dec-secure/check_circle.png"
-            alt="check icon"
-            className="w-[34px] h-[34px] flex-shrink-0 select-none pointer-events-none"
-            draggable={false}
-          />
+  <section className="w-full bg-[#000000] block sm:hidden py-16 px-4">
+    <div className="flex flex-col items-center gap-8 w-full max-w-[430px] mx-auto">
+      {/* Título */}
+      <h2 className="font-bold text-[38px] leading-[1.3] text-center text-white">
+        {title}
+      </h2>
 
-          <div className="flex-1">
-            {/* Título */}
-            <h3 className="font-inter font-semibold text-[16px] leading-[20px] text-white">
+      {/* Grid de tarjetas centradas */}
+      <div className="flex flex-col items-center justify-center gap-4 w-full">
+        {features.map((feat, idx) => (
+          <div
+            key={idx}
+            className="flex flex-col bg-[#101010] rounded-xl w-full p-6 gap-4"
+          >
+            <img
+              src="/images/apps/dec-secure/check_circle.png"
+              alt=""
+              className="w-[44px] h-[44px]"
+              draggable={false}
+              loading="lazy"
+              aria-hidden="true"
+            />
+            <h4 className="font-medium text-[22px] leading-[1.5] text-white">
               {feat.title}
-            </h3>
-
-            {/* Descripción */}
-            <p className="font-inter text-[14px] leading-[18px] text-[rgba(244,248,250,0.6)] mt-1">
+            </h4>
+            <p className="text-base leading-relaxed text-white/80">
               {feat.description}
             </p>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-
-    {/* Imagen recortada desde la mitad hacia abajo */}
-    {/* <div className="relative w-[324px] h-[393px] mt-6 overflow-hidden">
-      <img
-        src={imageUrl}
-        alt="DEC Secure Phone"
-        className="w-full h-full object-cover object-top select-none pointer-events-none"
-        draggable={false}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-full h-[30%]
-                   bg-gradient-to-t from-black to-transparent
-                   pointer-events-none"
-      />
-    </div> */}
   </section>
 );
 

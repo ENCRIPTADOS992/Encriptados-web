@@ -235,7 +235,6 @@
     "encryptedTitleButon": "SIM Card Criptografada",
     "encryptedTitle": "O SIM Criptografado oferece a maior segurança e anonimato em qualquer lugar do mundo",
     "encryptedDescription": "Segurança e privacidade em suas comunicações, faça chamadas anônimas e ir rastreáveis e proteja-se contra IMSI Catchers",
-
     "CardSim": {
       "headerTitle": "Recarga de Dados",
       "availableCountries": "+200 países disponíveis",
@@ -250,11 +249,9 @@
       "rating": "5/5",
       "buyNow": "Compre Agora"
     },
-
     "characteristics": {
       "title": "Características principais"
     },
-
     "commonFeatures": {
       "dataMobile": "Dados móveis",
       "speed": "Velocidade 4/5G LTE",
@@ -333,7 +330,6 @@
         "headerTitle": "SIM Físico"
       }
     },
-
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Melhore sua segurança com esses recursos",
       "untraceable": {
@@ -356,7 +352,6 @@
         "title": "Filtros de voz",
         "description": "Utilize 7 filtros de voz diferentes para maior anonimato em suas chamadas"
       },
-
       "callback": {
         "title": "Retorno de chamada",
         "description": "Gere um número aleatório para cada chamada que aparecerá no identificador do receptor"
@@ -377,7 +372,6 @@
         "title": "Mascarar o IMSI",
         "description": "Oculte seu IMSI para evitar interceptações ou antenas falsas, como os IMSI Catchers"
       },
-
       "providerPrivateRed": {
         "title": "Provedor de rede privada",
         "description": "Somos uma MVNO privada com total discrição no uso de seus dados pessoais"
@@ -428,7 +422,6 @@
       "unlimitedDataTitle": "Dados ilimitados",
       "unlimitedDataDescription": "Encontre planos ilimitados para que os gigabytes não sejam um problema. Mantenha-se conectado"
     },
-
     "howItWorks": {
       "title": "Assim funciona",
       "chooseRegionTitle": "Escolha a região onde você deseja usar seu",
@@ -452,6 +445,32 @@
     "whyChooseSim": "Por que escolher nosso SIM?",
     "anonTitle": "Sem registro de dados, anonimato garantido!",
     "anonDescription": "Os dados que não são armazenados não podem ser vazados ou revelados. Faz parte da nossa filosofia não coletar informações pessoais nem registros de nossos clientes.",
+    "simSelection": {
+      "mainTitle": "Onde você vai usar seu SIM?",
+      "subtitle": "Conecte-se à Internet com seu SIM ou eSIM em mais de 200 países. Desfrute de Internet segura com total anonimato.",
+      "category": "Categoria",
+      "physicalSim": "SIM Físico",
+      "recharge": "Recarregar",
+      "esimData": "eSIM + Dados",
+      "region": "Região/País",
+      "search": "Buscar",
+      "back": "Voltar",
+      "productsFound": "produtos encontrados",
+      "noProducts": "0 produtos encontrados",
+      "selectRegionCountry": "Escolha uma região ou país",
+      "country": "País",
+      "applyFilter": "Aplicar filtro",
+      "loadingRegions": "Carregando regiões...",
+      "loadingCountries": "Carregando países...",
+      "searching": "Buscando...",
+      "from": "A partir de",
+      "countries": "países",
+      "coverage": "Cobertura 4G/5G",
+      "product": "produto",
+      "products": "produtos",
+      "found": "encontrado",
+      "founds": "encontrados"
+    },
     "OurSimCard": {
       "title": "Sem tarifas de roaming",
       "description": "Nosso SIM permite que você se conecte a uma operadora local e evite altas tarifas de roaming",
@@ -541,6 +560,10 @@
       "licenseTitle": "Duração da licença",
       "selectPlacerholder": "Selecionar",
       "searchPlaceholder": "Buscar"
+    },
+    "productCard": {
+      "buy": "Comprar",
+      "moreInfo": "Mais informa\u00e7\u00f5es"
     }
   },
   "DistributorsPage": {
@@ -582,7 +605,6 @@
     "ourProducts": {
       "title": "Nossos produtos",
       "subtitle": "Conheça nossos Produtos Criptografados",
-
       "seeProducts": "Ver produtos",
       "cards": {
         "card1": "SIMs Criptografadas",
@@ -831,7 +853,20 @@
         },
         "timSim": {
           "title": "SIM TIM",
-          "description": "Descubra como funciona o SIM TIM"
+          "description": "Descubra como funciona o SIM TIM",
+          "simSelection": {
+            "mainTitle": "Onde você vai usar seu SIM?",
+            "subtitle": "Conecte-se à Internet com seu SIM ou eSIM em mais de 200 países. Desfrute de internet segura e com total anonimato.",
+            "category": "Categoria",
+            "physicalSim": "SIM Físico",
+            "recharge": "Recarregar",
+            "esimData": "eSIM + Dados",
+            "region": "Região/País",
+            "search": "Pesquisar",
+            "back": "Voltar",
+            "productsFound": "produtos encontrados",
+            "noProducts": "0 produtos encontrados"
+          }
         }
       }
     },
@@ -1585,7 +1620,10 @@
       "Interface unificada",
       "Chats em grupo criptografados"
     ],
-    "plans": ["Licença de 3 Meses", "Licença de 6 Meses"],
+    "plans": [
+      "Licença de 3 Meses",
+      "Licença de 6 Meses"
+    ],
     "buttons": {
       "buyNow": "Comprar agora",
       "supportChat": "Chat de suporte"
@@ -1909,7 +1947,10 @@
       "Bloqueio e apagamento remoto",
       "Mensagens e chamadas criptografadas"
     ],
-    "plans": ["Licença 3 meses", "Licença 6 meses"],
+    "plans": [
+      "Licença 3 meses",
+      "Licença 6 meses"
+    ],
     "buttons": {
       "buyNow": "Comprar agora",
       "supportChat": "Chat de suporte"

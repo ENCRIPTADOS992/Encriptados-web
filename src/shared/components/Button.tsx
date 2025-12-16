@@ -7,39 +7,39 @@ const buttonStyles = cva(
   {
     variants: {
       intent: {
-        // Botones principales basados en el diseño real (14px por defecto)
-        primary: "bg-primary text-white hover:bg-[#0899CC] px-4 py-2 rounded-full text-sm",
-        secondary: "bg-secondary text-[#00516B] hover:bg-[#2ABEE8] px-4 py-2 rounded-full text-sm",
-        outline: "bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-4 py-2 rounded-full text-sm",
-        outlineDark: "bg-transparent border-2 border-black text-black hover:bg-black hover:text-white px-4 py-2 rounded-full text-sm",
-        light: "bg-[#E3F8FF] text-[#1C1B1F] hover:bg-[#D0F2FF] px-4 py-2 rounded-full text-sm",
-        dark: "bg-black text-white hover:bg-[#1A1A1A] px-4 py-2 rounded-full text-sm",
-        ghost: "bg-transparent text-black hover:bg-black/5 px-3 py-1.5 text-sm",
-        link: "bg-transparent text-black hover:underline px-0 py-0 text-sm font-normal",
+        // Botones principales basados en el diseño real
+        primary: "bg-primary text-white hover:bg-[#0899CC] rounded-full",
+        secondary: "bg-secondary text-[#00516B] hover:bg-[#2ABEE8] rounded-full",
+        outline: "bg-transparent border-2 border-white text-white hover:bg-white hover:text-black rounded-full",
+        outlineDark: "bg-transparent border-2 border-black text-black hover:bg-black hover:text-white rounded-full",
+        light: "bg-[#E3F8FF] text-[#1C1B1F] hover:bg-[#D0F2FF] rounded-full",
+        dark: "bg-black text-white hover:bg-[#1A1A1A] rounded-full",
+        ghost: "bg-transparent text-black hover:bg-black/5",
+        link: "bg-transparent text-black hover:underline px-0 py-0 font-normal",
         
         // Variantes alternativas
-        alternate1: "bg-[#054D61] text-white hover:bg-[#043A4A] px-4 py-2 rounded-full text-sm",
-        alternate2: "bg-white text-black hover:bg-gray-100 border-2 border-gray-200 px-4 py-2 rounded-full text-sm",
-        alternate3: "bg-[#00D4AA] text-white hover:bg-[#00B890] px-4 py-2 rounded-full text-sm",
+        alternate1: "bg-[#054D61] text-white hover:bg-[#043A4A] rounded-full",
+        alternate2: "bg-white text-black hover:bg-gray-100 border-2 border-gray-200 rounded-full",
+        alternate3: "bg-[#00D4AA] text-white hover:bg-[#00B890] rounded-full",
         
         // Variantes legacy para compatibilidad (deprecated)
-        solid: "text-white bg-primary px-4 py-2 rounded-md text-sm",
-        black: "bg-black text-white text-sm py-3 w-full flex items-center justify-center rounded-lg",
-        dangerMetal: "bg-[#2D0505] text-[#FF6C6C] font-light px-4 py-2 rounded-md text-sm",
-        profile: "bg-[#1D1D1D] text-white font-medium px-4 py-2 rounded-md text-sm",
-        elegant: "bg-[#F4F4F4] text-black px-4 py-2 rounded-md text-sm",
-        cyan: "bg-transparent border border-[#70DEFF] text-cyan-500 font-light px-4 py-2 rounded-md text-sm",
-        blueT: "bg-[#29A9EA] text-white hover:bg-[#1590cd] px-4 py-2 rounded-md text-sm",
-        support: "bg-[#EDF4F6] text-[#00516B] text-sm py-3 w-full flex items-center justify-center rounded-lg",
+        solid: "text-white bg-primary rounded-md",
+        black: "bg-black text-white py-3 w-full flex items-center justify-center rounded-lg",
+        dangerMetal: "bg-[#2D0505] text-[#FF6C6C] font-light rounded-md",
+        profile: "bg-[#1D1D1D] text-white font-medium rounded-md",
+        elegant: "bg-[#F4F4F4] text-black rounded-md",
+        cyan: "bg-transparent border border-[#70DEFF] text-cyan-500 font-light rounded-md",
+        blueT: "bg-[#29A9EA] text-white hover:bg-[#1590cd] rounded-md",
+        support: "bg-[#EDF4F6] text-[#00516B] py-3 w-full flex items-center justify-center rounded-lg",
       },
       size: {
-        sm: "text-xs px-3 py-1.5",      // 12px
-        md: "text-sm px-4 py-2",        // 14px (default)
-        lg: "text-base px-6 py-2.5",    // 16px
+        sm: "text-sm px-4 py-2",        // 14px
+        md: "text-base px-6 py-3",      // 16px (default - más padding)
+        lg: "text-lg px-8 py-4",        // 18px
         // Legacy aliases
-        small: "text-xs px-3 py-1.5",   // 12px
-        medium: "text-sm px-4 py-2",    // 14px
-        large: "text-base px-6 py-2.5", // 16px
+        small: "text-sm px-4 py-2",     // 14px
+        medium: "text-base px-6 py-3",  // 16px
+        large: "text-lg px-8 py-4",     // 18px
       },
       rounded: {
         none: "rounded-none",

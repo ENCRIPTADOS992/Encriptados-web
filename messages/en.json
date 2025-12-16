@@ -240,7 +240,6 @@
     "encryptedTitleButon": "Encrypted SIM Card",
     "encryptedTitle": "The Encrypted SIM provides you with the highest security and anonymity anywhere in the world",
     "encryptedDescription": "Security and privacy in your communications, make anonymous and untraceable calls, and protect yourself against IMSI Catchers",
-
     "CardSim": {
       "headerTitle": "Data Top-Up",
       "availableCountries": "+200 countries available",
@@ -258,7 +257,6 @@
     "characteristics": {
       "title": "Main Features"
     },
-
     "commonFeatures": {
       "dataMobile": "Mobile data",
       "speed": "4/5G LTE speed",
@@ -337,7 +335,6 @@
         "headerTitle": "Physical SIM"
       }
     },
-
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Enhance your security with these features",
       "untraceable": {
@@ -360,7 +357,6 @@
         "title": "Voice filters",
         "description": "Use 7 different voice filters for greater anonymity in your calls"
       },
-
       "callback": {
         "title": "Callback",
         "description": "Generate a random number for each call that will appear in the recipient's identifier"
@@ -381,7 +377,6 @@
         "title": "Mask the IMSI",
         "description": "Hide your IMSI to avoid interception or fake antennas like IMSI Catchers"
       },
-
       "providerPrivateRed": {
         "title": "Private network provider",
         "description": "We are a private MVNO with complete discretion in the use of your personal data"
@@ -405,13 +400,11 @@
       "card2": "Anonymity in calls through tools: ID substitution, Callback, and Voice Filter",
       "card3": "The SIM generates a random substitute number for each call for increased anonymity"
     },
-
     "coverageMoreThan200CountriesTitle": "Coverage in over 200 countries",
     "coverageMoreThan200CountriesDescription": "Secure communication without borders",
     "downloadAppTitle": "Download the app for iOS & Android",
     "downloadAppDescription": "Download the app for iOS & Android"
   },
-
   "MayaData": {
     "anonymSim": "Anonymous eSIM",
     "monthPackage": "with monthly plans and unlimited data",
@@ -434,7 +427,6 @@
       "unlimitedDataTitle": "Unlimited data",
       "unlimitedDataDescription": "Find unlimited plans so that gigabytes are not a problem. Stay connected"
     },
-
     "howItWorks": {
       "title": "Here's how it works",
       "chooseRegionTitle": "Choose the region where you want to use your",
@@ -458,6 +450,32 @@
     "whyChooseSim": "Why choose our SIM?",
     "anonTitle": "No data logs, anonymity guaranteed!",
     "anonDescription": "Data that is not stored cannot be leaked or revealed. It’s part of our philosophy not to collect personal information or logs of our customers.",
+    "simSelection": {
+      "mainTitle": "Where will you use your SIM?",
+      "subtitle": "Connect to the Internet with your SIM or eSIM in over 200 countries. Enjoy secure internet with total anonymity.",
+      "category": "Category",
+      "physicalSim": "Physical SIM",
+      "recharge": "Recharge",
+      "esimData": "eSIM + Data",
+      "region": "Region/Country",
+      "search": "Search",
+      "back": "Back",
+      "productsFound": "products found",
+      "noProducts": "0 products found",
+      "selectRegionCountry": "Choose a region or country",
+      "country": "Country",
+      "applyFilter": "Apply filter",
+      "loadingRegions": "Loading regions...",
+      "loadingCountries": "Loading countries...",
+      "searching": "Searching...",
+      "from": "From",
+      "countries": "countries",
+      "coverage": "4G/5G Coverage",
+      "product": "product",
+      "products": "products",
+      "found": "found",
+      "founds": "found"
+    },
     "OurSimCard": {
       "title": "No roaming charges",
       "description": "Our SIM lets you connect to a local operator and avoid high roaming fees",
@@ -506,7 +524,6 @@
       "description": "Or scan the QR code with your camera"
     }
   },
-
   "DashboardPage": {
     "menuDashboard": {
       "header": {
@@ -550,9 +567,12 @@
       "searchPlaceholder": "Search",
       "regionTitle": "Regiónes",
       "countryTitle": "Países"
+    },
+    "productCard": {
+      "buy": "Buy",
+      "moreInfo": "More information"
     }
   },
-
   "DistributorsPage": {
     "banner": {
       "becomeOurAllyBannerTitle": "Become our business ally and sell our products",
@@ -825,7 +845,6 @@
     "goTelegram": "Go to Telegram",
     "articleTitle": "Related Articles"
   },
-
   "productsCategories": {
     "sims": {
       "title": "SIMS",
@@ -841,7 +860,20 @@
         },
         "timSim": {
           "title": "TIM SIM",
-          "description": "Learn how the TIM SIM works"
+          "description": "Learn how the TIM SIM works",
+          "simSelection": {
+            "mainTitle": "Where will you use your SIM?",
+            "subtitle": "Connect to the Internet with your SIM or eSIM in over 200 countries. Enjoy secure and completely anonymous internet.",
+            "category": "Category",
+            "physicalSim": "Physical SIM",
+            "recharge": "Recharge",
+            "esimData": "eSIM + Data",
+            "region": "Region/Country",
+            "search": "Search",
+            "back": "Back",
+            "productsFound": "products found",
+            "noProducts": "0 products found"
+          }
         }
       }
     },
@@ -997,27 +1029,27 @@
     }
   },
   "menuMobile": {
-  "openMenu": "Open menu",
-  "closeMenu": "Close menu",
-  "login": "Log in",
-  "store": {
-    "label": "Store",
-    "new": "New"
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "login": "Log in",
+    "store": {
+      "label": "Store",
+      "new": "New"
+    },
+    "deliveries": {
+      "label": "Deliveries"
+    },
+    "categories": {
+      "products": "Products",
+      "others": "Others",
+      "us": "About us"
+    },
+    "aboutUs": "About us",
+    "suggestions": {
+      "question": "Did you see something wrong?",
+      "link": "send us a suggestion here"
+    }
   },
-  "deliveries": {
-    "label": "Deliveries"
-  },
-  "categories": {
-    "products": "Products",
-    "others": "Others",
-    "us": "About us"
-  },
-  "aboutUs": "About us",
-  "suggestions": {
-    "question": "Did you see something wrong?",
-    "link": "send us a suggestion here"
-  }
-},
   "encryptedHeader": {
     "menu": {
       "products": "Products",
@@ -1058,7 +1090,11 @@
   },
   "silentCircle": {
     "description": "It is an app designed by the best minds in mobile technology, focused on keeping your data secure at all times.",
-    "details": ["Encrypted calls", "No location permissions", "Timed messages"],
+    "details": [
+      "Encrypted calls",
+      "No location permissions",
+      "Timed messages"
+    ],
     "buttons": {
       "buyNow": "Buy now",
       "supportChat": "Support chat"
@@ -1713,7 +1749,6 @@
       ]
     }
   },
-
   "RenatiPage": {
     "product": {
       "title": "Renati",
@@ -1971,7 +2006,10 @@
       "Unified interface",
       "Encrypted group chats"
     ],
-    "plans": ["3-Month License", "6-Month License"],
+    "plans": [
+      "3-Month License",
+      "6-Month License"
+    ],
     "buttons": {
       "buyNow": "Buy Now",
       "supportChat": "Chat support"
@@ -2032,7 +2070,11 @@
       "Intuitive interface",
       "Encrypted chats with remote wipe"
     ],
-    "plans": ["6-month license", "12-month license", "Phone + 6-month license"],
+    "plans": [
+      "6-month license",
+      "12-month license",
+      "Phone + 6-month license"
+    ],
     "buttons": {
       "buyNow": "Buy now",
       "supportChat": "Support chat"
@@ -2093,7 +2135,11 @@
       "Decentralized Private Network",
       "Private Email and Calls"
     ],
-    "plans": ["6-month License", "12-month License", "Phone + 6-month License"],
+    "plans": [
+      "6-month License",
+      "12-month License",
+      "Phone + 6-month License"
+    ],
     "buttons": {
       "buyNow": "Buy Now",
       "supportChat": "Chat Support"
@@ -2162,7 +2208,11 @@
       "Blockchain Apps",
       "Remote Wipe & Panic Button"
     ],
-    "plans": ["Encrypted Cell Phone", "3-Month License", "6-Month License"],
+    "plans": [
+      "Encrypted Cell Phone",
+      "3-Month License",
+      "6-Month License"
+    ],
     "buttons": {
       "buyNow": "Buy Now",
       "supportChat": "Support Chat"
@@ -2283,7 +2333,10 @@
       "Remote Lock & Wipe",
       "Encrypted Messages and Calls"
     ],
-    "plans": ["3-Month License", "6-Month License"],
+    "plans": [
+      "3-Month License",
+      "6-Month License"
+    ],
     "buttons": {
       "buyNow": "Buy Now",
       "supportChat": "Support Chat"

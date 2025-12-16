@@ -3,7 +3,7 @@ import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import { Check } from "lucide-react";
-import Button from "../shared/Button";
+import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -49,6 +49,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   languageCode = "es",
 }) => {
   const { openModal } = useModalPayment();
+  const priceBlockRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleBuy = () => {
     if (onBuy) {
@@ -69,27 +70,27 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   };
 
   return (
-    <section className="w-full hidden lg:flex justify-center bg-white">
-      <div className="w-full max-w-[1440px] h-[600px] flex items-center justify-center mx-auto px-2">
+    <section className="w-full hidden lg:flex justify-center bg-white py-16 md:py-20 lg:py-24">
+      <div className="w-full max-w-[1272px] flex items-center justify-center mx-auto px-4 gap-8">
         {/* Columna izquierda */}
-        <div className="flex flex-col w-[455px] gap-y-[20px]">
+        <div className="flex flex-col flex-1 max-w-[540px]">
           {/* Título + Descripción */}
-          <div className="flex flex-col w-[413px] gap-[12px]">
-            <h2 className="font-inter font-bold text-[28px] leading-[100%] text-[#131313]">
+          <div className="flex flex-col gap-6 mb-6">
+            <h1 className="font-bold text-[38px] leading-[1.4] text-[#333333]">
               {title}
-            </h2>
-            <p className="font-inter font-normal text-[14px] leading-[100%] text-[#000000]">
+            </h1>
+            <p className="text-base leading-relaxed text-[#555555]">
               {description}
             </p>
           </div>
 
           {/* Features/Checks */}
-          <div className="flex flex-col gap-[8px]">
+          <div className="flex flex-col gap-3 mb-6">
             {features.length > 0 ? (
               features.map((f, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <Check width={28} height={28} color="#1C1B1F" />
-                  <span className="text-[16px] text-[#131313]">{f}</span>
+                <div key={i} className="flex items-center gap-3">
+                  <Check width={28} height={28} color="#333333" />
+                  <span className="text-base leading-relaxed text-[#333333]">{f}</span>
                 </div>
               ))
             ) : loading ? (
@@ -98,12 +99,11 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           </div>
 
           {/* Radios */}
-          <div className="flex flex-row flex-wrap gap-[18px]">
+          <div className="flex flex-row flex-wrap gap-4 mb-6">
             {radioOptions.map((option) => (
               <label
                 key={option}
-                className="flex items-center gap-1 cursor-pointer font-inter font-normal text-[16px] text-[#131313] whitespace-nowrap"
-                style={{ maxWidth: "calc(100% - 20px)" }}
+                className="flex items-center gap-2 cursor-pointer text-base text-[#333333] whitespace-nowrap"
               >
                 <input
                   type="radio"
@@ -111,33 +111,35 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                   value={option}
                   checked={selectedRadio === option}
                   onChange={() => onRadioChange(option)}
+                  className="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label={`Plan ${option}`}
                 />
                 <span className="whitespace-nowrap">{option}</span>
               </label>
             ))}
           </div>
 
-          <hr className="my-[18px] border-[#E0E0E0]" />
+          <hr className="my-6 border-[#E0E0E0]" />
 
           {/* Precio + Botones */}
-          <div className="flex flex-col gap-[22px]">
+          <div className="flex flex-col gap-6" ref={priceBlockRef}>
             <div>
-              <span className="block text-[14px] text-[#000000] leading-[100%] mb-[2px]">
+              <span className="block text-sm text-[#555555] leading-relaxed mb-2">
                 Desde
               </span>
-              <span className="block font-inter font-bold text-[24px] leading-[100%] text-[#000000]">
+              <span className="block font-bold text-[30px] leading-none text-[#333333]">
                 {price}
               </span>
             </div>
             <div className="flex gap-3">
               <Button
-                type="primary"
-                className="md:w-full md:justify-center"
+                intent="dark"
+                size="md"
                 onClick={handleBuy}
-                disabled={!productId}
+                icon={<ShoppingCart color="white" height={20} width={20} />}
+                iconPosition="right"
               >
-                <p className="font-medium text-base">Comprar ahora</p>
-                <ShoppingCart color="white" height={20} width={20} />
+                Comprar ahora
               </Button>
               <TelegramButton />
             </div>
@@ -145,14 +147,14 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         </div>
 
         {/* Columna derecha */}
-        <div className="flex flex-col items-center w-[520px] h-[329px] ml-14">
+        <div className="flex flex-col items-center flex-1 max-w-[627px]">
           <img
             src={productImage}
             alt={`${title} screenshot`}
-            className="rounded-[22.25px] w-full h-full object-contain"
+            className="rounded-2xl w-full h-auto object-contain"
             draggable={false}
           />
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-3 mt-6">
             <AppStoreFooter />
             <PlayStoreSvg />
           </div>

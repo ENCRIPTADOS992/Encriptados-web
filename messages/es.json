@@ -455,6 +455,32 @@
     "whyChooseSim": "¿Por qué elegir nuestra SIM TIM?",
     "anonTitle": "Sin registro de datos ¡Anonimato Garantizado!",
     "anonDescription": "Los datos que no se almacenan no se pueden filtrar ni revelar. Es parte de nuestra filosofía no recopilar información personal ni registros de nuestros clientes.",
+    "simSelection": {
+      "mainTitle": "¿Dónde vas a usar tu SIM?",
+      "subtitle": "Conéctate a Internet con tu SIM o eSIM en más de 200 países. Disfruta de internet seguro y con total anonimato.",
+      "category": "Categoría",
+      "physicalSim": "SIM Física",
+      "recharge": "Recargar",
+      "esimData": "eSIM + Datos",
+      "region": "Región/País",
+      "search": "Buscar",
+      "back": "Atrás",
+      "productsFound": "productos encontrados",
+      "noProducts": "0 productos encontrados",
+      "selectRegionCountry": "Elige una región o país",
+      "country": "País",
+      "applyFilter": "Aplicar filtro",
+      "loadingRegions": "Cargando regiones...",
+      "loadingCountries": "Cargando países...",
+      "searching": "Buscando...",
+      "from": "Desde",
+      "countries": "países",
+      "coverage": "Cobertura 4G/5G",
+      "product": "producto",
+      "products": "productos",
+      "found": "encontrado",
+      "founds": "encontrados"
+    },
     "OurSimCard": {
       "title": "Sin cargos de roaming",
       "description": "Nuestra SIM te permite conectarte a un operador local y evitar altas tarifas de roaming",
@@ -559,6 +585,10 @@
       "subtitle": "Regístrate en cualquier aplicación con un número de teléfono virtual",
       "note": "*Se genera un número colombiano",
       "button": "Comprar ahora"
+    },
+    "productCard": {
+      "buy": "Comprar",
+      "moreInfo": "Más información"
     }
   },
   "DistributorsPage": {
@@ -851,7 +881,20 @@
         },
         "timSim": {
           "title": "SIM TIM",
-          "description": "Conoce cómo funciona la SIM TIM"
+          "description": "Conoce cómo funciona la SIM TIM",
+          "simSelection": {
+            "mainTitle": "¿Dónde vas a usar tu SIM?",
+            "subtitle": "Conéctate a Internet con tu SIM o eSIM en más de 200 países. Disfruta de internet seguro y con total anonimato.",
+            "category": "Categoría",
+            "physicalSim": "SIM Física",
+            "recharge": "Recargar",
+            "esimData": "eSIM + Datos",
+            "region": "Región/País",
+            "search": "Buscar",
+            "back": "Atrás",
+            "productsFound": "productos encontrados",
+            "noProducts": "0 productos encontrados"
+          }
         }
       }
     },

@@ -17,36 +17,30 @@ const FAQSectionTablet: React.FC<FAQSectionTabletProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full bg-white py-8 px-0 hidden flex-col items-center sm:flex lg:hidden mt-[50px]">
-      <h2 className="text-[26px] font-bold text-[#101010] text-center mb-7 leading-[100%]">
+    <section className="w-full bg-white py-16 px-0 hidden flex-col items-center sm:flex lg:hidden">
+      <h2 className="text-[38px] font-bold text-[#333333] text-center mb-12 leading-[1.3]">
         {title}
       </h2>
-      <div className="w-full max-w-[713px] flex flex-col gap-[14px] mt-[20px]">
+      <div className="w-full max-w-[713px] flex flex-col gap-4 px-4">
         {faqs.map((faq, idx) => (
           <div
             key={idx}
-            className="bg-[#F9F9F9] border border-[#F1F1F1] rounded-[14px] flex flex-col"
-            style={{
-              padding: "10px 16px",
-              minHeight: 84,
-            }}
+            className="bg-[#F9F9F9] rounded-xl px-6 py-5 flex flex-col"
           >
             <button
-              className="w-full h-[48px] flex items-center justify-between text-left focus:outline-none"
+              className="w-full flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
               onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
               aria-expanded={openIndex === idx}
               aria-controls={`faq-answer-${idx}`}
+              aria-label={`Toggle answer for: ${faq.question}`}
             >
               <span
-                className="block max-w-[458px] text-[16px] font-normal text-black leading-[100%]"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                }}
+                className="text-[22px] font-medium text-[#333333] leading-[1.5] pr-4"
               >
                 {faq.question}
               </span>
               <span
-                className={`transform transition-transform duration-200 text-[#101010] text-2xl ${
+                className={`transform transition-transform duration-200 text-[#333333] flex-shrink-0 ${
                   openIndex === idx ? "rotate-180" : ""
                 }`}
               >
@@ -63,7 +57,7 @@ const FAQSectionTablet: React.FC<FAQSectionTabletProps> = ({
                 >
                   <path
                     d="M1 1.5L9 10.5L17 1.5"
-                    stroke="#283A06"
+                    stroke="#333333"
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -75,10 +69,7 @@ const FAQSectionTablet: React.FC<FAQSectionTabletProps> = ({
             {openIndex === idx && (
               <div
                 id={`faq-answer-${idx}`}
-                className="mt-2 text-[14px] text-[#101010] opacity-80"
-                style={{
-                  lineHeight: "20px",
-                }}
+                className="mt-4 text-base text-[#555555] leading-relaxed"
               >
                 {faq.answer}
               </div>
