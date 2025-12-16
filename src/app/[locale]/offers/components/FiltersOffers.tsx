@@ -25,7 +25,7 @@ export default function FiltersOffers({
   const selectedItem = watch(name);
 
   return (
-    <div className="w-full max-w-[720px] min-w-[320px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-2 sm:px-3 h-14 sm:h-16 overflow-hidden mx-auto">
+    <nav className="w-full max-w-[720px] min-w-[320px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-2 sm:px-3 h-14 sm:h-16 overflow-hidden mx-auto" aria-label="Filtros de categorías de ofertas">
       <div className="flex items-center h-full gap-1">
         {items?.map((item, index) => (
           <Controller
@@ -37,20 +37,22 @@ export default function FiltersOffers({
               <button
                 type="button"
                 onClick={() => onChange(item.value)}
-                className={`basis-1/3 grow-0 shrink-0 h-10 sm:h-12 text-center px-0 text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap
+                aria-label={`Filtrar por ${item.label}`}
+                aria-pressed={selectedItem === item.value}
+                className={`basis-1/3 grow-0 shrink-0 h-10 sm:h-12 text-center px-0 text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1A1A1A]
                   ${
                     selectedItem === item.value
                       ? "bg-[#2A2A2A] text-white"
                       : "text-[#CFCFCF] hover:bg-white/5"
                   }`}
               >
-                {item.icon && <span className="mr-2">{item.icon}</span>}
+                {item.icon && <span className="mr-2" aria-hidden="true">{item.icon}</span>}
                 <span>{item.label}</span>
               </button>
             )}
           />
         ))}
       </div>
-    </div>
+    </nav>
   );
 }

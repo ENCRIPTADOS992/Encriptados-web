@@ -22,11 +22,11 @@ const OffersBanner = () => {
 
       <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center">
         <div className="z-10 max-w-[60%] sm:max-w-md">
-          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold italic uppercase text-white leading-tight tracking-tight">
+          <h1 className="text-[30px] sm:text-[38px] lg:text-[44px] font-extrabold italic uppercase text-white leading-[1.3] tracking-tight">
             {t("banner.titleOffers")}<br />
             {t("banner.titleEncrypted")}
-          </h2>
-          <p className="mt-2 sm:mt-4 text-sm sm:text-base md:text-lg text-white/90 italic leading-relaxed">
+          </h1>
+          <p className="mt-3 sm:mt-5 text-base sm:text-lg text-white/90 italic leading-relaxed">
             {t("banner.description")}
           </p>
         </div>

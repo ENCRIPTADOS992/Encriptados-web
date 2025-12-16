@@ -9,13 +9,13 @@ const OffersPage = () => {
     <>
       <BasicFormProvider defaultValue={{ currentoffer: "sims" }}>
         <OffersBanner />
-        <div className="w-full bg-black flex justify-center items-center py-10 md:py-16 px-4">
+        <div className="w-full bg-black flex justify-center items-center py-12 md:py-16 lg:py-20 px-4">
           <div>
             <ListOfOffers />
           </div>
         </div>
 
-        <div className="w-full bg-black relative overflow-hidden py-10 md:py-16">
+        <div className="w-full bg-black relative overflow-hidden py-16 md:py-20 lg:py-24">
           <div
             className="absolute pointer-events-none z-0"
             style={{

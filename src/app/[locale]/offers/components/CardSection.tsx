@@ -16,12 +16,12 @@ const CardSection = () => {
   const t = useTranslations("OffersPage");
 
   return (
-    <div className="mt-44">
+    <div className="py-16 md:py-20">
       {/* Imagen principal */}
       <div className="flex items-center justify-center w-full">
         <Image
           src={offersImage}
-          alt="Sim Offers"
+          alt="Oferta de SIM encriptado"
           width={500}
           height={300}
           className="rounded-lg"
@@ -33,25 +33,25 @@ const CardSection = () => {
       </div>
 
       {/* Título */}
-      <div className="flex items-center justify-center mt-8">
-        <div className="w-full md:w-6/12 p-2">
-          <h2 className="text-center text-white font-extrabold text-2xl sm:text-3xl md:text-4xl leading-tight tracking-tight">
+      <div className="flex items-center justify-center mt-10 md:mt-12">
+        <div className="w-full md:w-6/12 px-4">
+          <h2 className="text-center text-white font-bold text-[24px] sm:text-[30px] lg:text-[38px] leading-[1.3]">
             {t("discoverSimTitle")}
           </h2>
         </div>
       </div>
 
       {/* Descripción */}
-      <div className="flex items-center justify-center mt-6">
-        <div className="w-full md:w-6/12 p-2">
-          <p className="text-center text-white/80 text-sm sm:text-base md:text-lg leading-relaxed">
+      <div className="flex items-center justify-center mt-5 md:mt-6">
+        <div className="w-full md:w-6/12 px-4">
+          <p className="text-center text-gray-300 text-base sm:text-lg leading-relaxed">
             {t("discoverSimDescription")}
           </p>
         </div>
       </div>
 
       {/* Sección de tarjetas */}
-      <div className="mt-10">
+      <div className="mt-12 md:mt-16">
         <FeaturesGrid />
       </div>
     </div>

@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import React from "react";
 import FiltersOffers from "./FiltersOffers";
 import { useTranslations } from "next-intl";
@@ -31,7 +33,7 @@ const ListOfOffers = () => {
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto">
-      <h1 className="text-white font-bold mb-4 text-xl sm:text-2xl md:text-3xl ">{o("exclusiveOffersTitle")}</h1>
+      <h2 className="text-white font-bold mb-6 text-[24px] sm:text-[30px] lg:text-[38px] leading-[1.3]">{o("exclusiveOffersTitle")}</h2>
       <div className="w-full max-w-[720px] mx-auto">
         <FiltersOffers
           items={[

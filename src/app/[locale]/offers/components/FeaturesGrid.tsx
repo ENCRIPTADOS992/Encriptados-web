@@ -47,26 +47,26 @@ export default function FeaturesGrid() {
   ];
 
   return (
-    <section className="w-full py-8 px-2">
+    <section className="w-full px-2">
       <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((f, i) => (
-            <div
+            <article
               key={i}
-              className="relative rounded-2xl bg-[#141414] p-6 flex flex-col items-center text-center shadow-sm border border-[#1a2a2a]"
+              className="relative rounded-2xl bg-[#141414] p-6 md:p-8 flex flex-col items-center text-center shadow-sm border border-[#1a2a2a]"
             >
-              <div className="mb-4 w-[110px] h-[110px] rounded-[24px] bg-[#0D0D0D] flex items-center justify-center">
+              <div className="mb-5 w-[110px] h-[110px] rounded-[24px] bg-[#0D0D0D] flex items-center justify-center" aria-hidden="true">
                 <Image
                   src={f.icon}
-                  alt={f.title}
+                  alt=""
                   width={56}
                   height={56}
                   className="w-14 h-14"
                 />
               </div>
-              <h3 className="text-white font-semibold text-lg mb-2">{f.title}</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">{f.description}</p>
-            </div>
+              <h3 className="text-white font-medium text-[22px] leading-[1.5] mb-3">{f.title}</h3>
+              <p className="text-gray-300 text-base leading-relaxed">{f.description}</p>
+            </article>
           ))}
         </div>
       </div>

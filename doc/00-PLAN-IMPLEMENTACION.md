@@ -42,7 +42,7 @@ Este documento presenta un plan detallado paso a paso para implementar el sistem
 | 14 | IRA SIM | `/ira-sim` | ⏳ | 🟡 Media |
 | 15 | Login | `/login` | ⏳ | 🔴 Alta |
 | 16 | News | `/news` | ⏳ | 🟢 Baja |
-| 17 | Offers | `/offers` | ⏳ | 🔴 Alta |
+| 17 | Offers | `/offers` | ✅ | 🔴 Alta |
 | 18 | Our Products | `/our-products` | ⏳ | 🔴 Alta |
 | 19 | Router | `/router` | ⏳ | 🟡 Media |
 | 20 | Security Test | `/security-test` | ⏳ | 🟢 Baja |
@@ -645,7 +645,7 @@ npx storybook@latest init
 | **Clases de tipografía únicas** | ~100+ | <20 | ⏳ |
 | **Tiempo de carga (LCP)** | 3.5s | <2.5s | ⏳ |
 | **Score de accesibilidad** | 85 | >95 | ⏳ |
-| **Páginas migradas** | 0/26 | 26/26 | 7/26 |
+| **Páginas migradas** | 0/26 | 26/26 | 8/26 |
 
 ---
 
