@@ -37,13 +37,11 @@ const EncryptedSim = () => {
             <BasicFormProvider>
               <div className="p-4">
                 <h2 className="bg-gradient-to-r text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent leading-[1.3] mb-6">
-                  Cobertura en más de 200 países
+                  {t("coverageTitle")}
                 </h2>
                 <div className="flex justify-center text-center mb-6">
                   <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
-                    Consulta el costo del gigabyte según el país y el perfil
-                    recomendado, así optimizas el consumo de tus datos al mejor
-                    precio
+                    {t("coverageDescription")}
                   </p>
                 </div>
 
@@ -51,7 +49,7 @@ const EncryptedSim = () => {
                   inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
                   iconPosition="left"
                   name="searchinputcountry"
-                  placeholder="Colombia"
+                  placeholder={t("searchPlaceholder")}
                 />
                 <div className="mt-4 w-full">
                   <ListOfPlans data={ListOfProductsData} />
