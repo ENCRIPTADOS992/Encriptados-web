@@ -110,12 +110,19 @@ const WhereUseSimSection = () => {
                         }
                       `}
                     >
-                      <span className={`relative w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2 transition ${isActive ? "filter-none opacity-100" : "opacity-60"}`}>
+                      <span className="relative w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2">
                         <Image
                           src={option.icon}
                           alt={option.label}
                           fill
-                          className="object-contain"
+                          className={`object-contain transition-all ${
+                            isActive 
+                              ? "brightness-0 saturate-100 opacity-100" 
+                              : "opacity-60 grayscale"
+                          }`}
+                          style={isActive ? {
+                            filter: 'invert(47%) sepia(92%) saturate(2574%) hue-rotate(180deg) brightness(102%) contrast(101%)'
+                          } : {}}
                         />
                       </span>
                       <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">
@@ -127,57 +134,19 @@ const WhereUseSimSection = () => {
               </div>
             </div>
 
-            {/* Región/País y Buscar (lado a lado en tablet+, apilados en móvil) */}
-            <div className="w-full lg:w-auto lg:flex-1 flex flex-col sm:flex-row gap-4">
-              
-              {/* Región / País */}
-              {shouldShowTimRegion && (
-                <div className="w-full sm:flex-1">
-                  <p className="text-sm font-medium text-[#7E7E7E] mb-3">
-                    Región/País
-                  </p>
-                  <FilterRegionCountryTim
-                    filters={filters}
-                    updateFilters={updateFilters}
-                    service={activeTimService}
-                  />
-                </div>
-              )}
-
-              {/* Buscar */}
-              <div className="w-full sm:flex-1 lg:w-auto lg:min-w-[280px]">
-                <p className={`text-sm font-medium text-[#7E7E7E] mb-3 ${shouldShowTimRegion ? 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : ''}`} aria-hidden={shouldShowTimRegion ? "true" : "false"}>
-                  Buscar
+            {/* Región/País */}
+            {shouldShowTimRegion && (
+              <div className="w-full lg:flex-1">
+                <p className="text-sm font-medium text-[#7E7E7E] mb-3">
+                  Región/País
                 </p>
-                <div className="relative">
-                  <input 
-                    type="text" 
-                    placeholder="Buscar SIM (ej: SIM Física, eSIM, Recarga...)" 
-                    value={filters.searchQuery || ""}
-                    className="w-full h-[48px] sm:h-[56px] pl-4 pr-20 bg-[#F5F5F5] border-2 border-transparent rounded-xl sm:rounded-[24px] text-sm sm:text-base focus:outline-none focus:border-[#00A3FF] transition-all"
-                    onChange={(e) => updateFilters({ searchQuery: e.target.value })}
-                  />
-                  {filters.searchQuery && (
-                    <button 
-                      type="button" 
-                      onClick={() => updateFilters({ searchQuery: "" })}
-                      className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors p-1"
-                      title="Limpiar búsqueda"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  )}
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                </div>
+                <FilterRegionCountryTim
+                  filters={filters}
+                  updateFilters={updateFilters}
+                  service={activeTimService}
+                />
               </div>
-
-            </div>
+            )}
           </div>
         </div>
 

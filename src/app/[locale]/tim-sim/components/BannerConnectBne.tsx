@@ -15,14 +15,17 @@ const BannerConnectBne: React.FC = () => {
           relative w-full h-[80vh] flex flex-col md:flex-row items-end
           bg-no-repeat bg-center
           bg-[length:150%] md:bg-[length:100%]
+          overflow-hidden
         "
       >
+        {/* Filtro oscuro para mejorar legibilidad en móvil/tablet */}
+        <div className="absolute inset-0 bg-black/60 md:bg-black/30 lg:bg-transparent z-[2]" aria-hidden="true"></div>
 
         {/* 📌 Contenedor principal */}
         <div className="container mx-auto px-4 py-4 max-w-[1200px] relative h-full flex justify-between items-start">
 
           {/* 📌 Contenedor de texto */}
-          <div className="w-full md:w-[50%] flex flex-col justify-center items-center md:items-start text-white h-full mt-[-80px] sm:mt-[-30px] md:mt-0 z-10">
+          <div className="w-full md:w-[50%] flex flex-col justify-center items-center md:items-start text-white h-full mt-[-60px] sm:mt-[-40px] md:mt-0 z-20">
 
             {/* 📌 Imagen ajustada en móvil */}
             <Image
@@ -47,7 +50,7 @@ const BannerConnectBne: React.FC = () => {
         </div>
 
         {/* 📌 Contenedor de imagen (Derecha) */}
-        <div className="absolute bottom-0 right-0 w-[60%] h-full flex items-end justify-center">
+        <div className="absolute bottom-0 right-0 w-full md:w-[60%] h-full flex items-end justify-center">
           {/* Imagen del logo grande (Fondo) */}
           <Image
             src="/images/bne-sim/tim_logo_600px_positivo 1.png"
@@ -55,7 +58,7 @@ const BannerConnectBne: React.FC = () => {
             width={1000}
             height={600}
             priority
-            className="absolute -bottom-10 -z-9 transform scale-75 right-0 left-auto translate-x-1/4 lg:translate-x-[13%] hidden md:block"
+            className="absolute bottom-[5%] md:-bottom-10 right-0 origin-right z-0 w-full md:w-auto scale-[0.8] sm:scale-[0.9] md:scale-50 lg:scale-[0.6] xl:scale-75 opacity-70 md:opacity-100"
           />
 
           {/* Imagen de la persona */}
@@ -66,13 +69,13 @@ const BannerConnectBne: React.FC = () => {
             height={550}
             priority
             className="
-              h-auto object-cover 
-              absolute bottom-[85px] sm:bottom-0 
-              left-[10%] sm:left-1/2 transform -translate-x-[40%] sm:-translate-x-1/2
-              z-[1] md:z-10
-              scale-150 sm:scale-100
-              opacity-50 md:opacity-100
-              max-w-[300px] max-h-[400px] md:max-w-[400px] md:max-h-[500px] lg:max-w-[450px] lg:max-h-[550px]
+              h-auto object-contain
+              absolute bottom-0
+              left-1/2 transform -translate-x-1/2
+              z-[1] lg:z-[5]
+              w-[95%] sm:w-[90%] md:w-[70%] lg:w-auto
+              opacity-100
+              max-w-[450px] max-h-[560px] sm:max-w-[480px] sm:max-h-[600px] md:max-w-[450px] md:max-h-[550px] lg:max-w-[500px] lg:max-h-[600px]
             "
           />
 

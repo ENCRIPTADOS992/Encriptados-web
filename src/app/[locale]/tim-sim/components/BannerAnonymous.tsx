@@ -6,7 +6,7 @@ const AnonymousBanner: React.FC = () => {
   const t = useTranslations("BneSimPage");
   return (
     <div className="p-4 md:p-0 flex flex-col items-center justify-center max-w-[1000px] mx-auto">
-      <div className="text-center">
+      <div className="text-center w-full">
         <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold mb-6 leading-[1.3] text-[#333333]">
           {t("BannerAnonymous.title")}
         </h2>

@@ -118,7 +118,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
 
   return (
-    <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
+    <div className="w-full max-w-[280px] mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
       {/* Imagen de cabecera */}
       <div className="relative w-full aspect-[16/9] bg-white flex items-center justify-center">
         <Image
@@ -225,11 +225,11 @@ const CardProduct: React.FC<CardSimProps> = ({
 
         <div className="mt-auto flex flex-col gap-2">
           <div className="text-lg font-bold">{displayPrice}</div>
-          <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-2">
+          <div className="flex flex-row justify-between items-center gap-2">
             <button
               onClick={handleBuy}
               type="button"
-              className="w-full sm:w-auto bg-black text-white text-xs rounded-full px-4 py-2 flex items-center justify-center gap-2"
+              className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center justify-center gap-2"
             >
               Comprar
               <LocalMallSvgNew />
@@ -244,7 +244,7 @@ const CardProduct: React.FC<CardSimProps> = ({
                 console.log("🔗 [CardProduct] Go to info:", { url, id });
                 if (url) router.push(`${url}?productId=${id}`);
               }}
-              className="cursor-pointer text-xs text-black hover:underline mt-1 sm:mt-0"
+              className="cursor-pointer text-xs text-black hover:underline"
             >
               Más información
             </span>

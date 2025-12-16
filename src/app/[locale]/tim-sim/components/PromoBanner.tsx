@@ -15,7 +15,8 @@ const PromoBanner: React.FC = () => {
           max-w-[1058px]
           h-auto
           lg:h-[408px]
-          overflow-visible
+          overflow-hidden
+          lg:overflow-visible
           px-6
           lg:px-12
           py-8
@@ -44,13 +45,17 @@ const PromoBanner: React.FC = () => {
     relative
     mt-6
     lg:mt-0
-    w-[260px]
-    h-[360px]
+    w-full
+    max-w-[350px]
+    h-[400px]
+    md:max-w-[450px]
+    md:h-[500px]
     lg:absolute
     lg:right-[-30px]   
-    lg:bottom-[-220px]
-    lg:w-[700px]
-    lg:h-[903px]
+    lg:bottom-0
+    lg:w-[500px]
+    lg:h-[450px]
+    lg:max-w-none
     z-10               
   "
         >
@@ -58,7 +63,7 @@ const PromoBanner: React.FC = () => {
             src={BneSimImg}
             alt="Persona usando smartphone con SIM TIM internacional"
             fill
-            className="object-contain"
+            className="object-contain object-bottom"
             priority
           />
         </div>

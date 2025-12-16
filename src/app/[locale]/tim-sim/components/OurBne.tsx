@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 const OurBne: React.FC = () => {
   const t = useTranslations("BneSimPage");
   return (    
-      <div className="lg:w-[1100px] sm:w[500px] m-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="w-full max-w-[1100px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
         <OurBneCard
           title={t("OurBneCard.title")}
           description={t("OurBneCard.description")}

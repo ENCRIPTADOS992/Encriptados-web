@@ -15,7 +15,7 @@ const OurSim: React.FC = () => {
         <p className="text-base sm:text-lg leading-relaxed text-[#333333]">{t("anonDescription")}</p>
       </div>
 
-      <div className="ls:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="w-full lg:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[600px] lg:max-w-none mx-auto place-items-center">
        {/* 1. Oscura */}
         <OurSimCard
           bgColor="bg-[linear-gradient(180deg,#010101_0%,#010101_70%,#019EFF_100%)]"
@@ -23,7 +23,7 @@ const OurSim: React.FC = () => {
           icon={CellTowerSvg}
           title={t('OurSimCard.title')}
           description={t('OurSimCard.description')}
-          classCard="md:-translate-y-4"
+          classCard="sm:-translate-y-4"
         />
 
 
@@ -34,7 +34,7 @@ const OurSim: React.FC = () => {
           icon={AdsClickSvg}
           title={t("OurSimCard.title2")}
           description={t("OurSimCard.description2")}
-          classCard="md:translate-y-4"
+          classCard="sm:translate-y-4"
         />
 
         {/* 3. Clara */}
@@ -44,7 +44,7 @@ const OurSim: React.FC = () => {
           icon={Rotate_rightSvg}
           title={t("OurSimCard.title3")}
           description={t("OurSimCard.description3")}
-          classCard="md:-translate-y-4"
+          classCard="sm:-translate-y-4"
         />
 
         {/* 4. Oscura */}
@@ -54,7 +54,7 @@ const OurSim: React.FC = () => {
           icon={SimCardSvg}
           title={t("OurSimCard.title4")}
           description={t("OurSimCard.description4")}
-          classCard="md:translate-y-4"
+          classCard="sm:translate-y-4"
         />
       </div>
     </div>
