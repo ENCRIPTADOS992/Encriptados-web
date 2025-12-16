@@ -1,18 +1,20 @@
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import React from "react";
+import Typography from "@/shared/components/Typography";
+import Paragraph from "@/shared/components/Paragraph";
 
 const DownloadBanner = () => {
   return (
     <section className="bg-custom-gradient-qr-black-y-grey">
       {/* Fondo full-width */}
-      <div className="w-full relative overflow-hidden shadow-none shadow-[0_-20px_30px_0px_rgba(0,0,0,0.7)]">
+      <div className="w-full relative overflow-hidden shadow-[0_-20px_30px_0px_rgba(0,0,0,0.7)]">
         {/* Aquí limitamos ancho y padding solo al contenido */}
         <SectionWrapper className="p-10 flex items-center justify-center">
           {/* Tu contenido queda aquí, con ancho constrained */}
           <div className="w-1/2 flex flex-col justify-center items-start ml-10">
-            <h2 className="text-white text-3xl font-bold mb-6 leading-tight">
+            <Typography variant="h3" as="h2" className="text-white font-bold mb-6 leading-tight">
               Descarga la App para iOS & Android
-            </h2>
+            </Typography>
             <div className="flex space-x-4 mb-6">
               <img
                 src="/images/deliveries/Group 480955701.png"
@@ -25,9 +27,9 @@ const DownloadBanner = () => {
                 className="w-40 cursor-pointer"
               />
             </div>
-            <p className="text-white text-xs">
+            <Paragraph variant="small" color="primary" className="text-white">
               O Escanea el código QR con tu cámara
-            </p>
+            </Paragraph>
           </div>
 
           {/* Celular + rombos (posición intacta) */}

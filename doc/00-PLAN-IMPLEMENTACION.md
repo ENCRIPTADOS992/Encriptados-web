@@ -28,7 +28,7 @@ Este documento presenta un plan detallado paso a paso para implementar el sistem
 |---|--------|------|--------|-----------|
 | 1 | Home | `/` | ✅ | 🔴 Alta |
 | 2 | About Us | `/about-us` | ✅ | 🟡 Media |
-| 3 | Ambassadors | `/ambassadors` | ⏳ | 🟢 Baja |
+| 3 | Ambassadors | `/ambassadors` | ✅ | 🟢 Baja |
 | 4 | Apps | `/apps` | ⏳ | 🟡 Media |
 | 5 | Become Partner | `/become-an-encrypted-partner` | ⏳ | 🟢 Baja |
 | 6 | Blog | `/blog` | ⏳ | 🟡 Media |
@@ -814,7 +814,7 @@ findButtons('./src/app');
 - [ ] Where to Find Us
 
 ### Páginas Baja Prioridad
-- [ ] Ambassadors
+- [x] Ambassadors
 - [ ] Become Partner
 - [ ] Distributors
 - [ ] Encrypted Phones Distributors

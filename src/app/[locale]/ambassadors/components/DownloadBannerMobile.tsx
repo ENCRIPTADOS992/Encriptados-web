@@ -1,4 +1,6 @@
 import React from "react";
+import Typography from "@/shared/components/Typography";
+import Paragraph from "@/shared/components/Paragraph";
 
 const DownloadBannerMobile = () => {
   return (
@@ -17,15 +19,19 @@ const DownloadBannerMobile = () => {
           items-center lg:items-end
           justify-center
 
-          shadow-none shadow-[0_-20px_30px_0px_rgba(0,0,0,0.7)]
+          shadow-[0_-20px_30px_0px_rgba(0,0,0,0.7)]
           relative overflow-hidden
         `}
       >
         {/* Texto y botones */}
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
-          <h2 className="mt-8 lg:mt-0 text-white text-3xl font-bold mb-6 leading-tight text-center lg:text-left">
+          <Typography 
+            variant="h3" 
+            as="h2" 
+            className="mt-8 lg:mt-0 text-white font-bold mb-6 leading-tight text-center lg:text-left"
+          >
             Descarga la App para iOS & Android
-          </h2>
+          </Typography>
           <div className="flex space-x-4 mb-6">
             <img
               src="/images/deliveries/Group 480955701.png"
@@ -38,9 +44,9 @@ const DownloadBannerMobile = () => {
               className="w-32 sm:w-40 cursor-pointer"
             />
           </div>
-          <p className="text-white text-xs">
+          <Paragraph variant="small" color="primary" className="text-white">
             O Escanea el código QR con tu cámara
-          </p>
+          </Paragraph>
         </div>
 
         {/* QR + rombos */}

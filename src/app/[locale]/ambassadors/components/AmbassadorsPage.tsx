@@ -5,6 +5,7 @@ import AmbassadorCards from "./AmbassadorCards";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import DownloadBanner from "./DownloadBanner";
 import DownloadBannerMobile from "./DownloadBannerMobile";
+import Typography from "@/shared/components/Typography";
 
 const AmbassadorsPage = () => {
   const t = useTranslations();
@@ -13,9 +14,13 @@ const AmbassadorsPage = () => {
       <AmbassadorBanner />
       <SectionWrapper className="mt-12 mb-10">
         <div className="flex items-center justify-center mb-2">
-          <h1 className="text-white font-bold text-xl sm:text-3xl lg:text-4xl text-center">
+          <Typography 
+            variant="h2" 
+            as="h2" 
+            className="text-white font-bold text-xl sm:text-3xl lg:text-[38px] text-center"
+          >
             {t("AmbassadorsPage.partnerCards.title")}
-          </h1>
+          </Typography>
         </div>
         <AmbassadorCards />
       </SectionWrapper>

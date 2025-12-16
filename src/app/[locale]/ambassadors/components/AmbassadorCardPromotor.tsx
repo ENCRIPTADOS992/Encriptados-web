@@ -3,6 +3,8 @@ import TelegramButton from "@/shared/components/TelegramButton";
 import { Check, Briefcase } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
+import Typography from "@/shared/components/Typography";
+import Paragraph from "@/shared/components/Paragraph";
 
 interface AmbassadorCardProps {
   image?: string;
@@ -39,18 +41,18 @@ export default function AmbassadorCardPromotor({
       <div className="p-6 space-y-6 bg-[#151515]">
         <div className="flex items-center gap-2">
           <Briefcase className="w-6 h-6 text-cyan-400" />
-          <h2 className="text-2xl text-cyan-400 font-bold">{title}</h2>
+          <Typography variant="h4" as="h2" className="text-cyan-400 font-bold">{title}</Typography>
           <span className="px-2 py-1 text-xs font-semibold bg-zinc-800 text-cyan-400 rounded-full ml-2">
             {company}
           </span>
         </div>
 
-        <p className="text-zinc-400 text-sm leading-relaxed">{description}</p>
+        <Paragraph variant="caption" color="secondary" className="text-zinc-400">{description}</Paragraph>
 
         <div className="space-y-2">
-          <h3 className="text-lg text-cyan-400">
+          <Typography variant="h5" as="h3" className="text-cyan-400">
             {t("AmbassadorsPage.partnerCards.distributor.benefits")}
-          </h3>
+          </Typography>
           <ul className="space-y-3">
             {benefits.map((benefit, index) => (
               <li key={index} className="flex items-start gap-2 text-zinc-400">
