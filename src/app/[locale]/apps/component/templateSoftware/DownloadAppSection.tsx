@@ -62,23 +62,24 @@ const Component: React.FC = () => {
         </div>
 
         <div className="relative mx-auto w-full sm:max-w-[250px] max-w-[250px] aspect-[5/7]">
-          <div className="absolute left-1/2 -translate-x-1/2 w-[370px] h-[400px] rounded-2xl flex items-center justify-center p-4 relative">
-            {/* Imagen del teléfono */}
+          <div className="absolute left-1/2 -translate-x-1/2 w-[370px] h-[400px] rounded-2xl flex items-center justify-center p-4">
+            {/* Imagen del teléfono - Fondo (z-0) */}
             <Image
               src={PhoneQr}
               alt="Teléfono con app"
               width={260}
               height={260}
-              className="w-full h-full"
+              className="w-full h-full absolute inset-0 z-0"
               priority
             />
 
-            <div className="absolute inset-0 flex items-center justify-center">
+            {/* Código QR - Frente centrado (z-10) */}
+            <div className="absolute inset-0 flex items-center justify-center z-10">
               <Image
                 src={DownloadQr}
                 alt="Código QR de descarga"
-                width={140}
-                height={140}
+                width={240}
+                height={240}
                 className="w-[240px] h-[240px] rounded-lg"
                 priority
               />

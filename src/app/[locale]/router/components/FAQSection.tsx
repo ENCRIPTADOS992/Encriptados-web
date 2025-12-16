@@ -17,23 +17,24 @@ const FAQSection: React.FC<FAQSectionProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-<section className="w-full flex flex-col items-center bg-white py-16 hidden lg:flex mt-[40px]">
-      <h2 className="text-[34px] font-bold text-[#101010] text-center mb-10 leading-[100%]">
+<section className="w-full hidden lg:flex flex-col items-center bg-white py-16 md:py-20 lg:py-24">
+      <h2 className="text-[38px] font-bold text-[#333333] text-center mb-12 leading-[1.3]">
         {title}
       </h2>
-      <div className="w-full max-w-[1060px] flex flex-col gap-4">
+      <div className="w-full max-w-[1060px] flex flex-col gap-4 px-4">
         {faqs.map((faq, idx) => (
           <div
             key={idx}
-            className="bg-[#F9F9F9] border border-[#F1F1F1] rounded-[8px] px-9 py-4 flex flex-col"
+            className="bg-[#F9F9F9] rounded-xl px-6 py-5 flex flex-col"
           >
             <button
-              className="w-full flex justify-between items-center text-left focus:outline-none"
+              className="w-full flex justify-between items-center text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg p-2"
               onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
               aria-expanded={openIndex === idx}
               aria-controls={`faq-answer-${idx}`}
+              aria-label={`Pregunta: ${faq.question}`}
             >
-              <span className="text-[24px] font-normal text-[#101010]">
+              <span className="text-[22px] font-medium text-[#333333] leading-[1.5]">
                 {faq.question}
               </span>
               <span
@@ -65,7 +66,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({
             {openIndex === idx && (
               <div
                 id={`faq-answer-${idx}`}
-                className="mt-4 text-[16px] text-[#101010] opacity-80"
+                className="mt-4 text-base text-[#555555] leading-relaxed"
               >
                 {faq.answer}
               </div>

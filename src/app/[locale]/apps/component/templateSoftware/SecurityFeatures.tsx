@@ -27,100 +27,38 @@ const SecurityFeatures: React.FC<SecurityFeaturesProps> = ({
   const containerHeight = rows <= 2 ? 1140 : 1460;
 
   return (
-    <section className="hidden lg:flex justify-center py-8 bg-white mt-[64px]">
-      <div
-        className="bg-black rounded-[44px] w-[1273px] mx-auto px-[60px]"
-        style={{ height: containerHeight }}
-      >
-        <div className="w-full">
-          <div className="pt-[85px] mx-auto text-center" style={{ width: 891 }}>
-            <h2
-              className="
-      font-inter font-bold
-      text-[30px] leading-[30px] tracking-[0]
-      text-white
-      break-words 
-    "
-            >
-              {title}
-            </h2>
-          </div>
+    <section className="hidden lg:flex w-full justify-center py-16 md:py-20 lg:py-24" aria-labelledby="security-features-title">
+      <div className="bg-[#000000] w-full max-w-[1272px] rounded-[44px] py-16 px-16 mx-auto">
+        <div className="flex flex-col items-center gap-12 h-full">
+          <h2
+            id="security-features-title"
+            className="max-w-[891px] text-center text-white font-bold text-[38px] leading-[1.3] mb-4"
+          >
+            {title}
+          </h2>
 
-          <div className="flex justify-center mt-10">
-            <div
-              className="relative overflow-hidden" 
-              style={{ width: 283, height: 315.39 }} 
-            >
-              <img
-                src={imageUrl}
-                alt="DEC Secure Phone"
-                className="block mx-auto select-none pointer-events-none"
-                style={{
-                  width: "273.91px",
-                  height: "auto",
-                  objectFit: "contain",
-                  objectPosition: "top center",
-                  clipPath: "inset(0 0 50% 0)", 
-                }}
-                draggable={false}
-              />
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-[927px]">
+            {features.map((feat, idx) => (
               <div
-                className="pointer-events-none"
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  bottom: 0,
-                  width: 283,
-                  height: 110,
-                  background:
-                    "linear-gradient(180deg, rgba(2,6,7,0) 0%, #020607 100%)",
-                }}
-              />
-            </div>
-          </div>
-          <div className="relative w-full">
-            <div className="mx-auto" style={{ width: 927 }}>
-              <div
-                className="relative z-10 grid"
-                style={{
-                  width: 927,
-                  height: 810,
-                  gridTemplateColumns: "repeat(3, 303px)",
-                  gridAutoRows: "264px",
-                  columnGap: 9,
-                  rowGap: 9,
-                }}
+                key={idx}
+                className="flex flex-col bg-[#101010] rounded-xl w-full max-w-[303px] p-6 gap-3 shadow-lg items-start"
               >
-                {features.slice(0, 9).map((feat, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-[#101010] rounded-[12px] flex flex-col items-start"
-                    style={{
-                      width: 303,
-                      height: 264,
-                      padding: "24px 16px 34px 16px",
-                      gap: 14,
-                    }}
-                  >
-                    <img
-                      src="/images/apps/dec-secure/check_circle.png"
-                      alt="check icon"
-                      className="w-[34px] h-[34px] select-none pointer-events-none"
-                      draggable={false}
-                    />
-                    <div>
-                      <h3 className="font-inter font-semibold text-[14px] leading-[18px] text-white w-[271px] h-[34px]">
-                        {feat.title}
-                      </h3>
-                      <p className="font-inter font-normal text-[14px] leading-[16px] text-[rgba(244,248,250,0.6)] w-[271px] h-[85px] mt-2">
-                        {feat.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                <img
+                  src="/images/apps/dec-secure/check_circle.png"
+                  alt={feat.title}
+                  className="w-10 h-10 mb-2"
+                  draggable={false}
+                  loading="lazy"
+                  aria-hidden="true"
+                />
+                <h4 className="font-medium text-[22px] text-white leading-[1.5] mb-2">
+                  {feat.title}
+                </h4>
+                <p className="text-base text-white/80 leading-relaxed">
+                  {feat.description}
+                </p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

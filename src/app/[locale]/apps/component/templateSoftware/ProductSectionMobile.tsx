@@ -2,7 +2,7 @@ import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import { Check } from "lucide-react";
-import Button from "../../shared/Button";
+import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 
@@ -42,36 +42,42 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
   console.log("Props.selectedRadio:", selectedRadio);
 
   return (
-    <section className="w-full flex justify-center bg-white sm:hidden">
-      <div className="w-full flex flex-col px-3 py-5 gap-5">
+    <section className="w-full flex justify-center bg-white sm:hidden py-8">
+      <div className="w-full max-w-[430px] flex flex-col px-4 gap-6">
         {/* Imagen centrada */}
         <div className="w-full flex justify-center">
           <img
             src={productImage}
             alt={`${title} screenshot`}
-            className="rounded-[18px] w-full max-w-[430px] h-auto object-contain mb-4"
+            className="rounded-2xl w-full h-auto object-contain"
             draggable={false}
           />
         </div>
 
-        {/* Bloque alineado a la izquierda */}
-        <div className="w-full flex flex-col items-start">
-          <h2 className="font-bold text-[24px] text-[#131313] mb-3">{title}</h2>
-          <p className="text-[14px] text-[#000000] mb-3">{description}</p>
-          <div className="flex flex-col gap-2 w-full mb-1">
-  {features.map((f, i) => (
-    <div key={i} className="flex items-center gap-2">
-      <Check width={20} height={20} color="#1C1B1F" />
-      <span className="text-[16px]">{f}</span>
-    </div>
-  ))}
-</div>
-          <div className="flex flex-wrap gap-2 w-full mt-2 ">
+        {/* Contenido */}
+        <div className="w-full flex flex-col gap-6">
+          {/* Título y descripción */}
+          <div className="flex flex-col gap-4">
+            <h1 className="text-[30px] leading-[1.4] font-bold text-[#131313]">{title}</h1>
+            <p className="text-base leading-relaxed text-[#555555]">{description}</p>
+          </div>
+
+          {/* Features */}
+          <div className="flex flex-col gap-3">
+            {features.map((f, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <Check width={20} height={20} color="#1C1B1F" aria-hidden="true" />
+                <span className="text-base text-[#333333]">{f}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Radios */}
+          <div className="flex flex-wrap gap-4">
             {radioOptions.map((option) => (
               <label
                 key={option}
-                className="flex items-center gap-1 text-[14px] mb-1"
-                style={{ maxWidth: "90vw" }}
+                className="flex items-center gap-2 text-base text-[#333333] cursor-pointer"
               >
                 <input
                   type="radio"
@@ -82,29 +88,40 @@ const ProductSectionMobile: React.FC<ProductSectionProps> = ({
                     console.log("onChange option:", option);
                     onRadioChange(option);
                   }}
+                  className="w-4 h-4 text-primary focus:ring-primary focus:ring-2"
+                  aria-label={`Seleccionar plan ${option}`}
                 />
                 {option}
               </label>
             ))}
           </div>
-        </div>
 
-        <div className="flex flex-col items-start mb-3 leading-tight">
-          <span className="text-[12px] text-[#000000] mb-[12px]">Desde</span>
-          <span className="font-bold text-[28px] text-[#000000] leading-none">
-            {price}
-          </span>
-        </div>
+          {/* Separador */}
+          <hr className="border-[#E0E0E0]" />
 
-        <div className="flex flex-col gap-2 w-full mb-3">
-          <Button
-            type="primary"
-            className="w-full justify-center h-[54px] rounded-[50px] px-[20px]"
-          >
-            <p>Comprar ahora</p>
-            <ShoppingCart color="white" height={18} width={18} />
-          </Button>
-          <TelegramButton className="w-full h-[54px] rounded-[50px] px-[20px] min-w-0" />
+          {/* Precio */}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm text-[#787878] leading-normal">Desde</span>
+            <span className="text-[30px] leading-[1.4] font-bold text-[#131313]">
+              {price}
+            </span>
+          </div>
+
+          {/* Botones */}
+          <div className="flex flex-col gap-3">
+            <Button
+              intent="dark"
+              size="md"
+              fullWidth={true}
+              onClick={onBuy}
+              icon={<ShoppingCart color="white" height={20} width={20} />}
+              iconPosition="right"
+              className="px-6"
+            >
+              Comprar ahora
+            </Button>
+            <TelegramButton className="w-full" />
+          </div>
         </div>
       </div>
     </section>

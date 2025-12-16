@@ -16,29 +16,28 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
   features,
 }) => {
   return (
-    <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-10 ">
-      <div className="w-full max-w-[1272px] mx-auto">
-        <h3 className="text-[24px] font-bold leading-[100%] text-[#101010] mb-8">
+    <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-16 md:py-20 lg:py-24">
+      <div className="w-full max-w-[1272px] mx-auto px-4">
+        <h2 className="text-[38px] font-bold leading-[1.3] text-[#333333] mb-12">
           {title}
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-6">
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {features.map((feature, idx) => (
-            <div key={idx} className="flex flex-col items-stretch h-full">
-              <div className="bg-white rounded-[14.84px] flex flex-col items-center justify-center w-[306px] h-[289px]">
+            <div key={idx} className="flex flex-col h-full">
+              <div className="bg-white rounded-2xl flex items-center justify-center h-[200px] p-6">
                 <img
                   src={feature.image}
                   alt={feature.title}
-                  className="w-[210px] h-[262px] object-contain"
+                  className="max-h-[150px] max-w-full object-contain"
                   draggable={false}
                   loading="lazy"
-                  style={{ margin: "0 auto" }}
                 />
               </div>
-              <div className="flex flex-col flex-1 pt-4">
-                <h4 className="font-inter font-semibold text-[18px] text-[#101010] mb-2 min-h-[44px] leading-[22px]">
+              <div className="flex flex-col flex-1 pt-6">
+                <h3 className="font-medium text-[22px] leading-[1.5] text-[#333333] mb-3">
                   {feature.title}
-                </h4>
-                <p className="font-inter font-light text-[14px] text-[#101010] opacity-70 leading-[1.2] text-justify">
+                </h3>
+                <p className="text-base leading-relaxed text-[#555555]">
                   {feature.description}
                 </p>
               </div>

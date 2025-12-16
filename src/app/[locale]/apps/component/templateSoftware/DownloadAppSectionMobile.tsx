@@ -2,9 +2,9 @@ import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 
 const DownloadAppSectionMobile = () => (
-  <section className="w-full bg-black flex flex-col items-center justify-center py-8 px-0 block sm:hidden">
+  <section className="w-full bg-black flex flex-col items-center justify-center py-12 px-4 sm:hidden">
     {/* Título */}
-    <h2 className="font-inter font-bold text-white text-[20px] leading-[110%] text-center mb-5 px-2">
+    <h2 className="font-bold text-white text-[30px] leading-[1.4] text-center mb-6">
       Descarga la App <br />
       para iOS &amp; Android
     </h2>
@@ -16,7 +16,7 @@ const DownloadAppSectionMobile = () => (
     </div>
 
     {/* Texto QR */}
-    <span className="block text-white text-[18px] font-normal opacity-80 text-center mb-12 px-2">
+    <span className="block text-white text-lg leading-relaxed text-white/80 text-center mb-12">
       O escanea el código QR con tu cámara
     </span>
 
@@ -24,7 +24,7 @@ const DownloadAppSectionMobile = () => (
     <div className="w-full flex justify-center relative">
       {/* Lateral izquierdo (detrás de la imagen) */}
       <div
-        className="absolute left-0 pointer-events-none z-10"
+        className="absolute left-0 pointer-events-none z-0"
         style={{
           top: "30%",
           height: "70%",
@@ -44,7 +44,7 @@ const DownloadAppSectionMobile = () => (
 
       {/* Lateral derecho (detrás de la imagen) */}
       <div
-        className="absolute right-0 pointer-events-none z-10"
+        className="absolute right-0 pointer-events-none z-0"
         style={{
           top: "30%",
           height: "70%",
@@ -62,21 +62,22 @@ const DownloadAppSectionMobile = () => (
         }}
       />
 
-      {/* Mockup por encima */}
+      {/* Mockup en background */}
       <img
         src="/images/apps/armadillo-v2/iPhonePortrait.png"
-        alt="iPhone App Mockup"
-        className="relative z-20 object-contain select-none pointer-events-none"
+        alt=""
+        className="relative z-10 object-contain select-none pointer-events-none"
         draggable={false}
         style={{
           width: "339px",
           height: "373px",
           maxWidth: "100%",
         }}
+        aria-hidden="true"
       />
 
       {/* QR superpuesto al centro */}
-      <div className="absolute inset-0 flex items-center justify-center z-30">
+      <div className="absolute inset-0 flex items-center justify-center z-20">
         <img
           src="/images/encrypted-sim/download.png"
           alt="Código QR de descarga"

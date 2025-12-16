@@ -15,7 +15,7 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "" }) => {
       target="_blank"
       rel="noopener noreferrer"
       className={`
-        inline-flex items-center gap-2 bg-[#12b4e7] hover:bg-[#0da8d8] text-white py-2 px-6 rounded-full transition-all duration-200 whitespace-nowrap min-w-[220px] justify-center
+        inline-flex items-center gap-2 bg-[#12b4e7] hover:bg-[#0da8d8] text-white py-3 px-6 rounded-full transition-all duration-200 whitespace-nowrap min-w-[220px] justify-center text-base font-bold
         ${className}
       `}
     >
