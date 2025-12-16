@@ -20,12 +20,11 @@ interface FeaturedProductsProps {
 }
 
 const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
-  <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-8 mt-[90px]">
-
-    <div className="flex gap-4" style={{ width: 1272, minHeight: 306 }}>
+  <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-8">
+    <div className="flex gap-4 w-full max-w-[1272px] px-4">
       {/* LEFT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[34px] w-[628px] h-[306px] px-10 py-8"
+        className="relative flex flex-col justify-between rounded-[34px] flex-1 min-h-[306px] px-10 py-8 overflow-hidden"
         style={{
           background:
             "radial-gradient(120% 120% at 100% 0%, #004A60 0%, #000 100%)",
@@ -57,14 +56,14 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
         <img
           src={left.image}
           alt="SIM Card encriptada"
-          className="absolute right-4 bottom-4 w-[320px] h-[279px] object-contain select-none pointer-events-none"
+          className="absolute right-0 bottom-0 w-full max-w-[320px] h-auto object-contain select-none pointer-events-none"
           draggable={false}
         />
       </div>
 
       {/* RIGHT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[34px] w-[628px] h-[306px] px-10 py-8"
+        className="relative flex flex-col justify-between rounded-[34px] flex-1 min-h-[306px] px-10 py-8 overflow-hidden"
         style={{
           background: "linear-gradient(90deg, #35CDFB 0%, #A8EBFF 100%)",
         }}
@@ -88,7 +87,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
         <img
           src={right.image}
           alt="eSIM Encriptada"
-          className="absolute right-4 bottom-4 w-[270px] h-[290px] object-contain select-none pointer-events-none"
+          className="absolute right-0 bottom-0 w-full max-w-[270px] h-auto object-contain select-none pointer-events-none"
           draggable={false}
         />
       </div>

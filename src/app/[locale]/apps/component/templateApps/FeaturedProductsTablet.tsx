@@ -23,19 +23,17 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
   left,
   right,
 }) => (
-  <section className="w-full hidden sm:flex lg:hidden justify-center py-8 mt-[30px]">
-    <div className="flex flex-row gap-[20px] w-full max-w-[718px]">
-      {" "}
-      {/* 349*2 + gap */}
+  <section className="w-full hidden sm:flex lg:hidden justify-center py-8">
+    <div className="flex flex-row gap-4 w-full max-w-[718px] px-4">
       {/* LEFT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[16px] w-[349px] h-[218px] px-4 py-4"
+        className="relative flex flex-col justify-between rounded-[16px] flex-1 min-h-[218px] px-4 py-4 overflow-hidden"
         style={{
           background:
             "radial-gradient(120% 120% at 100% 0%, #004A60 0%, #000 100%)",
         }}
       >
-        <div className="z-10 flex flex-col gap-2 max-w-[200px] mt-2">
+        <div className="z-10 flex flex-col gap-2 max-w-[55%] mt-2">
           <h2 className="font-bold text-[15px] text-white leading-tight">
             {left.title}
           </h2>
@@ -59,18 +57,18 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
         <img
           src={left.image}
           alt="SIM Card encriptada"
-          className="absolute right-2 top-6 w-[180px] h-[175px] object-contain select-none pointer-events-none"
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-[45%] max-w-[180px] h-auto object-contain select-none pointer-events-none"
           draggable={false}
         />
       </div>
       {/* RIGHT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[16px] w-[349px] h-[218px] px-4 py-4"
+        className="relative flex flex-col justify-between rounded-[16px] flex-1 min-h-[218px] px-4 py-4 overflow-hidden"
         style={{
           background: "linear-gradient(90deg, #35CDFB 0%, #A8EBFF 100%)",
         }}
       >
-        <div className="z-10 flex flex-col gap-2 max-w-[200px] mt-2">
+        <div className="z-10 flex flex-col gap-2 max-w-[55%] mt-2">
           <h2 className="font-bold text-[15px] text-[#101010] leading-tight">
             {right.title}
           </h2>
@@ -87,7 +85,7 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
         <img
           src={right.image}
           alt="eSIM Encriptada"
-          className="absolute right-2 top-6 w-[180px] h-[175px] object-contain select-none pointer-events-none"
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-[45%] max-w-[180px] h-auto object-contain select-none pointer-events-none"
           draggable={false}
         />
       </div>

@@ -28,11 +28,11 @@ const ProductFeaturesGridTablet: React.FC<ProductFeaturesGridProps> = ({
               className="flex flex-col items-center w-full rounded-xl"
             >
               {/* Imagen */}
-              <div className="w-full h-[220px] rounded-xl bg-white flex justify-center items-center shadow-md">
+              <div className="w-full max-w-[340px] h-[220px] rounded-xl bg-white flex justify-center items-center shadow-md p-4 mx-auto">
                 <img
                   src={feature.image}
                   alt=""
-                  className="w-[174px] h-[179px] object-contain"
+                  className="w-full max-w-[174px] max-h-full object-contain"
                   draggable={false}
                   loading="lazy"
                   aria-hidden="true"

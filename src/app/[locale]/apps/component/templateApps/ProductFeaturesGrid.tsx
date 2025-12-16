@@ -24,11 +24,11 @@ const ProductFeaturesGrid: React.FC<ProductFeaturesGridProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {features.map((feature, idx) => (
             <div key={idx} className="flex flex-col items-stretch h-full">
-              <div className="bg-white rounded-[14.84px] flex flex-col items-center justify-center w-[306px] h-[289px]">
+              <div className="bg-white rounded-[14.84px] flex flex-col items-center justify-center w-full max-w-[306px] h-[289px] mx-auto p-4">
                 <img
                   src={feature.image}
                   alt={feature.title}
-                  className="w-[210px] h-[262px] object-contain"
+                  className="w-full max-w-[210px] max-h-full object-contain"
                   draggable={false}
                   loading="lazy"
                   style={{ margin: "0 auto" }}

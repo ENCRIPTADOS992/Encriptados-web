@@ -24,22 +24,11 @@ const ProductFeaturesGridMobile: React.FC<ProductFeaturesGridMobileProps> = ({
         {features.map((feature, idx) => (
           <div key={idx} className="flex flex-col items-center w-full max-w-[430px] mx-auto">
             {/* Cuadro blanco solo para la imagen */}
-            <div
-              className="bg-white rounded-2xl mx-auto flex items-center justify-center shadow-md"
-              style={{
-                width: "100%",
-                maxWidth: "374px",
-                height: "289px",
-              }}
-            >
+            <div className="bg-white rounded-2xl mx-auto flex items-center justify-center shadow-md w-full max-w-[374px] h-[289px] p-4">
               <img
                 src={feature.image}
                 alt=""
-                style={{
-                  width: "176px",
-                  height: "253px",
-                  objectFit: "contain",
-                }}
+                className="w-full max-w-[176px] max-h-full object-contain"
                 draggable={false}
                 loading="lazy"
                 aria-hidden="true"
