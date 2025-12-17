@@ -40,7 +40,7 @@ export default function PurchaseScaffold({
   console.log("[Scaffold] mode:", mode);
   
   return (
-    <div className={`flex flex-col gap-4 ${className ?? ""}`}>
+    <div className={`flex flex-col gap-3 ${className ?? ""}`}>
       <PurchaseHeader {...headerProps} />
       {mode !== "sim" && (
         <PurchaseTabs
@@ -54,7 +54,7 @@ export default function PurchaseScaffold({
 
       {showRechargeCTA && (
         <div className="pt-2">
-          <div className="text-center py-6">
+          <div className="text-center py-4">
             <Image
               src="/images/home/currency_exchange.png"
               alt="Recargar"

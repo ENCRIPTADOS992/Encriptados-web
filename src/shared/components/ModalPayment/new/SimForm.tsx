@@ -103,10 +103,10 @@ export default function SimForm({
   const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
       <SimTypeAlertSection formType={formType} />
 
-      <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80">
+      <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 !mt-2">
         Datos de compra
       </p>
 
@@ -118,7 +118,7 @@ export default function SimForm({
         countryValue={country}
       />
 
-      <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+      <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F] !mt-2">
         <input
           type="checkbox"
           checked={terms}
@@ -156,7 +156,7 @@ export default function SimForm({
         type="submit"
         disabled={!canPay || loading}
         aria-disabled={!canPay || loading}
-        className={`mt-2 w-full h-[54px]
+        className={`!mt-3 w-full h-[54px]
           rounded-[8px] px-[10px]
           inline-flex items-center justify-center gap-[10px]
           text-white text-[14px] font-semibold

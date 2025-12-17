@@ -190,9 +190,9 @@ export default function NewUserForm({
 
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2.5">
         {/* Usernames */}
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Ingresa los nombres sugeridos</p>
           <p className="rounded-[8px] px-3 py-2 text-[12px] leading-[14px] bg-amber-50 border border-amber-200">
             Mínimo 4 y máximo 20 caracteres alfanuméricos.
@@ -219,7 +219,7 @@ export default function NewUserForm({
         </div>
 
         {/* Email */}
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Correo electrónico para recibir licencia</p>
           <div className="self-start w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
             <input
@@ -250,7 +250,7 @@ export default function NewUserForm({
         </label>
 
         {/* Método de pago */}
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Método de pago</p>
 
           <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
@@ -286,7 +286,7 @@ export default function NewUserForm({
 
         {/* Campos tarjeta (Stripe Split Elements + billing básicos) */}
         {method === "card" && (
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {/* Titular */}
             <div className={`w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center ${errBorderFilled(cardName, nameOk)}`}>
               <input
@@ -333,7 +333,7 @@ export default function NewUserForm({
           disabled={!canPay}
           onClick={handlePay}
           aria-disabled={!canPay}
-          className={`mt-2 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
+          className={`!mt-2.5 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
           text-white text-[14px] font-semibold ${
             canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
           } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
