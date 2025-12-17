@@ -34,7 +34,7 @@ const BannerConnectBne: React.FC = () => {
               width={120}
               height={25}
               priority
-              className="mb-4 md:w-[150px] md:h-[30px] md:mx-0 mx-auto"
+              className="mb-4 w-[120px] h-auto md:w-[150px] md:mx-0 mx-auto"
             />
 
             <h1 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold mb-6 leading-[1.3] md:text-left text-center">
@@ -73,9 +73,9 @@ const BannerConnectBne: React.FC = () => {
               absolute bottom-0
               left-1/2 transform -translate-x-1/2
               z-[1] lg:z-[5]
-              w-[95%] sm:w-[90%] md:w-[70%] lg:w-auto
+              w-[95%] sm:w-[90%] md:w-[70%] lg:w-[60%] xl:w-auto
               opacity-100
-              max-w-[450px] max-h-[560px] sm:max-w-[480px] sm:max-h-[600px] md:max-w-[450px] md:max-h-[550px] lg:max-w-[500px] lg:max-h-[600px]
+              max-w-[450px] max-h-[560px] sm:max-w-[480px] sm:max-h-[600px] md:max-w-[450px] md:max-h-[550px] lg:max-w-[450px] lg:max-h-[550px] xl:max-w-[500px] xl:max-h-[600px]
             "
           />
 
