@@ -74,7 +74,7 @@ export default function PurchaseScaffold({
           <div className="w-full flex justify-center">
             <TelegramButton
               className="
-        w-[416px] h-[54px]
+        w-full sm:w-[416px] max-w-[416px] h-[54px]
         rounded-[8px] px-[10px] py-[10px]
         flex items-center justify-center gap-[10px]
         !bg-[#1CB9EC] text-white

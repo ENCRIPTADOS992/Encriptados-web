@@ -200,7 +200,7 @@ export default function RoningForm({
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
             Correo electrónico para recibir licencia
           </p>
-          <div className="self-start w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+          <div className="w-full sm:w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
             <input
               value={emailVal}
               onChange={(e) => setEmailVal(e.target.value)}
