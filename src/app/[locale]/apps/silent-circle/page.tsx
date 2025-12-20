@@ -18,9 +18,7 @@ import HeroVideoSectionTablet from "../component/templateApps/HeroVideoSectionTa
 import FeaturedProducts from "../component/templateApps/FeaturedProducts";
 import FeaturedProductsMobile from "../component/templateApps/FeaturedProductsMobile";
 import FeaturedProductsTablet from "../component/templateApps/FeaturedProductsTablet";
-import FAQSection from "../component/templateApps/FAQSection";
-import FAQSectionMobile from "../component/templateApps/FAQSectionMobile";
-import FAQSectionTablet from "../component/templateApps/FAQSectionTablet";
+import FAQSection from "@/shared/components/FAQ/FAQSection";
 import DownloadAppSection from "../component/templateApps/DownloadAppSection";
 import DownloadAppSectionMobile from "../component/templateApps/DownloadAppSectionMobile";
 import DownloadAppSectionTablet from "../component/templateApps/DownloadAppSectionTablet";
@@ -383,9 +381,7 @@ const Page = () => {
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
-      <FAQSection faqs={Faqs} />
-      <FAQSectionMobile faqs={Faqs} />
-      <FAQSectionTablet faqs={Faqs} />
+      <FAQSection faqs={Faqs} layout="single" bgColor="bg-white" />
       <DownloadAppSection />
       <DownloadAppSectionMobile/>
       <DownloadAppSectionTablet/>
