@@ -14,7 +14,7 @@ type Props = {
 
 export function PaymentMethodSection({ method, setValue }: Props) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">  
       <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
         Método de pago
       </p>

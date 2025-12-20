@@ -17,7 +17,7 @@ export function CardFieldsSection({ method, register, mountError }: Props) {
   if (method !== "card") return null;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       {/* Titular */}
       <div className={getFieldWrapperClassName(false)}>
         <input

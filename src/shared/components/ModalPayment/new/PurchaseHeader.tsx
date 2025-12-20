@@ -187,7 +187,7 @@ const PurchaseHeader: React.FC<Props> = ({
   return (
     <div className="w-full">
       {/* Título */}
-      <div className="text-center text-[13px] md:text-[13px] lg:text-sm font-medium text-gray-600 pb-1.5">
+      <div className="text-center text-[13px] md:text-[13px] lg:text-sm font-medium text-gray-600 pb-2">
         Detalles de compra
       </div>
 
@@ -216,7 +216,7 @@ const PurchaseHeader: React.FC<Props> = ({
         </div>
 
         {/* Derecha: info */}
-        <div className="mt-3 sm:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[10px] px-2 sm:px-4 ipad:px-3 lg:px-4">
+        <div className="mt-3 sm:mt-0 w-[306px] max-w-[306px] flex-none shrink-0 grow-0 flex flex-col gap-[10px] px-3 sm:px-4 ipad:px-3 lg:px-4">
           {/* Encabezado: nombre + precio */}
           <div className="flex items-center justify-between">
             <h3

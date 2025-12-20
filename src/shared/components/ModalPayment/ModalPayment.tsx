@@ -111,9 +111,9 @@ const ModalPayment: React.FC<Props> = ({
     <div
       className={[
         "fixed inset-0 z-50",
-        "flex items-center sm:items-center justify-center",
+        "flex items-start sm:items-center justify-center",
         "overflow-y-auto overflow-x-hidden",
-        "p-3 sm:p-4 lg:p-6",
+        "py-4 sm:py-6 px-3 sm:px-4",
         isDark ? "bg-black/70" : "bg-black/50",
         "backdrop-blur-sm",
         overlayClassName ?? "",
@@ -125,9 +125,10 @@ const ModalPayment: React.FC<Props> = ({
         ref={panelRef}
         className={[
           "relative w-full max-w-[820px]",
-          "my-auto",
+          "sm:my-auto",
           isDark ? "bg-zinc-900 text-zinc-100" : "bg-white text-zinc-900",
-          "rounded-2xl p-3 sm:p-4 lg:p-6 shadow-2xl",
+          "rounded-2xl shadow-2xl",
+          "pt-9 pb-4 px-4 sm:pt-10 sm:pb-5 sm:px-5 lg:p-6",
           panelClassName ?? "",
         ].join(" ")}
       >
@@ -136,7 +137,7 @@ const ModalPayment: React.FC<Props> = ({
             console.log("[ModalPayment] botón cerrar clic");
             onClose();
           }}
-          className="absolute top-3 right-3 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10 transition-colors z-10"
+          className="absolute top-2 right-2 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10 transition-colors z-10"
           aria-label="Cerrar"
         >
           ✕

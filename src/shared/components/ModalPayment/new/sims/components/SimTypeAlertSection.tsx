@@ -15,7 +15,7 @@ export function SimTypeAlertSection({ formType }: Props) {
   if (!isEsim && !isPhysical) return null;
 
   return (
-    <div className="mt-2 flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[15px]">
+    <div className="flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
       <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#C98A00] text-[14px] font-bold text-[#C98A00]">
         !
       </span>

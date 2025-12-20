@@ -194,7 +194,7 @@ export default function RoningForm({
 
   return (
     <>
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2">
         {/* Email */}
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
@@ -336,7 +336,7 @@ export default function RoningForm({
           disabled={!canPay}
           onClick={handlePay}
           aria-disabled={!canPay}
-          className={`!mt-2.5 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
+          className={`!mt-2 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
           text-white text-[14px] font-semibold ${
             canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
           } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
