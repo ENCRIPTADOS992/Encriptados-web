@@ -71,7 +71,7 @@ const PayForUse = () => {
       >
         <ArrowUpRight className="absolute top-6 right-6 text-black h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14" />
 
-        <p className="text-black font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight pr-8">
+        <p className="text-black font-bold text-4xl sm:text-5xl md:text-6xl lg:text-6xl leading-tight pr-8">
           {t("payOnlySecondCard")}
         </p>
       </div>

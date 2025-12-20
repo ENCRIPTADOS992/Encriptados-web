@@ -23,7 +23,7 @@ const SearchInput = ({
     <div className={`relative flex items-center ${containerClassName}`}>
       {iconPosition === "left" && (
         <div
-          className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
+          className={`absolute left-6 top-1/2 transform -translate-y-1/2 ${iconClassName}`}
         >
           <SearchSvg />
         </div>
@@ -34,7 +34,7 @@ const SearchInput = ({
         placeholder={placeholder}
         {...register(name)}
         className={`py-4 border-1 rounded-full border-[#505050] flex-grow ${
-          iconPosition === "left" ? "pl-14 pr-6" : "pl-6 pr-14"
+          iconPosition === "left" ? "pl-16 pr-6" : "pl-6 pr-14"
         } ${inputClassName}`}
       />
 

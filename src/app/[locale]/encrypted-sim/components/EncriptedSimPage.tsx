@@ -10,7 +10,6 @@ import WhyCallSim from "./WhyCallSim/WhyCallSim";
 // import SimProductsPage from "./SimProducts";
 import CustomShapeDivider from "./CustomShapeDivider";
 import BannerCoverage from "@/shared/BannerCoverage";
-
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import ListOfPlans from "./ListOfPlans";
 import { ListOfProductsData } from "../constants/ListOfProductsData";
@@ -36,8 +35,10 @@ const EncryptedSim = () => {
           <div className="w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-6/12 py-12 md:py-16">
             <BasicFormProvider>
               <div className="p-4">
-                <h2 className="bg-gradient-to-r text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent leading-[1.3] mb-6">
-                  {t("coverageTitle")}
+                <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
+                  <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">
+                    {t("coverageTitle")}
+                  </span>
                 </h2>
                 <div className="flex justify-center text-center mb-6">
                   <p className="text-base sm:text-lg leading-relaxed text-[#012029]">

@@ -41,11 +41,11 @@ const CardSim: React.FC<CardSimProps> = ({
           PARTE SUPERIOR: imagen de la SIM + "+200 países" / "5G LTE"
       ------------------------------------------------------ */}
       <div className="p-2 bg-[#5D5D5D]">
-        <div className="w-full aspect-[4/3] flex items-center justify-center max-w-[400px] mx-auto">
+        <div className="w-full aspect-[4/3] flex items-center justify-center max-w-[180px] sm:max-w-[200px] md:max-w-[220px] mx-auto">
           <Image
             src={productImage}
             alt="Sim Card"
-            className="max-w-full max-h-full object-contain"
+            className="max-h-[150px] object-contain"
           />
         </div>
         <div className="p-2">

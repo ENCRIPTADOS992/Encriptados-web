@@ -7,7 +7,7 @@ const BannerConnect = () => {
   const t = useTranslations("EncryptedSimPage");
   return (
     <div className="flex flex-col lg:flex-row w-full bg-white justify-between px-6 sm:px-8 md:px-10 py-8 md:py-10 shadow-lg rounded-3xl">
-      <div className="w-full lg:w-6/12 items-center flex flex-col justify-center">
+      <div className="w-full lg:w-6/12 items-center flex flex-col justify-center lg:pr-8">
         <h2 className="text-[#333333] font-bold text-[24px] sm:text-[30px] lg:text-[38px] leading-[1.3] text-center lg:text-left">
           <span className="text-[#10B4E7] font-bold">
             {t("connectAllWorldTitle")}

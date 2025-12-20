@@ -221,7 +221,7 @@ const FixedSimProducts: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-5 w-full">
       {cardData.map((card, index) => (
         <div
           key={index}
@@ -232,7 +232,7 @@ const FixedSimProducts: React.FC = () => {
             sm:shadow-none
             gap-6
             flex flex-col
-            md:flex-row
+            xl:flex-row
             my-0
             rounded-3xl
             sm:p-0 xs:p-0

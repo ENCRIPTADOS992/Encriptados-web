@@ -24,7 +24,7 @@ const buttonStyles = cva(
         
         // Variantes legacy para compatibilidad (deprecated)
         solid: "text-white bg-primary rounded-md",
-        black: "bg-black text-white py-3 w-full flex items-center justify-center rounded-lg",
+        black: "bg-black text-white py-3 w-full flex items-center justify-center",
         dangerMetal: "bg-[#2D0505] text-[#FF6C6C] font-light rounded-md",
         profile: "bg-[#1D1D1D] text-white font-medium rounded-md",
         elegant: "bg-[#F4F4F4] text-black rounded-md",
