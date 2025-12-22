@@ -60,7 +60,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
 
       <div
         ref={dropdownRef}
-        className="relative flex-1 min-w-0 max-w-full md:max-w-[120px] xl:max-w-[120px]"
+        className="relative flex-1 min-w-0 max-w-full lg:max-w-[120px] xl:max-w-[120px]"
       >
         {/* Trigger */}
         <button
@@ -68,7 +68,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
           onClick={() => setOpen((v) => !v)}
           className={`
             flex items-center justify-between
-            w-full md:w-[120px]
+            w-full lg:w-[120px]
             border rounded-2xl shadow-md
             px-4 py-4
             transition duration-150 ease-in-out
@@ -138,7 +138,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
             <div className="flex gap-3 mb-4">
               <button
                 className={`
-                  px-4 py-2 rounded-full text-sm font-semibold
+                  w-full md:w-auto px-4 py-2 rounded-full text-sm font-semibold
                   transition
                   ${
                     filters.regionOrCountryType === "region"
@@ -157,7 +157,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
 
               <button
                 className={`
-                  px-4 py-2 rounded-full text-sm font-semibold
+                  w-full md:w-auto px-4 py-2 rounded-full text-sm font-semibold
                   transition
                   ${
                     filters.regionOrCountryType === "country"

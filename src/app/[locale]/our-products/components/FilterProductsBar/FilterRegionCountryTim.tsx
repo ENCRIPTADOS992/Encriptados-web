@@ -66,7 +66,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
           onClick={() => setOpen((v) => !v)}
           className="
             inline-flex items-center
-            w-full sm:w-[190px] h-[64px]
+            w-fit min-w-[120px] h-[64px]
             rounded-[12px]
             border border-[#D0D0D0]
             bg-[#EDEDED]
@@ -88,7 +88,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
             <span
               className="
                 inline-flex items-center 
-                text-[14px] sm:text-[16px] font-semibold
+                text-[16px] sm:text-[16px] font-semibold
                 text-[#171717]
                 truncate
               "
@@ -177,11 +177,11 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
 
             {/* Tabs País / Región + Aplicar filtro */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4">
-              <div className="flex gap-2">
+              <div className="flex gap-2 w-full md:w-auto">
                 <button
                   className={`
-                    px-4 py-2 rounded-full text-sm font-semibold
-                    transition h-[38px] w-[100px]
+                    w-full md:w-[100px] px-4 py-2 rounded-full text-sm font-semibold
+                    transition h-[38px]
                     ${
                       filters.regionOrCountryType === "country"
                         ? "bg-[#009DFF] text-white"
@@ -199,8 +199,8 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
 
                 <button
                   className={`
-                    px-4 py-2 rounded-full text-sm font-semibold
-                    transition h-[38px] w-[100px]
+                    w-full md:w-[100px] px-4 py-2 rounded-full text-sm font-semibold
+                    transition h-[38px]
                     ${
                       filters.regionOrCountryType === "region"
                         ? "bg-[#009DFF] text-white"
@@ -304,7 +304,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                             </span>
                           </span>
 
-                          <span className="w-5 h-5 flex items-center justify-center">
+                          <span className="w-5 h-5 flex items-center justify-center flex-shrink-0 self-center">
                             <span
                               className={`
                                 block w-4 h-4 rounded-full border transition-all
@@ -399,7 +399,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                             </span>
                           </span>
 
-                          <span className="w-5 h-5 flex items-center justify-center">
+                          <span className="w-5 h-5 flex items-center justify-center flex-shrink-0 self-center">
                             <span
                               className={`
                                 block w-4 h-4 rounded-full border transition-all

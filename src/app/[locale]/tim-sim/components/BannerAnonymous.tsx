@@ -1,5 +1,4 @@
 import Image from "next/image";
-import BneSimSvg from "/public/images/bne-sim/anonymous_purchase.png";
 import { useTranslations } from "next-intl";
 
 const AnonymousBanner: React.FC = () => {
@@ -14,12 +13,27 @@ const AnonymousBanner: React.FC = () => {
           {t("BannerAnonymous.description")}
         </p>
       </div>
-      <div className="mt-8">
-        <Image
-          src={BneSimSvg}
-          alt="Ilustración de compra anónima con SIM TIM"
-          className="w-full max-w-[800px]"
-        />
+      <div className="mt-8 w-full">
+        <picture>
+          {/* Desktop: >= 1024px */}
+          <source
+            media="(min-width: 1024px)"
+            srcSet="/images/bne-sim/anonymous-desktop.png"
+          />
+          {/* Tablet: 768px - 1023px */}
+          <source
+            media="(min-width: 768px)"
+            srcSet="/images/bne-sim/anonymous-tablet.png"
+          />
+          {/* Móvil: < 768px */}
+          <Image
+            src="/images/bne-sim/anonymous-movil.png"
+            alt="Ilustración de compra anónima con SIM TIM"
+            width={800}
+            height={600}
+            className="w-full max-w-[800px] mx-auto"
+          />
+        </picture>
       </div>
     </div>
   );
