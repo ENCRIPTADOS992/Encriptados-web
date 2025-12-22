@@ -66,7 +66,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
           onClick={() => setOpen((v) => !v)}
           className="
             inline-flex items-center
-            w-[190px] h-[64px]
+            w-full sm:w-[190px] h-[64px]
             rounded-[12px]
             border border-[#D0D0D0]
             bg-[#EDEDED]
@@ -74,7 +74,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
           "
         >
           <div className="flex items-center gap-3 h-[36px]">
-            <span className="inline-flex w-[32px] h-[32px]">
+            <span className="inline-flex w-[32px] h-[32px] flex-shrink-0">
               {selectedInfo.isCountry && selectedInfo.flagCode ? (
                 <CircleFlag
                   countryCode={selectedInfo.flagCode}
@@ -88,8 +88,9 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
             <span
               className="
                 inline-flex items-center 
-                text-[16px] font-semibold
+                text-[14px] sm:text-[16px] font-semibold
                 text-[#171717]
+                truncate
               "
             >
               {selectedInfo.label}
@@ -103,12 +104,12 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
               absolute z-20 mt-2
               rounded-[12px]
               shadow-xl
-              left-1/2 -translate-x-1/2
+              left-0 sm:left-1/2 sm:-translate-x-1/2
               border bg-white border-[#D0D0D0]
-              w-[518px] max-w-[calc(100vw-32px)]
+              w-[calc(100vw-32px)] sm:w-[518px] sm:max-w-[calc(100vw-32px)]
+              px-4 sm:px-6 py-4 sm:py-[18px]
             "
             style={{
-              padding: "18px 24px",
               boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
             }}
           >
@@ -175,7 +176,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
             </div>
 
             {/* Tabs País / Región + Aplicar filtro */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4">
               <div className="flex gap-2">
                 <button
                   className={`
@@ -216,7 +217,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                 </button>
               </div>
 
-              {/* Enlacee Aplicar filtro */}
+              {/* Enlace Aplicar filtro */}
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -224,6 +225,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                   text-[13px] font-semibold
                   text-[#009DFF]
                   hover:underline underline-offset-2
+                  whitespace-nowrap
                 "
               >
                 Aplicar filtro ({selectedCount})

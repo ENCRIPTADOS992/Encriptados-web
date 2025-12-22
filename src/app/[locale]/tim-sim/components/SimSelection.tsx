@@ -56,45 +56,45 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
         {/* Categoría */}
         <div className="w-full lg:w-auto lg:flex-1">
           <p className="text-sm font-medium text-[#7E7E7E] mb-3">{t('category')}</p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
             <button
-              className={`flex flex-col items-center justify-center py-3 sm:py-4 px-1 sm:px-3 rounded-xl sm:rounded-[18px] border-2 transition-all ${
+              className={`flex flex-col items-center justify-center py-2.5 sm:py-3 md:py-4 px-0.5 sm:px-1 md:px-3 rounded-xl sm:rounded-[18px] border-2 transition-all ${
                 selectedOption === 'physical' 
                   ? 'bg-[#E8F4FF] border-[#00A3FF] text-[#00A3FF]' 
                   : 'bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:border-[#00A3FF]'
               }`}
               onClick={() => setSelectedOption('physical')}
             >
-              <svg className="w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mb-1 sm:mb-1.5 md:mb-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19 5H17V3H7V5H5C3.9 5 3 5.9 3 7V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V7C21 5.9 20.1 5 19 5ZM9 5H15V7H9V5ZM19 19H5V7H7V9H17V7H19V19Z" fill="currentColor"/>
               </svg>
-              <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">{t('physicalSim')}</span>
+              <span className="text-[9px] sm:text-[10px] md:text-xs font-medium text-center leading-tight px-0.5">{t('physicalSim')}</span>
             </button>
             <button
-              className={`flex flex-col items-center justify-center py-3 sm:py-4 px-1 sm:px-3 rounded-xl sm:rounded-[18px] border-2 transition-all ${
+              className={`flex flex-col items-center justify-center py-2.5 sm:py-3 md:py-4 px-0.5 sm:px-1 md:px-3 rounded-xl sm:rounded-[18px] border-2 transition-all ${
                 selectedOption === 'recharge' 
                   ? 'bg-[#E8F4FF] border-[#00A3FF] text-[#00A3FF]' 
                   : 'bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:border-[#00A3FF]'
               }`}
               onClick={() => setSelectedOption('recharge')}
             >
-              <svg className="w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mb-1 sm:mb-1.5 md:mb-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
               </svg>
-              <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">{t('recharge')}</span>
+              <span className="text-[9px] sm:text-[10px] md:text-xs font-medium text-center leading-tight px-0.5">{t('recharge')}</span>
             </button>
             <button
-              className={`flex flex-col items-center justify-center py-3 sm:py-4 px-1 sm:px-3 rounded-xl sm:rounded-[18px] border-2 transition-all ${
+              className={`flex flex-col items-center justify-center py-2.5 sm:py-3 md:py-4 px-0.5 sm:px-1 md:px-3 rounded-xl sm:rounded-[18px] border-2 transition-all ${
                 selectedOption === 'esim' 
                   ? 'bg-[#E8F4FF] border-[#00A3FF] text-[#00A3FF]' 
                   : 'bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:border-[#00A3FF]'
               }`}
               onClick={() => setSelectedOption('esim')}
             >
-              <svg className="w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mb-1 sm:mb-1.5 md:mb-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 6H2V20C2 21.1 2.9 22 4 22H18V20H4V6ZM20 2H8C6.9 2 6 2.9 6 4V16C6 17.1 6.9 18 8 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H8V4H20V16ZM10 9H12V11H10V9ZM14 9H16V11H14V9ZM10 13H12V15H10V13ZM14 13H16V15H14V13Z" fill="currentColor"/>
               </svg>
-              <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">{t('esimData')}</span>
+              <span className="text-[9px] sm:text-[10px] md:text-xs font-medium text-center leading-tight px-0.5">{t('esimData')}</span>
             </button>
           </div>
         </div>

@@ -84,11 +84,11 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
           <div className="flex flex-wrap items-start gap-4 md:gap-6">
             
             {/* Categoría */}
-            <div className="w-auto">
+            <div className="w-full md:w-auto">
               <p className="text-sm font-medium text-[#7E7E7E] mb-3">
                 {t('category')}
               </p>
-              <div className="flex gap-2 justify-start">
+              <div className="flex flex-wrap gap-2 justify-start">
                 {TIM_SERVICE_OPTIONS.map((option) => {
                   const isActive = activeTimService === option.id;
 
@@ -105,8 +105,8 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
                       className={`
                         group
                         flex flex-col items-center justify-center
-                        w-[124px] h-[64px]
-                        px-6
+                        w-[calc(33.333%-5.33px)] min-w-[100px] sm:w-[124px] h-[64px]
+                        px-2 sm:px-6
                         gap-1
                         rounded-lg
                         border
@@ -118,7 +118,7 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
                         }
                       `}
                     >
-                      <span className="relative w-6 h-6">
+                      <span className="relative w-6 h-6 flex-shrink-0">
                         <Image
                           src={option.icon}
                           alt={option.translationKey}
@@ -130,7 +130,7 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
                           }`}
                         />
                       </span>
-                      <span className="text-[10px] font-medium text-center leading-tight">
+                      <span className="text-[9px] sm:text-[10px] font-medium text-center leading-tight px-1">
                         {t(option.translationKey as any)}
                       </span>
                     </button>
@@ -141,7 +141,7 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
 
             {/* Región/País */}
             {shouldShowTimRegion && (
-              <div className="w-auto flex-1 min-w-[200px]">
+              <div className="w-full md:w-auto md:flex-1 md:min-w-[200px]">
                 <p className="text-sm font-medium text-[#7E7E7E] mb-3">
                   {t('region')}
                 </p>
