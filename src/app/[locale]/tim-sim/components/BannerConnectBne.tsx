@@ -1,167 +1,215 @@
-import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import Image from "next/image"
+import { Check } from "lucide-react"
 
-const BannerConnectBne: React.FC = () => {
-  const t = useTranslations('BneSimPage'); // Nombre de la sección de traducción
+export default function BannerConnectBne() {
+  const features = [
+    { blue: "Total", black: "anonimato" },
+    { blue: "Internet", black: "ilimitado" },
+    { blue: "Compatible:", black: "iOS y Android" },
+    { blue: "Cobertura en de", black: "150 países" },
+    { blue: "Sin recargos", black: "Roaming" },
+    { blue: "Activación", black: "instantánea" },
+  ]
+
+  const mobileFeatures = ["Conexiones anónimas", "Planes accesibles", "Tarifas"]
 
   return (
-    <>
-      <div
-        style={{
-          background:
-            'radial-gradient(circle at -15% 37%, rgba(0,157,255,0.8) 0%, rgba(0,157,255,0.9) 3%, rgba(25,25,25,1) 20%, rgba(25,25,25,1) 60%)',
-        }}
-        className="
-          relative w-full h-[80vh] flex flex-col md:flex-row items-end
-          bg-no-repeat bg-center
-          bg-[length:150%] md:bg-[length:100%]
-          overflow-hidden
-        "
-      >
-        {/* Filtro oscuro para mejorar legibilidad en móvil/tablet */}
-        <div className="absolute inset-0 bg-black/60 md:bg-black/30 lg:bg-transparent z-[2]" aria-hidden="true"></div>
+    <main className="bg-gradient-to-r from-[#001E30] to-[#000000] w-full">
+      {/* Desktop and Tablet Layout */}
+      <div className="hidden sm:flex w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 xl:pt-16 pb-0">
+        <div className="grid sm:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 max-w-[1600px] mx-auto w-full">
+          {/* Left Column */}
+          <div className="space-y-4 lg:space-y-6 xl:space-y-8 z-10 self-center">
+            <div className="inline-block">
+              <Image
+                src="/images/bne-sim/logo-sim-tim.svg"
+                alt="SIM TIM Logo"
+                width={170}
+                height={54}
+                className="w-auto h-10 md:h-11 lg:h-12 xl:h-14"
+              />
+            </div>
 
-        {/* 📌 Contenedor principal */}
-        <div className="container mx-auto px-4 py-4 max-w-[1200px] relative h-full flex justify-between items-start">
-
-          {/* 📌 Contenedor de texto */}
-          <div className="w-full md:w-[50%] flex flex-col justify-center items-center md:items-start text-white h-full mt-[-60px] sm:mt-[-40px] md:mt-0 z-20">
-
-            {/* 📌 Imagen ajustada en móvil */}
-            <Image
-              src="/images/bne-sim/Frame 480956513.png"
-              alt="Logotipo de SIM TIM"
-              width={120}
-              height={25}
-              priority
-              className="mb-4 w-[120px] h-auto md:w-[150px] md:mx-0 mx-auto"
-            />
-
-            <h1 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold mb-6 leading-[1.3] md:text-left text-center">
-              {t('headline')} <br />
-              <span className="text-[#10b4e7]">{t('headline1')}</span>
-              <span className="text-[#10b4e7]">{t('headline2')}</span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight">
+              {"Conéctate en cualquier "}
+              <span className="text-[#009DFF]">{"lugar del mundo con total anonimato"}</span>
             </h1>
 
-            <p className="text-base sm:text-lg leading-relaxed md:text-left text-center">
-              {t('subheadline')} <br /> {t('subheadline2')}
+            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300">
+              {"Tus datos no expiran sin importar el tiempo que tardes en consumirlos"}
             </p>
           </div>
-        </div>
 
-        {/* 📌 Contenedor de imagen (Derecha) */}
-        <div className="absolute bottom-0 right-0 w-full md:w-[60%] h-full flex items-end justify-center">
-          {/* Imagen del logo grande (Fondo) */}
-          <Image
-            src="/images/bne-sim/tim_logo_600px_positivo 1.png"
-            alt="TIM Logo"
-            width={1000}
-            height={600}
-            priority
-            className="absolute bottom-[5%] md:-bottom-10 right-0 origin-right z-0 w-full md:w-auto scale-[0.8] sm:scale-[0.9] md:scale-50 lg:scale-[0.6] xl:scale-75 opacity-70 md:opacity-100"
-          />
-
-          {/* Imagen de la persona */}
-          <Image
-            src="/images/bne-sim/image-banner-bne.png"
-            alt="Persona con tecnología SIM TIM"
-            width={450}
-            height={550}
-            priority
-            className="
-              h-auto object-contain
-              absolute bottom-0
-              left-1/2 transform -translate-x-1/2
-              z-[1] lg:z-[5]
-              w-[95%] sm:w-[90%] md:w-[70%] lg:w-[60%] xl:w-auto
-              opacity-100
-              max-w-[450px] max-h-[560px] sm:max-w-[480px] sm:max-h-[600px] md:max-w-[450px] md:max-h-[550px] lg:max-w-[450px] lg:max-h-[550px] xl:max-w-[500px] xl:max-h-[600px]
-            "
-          />
-
-          {/* Contenedor principal */}
-          <div
-            className="
-              absolute 
-              z-20 
-              w-full 
-              flex 
-              justify-between 
-              items-start 
-              px-16 
-              bottom-10
-              top-1/2 
-              transform 
-              -translate-y-1/2
-            "
-          >
-            {/* Contenedor principal (relative) */}
-            <div className="relative w-full h-full z-20">
-              {/* Etiqueta 1 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '80px', left: '160px' }} aria-hidden="true">
-                <Image
-                  src="/images/bne-sim/Frame 480955929.png"
-                  alt="Etiqueta decorativa: Total anonimato en tus comunicaciones"
-                  width={170}
-                  height={44}
-                />
-              </div>
-              {/* Etiqueta 2 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '180px', left: '80px' }} aria-hidden="true">
-                <Image
-                  src="/images/bne-sim/Frame 480955935.png"
-                  alt="Etiqueta decorativa: Sin recargos de Roaming internacional"
-                  width={230}
-                  height={44}
-                />
-              </div>
-              {/* Etiqueta 3 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '300px', left: '120px' }} aria-hidden="true">
-                <Image
-                  src="/images/bne-sim/Frame 480955934.png"
-                  alt="Etiqueta decorativa: Compatible con iOS y Android"
-                  width={210}
-                  height={44}
-                />
-              </div>
+          {/* Right Column - Desktop/Tablet with man and badges */}
+          <div className="relative flex justify-center sm:justify-end self-end">
+            <div className="absolute -right-6 lg:-right-12 xl:-right-16 top-1/2 -translate-y-1/2 w-[500px] h-[500px] lg:w-[600px] lg:h-[600px] xl:w-[700px] xl:h-[700px] 2xl:w-[800px] 2xl:h-[800px] opacity-20 pointer-events-none hidden lg:block overflow-visible">
+              <Image
+                src="/images/bne-sim/logo-tim.png"
+                alt="TIM Logo Background"
+                width={800}
+                height={800}
+                className="w-full h-full object-contain object-right"
+              />
             </div>
 
-            {/* Columna Derecha */}
-            <div className="relative w-full h-full z-20">
-              {/* Etiqueta 1 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '80px', left: '90px' }} aria-hidden="true">
+            {/* Man Image with Floating Tags */}
+            <div className="relative max-w-sm lg:max-w-md xl:max-w-lg w-full">
+              <div className="relative z-10">
                 <Image
-                  src="/images/bne-sim/Frame 480955952.png"
-                  alt="Etiqueta decorativa: Beneficio de privacidad total"
-                  width={180}
-                  height={44}
+                  src="/images/bne-sim/hombre-feliz.png"
+                  alt="Hombre Feliz"
+                  width={400}
+                  height={400}
+                  className="w-full h-auto"
                 />
-              </div>
-              {/* Etiqueta 2 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '180px', left: '140px' }} aria-hidden="true">
-                <Image
-                  src="/images/bne-sim/Frame 480955936.png"
-                  alt="Etiqueta decorativa: Beneficio sin cargos adicionales"
-                  width={250}
-                  height={44}
-                />
-              </div>
-              {/* Etiqueta 3 */}
-              <div className="absolute hidden md:hidden lg:block" style={{ top: '300px', left: '90px' }} aria-hidden="true">
-                <Image
-                  src="/images/bne-sim/Frame 480956514.png"
-                  alt="Etiqueta decorativa: Compatibilidad multiplataforma"
-                  width={230}
-                  height={44}
-                />
+
+                {/* Floating Feature Tags - Only visible on desktop */}
+                <div className="hidden lg:block">
+                  {/* Top Left - Total anonimato */}
+                  <div className="absolute top-4 xl:top-8 -left-8 xl:-left-12 bg-white rounded-full px-3 xl:px-4 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <div className="w-5 h-5 rounded-full bg-[#009DFF] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs xl:text-sm font-medium">
+                      <span className="text-[#009DFF]">{features[0].blue}</span>{" "}
+                      <span className="text-black">{features[0].black}</span>
+                    </span>
+                  </div>
+
+                  {/* Top Right - Internet ilimitado */}
+                  <div className="absolute top-0 xl:top-4 -right-4 xl:-right-8 bg-white rounded-full px-3 xl:px-4 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <div className="w-5 h-5 rounded-full bg-[#009DFF] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs xl:text-sm font-medium">
+                      <span className="text-[#009DFF]">{features[1].blue}</span>{" "}
+                      <span className="text-black">{features[1].black}</span>
+                    </span>
+                  </div>
+
+                  {/* Middle Left - Compatible iOS y Android */}
+                  <div className="absolute top-[35%] -left-12 xl:-left-16 bg-white rounded-full px-3 xl:px-4 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <div className="w-5 h-5 rounded-full bg-[#009DFF] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs xl:text-sm font-medium">
+                      <span className="text-[#009DFF]">{features[2].blue}</span>{" "}
+                      <span className="text-black">{features[2].black}</span>
+                    </span>
+                  </div>
+
+                  {/* Middle Right - Cobertura 150 países */}
+                  <div className="absolute top-[40%] -right-4 xl:-right-8 bg-white rounded-full px-3 xl:px-4 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <div className="w-5 h-5 rounded-full bg-[#009DFF] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs xl:text-sm font-medium">
+                      <span className="text-[#009DFF]">{features[3].blue}</span>{" "}
+                      <span className="text-black">{features[3].black}</span>
+                    </span>
+                  </div>
+
+                  {/* Bottom Left - Sin recargos Roaming */}
+                  <div className="absolute bottom-16 xl:bottom-20 -left-10 xl:-left-14 bg-white rounded-full px-3 xl:px-4 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <div className="w-5 h-5 rounded-full bg-[#009DFF] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs xl:text-sm font-medium">
+                      <span className="text-[#009DFF]">{features[4].blue}</span>{" "}
+                      <span className="text-black">{features[4].black}</span>
+                    </span>
+                  </div>
+
+                  {/* Bottom Right - Activación instantánea */}
+                  <div className="absolute bottom-20 xl:bottom-24 -right-4 xl:-right-8 bg-white rounded-full px-3 xl:px-4 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <div className="w-5 h-5 rounded-full bg-[#009DFF] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs xl:text-sm font-medium">
+                      <span className="text-[#009DFF]">{features[5].blue}</span>{" "}
+                      <span className="text-black">{features[5].black}</span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-    </>
-  );
-};
 
-export default BannerConnectBne;
+      <div className="sm:hidden w-full px-6 pt-8 flex flex-col items-center text-center relative overflow-hidden pb-0">
+        {/* Logo */}
+        <div className="mb-6 relative z-10">
+          <Image src="/images/bne-sim/logo-sim-tim.svg" alt="SIM TIM Logo" width={170} height={54} className="w-auto h-12" />
+        </div>
+
+        {/* Title */}
+        <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight mb-4 max-w-md relative z-10">
+          {"Conéctate en cualquier "}
+          <span className="text-[#009DFF]">{"lugar del mundo con total anonimato"}</span>
+        </h1>
+
+        {/* Description */}
+        <p className="text-sm text-gray-300 mb-8 max-w-sm relative z-10">
+          {"Tus datos no expiran sin importar el tiempo que tardes en consumirlos"}
+        </p>
+
+        <div className="absolute right-0 top-0 bottom-0 w-full opacity-20 pointer-events-none flex items-center justify-end">
+          <Image
+            src="/images/bne-sim/logo-tim.png"
+            alt="TIM Logo Background"
+            width={600}
+            height={600}
+            className="w-full h-auto object-contain object-right"
+          />
+        </div>
+
+        {/* Man Image */}
+        <div className="relative w-full max-w-xs mb-0 z-10">
+          <Image src="/images/bne-sim/hombre-feliz.png" alt="Hombre Feliz" width={300} height={300} className="w-full h-auto" />
+        </div>
+      </div>
+
+      {/* Cinta de carrusel - Solo móvil */}
+      <div className="sm:hidden w-full bg-[#068CE1] py-4">
+        <div className="relative w-full overflow-hidden">
+          <div className="flex animate-scroll gap-3">
+            {/* Duplicamos los features para crear el efecto infinito */}
+            {[...features, ...features].map((feature, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 bg-[#068CE1] rounded-full px-4 py-2 shadow-lg whitespace-nowrap flex-shrink-0"
+              >
+                <div className="w-4 h-4 rounded-full bg-[#000000] flex items-center justify-center flex-shrink-0">
+                  <Check className="w-2.5 h-2.5 text-white" />
+                </div>
+                <span className="text-xs font-medium text-white">
+                  {feature.blue} {feature.black}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <style jsx>{`
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          
+          .animate-scroll {
+            animation: scroll 20s linear infinite;
+          }
+          
+          .animate-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+      </div>
+    </main>
+  )
+}
