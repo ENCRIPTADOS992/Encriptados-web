@@ -333,7 +333,7 @@ export default function NewUserForm({
           disabled={!canPay}
           onClick={handlePay}
           aria-disabled={!canPay}
-          className={`!mt-2 w-full h-[54px] rounded-[8px] px-[10px] inline-flex items-center justify-center gap-[10px]
+          className={`mt-4 w-full h-[54px] rounded-lg px-4 inline-flex items-center justify-center gap-2.5
           text-white text-[14px] font-semibold ${
             canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
           } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}

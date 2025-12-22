@@ -156,10 +156,10 @@ export default function SimForm({
         type="submit"
         disabled={!canPay || loading}
         aria-disabled={!canPay || loading}
-        className={`!mt-2 w-full h-[54px]
-          rounded-[8px] px-[10px]
-          inline-flex items-center justify-center gap-[10px]
-          text-white text-[14px] font-semibold
+        className={`mt-4 w-full h-[54px]
+          rounded-lg px-4
+          inline-flex items-center justify-center gap-2.5
+          text-white text-sm font-semibold
           ${
             canPay && !loading
               ? "bg-black hover:bg-black/90"

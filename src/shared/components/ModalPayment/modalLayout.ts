@@ -11,19 +11,19 @@ type LayoutParams = {
 
 export const PANEL_MOBILE = `
   bg-[#F7F9FB]
-  rounded-none
+  rounded-2xl
   p-3
-  h-[1160px]
+  min-h-0
   w-[354px]
   overflow-x-hidden
 `;
 
 
 export const PANEL_SM_MD = `
-  sm:rounded-[16px]
+  sm:rounded-2xl
   sm:p-6
   sm:w-[628px]
-  sm:h-[1088px]
+  sm:min-h-0
   md:w-[628px]
 `;
 
@@ -31,10 +31,10 @@ export const PANEL_SM_MD = `
 export const PANEL_LG = `
   ipad:bg-[#FAFAFA]
   ipad:w-[628px]
-  ipad:rounded-[21px]
+  ipad:rounded-2xl
   lg:w-[720px]
-  lg:h-[1059px]
-  lg:rounded-[21px]
+  lg:min-h-0
+  lg:rounded-2xl
   lg:max-h-[88vh]
 `;
 

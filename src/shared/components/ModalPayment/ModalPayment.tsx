@@ -113,7 +113,7 @@ const ModalPayment: React.FC<Props> = ({
         "fixed inset-0 z-50",
         "flex items-start sm:items-center justify-center",
         "overflow-y-auto overflow-x-hidden",
-        "py-4 sm:py-6 px-3 sm:px-4",
+        "p-0 sm:py-6 sm:px-4",
         isDark ? "bg-black/70" : "bg-black/50",
         "backdrop-blur-sm",
         overlayClassName ?? "",
@@ -127,8 +127,9 @@ const ModalPayment: React.FC<Props> = ({
           "relative w-full max-w-[820px]",
           "sm:my-auto",
           isDark ? "bg-zinc-900 text-zinc-100" : "bg-white text-zinc-900",
-          "rounded-2xl shadow-2xl",
-          "pt-9 pb-4 px-4 sm:pt-10 sm:pb-5 sm:px-5 lg:p-6",
+          "rounded-2xl",
+          "shadow-2xl",
+          "p-4 sm:p-5 lg:p-6",
           panelClassName ?? "",
         ].join(" ")}
       >
