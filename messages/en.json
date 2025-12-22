@@ -443,6 +443,37 @@
     }
   },
   "BneSimPage": {
+    "banner": {
+      "title": "Connect anywhere ",
+      "titleHighlight": "in the world with total anonymity",
+      "subtitle": "Your data doesn't expire no matter how long it takes you to use it",
+      "features": {
+        "anonymity": {
+          "blue": "Total",
+          "black": "anonymity"
+        },
+        "internet": {
+          "blue": "Unlimited",
+          "black": "internet"
+        },
+        "compatible": {
+          "blue": "Compatible:",
+          "black": "iOS and Android"
+        },
+        "coverage": {
+          "blue": "Coverage in",
+          "black": "over 150 countries"
+        },
+        "roaming": {
+          "blue": "No",
+          "black": "Roaming charges"
+        },
+        "activation": {
+          "blue": "Instant",
+          "black": "activation"
+        }
+      }
+    },
     "headline": "Connect anywhere",
     "headline1": "in the world",
     "headline2": "with total anonymity",

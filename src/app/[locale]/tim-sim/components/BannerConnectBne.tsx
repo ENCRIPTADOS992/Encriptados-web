@@ -1,17 +1,18 @@
 import Image from "next/image"
 import { Check } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export default function BannerConnectBne() {
+  const t = useTranslations('BneSimPage.banner')
+  
   const features = [
-    { blue: "Total", black: "anonimato" },
-    { blue: "Internet", black: "ilimitado" },
-    { blue: "Compatible:", black: "iOS y Android" },
-    { blue: "Cobertura en de", black: "150 países" },
-    { blue: "Sin recargos", black: "Roaming" },
-    { blue: "Activación", black: "instantánea" },
+    { blue: t('features.anonymity.blue'), black: t('features.anonymity.black') },
+    { blue: t('features.internet.blue'), black: t('features.internet.black') },
+    { blue: t('features.compatible.blue'), black: t('features.compatible.black') },
+    { blue: t('features.coverage.blue'), black: t('features.coverage.black') },
+    { blue: t('features.roaming.blue'), black: t('features.roaming.black') },
+    { blue: t('features.activation.blue'), black: t('features.activation.black') },
   ]
-
-  const mobileFeatures = ["Conexiones anónimas", "Planes accesibles", "Tarifas"]
 
   return (
     <main className="bg-gradient-to-r from-[#001E30] to-[#000000] w-full">
@@ -31,12 +32,12 @@ export default function BannerConnectBne() {
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight">
-              {"Conéctate en cualquier "}
-              <span className="text-[#009DFF]">{"lugar del mundo con total anonimato"}</span>
+              {t('title')}
+              <span className="text-[#009DFF]">{t('titleHighlight')}</span>
             </h1>
 
             <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300">
-              {"Tus datos no expiran sin importar el tiempo que tardes en consumirlos"}
+              {t('subtitle')}
             </p>
           </div>
 
@@ -145,13 +146,13 @@ export default function BannerConnectBne() {
 
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight mb-4 max-w-md relative z-10">
-          {"Conéctate en cualquier "}
-          <span className="text-[#009DFF]">{"lugar del mundo con total anonimato"}</span>
+          {t('title')}
+          <span className="text-[#009DFF]">{t('titleHighlight')}</span>
         </h1>
 
         {/* Description */}
         <p className="text-sm text-gray-300 mb-8 max-w-sm relative z-10">
-          {"Tus datos no expiran sin importar el tiempo que tardes en consumirlos"}
+          {t('subtitle')}
         </p>
 
         <div className="absolute right-0 top-0 bottom-0 w-full opacity-20 pointer-events-none flex items-center justify-end">

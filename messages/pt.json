@@ -438,6 +438,37 @@
     }
   },
   "BneSimPage": {
+    "banner": {
+      "title": "Conecte-se em qualquer ",
+      "titleHighlight": "lugar do mundo com total anonimato",
+      "subtitle": "Seus dados não expiram independentemente do tempo que você leve para consumi-los",
+      "features": {
+        "anonymity": {
+          "blue": "Total",
+          "black": "anonimato"
+        },
+        "internet": {
+          "blue": "Internet",
+          "black": "ilimitado"
+        },
+        "compatible": {
+          "blue": "Compatível:",
+          "black": "iOS e Android"
+        },
+        "coverage": {
+          "blue": "Cobertura em",
+          "black": "mais de 150 países"
+        },
+        "roaming": {
+          "blue": "Sem custos",
+          "black": "de Roaming"
+        },
+        "activation": {
+          "blue": "Ativação",
+          "black": "instantânea"
+        }
+      }
+    },
     "headline": "Conecte-se em qualquer",
     "headline1": "lugar do mundo",
     "headline2": "com total anonimato",
