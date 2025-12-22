@@ -3,7 +3,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Share2 } from "lucide-react";
+import CopyPaste from "@/shared/svgs/CopyPast";
 
 type Variant = {
   id: number;
@@ -196,44 +196,46 @@ const PurchaseHeader: React.FC<Props> = ({
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-5 px-4 sm:px-0">
         {/* Columna 1: Imagen con botón compartir */}
         <div className="relative min-h-[200px]">
-          <Image
-            src={product?.images?.[0]?.src ?? "/your-image-placeholder.png"}
-            alt={product?.name ?? "Producto"}
-            width={500}
-            height={375}
-            className="w-full h-auto rounded-xl object-contain"
-            sizes="(max-width: 640px) calc(100vw - 32px), 50vw"
-            priority
-          />
-          <button
-            type="button"
-            onClick={() => {
-              // Obtener el ID del producto desde params si está disponible
-              const productId = (product as any)?.id || (product as any)?.productId;
-              const shareUrl = productId 
-                ? `${window.location.origin}/our-products/${productId}`
-                : window.location.href;
-              
-              const shareData = {
-                title: product?.name ?? "Producto",
-                text: `${product?.name ?? "Producto"} - ${unitPrice} ${currency}`,
-                url: shareUrl,
-              };
-              
-              if (navigator.share) {
-                navigator.share(shareData).catch(() => {});
-              } else {
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                  alert('Enlace copiado al portapapeles');
-                }).catch(() => {});
-              }
-            }}
-            className="absolute bottom-3 left-3 z-10 flex items-center gap-2 bg-[#0AAEE1] hover:bg-[#0AAEE1]/90 text-white pl-4 pr-3 py-2 rounded-full text-sm font-medium transition-colors shadow-lg whitespace-nowrap"
-            aria-label="Compartir producto"
-          >
-            Compartir
-            <Share2 size={18} strokeWidth={2} />
-          </button>
+          <div className="relative w-full">
+            <Image
+              src={product?.images?.[0]?.src ?? "/your-image-placeholder.png"}
+              alt={product?.name ?? "Producto"}
+              width={500}
+              height={375}
+              className="w-full h-auto rounded-xl object-contain"
+              sizes="(max-width: 640px) calc(100vw - 32px), 50vw"
+              priority
+            />
+            <button
+              type="button"
+              onClick={() => {
+                // Obtener el ID del producto desde params si está disponible
+                const productId = (product as any)?.id || (product as any)?.productId;
+                const shareUrl = productId 
+                  ? `${window.location.origin}/our-products/${productId}`
+                  : window.location.href;
+                
+                const shareData = {
+                  title: product?.name ?? "Producto",
+                  text: `${product?.name ?? "Producto"} - ${unitPrice} ${currency}`,
+                  url: shareUrl,
+                };
+                
+                if (navigator.share) {
+                  navigator.share(shareData).catch(() => {});
+                } else {
+                  navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Enlace copiado al portapapeles');
+                  }).catch(() => {});
+                }
+              }}
+              className="absolute bottom-2 left-3 z-10 flex items-center gap-2 bg-[#0AAEE1] hover:bg-[#0AAEE1]/90 text-white pl-4 pr-3 py-2 rounded-full text-sm font-medium transition-colors shadow-lg whitespace-nowrap"
+              aria-label="Compartir producto"
+            >
+              Compartir
+              <CopyPaste width={18} height={18} color="white" />
+            </button>
+          </div>
         </div>
 
         {/* Columna 2: Información del producto */}
