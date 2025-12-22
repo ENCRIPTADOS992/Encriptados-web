@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       productImage = `${baseUrl}/${productImage}`;
     }
     
-    const productPrice = product?.price || product?.variants?.[0]?.price || 0;
+    const productPrice = product?.price || "0";
     const productDescription = `${productName} - ${productPrice} USD. Compra ahora en Encriptados.`;
     const productUrl = `${baseUrl}/our-products/${productId}`;
 
