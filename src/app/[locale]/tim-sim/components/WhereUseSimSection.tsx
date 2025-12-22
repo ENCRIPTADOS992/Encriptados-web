@@ -80,15 +80,15 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
         </div>
 
         <div className="w-full bg-white rounded-[24px] md:rounded-[32px] px-3 sm:px-4 md:px-8 py-5 sm:py-6 mb-10 shadow-lg">
-          {/* Layout responsive: Móvil (columna) | Tablet (2 filas) | Desktop (1 fila) */}
-          <div className="flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-6">
+          {/* Layout responsive con flex-wrap */}
+          <div className="flex flex-wrap items-start gap-4 md:gap-6">
             
             {/* Categoría */}
-            <div className="w-full lg:w-auto lg:flex-1">
+            <div className="w-auto">
               <p className="text-sm font-medium text-[#7E7E7E] mb-3">
                 {t('category')}
               </p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex gap-2 justify-start">
                 {TIM_SERVICE_OPTIONS.map((option) => {
                   const isActive = activeTimService === option.id;
 
@@ -105,30 +105,32 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
                       className={`
                         group
                         flex flex-col items-center justify-center
-                        py-3 sm:py-4 px-1 sm:px-3
-                        rounded-xl sm:rounded-[18px]
-                        border-2
-                        transition-all
+                        w-[124px] h-[64px]
+                        px-6
+                        gap-1
+                        rounded-lg
+                        border
+                        transition-all duration-200
                         ${
                           isActive
-                            ? "bg-[#E8F4FF] border-[#00A3FF] text-[#00A3FF]"
-                            : "bg-[#F5F5F5] border-transparent text-[#7E7E7E] hover:bg-[#E8F4FF] hover:border-[#00A3FF] hover:text-[#00A3FF]"
+                            ? "bg-white border-[#1E90FF] text-[#1E90FF] shadow-sm"
+                            : "bg-[#E8EAED] border-[#E8EAED] text-[#5F6368] hover:bg-white hover:border-[#1E90FF] hover:text-[#1E90FF] hover:shadow-sm"
                         }
                       `}
                     >
-                      <span className="relative w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2">
+                      <span className="relative w-6 h-6">
                         <Image
                           src={option.icon}
                           alt={option.translationKey}
                           fill
-                          className={`object-contain transition-all ${
+                          className={`object-contain transition-all duration-200 ${
                             isActive 
-                              ? "[filter:brightness(0)_saturate(100%)_invert(52%)_sepia(97%)_saturate(1655%)_hue-rotate(179deg)_brightness(103%)_contrast(101%)]" 
-                              : "[filter:grayscale(100%)_opacity(0.6)] group-hover:[filter:brightness(0)_saturate(100%)_invert(52%)_sepia(97%)_saturate(1655%)_hue-rotate(179deg)_brightness(103%)_contrast(101%)]"
+                              ? "[filter:brightness(0)_saturate(100%)_invert(42%)_sepia(99%)_saturate(2479%)_hue-rotate(200deg)_brightness(101%)_contrast(101%)]" 
+                              : "[filter:brightness(0)_saturate(0%)_opacity(0.5)] group-hover:[filter:brightness(0)_saturate(100%)_invert(42%)_sepia(99%)_saturate(2479%)_hue-rotate(200deg)_brightness(101%)_contrast(101%)]"
                           }`}
                         />
                       </span>
-                      <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">
+                      <span className="text-[10px] font-medium text-center leading-tight">
                         {t(option.translationKey as any)}
                       </span>
                     </button>
@@ -139,7 +141,7 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
 
             {/* Región/País */}
             {shouldShowTimRegion && (
-              <div className="w-full lg:flex-1">
+              <div className="w-auto flex-1 min-w-[200px]">
                 <p className="text-sm font-medium text-[#7E7E7E] mb-3">
                   {t('region')}
                 </p>

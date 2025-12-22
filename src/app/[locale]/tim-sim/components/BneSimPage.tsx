@@ -10,36 +10,39 @@ import QRBanner from "../../fast-delivery/components/QRBanner";
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import StepperBuy from "@/shared/components/StepperBuy/StepperBuy";
 import WhereUseSimSection from "./WhereUseSimSection";
+import { useTranslations } from "next-intl";
 
 interface BneSimPageProps {
   locale: string;
 }
 
 const BneSimPage = ({ locale }: BneSimPageProps) => {
+  const t = useTranslations('BneSimPage.faqs');
+
   const faqs = [
     {
-      question: "¿Qué dispositivos son compatibles con la SIM?",
-      answer: "La SIM funciona con la mayoría de teléfonos y tablets desbloqueados. Solo necesitas que tu dispositivo admita la banda de tu operador local.",
+      question: t('q1.question'),
+      answer: t('q1.answer'),
     },
     {
-      question: "¿Cómo activo mi SIM después de comprarla?",
-      answer: "Recibirás instrucciones paso a paso por correo y dentro de la app. Generalmente solo debes escanear un código o seguir una guía rápida.",
+      question: t('q2.question'),
+      answer: t('q2.answer'),
     },
     {
-      question: "¿Puedo usarla en varios países?",
-      answer: "Sí. Dependiendo del plan contratado, podrás usar la SIM en diferentes países sin cambiar de número ni perder tu saldo de datos.",
+      question: t('q3.question'),
+      answer: t('q3.answer'),
     },
     {
-      question: "¿Mi información personal queda registrada?",
-      answer: "No pedimos información sensible innecesaria. Nuestro enfoque está en mantener tu navegación lo más privada posible.",
+      question: t('q4.question'),
+      answer: t('q4.answer'),
     },
     {
-      question: "¿Qué pasa si agoto mis datos?",
-      answer: "Puedes recargar tu plan desde la app o desde la web en cualquier momento, sin perder tu SIM ni necesidad de volver a activarla.",
+      question: t('q5.question'),
+      answer: t('q5.answer'),
     },
     {
-      question: "¿Hay soporte si tengo problemas con la activación?",
-      answer: "Sí. Contamos con soporte vía chat y correo para ayudarte con la instalación, activación y uso de tu SIM.",
+      question: t('q6.question'),
+      answer: t('q6.answer'),
     },
   ];
 
@@ -93,7 +96,7 @@ const BneSimPage = ({ locale }: BneSimPageProps) => {
         </div>
 
         <FAQSection 
-          title="Preguntas frecuentes"
+          title={t('title')}
           faqs={faqs} 
           layout="single" 
           bgColor="bg-white" 

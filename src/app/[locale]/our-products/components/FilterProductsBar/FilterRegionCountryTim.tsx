@@ -103,12 +103,11 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
               absolute z-20 mt-2
               rounded-[12px]
               shadow-xl
-              right-0
+              left-1/2 -translate-x-1/2
               border bg-white border-[#D0D0D0]
+              w-[518px] max-w-[calc(100vw-32px)]
             "
             style={{
-              width: "min(100vw - 52px, 518px)",
-              maxWidth: "100vw",
               padding: "18px 24px",
               boxShadow: "0px 24px 44px 0px rgba(0,0,0,0.08)",
             }}
