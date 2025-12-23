@@ -120,27 +120,27 @@ const CardProduct: React.FC<CardSimProps> = ({
 
 
   return (
-    <div className="w-full max-w-[280px] mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
-      {/* Imagen de cabecera */}
-      <div className="relative w-full aspect-[16/9] bg-white flex items-center justify-center">
+    <div className="w-full shadow-lg rounded-2xl overflow-hidden flex flex-col">
+      {/* Imagen de cabecera - sin contenedor extra, imagen directa */}
+      <div className="relative w-full aspect-[16/10] flex-shrink-0">
         <Image
           src={productImage}
           alt="Sim Card"
-          width={300}
-          height={200}
-          className="object-contain"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover rounded-t-2xl"
         />
 
         {badges?.country?.label ? (
-          <div className="absolute left-2 bottom-2 flex items-center bg-white/90 rounded-full px-2 py-1 shadow-md">
-            <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center">
+          <div className="absolute left-3 bottom-3 flex items-center bg-white/90 rounded-full px-2.5 py-1.5 shadow-md z-10">
+            <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center">
               {filters.regionOrCountryType === "country" ? (
                 badges.country.flagUrl ? (
                   <Image
                     src={badges.country.flagUrl}
                     alt={badges.country.label}
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                     className="w-full h-full object-cover rounded-full"
                   />
                 ) : badges.country.code ? (
@@ -149,29 +149,26 @@ const CardProduct: React.FC<CardSimProps> = ({
                     className="w-full h-full"
                   />
                 ) : (
-                  <RegionIcon size={24} />
+                  <RegionIcon size={20} />
                 )
               ) : (
-                <RegionIcon size={24} />
+                <RegionIcon size={20} />
               )}
             </div>
-
-              <span className="ml-2 text-[13px] font-bold text-black leading-none">
-                {badges.country.label}
-              </span>
-            </div>
+            <span className="ml-1.5 text-[12px] font-bold text-black leading-none">
+              {badges.country.label}
+            </span>
+          </div>
         ) : null}
-
       </div>
 
       {/* Contenido */}
-      <div className="p-2 sm:p-4 flex flex-col">
-        <div className="flex items-start justify-between mb-1">
+      <div className="p-4 flex flex-col flex-grow bg-white rounded-b-2xl">
+        <div className="flex items-start justify-between gap-2 mb-2">
           <h2
             className="
-              text-[12px] leading-[12px] tracking-[0.01em] font-bold
-              md:text-lg md:leading-tight
-              truncate
+              text-[18px] leading-[1.3] tracking-[0.01em] font-bold
+              line-clamp-2
             "
           >
             {headerTitle}
@@ -181,14 +178,13 @@ const CardProduct: React.FC<CardSimProps> = ({
           {badges?.tag ? (
             <div
               className="
-                ml-2
-                inline-flex items-center justify-center
+                inline-flex items-center justify-center flex-shrink-0
                 rounded-full
                 bg-[#1CB9EC]
-                text-[10px] md:text-[11px]
+                text-[11px]
                 font-semibold
-                h-[18px]
-                px-[9px]
+                h-[20px]
+                px-3
                 shadow-md
                 whitespace-nowrap
               "
@@ -199,39 +195,39 @@ const CardProduct: React.FC<CardSimProps> = ({
 
         </div>
 
-        <ul className="space-y-1">
+        <ul className="space-y-1.5 mb-2">
           {features.map((item, idx) => (
             <li
               key={idx}
-              className="flex items-center text-sm md:text-base gap-2"
+              className="flex items-center text-[14px] leading-[1.4] gap-2"
             >
-              <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
+              <Image src={CheckSvg} alt="✓" className="w-4 h-4 flex-shrink-0" />
               <span>{item}</span>
             </li>
           ))}
         </ul>
 
-        <div className="min-h-[72px] flex flex-col justify-start space-y-2">
+        <div className="flex flex-col justify-start space-y-1.5 mb-3">
           {checks.slice(0, 3).map((adv, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2 text-xs md:text-sm"
+              className="flex items-center gap-2 text-[14px] leading-[1.4]"
             >
-              <Image src={CheckSvg} alt="✓" className="w-4 h-4" />
+              <Image src={CheckSvg} alt="✓" className="w-4 h-4 flex-shrink-0" />
               <span>{adv.name}</span>
             </div>
           ))}
         </div>
 
-        <hr className="my-2 border-gray-200" />
+        <hr className="my-3 border-gray-200" />
 
-        <div className="mt-auto flex flex-col gap-2">
-          <div className="text-lg font-bold">{displayPrice}</div>
+        <div className="mt-auto flex flex-col gap-2.5">
+          <div className="text-[16px] leading-[1.2] font-bold">{displayPrice}</div>
           <div className="flex flex-row justify-between items-center gap-2">
             <button
               onClick={handleBuy}
               type="button"
-              className="bg-black text-white text-xs rounded-full px-4 py-2 flex items-center justify-center gap-2"
+              className="bg-black text-white text-[14px] leading-[1.2] rounded-full px-4 py-2.5 flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
             >{t("buy")}
               <LocalMallSvgNew />
             </button>
@@ -245,7 +241,7 @@ const CardProduct: React.FC<CardSimProps> = ({
                 console.log("🔗 [CardProduct] Go to info:", { url, id });
                 if (url) router.push(`${url}?productId=${id}`);
               }}
-              className="cursor-pointer text-xs text-black hover:underline"
+              className="cursor-pointer text-[14px] leading-[1.2] text-black hover:underline font-medium"
             >
               {t("moreInfo")}
             </span>

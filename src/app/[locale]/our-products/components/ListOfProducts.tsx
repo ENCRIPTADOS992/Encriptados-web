@@ -474,8 +474,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         {productCount} {productCount !== 1 ? t('products') : t('product')} {productCount !== 1 ? t('founds') : t('found')}
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full max-w-7xl mx-auto">
+      <div className="w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-4 lg:gap-5 w-full max-w-7xl mx-auto">
           {filteredProducts.map((product, index) => {
             const isCategory40 = selectedOption === 40;
             const isTimProvider = (product.provider ?? "")
