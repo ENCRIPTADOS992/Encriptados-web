@@ -70,6 +70,21 @@ export interface ProductById {
   faqs: FAQ[];
   advantages: Advantage[];
   features: Feature[];
+  /** Variantes del producto (licencias) */
+  variants?: ProductVariantFromAPI[];
+  image?: string;
+  image_full?: string;
+}
+
+/**
+ * Variante de producto desde la API de WordPress
+ */
+export interface ProductVariantFromAPI {
+  id: number;
+  licensetime: string;
+  price: number;
+  sku?: string;
+  image?: string;
 }
 
 export interface FAQ {
