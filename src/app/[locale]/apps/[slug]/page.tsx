@@ -3,34 +3,16 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useRouter, usePathname, notFound } from "next/navigation";
 
-// Componentes Template Producto Unificado
-import HeroBanner from "../component/templateProduct/HeroBanner";
-import HeroBannerMobile from "../component/templateProduct/HeroBannerMobile";
-import HeroBannerTablet from "../component/templateProduct/HeroBannerTablet";
-import ProductSection from "../component/templateProduct/ProductSection";
-import ProductSectionMobile from "../component/templateProduct/ProductSectionMobile";
-import ProductSectionTablet from "../component/templateProduct/ProductSectionTablet";
-import ProductFeaturesGrid from "../component/templateProduct/ProductFeaturesGrid";
-import ProductFeaturesGridMobile from "../component/templateProduct/ProductFeaturesGridMobile";
-import ProductFeaturesGridTablet from "../component/templateProduct/ProductFeaturesGridTablet";
-import ProductBenefitsGrid from "../component/templateProduct/ProductBenefitsGrid";
-import ProductBenefitsGridMobile from "../component/templateProduct/ProductBenefitsGridMobile";
-import ProductBenefitsGridTablet from "../component/templateProduct/ProductBenefitsGridTablet";
-import HeroVideoSection from "../component/templateProduct/HeroVideoSection";
-import HeroVideoSectionMobile from "../component/templateProduct/HeroVideoSectionMobile";
-import HeroVideoSectionTablet from "../component/templateProduct/HeroVideoSectionTablet";
-import FeaturedProducts from "../component/templateProduct/FeaturedProducts";
-import FeaturedProductsMobile from "../component/templateProduct/FeaturedProductsMobile";
-import FeaturedProductsTablet from "../component/templateProduct/FeaturedProductsTablet";
-import FAQSection from "../component/templateProduct/FAQSection";
-import FAQSectionMobile from "../component/templateProduct/FAQSectionMobile";
-import FAQSectionTablet from "../component/templateProduct/FAQSectionTablet";
-import StickyPriceBannerDesktop from "../component/templateProduct/StickyPriceBannerDesktop";
-import StickyPriceBannerTablet from "../component/templateProduct/StickyPriceBannerTablet";
-import StickyPriceBannerMobile from "../component/templateProduct/StickyPriceBannerMobile";
-import SecurityFeatures from "../component/templateProduct/SecurityFeatures";
-import SecurityFeaturesMobile from "../component/templateProduct/SecurityFeaturesMobile";
-import SecurityFeaturesTablet from "../component/templateProduct/SecurityFeaturesTablet";
+// Componentes Template Producto Unificados (Responsive)
+import HeroBannerUnified from "../component/templateProduct/HeroBannerUnified";
+import ProductSectionUnified from "../component/templateProduct/ProductSectionUnified";
+import ProductFeaturesGridUnified from "../component/templateProduct/ProductFeaturesGridUnified";
+import ProductBenefitsGridUnified from "../component/templateProduct/ProductBenefitsGridUnified";
+import HeroVideoSectionUnified from "../component/templateProduct/HeroVideoSectionUnified";
+import FeaturedProductsUnified from "../component/templateProduct/FeaturedProductsUnified";
+import FAQSectionUnified from "../component/templateProduct/FAQSectionUnified";
+import StickyPriceBannerUnified from "../component/templateProduct/StickyPriceBannerUnified";
+import SecurityFeaturesUnified from "../component/templateProduct/SecurityFeaturesUnified";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -162,28 +144,44 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
     [product, config, selectedPlan, locale, openModal]
   );
 
+  // Loading state
   if (isLoading) return <ProductPageSkeleton />;
 
+  // Error state
   if (error && !product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">{config?.slug || "Producto"}</h1>
+      <main className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+            {config?.slug || "Producto"}
+          </h1>
           <p className="text-gray-600">{error}</p>
-          <p className="text-sm text-gray-400 mt-2">Este producto será añadido próximamente.</p>
+          <p className="text-sm text-gray-400 mt-2">
+            Este producto será añadido próximamente.
+          </p>
         </div>
-      </div>
+      </main>
     );
   }
 
+  // Hero banner images object
+  const heroBannerImages = {
+    desktop: config?.heroBanners.desktop || "",
+    tablet: config?.heroBanners.tablet || "",
+    mobile: config?.heroBanners.mobile || "",
+  };
+
   return (
-    <div>
-      <HeroBanner imageUrl={config?.heroBanners.desktop || ""} alt={`${product?.name || slug} Hero Banner`} />
-      <HeroBannerMobile imageUrl={config?.heroBanners.mobile || ""} alt={`${product?.name || slug} Hero Banner`} />
-      <HeroBannerTablet imageUrl={config?.heroBanners.tablet || ""} alt={`${product?.name || slug} Hero Banner`} />
+    <main>
+      {/* Hero Banner */}
+      <HeroBannerUnified 
+        imageUrl={heroBannerImages} 
+        alt={`${product?.name || slug} Hero Banner`} 
+      />
 
+      {/* Product Section with price block ref */}
       <div ref={priceBlockRef}>
-        <ProductSection
+        <ProductSectionUnified
           title={product?.name || ""}
           description={product?.description || ""}
           features={features}
@@ -192,133 +190,47 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
           selectedRadio={selectedRadio}
           onRadioChange={handleRadioChange}
           onBuy={handleBuy}
-          onChat={handleChat}
-          productImage={config?.productImage || ""}
-          appStoreUrl={config?.appStoreUrl}
-          googlePlayUrl={config?.googlePlayUrl}
-        />
-        <ProductSectionMobile
-          title={product?.name || ""}
-          description={product?.description || ""}
-          features={features}
-          price={currentPrice}
-          radioOptions={radioOptions}
-          selectedRadio={selectedRadio}
-          onRadioChange={handleRadioChange}
-          onBuy={handleBuy}
-          onChat={handleChat}
-          productImage={config?.productImage || ""}
-          appStoreUrl={config?.appStoreUrl}
-          googlePlayUrl={config?.googlePlayUrl}
-        />
-        <ProductSectionTablet
-          title={product?.name || ""}
-          description={product?.description || ""}
-          features={features}
-          price={currentPrice}
-          radioOptions={radioOptions}
-          selectedRadio={selectedRadio}
-          onRadioChange={handleRadioChange}
-          onBuy={handleBuy}
-          onChat={handleChat}
           productImage={config?.productImage || ""}
           appStoreUrl={config?.appStoreUrl}
           googlePlayUrl={config?.googlePlayUrl}
         />
       </div>
 
-      <div className="hidden lg:block">
-        <StickyPriceBannerDesktop visible={!isVisible} productInfo={productInfo} />
-      </div>
-      <div className="hidden sm:block lg:hidden">
-        <StickyPriceBannerTablet visible={!isVisible} productInfo={productInfo} />
-      </div>
-      <div className="block sm:hidden">
-        <StickyPriceBannerMobile visible={!isVisible} productInfo={productInfo} />
-      </div>
+      {/* Sticky Price Banner */}
+      <StickyPriceBannerUnified visible={!isVisible} productInfo={productInfo} />
 
+      {/* Features Grid */}
       {featuresGrid.length > 0 && (
-        <>
-          <ProductFeaturesGrid features={featuresGrid} />
-          <ProductFeaturesGridMobile features={featuresGrid} />
-          <ProductFeaturesGridTablet features={featuresGrid} />
-        </>
+        <ProductFeaturesGridUnified features={featuresGrid} />
       )}
 
+      {/* Benefits Grid */}
       {benefits.length > 0 && (
-        <>
-          <ProductBenefitsGrid title={config?.benefitsTitle || "Te mantenemos conectado de forma segura"} benefits={benefits} />
-          <ProductBenefitsGridMobile title={config?.benefitsTitle || "Te mantenemos conectado de forma segura"} benefits={benefits} />
-          <ProductBenefitsGridTablet title={config?.benefitsTitle || "Te mantenemos conectado de forma segura"} benefits={benefits} />
-        </>
+        <ProductBenefitsGridUnified 
+          title={config?.benefitsTitle || "Te mantenemos conectado de forma segura"} 
+          benefits={benefits} 
+        />
       )}
 
-      {/* SecurityFeatures: Solo para productos tipo software */}
+      {/* Security Features - Solo para productos tipo software */}
       {isSoftwareTemplate && securityFeatures.length > 0 && (
-        <>
-          <SecurityFeatures
-            title={`Características de seguridad de ${product?.name || "este producto"}`}
-            features={securityFeatures}
-            imageUrl={config?.productImage || ""}
-          />
-          <SecurityFeaturesMobile
-            title={`Características de seguridad de ${product?.name || "este producto"}`}
-            features={securityFeatures}
-            imageUrl={config?.productImage || ""}
-          />
-          <SecurityFeaturesTablet
-            title={`Características de seguridad de ${product?.name || "este producto"}`}
-            features={securityFeatures}
-            imageUrl={config?.productImage || ""}
-          />
-        </>
+        <SecurityFeaturesUnified
+          title={`Características de seguridad de ${product?.name || "este producto"}`}
+          features={securityFeatures}
+          imageUrl={config?.productImage || ""}
+        />
       )}
 
+      {/* Hero Video Section */}
       {config?.videoUrl && (
-        <>
-          <HeroVideoSection title={config.videoTitle || `${product?.name}, tu app de comunicación segura`} videoUrl={config.videoUrl} />
-          <HeroVideoSectionMobile title={config.videoTitle || `${product?.name}, tu app de comunicación segura`} videoUrl={config.videoUrl} />
-          <HeroVideoSectionTablet title={config.videoTitle || `${product?.name}, tu app de comunicación segura`} videoUrl={config.videoUrl} />
-        </>
+        <HeroVideoSectionUnified 
+          title={config.videoTitle || `${product?.name}, tu app de comunicación segura`} 
+          videoUrl={config.videoUrl} 
+        />
       )}
 
-      <FeaturedProducts
-        left={{
-          title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes",
-          buttonLabel: "Comprar",
-          onButtonClick: () => handleSimBuy(config?.relatedProducts.simProductId || "508"),
-          moreInfoLabel: "Más información",
-          onMoreInfo: () => handleMoreInfo(config?.relatedProducts.simProductId || "508"),
-          image: "/images/apps/armadillo-v2/sim.png",
-        }}
-        right={{
-          title: "E-SIM Encriptada",
-          subtitle: "Conectividad global segura",
-          buttonLabel: "Ver más",
-          onButtonClick: () => handleMoreInfo(config?.relatedProducts.esimProductId || "454"),
-          image: "/images/apps/armadillo-v2/phone.png",
-        }}
-      />
-      <FeaturedProductsMobile
-        left={{
-          title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes",
-          buttonLabel: "Comprar",
-          onButtonClick: () => handleSimBuy(config?.relatedProducts.simProductId || "508"),
-          moreInfoLabel: "Más información",
-          onMoreInfo: () => handleMoreInfo(config?.relatedProducts.simProductId || "508"),
-          image: "/images/apps/armadillo-v2/sim.png",
-        }}
-        right={{
-          title: "E-SIM Encriptada",
-          subtitle: "Conectividad global segura",
-          buttonLabel: "Ver más",
-          onButtonClick: () => handleMoreInfo(config?.relatedProducts.esimProductId || "454"),
-          image: "/images/apps/armadillo-v2/phone.png",
-        }}
-      />
-      <FeaturedProductsTablet
+      {/* Featured Products */}
+      <FeaturedProductsUnified
         left={{
           title: "SIM Card encriptada",
           description: "Protégete de los ciberdelincuentes",
@@ -337,31 +249,47 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
         }}
       />
 
+      {/* FAQ Section */}
       {faqs.length > 0 && (
-        <>
-          <FAQSection faqs={faqs} title="Preguntas frecuentes" />
-          <FAQSectionMobile faqs={faqs} />
-          <FAQSectionTablet faqs={faqs} />
-        </>
+        <FAQSectionUnified faqs={faqs} title="Preguntas frecuentes" />
       )}
-    </div>
+    </main>
   );
 }
 
 function ProductPageSkeleton() {
   return (
-    <div className="min-h-screen animate-pulse">
-      <div className="h-[400px] bg-gray-200" />
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <div className="h-8 bg-gray-200 rounded w-3/4" />
-            <div className="h-4 bg-gray-200 rounded w-full" />
-            <div className="h-4 bg-gray-200 rounded w-5/6" />
+    <main className="min-h-screen animate-pulse">
+      {/* Hero skeleton */}
+      <div className="h-44 sm:h-36 lg:h-72 bg-gray-200" />
+      
+      {/* Content skeleton */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
+          {/* Text content */}
+          <div className="space-y-6 order-2 lg:order-1">
+            <div className="h-10 bg-gray-200 rounded w-3/4" />
+            <div className="space-y-3">
+              <div className="h-4 bg-gray-200 rounded w-full" />
+              <div className="h-4 bg-gray-200 rounded w-5/6" />
+              <div className="h-4 bg-gray-200 rounded w-4/6" />
+            </div>
+            <div className="space-y-2">
+              <div className="h-5 bg-gray-200 rounded w-1/4" />
+              <div className="h-12 bg-gray-200 rounded w-1/3" />
+            </div>
+            <div className="flex gap-3">
+              <div className="h-12 bg-gray-200 rounded w-40" />
+              <div className="h-12 bg-gray-200 rounded w-32" />
+            </div>
           </div>
-          <div className="h-[300px] bg-gray-200 rounded" />
+          
+          {/* Image placeholder */}
+          <div className="order-1 lg:order-2">
+            <div className="h-64 lg:h-80 bg-gray-200 rounded-2xl" />
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

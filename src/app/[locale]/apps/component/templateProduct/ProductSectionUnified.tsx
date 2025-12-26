@@ -18,11 +18,9 @@ interface ProductSectionProps {
   selectedRadio: string;
   onRadioChange: (value: string) => void;
   onBuy?: () => void;
-  onChat: () => void;
   productImage: string;
   appStoreUrl?: string;
   googlePlayUrl?: string;
-  loading?: boolean;
   productId?: number | string;
   selectedOption?: number | string;
   languageCode?: string;

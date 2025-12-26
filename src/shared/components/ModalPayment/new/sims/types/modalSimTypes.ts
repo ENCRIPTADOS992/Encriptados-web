@@ -3,30 +3,27 @@
 
 import type { Provider as PayProvider } from "@/services/checkout";
 import type { FormType } from "./simFormTypes";
-import type { getProductById } from "@/features/products/services";
 import type {
   TottoliCheckoutPayload,
   TottoliMethod,
 } from "@/features/products/payments/tottoliCheckout";
 
-export type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
-
 export type Variant = {
   id: number;
-  licensetime: number;
+  licensetime?: number | string;
   price: number;
   sku?: string;
   image?: string;
-  name: string;
+  name?: string;
   ussd?: string;
   gb?: string;
-  cost: number;
+  cost?: number;
   days?: number;
   minutes?: number;
   minute_price?: number;
-  currency: string;
-  label: string;
-  purchase_url: string;
+  currency?: string;
+  label?: string;
+  purchase_url?: string;
 };
 
 export type ConfigSim = {
@@ -35,7 +32,7 @@ export type ConfigSim = {
   code?: string;
 };
 
-export type ModalProduct = ProductFromAPI & {
+export type ModalProduct = {
   variants?: Variant[];
   images?: { src: string }[];
   price?: number | string;

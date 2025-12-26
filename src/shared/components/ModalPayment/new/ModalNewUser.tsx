@@ -9,15 +9,17 @@ import PurchaseScaffold from "./PurchaseScaffold";
 import NewUserForm from "./NewUserForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 
-type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
-type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
+type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
-type ModalProduct = ProductFromAPI & {
+type ModalProduct = {
   variants?: Variant[];
   images?: { src: string }[];
   price?: number | string;
   name?: string;
   licensetime?: number | string;
+  id?: number;
+  description?: string;
+  category?: { id: number; name: string };
 };
 
 export default function ModalNewUser() {
