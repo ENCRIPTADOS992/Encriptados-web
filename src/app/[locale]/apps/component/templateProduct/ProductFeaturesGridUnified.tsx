@@ -33,12 +33,12 @@ const ProductFeaturesGridUnified: React.FC<ProductFeaturesGridProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
           {features.map((feature, idx) => (
             <article key={idx} className="flex flex-col h-full">
-              {/* Imagen container */}
-              <div className="bg-white rounded-2xl flex items-center justify-center p-6 shadow-sm min-h-[200px] lg:min-h-[280px]">
+              {/* Imagen container - aspect ratio 3:4 (más alto que ancho) */}
+              <div className="bg-white rounded-2xl flex items-center justify-center p-4 sm:p-5 lg:p-6 shadow-sm aspect-[3/4]">
                 <img
                   src={feature.image}
                   alt={feature.title}
-                  className="w-44 h-auto lg:w-72 lg:h-72 object-contain"
+                  className="max-w-full max-h-full object-contain"
                   draggable={false}
                   loading="lazy"
                 />

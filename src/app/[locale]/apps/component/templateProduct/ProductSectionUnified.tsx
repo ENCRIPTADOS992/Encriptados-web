@@ -93,9 +93,9 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               draggable={false}
             />
             
-            {/* Store buttons - Siempre visibles, alineados a la izquierda */}
+            {/* Store buttons - Ocultos en móvil, visibles desde sm */}
             {hasStoreLinks && (
-              <div className="flex flex-wrap gap-3 mt-4">
+              <div className="hidden sm:flex flex-wrap gap-3 mt-4">
                 {appStoreUrl && (
                   <a 
                     href={appStoreUrl} 
