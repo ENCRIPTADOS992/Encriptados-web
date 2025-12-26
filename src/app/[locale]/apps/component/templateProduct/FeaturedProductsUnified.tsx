@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 interface FeaturedProductsProps {
   left: {
@@ -19,8 +22,41 @@ interface FeaturedProductsProps {
   };
 }
 
+// Variantes de animación
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, delay: 0.2 },
+  },
+};
+
 /**
- * FeaturedProducts - Componente unificado y responsive
+ * FeaturedProducts - Componente unificado y responsive con animaciones
  * Mobile: 1 columna (cards apiladas), cada card con 2 columnas internas (60% texto, 40% imagen)
  * Tablet (sm+): 2 columnas (cards lado a lado)
  */
@@ -28,14 +64,22 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
   return (
     <section className="w-full bg-slate-50 py-8 lg:py-10">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           
           {/* Left Card - Dark gradient */}
-          <article 
+          <motion.article 
             className="rounded-3xl overflow-hidden p-5 sm:p-6 lg:p-8 min-h-[180px] sm:min-h-0"
             style={{
               background: "radial-gradient(120% 120% at 100% 0%, #004A60 0%, #000 100%)",
             }}
+            variants={cardVariants}
+            whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
           >
             <div className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 items-center h-full">
               {/* Contenido texto */}
@@ -48,12 +92,14 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                 </p>
                 
                 <div className="flex flex-col gap-1.5 sm:gap-2 mt-1 sm:mt-2">
-                  <button
+                  <motion.button
                     onClick={left.onButtonClick}
                     className="bg-cyan-100 text-gray-900 font-medium rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base w-fit hover:bg-cyan-200 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     {left.buttonLabel}
-                  </button>
+                  </motion.button>
                   <button
                     onClick={left.onMoreInfo}
                     className="text-white text-xs sm:text-sm lg:text-base font-medium underline w-fit hover:text-white/80 transition-colors"
@@ -64,7 +110,12 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
               </div>
 
               {/* Imagen */}
-              <div className="flex items-center justify-center w-32 sm:w-40 lg:w-56 xl:w-64">
+              <motion.div 
+                className="flex items-center justify-center w-32 sm:w-40 lg:w-56 xl:w-64"
+                variants={imageVariants}
+                whileHover={{ scale: 1.05, rotate: 2 }}
+                transition={{ duration: 0.3 }}
+              >
                 <img
                   src={left.image}
                   alt={left.title}
@@ -72,16 +123,18 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                   draggable={false}
                   loading="lazy"
                 />
-              </div>
+              </motion.div>
             </div>
-          </article>
+          </motion.article>
 
           {/* Right Card - Cyan gradient */}
-          <article 
+          <motion.article 
             className="rounded-3xl overflow-hidden p-5 sm:p-6 lg:p-8 min-h-[180px] sm:min-h-0"
             style={{
               background: "linear-gradient(90deg, #35CDFB 0%, #A8EBFF 100%)",
             }}
+            variants={cardVariants}
+            whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
           >
             <div className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 items-center h-full">
               {/* Contenido texto */}
@@ -93,16 +146,23 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                   {right.subtitle}
                 </p>
                 
-                <button
+                <motion.button
                   onClick={right.onButtonClick}
                   className="bg-white text-gray-900 font-medium rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base w-fit mt-1 sm:mt-2 hover:bg-white/90 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {right.buttonLabel}
-                </button>
+                </motion.button>
               </div>
 
               {/* Imagen */}
-              <div className="flex items-center justify-center w-32 sm:w-40 lg:w-56 xl:w-64">
+              <motion.div 
+                className="flex items-center justify-center w-32 sm:w-40 lg:w-56 xl:w-64"
+                variants={imageVariants}
+                whileHover={{ scale: 1.05, rotate: -2 }}
+                transition={{ duration: 0.3 }}
+              >
                 <img
                   src={right.image}
                   alt={right.title}
@@ -110,10 +170,10 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                   draggable={false}
                   loading="lazy"
                 />
-              </div>
+              </motion.div>
             </div>
-          </article>
-        </div>
+          </motion.article>
+        </motion.div>
       </div>
     </section>
   );

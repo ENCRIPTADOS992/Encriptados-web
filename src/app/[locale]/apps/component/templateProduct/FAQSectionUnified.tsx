@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQItem {
   question: string;
@@ -12,8 +13,41 @@ interface FAQSectionProps {
   faqs: FAQItem[];
 }
 
+// Variantes de animación
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  },
+};
+
+const titleVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
 /**
- * FAQSection - Componente unificado y responsive
+ * FAQSection - Componente unificado y responsive con animaciones
  * Acordeón accesible con animación
  */
 const FAQSectionUnified: React.FC<FAQSectionProps> = ({
@@ -31,18 +65,31 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
   return (
     <section className="w-full bg-white py-12 lg:py-20">
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
-        <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 text-center mb-8 lg:mb-12">
+        <motion.h2
+          className="text-2xl lg:text-3xl font-bold text-gray-800 text-center mb-8 lg:mb-12"
+          variants={titleVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {title}
-        </h2>
+        </motion.h2>
 
-        <div className="flex flex-col gap-4">
+        <motion.div
+          className="flex flex-col gap-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             
             return (
-              <div
+              <motion.div
                 key={idx}
                 className="bg-gray-50 rounded-xl overflow-hidden transition-shadow hover:shadow-md"
+                variants={itemVariants}
               >
                 <button
                   onClick={() => toggleFaq(idx)}
@@ -54,15 +101,15 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
                     {faq.question}
                   </span>
                   
-                  <svg
+                  <motion.svg
                     width={18}
                     height={12}
                     viewBox="0 0 18 12"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`flex-shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
+                    className="flex-shrink-0"
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                     aria-hidden="true"
                   >
                     <path
@@ -73,25 +120,29 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
                       strokeLinejoin="round"
                       className="text-gray-600"
                     />
-                  </svg>
+                  </motion.svg>
                 </button>
 
-                <div
-                  id={`faq-answer-${idx}`}
-                  className={`grid transition-all duration-200 ease-in-out ${
-                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="px-5 pb-5 lg:px-6 lg:pb-6 text-base text-gray-600 leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={`faq-answer-${idx}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 pb-5 lg:px-6 lg:pb-6 text-base text-gray-600 leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
