@@ -1159,9 +1159,28 @@
       "link": "Más información"
     },
     "simDataPlans": {
-      "title": "E-SIM Encriptada Planes datos o minutos",
-      "description": "Lorem Ipsum Dolor met",
+      "title": "E-SIM Encriptada",
+      "subtitle": "Conectividad global segura",
       "button": "Ver más"
+    },
+    "productTemplate": {
+      "license": "Licencia",
+      "licenseMonths": "{count} {count, plural, one {Mes} other {Meses}}",
+      "licenseUnique": "Única",
+      "priceFrom": "Desde",
+      "priceConsult": "Consultar precio",
+      "buyNow": "Comprar ahora",
+      "selectPlan": "Selecciona un plan",
+      "downloadAppStore": "Descargar en App Store",
+      "downloadGooglePlay": "Descargar en Google Play",
+      "faqTitle": "Preguntas frecuentes",
+      "featuresTitle": "Características principales",
+      "benefitsTitle": "Asegura tus comunicaciones",
+      "securityFeaturesTitle": "Características de seguridad de {productName}",
+      "videoTitle": "{productName}, tu app de comunicación segura",
+      "productNotAvailable": "Este producto aún no está disponible en el catálogo.",
+      "productComingSoon": "Este producto será añadido próximamente.",
+      "productLoadError": "No se pudo cargar la información del producto."
     }
   },
   "silentCircle": {

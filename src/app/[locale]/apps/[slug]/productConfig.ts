@@ -1,18 +1,27 @@
 /**
- * Configuración estática de productos de Apps
+ * Configuración estática de productos
  * 
  * Este archivo contiene SOLO los datos que NO vienen de la API:
  * - Rutas de imágenes locales (banners hero, iconos)
  * - URLs de video
  * - URLs de tiendas de apps
  * - IDs de productos relacionados (SIMs)
+ * 
+ * CATEGORÍAS DEL API:
+ * - 38: Aplicaciones (apps)
+ * - 35: Software/Sistemas
+ * - 36: Router
+ * 
+ * PLANTILLA UNIFICADA para Apps, Software y Router
+ * Ruta: /apps/[slug]
  */
 
-export type TemplateType = "app" | "software";
+export type TemplateType = "app" | "software" | "router";
 
 export interface ProductStaticConfig {
   slug: string;
   productId: number;
+  categoryId: number; // 38=apps, 35=software, 36=router
   templateType: TemplateType;
   heroBanners: {
     desktop: string;
@@ -23,8 +32,6 @@ export interface ProductStaticConfig {
   iconUrl: string;
   benefitIcon: string;
   videoUrl?: string;
-  videoTitle?: string;
-  benefitsTitle?: string;
   appStoreUrl?: string;
   googlePlayUrl?: string;
   relatedProducts: {
@@ -34,23 +41,28 @@ export interface ProductStaticConfig {
 }
 
 /**
- * Configuraciones de todos los productos de Apps
+ * ════════════════════════════════════════════════════════════════
+ * PRODUCTOS UNIFICADOS
+ * ════════════════════════════════════════════════════════════════
  * 
- * Productos en BD (8): silent-circle, vault-chat, armadillo, threema,
- *                      threema-work, vnc-lagoon, salt, nord-vpn
+ * APLICACIONES (8): silent-circle, vault-chat, armadillo, threema,
+ *                   threema-work, vnc-lagoon, salt, nord-vpn
  * 
- * Productos sin BD (11): chat-mail, cryptcom, dec-secure, elyon, intact-phone,
- *                        renati, secure-mdm-android, secure-mdm-iphone,
- *                        secureCrypt, t2-communicator, ultrax
+ * SISTEMAS (11): secure-mdm-iphone, secure-mdm-android, cryptcom,
+ *                renati, chat-mail, armadillo-software, vault-chat-software,
+ *                ultra-x, intact-phone, dec-secure, secure-crypt
+ * 
+ * ROUTER (1): router-camaleon (usa /router, no /apps/[slug])
  */
 export const productConfigs: Record<string, ProductStaticConfig> = {
-  // ============================================
-  // PRODUCTOS CON DATOS EN BD (8 productos)
-  // ============================================
+  // ════════════════════════════════════════════════════════════════
+  // APLICACIONES (Categoría 38)
+  // ════════════════════════════════════════════════════════════════
   
   "silent-circle": {
     slug: "silent-circle",
     productId: 122,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/silent-circle/hero-desktop.png",
@@ -61,8 +73,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/silent-circle/logo.png",
     benefitIcon: "/images/apps/silent-circle/icono.png",
     videoUrl: "https://www.youtube.com/embed/X9iE-f8briY",
-    videoTitle: "Silent Phone, la aplicación cifrada que protegerá todos tus chats",
-    benefitsTitle: "Te mantenemos conectado de forma segura y privada",
     appStoreUrl: "https://apps.apple.com/app/silent-phone",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.silentcircle.silentphone",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -71,6 +81,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "vault-chat": {
     slug: "vault-chat",
     productId: 127,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/vault-chat/hero-desktop.png",
@@ -81,28 +92,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/vault-chat/logo.png",
     benefitIcon: "/images/apps/vault-chat/icono.png",
     videoUrl: "https://www.youtube.com/embed/vault-chat-video",
-    videoTitle: "VaultChat, comunicación empresarial segura",
-    benefitsTitle: "Seguridad empresarial de nivel militar",
-    appStoreUrl: "https://apps.apple.com/app/vaultchat",
-    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vaultchat",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "vault-chat-v2": {
-    slug: "vault-chat-v2",
-    productId: 127,
-    templateType: "app",
-    heroBanners: {
-      desktop: "/images/apps/vault-chat-v2/hero-desktop.png",
-      tablet: "/images/apps/vault-chat-v2/hero-tablet.png",
-      mobile: "/images/apps/vault-chat-v2/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/vault-chat-v2/banner.png",
-    iconUrl: "/images/apps/vault-chat-v2/logo.png",
-    benefitIcon: "/images/apps/vault-chat-v2/icono.png",
-    videoUrl: "https://www.youtube.com/embed/vault-chat-video",
-    videoTitle: "VaultChat V2, la evolución en comunicación segura",
-    benefitsTitle: "Nueva generación de seguridad empresarial",
     appStoreUrl: "https://apps.apple.com/app/vaultchat",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vaultchat",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -111,6 +100,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "armadillo": {
     slug: "armadillo",
     productId: 177,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/armadillo/hero-desktop.png",
@@ -121,28 +111,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/armadillo/logo.png",
     benefitIcon: "/images/apps/armadillo/icono.png",
     videoUrl: "https://www.youtube.com/embed/armadillo-video",
-    videoTitle: "Armadillo Chat, privacidad total en tus comunicaciones",
-    benefitsTitle: "Protección blindada para tus conversaciones",
-    appStoreUrl: "https://apps.apple.com/app/armadillo-chat",
-    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.armadillo",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "armadillo-v2": {
-    slug: "armadillo-v2",
-    productId: 177,
-    templateType: "app",
-    heroBanners: {
-      desktop: "/images/apps/armadillo-v2/hero-desktop.png",
-      tablet: "/images/apps/armadillo-v2/hero-tablet.png",
-      mobile: "/images/apps/armadillo-v2/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/armadillo-v2/banner.png",
-    iconUrl: "/images/apps/armadillo-v2/logo.png",
-    benefitIcon: "/images/apps/armadillo-v2/icono.png",
-    videoUrl: "https://www.youtube.com/embed/armadillo-video",
-    videoTitle: "Armadillo V2, la nueva generación de privacidad",
-    benefitsTitle: "Protección blindada evolucionada",
     appStoreUrl: "https://apps.apple.com/app/armadillo-chat",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.armadillo",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -151,6 +119,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "threema": {
     slug: "threema",
     productId: 136,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/threema/hero-desktop.png",
@@ -161,8 +130,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/threema/logo.png",
     benefitIcon: "/images/apps/threema/icono.png",
     videoUrl: "https://www.youtube.com/embed/threema-video",
-    videoTitle: "Threema, mensajería suiza de máxima privacidad",
-    benefitsTitle: "Privacidad suiza para tus mensajes",
     appStoreUrl: "https://apps.apple.com/app/threema",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=ch.threema.app",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -171,6 +138,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "threema-work": {
     slug: "threema-work",
     productId: 135,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/threema-work/hero-desktop.png",
@@ -181,8 +149,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/threema-work/logo.png",
     benefitIcon: "/images/apps/threema-work/icono.png",
     videoUrl: "https://www.youtube.com/embed/threema-work-video",
-    videoTitle: "Threema Work, comunicación empresarial segura",
-    benefitsTitle: "Seguridad empresarial de nivel suizo",
     appStoreUrl: "https://apps.apple.com/app/threema-work",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=ch.threema.app.work",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -191,6 +157,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "vnc-lagoon": {
     slug: "vnc-lagoon",
     productId: 134,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/vnc-lagoon/hero-desktop.png",
@@ -201,8 +168,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/vnc-lagoon/logo.png",
     benefitIcon: "/images/apps/vnc-lagoon/icono.png",
     videoUrl: "https://www.youtube.com/embed/vnc-lagoon-video",
-    videoTitle: "VNC Lagoon, suite de comunicación segura",
-    benefitsTitle: "Comunicación unificada y segura",
     appStoreUrl: "https://apps.apple.com/app/vnc-lagoon",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vnc.lagoon",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -211,6 +176,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "salt": {
     slug: "salt",
     productId: 133,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/salt/hero-desktop.png",
@@ -221,8 +187,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/salt/logo.png",
     benefitIcon: "/images/apps/salt/icono.png",
     videoUrl: "https://www.youtube.com/embed/salt-video",
-    videoTitle: "Salt, comunicación empresarial cifrada",
-    benefitsTitle: "Cifrado de grado militar para empresas",
     appStoreUrl: "https://apps.apple.com/app/salt-communications",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.salt",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -231,6 +195,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "nord-vpn": {
     slug: "nord-vpn",
     productId: 137,
+    categoryId: 38,
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/nord-vpn/hero-desktop.png",
@@ -241,160 +206,19 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/nord-vpn/logo.png",
     benefitIcon: "/images/apps/nord-vpn/icono.png",
     videoUrl: "https://www.youtube.com/embed/nord-vpn-video",
-    videoTitle: "NordVPN, protege tu conexión en cualquier lugar",
-    benefitsTitle: "Tu privacidad en internet garantizada",
     appStoreUrl: "https://apps.apple.com/app/nordvpn",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.nordvpn.android",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  // ============================================
-  // PRODUCTOS SIN DATOS EN BD (11 productos)
-  // ============================================
-
-  "chat-mail": {
-    slug: "chat-mail",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/chat-mail/hero-desktop.png",
-      tablet: "/images/apps/chat-mail/hero-tablet.png",
-      mobile: "/images/apps/chat-mail/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/chat-mail/banner.png",
-    iconUrl: "/images/apps/chat-mail/logo.png",
-    benefitIcon: "/images/apps/chat-mail/icono.png",
-    videoUrl: "https://www.youtube.com/embed/chat-mail-video",
-    videoTitle: "ChatMail, email seguro y cifrado",
-    benefitsTitle: "Comunicación por email 100% privada",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "cryptcom": {
-    slug: "cryptcom",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/cryptcom/hero-desktop.png",
-      tablet: "/images/apps/cryptcom/hero-tablet.png",
-      mobile: "/images/apps/cryptcom/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/cryptcom/banner.png",
-    iconUrl: "/images/apps/cryptcom/logo.png",
-    benefitIcon: "/images/apps/cryptcom/icono.png",
-    videoUrl: "",
-    videoTitle: "CryptCom, comunicación criptográfica avanzada",
-    benefitsTitle: "Criptografía de última generación",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "dec-secure": {
-    slug: "dec-secure",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/dec-secure/hero-desktop.png",
-      tablet: "/images/apps/dec-secure/hero-tablet.png",
-      mobile: "/images/apps/dec-secure/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/dec-secure/banner.png",
-    iconUrl: "/images/apps/dec-secure/logo.png",
-    benefitIcon: "/images/apps/dec-secure/icono.png",
-    videoUrl: "",
-    videoTitle: "DEC Secure, seguridad descentralizada",
-    benefitsTitle: "Protección descentralizada total",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "elyon": {
-    slug: "elyon",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/elyon/hero-desktop.png",
-      tablet: "/images/apps/elyon/hero-tablet.png",
-      mobile: "/images/apps/elyon/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/elyon/banner.png",
-    iconUrl: "/images/apps/elyon/logo.png",
-    benefitIcon: "/images/apps/elyon/icono.png",
-    videoUrl: "",
-    videoTitle: "Elyon, comunicación segura empresarial",
-    benefitsTitle: "Seguridad empresarial de élite",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "intact-phone": {
-    slug: "intact-phone",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/intact-phone/hero-desktop.png",
-      tablet: "/images/apps/intact-phone/hero-tablet.png",
-      mobile: "/images/apps/intact-phone/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/intact-phone/banner.png",
-    iconUrl: "/images/apps/intact-phone/logo.png",
-    benefitIcon: "/images/apps/intact-phone/icono.png",
-    videoUrl: "",
-    videoTitle: "Intact Phone, llamadas 100% seguras",
-    benefitsTitle: "Comunicación de voz inviolable",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "renati": {
-    slug: "renati",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/renati/hero-desktop.png",
-      tablet: "/images/apps/renati/hero-tablet.png",
-      mobile: "/images/apps/renati/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/renati/banner.png",
-    iconUrl: "/images/apps/renati/logo.png",
-    benefitIcon: "/images/apps/renati/icono.png",
-    videoUrl: "",
-    videoTitle: "Renati, privacidad renovada",
-    benefitsTitle: "Nueva era de privacidad digital",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  "secure-mdm-android": {
-    slug: "secure-mdm-android",
-    productId: 0,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/secure-mdm-android/hero-desktop.png",
-      tablet: "/images/apps/secure-mdm-android/hero-tablet.png",
-      mobile: "/images/apps/secure-mdm-android/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/secure-mdm-android/banner.png",
-    iconUrl: "/images/apps/secure-mdm-android/logo.png",
-    benefitIcon: "/images/apps/secure-mdm-android/icono.png",
-    videoUrl: "",
-    videoTitle: "Secure MDM Android, gestión móvil segura",
-    benefitsTitle: "Control total de dispositivos Android",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
+  // ════════════════════════════════════════════════════════════════
+  // SISTEMAS / SOFTWARE (Categoría 35)
+  // ════════════════════════════════════════════════════════════════
 
   "secure-mdm-iphone": {
     slug: "secure-mdm-iphone",
-    productId: 0,
+    productId: 168,
+    categoryId: 35,
     templateType: "software",
     heroBanners: {
       desktop: "/images/apps/secure-mdm-iphone/hero-desktop.png",
@@ -405,56 +229,131 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/secure-mdm-iphone/logo.png",
     benefitIcon: "/images/apps/secure-mdm-iphone/icono.png",
     videoUrl: "",
-    videoTitle: "Secure MDM iPhone, gestión iOS segura",
-    benefitsTitle: "Control total de dispositivos iOS",
     appStoreUrl: "",
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  "secureCrypt": {
-    slug: "secureCrypt",
-    productId: 0,
+  "secure-mdm-android": {
+    slug: "secure-mdm-android",
+    productId: 169,
+    categoryId: 35,
     templateType: "software",
     heroBanners: {
-      desktop: "/images/apps/secureCrypt/hero-desktop.png",
-      tablet: "/images/apps/secureCrypt/hero-tablet.png",
-      mobile: "/images/apps/secureCrypt/hero-mobile.jpg",
+      desktop: "/images/apps/secure-mdm-android/hero-desktop.png",
+      tablet: "/images/apps/secure-mdm-android/hero-tablet.png",
+      mobile: "/images/apps/secure-mdm-android/hero-mobile.jpg",
     },
-    productImage: "/images/apps/secureCrypt/banner.png",
-    iconUrl: "/images/apps/secureCrypt/logo.png",
-    benefitIcon: "/images/apps/secureCrypt/icono.png",
+    productImage: "/images/apps/secure-mdm-android/banner.png",
+    iconUrl: "/images/apps/secure-mdm-android/logo.png",
+    benefitIcon: "/images/apps/secure-mdm-android/icono.png",
     videoUrl: "",
-    videoTitle: "SecureCrypt, criptografía avanzada",
-    benefitsTitle: "Cifrado de nivel gubernamental",
     appStoreUrl: "",
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  "t2-communicator": {
-    slug: "t2-communicator",
-    productId: 0,
+  "cryptcom": {
+    slug: "cryptcom",
+    productId: 139,
+    categoryId: 35,
     templateType: "software",
     heroBanners: {
-      desktop: "/images/apps/t2-communicator/hero-desktop.png",
-      tablet: "/images/apps/t2-communicator/hero-tablet.png",
-      mobile: "/images/apps/t2-communicator/hero-mobile.jpg",
+      desktop: "/images/apps/cryptcom/hero-desktop.png",
+      tablet: "/images/apps/cryptcom/hero-tablet.png",
+      mobile: "/images/apps/cryptcom/hero-mobile.jpg",
     },
-    productImage: "/images/apps/t2-communicator/banner.png",
-    iconUrl: "/images/apps/t2-communicator/logo.png",
-    benefitIcon: "/images/apps/t2-communicator/icono.png",
+    productImage: "/images/apps/cryptcom/banner.png",
+    iconUrl: "/images/apps/cryptcom/logo.png",
+    benefitIcon: "/images/apps/cryptcom/icono.png",
     videoUrl: "",
-    videoTitle: "T2 Communicator, comunicación táctica",
-    benefitsTitle: "Comunicación de grado táctico",
     appStoreUrl: "",
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  "ultrax": {
-    slug: "ultrax",
-    productId: 0,
+  "renati": {
+    slug: "renati",
+    productId: 151,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/renati/hero-desktop.png",
+      tablet: "/images/apps/renati/hero-tablet.png",
+      mobile: "/images/apps/renati/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/renati/banner.png",
+    iconUrl: "/images/apps/renati/logo.png",
+    benefitIcon: "/images/apps/renati/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "chat-mail": {
+    slug: "chat-mail",
+    productId: 142,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/chat-mail/hero-desktop.png",
+      tablet: "/images/apps/chat-mail/hero-tablet.png",
+      mobile: "/images/apps/chat-mail/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/chat-mail/banner.png",
+    iconUrl: "/images/apps/chat-mail/logo.png",
+    benefitIcon: "/images/apps/chat-mail/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // Armadillo como Sistema (diferente del app)
+  "armadillo-software": {
+    slug: "armadillo-software",
+    productId: 180,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/armadillo/hero-desktop.png",
+      tablet: "/images/apps/armadillo/hero-tablet.png",
+      mobile: "/images/apps/armadillo/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/armadillo/banner.png",
+    iconUrl: "/images/apps/armadillo/logo.png",
+    benefitIcon: "/images/apps/armadillo/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // VaultChat como Sistema (diferente del app)
+  "vault-chat-software": {
+    slug: "vault-chat-software",
+    productId: 148,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/vault-chat/hero-desktop.png",
+      tablet: "/images/apps/vault-chat/hero-tablet.png",
+      mobile: "/images/apps/vault-chat/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/vault-chat/banner.png",
+    iconUrl: "/images/apps/vault-chat/logo.png",
+    benefitIcon: "/images/apps/vault-chat/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "ultra-x": {
+    slug: "ultra-x",
+    productId: 182,
+    categoryId: 35,
     templateType: "software",
     heroBanners: {
       desktop: "/images/apps/ultrax/hero-desktop.png",
@@ -465,8 +364,86 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     iconUrl: "/images/apps/ultrax/logo.png",
     benefitIcon: "/images/apps/ultrax/icono.png",
     videoUrl: "",
-    videoTitle: "UltraX, seguridad ultra avanzada",
-    benefitsTitle: "El nivel más alto de protección",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "intact-phone": {
+    slug: "intact-phone",
+    productId: 188,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/intact-phone/hero-desktop.png",
+      tablet: "/images/apps/intact-phone/hero-tablet.png",
+      mobile: "/images/apps/intact-phone/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/intact-phone/banner.png",
+    iconUrl: "/images/apps/intact-phone/logo.png",
+    benefitIcon: "/images/apps/intact-phone/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "dec-secure": {
+    slug: "dec-secure",
+    productId: 233,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/dec-secure/hero-desktop.png",
+      tablet: "/images/apps/dec-secure/hero-tablet.png",
+      mobile: "/images/apps/dec-secure/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/dec-secure/banner.png",
+    iconUrl: "/images/apps/dec-secure/logo.png",
+    benefitIcon: "/images/apps/dec-secure/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "secure-crypt": {
+    slug: "secure-crypt",
+    productId: 174,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/secureCrypt/hero-desktop.png",
+      tablet: "/images/apps/secureCrypt/hero-tablet.png",
+      mobile: "/images/apps/secureCrypt/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/secureCrypt/banner.png",
+    iconUrl: "/images/apps/secureCrypt/logo.png",
+    benefitIcon: "/images/apps/secureCrypt/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // ROUTER (Categoría 36) - Usa /router pero comparte config
+  // ════════════════════════════════════════════════════════════════
+
+  "router-camaleon": {
+    slug: "router-camaleon",
+    productId: 59747,
+    categoryId: 36,
+    templateType: "router",
+    heroBanners: {
+      desktop: "/images/router/hero-desktop.png",
+      tablet: "/images/router/hero-tablet.png",
+      mobile: "/images/router/hero-mobile.png",
+    },
+    productImage: "/images/router/card_fondo.png",
+    iconUrl: "/images/router/logo.png",
+    benefitIcon: "/images/router/icono.png",
+    videoUrl: "https://www.youtube.com/embed/router-video",
     appStoreUrl: "",
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
@@ -483,4 +460,18 @@ export function isValidProductSlug(slug: string): boolean {
 
 export function getAllProductSlugs(): string[] {
   return Object.keys(productConfigs);
+}
+
+/**
+ * Obtener productos por tipo de template
+ */
+export function getProductsByTemplateType(type: TemplateType): ProductStaticConfig[] {
+  return Object.values(productConfigs).filter(p => p.templateType === type);
+}
+
+/**
+ * Obtener productos por categoría
+ */
+export function getProductsByCategoryId(categoryId: number): ProductStaticConfig[] {
+  return Object.values(productConfigs).filter(p => p.categoryId === categoryId);
 }

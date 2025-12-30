@@ -1,5 +1,14 @@
 export type Allproducts = Product[];
 
+/**
+ * Hero Banners - Imágenes responsivas para el banner principal
+ */
+export interface HeroBanners {
+  desktop: string;
+  tablet: string;
+  mobile: string;
+}
+
 export type Product = {
   id: number;
   name: string;
@@ -40,10 +49,37 @@ export type Product = {
     description: string;
     image: string;
   }[];
- variants?: ProductVariant[];
- licenseVariants?: ProductLicenseVariant[];
- plan_data_amount?: number;
-
+  variants?: ProductVariant[];
+  licenseVariants?: ProductLicenseVariant[];
+  plan_data_amount?: number;
+  
+  // ══════════════════════════════════════════════════════════════
+  // NUEVOS CAMPOS - Estructura completa de página de producto
+  // ══════════════════════════════════════════════════════════════
+  
+  /** Imagen de alta resolución del producto */
+  image_full?: string;
+  
+  /** Imagen del celular con logotipo de la marca (para sección benefits) */
+  image_benefits?: string;
+  
+  /** Hero banners responsivos (desktop, tablet, mobile) */
+  heroBanners?: HeroBanners;
+  
+  /** Imagen principal del producto para secciones */
+  productImage?: string;
+  
+  /** Logo/icono del producto */
+  iconUrl?: string;
+  
+  /** URL embed de YouTube con texto acompañante */
+  videoUrl?: string;
+  
+  /** Link a App Store (opcional) */
+  appStoreUrl?: string;
+  
+  /** Link a Google Play (opcional) */
+  googlePlayUrl?: string;
 };
 
 export interface ProductById {
@@ -72,8 +108,41 @@ export interface ProductById {
   features: Feature[];
   /** Variantes del producto (licencias) */
   variants?: ProductVariantFromAPI[];
+  /** Imagen thumbnail del producto */
   image?: string;
+  /** Imagen de alta resolución del producto */
   image_full?: string;
+  
+  // ══════════════════════════════════════════════════════════════
+  // NUEVOS CAMPOS - Estructura completa de página de producto
+  // ══════════════════════════════════════════════════════════════
+  
+  /** Imagen del celular con logotipo de la marca (para sección benefits) */
+  image_benefits?: string;
+  
+  /** Título de la sección de beneficios/ventajas */
+  title_benefits?: string;
+  
+  /** Texto acompañante del video */
+  video_text?: string;
+  
+  /** Hero banners responsivos (desktop, tablet, mobile) */
+  heroBanners?: HeroBanners;
+  
+  /** Imagen principal del producto para secciones */
+  productImage?: string;
+  
+  /** Logo/icono del producto */
+  iconUrl?: string;
+  
+  /** URL embed de YouTube con texto acompañante */
+  videoUrl?: string;
+  
+  /** Link a App Store (opcional) */
+  appStoreUrl?: string;
+  
+  /** Link a Google Play (opcional) */
+  googlePlayUrl?: string;
 }
 
 /**

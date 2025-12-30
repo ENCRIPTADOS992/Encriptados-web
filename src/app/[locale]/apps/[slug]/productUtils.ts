@@ -40,18 +40,69 @@ export function transformChecksToFeatures(product: ProductById | null): string[]
   return product.checks.map(check => check.name);
 }
 
-export function transformVariantsToPlans(variants: any[] | undefined): LicensePlan[] {
-  if (!variants || variants.length === 0) {
-    return [{ label: "Licencia Única", value: "1", price: 0, variantId: 0, sku: "" }];
+export interface LicenseTranslations {
+  license: string;        // "Licencia", "License", "Licence", etc.
+  month: string;          // "Mes", "Month", "Mois", etc.
+  months: string;         // "Meses", "Months", "Mois", etc.
+  unique: string;         // "Única", "One-time", "Unique", etc.
+}
+
+const defaultLicenseTranslations: LicenseTranslations = {
+  license: "Licencia",
+  month: "Mes",
+  months: "Meses",
+  unique: "Única",
+};
+
+/**
+ * Transforma variantes a planes de licencia
+ * Si no hay variantes, usa licensetime y price del producto principal
+ * @param variants - Array de variantes del producto
+ * @param product - Producto principal (usado si no hay variantes)
+ * @param translations - Traducciones para los labels (opcional)
+ */
+export function transformVariantsToPlans(
+  variants: any[] | undefined,
+  product?: ProductById | null,
+  translations?: LicenseTranslations
+): LicensePlan[] {
+  const t = translations || defaultLicenseTranslations;
+  
+  // Si hay variantes, usarlas
+  if (variants && variants.length > 0) {
+    return variants.map(variant => {
+      const count = Number(variant.licensetime);
+      const monthLabel = count === 1 ? t.month : t.months;
+      return {
+        label: `${t.license} ${variant.licensetime} ${monthLabel}`,
+        value: String(variant.licensetime),
+        price: Number(variant.price),
+        variantId: variant.id,
+        sku: variant.sku || "",
+      };
+    });
   }
   
-  return variants.map(variant => ({
-    label: `Licencia ${variant.licensetime} ${Number(variant.licensetime) === 1 ? 'Mes' : 'Meses'}`,
-    value: String(variant.licensetime),
-    price: Number(variant.price),
-    variantId: variant.id,
-    sku: variant.sku || "",
-  }));
+  // Si NO hay variantes, usar licensetime y price del producto
+  if (product) {
+    const licensetime = (product as any).licensetime || "1";
+    const price = Number((product as any).price) || 0;
+    const count = Number(licensetime);
+    const licenseLabel = licensetime === "0" || licensetime === "Única" || licensetime === "unique"
+      ? t.unique 
+      : `${licensetime} ${count === 1 ? t.month : t.months}`;
+    
+    return [{
+      label: `${t.license} ${licenseLabel}`,
+      value: licensetime,
+      price: price,
+      variantId: (product as any).id || 0,
+      sku: (product as any).sku || "",
+    }];
+  }
+  
+  // Fallback si no hay nada
+  return [{ label: `${t.license} ${t.unique}`, value: "1", price: 0, variantId: 0, sku: "" }];
 }
 
 export function getRadioOptionsFromPlans(plans: LicensePlan[]): string[] {
@@ -62,12 +113,13 @@ export function transformAdvantagesToFeaturesGrid(
   product: ProductById | null,
   fallbackImage: string = "/images/apps/default-feature.png"
 ): FeatureGridItem[] {
-  if (!product?.advantages) return [];
+  // Usar 'features' de la API (tienen las screenshots/imágenes grandes)
+  if (!product?.features) return [];
   
-  return product.advantages.map(advantage => ({
-    image: advantage.image || fallbackImage,
-    title: advantage.name,
-    description: advantage.description,
+  return product.features.map(feature => ({
+    image: feature.image || fallbackImage,
+    title: feature.name,
+    description: feature.description,
   }));
 }
 
@@ -75,14 +127,15 @@ export function transformFeaturesToBenefitsGrid(
   product: ProductById | null,
   config: ProductStaticConfig | null
 ): BenefitGridItem[] {
-  if (!product?.features) return [];
+  // Usar 'advantages' de la API (tienen los iconos pequeños)
+  if (!product?.advantages) return [];
   
   const fallbackIcon = config?.benefitIcon || "/images/apps/default-icon.png";
   
-  return product.features.map(feature => ({
-    icon: feature.image || fallbackIcon,
-    title: feature.name,
-    description: feature.description,
+  return product.advantages.map(advantage => ({
+    icon: advantage.image || fallbackIcon,
+    title: advantage.name,
+    description: advantage.description,
   }));
 }
 
@@ -95,9 +148,13 @@ export function transformFaqs(product: ProductById | null): FAQItem[] {
   }));
 }
 
-export function formatPrice(price: string | number, currency: string = "USD"): string {
+export function formatPrice(
+  price: string | number, 
+  currency: string = "USD",
+  consultText: string = "Consultar precio"
+): string {
   const numericPrice = typeof price === "string" ? parseFloat(price) : price;
-  if (isNaN(numericPrice)) return "Consultar precio";
+  if (isNaN(numericPrice)) return consultText;
   return `${numericPrice}$ ${currency}`;
 }
 
@@ -113,19 +170,33 @@ export interface ProductInfoForBanner {
   onChat: () => void;
 }
 
+export interface BuildProductInfoTranslations {
+  buyNow: string;
+  priceConsult: string;
+  defaultSubtitle: string;
+}
+
+const defaultBuildTranslations: BuildProductInfoTranslations = {
+  buyNow: "Comprar ahora",
+  priceConsult: "Consultar precio",
+  defaultSubtitle: "Comunicación cifrada y segura",
+};
+
 export function buildProductInfo(
   product: ProductById | null,
   config: ProductStaticConfig | null,
   selectedPlan: LicensePlan | null,
   onBuy: () => void,
-  onChat: () => void
+  onChat: () => void,
+  translations?: BuildProductInfoTranslations
 ): ProductInfoForBanner {
+  const t = translations || defaultBuildTranslations;
   return {
     title: product?.name || "Producto",
-    price: selectedPlan ? formatPrice(selectedPlan.price) : formatPrice(product?.price || 0),
-    subtitle: product?.description?.substring(0, 100) + "..." || "Comunicación cifrada y segura",
+    price: selectedPlan ? formatPrice(selectedPlan.price, "USD", t.priceConsult) : formatPrice(product?.price || 0, "USD", t.priceConsult),
+    subtitle: product?.description?.substring(0, 100) + "..." || t.defaultSubtitle,
     iconUrl: config?.iconUrl || "/images/apps/default-logo.png",
-    ctaLabel: "Comprar ahora",
+    ctaLabel: t.buyNow,
     categoryId: product?.category?.id || 38,
     productId: product?.id || config?.productId || 0,
     onBuy,

@@ -1,11 +1,16 @@
 import React from "react";
 import { useProductById } from "../context/ProductByIdContext";
 
+/**
+ * Features Grid - Características principales con screenshots
+ * NO se muestra si features[] está vacío o no viene de la API
+ */
 const Features = () => {
   const { currentProduct } = useProductById();
 
   const features = currentProduct?.features;
 
+  // NO mostrar sección si no hay features
   if (!features || features.length === 0) return null;
 
   const isSingleFeature = features.length === 1;

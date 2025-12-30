@@ -1,3 +1,14 @@
+/**
+ * Página de Producto por ID
+ * 
+ * ⚠️ IMPORTANTE: Esta ruta se usa SOLO para productos SIM (categoría 40)
+ * 
+ * Para Apps, Software y Router usar:
+ * - Apps/Software: /apps/[slug]  
+ * - Router: /router
+ * 
+ * Ver productConfig.ts para la lista de slugs disponibles
+ */
 import React from "react";
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";

@@ -4,16 +4,17 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { useRouter, usePathname, notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-// Componentes template de producto
-import HeroBanner from "../component/templateProduct/HeroBanner";
-import ProductSection from "../component/templateProduct/ProductSection";
-import ProductFeaturesGrid from "../component/templateProduct/ProductFeaturesGrid";
-import ProductBenefitsGrid from "../component/templateProduct/ProductBenefitsGrid";
-import HeroVideoSection from "../component/templateProduct/HeroVideoSection";
-import FeaturedProducts from "../component/templateProduct/FeaturedProducts";
-import FAQSection from "../component/templateProduct/FAQSection";
-import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
-import SecurityFeatures from "../component/templateProduct/SecurityFeatures";
+// Componentes template de producto (reutilizados de apps)
+import HeroBanner from "../../apps/component/templateProduct/HeroBanner";
+import ProductSection from "../../apps/component/templateProduct/ProductSection";
+import ProductFeaturesGrid from "../../apps/component/templateProduct/ProductFeaturesGrid";
+import ProductBenefitsGrid from "../../apps/component/templateProduct/ProductBenefitsGrid";
+import FeaturedProducts from "../../apps/component/templateProduct/FeaturedProducts";
+import FAQSection from "../../apps/component/templateProduct/FAQSection";
+import StickyPriceBanner from "../../apps/component/templateProduct/StickyPriceBanner";
+
+// Componente específico de SIM - Cobertura
+import BannerCoverage from "@/shared/BannerCoverage";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -22,32 +23,31 @@ import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 // Configuración y utilidades locales
-import { getProductConfig, isValidProductSlug } from "./productConfig";
+import { getSimProductConfig, isValidSimProductSlug } from "./simProductConfig";
 import {
   transformChecksToFeatures,
-  transformVariantsToPlans,
-  getRadioOptionsFromPlans,
+  transformVariantsToSimPlans,
+  getRadioOptionsFromSimPlans,
   transformAdvantagesToFeaturesGrid,
   transformFeaturesToBenefitsGrid,
   transformFaqs,
-  transformSecurityFeatures,
   formatPrice,
-  buildProductInfo,
-  type LicenseTranslations,
-  type BuildProductInfoTranslations,
-} from "./productUtils";
+  buildSimProductInfo,
+  type SimTranslations,
+  type BuildSimProductInfoTranslations,
+} from "./simProductUtils";
 
 interface PageProps {
   params: { slug: string; locale: string };
 }
 
-export default function ProductPage({ params }: PageProps) {
+export default function SimProductPage({ params }: PageProps) {
   const { slug, locale } = params;
   
-  return <ProductPageContent slug={slug} locale={locale} />;
+  return <SimProductPageContent slug={slug} locale={locale} />;
 }
 
-function ProductPageContent({ slug, locale }: { slug: string; locale: string }) {
+function SimProductPageContent({ slug, locale }: { slug: string; locale: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
@@ -56,29 +56,29 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   
   // Traducciones
   const t = useTranslations("appsShared.productTemplate");
-  const tSim = useTranslations("appsShared");
+  const tShared = useTranslations("appsShared");
 
   const [product, setProduct] = useState<ProductById | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
-  const config = useMemo(() => getProductConfig(slug), [slug]);
+  const config = useMemo(() => getSimProductConfig(slug), [slug]);
 
-  if (!isValidProductSlug(slug)) {
+  if (!isValidSimProductSlug(slug)) {
     notFound();
   }
 
-  // Traducciones para licencias (memoizadas)
-  const licenseTranslations: LicenseTranslations = useMemo(() => ({
-    license: t("license"),
-    month: locale === "es" ? "Mes" : locale === "en" ? "Month" : locale === "fr" ? "Mois" : locale === "it" ? "Mese" : "Mês",
-    months: locale === "es" ? "Meses" : locale === "en" ? "Months" : locale === "fr" ? "Mois" : locale === "it" ? "Mesi" : "Meses",
-    unique: t("licenseUnique"),
-  }), [t, locale]);
+  // Traducciones para planes SIM (memoizadas)
+  const simTranslations: SimTranslations = useMemo(() => ({
+    plan: locale === "es" ? "Plan" : locale === "en" ? "Plan" : locale === "fr" ? "Forfait" : locale === "it" ? "Piano" : "Plano",
+    days: locale === "es" ? "días" : locale === "en" ? "days" : locale === "fr" ? "jours" : locale === "it" ? "giorni" : "dias",
+    unlimited: locale === "es" ? "Ilimitado" : locale === "en" ? "Unlimited" : locale === "fr" ? "Illimité" : locale === "it" ? "Illimitato" : "Ilimitado",
+    dataIncluded: locale === "es" ? "Datos incluidos" : locale === "en" ? "Data included" : locale === "fr" ? "Données incluses" : locale === "it" ? "Dati inclusi" : "Dados incluídos",
+  }), [locale]);
 
-  // Traducciones para buildProductInfo
-  const buildTranslations: BuildProductInfoTranslations = useMemo(() => ({
+  // Traducciones para buildSimProductInfo
+  const buildTranslations: BuildSimProductInfoTranslations = useMemo(() => ({
     buyNow: t("buyNow"),
     priceConsult: t("priceConsult"),
     defaultSubtitle: "",
@@ -98,7 +98,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
         const productData = await getProductById(String(config.productId), locale);
         setProduct(productData);
       } catch (err) {
-        console.error("Error cargando producto:", err);
+        console.error("Error cargando producto SIM:", err);
         setError(t("productLoadError"));
       } finally {
         setIsLoading(false);
@@ -111,17 +111,14 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   const plans = useMemo(() => {
     if (!product) return [];
     const variants = (product as any).variants || [];
-    return transformVariantsToPlans(variants, product, licenseTranslations);
-  }, [product, licenseTranslations]);
+    return transformVariantsToSimPlans(variants, product, simTranslations);
+  }, [product, simTranslations]);
 
-  const radioOptions = useMemo(() => getRadioOptionsFromPlans(plans), [plans]);
+  const radioOptions = useMemo(() => getRadioOptionsFromSimPlans(plans), [plans]);
   const features = useMemo(() => transformChecksToFeatures(product), [product]);
   const featuresGrid = useMemo(() => transformAdvantagesToFeaturesGrid(product, config?.benefitIcon), [product, config]);
   const benefits = useMemo(() => transformFeaturesToBenefitsGrid(product, config), [product, config]);
   const faqs = useMemo(() => transformFaqs(product), [product]);
-  const securityFeatures = useMemo(() => transformSecurityFeatures(product), [product]);
-  
-  const isSoftwareTemplate = config?.templateType === "software";
 
   useEffect(() => {
     if (plans.length > 0 && !selectedRadio) {
@@ -144,24 +141,29 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
     openModal({
       productid: String(product?.id || config?.productId),
       languageCode: locale,
-      selectedOption: product?.category?.id || 38,
+      selectedOption: product?.category?.id || 40,
     });
   };
 
   const handleChat = () => console.log("Chat support");
 
-  const buildSimUrl = (slug: string) => {
-    const basePath = `/sim/${slug}`;
+  const buildSimUrl = (simSlug: string) => {
+    const basePath = `/sim/${simSlug}`;
     const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
     if (!match) return basePath;
     return `/${match[1]}${basePath}`;
   };
 
-  const handleMoreInfo = (slug: string) => router.push(buildSimUrl(slug));
-  const handleSimBuy = (productId: string) => openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
+  const handleMoreInfo = (simSlug: string) => {
+    router.push(buildSimUrl(simSlug));
+  };
+
+  const handleSimBuy = (productId: string) => {
+    openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
+  };
 
   const productInfo = useMemo(() => 
-    buildProductInfo(product, config, selectedPlan, handleBuy, handleChat, buildTranslations),
+    buildSimProductInfo(product, config, selectedPlan, handleBuy, handleChat, buildTranslations),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [product, config, selectedPlan, locale, openModal, buildTranslations]
   );
@@ -176,7 +178,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   }), [t]);
 
   // Loading state
-  if (isLoading) return <ProductPageSkeleton />;
+  if (isLoading) return <SimProductPageSkeleton />;
 
   // Error state
   if (error && !product) {
@@ -184,7 +186,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
       <main className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">
-            {config?.slug || "Producto"}
+            {config?.slug || "Producto SIM"}
           </h1>
           <p className="text-gray-600">{error}</p>
           <p className="text-sm text-gray-400 mt-2">
@@ -222,8 +224,6 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
           onRadioChange={handleRadioChange}
           onBuy={handleBuy}
           productImage={config?.productImage || ""}
-          appStoreUrl={config?.appStoreUrl}
-          googlePlayUrl={config?.googlePlayUrl}
           translations={productSectionTranslations}
         />
       </div>
@@ -249,39 +249,29 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
         />
       )}
 
-      {/* Security Features - Solo para productos tipo software */}
-      {isSoftwareTemplate && securityFeatures.length > 0 && (
-        <SecurityFeatures
-          title={t("securityFeaturesTitle", { productName: product?.name || "este producto" })}
-          features={securityFeatures}
-          imageUrl={config?.productImage || ""}
-        />
+      {/* Banner de Cobertura - Solo si está habilitado en config */}
+      {config?.showCoverage && (
+        <div className="py-8 lg:py-12">
+          <BannerCoverage />
+        </div>
       )}
 
-      {/* Hero Video Section */}
-      {config?.videoUrl && (
-        <HeroVideoSection 
-          title={t("videoTitle", { productName: product?.name || "" })} 
-          videoUrl={config.videoUrl} 
-        />
-      )}
-
-      {/* Featured Products */}
+      {/* Featured Products - Otros productos SIM */}
       <FeaturedProducts
         left={{
-          title: tSim("encryptedSim.title"),
-          description: tSim("encryptedSim.description"),
-          buttonLabel: tSim("encryptedSim.button"),
-          onButtonClick: () => handleSimBuy(config?.relatedProducts.simProductId || "508"),
-          moreInfoLabel: tSim("encryptedSim.link"),
-          onMoreInfo: () => handleMoreInfo("sim-encriptada"),
+          title: tShared("encryptedSim.title"),
+          description: tShared("encryptedSim.description"),
+          buttonLabel: tShared("encryptedSim.button"),
+          onButtonClick: () => handleSimBuy("508"),
+          moreInfoLabel: tShared("encryptedSim.link"),
+          onMoreInfo: () => handleMoreInfo(config?.relatedProducts.simEncriptadaSlug || "sim-encriptada"),
           image: "/images/apps/armadillo-v2/sim.png",
         }}
         right={{
-          title: tSim("simDataPlans.title"),
-          subtitle: tSim("simDataPlans.subtitle"),
-          buttonLabel: tSim("simDataPlans.button"),
-          onButtonClick: () => handleMoreInfo("tim-sim"),
+          title: tShared("simDataPlans.title"),
+          subtitle: tShared("simDataPlans.subtitle"),
+          buttonLabel: tShared("simDataPlans.button"),
+          onButtonClick: () => handleMoreInfo(config?.relatedProducts.timSimSlug || "tim-sim"),
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />
@@ -294,7 +284,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   );
 }
 
-function ProductPageSkeleton() {
+function SimProductPageSkeleton() {
   return (
     <main className="min-h-screen animate-pulse">
       {/* Hero skeleton */}
@@ -325,6 +315,13 @@ function ProductPageSkeleton() {
           <div className="order-1 lg:order-2">
             <div className="h-64 lg:h-80 bg-gray-200 rounded-2xl" />
           </div>
+        </div>
+      </div>
+      
+      {/* Coverage skeleton */}
+      <div className="py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="h-48 bg-gray-200 rounded-2xl" />
         </div>
       </div>
     </main>

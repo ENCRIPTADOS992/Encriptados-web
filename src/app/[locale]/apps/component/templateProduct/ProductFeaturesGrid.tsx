@@ -102,10 +102,10 @@ const ProductFeaturesGridUnified: React.FC<ProductFeaturesGridProps> = ({
 
               {/* Texto */}
               <div className="flex flex-col flex-1 pt-4 lg:pt-5">
-                <h4 className="font-semibold text-base lg:text-lg text-gray-900 mb-2 leading-snug">
+                <h4 className="font-semibold text-lg text-gray-900 mb-2 leading-snug min-h-[54px]">
                   {feature.title}
                 </h4>
-                <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
+                <p className="font-normal text-sm text-gray-600 leading-relaxed">
                   {feature.description}
                 </p>
               </div>

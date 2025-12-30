@@ -57,10 +57,10 @@ const imageVariants = {
 
 /**
  * FeaturedProducts - Componente unificado y responsive con animaciones
- * Mobile: 1 columna (cards apiladas), cada card con 2 columnas internas (60% texto, 40% imagen)
+ * Mobile: 1 columna (cards apiladas), cada card con 2 columnas internas (55% texto, 45% imagen)
  * Tablet (sm+): 2 columnas (cards lado a lado)
  */
-const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right }) => {
+const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => {
   return (
     <section className="w-full bg-slate-50 py-8 lg:py-10">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,20 +81,21 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
             variants={cardVariants}
             whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
           >
-            <div className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 items-center h-full">
+            {/* Grid 55% texto / 45% imagen */}
+            <div className="grid grid-cols-[55%_45%] gap-3 sm:gap-4 items-center h-full">
               {/* Contenido texto */}
               <div className="flex flex-col gap-2 sm:gap-3">
-                <h2 className="font-bold text-base sm:text-lg lg:text-2xl text-white leading-tight">
+                <h2 className="font-bold text-lg sm:text-xl lg:text-2xl text-white leading-tight">
                   {left.title}
                 </h2>
-                <p className="text-white/90 text-xs sm:text-sm lg:text-base leading-relaxed line-clamp-3">
+                <p className="text-white/90 text-sm leading-relaxed line-clamp-3">
                   {left.description}
                 </p>
                 
                 <div className="flex flex-col gap-1.5 sm:gap-2 mt-1 sm:mt-2">
                   <motion.button
                     onClick={left.onButtonClick}
-                    className="bg-cyan-100 text-gray-900 font-medium rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base w-fit hover:bg-cyan-200 transition-colors"
+                    className="bg-cyan-100 text-gray-900 font-medium rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-base w-fit hover:bg-cyan-200 transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -102,7 +103,7 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                   </motion.button>
                   <button
                     onClick={left.onMoreInfo}
-                    className="text-white text-xs sm:text-sm lg:text-base font-medium underline w-fit hover:text-white/80 transition-colors"
+                    className="text-white text-base font-medium underline w-fit hover:text-white/80 transition-colors"
                   >
                     {left.moreInfoLabel}
                   </button>
@@ -111,7 +112,7 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
 
               {/* Imagen */}
               <motion.div 
-                className="flex items-center justify-center w-32 sm:w-40 lg:w-56 xl:w-64"
+                className="flex items-center justify-center"
                 variants={imageVariants}
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 transition={{ duration: 0.3 }}
@@ -119,7 +120,7 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                 <img
                   src={left.image}
                   alt={left.title}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[200px] lg:max-h-[280px]"
                   draggable={false}
                   loading="lazy"
                 />
@@ -136,19 +137,20 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
             variants={cardVariants}
             whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
           >
-            <div className="grid grid-cols-[1fr_auto] gap-3 sm:gap-4 items-center h-full">
+            {/* Grid 55% texto / 45% imagen */}
+            <div className="grid grid-cols-[55%_45%] gap-3 sm:gap-4 items-center h-full">
               {/* Contenido texto */}
               <div className="flex flex-col gap-2 sm:gap-3">
-                <h2 className="font-bold text-base sm:text-lg lg:text-2xl text-gray-900 leading-tight">
+                <h2 className="font-bold text-lg sm:text-xl lg:text-2xl text-gray-900 leading-tight">
                   {right.title}
                 </h2>
-                <p className="text-gray-900/70 text-xs sm:text-sm lg:text-base">
+                <p className="text-gray-900/70 text-sm">
                   {right.subtitle}
                 </p>
                 
                 <motion.button
                   onClick={right.onButtonClick}
-                  className="bg-white text-gray-900 font-medium rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm lg:text-base w-fit mt-1 sm:mt-2 hover:bg-white/90 transition-colors"
+                  className="bg-white text-gray-900 font-medium rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-base w-fit mt-1 sm:mt-2 hover:bg-white/90 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -158,7 +160,7 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
 
               {/* Imagen */}
               <motion.div 
-                className="flex items-center justify-center w-32 sm:w-40 lg:w-56 xl:w-64"
+                className="flex items-center justify-center"
                 variants={imageVariants}
                 whileHover={{ scale: 1.05, rotate: -2 }}
                 transition={{ duration: 0.3 }}
@@ -166,7 +168,7 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
                 <img
                   src={right.image}
                   alt={right.title}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain max-h-[200px] lg:max-h-[280px]"
                   draggable={false}
                   loading="lazy"
                 />
@@ -179,4 +181,4 @@ const FeaturedProductsUnified: React.FC<FeaturedProductsProps> = ({ left, right 
   );
 };
 
-export default FeaturedProductsUnified;
+export default FeaturedProducts;

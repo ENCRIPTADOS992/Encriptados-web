@@ -159,29 +159,32 @@ if (currentProduct === null) {
             </div>
           </div>
 
+          {/* Features - Solo se muestra si hay datos */}
           <div className="mt-24">
             <Features />
           </div>
 
-          <div className="">
-            <Advantages />
-          </div>
+          {/* Advantages - Solo se muestra si hay datos */}
+          <Advantages />
 
           <div className="">
             <BannerCoverage />
           </div>
 
-          <div className="px-2 2xl:px-96 xl:px-10 lg:px-0  mt-24 mb-24">
-            <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5  font-bold text-[#333333]">
-              Preguntas frecuentes
-            </h1>
-            <Accordion
-              items={currentProduct.faqs.map((faq) => ({
-                title: faq.name,
-                content: faq.description,
-              }))}
-            />
-          </div>
+          {/* FAQs - Solo se muestra si hay datos */}
+          {currentProduct.faqs && currentProduct.faqs.length > 0 && (
+            <div className="px-2 2xl:px-96 xl:px-10 lg:px-0 mt-24 mb-24">
+              <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5 font-bold text-[#333333]">
+                Preguntas frecuentes
+              </h1>
+              <Accordion
+                items={currentProduct.faqs.map((faq) => ({
+                  title: faq.name,
+                  content: faq.description,
+                }))}
+              />
+            </div>
+          )}
         </>
       )}
     </>

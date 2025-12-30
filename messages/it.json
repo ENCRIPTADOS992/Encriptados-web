@@ -1150,6 +1150,37 @@
   "RechargeSim": {
     "errorInput": "Deve essere un numero di telefono valido con almeno 6 cifre."
   },
+  "appsShared": {
+    "encryptedSim": {
+      "title": "SIM Card crittografata",
+      "description": "Proteggiti dai criminali informatici e mantieni le tue informazioni personali al sicuro",
+      "button": "Acquista",
+      "link": "Maggiori informazioni"
+    },
+    "simDataPlans": {
+      "title": "E-SIM Crittografata",
+      "subtitle": "Connettività globale sicura",
+      "button": "Vedi di più"
+    },
+    "productTemplate": {
+      "license": "Licenza",
+      "licenseMonths": "{count} {count, plural, one {Mese} other {Mesi}}",
+      "licenseUnique": "Unica",
+      "priceFrom": "Da",
+      "priceConsult": "Richiedi il prezzo",
+      "buyNow": "Acquista ora",
+      "selectPlan": "Seleziona un piano",
+      "downloadAppStore": "Scarica dall'App Store",
+      "downloadGooglePlay": "Scarica da Google Play",
+      "faqTitle": "Domande frequenti",
+      "featuresTitle": "Caratteristiche principali",
+      "securityFeaturesTitle": "Funzionalità di sicurezza di {productName}",
+      "videoTitle": "{productName}, la tua app di comunicazione sicura",
+      "productNotAvailable": "Questo prodotto non è ancora disponibile nel catalogo.",
+      "productComingSoon": "Questo prodotto sarà aggiunto presto.",
+      "productLoadError": "Impossibile caricare le informazioni del prodotto."
+    }
+  },
   "ThreemaPage": {
     "product": {
       "title": "App Threema",

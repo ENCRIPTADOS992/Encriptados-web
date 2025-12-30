@@ -12,6 +12,21 @@ export interface ProductRouteItem {
   };
 }
 
+export interface SimProductRouteItem {
+  name: string;
+  link: string;
+  categoryId: number;
+  productId: number;
+}
+
+// Rutas de productos SIM (categoría 40)
+export const SIM_PRODUCT_ROUTES: SimProductRouteItem[] = [
+  { name: "SIM Encriptada", link: "/sim/sim-encriptada", categoryId: 40, productId: 508 },
+  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: 40, productId: 454 },
+  { name: "TIM-SIM", link: "/sim/tim-sim", categoryId: 40, productId: 59835 },
+  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: 40, productId: 59836 },
+];
+
 export const PRODUCT_ROUTES: ProductRouteItem[] = [
   // Sistemas (35)
  { name: "Secure MDM iPhone", link: "/apps/secure-mdm-iphone", categoryId: 35 },

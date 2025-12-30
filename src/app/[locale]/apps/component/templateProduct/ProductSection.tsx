@@ -10,6 +10,14 @@ import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
+interface ProductSectionTranslations {
+  priceFrom: string;
+  buyNow: string;
+  selectPlan: string;
+  downloadAppStore: string;
+  downloadGooglePlay: string;
+}
+
 interface ProductSectionProps {
   title: string;
   description: string;
@@ -25,14 +33,15 @@ interface ProductSectionProps {
   productId?: number | string;
   selectedOption?: number | string;
   languageCode?: string;
+  translations?: ProductSectionTranslations;
 }
 
 /**
  * Limpia el texto de la opción para mostrar solo la duración
- * Ej: "Licencia 3 Meses" -> "3 Meses"
+ * Ej: "Licencia 3 Meses" -> "3 Meses", "License 3 Months" -> "3 Months"
  */
 const formatRadioLabel = (option: string): string => {
-  return option.replace(/^Licencia\s*/i, "").trim();
+  return option.replace(/^(Licencia|License|Licence|Licenza|Licen[çc]a)\s*/i, "").trim();
 };
 
 // Variantes de animación
@@ -96,8 +105,18 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   productId,
   selectedOption,
   languageCode = "es",
+  translations,
 }) => {
   const { openModal } = useModalPayment();
+
+  // Default translations (fallback)
+  const t = {
+    priceFrom: translations?.priceFrom || "Desde",
+    buyNow: translations?.buyNow || "Comprar ahora",
+    selectPlan: translations?.selectPlan || "Selecciona un plan",
+    downloadAppStore: translations?.downloadAppStore || "Descargar en App Store",
+    downloadGooglePlay: translations?.downloadGooglePlay || "Descargar en Google Play",
+  };
 
   const handleBuy = () => {
     if (onBuy) {
@@ -157,7 +176,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                     href={appStoreUrl} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    aria-label="Descargar en App Store"
+                    aria-label={t.downloadAppStore}
                     className="flex-shrink-0"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -170,7 +189,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                     href={googlePlayUrl} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    aria-label="Descargar en Google Play"
+                    aria-label={t.downloadGooglePlay}
                     className="flex-shrink-0"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -242,7 +261,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
               >
-                <legend className="sr-only">Selecciona un plan</legend>
+                <legend className="sr-only">{t.selectPlan}</legend>
                 {radioOptions.map((option) => (
                   <label
                     key={option}
@@ -277,7 +296,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55, duration: 0.4 }}
             >
-              <span className="text-xs sm:text-sm text-gray-500">Desde</span>
+              <span className="text-xs sm:text-sm text-gray-500">{t.priceFrom}</span>
               <motion.p 
                 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900"
                 key={price}
@@ -309,7 +328,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                   iconPosition="right"
                   className="w-full"
                 >
-                  Comprar ahora
+                  {t.buyNow}
                 </Button>
               </motion.div>
               <motion.div
