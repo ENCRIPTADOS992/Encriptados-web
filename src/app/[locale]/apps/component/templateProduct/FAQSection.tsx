@@ -64,7 +64,7 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
 
   return (
     <section className="w-full bg-white py-12 lg:py-20">
-      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           className="text-2xl lg:text-3xl font-bold text-gray-800 text-center mb-8 lg:mb-12"
           variants={titleVariants}
