@@ -1,41 +1,31 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
-import { useRouter, usePathname, notFound } from "next/navigation";
+import { useEffect, useState, useMemo } from "react";
+import { notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-// Componentes template de producto (reutilizados de apps)
-import HeroBanner from "../../apps/component/templateProduct/HeroBanner";
-import ProductSection from "../../apps/component/templateProduct/ProductSection";
-import ProductFeaturesGrid from "../../apps/component/templateProduct/ProductFeaturesGrid";
-import ProductBenefitsGrid from "../../apps/component/templateProduct/ProductBenefitsGrid";
-import FeaturedProducts from "../../apps/component/templateProduct/FeaturedProducts";
-import FAQSection from "../../apps/component/templateProduct/FAQSection";
-import StickyPriceBanner from "../../apps/component/templateProduct/StickyPriceBanner";
+// Componentes de SIM
+import HeroSimSection from "./components/HeroSimSection";
 
-// Componente específico de SIM - Cobertura
+// Componentes de Cobertura
+import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
+import SearchInput from "@/shared/components/SearchInput";
+import ListOfPlans from "@/app/[locale]/encrypted-sim/components/ListOfPlans";
+import { ListOfProductsData } from "@/app/[locale]/encrypted-sim/constants/ListOfProductsData";
+import FeaturesList from "@/app/[locale]/encrypted-sim/components/FeaturesList";
+import OurObjetive from "@/app/[locale]/encrypted-sim/components/OurObjetive";
+import BannerSecure from "@/app/[locale]/encrypted-sim/components/BannerSecure";
+import PayForUse from "@/app/[locale]/encrypted-sim/components/PayForUse";
+import WhyCallSim from "@/app/[locale]/encrypted-sim/components/WhyCallSim/WhyCallSim";
 import BannerCoverage from "@/shared/BannerCoverage";
 
 // Hooks y servicios
-import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 // Configuración y utilidades locales
 import { getSimProductConfig, isValidSimProductSlug } from "./simProductConfig";
-import {
-  transformChecksToFeatures,
-  transformVariantsToSimPlans,
-  getRadioOptionsFromSimPlans,
-  transformAdvantagesToFeaturesGrid,
-  transformFeaturesToBenefitsGrid,
-  transformFaqs,
-  formatPrice,
-  buildSimProductInfo,
-  type SimTranslations,
-  type BuildSimProductInfoTranslations,
-} from "./simProductUtils";
 
 interface PageProps {
   params: { slug: string; locale: string };
@@ -48,20 +38,14 @@ export default function SimProductPage({ params }: PageProps) {
 }
 
 function SimProductPageContent({ slug, locale }: { slug: string; locale: string }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const priceBlockRef = useRef<HTMLDivElement | null>(null);
-  const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
   
   // Traducciones
-  const t = useTranslations("appsShared.productTemplate");
-  const tShared = useTranslations("appsShared");
+  const t = useTranslations("EncryptedSimPage");
 
   const [product, setProduct] = useState<ProductById | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const config = useMemo(() => getSimProductConfig(slug), [slug]);
 
@@ -69,26 +53,11 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     notFound();
   }
 
-  // Traducciones para planes SIM (memoizadas)
-  const simTranslations: SimTranslations = useMemo(() => ({
-    plan: locale === "es" ? "Plan" : locale === "en" ? "Plan" : locale === "fr" ? "Forfait" : locale === "it" ? "Piano" : "Plano",
-    days: locale === "es" ? "días" : locale === "en" ? "days" : locale === "fr" ? "jours" : locale === "it" ? "giorni" : "dias",
-    unlimited: locale === "es" ? "Ilimitado" : locale === "en" ? "Unlimited" : locale === "fr" ? "Illimité" : locale === "it" ? "Illimitato" : "Ilimitado",
-    dataIncluded: locale === "es" ? "Datos incluidos" : locale === "en" ? "Data included" : locale === "fr" ? "Données incluses" : locale === "it" ? "Dati inclusi" : "Dados incluídos",
-  }), [locale]);
-
-  // Traducciones para buildSimProductInfo
-  const buildTranslations: BuildSimProductInfoTranslations = useMemo(() => ({
-    buyNow: t("buyNow"),
-    priceConsult: t("priceConsult"),
-    defaultSubtitle: "",
-  }), [t]);
-
   useEffect(() => {
     async function loadProduct() {
       if (!config || config.productId === 0) {
         setIsLoading(false);
-        setError(t("productNotAvailable"));
+        setError("Producto no disponible");
         return;
       }
 
@@ -99,86 +68,78 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
         setProduct(productData);
       } catch (err) {
         console.error("Error cargando producto SIM:", err);
-        setError(t("productLoadError"));
+        setError("Error al cargar el producto");
       } finally {
         setIsLoading(false);
       }
     }
 
     loadProduct();
-  }, [config, locale, t]);
+  }, [config, locale]);
 
-  const plans = useMemo(() => {
-    if (!product) return [];
-    const variants = (product as any).variants || [];
-    return transformVariantsToSimPlans(variants, product, simTranslations);
-  }, [product, simTranslations]);
+  // Transformar checks a features
+  const features = useMemo(() => {
+    if (!product?.checks) return [];
+    return product.checks.map(check => check.name);
+  }, [product]);
 
-  const radioOptions = useMemo(() => getRadioOptionsFromSimPlans(plans), [plans]);
-  const features = useMemo(() => transformChecksToFeatures(product), [product]);
-  const featuresGrid = useMemo(() => transformAdvantagesToFeaturesGrid(product, config?.benefitIcon), [product, config]);
-  const benefits = useMemo(() => transformFeaturesToBenefitsGrid(product, config), [product, config]);
-  const faqs = useMemo(() => transformFaqs(product), [product]);
+  // Formatear precio
+  const formatPrice = (price: number | string): string => {
+    const numericPrice = typeof price === "string" ? parseFloat(price) : price;
+    if (isNaN(numericPrice)) return "Consultar";
+    return `${numericPrice}$ USD`;
+  };
 
-  useEffect(() => {
-    if (plans.length > 0 && !selectedRadio) {
-      setSelectedRadio(plans[0].label);
+  // Obtener imagen del producto de la API
+  const productImage = useMemo(() => {
+    if (product?.images && product.images.length > 0) {
+      return product.images[0].src;
     }
-  }, [plans, selectedRadio]);
+    return config?.productImage || "/images/encrypted-sim/Encrypted_sim_card.png";
+  }, [product, config]);
 
-  const selectedPlan = useMemo(() => {
-    return plans.find(p => p.label === selectedRadio) || plans[0] || null;
-  }, [plans, selectedRadio]);
-
-  const currentPrice = useMemo(() => {
-    if (selectedPlan) return formatPrice(selectedPlan.price);
-    return formatPrice(product?.price || 0);
-  }, [selectedPlan, product]);
-
-  const handleRadioChange = (val: string) => setSelectedRadio(val);
-
-  const handleBuy = () => {
+  const handleBuy = (productId?: string) => {
     openModal({
-      productid: String(product?.id || config?.productId),
+      productid: productId || String(product?.id || config?.productId),
       languageCode: locale,
-      selectedOption: product?.category?.id || 40,
+      selectedOption: 40,
     });
   };
 
-  const handleChat = () => console.log("Chat support");
-
-  const buildSimUrl = (simSlug: string) => {
-    const basePath = `/sim/${simSlug}`;
-    const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
-    if (!match) return basePath;
-    return `/${match[1]}${basePath}`;
-  };
-
-  const handleMoreInfo = (simSlug: string) => {
-    router.push(buildSimUrl(simSlug));
-  };
-
-  const handleSimBuy = (productId: string) => {
-    openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
-  };
-
-  const productInfo = useMemo(() => 
-    buildSimProductInfo(product, config, selectedPlan, handleBuy, handleChat, buildTranslations),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [product, config, selectedPlan, locale, openModal, buildTranslations]
-  );
-
-  // Traducciones para ProductSection
-  const productSectionTranslations = useMemo(() => ({
-    priceFrom: t("priceFrom"),
-    buyNow: t("buyNow"),
-    selectPlan: t("selectPlan"),
-    downloadAppStore: t("downloadAppStore"),
-    downloadGooglePlay: t("downloadGooglePlay"),
+  // Traducciones para el componente
+  const heroTranslations = useMemo(() => ({
+    priceFrom: t("products.data.priceRange")?.includes("-") ? "Desde" : "Precio",
+    buyNow: t("CardSim.buyNow"),
+    benefitsTitle: t("characteristics.title") || "Beneficios para ti:",
   }), [t]);
 
   // Loading state
-  if (isLoading) return <SimProductPageSkeleton />;
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-black">
+        <div className="animate-pulse">
+          <div className="h-[200px] sm:h-[284px] bg-gray-900" />
+          <div className="bg-white py-16">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="space-y-6">
+                  <div className="h-10 bg-gray-200 rounded w-1/2" />
+                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div className="h-4 bg-gray-200 rounded w-5/6" />
+                    <div className="h-4 bg-gray-200 rounded w-4/6" />
+                  </div>
+                  <div className="h-12 bg-gray-200 rounded w-1/3" />
+                </div>
+                <div className="h-64 bg-gray-200 rounded-2xl" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   // Error state
   if (error && !product) {
@@ -189,141 +150,111 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
             {config?.slug || "Producto SIM"}
           </h1>
           <p className="text-gray-600">{error}</p>
-          <p className="text-sm text-gray-400 mt-2">
-            {t("productComingSoon")}
-          </p>
         </div>
       </main>
     );
   }
 
-  // Hero banner images object
-  const heroBannerImages = {
-    desktop: config?.heroBanners.desktop || "",
-    tablet: config?.heroBanners.tablet || "",
-    mobile: config?.heroBanners.mobile || "",
-  };
-
   return (
-    <main>
-      {/* Hero Banner */}
-      <HeroBanner 
-        imageUrl={heroBannerImages} 
-        alt={`${product?.name || slug} Hero Banner`} 
+    <main className="min-h-screen">
+      <HeroSimSection
+        productName={product?.name || config?.slug || "SIM Encriptada"}
+        productImage={productImage}
+        features={features}
+        price={formatPrice(product?.price || 0)}
+        onBuy={() => handleBuy()}
+        appStoreUrl="https://apps.apple.com/app/encriptados"
+        googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
+        apkUrl="https://encriptados.io/apk"
+        translations={heroTranslations}
       />
-
-      {/* Product Section with price block ref */}
-      <div ref={priceBlockRef}>
-        <ProductSection
-          title={product?.name || ""}
-          description={product?.description || ""}
-          features={features}
-          price={currentPrice}
-          radioOptions={radioOptions}
-          selectedRadio={selectedRadio}
-          onRadioChange={handleRadioChange}
-          onBuy={handleBuy}
-          productImage={config?.productImage || ""}
-          translations={productSectionTranslations}
-        />
-      </div>
-
-      {/* Sticky Price Banner */}
-      <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
-
-      {/* Features Grid */}
-      {featuresGrid.length > 0 && (
-        <ProductFeaturesGrid 
-          features={featuresGrid} 
-          title={t("featuresTitle")}
-        />
-      )}
-
-      {/* Benefits Grid */}
-      {benefits.length > 0 && (
-        <ProductBenefitsGrid 
-          benefits={benefits}
-          title={(product as any)?.title_benefits || t("benefitsTitle")}
-          imageBenefits={(product as any)?.image_benefits}
-          productName={product?.name}
-        />
-      )}
-
-      {/* Banner de Cobertura - Solo si está habilitado en config */}
-      {config?.showCoverage && (
-        <div className="py-8 lg:py-12">
-          <BannerCoverage />
-        </div>
-      )}
-
-      {/* Featured Products - Otros productos SIM */}
-      <FeaturedProducts
-        left={{
-          title: tShared("encryptedSim.title"),
-          description: tShared("encryptedSim.description"),
-          buttonLabel: tShared("encryptedSim.button"),
-          onButtonClick: () => handleSimBuy("508"),
-          moreInfoLabel: tShared("encryptedSim.link"),
-          onMoreInfo: () => handleMoreInfo(config?.relatedProducts.simEncriptadaSlug || "sim-encriptada"),
-          image: "/images/apps/armadillo-v2/sim.png",
-        }}
-        right={{
-          title: tShared("simDataPlans.title"),
-          subtitle: tShared("simDataPlans.subtitle"),
-          buttonLabel: tShared("simDataPlans.button"),
-          onButtonClick: () => handleMoreInfo(config?.relatedProducts.timSimSlug || "tim-sim"),
-          image: "/images/apps/armadillo-v2/phone.png",
-        }}
-      />
-
-      {/* FAQ Section */}
-      {faqs.length > 0 && (
-        <FAQSection faqs={faqs} title={t("faqTitle")} />
-      )}
-    </main>
-  );
-}
-
-function SimProductPageSkeleton() {
-  return (
-    <main className="min-h-screen animate-pulse">
-      {/* Hero skeleton */}
-      <div className="h-44 sm:h-36 lg:h-72 bg-gray-200" />
       
-      {/* Content skeleton */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-          {/* Text content */}
-          <div className="space-y-6 order-2 lg:order-1">
-            <div className="h-10 bg-gray-200 rounded w-3/4" />
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-full" />
-              <div className="h-4 bg-gray-200 rounded w-5/6" />
-              <div className="h-4 bg-gray-200 rounded w-4/6" />
+      {/* Sección de Cobertura con buscador */}
+      <section className="py-12 md:py-16">
+        <div className="w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-6/12 mx-auto px-4">
+          <BasicFormProvider>
+            <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
+              <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">
+                {t("coverageTitle")}
+              </span>
+            </h2>
+            <div className="flex justify-center text-center mb-6">
+              <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
+                {t("coverageDescription")}
+              </p>
             </div>
-            <div className="space-y-2">
-              <div className="h-5 bg-gray-200 rounded w-1/4" />
-              <div className="h-12 bg-gray-200 rounded w-1/3" />
+
+            <SearchInput
+              inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
+              iconPosition="left"
+              name="searchinputcountry"
+              placeholder={t("searchPlaceholder")}
+            />
+            <div className="mt-4 w-full">
+              <ListOfPlans data={ListOfProductsData} />
             </div>
-            <div className="flex gap-3">
-              <div className="h-12 bg-gray-200 rounded w-40" />
-              <div className="h-12 bg-gray-200 rounded w-32" />
-            </div>
-          </div>
-          
-          {/* Image placeholder */}
-          <div className="order-1 lg:order-2">
-            <div className="h-64 lg:h-80 bg-gray-200 rounded-2xl" />
+          </BasicFormProvider>
+        </div>
+      </section>
+
+      {/* Sección de Características de Seguridad */}
+      <section className="py-16 md:py-20">
+        <div className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 justify-center mx-auto items-center px-4 text-center">
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] mb-12 md:mb-16">
+            {t("improveYourSecurity.titleImproveYourSecurity")}
+          </h2>
+        </div>
+        <div className="w-full sm:w-10/12 md:w-9/12 items-center flex justify-center mx-auto">
+          <FeaturesList />
+        </div>
+      </section>
+
+      {/* Sección Nuestro Objetivo */}
+      <section className="bg-[#f4f8fa] py-[8vh]">
+        <div className="max-w-[1100px] m-auto justify-center items-center p-4">
+          <OurObjetive />
+        </div>
+      </section>
+
+      {/* Sección Comunícate desde cualquier lugar */}
+      <section className="bg-[#E7F4F8] py-12 md:py-16 lg:py-20">
+        <div className="flex justify-center px-4 mb-12 md:mb-16">
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-center text-[#333333] max-w-[1100px]">
+            {t("comunicationTitle")}
+          </h2>
+        </div>
+        <div className="max-w-[1100px] mx-auto px-4">
+          <BannerSecure />
+        </div>
+      </section>
+
+      {/* Sección Paga solo por lo que usas */}
+      <section className="w-full py-12 md:py-16 lg:py-20 px-4">
+        <div className="max-w-[1100px] mx-auto">
+          <PayForUse />
+        </div>
+      </section>
+
+      {/* Sección Por qué llamar con la SIM Encriptada */}
+      <section className="max-w-[1100px] m-auto px-4 py-16 md:py-20">
+        <div>
+          <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-center text-[#333333] mb-12 md:mb-16">
+            {t("whyCallWithEncryptedSIM.title")}
+          </h2>
+        </div>
+        <div className="flex justify-center">
+          <div>
+            <WhyCallSim />
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Sección Cobertura en más de 200 países */}
+      <section className="pt-12 md:pt-16">
+        <BannerCoverage />
+      </section>
       
-      {/* Coverage skeleton */}
-      <div className="py-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="h-48 bg-gray-200 rounded-2xl" />
-        </div>
-      </div>
+      {/* Aquí irán más secciones: FAQ, etc. */}
     </main>
   );
 }
