@@ -52,7 +52,8 @@ interface CardSimProps {
     country?: { label: string; code?: string; flagUrl?: string };
     tag?: string;
   };
-  provider?: string;           
+  provider?: string;
+  typeProduct?: string;  // Campo type_product del backend
   planDataAmount?: number;
 }
 
@@ -65,7 +66,8 @@ const CardProduct: React.FC<CardSimProps> = ({
   filters,
   checks,
   badges,
-  provider,         
+  provider,
+  typeProduct,
   planDataAmount,
 }) => {
   const router = useRouter();
@@ -77,6 +79,8 @@ const CardProduct: React.FC<CardSimProps> = ({
     headerTitle,
     selectedOption: filters.selectedOption,
     badges,
+    provider,
+    typeProduct,
   });
 
   const handleBuy = () => {
@@ -233,12 +237,15 @@ const CardProduct: React.FC<CardSimProps> = ({
             </button>
             <span
               onClick={() => {
+                // Derivar URL correcta desde campos del backend (provider, typeProduct)
                 const url = getProductLink(
                   headerTitle,
                   Number(filters.selectedOption),
-                  id
+                  id,
+                  provider,
+                  typeProduct
                 );
-                console.log("🔗 [CardProduct] Go to info:", { url, id });
+                console.log("🔗 [CardProduct] Go to info:", { url, id, provider, typeProduct });
                 if (url) router.push(`${url}?productId=${id}`);
               }}
               className="cursor-pointer text-[14px] leading-[1.2] text-black hover:underline font-medium"

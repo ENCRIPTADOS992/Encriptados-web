@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 // Componentes de SIM
@@ -26,7 +26,20 @@ import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 // Configuración y utilidades locales
-import { getSimProductConfig, isValidSimProductSlug } from "./simProductConfig";
+import { 
+  getSimProductConfig,
+  getConfigForProduct,
+  isValidSimProductSlug,
+  deriveProductFamily,
+  deriveProductFormat,
+  shouldShowEncryptedSections,
+  shouldShowTimSections,
+  shouldShowEsimInfo,
+  shouldShowShippingInfo,
+  validateProductMatchesSlug,
+  type ProductFamily,
+  type ProductFormat,
+} from "./simProductConfig";
 
 interface PageProps {
   params: { slug: string; locale: string };
@@ -40,6 +53,8 @@ export default function SimProductPage({ params }: PageProps) {
 
 function SimProductPageContent({ slug, locale }: { slug: string; locale: string }) {
   const { openModal } = useModalPayment();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   
   // Traducciones
   const t = useTranslations("EncryptedSimPage");
@@ -47,25 +62,37 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
   const [product, setProduct] = useState<ProductById | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [validationChecked, setValidationChecked] = useState(false);
 
-  const config = useMemo(() => getSimProductConfig(slug), [slug]);
+  // Obtener productId desde query params
+  const productIdFromUrl = searchParams.get("productId");
+  
+  // Config estático para assets (banners, imágenes) - fallback al slug de la URL
+  const staticConfig = useMemo(() => getSimProductConfig(slug), [slug]);
 
   if (!isValidSimProductSlug(slug)) {
     notFound();
   }
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CARGA DEL PRODUCTO
+  // Prioridad: productId del query param > productId del config estático
+  // ═══════════════════════════════════════════════════════════════════════════
   useEffect(() => {
     async function loadProduct() {
-      if (!config || config.productId === 0) {
+      // Determinar qué productId usar
+      const productIdToLoad = productIdFromUrl || (staticConfig?.productId ? String(staticConfig.productId) : null);
+      
+      if (!productIdToLoad) {
         setIsLoading(false);
-        setError("Producto no disponible");
+        setError("Producto no disponible - No se especificó ID");
         return;
       }
 
       try {
         setIsLoading(true);
         setError(null);
-        const productData = await getProductById(String(config.productId), locale);
+        const productData = await getProductById(productIdToLoad, locale);
         setProduct(productData);
       } catch (err) {
         console.error("Error cargando producto SIM:", err);
@@ -76,7 +103,37 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     }
 
     loadProduct();
-  }, [config, locale]);
+  }, [productIdFromUrl, staticConfig, locale]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // VALIDACIÓN: El backend es la fuente de verdad
+  // Si el producto no corresponde a la URL actual, redirigir al slug correcto
+  // ═══════════════════════════════════════════════════════════════════════════
+  useEffect(() => {
+    if (!product || isLoading || validationChecked) return;
+
+    const validation = validateProductMatchesSlug(product, slug, locale);
+    setValidationChecked(true);
+
+    if (!validation.isValid && validation.redirectUrl) {
+      console.warn(
+        `[SIM Page] Producto no corresponde a URL. ` +
+        `Producto ID ${product.id} (provider: "${product.provider}", type: "${product.type_product}") ` +
+        `debería estar en "${validation.expectedSlug}", no en "${slug}". ` +
+        `Redirigiendo a ${validation.redirectUrl}`
+      );
+      // Mantener el productId en la URL de redirección
+      const redirectWithId = productIdFromUrl 
+        ? `${validation.redirectUrl}?productId=${productIdFromUrl}`
+        : validation.redirectUrl;
+      router.replace(redirectWithId);
+    }
+  }, [product, isLoading, slug, locale, router, validationChecked, productIdFromUrl]);
+
+  // Obtener config basado en el producto cargado (no en la URL)
+  const config = useMemo(() => {
+    return getConfigForProduct(product) || staticConfig;
+  }, [product, staticConfig]);
 
   // Transformar checks a features
   const features = useMemo(() => {
@@ -92,6 +149,24 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
       answer: faq.description,
     }));
   }, [product]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DERIVACIÓN: Determinar family y format desde campos del backend
+  // ═══════════════════════════════════════════════════════════════════════════
+  const productFamily: ProductFamily = useMemo(() => {
+    return deriveProductFamily(product?.provider);
+  }, [product?.provider]);
+
+  const productFormat: ProductFormat = useMemo(() => {
+    return deriveProductFormat(product?.type_product);
+  }, [product?.type_product]);
+
+  // Flags para renderizado condicional de secciones
+  const showEncryptedSections = shouldShowEncryptedSections(productFamily);
+  const showTimSections = shouldShowTimSections(productFamily);
+  // TODO: Usar estos flags cuando se implementen las secciones de eSIM y envío
+  const _showEsimInfo = shouldShowEsimInfo(productFormat);
+  const _showShippingInfo = shouldShowShippingInfo(productFormat);
 
   // Formatear precio
   const formatPrice = (price: number | string): string => {
@@ -209,29 +284,35 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
         </div>
       </section>
 
-      {/* Sección de Características de Seguridad */}
-      <section>
-        <FeaturesList />
-      </section>
+      {/* Sección de Características de Seguridad - SOLO ENCRYPTED */}
+      {showEncryptedSections && (
+        <section>
+          <FeaturesList />
+        </section>
+      )}
 
-      {/* Sección Nuestro Objetivo */}
-      <section className="bg-[#f4f8fa] py-12 md:py-16 lg:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <OurObjetive />
-        </div>
-      </section>
+      {/* Sección Nuestro Objetivo - SOLO ENCRYPTED */}
+      {showEncryptedSections && (
+        <section className="bg-[#f4f8fa] py-12 md:py-16 lg:py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <OurObjetive />
+          </div>
+        </section>
+      )}
 
-      {/* Sección Comunícate desde cualquier lugar */}
-      <section className="bg-[#F4F8FA] py-12 md:py-16 lg:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800">
-            {t("comunicationTitle")}
-          </h2>
-        </div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <BannerSecure />
-        </div>
-      </section>
+      {/* Sección Comunícate desde cualquier lugar - SOLO ENCRYPTED */}
+      {showEncryptedSections && (
+        <section className="bg-[#F4F8FA] py-12 md:py-16 lg:py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800">
+              {t("comunicationTitle")}
+            </h2>
+          </div>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <BannerSecure />
+          </div>
+        </section>
+      )}
 
       {/* Sección Paga solo por lo que usas */}
       <section className="py-12 md:py-16 lg:py-20">
@@ -240,17 +321,34 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
         </div>
       </section>
 
-      {/* Sección Por qué llamar con la SIM Encriptada */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-12 md:mb-16">
-            {t("whyCallWithEncryptedSIM.title")}
-          </h2>
-          <div className="flex justify-center">
-            <WhyCallSim />
+      {/* Sección Por qué llamar con la SIM Encriptada - SOLO ENCRYPTED */}
+      {showEncryptedSections && (
+        <section className="py-16 md:py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-12 md:mb-16">
+              {t("whyCallWithEncryptedSIM.title")}
+            </h2>
+            <div className="flex justify-center">
+              <WhyCallSim />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* TODO: Sección de Planes de Datos - SOLO TIM */}
+      {showTimSections && (
+        <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-8">
+              Planes de Datos TIM
+            </h2>
+            <p className="text-center text-gray-600 mb-8">
+              Navega en más de 200 países con nuestros planes de datos internacionales.
+            </p>
+            {/* Aquí irían los planes de datos de TIM */}
+          </div>
+        </section>
+      )}
 
       {/* Sección Cobertura en más de 200 países */}
       <section className="pt-12 md:pt-16">
@@ -259,7 +357,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
 
       {/* Sección Preguntas Frecuentes */}
       {faqs.length > 0 && (
-        <FAQSection faqs={faqs} title={t("faqTitle")} />
+        <FAQSection faqs={faqs} title="Preguntas Frecuentes" />
       )}
     </main>
   );

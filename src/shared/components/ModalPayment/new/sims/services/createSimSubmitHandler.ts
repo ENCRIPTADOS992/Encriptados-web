@@ -11,6 +11,12 @@ import {
   type TottoliMethod,
 } from "../types/modalSimTypes";
 import { tottoliCheckout } from "@/features/products/payments/tottoliCheckout";
+import {
+  deriveProductFamily,
+  deriveProductFormat,
+  deriveProductSlug,
+  hydrateCanonicalPath,
+} from "@/app/[locale]/sim/[slug]/simProductConfig";
 
 type Params = {
   formType: FormType;
@@ -69,7 +75,9 @@ export function createSimSubmitHandler({
       product?.provider || product?.brand || ""
     ).toLowerCase();
     const isEncryptedProvider = providerName.includes("encript");
+    const isTimProvider = providerName.includes("tim");
 
+    // Productos que van por Tottoli (Encrypted)
     const isTottoliSim =
       isEncryptedProvider &&
       (formType === "encrypted_esim" ||
@@ -78,10 +86,17 @@ export function createSimSubmitHandler({
         formType === "encrypted_physical" ||
         formType === "encrypted_esimData");
 
+    // Productos TIM (física o eSIM)
+    const isTimSim =
+      isTimProvider &&
+      (formType === "tim_physical" || formType === "tim_esim");
+
     console.log("[createSimSubmitHandler] provider / flags", {
       providerName,
       isEncryptedProvider,
+      isTimProvider,
       isTottoliSim,
+      isTimSim,
       formType,
     });
 
@@ -242,6 +257,12 @@ export function createSimSubmitHandler({
       const provider: PayProvider =
         data.method === "card" ? "stripe" : "kriptomus";
 
+      // Derivar valores para metadata
+      const productFamily = deriveProductFamily(product?.provider || product?.brand);
+      const productFormat = deriveProductFormat(product?.type_product);
+      const slug = deriveProductSlug(productFamily, productFormat);
+      const canonicalPath = hydrateCanonicalPath(slug);
+
       await payUserId({
         productId: productIdNum,
         email: data.email,
@@ -249,7 +270,11 @@ export function createSimSubmitHandler({
         amount: amountUsd,
         currency: "USD",
         metadata: {
-          type: "SIM_GENERIC",
+          type: formType,
+          productFamily,
+          productFormat,
+          slug,
+          sourcePage: canonicalPath,
           telegram: data.telegram,
           fullName: data.fullName,
           address: data.address,

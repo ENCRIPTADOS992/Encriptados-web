@@ -1,11 +1,31 @@
 // src/shared/components/ModalPayment/new/sims/types/simFormTypes.ts
+
+/**
+ * Tipos de formulario para productos SIM
+ * 
+ * Encrypted (SIM Encriptada):
+ * - encrypted_physical: SIM física encriptada
+ * - encrypted_esim: eSIM encriptada (digital)
+ * - encrypted_data: Recarga de datos
+ * - encrypted_minutes: Recarga de minutos
+ * - encrypted_esimData: eSIM con datos
+ * - encrypted_generic: Fallback
+ * 
+ * TIM (SIM TIM):
+ * - tim_physical: SIM TIM física
+ * - tim_esim: eSIM TIM (digital)
+ */
 export type FormType =
+  // Encrypted products
   | "encrypted_physical"
   | "encrypted_esim"
   | "encrypted_data"
   | "encrypted_minutes"
   | "encrypted_generic"
-  | "encrypted_esimData";
+  | "encrypted_esimData"
+  // TIM products
+  | "tim_physical"
+  | "tim_esim";
 
 export type SimFormValues = {
   email: string;

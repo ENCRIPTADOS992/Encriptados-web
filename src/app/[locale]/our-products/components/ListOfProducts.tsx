@@ -531,6 +531,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 checks={product.checks || []}
                 badges={badges}
                 provider={product.provider}
+                typeProduct={product.type_product}
                 planDataAmount={effectivePlanDataAmount}
               />
             );
