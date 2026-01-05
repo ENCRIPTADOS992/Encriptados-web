@@ -3,9 +3,12 @@
 import { useEffect, useState, useMemo } from "react";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
 // Componentes de SIM
 import HeroSimSection from "./components/HeroSimSection";
+import SimTimBanner from "./components/SimTimBanner";
+import ProductInfoSection from "./components/ProductInfoSection";
 
 // Componentes de Cobertura
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
@@ -44,6 +47,16 @@ import {
 interface PageProps {
   params: { slug: string; locale: string };
 }
+
+// Variantes de animación para secciones
+const sectionVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
 
 export default function SimProductPage({ params }: PageProps) {
   const { slug, locale } = params;
@@ -242,20 +255,48 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
 
   return (
     <main className="min-h-screen">
-      <HeroSimSection
-        productName={product?.name || config?.slug || "SIM Encriptada"}
-        productImage={productImage}
-        features={features}
-        price={formatPrice(product?.price || 0)}
-        onBuy={() => handleBuy()}
-        appStoreUrl="https://apps.apple.com/app/encriptados"
-        googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
-        apkUrl="https://encriptados.io/apk"
-        translations={heroTranslations}
-      />
+      {/* Banner Hero - Dinámico según productFamily */}
+      {showTimSections ? (
+        <>
+          <SimTimBanner
+            productName={product?.name || config?.slug || "SIM TIM"}
+            onBuy={() => handleBuy()}
+          />
+          {/* Sección de información del producto para TIM */}
+          <ProductInfoSection
+            productName={product?.name || config?.slug || "SIM TIM"}
+            productImage={productImage}
+            features={features}
+            price={formatPrice(product?.price || 0)}
+            onBuy={() => handleBuy()}
+            appStoreUrl="https://apps.apple.com/app/encriptados"
+            googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
+            apkUrl="https://encriptados.io/apk"
+            translations={heroTranslations}
+          />
+        </>
+      ) : (
+        <HeroSimSection
+          productName={product?.name || config?.slug || "SIM Encriptada"}
+          productImage={productImage}
+          features={features}
+          price={formatPrice(product?.price || 0)}
+          onBuy={() => handleBuy()}
+          appStoreUrl="https://apps.apple.com/app/encriptados"
+          googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
+          apkUrl="https://encriptados.io/apk"
+          translations={heroTranslations}
+        />
+      )}
       
       {/* Sección de Cobertura con buscador */}
-      <section className="py-12 md:py-16">
+      <motion.section 
+        className="py-12 md:py-16"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <BasicFormProvider>
             <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
@@ -282,82 +323,101 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
             </div>
           </BasicFormProvider>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Sección de Características de Seguridad - SOLO ENCRYPTED */}
-      {showEncryptedSections && (
-        <section>
-          <FeaturesList />
-        </section>
-      )}
+      {/* Sección de Características de Seguridad */}
+      <motion.section
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <FeaturesList />
+      </motion.section>
 
-      {/* Sección Nuestro Objetivo - SOLO ENCRYPTED */}
-      {showEncryptedSections && (
-        <section className="bg-[#f4f8fa] py-12 md:py-16 lg:py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <OurObjetive />
-          </div>
-        </section>
-      )}
+      {/* Sección Nuestro Objetivo */}
+      <motion.section 
+        className="bg-[#f4f8fa] py-12 md:py-16 lg:py-20"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <OurObjetive />
+        </div>
+      </motion.section>
 
-      {/* Sección Comunícate desde cualquier lugar - SOLO ENCRYPTED */}
-      {showEncryptedSections && (
-        <section className="bg-[#F4F8FA] py-12 md:py-16 lg:py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800">
-              {t("comunicationTitle")}
-            </h2>
-          </div>
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <BannerSecure />
-          </div>
-        </section>
-      )}
+      {/* Sección Comunícate desde cualquier lugar */}
+      <motion.section 
+        className="bg-[#F4F8FA] py-12 md:py-16 lg:py-20"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800">
+            {t("comunicationTitle")}
+          </h2>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BannerSecure />
+        </div>
+      </motion.section>
 
       {/* Sección Paga solo por lo que usas */}
-      <section className="py-12 md:py-16 lg:py-20">
+      <motion.section 
+        className="py-12 md:py-16 lg:py-20"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <PayForUse />
         </div>
-      </section>
+      </motion.section>
 
-      {/* Sección Por qué llamar con la SIM Encriptada - SOLO ENCRYPTED */}
-      {showEncryptedSections && (
-        <section className="py-16 md:py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-12 md:mb-16">
-              {t("whyCallWithEncryptedSIM.title")}
-            </h2>
-            <div className="flex justify-center">
-              <WhyCallSim />
-            </div>
+      {/* Sección Por qué llamar con la SIM Encriptada */}
+      <motion.section 
+        className="py-16 md:py-20"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-12 md:mb-16">
+            {t("whyCallWithEncryptedSIM.title")}
+          </h2>
+          <div className="flex justify-center">
+            <WhyCallSim />
           </div>
-        </section>
-      )}
-
-      {/* TODO: Sección de Planes de Datos - SOLO TIM */}
-      {showTimSections && (
-        <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-8">
-              Planes de Datos TIM
-            </h2>
-            <p className="text-center text-gray-600 mb-8">
-              Navega en más de 200 países con nuestros planes de datos internacionales.
-            </p>
-            {/* Aquí irían los planes de datos de TIM */}
-          </div>
-        </section>
-      )}
+        </div>
+      </motion.section>
 
       {/* Sección Cobertura en más de 200 países */}
-      <section className="pt-12 md:pt-16">
+      <motion.section 
+        className="pt-12 md:pt-16"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <BannerCoverage />
-      </section>
+      </motion.section>
 
       {/* Sección Preguntas Frecuentes */}
       {faqs.length > 0 && (
-        <FAQSection faqs={faqs} title="Preguntas Frecuentes" />
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <FAQSection faqs={faqs} title="Preguntas Frecuentes" />
+        </motion.div>
       )}
     </main>
   );

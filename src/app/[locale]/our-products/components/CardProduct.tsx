@@ -103,8 +103,11 @@ const CardProduct: React.FC<CardSimProps> = ({
     const displayPrice = (() => {
       const normalizedProvider = provider?.toLowerCase().trim() ?? "";
 
+      // Soportar tanto "Sim TIM" como "tim" del backend
       const isSimTim =
-        normalizedProvider.includes("sim tim") || normalizedProvider.includes("tim");
+        normalizedProvider === "tim" || 
+        normalizedProvider.includes("sim tim") || 
+        normalizedProvider.includes("tim");
 
       if (isSimTim && planDataAmount != null) {
         return `$ ${planDataAmount} USD`;

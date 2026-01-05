@@ -5,6 +5,7 @@ const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
 
 type GetAllProductsOptions = {
   simCountry?: string | null;
+  provider?: string | null;
 };
 
 export const getAllProducts = async (
@@ -19,6 +20,10 @@ export const getAllProducts = async (
     };
     if (options?.simCountry && categoryId === 40) {
       params.sim_country = options.simCountry;
+    }
+    // Enviar provider a la API si está disponible (solo para categoría 40)
+    if (options?.provider && options.provider !== "all" && categoryId === 40) {
+      params.provider = options.provider;
     }
 
     console.log("🚀 [getAllProducts] Iniciando petición...");

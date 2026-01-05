@@ -227,6 +227,26 @@
     }
   },
   "EncryptedSimPage": {
+    "SimTimBanner": {
+      "title": "Connectez-vous depuis n'importe où",
+      "titleHighlight": "dans le monde avec un anonymat total",
+      "subtitle": "Vos données n'expirent jamais, peu importe le temps que vous mettez à les utiliser",
+      "personAlt": "Personne heureuse",
+      "features": {
+        "anonymity": "Anonymat",
+        "anonymityHighlight": "total",
+        "payForUse": "Payez pour",
+        "payForUseHighlight": "ce que vous utilisez",
+        "compatible": "Compatible:",
+        "compatibleHighlight": "iOS et Android",
+        "coverage": "Couverture dans",
+        "coverageHighlight": "175 pays",
+        "noExpiry": "Vos données",
+        "noExpiryHighlight": "n'expirent pas",
+        "instantActivation": "Activation",
+        "instantActivationHighlight": "instantanée"
+      }
+    },
     "connectAllWorldTitle": "Connectez-vous dans le monde entier",
     "totalSecurityTitle": "avec une sécurité totale dans vos communications",
     "addYourSimSubtitle": "Obtenez votre SIM/eSIM avec des données mobiles et profitez d'un anonymat total dans les appels, filtres, changements d'IMSI et plus encore",

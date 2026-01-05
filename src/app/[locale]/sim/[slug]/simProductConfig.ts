@@ -198,12 +198,15 @@ export type SimSlug = "sim-encriptada" | "esim-encriptada" | "tim-sim" | "esim-t
 /**
  * Deriva `family` desde el campo `provider` del backend
  * @example deriveProductFamily("Sim Encriptados") → "encrypted"
+ * @example deriveProductFamily("encrypted") → "encrypted"
  * @example deriveProductFamily("Sim TIM") → "tim"
+ * @example deriveProductFamily("tim") → "tim"
  */
 export function deriveProductFamily(provider: string | undefined): ProductFamily {
   const prov = (provider || "").toLowerCase();
-  if (prov.includes("encript")) return "encrypted";
-  if (prov.includes("tim")) return "tim";
+  // Nuevos valores del backend: "encrypted", "tim"
+  if (prov === "encrypted" || prov.includes("encript")) return "encrypted";
+  if (prov === "tim" || prov.includes("tim")) return "tim";
   return "encrypted"; // fallback
 }
 

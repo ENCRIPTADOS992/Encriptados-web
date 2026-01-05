@@ -12,8 +12,9 @@ type SimSlug = "sim-encriptada" | "esim-encriptada" | "tim-sim" | "esim-tim";
 /** Deriva family desde el campo `provider` del backend */
 function deriveProductFamily(provider: string | undefined): ProductFamily {
   const prov = (provider || "").toLowerCase();
-  if (prov.includes("encript")) return "encrypted";
-  if (prov.includes("tim")) return "tim";
+  // Nuevos valores del backend: "encrypted", "tim"
+  if (prov === "encrypted" || prov.includes("encript")) return "encrypted";
+  if (prov === "tim" || prov.includes("tim")) return "tim";
   return "encrypted"; // fallback
 }
 

@@ -12,9 +12,9 @@ interface ListOfProductsProps {
 
 import { useTranslations } from 'next-intl';
 
-const providerMap: Record<string, string> = {
-  encriptados: "Sim Encriptados",
-  tim: "Sim TIM",
+const providerMap: Record<string, string[]> = {
+  encriptados: ["Sim Encriptados", "encrypted", "encriptados"],
+  tim: ["Sim TIM", "tim"],
 };
 
 const serviceMap: Record<string, string> = {
@@ -85,7 +85,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     filters.simCountry
   );
 
-  console.log("🎛️ [ListOfProducts] filtros actuales =>", filters);
+  console.log("🎛️ [ListOfProducts] filtros actuales =>", {
+    ...filters,
+    selectedOption,
+    isTim: filters.provider === "tim",
+    timproviderValue: filters.timprovider,
+  });
 
   if (isFetching) {
     console.log("[STATE] isFetching...");
@@ -107,6 +112,19 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   const products: Product[] = data ?? [];
   console.log("📦 [ListOfProducts] productos recibidos:", products.length);
+  
+  // Debug: mostrar todos los productos TIM recibidos de la API
+  const allTimProducts = products.filter(p => p.provider?.toLowerCase() === "tim");
+  console.log("📦 [ListOfProducts] productos TIM en respuesta API:", allTimProducts.length);
+  if (allTimProducts.length > 0) {
+    console.log("📦 [ListOfProducts] lista productos TIM:", allTimProducts.map(p => ({
+      id: p.id,
+      name: p.name,
+      provider: p.provider,
+      brand: p.brand,
+      type_product: p.type_product
+    })));
+  }
 
   // 👉 log general de recargas ANTES de cualquier filtro
   logRecargaSummary("ANTES DE FILTROS", products);
@@ -115,22 +133,23 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   // Filtro por provider (solo categoría 40)
   if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
-    const providerValue = providerMap[filters.provider];
+    const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
 
     filteredProducts = products.filter((product) => {
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
-      const filterNormalized = providerValue.toLowerCase().trim();
-      return (
-        providerNormalized === filterNormalized ||
-        brandNormalized === filterNormalized
-      );
+      
+      // Verificar si coincide con cualquiera de los valores aceptados
+      return providerValues.some(value => {
+        const valueNormalized = value.toLowerCase().trim();
+        return providerNormalized === valueNormalized || brandNormalized === valueNormalized;
+      });
     });
 
     console.log("🔎 [Filtro Provider]", {
       providerFilter: filters.provider,
-      providerValue,
+      providerValues,
       before,
       after: filteredProducts.length,
     });
@@ -171,20 +190,51 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     
     // Mapeo independiente del idioma usando patrones de nombre
     const namePatterns: Record<string, RegExp[]> = {
+      // Patrones para TIM
       physicsimtim: [
-        /^sim\s+(f[ií]sica?|physics?|physique|fisica|f[ií]sico)/i
+        /^sim\s+(f[ií]sica?|physics?|physique|fisica|f[ií]sico)/i,
+        /^sim\s+tim/i
       ],
       esimplusdatatim: [
-        /^esim\s*\+?\s*dat(a|os|données|i|ados)/i,
-        /^esim.*donn[ée]es/i,
-        /^esim.*\+.*dat/i,
-        /^esim.*dados/i
+        /^esim\s*\+?\s*dat(a|os|données|i|ados)$/i,
+        /^esim.*donn[ée]es$/i,
+        /^esim\s*\+\s*dat/i,
+        /^esim.*dados$/i
       ],
       datarechargetim: [
         /^(dat(a|os|données|i|ados)\s+)?(recarga|recharge|ricarica)/i,
         /^(recharge|ricarica|recarga)\s+dat(a|os|données|i|ados)/i
       ],
-      minuterecharge: [/^(minutos?\s+)?(recarga|recharge|ricarica)/i, /^(recharge|ricarica)\s+minutes?/i],
+      // Patrones para Encriptados
+      physicsim: [
+        /^sim\s+(f[ií]sica?|physics?|physique|fisica|f[ií]sico)/i,
+        /sim\s+encript/i,
+        /^sim\s*(card)?$/i
+      ],
+      esim: [
+        /^esim$/i,
+        /^esim\s*(virtual)?$/i,
+        /^esim\s+encript/i
+      ],
+      datarecharge: [
+        /^(dat(a|os|données|i|ados)\s+)?(recarga|recharge|ricarica)$/i,
+        /^(recharge|ricarica|recarga)\s+dat(a|os|données|i|ados)$/i,
+        /^recarga\s+dat/i
+      ],
+      eSimData: [
+        /^esim\s*\+?\s*(recarga\s+)?dat(a|os|données|i|ados)/i,
+        /^esim.*\+.*recarga.*dat/i,
+        /^esim.*recarga.*dat/i
+      ],
+      imsi: [
+        /imsi/i,
+        /cambio\s+imsi/i
+      ],
+      minuterecharge: [
+        /^(minutos?\s+)?(recarga|recharge|ricarica)/i, 
+        /^(recharge|ricarica)\s+minutes?/i,
+        /^recarga\s+minut/i
+      ],
     };
 
     const patterns = namePatterns[providerServiceKey];
@@ -244,11 +294,21 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       regionCode !== "GLOBAL" &&
       !usingBackendCountryFilter
     ) {
+      console.log("🌎 [Filtro Región TIM] Aplicando filtro por región:", regionCode);
+      console.log("🌎 [Filtro Región TIM] Productos antes del filtro:", filteredProducts.map(p => ({
+        id: p.id,
+        name: p.name,
+        hasVariants: (p.variants ?? []).length > 0,
+        variantScopes: (p.variants ?? []).map(v => v.scope?.code)
+      })));
+      
       filteredProducts = filteredProducts.filter((product) =>
         (product.variants ?? []).some(
           (v) => v.scope?.code?.toUpperCase() === regionCode
         )
       );
+    } else {
+      console.log("🌎 [Filtro Región TIM] NO se aplica filtro (regionCode:", regionCode, ", usingBackendCountryFilter:", usingBackendCountryFilter, ")");
     }
 
     console.log("🌎 [Filtro Región TIM]", {
@@ -478,16 +538,22 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-4 lg:gap-5 w-full max-w-7xl mx-auto">
           {filteredProducts.map((product, index) => {
             const isCategory40 = selectedOption === 40;
-            const isTimProvider = (product.provider ?? "")
-              .toLowerCase()
-              .includes("tim");
+            const providerLower = (product.provider ?? "").toLowerCase();
+            // Soportar tanto "Sim TIM" como "tim" del backend
+            const isTimProvider = providerLower === "tim" || providerLower.includes("tim");
             const isTim = filters.provider === "tim";
             const simName = (product.name ?? "").toLowerCase().trim();
+            // Lista de nombres de productos SIM que deben mostrar badges TIM
             const isSim =
               simName === "recarga datos" ||
               simName === "recarga minutos" ||
               simName === "esim" ||
-              simName === "esim + datos";
+              simName === "esim + datos" ||
+              simName === "esim + recarga datos" ||
+              simName === "sim física" ||
+              simName === "sim" ||
+              simName.startsWith("esim") ||
+              simName.includes("sim");
             const showTimBadges = isCategory40 && isTim && isSim;
 
             const variant = product.variants?.[0];
