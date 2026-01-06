@@ -23,7 +23,7 @@ import { createSimSubmitHandler } from "./sims/services/createSimSubmitHandler";
 
 export default function ModalSIM() {
   const { params } = useModalPayment();
-  const { productid } = (params || {}) as { productid?: string };
+  const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
   const { payUserId } = useCheckout();
   const [hideSimField, setHideSimField] = React.useState(false);
 
@@ -110,24 +110,61 @@ export default function ModalSIM() {
   );
 
   React.useEffect(() => {
+    // Si hay un initialPrice, buscar la variante que coincida con ese precio
+    if (initialPrice != null && initialPrice > 0 && minutesPlans.length > 0) {
+      const matchingPlan = minutesPlans.find((p) => p.value === initialPrice);
+      if (matchingPlan) {
+        console.log("[ModalSIM] Seleccionando plan que coincide con initialPrice:", {
+          initialPrice,
+          matchingPlan,
+        });
+        setSelectedPlanId(matchingPlan.id);
+        return;
+      }
+    }
+    
+    // Si no hay match o no hay initialPrice, usar el primero
     console.log("[ModalSIM] useEffect minutesPlans → setSelectedPlanId", {
       minutesPlans,
       firstId: minutesPlans[0]?.id ?? null,
     });
     setSelectedPlanId(minutesPlans[0]?.id ?? null);
-  }, [minutesPlans]);
+  }, [minutesPlans, initialPrice]);
+
+  // Track si el usuario ha cambiado manualmente el plan
+  const [userChangedPlan, setUserChangedPlan] = React.useState(false);
+
+  // Handler para cuando el usuario cambia el plan manualmente
+  const handlePlanChange = React.useCallback((planId: string | number) => {
+    setSelectedPlanId(planId);
+    setUserChangedPlan(true);
+  }, []);
 
   const unitPrice = React.useMemo(
-    () =>
-      calcSimUnitPrice({
+    () => {
+      // Para productos de minutos, siempre usar el precio del plan seleccionado
+      if (formType === "encrypted_minutes" && minutesPlans.length > 0) {
+        const selectedPlan = minutesPlans.find((p) => p.id === selectedPlanId) ?? minutesPlans[0];
+        console.log("[ModalSIM] Usando precio del plan seleccionado:", selectedPlan.value);
+        return selectedPlan.value;
+      }
+      
+      // Si se pasó un precio inicial desde la card y el usuario no ha cambiado nada, usarlo
+      if (initialPrice != null && initialPrice > 0 && !userChangedPlan) {
+        console.log("[ModalSIM] Usando initialPrice del params:", initialPrice);
+        return initialPrice;
+      }
+      
+      return calcSimUnitPrice({
         formType,
         minutesPlans,
         selectedPlanId,
         variants,
         selectedVariant,
         product,
-      }),
-    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product]
+      });
+    },
+    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan]
   );
 
   const onApplyCoupon = () =>
@@ -198,7 +235,7 @@ export default function ModalSIM() {
       }
       minutesPlans={minutesPlans}
       selectedPlanId={selectedPlanId}
-      onChangePlan={setSelectedPlanId}
+      onChangePlan={handlePlanChange}
       showEsimAddon={
         formType === "encrypted_data" ||
         (formType === "encrypted_minutes" && !isEsimDataCombo)

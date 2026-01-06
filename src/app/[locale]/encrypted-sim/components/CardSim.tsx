@@ -36,7 +36,7 @@ const CardSim: React.FC<CardSimProps> = ({
   const t = useTranslations("EncryptedSimPage.CardSim");
   
   return (
-    <div className="w-full md:max-w-sm md:mx-auto bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
+    <div className="w-full max-w-[320px] sm:max-w-none sm:w-[45%] sm:shrink-0 md:shrink-0 md:w-[340px] lg:w-[380px] xl:w-[420px] mx-auto mb-4 sm:mb-0 bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
       {/* ------------------------------------------------------
           PARTE SUPERIOR: imagen de la SIM + "+200 países" / "5G LTE"
       ------------------------------------------------------ */}

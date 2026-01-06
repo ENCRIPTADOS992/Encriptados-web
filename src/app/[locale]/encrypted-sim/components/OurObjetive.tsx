@@ -2,8 +2,18 @@ import React from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-const OurObjetive = () => {
-  const FloatSimCard = "/images/encrypted-sim/Encrypted_float_image.png";
+interface OurObjetiveProps {
+  variant?: "encrypted" | "tim";
+}
+
+const OurObjetive = ({ variant = "encrypted" }: OurObjetiveProps) => {
+  const isTimVariant = variant === "tim";
+  
+  const imageSrc = isTimVariant 
+    ? "/images/encrypted-sim/tim.sim.webp" 
+    : "/images/encrypted-sim/Encrypted_float_image.png";
+  
+  const containerBgColor = isTimVariant ? "#009DFF" : "white";
 
   const t = useTranslations("EncryptedSimPage");
   return (
@@ -22,20 +32,19 @@ const OurObjetive = () => {
       {/* Imagen */}
       <div className="w-full lg:w-1/2 flex justify-center">
         <div 
-          className="bg-white rounded-3xl flex justify-center items-center p-6 sm:p-8"
+          className="rounded-xl lg:rounded-3xl flex justify-center items-center p-4 sm:p-6 lg:p-8 w-full max-w-[374px] lg:max-w-[519px]"
           style={{ 
-            maxWidth: "519px",
-            minHeight: "432px",
-            borderRadius: "24px",
+            aspectRatio: "374/309",
+            borderRadius: "12px",
+            backgroundColor: containerBgColor,
           }}
         >
           <Image
             alt="SimCard"
-            src={FloatSimCard}
-            width={334}
-            height={314}
-            className="w-auto h-auto max-w-full object-contain"
-            style={{ aspectRatio: "334/314" }}
+            src={imageSrc}
+            width={450}
+            height={420}
+            className="w-full h-full max-w-[90%] max-h-[90%] lg:max-w-[95%] lg:max-h-[95%] object-contain"
           />
         </div>
       </div>

@@ -176,15 +176,28 @@ const PurchaseHeader: React.FC<Props> = ({
     );
   }, [product]);
 
-  const RECHARGE_AMOUNTS = [
-  { id: 25, label: "25 USD" },
-  { id: 50, label: "50 USD" },
-  { id: 100, label: "100 USD" },
-  { id: 150, label: "150 USD" },
-  { id: 200, label: "200 USD" },
-  { id: 250, label: "250 USD" },
-  { id: 500, label: "500 USD" },
-];
+  const RECHARGE_AMOUNTS = React.useMemo(() => {
+    // Si el producto tiene variantes, usarlas
+    const productVariants = (product as any)?.variants ?? [];
+    if (productVariants.length > 0) {
+      return productVariants.map((v: any) => ({
+        id: v.id ?? v.price,
+        label: `${v.price} USD`,
+        value: Number(v.price),
+      }));
+    }
+    
+    // Fallback a valores fijos
+    return [
+      { id: 25, label: "25 USD", value: 25 },
+      { id: 50, label: "50 USD", value: 50 },
+      { id: 100, label: "100 USD", value: 100 },
+      { id: 150, label: "150 USD", value: 150 },
+      { id: 200, label: "200 USD", value: 200 },
+      { id: 250, label: "250 USD", value: 250 },
+      { id: 500, label: "500 USD", value: 500 },
+    ];
+  }, [product]);
   return (
     <div className="w-full">
       {/* Título */}

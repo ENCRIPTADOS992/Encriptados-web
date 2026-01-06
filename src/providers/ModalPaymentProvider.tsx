@@ -16,6 +16,7 @@ interface ModalPaymentParams {
   categoryName?: string;          
   provider?: string;              
   brand?: string;
+  initialPrice?: number;
 }
 
 interface ModalPaymentContextProps {

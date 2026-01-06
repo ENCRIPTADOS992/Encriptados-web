@@ -22,7 +22,7 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
 
 }) => {
   return (
-    <div className="bg-transparent sm:bg-custom-linear-2 md:bg-custom-linear-2 p-8 rounded-2xl overflow-hidden flex flex-col justify-center">
+    <div className="w-full max-w-[320px] sm:max-w-none sm:w-[55%] md:w-auto mx-auto sm:mx-0 bg-transparent sm:bg-custom-linear-2 md:bg-custom-linear-2 p-8 rounded-2xl overflow-hidden flex flex-col justify-center">
       {/* Logo en la parte superior */}
       <div className="mb-6 flex justify-center">
         <Image

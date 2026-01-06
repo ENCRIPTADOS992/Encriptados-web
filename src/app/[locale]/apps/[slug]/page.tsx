@@ -141,10 +141,15 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   const handleRadioChange = (val: string) => setSelectedRadio(val);
 
   const handleBuy = () => {
+    // Extraer precio numérico
+    const priceStr = selectedPlan?.price ?? product?.price ?? 0;
+    const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+    
     openModal({
       productid: String(product?.id || config?.productId),
       languageCode: locale,
       selectedOption: product?.category?.id || 38,
+      initialPrice: numericPrice,
     });
   };
 

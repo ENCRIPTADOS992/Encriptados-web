@@ -84,11 +84,12 @@ const CardProduct: React.FC<CardSimProps> = ({
   });
 
   const handleBuy = () => {
-    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`);
+    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange });
     openModal({
       productid: id.toString(),
       languageCode: "es",
       selectedOption: Number(filters.selectedOption),
+      initialPrice: numericPrice,
     });
   };
 
@@ -116,6 +117,14 @@ const CardProduct: React.FC<CardSimProps> = ({
       return priceRange;
     })();
 
+    // Extraer el precio numérico para pasar al modal
+    const numericPrice = (() => {
+      if (planDataAmount != null) return planDataAmount;
+      // Extraer número de priceRange (ej: "57.5$" -> 57.5)
+      const match = priceRange.match(/[\d.]+/);
+      return match ? parseFloat(match[0]) : undefined;
+    })();
+
     console.log("💰 [CardProduct] price debug =>", {
     id,
     headerTitle,
@@ -123,6 +132,7 @@ const CardProduct: React.FC<CardSimProps> = ({
     planDataAmount,
     priceRange,
     displayPrice,
+    numericPrice,
   });
 
 
@@ -248,8 +258,8 @@ const CardProduct: React.FC<CardSimProps> = ({
                   provider,
                   typeProduct
                 );
-                console.log("🔗 [CardProduct] Go to info:", { url, id, provider, typeProduct });
-                if (url) router.push(`${url}?productId=${id}`);
+                console.log("🔗 [CardProduct] Go to info:", { url, id, provider, typeProduct, numericPrice });
+                if (url) router.push(`${url}?productId=${id}&price=${numericPrice ?? ''}`);
               }}
               className="cursor-pointer text-[14px] leading-[1.2] text-black hover:underline font-medium"
             >

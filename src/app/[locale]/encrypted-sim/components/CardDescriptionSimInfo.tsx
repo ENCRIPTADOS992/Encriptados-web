@@ -60,7 +60,12 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
           rounded="full"
           intent="black"
           customStyles="text-sm font-normal"
-          onClick={() => openModal({ productid: id.toString(), languageCode })}
+          onClick={() => {
+            // Extraer precio numérico del priceRange
+            const match = priceRange.match(/[\d.]+/);
+            const numericPrice = match ? parseFloat(match[0]) : undefined;
+            openModal({ productid: id.toString(), languageCode, initialPrice: numericPrice });
+          }}
         >
           {t("buyNow")}
         </Button>

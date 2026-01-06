@@ -79,6 +79,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
 
   // Obtener productId desde query params
   const productIdFromUrl = searchParams.get("productId");
+  const priceFromUrl = searchParams.get("price");
   
   // Config estático para assets (banners, imágenes) - fallback al slug de la URL
   const staticConfig = useMemo(() => getSimProductConfig(slug), [slug]);
@@ -188,6 +189,18 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     return `${numericPrice}$ USD`;
   };
 
+  // Precio efectivo: priorizar precio de URL, luego precio del producto
+  const effectivePrice = useMemo(() => {
+    if (priceFromUrl) {
+      const urlPrice = parseFloat(priceFromUrl);
+      if (!isNaN(urlPrice)) return urlPrice;
+    }
+    const productPrice = typeof product?.price === "string" 
+      ? parseFloat(product.price) 
+      : product?.price;
+    return productPrice ?? 0;
+  }, [priceFromUrl, product?.price]);
+
   // Obtener imagen del producto de la API
   const productImage = useMemo(() => {
     if (product?.images && product.images.length > 0) {
@@ -196,11 +209,12 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     return config?.productImage || "/images/encrypted-sim/Encrypted_sim_card.png";
   }, [product, config]);
 
-  const handleBuy = (productId?: string) => {
+  const handleBuy = (productId?: string, priceOverride?: number) => {
     openModal({
       productid: productId || String(product?.id || config?.productId),
       languageCode: locale,
       selectedOption: 40,
+      initialPrice: priceOverride ?? effectivePrice,
     });
   };
 
@@ -267,7 +281,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
             productName={product?.name || config?.slug || "SIM TIM"}
             productImage={productImage}
             features={features}
-            price={formatPrice(product?.price || 0)}
+            price={formatPrice(effectivePrice)}
             onBuy={() => handleBuy()}
             appStoreUrl="https://apps.apple.com/app/encriptados"
             googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
@@ -280,7 +294,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
           productName={product?.name || config?.slug || "SIM Encriptada"}
           productImage={productImage}
           features={features}
-          price={formatPrice(product?.price || 0)}
+          price={formatPrice(effectivePrice)}
           onBuy={() => handleBuy()}
           appStoreUrl="https://apps.apple.com/app/encriptados"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
@@ -344,7 +358,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <OurObjetive />
+          <OurObjetive variant={showTimSections ? "tim" : "encrypted"} />
         </div>
       </motion.section>
 

@@ -22,9 +22,10 @@ type ModalProduct = {
 
 export default function ModalRecharge() {
   const { params, openModal } = useModalPayment();
-  const { productid, mode = "recharge" } = (params || {}) as {
+  const { productid, mode = "recharge", initialPrice } = (params || {}) as {
     productid?: string;
     mode?: Mode;
+    initialPrice?: number;
   };
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
@@ -40,9 +41,21 @@ export default function ModalRecharge() {
 
   const variants = product?.variants ?? [];
 
+  // Track si el usuario ha cambiado manualmente la variante
+  const [userChangedVariant, setUserChangedVariant] = React.useState(false);
+
   React.useEffect(() => {
+    // Si hay un initialPrice, buscar la variante que coincida con ese precio
+    if (initialPrice != null && initialPrice > 0 && variants.length > 0) {
+      const matchingVariant = variants.find((v) => v.price === initialPrice);
+      if (matchingVariant) {
+        setSelectedVariant(matchingVariant);
+        return;
+      }
+    }
+    // Si no hay match o no hay initialPrice, usar el primero
     setSelectedVariant(variants.length ? variants[0] : null);
-  }, [product]);
+  }, [product, initialPrice]);
 
   const unitPrice =
     (variants.length
@@ -61,9 +74,10 @@ export default function ModalRecharge() {
       showRechargeCTA={true}                   
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
-      onChangeVariant={(id) =>
-        setSelectedVariant(variants.find((v) => v.id === id) ?? null)
-      }
+      onChangeVariant={(id) => {
+        setSelectedVariant(variants.find((v) => v.id === id) ?? null);
+        setUserChangedVariant(true);
+      }}
       quantity={quantity}
       setQuantity={setQuantity}
       coupon={coupon}

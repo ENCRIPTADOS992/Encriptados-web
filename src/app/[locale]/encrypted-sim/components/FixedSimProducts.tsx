@@ -51,9 +51,12 @@ const FixedSimProducts: React.FC = () => {
 
   const { openModal } = useModalPayment();
 
-  const handleBuy = (id: number) => {
-    console.log(`🛒 Comprar clicado para ID=${id}`);
-    openModal({ productid: id.toString(), languageCode: "es" });
+  const handleBuy = (id: number, priceLabel?: string) => {
+    console.log(`🛒 Comprar clicado para ID=${id}`, { priceLabel });
+    // Extraer precio numérico del priceLabel
+    const match = priceLabel?.match(/[\d.]+/);
+    const numericPrice = match ? parseFloat(match[0]) : undefined;
+    openModal({ productid: id.toString(), languageCode: "es", initialPrice: numericPrice });
   };
   // Define aquí las 4 cards EXACTAS (datos, minutos, imsi, esim)
   const commonFeaturesData = [
@@ -232,12 +235,13 @@ const FixedSimProducts: React.FC = () => {
             sm:shadow-none
             gap-6
             flex flex-col
-            md:flex-row
+            sm:flex-row
             my-0
             rounded-3xl
             sm:p-0 xs:p-0
             p-4
-            py-10 sm:py-0 xs:py-0
+            pt-10 pb-10
+            sm:py-0 xs:py-0
           `}
         >
           {/* IZQUIERDA: CardDescription */}
