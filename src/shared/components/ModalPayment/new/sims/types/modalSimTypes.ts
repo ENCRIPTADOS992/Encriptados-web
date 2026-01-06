@@ -64,4 +64,14 @@ export type StripeConfirmFn = (
   billing?: { name?: string; email?: string; postal_code?: string }
 ) => Promise<any>;
 
+export type SuccessPaymentData = {
+  intent: {
+    id: string;
+    amount: number;
+    currency: string;
+    created?: number;
+  };
+  orderId?: number | null;
+};
+
 export type { PayProvider, FormType, TottoliCheckoutPayload, TottoliMethod };

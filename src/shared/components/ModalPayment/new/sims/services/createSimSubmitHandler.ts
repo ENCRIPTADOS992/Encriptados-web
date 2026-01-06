@@ -9,6 +9,7 @@ import {
   type FormType,
   type TottoliCheckoutPayload,
   type TottoliMethod,
+  type SuccessPaymentData,
 } from "../types/modalSimTypes";
 import { tottoliCheckout } from "@/features/products/payments/tottoliCheckout";
 import {
@@ -36,6 +37,7 @@ type Params = {
     currency: string;
     metadata?: Record<string, any>;
   }) => Promise<any>;
+  onSuccess?: (data: SuccessPaymentData) => void;
 };
 
 export function createSimSubmitHandler({
@@ -49,6 +51,7 @@ export function createSimSubmitHandler({
   selectedPlanId,
   stripeConfirm,
   payUserId,
+  onSuccess,
 }: Params) {
   return async function handleSubmit(data: Shipping) {
     console.log("[createSimSubmitHandler] submit 👉", {
@@ -201,7 +204,16 @@ export function createSimSubmitHandler({
           );
 
           if (confirmRes?.status === "succeeded") {
-            alert("Pago realizado correctamente 🎉");
+            const paymentIntent = confirmRes.intent || confirmRes.paymentIntent;
+            onSuccess?.({
+              intent: {
+                id: paymentIntent?.id || (res as any).provider_ref || "unknown",
+                amount: amountUsd * 100, // convertir a centavos
+                currency: "usd",
+                created: Math.floor(Date.now() / 1000),
+              },
+              orderId: (res as any).order_id || null,
+            });
             return;
           }
 

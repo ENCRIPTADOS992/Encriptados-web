@@ -7,6 +7,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import { useCheckout } from "@/shared/hooks/useCheckout";
+import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 
 import SimForm from "./SimForm";
 import type { FormType } from "./sims/types/simFormTypes";
@@ -16,6 +17,7 @@ import {
   type Variant,
   type Shipping,
   type StripeConfirmFn,
+  type SuccessPaymentData,
 } from "./sims/types/modalSimTypes";
 import { buildMinutesPlans } from "./sims/utils/buildMinutesPlans";
 import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
@@ -26,6 +28,10 @@ export default function ModalSIM() {
   const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
   const { payUserId } = useCheckout();
   const [hideSimField, setHideSimField] = React.useState(false);
+
+  // Estados para el modal de éxito de pago
+  const [showSuccess, setShowSuccess] = React.useState(false);
+  const [successData, setSuccessData] = React.useState<SuccessPaymentData | null>(null);
 
   const { data: product } = useQuery<ModalProduct>({
     queryKey: ["productById", productid],
@@ -170,6 +176,11 @@ export default function ModalSIM() {
   const onApplyCoupon = () =>
     setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
+  const handlePaymentSuccess = React.useCallback((data: SuccessPaymentData) => {
+    setSuccessData(data);
+    setShowSuccess(true);
+  }, []);
+
   const handleSubmit = React.useMemo(
     () =>
       createSimSubmitHandler({
@@ -183,6 +194,7 @@ export default function ModalSIM() {
         selectedPlanId,
         stripeConfirm,
         payUserId,
+        onSuccess: handlePaymentSuccess,
       }),
     [
       formType,
@@ -195,6 +207,7 @@ export default function ModalSIM() {
       selectedPlanId,
       stripeConfirm,
       payUserId,
+      handlePaymentSuccess,
     ]
   );
 
@@ -249,6 +262,13 @@ export default function ModalSIM() {
         formType={formType}
         hideSimField={hideSimField || isEsimDataCombo}
         onStripeConfirmReady={handleStripeConfirmReady}
+      />
+
+      <PaymentSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        intent={successData?.intent ?? null}
+        orderId={successData?.orderId}
       />
     </PurchaseScaffold>
   );
