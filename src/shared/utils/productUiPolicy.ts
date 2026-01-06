@@ -38,8 +38,8 @@ export function getUiPolicyForProduct(opts: {
   const base = ProductPolicies[opts.kind];
   const route = findRouteItem(opts.product, opts.selectedOption);
 
-  // Regla base: solo SIM muestra tabs, el resto no (lo puedes cambiar si prefieres)
-  let showTabs = opts.kind === "SIM";
+  // Show tabs for SIM, APLICACIONES, and SOFTWARE
+  let showTabs = opts.kind === "SIM" || opts.kind === "APLICACIONES" || opts.kind === "SOFTWARE";
   let allowedModes: AllowedMode[] = ["new_user", "roning_code", "recharge"];
 
   // Overrides desde catálogo si existen

@@ -426,6 +426,26 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Alias para compatibilidad con URLs en camelCase
+  "secureCrypt": {
+    slug: "secureCrypt",
+    productId: 174,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/secureCrypt/hero-desktop.png",
+      tablet: "/images/apps/secureCrypt/hero-tablet.png",
+      mobile: "/images/apps/secureCrypt/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/secureCrypt/banner.png",
+    iconUrl: "/images/apps/secureCrypt/logo.png",
+    benefitIcon: "/images/apps/secureCrypt/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
   // ════════════════════════════════════════════════════════════════
   // ROUTER (Categoría 36) - Usa /router pero comparte config
   // ════════════════════════════════════════════════════════════════

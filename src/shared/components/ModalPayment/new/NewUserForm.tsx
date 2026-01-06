@@ -194,42 +194,48 @@ export default function NewUserForm({
         {/* Usernames */}
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Ingresa los nombres sugeridos</p>
-          <p className="rounded-[8px] px-3 py-2 text-[12px] leading-[14px] bg-amber-50 border border-amber-200">
+          <p className="w-full h-[42px] rounded-[8px] px-[14px] text-[14px] leading-[42px] bg-amber-50 border border-amber-200 flex items-center">
             Mínimo 4 y máximo 20 caracteres alfanuméricos.
           </p>
 
-          {usernames.map((val, idx) => {
-            const invalid = val.length > 0 && !reUser.test(val);
-            return (
-              <div
-                key={idx}
-                className={`w-full h-[42px] rounded-[8px] border-2 ${
-                  invalid ? "border-red-500" : "border-[#3D3D3D]"
-                } px-[14px] py-[8px] flex items-center gap-[10px]`}
-              >
-                <input
-                  value={val}
-                  onChange={(e) => setUsernameAt(idx, e.target.value)}
-                  placeholder="Ingresa nombre de usuario"
-                  className="w-full bg-transparent outline-none text-[14px]"
-                />
-              </div>
-            );
-          })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {usernames.map((val, idx) => {
+              const invalid = val.length > 0 && !reUser.test(val);
+              return (
+                <div
+                  key={idx}
+                  className={`w-full h-[42px] rounded-[8px] border-2 ${
+                    invalid ? "border-red-500" : "border-[#3D3D3D]"
+                  } px-[14px] py-[8px] flex items-center gap-[10px]`}
+                >
+                  <input
+                    value={val}
+                    onChange={(e) => setUsernameAt(idx, e.target.value)}
+                    placeholder="Ingresa nombre de usuario"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Email */}
-        <div className="space-y-1.5">
-          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Correo electrónico para recibir licencia</p>
-          <div className="w-full sm:w-[416px] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-            <input
-              value={emailVal}
-              onChange={(e) => setEmailVal(e.target.value)}
-              placeholder="Email"
-              type="email"
-              className="w-full bg-transparent outline-none text-[14px]"
-            />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="space-y-1.5">
+            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Correo electrónico para recibir licencia</p>
+            <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+              <input
+                value={emailVal}
+                onChange={(e) => setEmailVal(e.target.value)}
+                placeholder="Email"
+                type="email"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
           </div>
+          {/* Empty div to maintain grid structure */}
+          <div className="hidden sm:block" />
         </div>
 
         {/* Términos */}

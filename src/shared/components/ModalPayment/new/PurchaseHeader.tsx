@@ -272,7 +272,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 value={String(selectedPlanId ?? RECHARGE_AMOUNTS[0].id)}
                 onChange={(e) => onChangePlan?.(Number(e.target.value))}
               >
-                {RECHARGE_AMOUNTS.map((opt) => (
+                {RECHARGE_AMOUNTS.map((opt: { id: number; label: string; value: number }) => (
                   <option key={opt.id} value={opt.id}>
                     {opt.label}
                   </option>
