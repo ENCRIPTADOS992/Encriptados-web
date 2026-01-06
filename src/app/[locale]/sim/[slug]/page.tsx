@@ -430,7 +430,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <FAQSection faqs={faqs} title="Preguntas Frecuentes" />
+          <FAQSection faqs={showTimSections ? faqs.slice(0, 3) : faqs} title="Preguntas Frecuentes" />
         </motion.div>
       )}
     </main>

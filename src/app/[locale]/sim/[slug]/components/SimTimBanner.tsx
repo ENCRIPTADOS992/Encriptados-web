@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 
@@ -237,7 +237,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Check className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
+                  <CircleCheck className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
                   <span className="whitespace-nowrap">
                     {t("features.anonymity")} <span className="text-[#009DFF]">{t("features.anonymityHighlight")}</span>
                   </span>
@@ -248,7 +248,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Check className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
+                  <CircleCheck className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
                   <span className="whitespace-nowrap">
                     {t("features.payForUse")} <span className="text-[#009DFF]">{t("features.payForUseHighlight")}</span>
                   </span>
@@ -262,7 +262,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Check className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
+                  <CircleCheck className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
                   <span className="whitespace-nowrap">
                     {t("features.compatible")} <span className="text-[#009DFF]">{t("features.compatibleHighlight")}</span>
                   </span>
@@ -273,7 +273,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Check className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
+                  <CircleCheck className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
                   <span className="whitespace-nowrap">
                     {t("features.coverage")} <span className="text-[#009DFF]">{t("features.coverageHighlight")}</span>
                   </span>
@@ -287,7 +287,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Check className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
+                  <CircleCheck className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
                   <span className="whitespace-nowrap">
                     {t("features.noExpiry")} <span className="text-[#009DFF]">{t("features.noExpiryHighlight")}</span>
                   </span>
@@ -298,7 +298,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Check className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
+                  <CircleCheck className="h-4 w-4 flex-shrink-0 text-[#009DFF]" strokeWidth={3} />
                   <span className="whitespace-nowrap">
                     {t("features.instantActivation")} <span className="text-[#009DFF]">{t("features.instantActivationHighlight")}</span>
                   </span>

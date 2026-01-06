@@ -3,15 +3,15 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useParams } from "next/navigation";
 
-// Componentes Template Producto Unificados (Responsive)
-import HeroBannerUnified from "../apps/component/templateProduct/HeroBannerUnified";
-import ProductSectionUnified from "../apps/component/templateProduct/ProductSectionUnified";
-import ProductFeaturesGridUnified from "../apps/component/templateProduct/ProductFeaturesGridUnified";
-import ProductBenefitsGridUnified from "../apps/component/templateProduct/ProductBenefitsGridUnified";
-import HeroVideoSectionUnified from "../apps/component/templateProduct/HeroVideoSectionUnified";
-import FeaturedProductsUnified from "../apps/component/templateProduct/FeaturedProductsUnified";
-import FAQSectionUnified from "../apps/component/templateProduct/FAQSectionUnified";
-import StickyPriceBannerUnified from "../apps/component/templateProduct/StickyPriceBannerUnified";
+// Componentes Template Producto
+import HeroBanner from "../apps/component/templateProduct/HeroBanner";
+import ProductSection from "../apps/component/templateProduct/ProductSection";
+import ProductFeaturesGrid from "../apps/component/templateProduct/ProductFeaturesGrid";
+import ProductBenefitsGrid from "../apps/component/templateProduct/ProductBenefitsGrid";
+import HeroVideoSection from "../apps/component/templateProduct/HeroVideoSection";
+import FeaturedProducts from "../apps/component/templateProduct/FeaturedProducts";
+import FAQSection from "../apps/component/templateProduct/FAQSection";
+import StickyPriceBanner from "../apps/component/templateProduct/StickyPriceBanner";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -224,7 +224,7 @@ export default function RouterPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Banner */}
-      <HeroBannerUnified
+      <HeroBanner
         imageUrl={{
           desktop: ROUTER_CONFIG.heroBanners.desktop,
           tablet: ROUTER_CONFIG.heroBanners.tablet,
@@ -235,7 +235,7 @@ export default function RouterPage() {
 
       {/* Product Section */}
       <div ref={priceBlockRef}>
-        <ProductSectionUnified
+        <ProductSection
           title={(product as any)?.name || "Camaleón Router"}
           description={(product as any)?.description || "El Router Camaleón es la solución ideal para aquellos que buscan privacidad total y una conexión segura a Internet."}
           features={features}
@@ -249,19 +249,19 @@ export default function RouterPage() {
       </div>
 
       {/* Sticky Price Banner */}
-      <StickyPriceBannerUnified
+      <StickyPriceBanner
         visible={!isVisible}
         productInfo={productInfo}
       />
 
       {/* Features Grid */}
       {featuresGrid.length > 0 && (
-        <ProductFeaturesGridUnified features={featuresGrid} />
+        <ProductFeaturesGrid features={featuresGrid} />
       )}
 
       {/* Benefits Grid */}
       {benefits.length > 0 && (
-        <ProductBenefitsGridUnified
+        <ProductBenefitsGrid
           title={ROUTER_CONFIG.benefitsTitle}
           benefits={benefits}
         />
@@ -269,14 +269,14 @@ export default function RouterPage() {
 
       {/* Video Section */}
       {ROUTER_CONFIG.videoUrl && (
-        <HeroVideoSectionUnified
+        <HeroVideoSection
           videoUrl={ROUTER_CONFIG.videoUrl}
           title={ROUTER_CONFIG.videoTitle}
         />
       )}
 
       {/* Featured Products (SIM/eSIM) */}
-      <FeaturedProductsUnified
+      <FeaturedProducts
         left={{
           title: "SIM Card encriptada",
           description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
@@ -303,7 +303,7 @@ export default function RouterPage() {
 
       {/* FAQ Section */}
       {faqs.length > 0 && (
-        <FAQSectionUnified faqs={faqs} />
+        <FAQSection faqs={faqs} />
       )}
     </main>
   );
