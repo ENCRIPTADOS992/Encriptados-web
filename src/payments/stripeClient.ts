@@ -31,9 +31,8 @@ export async function getStripe(): Promise<Stripe> {
 }
 
 export function createCardElements(stripe: Stripe): StripeElements {
-  // Para elementos individuales (cardNumber, cardExpiry, cardCvc) no se usa appearance
-  // appearance es para Payment Element. Los estilos van directamente en cada elemento.
-  return stripe.elements();
+  // Para elementos individuales (cardNumber, cardExpiry, cardCvc)
+  return stripe.elements({ locale: 'es' });
 }
 
 export type SplitCardElements = {
@@ -79,17 +78,17 @@ export function mountSplitCardElements(
     style: elementStyle,
     showIcon: true,
     placeholder: "1234 1234 1234 1234",
-  } as any);
+  });
   
   const expiry = elements.create("cardExpiry", {
     style: elementStyle,
     placeholder: "MM / AA",
-  } as any);
+  });
   
   const cvc = elements.create("cardCvc", {
     style: elementStyle,
     placeholder: "CVC",
-  } as any);
+  });
   
   number.mount(hostNumber);
   expiry.mount(hostExpiry);

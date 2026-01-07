@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
@@ -200,6 +200,31 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
       : product?.price;
     return productPrice ?? 0;
   }, [priceFromUrl, product?.price]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AUTO-POPUP: Detectar parámetro buy=1 y abrir modal automáticamente
+  // ═══════════════════════════════════════════════════════════════════════════
+  const buyPopupTriggered = useRef(false);
+  
+  useEffect(() => {
+    const buyParam = searchParams.get("buy");
+    if (buyParam === "1" && product && !isLoading && !buyPopupTriggered.current) {
+      buyPopupTriggered.current = true;
+      
+      // Abrir el modal de pago
+      openModal({
+        productid: String(product.id),
+        languageCode: locale,
+        selectedOption: 40,
+        initialPrice: effectivePrice,
+      });
+      
+      // Limpiar el parámetro buy de la URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete("buy");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [searchParams, product, isLoading, locale, effectivePrice, openModal]);
 
   // Obtener imagen del producto de la API
   const productImage = useMemo(() => {

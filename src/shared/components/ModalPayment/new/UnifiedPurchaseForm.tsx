@@ -124,7 +124,10 @@ export default function UnifiedPurchaseForm({
 
   // Validaciones
   const reUser = /^[a-zA-Z0-9]{4,20}$/;
-  const usernamesOk = !policy.showUsernameFields || 
+  // Solo validar usernames si showUsernameFields es true Y estamos en modo "new_user"
+  // En modo "roning_code" o "recharge" no se requieren usernames
+  const requiresUsernames = policy.showUsernameFields && silentPhoneMode === "new_user";
+  const usernamesOk = !requiresUsernames || 
     (usernames.length === quantity && usernames.every((u) => reUser.test(u)));
   const emailOk = /\S+@\S+\.\S+/.test(emailVal) && emailVal.length <= 100 && emailVal.length > 5;
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
@@ -539,16 +542,16 @@ export default function UnifiedPurchaseForm({
 
             {/* Card number - Número de tarjeta */}
             <div className="space-y-1.5">
-              <div id="card-number-el" className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+              <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
             </div>
 
             {/* Expiry + CVC */}
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <div id="card-expiry-el" className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
               </div>
               <div className="space-y-1.5">
-                <div id="card-cvc-el" className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
               </div>
             </div>
 

@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const product = await getProductById(productId, locale || "es");
     const productName = product?.name || "Producto";
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://encriptados.com";
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
     
     // Obtener la imagen del producto y asegurar que sea URL absoluta
     let productImage = product?.images?.[0]?.src || "/images/default-product.png";

@@ -17,6 +17,8 @@ interface ModalPaymentParams {
   provider?: string;              
   brand?: string;
   initialPrice?: number;
+  /** URL de origen para compartir (se captura automáticamente al abrir el modal) */
+  sourceUrl?: string;
 }
 
 interface ModalPaymentContextProps {
@@ -43,7 +45,9 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
 
   const openModal = (newParams?: ModalPaymentParams) => {
         console.log("💠 [Provider] openModal() llamado con:", newParams);
-    setParams(prev => ({ ...prev, ...(newParams ?? {}) }));
+    // Capturar la URL de origen si no se proporciona
+    const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
+    setParams(prev => ({ ...prev, ...(newParams ?? {}), sourceUrl }));
     setIsModalOpen(true);
   };
   const closeModal = () => {

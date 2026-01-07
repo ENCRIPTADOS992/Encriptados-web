@@ -3,8 +3,9 @@
 
 import React from "react";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
-import { getShareConfigByProductId } from "@/shared/constants/shareConfig";
+import { getShareConfigByProductId, generateSimShareUrl, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 
 type Variant = {
   id: number;
@@ -45,6 +46,8 @@ type Props = {
   esimAddonLabel?: string;
   onTotalChange?: (total: number) => void;
   onChangeEsimAddon?: (checked: boolean) => void;
+  /** URL de origen para compartir (se captura al abrir el modal) */
+  sourceUrl?: string;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -68,7 +71,9 @@ const PurchaseHeader: React.FC<Props> = ({
   esimAddonLabel = "Lleva E-SIM",
   onTotalChange,
   onChangeEsimAddon,
+  sourceUrl,
 }) => {
+  const locale = useLocale();
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
 
@@ -228,10 +233,39 @@ const PurchaseHeader: React.FC<Props> = ({
                 
                 // Usar la configuración de compartir para obtener la URL correcta con ?buy=1
                 const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
-                const shareUrl = shareConfig?.shareUrl 
-                  || (productId 
-                    ? `${window.location.origin}/our-products/${productId}?buy=1`
-                    : `${window.location.href}${window.location.href.includes('?') ? '&' : '?'}buy=1`);
+                
+                // Generar la URL de compartir
+                let shareUrl: string;
+                if (shareConfig?.shareUrl) {
+                  // Si existe en shareConfig, usar esa URL con locale
+                  shareUrl = getShareUrlWithLocale(shareConfig.shareUrl, locale);
+                } else if (productId && unitPrice) {
+                  // Para SIMs: generar URL dinámica con productId y precio
+                  // Detectar el tipo de SIM basándose en el provider o nombre
+                  const productName = (product?.name || '').toLowerCase();
+                  const provider = (product?.provider || '').toLowerCase();
+                  
+                  let simType: 'sim-encriptada' | 'esim-encriptada' | 'tim-sim' | 'esim-tim' = 'esim-encriptada';
+                  if (provider.includes('tim') || productName.includes('tim')) {
+                    simType = productName.includes('esim') ? 'esim-tim' : 'tim-sim';
+                  } else if (productName.includes('esim') || productName.includes('e-sim')) {
+                    simType = 'esim-encriptada';
+                  } else if (productName.includes('sim') && !productName.includes('esim')) {
+                    simType = 'sim-encriptada';
+                  }
+                  
+                  shareUrl = generateSimShareUrl(Number(productId), unitPrice, simType, locale);
+                } else if (sourceUrl) {
+                  // Usar sourceUrl si está disponible
+                  const currentUrl = new URL(sourceUrl);
+                  currentUrl.searchParams.set('buy', '1');
+                  shareUrl = currentUrl.toString();
+                } else {
+                  // Fallback a URL actual
+                  const currentUrl = new URL(window.location.href);
+                  currentUrl.searchParams.set('buy', '1');
+                  shareUrl = currentUrl.toString();
+                }
                 
                 const shareData = {
                   title: shareConfig?.title || product?.name || "Producto",

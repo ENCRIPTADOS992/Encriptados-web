@@ -5,12 +5,17 @@
  * - metaImage: Imagen para Open Graph/Twitter Cards
  * - title: Título para metadatos
  * - description: Descripción corta con CTA
- * - shareUrl: URL de la página del producto con parámetro ?buy=1 para activar popup
+ * - shareUrl: URL de la página del producto con parámetro ?buy=1 o &buy=1 para activar popup
  * 
- * El parámetro ?buy=1 activa automáticamente el popup de pago al cargar la página
+ * El parámetro buy=1 activa automáticamente el popup de pago al cargar la página
+ * 
+ * ESTRUCTURA DE URLs:
+ * - Apps/Sistemas: /apps/[slug]?buy=1
+ * - SIMs: /sim/[slug]?productId=X&price=Y&buy=1
+ * - Router: /router?buy=1
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://encriptados.io";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
 
 export interface ShareConfig {
   productId: number;
@@ -232,47 +237,28 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
 /**
  * ════════════════════════════════════════════════════════════════
  * SIM ENCRIPTADOS (Categoría 40 - Encriptados)
+ * Estructura: /sim/[slug]?productId=X&price=Y&buy=1
  * ════════════════════════════════════════════════════════════════
  */
 export const SIM_ENCRIPTADOS_SHARE_CONFIG: ShareConfig[] = [
   {
     productId: 508,
-    slug: "sim-fisica",
+    slug: "sim-encriptada",
     name: "SIM Física Encriptados",
     metaImage: "/meta-image/sim-encriptados/encriptados-sim-fisica.png",
     title: "SIM Física Encriptados - Cobertura Global",
     description: "¡Conecta en cualquier país! Compra tu SIM aquí.",
-    shareUrl: `${BASE_URL}/our-products/508?buy=1`,
+    shareUrl: `${BASE_URL}/sim/sim-encriptada?productId=508&price=15&buy=1`,
     category: "sim-encriptados",
   },
   {
-    productId: 454,
-    slug: "esim",
+    productId: 449,
+    slug: "esim-encriptada",
     name: "eSIM Encriptados",
     metaImage: "/meta-image/sim-encriptados/encriptados-esim.png",
     title: "eSIM Encriptados - Activa al Instante",
     description: "¡Sin chip físico! Compra tu eSIM aquí.",
-    shareUrl: `${BASE_URL}/our-products/454?buy=1`,
-    category: "sim-encriptados",
-  },
-  {
-    productId: 12345, // TODO: Verificar ID real
-    slug: "minutos",
-    name: "Minutos Encriptados",
-    metaImage: "/meta-image/sim-encriptados/encriptados-minuto.png",
-    title: "Minutos Encriptados - Llamadas Seguras",
-    description: "¡Recarga minutos cifrados! Compra aquí.",
-    shareUrl: `${BASE_URL}/encrypted-sim?buy=1`,
-    category: "sim-encriptados",
-  },
-  {
-    productId: 12346, // TODO: Verificar ID real
-    slug: "recarga-datos",
-    name: "Recarga Datos Encriptados",
-    metaImage: "/meta-image/sim-encriptados/encriptados-recarga-datos.png",
-    title: "Recarga Datos - Internet Seguro",
-    description: "¡Más GB para tu SIM! Recarga aquí.",
-    shareUrl: `${BASE_URL}/encrypted-sim?buy=1`,
+    shareUrl: `${BASE_URL}/sim/esim-encriptada?productId=449&price=12&buy=1`,
     category: "sim-encriptados",
   },
 ];
@@ -280,37 +266,28 @@ export const SIM_ENCRIPTADOS_SHARE_CONFIG: ShareConfig[] = [
 /**
  * ════════════════════════════════════════════════════════════════
  * SIM TIM (Categoría 40 - TIM)
+ * Estructura: /sim/[slug]?productId=X&price=Y&buy=1
  * ════════════════════════════════════════════════════════════════
  */
 export const SIM_TIM_SHARE_CONFIG: ShareConfig[] = [
   {
-    productId: 59123, // TODO: Verificar ID real
-    slug: "tim-fisica",
+    productId: 448,
+    slug: "tim-sim",
     name: "TIM SIM Física",
     metaImage: "/meta-image/sim-tim/tim-fisica.png",
     title: "TIM SIM Física - Datos Globales",
     description: "¡Internet en 200+ países! Compra tu SIM TIM aquí.",
-    shareUrl: `${BASE_URL}/tim-sim?buy=1`,
+    shareUrl: `${BASE_URL}/sim/tim-sim?productId=448&price=10&buy=1`,
     category: "sim-tim",
   },
   {
-    productId: 59124, // TODO: Verificar ID real
-    slug: "tim-esim",
+    productId: 442,
+    slug: "esim-tim",
     name: "TIM eSIM",
     metaImage: "/meta-image/sim-tim/tim-esim-datos.png",
     title: "TIM eSIM - Activa Inmediata",
     description: "¡eSIM para datos! Compra aquí.",
-    shareUrl: `${BASE_URL}/tim-sim?buy=1`,
-    category: "sim-tim",
-  },
-  {
-    productId: 59125, // TODO: Verificar ID real
-    slug: "tim-recarga",
-    name: "Recarga TIM",
-    metaImage: "/meta-image/sim-tim/tim-recarga-datos.png",
-    title: "Recarga TIM - Más Datos",
-    description: "¡Recarga tu SIM TIM! Compra aquí.",
-    shareUrl: `${BASE_URL}/tim-sim?buy=1`,
+    shareUrl: `${BASE_URL}/sim/esim-tim?productId=442&price=10&buy=1`,
     category: "sim-tim",
   },
 ];
@@ -318,6 +295,7 @@ export const SIM_TIM_SHARE_CONFIG: ShareConfig[] = [
 /**
  * ════════════════════════════════════════════════════════════════
  * ROUTER (Categoría 36)
+ * Estructura: /router?buy=1
  * ════════════════════════════════════════════════════════════════
  */
 export const ROUTER_SHARE_CONFIG: ShareConfig[] = [
@@ -359,11 +337,60 @@ export function getShareConfigBySlug(slug: string): ShareConfig | undefined {
 }
 
 /**
- * Generar URL de compartir con parámetro buy=1
+ * Generar URL de compartir con locale dinámico
+ * Transforma URLs como https://example.com/apps/slug?buy=1
+ * en URLs como https://example.com/es/apps/slug?buy=1
+ * @param shareUrl - La URL base de compartir
+ * @param locale - El idioma actual (es, en, fr, etc.)
  */
-export function getShareUrl(productId: number): string {
+export function getShareUrlWithLocale(shareUrl: string, locale: string = 'es'): string {
+  try {
+    const url = new URL(shareUrl);
+    // Insertar el locale después del dominio
+    // Por ejemplo: /apps/slug?buy=1 -> /es/apps/slug?buy=1
+    const pathParts = url.pathname.split('/').filter(Boolean);
+    // Solo agregar locale si no está ya presente
+    const supportedLocales = ['es', 'en', 'fr', 'it', 'pt'];
+    if (!supportedLocales.includes(pathParts[0])) {
+      url.pathname = `/${locale}${url.pathname}`;
+    }
+    return url.toString();
+  } catch {
+    // Si no es una URL válida, retornar como está
+    return shareUrl;
+  }
+}
+
+/**
+ * Generar URL de compartir con parámetro buy=1
+ * Si el producto está en la config, usa esa URL
+ * Si no, genera una URL basada en el producto
+ * @param locale - El idioma actual para incluir en la URL
+ */
+export function getShareUrl(productId: number, price?: number, locale: string = 'es'): string {
   const config = getShareConfigByProductId(productId);
-  return config?.shareUrl || `${BASE_URL}?buy=1`;
+  if (config?.shareUrl) {
+    return getShareUrlWithLocale(config.shareUrl, locale);
+  }
+  
+  // Fallback: generar URL basada en el productId y price
+  // Para SIMs usamos la estructura /sim/esim-encriptada?productId=X&price=Y&buy=1
+  const priceParam = price ? `&price=${price}` : '';
+  return `${BASE_URL}/${locale}/sim/esim-encriptada?productId=${productId}${priceParam}&buy=1`;
+}
+
+/**
+ * Generar URL de compartir dinámicamente para productos SIM
+ * Útil cuando el producto no está pre-configurado en shareConfig
+ * @param locale - El idioma actual (es, en, fr, etc.) para incluir en la URL
+ */
+export function generateSimShareUrl(
+  productId: number, 
+  price: number, 
+  simType: 'sim-encriptada' | 'esim-encriptada' | 'tim-sim' | 'esim-tim' = 'esim-encriptada',
+  locale: string = 'es'
+): string {
+  return `${BASE_URL}/${locale}/sim/${simType}?productId=${productId}&price=${price}&buy=1`;
 }
 
 /**

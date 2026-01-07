@@ -27,7 +27,7 @@ Cuando se comparte un producto, se generan automáticamente:
 <meta property="og:title" content="Nombre del Producto" />
 <meta property="og:description" content="Nombre del Producto - 10 USD. Compra ahora en Encriptados." />
 <meta property="og:image" content="URL de la imagen del producto" />
-<meta property="og:url" content="https://encriptados.com/our-products/123" />
+<meta property="og:url" content="https://www.encriptados.net/our-products/123" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Encriptados" />
 
@@ -51,7 +51,7 @@ Para que las previsualizaciones se vean correctamente:
 
 1. **Variable de Entorno**:
    ```bash
-   NEXT_PUBLIC_SITE_URL=https://encriptados.com
+   NEXT_PUBLIC_SITE_URL=https://www.encriptados.net
    ```
    ⚠️ Actualiza esta URL en producción
 
@@ -69,7 +69,7 @@ Para que las previsualizaciones se vean correctamente:
 ### Cómo Funciona
 
 1. **Usuario hace clic en "Compartir"**
-2. Se genera la URL: `https://encriptados.com/our-products/{productId}`
+2. Se genera la URL: `https://www.encriptados.net/our-products/{productId}`
 3. Si el navegador soporta Web Share API → abre el selector nativo
 4. Si no → copia la URL al portapapeles
 5. Cuando alguien visita la URL, Next.js genera las meta tags automáticamente

@@ -256,6 +256,7 @@ export default function ModalSIM() {
       esimAddonPrice={7.5}
       esimAddonLabel="Lleva E-SIM por 7.50 USD"
       onChangeEsimAddon={(checked) => setHideSimField(checked)}
+      sourceUrl={params.sourceUrl}
     >
       <SimForm
         onSubmit={handleSubmit}

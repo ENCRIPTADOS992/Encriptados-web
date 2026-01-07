@@ -250,15 +250,19 @@ html {
 #card-number-el,
 #card-expiry-el,
 #card-cvc-el {
-  min-height: 42px;
+  min-height: 24px;
 }
 
 #card-number-el .StripeElement,
 #card-expiry-el .StripeElement,
-#card-cvc-el .StripeElement,
+#card-cvc-el .StripeElement {
+  width: 100% !important;
+  min-height: 24px;
+}
+
 #card-number-el iframe,
 #card-expiry-el iframe,
 #card-cvc-el iframe {
   width: 100% !important;
-  height: 100% !important;
+  min-height: 24px;
 }
