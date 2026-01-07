@@ -4,6 +4,7 @@
 import React from "react";
 import Image from "next/image";
 import CopyPaste from "@/shared/svgs/CopyPast";
+import { getShareConfigByProductId } from "@/shared/constants/shareConfig";
 
 type Variant = {
   id: number;
@@ -224,13 +225,17 @@ const PurchaseHeader: React.FC<Props> = ({
               onClick={() => {
                 // Obtener el ID del producto desde params si está disponible
                 const productId = (product as any)?.id || (product as any)?.productId;
-                const shareUrl = productId 
-                  ? `${window.location.origin}/our-products/${productId}`
-                  : window.location.href;
+                
+                // Usar la configuración de compartir para obtener la URL correcta con ?buy=1
+                const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
+                const shareUrl = shareConfig?.shareUrl 
+                  || (productId 
+                    ? `${window.location.origin}/our-products/${productId}?buy=1`
+                    : `${window.location.href}${window.location.href.includes('?') ? '&' : '?'}buy=1`);
                 
                 const shareData = {
-                  title: product?.name ?? "Producto",
-                  text: `${product?.name ?? "Producto"} - ${unitPrice} ${currency}`,
+                  title: shareConfig?.title || product?.name || "Producto",
+                  text: shareConfig?.description || `${product?.name ?? "Producto"} - ${unitPrice} ${currency}. ¡Compra aquí!`,
                   url: shareUrl,
                 };
                 

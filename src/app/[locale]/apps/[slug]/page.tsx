@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useMemo } from "react";
-import { useRouter, usePathname, notFound } from "next/navigation";
+import { useRouter, usePathname, notFound, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 // Componentes template de producto
@@ -50,6 +50,7 @@ export default function ProductPage({ params }: PageProps) {
 function ProductPageContent({ slug, locale }: { slug: string; locale: string }) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
@@ -139,6 +140,32 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   }, [selectedPlan, product]);
 
   const handleRadioChange = (val: string) => setSelectedRadio(val);
+
+  // === AUTO-ABRIR POPUP si viene con ?buy=1 ===
+  useEffect(() => {
+    const buyParam = searchParams.get("buy");
+    if (buyParam === "1" && product && !isLoading) {
+      // Pequeño delay para asegurar que todo está cargado
+      const timer = setTimeout(() => {
+        const priceStr = selectedPlan?.price ?? product?.price ?? 0;
+        const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+        
+        openModal({
+          productid: String(product?.id || config?.productId),
+          languageCode: locale,
+          selectedOption: (product as any)?.category?.id || config?.categoryId || 38,
+          initialPrice: numericPrice,
+        });
+        
+        // Limpiar el parámetro de la URL sin recargar
+        const url = new URL(window.location.href);
+        url.searchParams.delete("buy");
+        window.history.replaceState({}, "", url.toString());
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams, product, isLoading, selectedPlan, config, locale, openModal]);
 
   const handleBuy = () => {
     // Extraer precio numérico
