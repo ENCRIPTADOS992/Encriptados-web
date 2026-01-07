@@ -31,7 +31,9 @@ export async function getStripe(): Promise<Stripe> {
 }
 
 export function createCardElements(stripe: Stripe): StripeElements {
-  return stripe.elements({ appearance: { theme: "stripe" } });
+  // Para elementos individuales (cardNumber, cardExpiry, cardCvc) no se usa appearance
+  // appearance es para Payment Element. Los estilos van directamente en cada elemento.
+  return stripe.elements();
 }
 
 export type SplitCardElements = {
@@ -57,12 +59,42 @@ export function mountSplitCardElements(
     elements.getElement("cardCvc")?.unmount();
   } catch {}
 
-  const number = elements.create("cardNumber");
-  const expiry = elements.create("cardExpiry");
-  const cvc = elements.create("cardCvc");
+  // Estilos base para los elementos de Stripe
+  const elementStyle = {
+    base: {
+      fontSize: "14px",
+      color: "#1a1a1a",
+      fontFamily: "system-ui, -apple-system, sans-serif",
+      "::placeholder": {
+        color: "#9ca3af",
+      },
+    },
+    invalid: {
+      color: "#dc2626",
+    },
+  };
+
+  // Crear elementos con placeholders personalizados
+  const number = elements.create("cardNumber", {
+    style: elementStyle,
+    showIcon: true,
+    placeholder: "1234 1234 1234 1234",
+  } as any);
+  
+  const expiry = elements.create("cardExpiry", {
+    style: elementStyle,
+    placeholder: "MM / AA",
+  } as any);
+  
+  const cvc = elements.create("cardCvc", {
+    style: elementStyle,
+    placeholder: "CVC",
+  } as any);
+  
   number.mount(hostNumber);
   expiry.mount(hostExpiry);
   cvc.mount(hostCvc);
+  
   return { number, expiry, cvc };
 }
 

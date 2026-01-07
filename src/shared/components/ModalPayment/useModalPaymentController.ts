@@ -36,7 +36,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   const qpProvider = (search.get("provider") || "").toLowerCase();
   const qpSelectedOption = search.get("selectedOption");
 
-  const { theme = "light", mode = "roning_code" } = (params || {}) as {
+  const { theme = "light", mode = "new_user" } = (params || {}) as {
     theme?: "light" | "dark";
     mode?: Mode;
   };

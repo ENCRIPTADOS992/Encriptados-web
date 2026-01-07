@@ -245,3 +245,20 @@ html {
     opacity: 0.85;
   }
 }
+
+/* Stripe Elements - Estilos para iframes de Stripe */
+#card-number-el,
+#card-expiry-el,
+#card-cvc-el {
+  min-height: 42px;
+}
+
+#card-number-el .StripeElement,
+#card-expiry-el .StripeElement,
+#card-cvc-el .StripeElement,
+#card-number-el iframe,
+#card-expiry-el iframe,
+#card-cvc-el iframe {
+  width: 100% !important;
+  height: 100% !important;
+}

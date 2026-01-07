@@ -6,11 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import NewUserForm from "./NewUserForm";
-import AppLicenseForm from "./AppLicenseForm";
-import SimpleEmailForm from "./SimpleEmailForm";
+import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
-import { usePurchaseKind } from "../PurchaseKindContext";
+import { useFormPolicy } from "./useFormPolicy";
 
 type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
@@ -25,27 +23,16 @@ type ModalProduct = {
   category?: { id: number; name: string };
 };
 
+type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
+
 export default function ModalNewUser() {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
   const { payUserId, loading } = useCheckout();
-  const kind = usePurchaseKind();
+  const { formType, policy } = useFormPolicy();
 
-  // Products that use SimpleEmailForm (only email, no usernames, no license type, no Telegram)
-  const SIMPLE_EMAIL_PRODUCTS = [
-    "vnclagoon",
-    "armadillo",
-    "vaultchat",
-    "nordvpn",
-    "salt",
-    "threema work",
-    "threema",
-  ];
-
-  // Silent Phone uses NewUserForm (with username field)
-  const USERNAME_PRODUCTS = [
-    "silent phone",
-  ];
+  // Estado para Silent Phone: modo de tabs
+  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("new_user");
 
   const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -53,12 +40,6 @@ export default function ModalNewUser() {
     enabled: !!productid,
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
-
-  // Determine if this is an App/Software product that needs the full AppLicenseForm
-  const productNameLower = (product?.name || "").toLowerCase();
-  const isSimpleEmailProduct = SIMPLE_EMAIL_PRODUCTS.some(name => productNameLower.includes(name));
-  const isUsernameProduct = USERNAME_PRODUCTS.some(name => productNameLower.includes(name));
-  const isAppOrSoftware = (kind === "APLICACIONES" || kind === "SOFTWARE") && !isSimpleEmailProduct && !isUsernameProduct;
 
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
   const [quantity, setQuantity] = React.useState(1);
@@ -113,7 +94,7 @@ export default function ModalNewUser() {
    return (
     <PurchaseScaffold
       mode="new_user"
-      enableTabSwitch={true}
+      enableTabSwitch={false}
       onSelectMode={(m) => openModal({ ...params, mode: m })}
       showRechargeCTA={false}
       product={product}
@@ -129,71 +110,28 @@ export default function ModalNewUser() {
       onApplyCoupon={onApplyCoupon}
       unitPrice={unitPrice}
     >
-      {isAppOrSoftware ? (
-        <AppLicenseForm
-          quantity={quantity}
-          email=""
-          productId={productIdNum}
-          amountUsd={amount}
-          orderType="userid"
-          onPayCrypto={async (email, telegramId) => {
-            await payUserId({
-              productId: productIdNum,
-              email,
-              username: telegramId,
-              provider: "kriptomus",
-              amount,
-              currency: "USD",
-            });
-          }}
-          onPaid={() => {
-            closeModal();
-          }}
-          loading={loading}
-        />
-      ) : isSimpleEmailProduct ? (
-        <SimpleEmailForm
-          email=""
-          productId={productIdNum}
-          amountUsd={amount}
-          onPayCrypto={async (email) => {
-            await payUserId({
-              productId: productIdNum,
-              email,
-              username: undefined,
-              provider: "kriptomus",
-              amount,
-              currency: "USD",
-            });
-          }}
-          onPaid={() => {
-            closeModal();
-          }}
-          loading={loading}
-        />
-      ) : (
-        <NewUserForm
-          quantity={quantity}
-          email=""
-          productId={productIdNum}
-          amountUsd={amount}
-          orderType="userid"
-          onPayCrypto={async (email) => {
-            await payUserId({
-              productId: productIdNum,
-              email,
-              username: undefined,
-              provider: "kriptomus",
-              amount,
-              currency: "USD",
-            });
-          }}
-          onPaid={() => {
-            closeModal();
-          }}
-          loading={loading}
-        />
-      )}
+      <UnifiedPurchaseForm
+        quantity={quantity}
+        email=""
+        productId={productIdNum}
+        amountUsd={amount}
+        silentPhoneMode={silentPhoneMode}
+        onSilentPhoneModeChange={setSilentPhoneMode}
+        onPayCrypto={async (formData: FormData) => {
+          await payUserId({
+            productId: productIdNum,
+            email: formData.email,
+            username: formData.telegramId || formData.usernames?.[0],
+            provider: "kriptomus",
+            amount,
+            currency: "USD",
+          });
+        }}
+        onPaid={() => {
+          closeModal();
+        }}
+        loading={loading}
+      />
     </PurchaseScaffold>
   );
 }

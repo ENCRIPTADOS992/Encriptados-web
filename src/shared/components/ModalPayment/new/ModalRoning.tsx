@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import RoningForm from "./RoningForm";
+import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
 
@@ -74,50 +74,22 @@ export default function ModalRoning() {
 
   const amountUsd = Math.max(Number(unitPrice) * quantity - discount, 0);
 
-  const payWithCrypto = async (email: string) => {
+  const payWithCrypto = async (formData: FormData) => {
     const provider: PayProvider = "kriptomus";
     await payRoaming({
       productId: Number(productid),
       qty: quantity,
-      email,
+      email: formData.email,
       provider,
       amount: amountUsd,
       currency: "USD",
     });
   };
 
-  const handleSubmit = async (data: {
-    email: string;
-    method: "card" | "crypto";
-  }) => {
-    try {
-      const productIdNum = Number(productid);
-      const amount = Math.max(Number(unitPrice) * quantity - discount, 0);
-      const currency = "USD";
-      const provider: PayProvider =
-        data.method === "card" ? "stripe" : "kriptomus";
-
-      await payRoaming({
-        productId: productIdNum,
-        qty: quantity,
-        email: data.email,
-        provider,
-        amount,
-        currency,
-      });
-    } catch (e: any) {
-      if (e?.code === "out_of_stock") {
-        alert("Stock insuficiente");
-      } else {
-        alert(e?.message || "Error procesando el pago");
-      }
-    }
-  };
-
   return (
     <PurchaseScaffold
       mode="roning_code"
-      enableTabSwitch={true}
+      enableTabSwitch={false}
       onSelectMode={(m) => openModal({ ...params, mode: m })}
       showRechargeCTA={false}
       product={product}
@@ -133,15 +105,15 @@ export default function ModalRoning() {
       onApplyCoupon={onApplyCoupon}
       unitPrice={unitPrice}
     >
-      <RoningForm
+      <UnifiedPurchaseForm
         quantity={quantity}
         email=""
-        loading={loading}
         productId={Number(productid)}
-        orderType="roaming"             
         amountUsd={amountUsd}
+        orderType="roaming"
         onPayCrypto={payWithCrypto}
         onPaid={() => closeModal?.()}
+        loading={loading}
       />
     </PurchaseScaffold>
   );

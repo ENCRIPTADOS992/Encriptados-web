@@ -50,7 +50,8 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
     link: "/apps/silent-circle",
     categoryId: 38,
     uiPolicy: {
-      showTabs: true,                 
+      showTabs: true,
+      allowedModes: ["new_user", "roning_code", "recharge"],
     },
   },
   { name: "VaultChat", link: "/apps/vault-chat", categoryId: 38 },
