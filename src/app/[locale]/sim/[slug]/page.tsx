@@ -129,7 +129,17 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     const validation = validateProductMatchesSlug(product, slug, locale);
     setValidationChecked(true);
 
-    if (!validation.isValid && validation.redirectUrl) {
+    // Protección contra redirecciones a URLs inválidas
+    if (!validation.isValid && validation.redirectUrl && validation.expectedSlug) {
+      // Verificar que el expectedSlug sea un slug válido conocido
+      if (!isValidSimProductSlug(validation.expectedSlug)) {
+        console.error(
+          `[SIM Page] ⚠️ Slug inválido detectado, no redirigiendo:`,
+          { expectedSlug: validation.expectedSlug, product: product.id, provider: product.provider }
+        );
+        return;
+      }
+
       console.warn(
         `[SIM Page] Producto no corresponde a URL. ` +
         `Producto ID ${product.id} (provider: "${product.provider}", type: "${product.type_product}") ` +
@@ -211,18 +221,29 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     if (buyParam === "1" && product && !isLoading && !buyPopupTriggered.current) {
       buyPopupTriggered.current = true;
       
-      // Abrir el modal de pago
-      openModal({
-        productid: String(product.id),
-        languageCode: locale,
-        selectedOption: 40,
-        initialPrice: effectivePrice,
-      });
+      // Pequeño delay para asegurar que todo está cargado (igual que en Apps)
+      const timer = setTimeout(() => {
+        console.log("[SIM Page] 🔗 Auto-abriendo popup desde buy=1", {
+          productId: product.id,
+          price: effectivePrice,
+          locale,
+        });
+        
+        // Abrir el modal de pago
+        openModal({
+          productid: String(product.id),
+          languageCode: locale,
+          selectedOption: 40,
+          initialPrice: effectivePrice,
+        });
+        
+        // Limpiar el parámetro buy de la URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete("buy");
+        window.history.replaceState({}, "", url.toString());
+      }, 500);
       
-      // Limpiar el parámetro buy de la URL
-      const url = new URL(window.location.href);
-      url.searchParams.delete("buy");
-      window.history.replaceState({}, "", url.toString());
+      return () => clearTimeout(timer);
     }
   }, [searchParams, product, isLoading, locale, effectivePrice, openModal]);
 

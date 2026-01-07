@@ -9,6 +9,7 @@ import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 interface ProductSectionTranslations {
   priceFrom: string;
@@ -108,6 +109,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   translations,
 }) => {
   const { openModal } = useModalPayment();
+  const { isFromAppMobile } = useAppMobile();
 
   // Default translations (fallback)
   const t = {
@@ -313,37 +315,39 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               </motion.p>
             </motion.div>
 
-            {/* Botones */}
-            <motion.div 
-              className="flex flex-row gap-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.4 }}
-            >
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex-1 sm:flex-none"
+            {/* Botones - Ocultos cuando viene de app_mobile */}
+            {!isFromAppMobile && (
+              <motion.div 
+                className="flex flex-row gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
               >
-                <Button
-                  intent="dark"
-                  size="md"
-                  onClick={handleBuy}
-                  icon={<ShoppingCart color="white" height={20} width={20} />}
-                  iconPosition="right"
-                  className="w-full"
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex-1 sm:flex-none"
                 >
-                  {t.buyNow}
-                </Button>
+                  <Button
+                    intent="dark"
+                    size="md"
+                    onClick={handleBuy}
+                    icon={<ShoppingCart color="white" height={20} width={20} />}
+                    iconPosition="right"
+                    className="w-full"
+                  >
+                    {t.buyNow}
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex-1 sm:flex-none"
+                >
+                  <TelegramButton className="w-full" />
+                </motion.div>
               </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex-1 sm:flex-none"
-              >
-                <TelegramButton className="w-full" />
-              </motion.div>
-            </motion.div>
+            )}
           </motion.div>
         </motion.div>
       </div>

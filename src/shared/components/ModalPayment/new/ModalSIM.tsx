@@ -6,27 +6,22 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import { useCheckout } from "@/shared/hooks/useCheckout";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 
-import SimForm from "./SimForm";
+import SimFormUnified from "./sims/SimFormUnified";
 import type { FormType } from "./sims/types/simFormTypes";
 import { resolveSimFormType } from "./sims/utils/resolveSimFormType";
 import {
   type ModalProduct,
   type Variant,
-  type Shipping,
-  type StripeConfirmFn,
   type SuccessPaymentData,
 } from "./sims/types/modalSimTypes";
 import { buildMinutesPlans } from "./sims/utils/buildMinutesPlans";
 import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
-import { createSimSubmitHandler } from "./sims/services/createSimSubmitHandler";
 
 export default function ModalSIM() {
   const { params } = useModalPayment();
   const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
-  const { payUserId } = useCheckout();
   const [hideSimField, setHideSimField] = React.useState(false);
 
   // Estados para el modal de éxito de pago
@@ -52,40 +47,6 @@ export default function ModalSIM() {
       setHideSimField(true);
     }
   }, [isEsimDataCombo]);
-
-  const isPhysical = formType === "encrypted_physical";
-
-  type StripeConfirmFn = (
-    clientSecret: string,
-    billing?: { name?: string; email?: string; postal_code?: string }
-  ) => Promise<any>;
-
-  const [stripeConfirm, setStripeConfirm] =
-    React.useState<StripeConfirmFn | null>(null);
-
-  const handleStripeConfirmReady = React.useCallback(
-    (fn: StripeConfirmFn | null) => {
-      console.log("[ModalSIM] handleStripeConfirmReady called", {
-        incomingType: typeof fn,
-        incomingFn: fn,
-      });
-
-      if (!fn) {
-        setStripeConfirm(null);
-        return;
-      }
-
-      setStripeConfirm(() => fn);
-    },
-    []
-  );
-
-  React.useEffect(() => {
-    console.log("[ModalSIM] stripeConfirm updated", {
-      type: typeof stripeConfirm,
-      stripeConfirm,
-    });
-  }, [stripeConfirm]);
 
   const [selectedPlanId, setSelectedPlanId] = React.useState<
     string | number | null
@@ -181,46 +142,6 @@ export default function ModalSIM() {
     setShowSuccess(true);
   }, []);
 
-  const handleSubmit = React.useMemo(
-    () =>
-      createSimSubmitHandler({
-        formType,
-        isPhysical,
-        unitPrice,
-        quantity,
-        discount,
-        productid,
-        product,
-        selectedPlanId,
-        stripeConfirm,
-        payUserId,
-        onSuccess: handlePaymentSuccess,
-      }),
-    [
-      formType,
-      isPhysical,
-      unitPrice,
-      quantity,
-      discount,
-      productid,
-      product,
-      selectedPlanId,
-      stripeConfirm,
-      payUserId,
-      handlePaymentSuccess,
-    ]
-  );
-
-  const finalUnitPrice = React.useMemo(() => {
-    const base = unitPrice;
-    if (formType === "encrypted_esimData") {
-      return base + 7.5;
-    }
-    return base;
-  }, [unitPrice, formType]);
-
-  const baseAmount = Number(finalUnitPrice) * quantity - discount;
-
   return (
     <PurchaseScaffold
       mode="sim"
@@ -258,11 +179,15 @@ export default function ModalSIM() {
       onChangeEsimAddon={(checked) => setHideSimField(checked)}
       sourceUrl={params.sourceUrl}
     >
-      <SimForm
-        onSubmit={handleSubmit}
+      <SimFormUnified
         formType={formType}
+        productid={productid}
+        product={product}
+        unitPrice={unitPrice}
+        quantity={quantity}
+        discount={discount}
         hideSimField={hideSimField || isEsimDataCombo}
-        onStripeConfirmReady={handleStripeConfirmReady}
+        onSuccess={handlePaymentSuccess}
       />
 
       <PaymentSuccessModal

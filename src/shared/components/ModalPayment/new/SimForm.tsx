@@ -150,6 +150,7 @@ export default function SimForm({
         method={method}
         register={register}
         mountError={mountError ?? null}
+        stripeStatus={stripeStatus}
       />
 
       <button

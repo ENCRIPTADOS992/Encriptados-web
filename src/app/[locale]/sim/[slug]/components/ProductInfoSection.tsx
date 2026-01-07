@@ -10,6 +10,7 @@ import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import SimIconSvg from "@/shared/svgs/SimIconSvg";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 interface ProductInfoSectionProps {
   productName: string;
@@ -78,6 +79,8 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
   apkUrl,
   translations,
 }) => {
+  const { isFromAppMobile } = useAppMobile();
+  
   const t = {
     priceFrom: translations?.priceFrom || "Desde",
     buyNow: translations?.buyNow || "Comprar Ahora",
@@ -217,32 +220,34 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
               <p className="text-sm text-gray-500 mb-1">{t.priceFrom}</p>
               <p className="text-4xl font-bold text-gray-900 mb-6">{price}</p>
 
-              {/* Botones */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full sm:w-auto"
-                >
-                  <Button
-                    intent="dark"
-                    size="md"
-                    onClick={onBuy}
-                    icon={<ShoppingCart color="white" height={20} width={20} />}
-                    iconPosition="right"
-                    className="w-full"
+              {/* Botones - Ocultos cuando viene de app_mobile */}
+              {!isFromAppMobile && (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full sm:w-auto"
                   >
-                    {t.buyNow}
-                  </Button>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full sm:w-auto"
-                >
-                  <TelegramButton className="w-full" />
-                </motion.div>
-              </div>
+                    <Button
+                      intent="dark"
+                      size="md"
+                      onClick={onBuy}
+                      icon={<ShoppingCart color="white" height={20} width={20} />}
+                      iconPosition="right"
+                      className="w-full"
+                    >
+                      {t.buyNow}
+                    </Button>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full sm:w-auto"
+                  >
+                    <TelegramButton className="w-full" />
+                  </motion.div>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         </motion.div>

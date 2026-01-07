@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 interface StickyPriceBannerProps {
   visible: boolean;
@@ -19,14 +20,17 @@ interface StickyPriceBannerProps {
  * StickyPriceBanner - Componente unificado y responsive
  * Mobile: barra fija en el bottom, layout compacto
  * Tablet/Desktop: banner flotante centrado con más detalles
+ * Se oculta completamente cuando from=app_mobile
  */
 const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
   visible,
   productInfo,
 }) => {
   const [dismissed, setDismissed] = useState(false);
+  const { isFromAppMobile } = useAppMobile();
 
-  if (!visible || dismissed) return null;
+  // Ocultar completamente cuando viene de app móvil
+  if (!visible || dismissed || isFromAppMobile) return null;
 
   return (
     <>
