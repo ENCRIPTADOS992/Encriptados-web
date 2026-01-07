@@ -4,6 +4,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
@@ -60,6 +61,7 @@ export default function UnifiedPurchaseForm({
   silentPhoneMode = "new_user",
   onSilentPhoneModeChange,
 }: Props) {
+  const t = useTranslations("paymentModal");
   const { policy, formType, isLoading: policyLoading } = useFormPolicy();
 
   // Estado del formulario
@@ -143,12 +145,12 @@ export default function UnifiedPurchaseForm({
 
   const buttonLabel =
     method === "crypto"
-      ? "Pagar ahora"
+      ? t("payNow")
       : phase === "card_init"
-      ? "Continuar"
+      ? t("continue")
       : polling
-      ? "Procesando…"
-      : "Confirmar pago";
+      ? t("processing")
+      : t("confirmPayment");
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -308,7 +310,7 @@ export default function UnifiedPurchaseForm({
         {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && (
           <div className="space-y-1.5">
             <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              ¿Cómo quieres recibir tu licencia?
+              {t("licenseQuestion")}
             </p>
             <div className="flex gap-2">
               <button
@@ -317,7 +319,7 @@ export default function UnifiedPurchaseForm({
                 onClick={() => setLicenseType("new")}
                 className={[baseBtnClass, licenseType === "new" ? activeClass : inactiveClass].join(" ")}
               >
-                Nueva licencia
+                {t("newLicense")}
               </button>
               <button
                 type="button"
@@ -325,17 +327,17 @@ export default function UnifiedPurchaseForm({
                 onClick={() => setLicenseType("renew")}
                 className={[baseBtnClass, licenseType === "renew" ? activeClass : inactiveClass].join(" ")}
               >
-                Renovar licencia
+                {t("renewLicense")}
               </button>
             </div>
           </div>
         )}
 
-        {/* === THREE-WAY TABS (Silent Phone: Quiero mi usuario, Código RONING, Recargar) === */}
+        {/* === THREE-WAY TABS (Silent Phone) === */}
         {policy.showLicenseTabs && policy.licenseTabType === "three_way" && (
           <div className="space-y-1.5">
             <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              ¿Cómo quieres recibir tu licencia?
+              {t("licenseQuestion")}
             </p>
             <div className="w-full h-11 grid grid-cols-3 gap-2">
               <button
@@ -344,7 +346,7 @@ export default function UnifiedPurchaseForm({
                 onClick={() => onSilentPhoneModeChange?.("new_user")}
                 className={[baseBtnClass, silentPhoneMode === "new_user" ? activeClass : inactiveClass].join(" ")}
               >
-                Quiero mi usuario
+                {t("wantMyUser")}
               </button>
               <button
                 type="button"
@@ -352,7 +354,7 @@ export default function UnifiedPurchaseForm({
                 onClick={() => onSilentPhoneModeChange?.("roning_code")}
                 className={[baseBtnClass, silentPhoneMode === "roning_code" ? activeClass : inactiveClass].join(" ")}
               >
-                Código RONING
+                {t("roningCode")}
               </button>
               <button
                 type="button"
@@ -360,7 +362,7 @@ export default function UnifiedPurchaseForm({
                 onClick={() => onSilentPhoneModeChange?.("recharge")}
                 className={[baseBtnClass, silentPhoneMode === "recharge" ? activeClass : inactiveClass].join(" ")}
               >
-                Recargar
+                {t("recharge")}
               </button>
             </div>
           </div>
@@ -372,17 +374,17 @@ export default function UnifiedPurchaseForm({
             <div className="text-center py-4">
               <Image
                 src="/images/home/currency_exchange.png"
-                alt="Recargar"
+                alt={t("recharge")}
                 width={28}
                 height={28}
                 className="mx-auto"
                 priority
               />
               <p className="mt-3 text-[24px] leading-[22px] font-semibold text-black">
-                Si quieres recargar
+                {t("rechargeTitle")}
               </p>
               <p className="text-[24px] leading-[28px] font-semibold text-black">
-                comunícate con nosotros
+                {t("rechargeSubtitle")}
               </p>
             </div>
 
@@ -398,7 +400,7 @@ export default function UnifiedPurchaseForm({
                   [&>svg]:mr-[10px]
                 "
               >
-                Ir a Telegram
+                {t("goToTelegram")}
               </TelegramButton>
             </div>
           </div>
@@ -408,11 +410,11 @@ export default function UnifiedPurchaseForm({
         {policy.showUsernameFields && silentPhoneMode === "new_user" && (
           <div className="space-y-2">
             <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              Ingresa los nombres sugeridos
+              {t("suggestedUsernames")}
             </p>
             <div className="rounded-[12px] bg-[#E3F0FB] p-3">
               <p className="text-[11px] leading-[14px] text-[#010C0F]/80">
-                Puedes sugerir nombres de usuarios con un mínimo de 4 caracteres y máximo 20 alfanuméricos.
+                {t("usernameHint")}
               </p>
             </div>
             <div className="space-y-2">
@@ -421,7 +423,7 @@ export default function UnifiedPurchaseForm({
                   <input
                     value={u}
                     onChange={(e) => setUsernameAt(idx, e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20))}
-                    placeholder="Ingresa nombre de usuario"
+                    placeholder={t("usernamePlaceholder")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
@@ -484,18 +486,18 @@ export default function UnifiedPurchaseForm({
             className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
           />
           <span className="select-none">
-            Acepto{" "}
+            {t("acceptTerms")}{" "}
             <Link href={TERMS_URL} target="_blank" className="underline font-medium">
-              términos y condiciones
+              {t("termsAndConditions")}
             </Link>{" "}
-            de la compra
+            {t("ofPurchase")}
           </span>
         </label>
 
         {/* === PAYMENT METHODS === */}
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-            Método de pago
+            {t("paymentMethod")}
           </p>
           <div className="flex gap-3">
             {policy.paymentMethods.includes("card") && (
@@ -507,7 +509,7 @@ export default function UnifiedPurchaseForm({
                 }`}
               >
                 <Image src="/icons/tarjeta-credito-icono.svg" alt="" width={28} height={28} />
-                <span className="text-[14px] font-medium">Tarjeta de crédito</span>
+                <span className="text-[14px] font-medium">{t("creditCard")}</span>
               </button>
             )}
             {policy.paymentMethods.includes("crypto") && (
@@ -519,7 +521,7 @@ export default function UnifiedPurchaseForm({
                 }`}
               >
                 <Image src="/icons/cripto-icono.svg" alt="" width={28} height={28} />
-                <span className="text-[14px] font-medium">Criptomonedas</span>
+                <span className="text-[14px] font-medium">{t("cryptocurrency")}</span>
               </button>
             )}
           </div>
@@ -528,19 +530,19 @@ export default function UnifiedPurchaseForm({
         {/* === CARD FIELDS (when card is selected) === */}
         {method === "card" && (
           <div className="space-y-3 mt-2">
-            {/* Cardholder name - Titular de la tarjeta */}
+            {/* Cardholder name */}
             <div className="space-y-1.5">
               <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
                 <input
                   value={cardName}
                   onChange={(e) => setCardName(onlyLetters(e.target.value))}
-                  placeholder="Titular de la tarjeta"
+                  placeholder={t("cardholderName")}
                   className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
                 />
               </div>
             </div>
 
-            {/* Card number - Número de tarjeta */}
+            {/* Card number */}
             <div className="space-y-1.5">
               <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
             </div>
@@ -555,20 +557,20 @@ export default function UnifiedPurchaseForm({
               </div>
             </div>
 
-            {/* Postal code - Código postal */}
+            {/* Postal code */}
             <div className="space-y-1.5">
               <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
                 <input
                   value={postal}
                   onChange={(e) => setPostal(e.target.value)}
-                  placeholder="Código postal"
+                  placeholder={t("postalCode")}
                   className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
                 />
               </div>
             </div>
 
             {stripeStatus === "idle" && (
-              <p className="text-[12px] text-gray-500">Cargando formulario de pago...</p>
+              <p className="text-[12px] text-gray-500">{t("loadingPaymentForm")}</p>
             )}
             {mountError && (
               <p className="text-[12px] text-red-500">{mountError}</p>

@@ -3,7 +3,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, generateSimShareUrl, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 
@@ -74,6 +74,7 @@ const PurchaseHeader: React.FC<Props> = ({
   sourceUrl,
 }) => {
   const locale = useLocale();
+  const t = useTranslations("paymentModal");
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
 
@@ -208,7 +209,7 @@ const PurchaseHeader: React.FC<Props> = ({
     <div className="w-full">
       {/* Título */}
       <div className="text-center text-sm font-medium text-gray-600 pb-2">
-        Detalles de compra
+        {t("purchaseDetails")}
       </div>
 
       {/* Layout Grid Responsivo */}
@@ -277,14 +278,14 @@ const PurchaseHeader: React.FC<Props> = ({
                   navigator.share(shareData).catch(() => {});
                 } else {
                   navigator.clipboard.writeText(shareUrl).then(() => {
-                    alert('Enlace copiado al portapapeles');
+                    alert(t("linkCopied"));
                   }).catch(() => {});
                 }
               }}
               className="absolute bottom-2 left-3 z-10 flex items-center gap-2 bg-[#0AAEE1] hover:bg-[#0AAEE1]/90 text-white pl-4 pr-3 py-2 rounded-full text-sm font-medium transition-colors shadow-lg whitespace-nowrap"
-              aria-label="Compartir producto"
+              aria-label={t("share")}
             >
-              Compartir
+              {t("share")}
               <CopyPaste width={18} height={18} color="white" />
             </button>
           </div>
@@ -369,7 +370,7 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Cantidad */}
           <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">Cantidad</span>
+            <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
             <div className="justify-self-end flex items-center bg-[#EBEBEB] rounded-md h-9 px-4 gap-2 select-none">
               <button
                 onClick={dec}
@@ -396,7 +397,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Licencia (ocultable) */}
           {shouldShowLicense && (
             <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Licencia</span>
+              <span className="text-base text-[#3D3D3D]">{t("license")}</span>
 
               {showSelect ? (
                 <div ref={licenseRef} className="relative justify-self-end z-[1000]">
@@ -408,7 +409,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     className="relative w-32 h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
                   >
                     <span className="truncate">
-                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} Meses
+                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
                     </span>
                     <span className="ml-1 text-[#3D3D3D]">▾</span>
                   </button>
@@ -469,7 +470,7 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Total a pagar */}
           <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">Total a pagar</span>
+            <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
             <span className="justify-self-end text-base font-bold text-[#141414]">
               {total} {currency}
             </span>
@@ -514,7 +515,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 type="button"
                 className="shrink-0 h-full px-5 rounded-md bg-black text-white text-xs font-bold hover:bg-black/90"
               >
-                Aplicar
+                {t("apply")}
               </button>
               <button
                 type="button"
@@ -531,7 +532,7 @@ const PurchaseHeader: React.FC<Props> = ({
               onClick={() => setShowCoupon(true)}
               className="self-end text-xs underline text-[#3D3D3D] hover:text-black"
             >
-              Ingresa código de promoción
+              {t("enterPromoCode")}
             </button>
           )}
         </div>

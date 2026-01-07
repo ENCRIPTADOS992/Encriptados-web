@@ -4,6 +4,8 @@ import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
 import { InitAuthClient } from "@/shared/InitAuthClient";
 import { StripeProvider } from "@/shared/components/StripeProvider";
+import { ModalPaymentProvider } from "@/providers/ModalPaymentProvider";
+import ModalPaymentController from "@/shared/components/ModalPayment/ModalPaymentController";
 
 export default async function LocaleLayout({
   children,
@@ -16,11 +18,14 @@ export default async function LocaleLayout({
     <>
       <InitAuthClient />
       <NextIntlClientProvider messages={messages}>
-       <StripeProvider>
-          <CurrentHeader />
-          {children}
-          <FooterEncrypted />
-        </StripeProvider>
+        <ModalPaymentProvider>
+          <StripeProvider>
+            <CurrentHeader />
+            {children}
+            <FooterEncrypted />
+          </StripeProvider>
+          <ModalPaymentController />
+        </ModalPaymentProvider>
       </NextIntlClientProvider>
     </>
   );
