@@ -191,13 +191,17 @@ export function buildProductInfo(
   translations?: BuildProductInfoTranslations
 ): ProductInfoForBanner {
   const t = translations || defaultBuildTranslations;
+  
+  // Priorizar datos del backend sobre la configuración estática
+  const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "/images/apps/default-logo.png";
+  
   return {
     title: product?.name || "Producto",
     price: selectedPlan ? formatPrice(selectedPlan.price, "USD", t.priceConsult) : formatPrice(product?.price || 0, "USD", t.priceConsult),
     subtitle: product?.description?.substring(0, 100) + "..." || t.defaultSubtitle,
-    iconUrl: config?.iconUrl || "/images/apps/default-logo.png",
+    iconUrl,
     ctaLabel: t.buyNow,
-    categoryId: product?.category?.id || 38,
+    categoryId: product?.category?.id || config?.categoryId || 38,
     productId: product?.id || config?.productId || 0,
     onBuy,
     onChat,

@@ -9,17 +9,13 @@ import HowItWorksDeliveriesTablet from "./HowItWorksDeliveriesTablet";
 import HowItWorksDeliveriesMobile from "./HowItWorksDeliveriesMobile";
 import FeaturedProductsDeliveries from "./FeaturedProductsDeliveries";
 import ModalJoinUsDeliveries from "./ModalJoinUsDeliveries";
-import FAQSection from "./FAQSection";
-import FAQSectionMobile from "./FAQSectionMobile";
-import FAQSectionTablet from "./FAQSectionTablet";
+import FAQSection from "@/app/[locale]/apps/component/templateProduct/FAQSection";
 import { JoinUsModalProvider } from "../context/JoinUsModalContext";
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import LogoCarousel from "./LogoCarousel";
 import RenatiEncryptedCellphone from "./RenatiEncryptedCellphone";
 import RenatiEncryptedCellphoneIpad from "./RenatiEncryptedCellphoneIpad";
 import RenatiEncryptedCellphoneMobil from "./RenatiEncryptedCellphoneMobil";
-import ProductCarouselTablet from "./ProductCarouselTablet";
-import ProductCarouselMobile from "./ProductCarouselMobile";
 import TelegramButton from "@/shared/components/TelegramButton";
 
 import DownloadAppBanner from "./DownloadAppBanner";
@@ -55,7 +51,7 @@ const DeliveriesPage = () => {
           <div id="deliveries-map">
             <DeliveriesMap />
           </div>
-          <section className="w-full flex justify-center py-10">
+          <section className="w-full flex justify-center pt-10 pb-10 bg-[#eaf2f6]">
             <TelegramButton />
           </section>
           <HowItWorksDeliveries />
@@ -65,12 +61,8 @@ const DeliveriesPage = () => {
           <RenatiEncryptedCellphoneIpad/>
           <RenatiEncryptedCellphoneMobil />
           <FeaturedProductsDeliveries />
-          <ProductCarouselTablet/>
-          <ProductCarouselMobile/>
           <LogoCarousel />
           <FAQSection faqs={Faqs} />
-          <FAQSectionMobile faqs={Faqs} />
-          <FAQSectionTablet faqs={Faqs} />
           {/* <DownloadAppBanner/> */}
         </JoinUsModalProvider>
       </BasicFormProvider>

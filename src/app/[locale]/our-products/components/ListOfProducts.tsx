@@ -556,11 +556,51 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               simName.includes("sim");
             const showTimBadges = isCategory40 && isTim && isSim;
 
-            const variant = product.variants?.[0];
-            const variantId = isTim ? product.variants?.[0]?.id : undefined;
+            // Para TIM, buscar la variante que corresponde a la región/país seleccionado
+            const selectedRegionOrCountry = (filters.simCountry || filters.regionOrCountry || "").toUpperCase();
+            const isCountryType = filters.regionOrCountryType === "country";
+            
+            // Función para obtener la variante correcta según la región/país seleccionado
+            const getVariantForRegion = () => {
+              const variants = product.variants ?? [];
+              if (variants.length === 0) return undefined;
+              
+              // Si hay un país seleccionado, buscar la variante que coincida con ese país
+              if (isCountryType && selectedRegionOrCountry && selectedRegionOrCountry !== "GLOBAL" && selectedRegionOrCountry !== "ALL") {
+                const matchingVariant = variants.find(
+                  v => v.scope?.code?.toUpperCase() === selectedRegionOrCountry && 
+                       (v.scope?.type === "country" || !v.scope?.type)
+                );
+                if (matchingVariant) return matchingVariant;
+              }
+              
+              // Si hay una región seleccionada (no es país), buscar variantes de esa región
+              if (!isCountryType && selectedRegionOrCountry && selectedRegionOrCountry !== "GLOBAL" && selectedRegionOrCountry !== "ALL") {
+                const matchingVariant = variants.find(
+                  v => v.scope?.code?.toUpperCase() === selectedRegionOrCountry && 
+                       v.scope?.type === "region"
+                );
+                if (matchingVariant) return matchingVariant;
+                
+                // Si no hay variante de región específica, buscar el precio mínimo de variantes 
+                // que pertenezcan a esa región (esto requiere un mapeo de países a regiones)
+              }
+              
+              // Si es GLOBAL o no se encontró variante específica, retornar la primera (o buscar GLOBAL)
+              const globalVariant = variants.find(
+                v => v.scope?.code?.toUpperCase() === "GLOBAL" || 
+                     v.scope?.code?.toUpperCase() === "WW" ||
+                     v.scope?.type === "global"
+              );
+              return globalVariant ?? variants[0];
+            };
+            
+            const variant = isTimProvider ? getVariantForRegion() : product.variants?.[0];
+            const variantId = isTim ? variant?.id : undefined;
 
-            const effectivePlanDataAmount = isTimProvider
-              ? product.plan_data_amount ?? variant?.cost ?? undefined
+            // Para TIM, usar el cost de la variante correspondiente a la región
+            const effectivePlanDataAmount = isTimProvider && variant
+              ? variant.cost
               : undefined;
 
             console.log("💰 [ListOfProducts] price debug =>", {
@@ -569,8 +609,16 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               name: product.name,
               provider: product.provider,
               price: product.price,
-              plan_data_amount: product.plan_data_amount,
-              variantCost: variant?.cost,
+              selectedRegionOrCountry,
+              isCountryType,
+              variantSelected: variant ? {
+                id: variant.id,
+                scopeCode: variant.scope?.code,
+                scopeType: variant.scope?.type,
+                cost: variant.cost,
+                gb: variant.gb
+              } : null,
+              totalVariants: (product.variants ?? []).length,
               effectivePlanDataAmount,
             });
 
@@ -599,6 +647,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 provider={product.provider}
                 typeProduct={product.type_product}
                 planDataAmount={effectivePlanDataAmount}
+                variantId={variantId}
               />
             );
           })}

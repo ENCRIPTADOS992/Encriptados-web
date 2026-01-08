@@ -119,15 +119,15 @@ const FeaturesList = () => {
   ];
 
   return (
-    <div className="w-full bg-[#F4F8FA] py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="w-full bg-[#F4F8FA] py-12 md:py-16 px-4">
+      <div className="w-full lg:max-w-6xl mx-auto">
         {/* Título */}
         <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] text-center mb-12 md:mb-16">
           {t("improveYourSecurity.titleImproveYourSecurity")}
         </h2>
         
         {/* Grid de tarjetas */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
           {features.map((feature, index) => (
             <FeatureCard
               key={index}

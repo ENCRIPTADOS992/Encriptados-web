@@ -188,12 +188,14 @@ export default function RouterPage() {
     window.open("https://t.me/Encriptados", "_blank");
   };
 
-  // Producto Info para StickyBanner
+  // Producto Info para StickyBanner - Priorizar datos del backend
+  const productIconUrl = (product as any)?.iconUrl || ROUTER_CONFIG.iconUrl;
+  
   const productInfo = useMemo(() => ({
     title: (product as any)?.name || "Camaleón Router",
     price: formatPrice(currentPrice),
     subtitle: (product as any)?.description?.substring(0, 50) + "..." || "Privacidad total",
-    iconUrl: ROUTER_CONFIG.iconUrl,
+    iconUrl: productIconUrl,
     ctaLabel: "Comprar ahora",
     categoryId: ROUTER_CONFIG.categoryId,
     productId: ROUTER_CONFIG.productId,
@@ -223,12 +225,12 @@ export default function RouterPage() {
 
   return (
     <main className="bg-white min-h-screen">
-      {/* Hero Banner */}
+      {/* Hero Banner - Priorizar datos del backend */}
       <HeroBanner
         imageUrl={{
-          desktop: ROUTER_CONFIG.heroBanners.desktop,
-          tablet: ROUTER_CONFIG.heroBanners.tablet,
-          mobile: ROUTER_CONFIG.heroBanners.mobile,
+          desktop: (product as any)?.heroBanners?.desktop || ROUTER_CONFIG.heroBanners.desktop,
+          tablet: (product as any)?.heroBanners?.tablet || ROUTER_CONFIG.heroBanners.tablet,
+          mobile: (product as any)?.heroBanners?.mobile || ROUTER_CONFIG.heroBanners.mobile,
         }}
         alt={(product as any)?.name || "Camaleón Router"}
       />
@@ -244,7 +246,7 @@ export default function RouterPage() {
           selectedRadio={selectedRadio}
           onRadioChange={handleRadioChange}
           onBuy={handleBuy}
-          productImage={ROUTER_CONFIG.productImage}
+          productImage={(product as any)?.productImage || (product as any)?.image_full || ROUTER_CONFIG.productImage}
         />
       </div>
 
@@ -259,19 +261,21 @@ export default function RouterPage() {
         <ProductFeaturesGrid features={featuresGrid} />
       )}
 
-      {/* Benefits Grid */}
+      {/* Benefits Grid - Usar title_benefits del backend */}
       {benefits.length > 0 && (
         <ProductBenefitsGrid
-          title={ROUTER_CONFIG.benefitsTitle}
+          title={(product as any)?.title_benefits || ROUTER_CONFIG.benefitsTitle}
           benefits={benefits}
+          imageBenefits={(product as any)?.image_benefits}
+          productName={(product as any)?.name}
         />
       )}
 
-      {/* Video Section */}
-      {ROUTER_CONFIG.videoUrl && (
+      {/* Video Section - Priorizar datos del backend */}
+      {((product as any)?.videoUrl || ROUTER_CONFIG.videoUrl) && (
         <HeroVideoSection
-          videoUrl={ROUTER_CONFIG.videoUrl}
-          title={ROUTER_CONFIG.videoTitle}
+          videoUrl={(product as any)?.videoUrl || ROUTER_CONFIG.videoUrl}
+          title={(product as any)?.video_text || ROUTER_CONFIG.videoTitle}
         />
       )}
 

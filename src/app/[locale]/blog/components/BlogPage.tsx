@@ -70,9 +70,9 @@ const BlogPage = () => {
         <BannerBlog />
         <ListOfPosts posts={posts} />
 
-        <div>
+        {/* <div>
           <DownloadAppBanner />
-        </div>
+        </div> */}
         
         {/* <SubscribeBanner /> */}
       </BasicFormProvider>

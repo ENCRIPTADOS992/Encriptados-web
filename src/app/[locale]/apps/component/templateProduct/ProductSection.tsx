@@ -143,7 +143,8 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
     });
   };
 
-  const hasStoreLinks = appStoreUrl || googlePlayUrl;
+  // Siempre mostrar los iconos de tiendas, con o sin URLs
+  const showStoreIcons = true;
 
   return (
     <section className="w-full bg-white py-8 sm:py-12 lg:py-16 overflow-hidden">
@@ -170,15 +171,15 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               transition={{ duration: 0.3 }}
             />
             
-            {/* Store buttons - Ocultos en móvil, visibles desde sm */}
-            {hasStoreLinks && (
+            {/* Store buttons - Ocultos en móvil, visibles desde sm - Siempre visibles */}
+            {showStoreIcons && (
               <motion.div 
                 className="hidden sm:flex flex-wrap gap-3 mt-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
               >
-                {appStoreUrl && (
+                {appStoreUrl ? (
                   <motion.a 
                     href={appStoreUrl} 
                     target="_blank" 
@@ -190,8 +191,15 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                   >
                     <AppStoreFooter />
                   </motion.a>
+                ) : (
+                  <motion.div 
+                    className="flex-shrink-0 opacity-70"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <AppStoreFooter />
+                  </motion.div>
                 )}
-                {googlePlayUrl && (
+                {googlePlayUrl ? (
                   <motion.a 
                     href={googlePlayUrl} 
                     target="_blank" 
@@ -203,6 +211,13 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                   >
                     <PlayStoreSvg />
                   </motion.a>
+                ) : (
+                  <motion.div 
+                    className="flex-shrink-0 opacity-70"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <PlayStoreSvg />
+                  </motion.div>
                 )}
               </motion.div>
             )}

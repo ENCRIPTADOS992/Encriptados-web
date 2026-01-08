@@ -49,6 +49,7 @@ const titleVariants = {
 /**
  * FAQSection - Componente unificado y responsive con animaciones
  * Acordeón accesible con animación
+ * Muestra máximo 3 preguntas frecuentes
  */
 const FAQSectionUnified: React.FC<FAQSectionProps> = ({
   title = "Preguntas frecuentes",
@@ -57,6 +58,9 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   if (faqs.length === 0) return null;
+
+  // Limitar a máximo 3 FAQs
+  const displayedFaqs = faqs.slice(0, 3);
 
   const toggleFaq = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -82,7 +86,7 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {faqs.map((faq, idx) => {
+          {displayedFaqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             
             return (
@@ -92,7 +96,11 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
                 variants={itemVariants}
               >
                 <button
-                  onClick={() => toggleFaq(idx)}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleFaq(idx);
+                  }}
                   className="w-full flex justify-between items-center text-left p-5 lg:p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${idx}`}

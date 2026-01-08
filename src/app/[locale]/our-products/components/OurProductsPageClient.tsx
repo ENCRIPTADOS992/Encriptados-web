@@ -75,9 +75,9 @@ const OurProductsPageClient = () => {
         <BannerSecureMdm />
       </div>
 
-      <div>
+      {/* <div>
         <DownloadAppBanner />
-      </div>
+      </div> */}
 
       <div>
         <BasicFormProvider

@@ -28,12 +28,12 @@ const WhereToFindUsPage = () => {
         <HowToBuy />
       </div>
 
-      <div className="hidden lg:block z-10">
+      {/* <div className="hidden lg:block z-10">
         <DownloadBanner />
       </div>
       <div className="block lg:hidden z-10">
         <DownloadBannerMobile />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -55,6 +55,7 @@ interface CardSimProps {
   provider?: string;
   typeProduct?: string;  // Campo type_product del backend
   planDataAmount?: number;
+  variantId?: number;  // ID de la variante seleccionada (para TIM)
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -69,6 +70,7 @@ const CardProduct: React.FC<CardSimProps> = ({
   provider,
   typeProduct,
   planDataAmount,
+  variantId,
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
@@ -81,10 +83,12 @@ const CardProduct: React.FC<CardSimProps> = ({
     badges,
     provider,
     typeProduct,
+    planDataAmount,
+    variantId,
   });
 
   const handleBuy = () => {
-    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange });
+    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId });
     openModal({
       productid: id.toString(),
       languageCode: "es",

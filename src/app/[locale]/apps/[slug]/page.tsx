@@ -227,12 +227,20 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
     );
   }
 
-  // Hero banner images object
+  // Hero banner images object - Priorizar datos del backend, fallback a config estático
   const heroBannerImages = {
-    desktop: config?.heroBanners.desktop || "",
-    tablet: config?.heroBanners.tablet || "",
-    mobile: config?.heroBanners.mobile || "",
+    desktop: (product as any)?.heroBanners?.desktop || config?.heroBanners.desktop || "",
+    tablet: (product as any)?.heroBanners?.tablet || config?.heroBanners.tablet || "",
+    mobile: (product as any)?.heroBanners?.mobile || config?.heroBanners.mobile || "",
   };
+
+  // URLs de video y tiendas de apps - Priorizar datos del backend
+  const videoUrl = (product as any)?.videoUrl || config?.videoUrl;
+  const videoText = (product as any)?.video_text || t("videoTitle", { productName: product?.name || "" });
+  const appStoreUrl = (product as any)?.appStoreUrl || config?.appStoreUrl;
+  const googlePlayUrl = (product as any)?.googlePlayUrl || config?.googlePlayUrl;
+  const productImage = (product as any)?.productImage || (product as any)?.image_full || config?.productImage || "";
+  const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "";
 
   return (
     <main>
@@ -253,9 +261,9 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
           selectedRadio={selectedRadio}
           onRadioChange={handleRadioChange}
           onBuy={handleBuy}
-          productImage={config?.productImage || ""}
-          appStoreUrl={config?.appStoreUrl}
-          googlePlayUrl={config?.googlePlayUrl}
+          productImage={productImage}
+          appStoreUrl={appStoreUrl}
+          googlePlayUrl={googlePlayUrl}
           translations={productSectionTranslations}
         />
       </div>
@@ -286,15 +294,15 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
         <SecurityFeatures
           title={t("securityFeaturesTitle", { productName: product?.name || "este producto" })}
           features={securityFeatures}
-          imageUrl={config?.productImage || ""}
+          imageUrl={productImage}
         />
       )}
 
       {/* Hero Video Section */}
-      {config?.videoUrl && (
+      {videoUrl && (
         <HeroVideoSection 
-          title={t("videoTitle", { productName: product?.name || "" })} 
-          videoUrl={config.videoUrl} 
+          title={videoText} 
+          videoUrl={videoUrl} 
         />
       )}
 

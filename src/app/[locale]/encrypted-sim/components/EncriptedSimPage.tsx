@@ -71,12 +71,7 @@ const EncryptedSim = () => {
         </div>
 
         <div className="py-16 md:py-20">
-          <div className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 justify-center mx-auto items-center px-4 text-center">
-            <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] mb-12 md:mb-16">
-              {t("improveYourSecurity.titleImproveYourSecurity")}
-            </h2>
-          </div>
-          <div className="w-full sm:w-10/12 md:w-9/12 items-center flex justify-center mx-auto">
+          <div className="w-full lg:w-10/12 items-center flex justify-center mx-auto">
             <FeaturesList />
           </div>
         </div>
