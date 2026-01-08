@@ -13,7 +13,6 @@ import HeroVideoSection from "../component/templateProduct/HeroVideoSection";
 import FeaturedProducts from "../component/templateProduct/FeaturedProducts";
 import FAQSection from "../component/templateProduct/FAQSection";
 import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
-import SecurityFeatures from "../component/templateProduct/SecurityFeatures";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -30,7 +29,6 @@ import {
   transformAdvantagesToFeaturesGrid,
   transformFeaturesToBenefitsGrid,
   transformFaqs,
-  transformSecurityFeatures,
   formatPrice,
   buildProductInfo,
   type LicenseTranslations,
@@ -120,7 +118,6 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   const featuresGrid = useMemo(() => transformAdvantagesToFeaturesGrid(product, config?.benefitIcon), [product, config]);
   const benefits = useMemo(() => transformFeaturesToBenefitsGrid(product, config), [product, config]);
   const faqs = useMemo(() => transformFaqs(product), [product]);
-  const securityFeatures = useMemo(() => transformSecurityFeatures(product), [product]);
   
   const isSoftwareTemplate = config?.templateType === "software";
 
@@ -271,7 +268,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
       {/* Sticky Price Banner */}
       <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
 
-      {/* Features Grid */}
+      {/* Features Grid - Screenshots/imágenes grandes del producto */}
       {featuresGrid.length > 0 && (
         <ProductFeaturesGrid 
           features={featuresGrid} 
@@ -279,22 +276,13 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
         />
       )}
 
-      {/* Benefits Grid */}
+      {/* Benefits Grid - Beneficios con iconos */}
       {benefits.length > 0 && (
         <ProductBenefitsGrid 
           benefits={benefits}
           title={(product as any)?.title_benefits || t("benefitsTitle")}
           imageBenefits={(product as any)?.image_benefits}
           productName={product?.name}
-        />
-      )}
-
-      {/* Security Features - Solo para productos tipo software */}
-      {isSoftwareTemplate && securityFeatures.length > 0 && (
-        <SecurityFeatures
-          title={t("securityFeaturesTitle", { productName: product?.name || "este producto" })}
-          features={securityFeatures}
-          imageUrl={productImage}
         />
       )}
 

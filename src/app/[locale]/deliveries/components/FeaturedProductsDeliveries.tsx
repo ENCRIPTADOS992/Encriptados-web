@@ -49,12 +49,6 @@ const baseProducts = [
   },
   {
     id: 7,
-    name: "TotalSec",
-    image: "/images/deliveries/totalsec.png",
-    href: "/systems/totalsec",
-  },
-  {
-    id: 8,
     name: "VaultChat",
     image: "/images/deliveries/vaultchat.png",
     href: "/apps/vault-chat-v2",

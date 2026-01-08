@@ -49,8 +49,8 @@ export interface ProductStaticConfig {
  *                   threema-work, vnc-lagoon, salt, nord-vpn
  * 
  * SISTEMAS (11): secure-mdm-iphone, secure-mdm-android, cryptcom,
- *                renati, chat-mail, armadillo-software, vault-chat-software,
- *                ultra-x, intact-phone, dec-secure, secure-crypt
+ *                renati, chat-mail, armadillo-v2, vault-chat-v2,
+ *                ultrax, intact-phone, dec-secure, secureCrypt
  * 
  * ROUTER (1): router-camaleon (usa /router, no /apps/[slug])
  */
@@ -311,8 +311,9 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   },
 
   // Armadillo como Sistema (diferente del app)
-  "armadillo-software": {
-    slug: "armadillo-software",
+  // Slug canónico: armadillo-v2 (para distinguir del app armadillo)
+  "armadillo-v2": {
+    slug: "armadillo-v2",
     productId: 180,
     categoryId: 35,
     templateType: "software",
@@ -331,8 +332,9 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   },
 
   // VaultChat como Sistema (diferente del app)
-  "vault-chat-software": {
-    slug: "vault-chat-software",
+  // Slug canónico: vault-chat-v2 (para distinguir del app vault-chat)
+  "vault-chat-v2": {
+    slug: "vault-chat-v2",
     productId: 148,
     categoryId: 35,
     templateType: "software",
@@ -350,8 +352,9 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  "ultra-x": {
-    slug: "ultra-x",
+  // Ultra X - Slug canónico: ultrax
+  "ultrax": {
+    slug: "ultrax",
     productId: 182,
     categoryId: 35,
     templateType: "software",

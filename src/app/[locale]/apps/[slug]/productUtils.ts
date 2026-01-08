@@ -111,16 +111,23 @@ export function getRadioOptionsFromPlans(plans: LicensePlan[]): string[] {
 
 export function transformAdvantagesToFeaturesGrid(
   product: ProductById | null,
-  fallbackImage: string = "/images/apps/default-feature.png"
+  fallbackImage: string = ""
 ): FeatureGridItem[] {
   // Usar 'features' de la API (tienen las screenshots/imágenes grandes)
   if (!product?.features) return [];
   
-  return product.features.map(feature => ({
-    image: feature.image || fallbackImage,
-    title: feature.name,
-    description: feature.description,
-  }));
+  // Solo incluir features que tengan imagen Y (título o descripción)
+  // Si no hay imagen, no tiene sentido mostrar en este grid visual
+  return product.features
+    .filter(feature => 
+      feature.image?.trim() && 
+      (feature.name?.trim() || feature.description?.trim())
+    )
+    .map(feature => ({
+      image: feature.image || fallbackImage,
+      title: feature.name?.trim() || "",
+      description: feature.description?.trim() || "",
+    }));
 }
 
 export function transformFeaturesToBenefitsGrid(
@@ -130,13 +137,16 @@ export function transformFeaturesToBenefitsGrid(
   // Usar 'advantages' de la API (tienen los iconos pequeños)
   if (!product?.advantages) return [];
   
-  const fallbackIcon = config?.benefitIcon || "/images/apps/default-icon.png";
+  const fallbackIcon = ""; // Vacío para que el componente use CheckCircle
   
-  return product.advantages.map(advantage => ({
-    icon: advantage.image || fallbackIcon,
-    title: advantage.name,
-    description: advantage.description,
-  }));
+  // Filtrar advantages que tengan al menos título o descripción
+  return product.advantages
+    .filter(advantage => advantage.name?.trim() || advantage.description?.trim())
+    .map(advantage => ({
+      icon: advantage.image || fallbackIcon,
+      title: advantage.name?.trim() || "",
+      description: advantage.description?.trim() || "",
+    }));
 }
 
 export function transformFaqs(product: ProductById | null): FAQItem[] {
