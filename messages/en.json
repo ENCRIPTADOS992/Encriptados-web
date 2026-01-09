@@ -647,6 +647,36 @@
       "regionTitle": "Regiónes",
       "countryTitle": "Países"
     },
+    "silentCircle": {
+      "badge": "Silent Circle",
+      "title": "Silent Phone",
+      "description": "Developed by mobile technology experts, this app protects your data with maximum security at all times.",
+      "cta": "Buy your Silent Phone here easily and hassle-free",
+      "moreInfo": "More information"
+    },
+    "smsBanner": {
+      "title": "Activate Apps via SMS with Encriptados",
+      "subtitle": "Register for any app with a virtual phone number",
+      "note": "*A Colombian number is generated",
+      "button": "Buy now"
+    },
+    "secureMdm": {
+      "badge": "End-to-end security",
+      "title": "Encrypted systems with cipher security",
+      "fromPrice": "From",
+      "consultPrice": "Check our prices",
+      "buy": "Buy",
+      "moreInfo": "More information"
+    },
+    "secureCommunication": {
+      "title": "We are specialists in secure communication solutions:",
+      "checks": {
+        "item1": "Secure Phones",
+        "item2": "Encrypted SIM Cards",
+        "item3": "Enterprise-Level Protection",
+        "item4": "Proven Security Systems"
+      }
+    },
     "productCard": {
       "buy": "Buy",
       "moreInfo": "More information"

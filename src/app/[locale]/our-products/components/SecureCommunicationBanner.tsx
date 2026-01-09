@@ -4,8 +4,18 @@ import React from "react";
 import CheckIcon from "./svgs/CheckIcon";
 import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 import Typography from "@/shared/components/Typography";
+import { useTranslations } from "next-intl";
 
 const SecureCommunicationBanner = () => {
+  const t = useTranslations("OurProductsPage.secureCommunication");
+
+  const checkItems = [
+    t("checks.item1"),
+    t("checks.item2"),
+    t("checks.item3"),
+    t("checks.item4"),
+  ];
+
   return (
     <section className="relative overflow-hidden w-screen left-1/2 -translate-x-1/2 sm:w-full sm:left-0 sm:translate-x-0 max-w-screen-2xl mx-auto bg-gradient-to-b from-[#0B0B0B] to-[#00242E] rounded-none sm:rounded-2xl md:rounded-3xl py-8 sm:py-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-14 text-white">
       
@@ -26,9 +36,7 @@ const SecureCommunicationBanner = () => {
               as="h2" 
               className="text-lg sm:text-xl md:text-2xl lg:text-[30px] leading-snug"
             >
-              Somos especialistas en <br className="hidden sm:block" /> 
-              soluciones de comunicación <br className="hidden sm:block" /> 
-              segura:
+              {t("title")}
             </Typography>
             
             <div className="w-10 border-b-2 border-[#7EE0FF] mx-auto lg:mx-0"></div>
@@ -36,12 +44,7 @@ const SecureCommunicationBanner = () => {
 
           {/* Columna derecha */}
           <div className="w-full text-center lg:w-1/2 lg:pl-8 xl:pl-20 flex flex-col gap-3 sm:gap-4 lg:text-left">
-            {[
-              "Celulares Seguros",
-              "SIM Cards Encriptadas",
-              "Protección de Nivel Empresarial",
-              "Sistemas de Seguridad Probados",
-            ].map((text, idx) => (
+            {checkItems.map((text, idx) => (
               <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 text-[#7EE0FF]" key={idx}>
                 <CheckIcon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                 <Typography 

@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 
 const BannerSmsActivation = () => {
   const { openModal } = useModalPayment();
+  const t = useTranslations("OurProductsPage.smsBanner");
 
   const handleBuyClick = () => {
     openModal({ productid: "503", languageCode: "es" });
@@ -46,9 +47,7 @@ const BannerSmsActivation = () => {
             as="h2" 
             className="text-xl sm:text-2xl md:text-[30px] leading-snug"
           >
-            Activa APPs por SMS
-            <br className="hidden md:inline" />
-            <span className="md:inline"> </span>con Encriptados
+            {t("title")}
           </Typography>
           
           <Paragraph 
@@ -56,9 +55,7 @@ const BannerSmsActivation = () => {
             color="secondary" 
             className="text-sm sm:text-base text-[#9CA3AF]"
           >
-            Regístrate en cualquier aplicación
-            <br className="hidden md:inline" />
-            <span className="md:inline"> </span>con un número de teléfono virtual
+            {t("subtitle")}
           </Paragraph>
           
           <Paragraph 
@@ -73,7 +70,7 @@ const BannerSmsActivation = () => {
               className="sm:w-5 sm:h-[14px]"
               priority
             />
-            <span>*Se genera un número colombiano</span>
+            <span>{t("note")}</span>
           </Paragraph>
           
           {/* Botón CTA */}
@@ -85,7 +82,7 @@ const BannerSmsActivation = () => {
               onClick={handleBuyClick}
               className="!bg-[#00CCFF] !text-black hover:!bg-[#00B8E6] px-6 sm:px-8 w-fit"
             >
-              Comprar ahora
+              {t("button")}
             </Button>
           </div>
         </div>

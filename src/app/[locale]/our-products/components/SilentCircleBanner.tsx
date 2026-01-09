@@ -8,10 +8,12 @@ import CardProductItem from "./CardProductItem";
 import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
 import Button from "@/shared/components/Button";
+import { useTranslations } from "next-intl";
 
 const SilentCircleBanner: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations("OurProductsPage.silentCircle");
 
   // 1) Leer productId desde la URL (?productId= o ?id=)
   const productIdFromQuery = useMemo(() => {
@@ -64,11 +66,11 @@ const SilentCircleBanner: React.FC = () => {
         {/* Contenido de texto */}
         <div className="relative z-10 px-4 xs:px-6 space-y-3 xs:space-y-4 text-center">
           <span className="inline-block bg-[#CB0808] px-3 xs:px-4 py-1 rounded-full text-xs xs:text-sm font-semibold">
-            Silent Circle
+            {t("badge")}
           </span>
           
           <Typography variant="h3" as="h2" className="text-xl xs:text-2xl">
-            Silent Phone
+            {t("title")}
           </Typography>
           
           <Paragraph 
@@ -76,8 +78,7 @@ const SilentCircleBanner: React.FC = () => {
             color="secondary" 
             className="text-sm xs:text-base text-center max-w-md mx-auto"
           >
-            Desarrollada por expertos en tecnología móvil, esta app protege tus
-            datos con máxima seguridad en todo momento.
+            {t("description")}
           </Paragraph>
         </div>
 
@@ -95,7 +96,7 @@ const SilentCircleBanner: React.FC = () => {
           variant="h5" 
           className="text-lg xs:text-xl text-center mt-4 px-4 xs:px-6"
         >
-          Compra aquí tu Silent Phone fácil y sin complicaciones
+          {t("cta")}
         </Typography>
 
         {/* Card + botón */}
@@ -108,7 +109,7 @@ const SilentCircleBanner: React.FC = () => {
               onClick={handleMoreInfo}
               className="w-full text-sm font-semibold underline text-white justify-center"
             >
-              Más información
+              {t("moreInfo")}
             </Button>
           </div>
         )}
@@ -137,7 +138,7 @@ const SilentCircleBanner: React.FC = () => {
           {/* Texto */}
           <div className="w-full lg:w-1/2 sm:ml-4 md:ml-8 lg:ml-12 text-center lg:text-left space-y-3 sm:space-y-4">
             <span className="inline-block bg-[#CB0808] px-4 sm:px-6 py-1 rounded-full text-xs sm:text-sm font-semibold">
-              Silent Circle
+              {t("badge")}
             </span>
             
             <Typography 
@@ -145,7 +146,7 @@ const SilentCircleBanner: React.FC = () => {
               as="h2" 
               className="text-xl sm:text-2xl md:text-[30px]"
             >
-              Silent Phone
+              {t("title")}
             </Typography>
             
             <Paragraph 
@@ -153,8 +154,7 @@ const SilentCircleBanner: React.FC = () => {
               color="secondary" 
               className="text-sm sm:text-base max-w-md mx-auto lg:mx-0"
             >
-              Desarrollada por expertos en tecnología móvil, esta app protege
-              tus datos con máxima seguridad en todo momento.
+              {t("description")}
             </Paragraph>
           </div>
 
@@ -169,7 +169,7 @@ const SilentCircleBanner: React.FC = () => {
                   onClick={handleMoreInfo}
                   className="text-xs md:text-sm font-semibold underline text-white w-full text-right justify-end"
                 >
-                  Más información
+                  {t("moreInfo")}
                 </Button>
               </div>
             </div>

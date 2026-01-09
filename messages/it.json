@@ -640,6 +640,36 @@
       "selectPlacerholder": "Seleziona",
       "searchPlaceholder": "Cerca"
     },
+    "silentCircle": {
+      "badge": "Silent Circle",
+      "title": "Silent Phone",
+      "description": "Sviluppata da esperti di tecnologia mobile, questa app protegge i tuoi dati con la massima sicurezza in ogni momento.",
+      "cta": "Acquista qui il tuo Silent Phone in modo facile e senza complicazioni",
+      "moreInfo": "Maggiori informazioni"
+    },
+    "smsBanner": {
+      "title": "Attiva App tramite SMS con Encriptados",
+      "subtitle": "Registrati a qualsiasi applicazione con un numero di telefono virtuale",
+      "note": "*Viene generato un numero colombiano",
+      "button": "Acquista ora"
+    },
+    "secureMdm": {
+      "badge": "Sicurezza end-to-end",
+      "title": "Sistemi crittografati con sicurezza cifrata",
+      "fromPrice": "Da",
+      "consultPrice": "Consulta i nostri prezzi",
+      "buy": "Acquista",
+      "moreInfo": "Maggiori informazioni"
+    },
+    "secureCommunication": {
+      "title": "Siamo specialisti in soluzioni di comunicazione sicura:",
+      "checks": {
+        "item1": "Cellulari Sicuri",
+        "item2": "SIM Card Crittografate",
+        "item3": "Protezione di Livello Aziendale",
+        "item4": "Sistemi di Sicurezza Comprovati"
+      }
+    },
     "productCard": {
       "buy": "Acquista",
       "moreInfo": "Maggiori informazioni"
