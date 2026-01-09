@@ -243,3 +243,70 @@ export function transformSecurityFeatures(product: ProductById | null): Security
   
   return [];
 }
+
+/**
+ * Interfaz para las imágenes del banner por breakpoint
+ */
+export interface ProductBannerImages {
+  desktop: string;
+  tablet: string;
+  mobile: string;
+}
+
+/**
+ * Obtiene las imágenes del banner del producto con fallback inteligente
+ * 
+ * Prioridad para cada breakpoint:
+ * 1. heroBanners.[breakpoint] - Imagen específica del API
+ * 2. buyNowImage - Imagen alternativa del API (usada cuando heroBanners está vacío)
+ * 3. images[1]?.src o images[0]?.src - Imágenes del producto
+ * 4. config?.heroBanners.[breakpoint] - Configuración estática local
+ * 
+ * @param product - Datos del producto de la API
+ * @param config - Configuración estática del producto (fallback)
+ * @returns Objeto con las URLs de las imágenes por breakpoint
+ */
+export function getProductBannerImages(
+  product: ProductById | null,
+  config?: ProductStaticConfig | null
+): ProductBannerImages {
+  // Extraer datos del producto con casting seguro
+  const heroBanners = (product as any)?.heroBanners;
+  const buyNowImage = (product as any)?.buyNowImage;
+  const images = product?.images;
+  
+  // Helper para verificar si una URL es válida (no vacía)
+  const isValidUrl = (url: string | undefined | null): boolean => {
+    return !!url && url.trim().length > 0;
+  };
+  
+  // Obtener imagen de fallback de las imágenes del producto
+  const productImageFallback = images?.[1]?.src || images?.[0]?.src || "";
+  
+  // Construir URLs con cascada de prioridades
+  // Desktop: heroBanners.desktop > buyNowImage > images[1] > config.desktop
+  const desktop = 
+    (isValidUrl(heroBanners?.desktop) && heroBanners.desktop) ||
+    (isValidUrl(buyNowImage) && buyNowImage) ||
+    productImageFallback ||
+    config?.heroBanners?.desktop ||
+    "";
+  
+  // Tablet: heroBanners.tablet > buyNowImage > images[0] > config.tablet > desktop
+  const tablet = 
+    (isValidUrl(heroBanners?.tablet) && heroBanners.tablet) ||
+    (isValidUrl(buyNowImage) && buyNowImage) ||
+    productImageFallback ||
+    config?.heroBanners?.tablet ||
+    desktop;
+  
+  // Mobile: heroBanners.mobile > buyNowImage > images[0] > config.mobile > tablet
+  const mobile = 
+    (isValidUrl(heroBanners?.mobile) && heroBanners.mobile) ||
+    (isValidUrl(buyNowImage) && buyNowImage) ||
+    productImageFallback ||
+    config?.heroBanners?.mobile ||
+    tablet;
+  
+  return { desktop, tablet, mobile };
+}

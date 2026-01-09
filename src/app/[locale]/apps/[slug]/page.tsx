@@ -31,6 +31,7 @@ import {
   transformFaqs,
   formatPrice,
   buildProductInfo,
+  getProductBannerImages,
   type LicenseTranslations,
   type BuildProductInfoTranslations,
 } from "./productUtils";
@@ -224,12 +225,8 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
     );
   }
 
-  // Hero banner images object - Priorizar datos del backend, fallback a config estático
-  const heroBannerImages = {
-    desktop: (product as any)?.heroBanners?.desktop || config?.heroBanners.desktop || "",
-    tablet: (product as any)?.heroBanners?.tablet || config?.heroBanners.tablet || "",
-    mobile: (product as any)?.heroBanners?.mobile || config?.heroBanners.mobile || "",
-  };
+  // Hero banner images - Usar función con fallback inteligente (heroBanners > buyNowImage > images > config)
+  const heroBannerImages = getProductBannerImages(product, config);
 
   // URLs de video y tiendas de apps - Priorizar datos del backend
   const videoUrl = (product as any)?.videoUrl || config?.videoUrl;

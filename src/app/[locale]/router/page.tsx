@@ -18,6 +18,7 @@ import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { getProductBannerImages } from "../apps/[slug]/productUtils";
 
 // Configuración del router
 const ROUTER_CONFIG = {
@@ -225,13 +226,19 @@ export default function RouterPage() {
 
   return (
     <main className="bg-white min-h-screen">
-      {/* Hero Banner - Priorizar datos del backend */}
+      {/* Hero Banner - Usar función con fallback inteligente (heroBanners > buyNowImage > images > config) */}
       <HeroBanner
-        imageUrl={{
-          desktop: (product as any)?.heroBanners?.desktop || ROUTER_CONFIG.heroBanners.desktop,
-          tablet: (product as any)?.heroBanners?.tablet || ROUTER_CONFIG.heroBanners.tablet,
-          mobile: (product as any)?.heroBanners?.mobile || ROUTER_CONFIG.heroBanners.mobile,
-        }}
+        imageUrl={getProductBannerImages(product, {
+          slug: "router-camaleon",
+          productId: ROUTER_CONFIG.productId,
+          categoryId: ROUTER_CONFIG.categoryId,
+          templateType: "router",
+          heroBanners: ROUTER_CONFIG.heroBanners,
+          productImage: ROUTER_CONFIG.productImage,
+          iconUrl: ROUTER_CONFIG.iconUrl,
+          benefitIcon: ROUTER_CONFIG.benefitIcon,
+          relatedProducts: ROUTER_CONFIG.relatedProducts,
+        })}
         alt={(product as any)?.name || "Camaleón Router"}
       />
 
