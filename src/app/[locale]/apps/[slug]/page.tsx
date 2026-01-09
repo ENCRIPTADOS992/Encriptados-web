@@ -225,16 +225,28 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
     );
   }
 
-  // Hero banner images - Usar función con fallback inteligente (heroBanners > buyNowImage > images > config)
-  const heroBannerImages = getProductBannerImages(product, config);
+  // Hero banner images - Solo heroBanners del API o config estático
+  const heroBannerImages = {
+    desktop: (product as any)?.heroBanners?.desktop || config?.heroBanners.desktop || "",
+    tablet: (product as any)?.heroBanners?.tablet || config?.heroBanners.tablet || "",
+    mobile: (product as any)?.heroBanners?.mobile || config?.heroBanners.mobile || "",
+  };
 
   // URLs de video y tiendas de apps - Priorizar datos del backend
   const videoUrl = (product as any)?.videoUrl || config?.videoUrl;
   const videoText = (product as any)?.video_text || t("videoTitle", { productName: product?.name || "" });
   const appStoreUrl = (product as any)?.appStoreUrl || config?.appStoreUrl;
   const googlePlayUrl = (product as any)?.googlePlayUrl || config?.googlePlayUrl;
-  const productImage = (product as any)?.productImage || (product as any)?.image_full || config?.productImage || "";
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "";
+  
+  // Imagen del producto - Prioridad: buyNowImage > productImage > image_full > images[0] > config
+  const productImage = 
+    (product as any)?.buyNowImage || 
+    (product as any)?.productImage || 
+    (product as any)?.image_full || 
+    product?.images?.[0]?.src ||
+    config?.productImage || 
+    "";
 
   return (
     <main>

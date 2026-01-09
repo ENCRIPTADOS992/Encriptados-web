@@ -253,7 +253,7 @@ export default function RouterPage() {
           selectedRadio={selectedRadio}
           onRadioChange={handleRadioChange}
           onBuy={handleBuy}
-          productImage={(product as any)?.productImage || (product as any)?.image_full || ROUTER_CONFIG.productImage}
+          productImage={(product as any)?.buyNowImage || (product as any)?.productImage || (product as any)?.image_full || product?.images?.[0]?.src || ROUTER_CONFIG.productImage}
         />
       </div>
 

@@ -17,33 +17,33 @@ export default function BannerConnectBne() {
   return (
     <main className="bg-gradient-to-r from-[#001E30] to-[#000000] w-full">
       {/* Desktop and Tablet Layout */}
-      <div className="hidden sm:flex w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 xl:pt-16 pb-0">
+      <div className="hidden sm:flex w-full px-6 lg:px-12 xl:px-16 pt-6 lg:pt-8 xl:pt-10 pb-0">
         <div className="grid sm:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 max-w-[1600px] mx-auto w-full">
           {/* Left Column */}
-          <div className="space-y-4 lg:space-y-6 xl:space-y-8 z-10 self-center">
+          <div className="space-y-3 lg:space-y-4 xl:space-y-5 z-10 self-center">
             <div className="inline-block">
               <Image
                 src="/images/bne-sim/logo-sim-tim.svg"
                 alt="SIM TIM Logo"
                 width={170}
                 height={54}
-                className="w-auto h-10 md:h-11 lg:h-12 xl:h-14"
+                className="w-auto h-9 md:h-10 lg:h-11 xl:h-12"
               />
             </div>
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white leading-tight">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-5xl font-bold text-white leading-tight">
               {t('title')}
               <span className="text-[#009DFF]">{t('titleHighlight')}</span>
             </h1>
 
-            <p className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-300">
+            <p className="text-sm md:text-base lg:text-base xl:text-lg text-gray-300">
               {t('subtitle')}
             </p>
           </div>
 
           {/* Right Column - Desktop/Tablet with man and badges */}
           <div className="relative flex justify-center sm:justify-end self-end">
-            <div className="absolute -right-6 lg:-right-12 xl:-right-16 top-1/2 -translate-y-1/2 w-[500px] h-[500px] lg:w-[600px] lg:h-[600px] xl:w-[700px] xl:h-[700px] 2xl:w-[800px] 2xl:h-[800px] opacity-20 pointer-events-none hidden lg:block overflow-visible">
+            <div className="absolute -right-6 lg:-right-12 xl:-right-16 top-1/2 -translate-y-1/2 w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] xl:w-[550px] xl:h-[550px] 2xl:w-[600px] 2xl:h-[600px] opacity-20 pointer-events-none hidden lg:block overflow-visible">
               <Image
                 src="/images/bne-sim/logo-tim.png"
                 alt="TIM Logo Background"
@@ -54,7 +54,7 @@ export default function BannerConnectBne() {
             </div>
 
             {/* Man Image with Floating Tags */}
-            <div className="relative max-w-sm lg:max-w-md xl:max-w-lg w-full">
+            <div className="relative max-w-xs lg:max-w-sm xl:max-w-md w-full">
               <div className="relative z-10">
                 <Image
                   src="/images/bne-sim/hombre-feliz.png"

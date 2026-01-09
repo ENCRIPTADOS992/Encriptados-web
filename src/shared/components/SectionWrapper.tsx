@@ -17,7 +17,7 @@ export default function SectionWrapper({
 }: SectionWrapperProps) {
   const maxWidthClass = {
     default: "max-w-screen-xl", // 1280px
-    header: "max-w-[1272px]", // 1272px para header
+    header: "max-w-[1400px]", // 1400px para header (coincide con MegaMenu)
     full: "max-w-full",
   }[maxWidth];
 

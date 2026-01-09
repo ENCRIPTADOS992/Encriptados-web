@@ -4,38 +4,12 @@ import { useProductById } from "../context/ProductByIdContext";
 export default function BannerProduct() {
   const { currentProduct } = useProductById();
 
-  // Prioridad: heroBanners > buyNowImage > image_full > images[]
+  // Solo heroBanners para el HERO BANNER
   const heroBanners = (currentProduct as any)?.heroBanners;
-  const buyNowImage = (currentProduct as any)?.buyNowImage;
-  const imageFull = (currentProduct as any)?.image_full;
-  const images = currentProduct?.images;
 
-  // Helper para verificar si una URL es válida
-  const isValidUrl = (url: string | undefined | null): boolean => {
-    return !!url && url.trim().length > 0;
-  };
-
-  // Determinar imágenes a usar con prioridad extendida
-  const desktopSrc = 
-    (isValidUrl(heroBanners?.desktop) && heroBanners.desktop) || 
-    (isValidUrl(buyNowImage) && buyNowImage) ||
-    imageFull || 
-    images?.[1]?.src || 
-    images?.[0]?.src;
-  
-  const tabletSrc = 
-    (isValidUrl(heroBanners?.tablet) && heroBanners.tablet) || 
-    (isValidUrl(buyNowImage) && buyNowImage) ||
-    imageFull || 
-    images?.[0]?.src ||
-    desktopSrc;
-  
-  const mobileSrc = 
-    (isValidUrl(heroBanners?.mobile) && heroBanners.mobile) || 
-    (isValidUrl(buyNowImage) && buyNowImage) ||
-    imageFull || 
-    images?.[0]?.src ||
-    tabletSrc;
+  const desktopSrc = heroBanners?.desktop || "";
+  const tabletSrc = heroBanners?.tablet || desktopSrc;
+  const mobileSrc = heroBanners?.mobile || tabletSrc;
 
   // NO mostrar si no hay ninguna imagen disponible
   if (!desktopSrc && !mobileSrc) {
