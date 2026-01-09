@@ -40,28 +40,28 @@ const CardSim: React.FC<CardSimProps> = ({
       {/* ------------------------------------------------------
           PARTE SUPERIOR: imagen de la SIM + "+200 países" / "5G LTE"
       ------------------------------------------------------ */}
-      <div className="p-2 bg-[#5D5D5D]">
-        <div className="w-full aspect-[4/3] flex items-center justify-center max-w-[180px] sm:max-w-[200px] md:max-w-[220px] mx-auto">
-          <Image
-            src={productImage}
-            alt="Sim Card"
-            className="max-h-[150px] object-contain"
-          />
-        </div>
-        <div className="p-2">
-          <div className="flex justify-end gap-2 mb-1 text-sm text-gray-600">
-            <div className="bg-[#FFFFFF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1">
-              <Image src={TravelSvg} alt="Icon" className="w-4 h-4" />
-              <span>{t("availableCountries")}</span>
-            </div>
+      <div className="relative w-full aspect-[16/9] bg-[#5D5D5D] overflow-hidden">
+        {/* Imagen que ocupa todo el espacio */}
+        <Image
+          src={productImage}
+          alt="Sim Card"
+          fill
+          sizes="(max-width: 640px) 320px, (max-width: 768px) 340px, 420px"
+          className="object-cover"
+        />
+        
+        {/* Badges superpuestos en la esquina inferior derecha */}
+        <div className="absolute bottom-3 right-3 flex gap-2">
+          <div className="bg-[#FFFFFF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1 items-center">
+            <Image src={TravelSvg} alt="Icon" className="w-4 h-4" />
+            <span>{t("availableCountries")}</span>
+          </div>
 
-            <div className="bg-[#81E2FF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1">
-              <span>{t("lteSpeed")}</span>
-              <Image src={WifiSvg} alt="Icon" className="w-4 h-4" />
-            </div>
+          <div className="bg-[#81E2FF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1 items-center">
+            <span>{t("lteSpeed")}</span>
+            <Image src={WifiSvg} alt="Icon" className="w-4 h-4" />
           </div>
         </div>
-
       </div>
 
       {/* ---------------------------------------------

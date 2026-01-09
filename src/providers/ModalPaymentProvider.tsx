@@ -5,6 +5,12 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 
 export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
+export interface ProductVariant {
+  id: number;
+  price: number;
+  sku: string;
+}
+
 interface ModalPaymentParams {
   languageCode?: string;
   productid?: string;
@@ -19,6 +25,8 @@ interface ModalPaymentParams {
   initialPrice?: number;
   /** URL de origen para compartir (se captura automáticamente al abrir el modal) */
   sourceUrl?: string;
+  /** Variantes disponibles para productos con múltiples precios */
+  variants?: ProductVariant[];
 }
 
 interface ModalPaymentContextProps {

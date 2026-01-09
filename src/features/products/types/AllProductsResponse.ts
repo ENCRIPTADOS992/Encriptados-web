@@ -199,17 +199,21 @@ export interface ProductVariantScope {
 
 export interface ProductVariant {
   id: number;
-  name: string;
+  name?: string;
   ussd?:string;        
   gb?: string;         
-  cost: number;
+  cost?: number;
+  price?: number;  // Algunas variantes usan price en lugar de cost
   days?:number      
   minutes?:number 
   minute_price?:number;
-  currency: string;    
-  label: string;       
-  purchase_url: string;
-  scope?: ProductVariantScope; 
+  currency?: string;    
+  label?: string;       
+  purchase_url?: string;
+  scope?: ProductVariantScope;
+  licensetime?: string | null;
+  sku?: string;
+  image?: string;
 }
 
 export interface ProductLicenseVariant {
