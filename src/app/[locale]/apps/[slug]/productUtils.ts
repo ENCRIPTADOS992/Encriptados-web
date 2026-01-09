@@ -273,6 +273,4 @@ export function getProductBannerImages(
     tablet: heroBanners?.tablet || config?.heroBanners?.tablet || "",
     mobile: heroBanners?.mobile || config?.heroBanners?.mobile || "",
   };
-  
-  return { desktop, tablet, mobile };
 }

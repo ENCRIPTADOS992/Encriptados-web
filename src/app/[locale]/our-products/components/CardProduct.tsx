@@ -141,20 +141,20 @@ const CardProduct: React.FC<CardSimProps> = ({
 
 
   return (
-    <div className="w-full shadow-lg rounded-2xl overflow-hidden flex flex-col">
-      {/* Imagen de cabecera - sin contenedor extra, imagen directa */}
-      <div className="relative w-full aspect-[16/10] flex-shrink-0">
+    <div className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
+      {/* Imagen de cabecera - imagen completa sin recorte */}
+      <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-[#1a1a1a]">
         <Image
           src={productImage}
           alt="Sim Card"
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover rounded-t-2xl"
+          sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+          className="object-cover rounded-t-xl sm:rounded-t-2xl"
         />
 
         {badges?.country?.label ? (
-          <div className="absolute left-3 bottom-3 flex items-center bg-white/90 rounded-full px-2.5 py-1.5 shadow-md z-10">
-            <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center">
+          <div className="absolute left-2 sm:left-3 bottom-2 sm:bottom-3 flex items-center bg-white/90 rounded-full px-1.5 sm:px-2.5 py-1 sm:py-1.5 shadow-md z-10">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full overflow-hidden flex items-center justify-center">
               {filters.regionOrCountryType === "country" ? (
                 badges.country.flagUrl ? (
                   <Image
@@ -176,7 +176,7 @@ const CardProduct: React.FC<CardSimProps> = ({
                 <RegionIcon size={20} />
               )}
             </div>
-            <span className="ml-1.5 text-[12px] font-bold text-black leading-none">
+            <span className="ml-1 sm:ml-1.5 text-[10px] sm:text-[12px] font-bold text-black leading-none">
               {badges.country.label}
             </span>
           </div>
@@ -184,11 +184,11 @@ const CardProduct: React.FC<CardSimProps> = ({
       </div>
 
       {/* Contenido */}
-      <div className="p-4 flex flex-col flex-grow bg-white rounded-b-2xl">
-        <div className="flex items-start justify-between gap-2 mb-2">
+      <div className="p-2.5 sm:p-4 flex flex-col flex-grow bg-white rounded-b-xl sm:rounded-b-2xl">
+        <div className="flex items-start justify-between gap-1 sm:gap-2 mb-1.5 sm:mb-2">
           <h2
             className="
-              text-[18px] leading-[1.3] tracking-[0.01em] font-bold
+              text-[13px] sm:text-[18px] leading-[1.2] sm:leading-[1.3] tracking-[0.01em] font-bold
               line-clamp-2
             "
           >
@@ -202,10 +202,10 @@ const CardProduct: React.FC<CardSimProps> = ({
                 inline-flex items-center justify-center flex-shrink-0
                 rounded-full
                 bg-[#1CB9EC]
-                text-[11px]
+                text-[9px] sm:text-[11px]
                 font-semibold
-                h-[20px]
-                px-3
+                h-[16px] sm:h-[20px]
+                px-2 sm:px-3
                 shadow-md
                 whitespace-nowrap
               "
@@ -216,7 +216,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
         </div>
 
-        <ul className="space-y-1.5 mb-2">
+        <ul className="hidden sm:block space-y-1.5 mb-2">
           {features.map((item, idx) => (
             <li
               key={idx}
@@ -228,27 +228,27 @@ const CardProduct: React.FC<CardSimProps> = ({
           ))}
         </ul>
 
-        <div className="flex flex-col justify-start space-y-1.5 mb-3">
+        <div className="flex flex-col justify-start space-y-1 sm:space-y-1.5 mb-2 sm:mb-3">
           {checks.slice(0, 3).map((adv, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2 text-[14px] leading-[1.4]"
+              className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-[14px] leading-[1.3] sm:leading-[1.4]"
             >
-              <Image src={CheckSvg} alt="✓" className="w-4 h-4 flex-shrink-0" />
-              <span>{adv.name}</span>
+              <Image src={CheckSvg} alt="✓" className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+              <span className="line-clamp-1">{adv.name}</span>
             </div>
           ))}
         </div>
 
-        <hr className="my-3 border-gray-200" />
+        <hr className="my-2 sm:my-3 border-gray-200" />
 
-        <div className="mt-auto flex flex-col gap-2.5">
-          <div className="text-[16px] leading-[1.2] font-bold">{displayPrice}</div>
-          <div className="flex flex-row justify-between items-center gap-2">
+        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2.5">
+          <div className="text-[14px] sm:text-[16px] leading-[1.2] font-bold">{displayPrice}</div>
+          <div className="flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-1.5 xl:gap-2">
             <button
               onClick={handleBuy}
               type="button"
-              className="bg-black text-white text-[14px] leading-[1.2] rounded-full px-4 py-2.5 flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
+              className="bg-black text-white text-[12px] xl:text-[14px] leading-[1.2] rounded-full px-3 xl:px-4 py-2 xl:py-2.5 flex items-center justify-center gap-1.5 xl:gap-2 hover:bg-gray-800 transition-colors"
             >{t("buy")}
               <LocalMallSvgNew />
             </button>
@@ -265,7 +265,7 @@ const CardProduct: React.FC<CardSimProps> = ({
                 console.log("🔗 [CardProduct] Go to info:", { url, id, provider, typeProduct, numericPrice });
                 if (url) router.push(`${url}?productId=${id}&price=${numericPrice ?? ''}`);
               }}
-              className="cursor-pointer text-[14px] leading-[1.2] text-black hover:underline font-medium"
+              className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center"
             >
               {t("moreInfo")}
             </span>
