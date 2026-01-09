@@ -653,6 +653,18 @@
       "regionTitle": "Regiónes",
       "countryTitle": "Países"
     },
+    "simCards": {
+      "encrypted": {
+        "title": "SIM Card encriptada",
+        "description": "Protegete de los ciberdelincuentes y mantén tu información personal segura"
+      },
+      "tim": {
+        "title": "SIM TIM Conéctate con total anonimato",
+        "description": "Tus datos no expiran sin importar el tiempo que tardes en consumirlos"
+      },
+      "buyButton": "Comprar aquí",
+      "moreInfo": "Más información"
+    },
     "silentCircle": {
       "badge": "Silent Circle",
       "title": "Silent Phone",

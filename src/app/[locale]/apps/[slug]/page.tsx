@@ -181,7 +181,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   const handleChat = () => console.log("Chat support");
 
   const buildSimUrl = (slug: string) => {
-    const basePath = `/sim/${slug}`;
+    const basePath = `/${slug}`;
     const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
     if (!match) return basePath;
     return `/${match[1]}${basePath}`;
@@ -318,7 +318,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
           title: tSim("simDataPlans.title"),
           subtitle: tSim("simDataPlans.subtitle"),
           buttonLabel: tSim("simDataPlans.button"),
-          onButtonClick: () => handleMoreInfo("tim-sim"),
+          onButtonClick: () => handleMoreInfo("sim-encriptada"),
           image: "/images/apps/armadillo-v2/phone.png",
         }}
       />

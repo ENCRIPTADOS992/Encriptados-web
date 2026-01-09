@@ -640,6 +640,18 @@
       "selectPlacerholder": "Sélectionner",
       "searchPlaceholder": "Chercher"
     },
+    "simCards": {
+      "encrypted": {
+        "title": "Carte SIM Cryptée",
+        "description": "Protégez-vous des cybercriminels et gardez vos informations personnelles en sécurité"
+      },
+      "tim": {
+        "title": "SIM TIM Connectez-vous avec un anonymat total",
+        "description": "Vos données n'expirent jamais, peu importe le temps que vous mettez à les consommer"
+      },
+      "buyButton": "Acheter ici",
+      "moreInfo": "Plus d'informations"
+    },
     "silentCircle": {
       "badge": "Silent Circle",
       "title": "Silent Phone",
