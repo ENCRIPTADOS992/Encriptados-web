@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
 import { getProductConfig, isValidProductSlug } from "./productConfig";
-import { APPS_SHARE_CONFIG, getShareConfigByProductId } from "@/shared/constants/shareConfig";
 
 interface Props {
   params: { slug: string; locale: string };
@@ -16,8 +15,8 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     // Validar slug
     if (!isValidProductSlug(slug)) {
       return {
-        title: "Producto no encontrado",
-        description: "El producto solicitado no existe.",
+        title: "Encriptados",
+        description: "¡Compra ahora!",
       };
     }
 
@@ -25,8 +24,8 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const config = getProductConfig(slug);
     if (!config) {
       return {
-        title: "Producto no encontrado",
-        description: "La configuración del producto no está disponible.",
+        title: "Encriptados",
+        description: "¡Compra ahora!",
       };
     }
 
@@ -35,17 +34,11 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
 
     if (!product) {
       return {
-        title: "Producto no encontrado",
-        description: "El producto solicitado no está disponible.",
+        title: "Encriptados",
+        description: "¡Compra ahora!",
       };
     }
 
-    // Obtener configuración de compartir si existe
-    const shareConfig = getShareConfigByProductId(config.productId);
-
-    // Preparar metadatos
-    const productName = product.name || shareConfig?.name || "Producto";
-    const productDescription = shareConfig?.description || product.description || "Descubre este producto en Encriptados";
     const productUrl = `${baseUrl}/${locale}/apps/${slug}`;
 
     // Mapeo de slugs a imágenes de metadatos
@@ -77,7 +70,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     };
 
     // Obtener imagen de metadatos
-    let metaImage = metaImageMap[slug] || shareConfig?.metaImage;
+    let metaImage = metaImageMap[slug];
     if (!metaImage && product.images?.[0]?.src) {
       metaImage = product.images[0].src;
     }
@@ -92,12 +85,25 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       metaImage = `${baseUrl}/${metaImage}`;
     }
 
+    // Título corto basado en el nombre del producto
+    let shortTitle = product.name || "Encriptados";
+    
+    // Acortar nombres largos
+    if (shortTitle.length > 20) {
+      // Usar solo las primeras palabras significativas
+      const words = shortTitle.split(/[\s-]+/).slice(0, 3);
+      shortTitle = words.join(" ");
+    }
+    
+    // Descripción corta - llamado a la acción
+    const shortDescription = "¡Compra ahora!";
+
     return {
-      title: `${productName} | Encriptados`,
-      description: productDescription,
+      title: shortTitle,
+      description: shortDescription,
       openGraph: {
-        title: productName,
-        description: productDescription,
+        title: shortTitle,
+        description: shortDescription,
         url: productUrl,
         siteName: "Encriptados",
         images: [
@@ -105,7 +111,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
             url: metaImage,
             width: 1200,
             height: 630,
-            alt: productName,
+            alt: shortTitle,
             type: "image/png",
           },
         ],
@@ -114,8 +120,8 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       },
       twitter: {
         card: "summary_large_image",
-        title: productName,
-        description: productDescription,
+        title: shortTitle,
+        description: shortDescription,
         images: [metaImage],
       },
       alternates: {
@@ -125,8 +131,8 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   } catch (error) {
     console.error("Error generando metadata para app:", error);
     return {
-      title: "Producto | Encriptados",
-      description: "Descubre nuestros productos de seguridad y comunicación encriptada.",
+      title: "Encriptados",
+      description: "¡Compra ahora!",
     };
   }
 }

@@ -5,14 +5,19 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
-import { useSearchParams } from "next/navigation";
-import TelegramButton from "@/shared/components/TelegramButton";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import LocalMallSvgNew from "@/app/[locale]/our-products/components/svgs/LocalMallSvgNew";
+
+const ROUTER_PRODUCT_ID = "59747"; // ID del Camaleón Router
 
 const RouterCamaleon = () => {
   const t = useTranslations("RouterCamaleonPage.product");
   const [product, setProduct] = useState<ProductById | null>(null);
   const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
+  const router = useRouter();
+  const { openModal } = useModalPayment();
+  const productId = searchParams.get("productId") || ROUTER_PRODUCT_ID;
 
   useEffect(() => {
     if (productId) {
@@ -39,7 +44,7 @@ const RouterCamaleon = () => {
     "
 >
       {/* MOBILE */}
-      <div className="block lg:hidden mb-6 flex justify-center">
+      <div className="flex lg:hidden mb-6 justify-center">
         <Image
           src="/images/routercamaleon/router-standalone.png"
           alt="Router Camaleón"
@@ -80,18 +85,27 @@ const RouterCamaleon = () => {
           <p className="text-2xl font-bold text-[#0F172A] mb-5">{price}</p>
 
           {/* Botones */}
-          <div className="flex flex-row gap-4 mb-6">
-            <button className="bg-black text-white px-6 py-[10px] h-[54px] rounded-full text-[14px] flex items-center gap-2 hover:opacity-90">
+          <div className="flex flex-row items-center gap-4 mb-6">
+            <button 
+              onClick={() => {
+                openModal({
+                  productid: productId,
+                  languageCode: "es",
+                  categoryId: 36, // Router
+                });
+              }}
+              className="bg-black text-white px-6 py-[10px] h-[44px] rounded-full text-[14px] flex items-center gap-2 hover:opacity-90"
+            >
               Comprar
-              <Image
-                src="/images/apps/cryptcom/shopping_cart.png"
-                alt="Carrito"
-                width={20}
-                height={20}
-              />
+              <LocalMallSvgNew />
             </button>
 
-            <TelegramButton />
+            <span
+              onClick={() => router.push(`/router?productId=${productId}`)}
+              className="cursor-pointer text-[14px] text-black hover:underline font-medium"
+            >
+              Más información
+            </span>
           </div>
         </div>
 
