@@ -35,12 +35,9 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = product?.description || shareConfig.description;
     const productUrl = `${baseUrl}/${locale}/tim-sim`;
 
-    // Imagen para Open Graph
-    let metaImage = shareConfig.metaImage;
-    if (product?.images?.[0]?.src) {
-      metaImage = product.images[0].src;
-    }
-
+    // Usar imagen de metadatos específica para TIM SIM
+    let metaImage = "/meta-image/sim-tim/tim-fisica.png";
+    
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
       metaImage = `${baseUrl}${metaImage}`;
