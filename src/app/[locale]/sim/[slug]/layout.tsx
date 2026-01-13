@@ -44,23 +44,25 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = product.description || "Descubre este producto SIM en Encriptados";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
-    // Determinar imagen de metadatos basada en el provider del producto
+    // Determinar imagen de metadatos basada en el provider y slug del producto
     const provider = product.provider || "encriptados"; // Puede ser "tim" o "encriptados"
     
     let metaImage: string;
     
     if (provider === "tim") {
-      // Productos TIM usan imágenes de sim-tim
+      // Productos TIM: tim-fisica.png, tim-esim-datos.png
       if (slug === "esim-tim") {
         metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
       } else {
+        // tim-sim
         metaImage = "/meta-image/sim-tim/tim-fisica.png";
       }
     } else {
-      // Productos Encriptados usan imágenes de sim-encriptados
+      // Productos Encriptados: encriptados-sim-fisica.png, encriptados-esim.png
       if (slug === "esim-encriptada") {
         metaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
       } else {
+        // sim-encriptada
         metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
       }
     }
