@@ -44,18 +44,25 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = product.description || "Descubre este producto SIM en Encriptados";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
-    // Determinar imagen de metadatos basada en el slug
-    const metaImageMap: Record<string, string> = {
-      "sim-encriptada": "/meta-image/sim-encriptados/encriptados-sim-fisica.png",
-      "esim-encriptada": "/meta-image/sim-encriptados/encriptados-esim.png",
-      "tim-sim": "/meta-image/sim-tim/tim-fisica.png",
-      "esim-tim": "/meta-image/sim-tim/tim-esim-datos.png",
-    };
-
-    // Obtener imagen de metadatos
-    let metaImage = metaImageMap[slug] || product.images?.[0]?.src;
-    if (!metaImage) {
-      metaImage = "/images/sim/default-sim.png";
+    // Determinar imagen de metadatos basada en el provider del producto
+    const provider = product.provider || "encriptados"; // Puede ser "tim" o "encriptados"
+    
+    let metaImage: string;
+    
+    if (provider === "tim") {
+      // Productos TIM usan imágenes de sim-tim
+      if (slug === "esim-tim") {
+        metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
+      } else {
+        metaImage = "/meta-image/sim-tim/tim-fisica.png";
+      }
+    } else {
+      // Productos Encriptados usan imágenes de sim-encriptados
+      if (slug === "esim-encriptada") {
+        metaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
+      } else {
+        metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
+      }
     }
 
     // Asegurar que la imagen sea URL absoluta
