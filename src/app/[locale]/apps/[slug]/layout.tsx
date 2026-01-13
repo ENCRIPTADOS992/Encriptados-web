@@ -48,8 +48,33 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = shareConfig?.description || product.description || "Descubre este producto en Encriptados";
     const productUrl = `${baseUrl}/${locale}/apps/${slug}`;
 
-    // Imagen para Open Graph
-    let metaImage = shareConfig?.metaImage;
+    // Mapeo de slugs a imágenes de metadatos
+    const metaImageMap: Record<string, string> = {
+      // Apps
+      "silent-circle": "/meta-image/apps/silent-phone.png",
+      "vault-chat": "/meta-image/apps/vaultchat.png",
+      "armadillo": "/meta-image/apps/armadillo.png",
+      "threema": "/meta-image/apps/threema.png",
+      "threema-work": "/meta-image/apps/threemawork.png",
+      "vnc-lagoon": "/meta-image/apps/vnclaggon.png",
+      "salt": "/meta-image/apps/salt.png",
+      "nord-vpn": "/meta-image/apps/nordvpn.png",
+      // Software/Sistemas
+      "secure-mdm-iphone": "/meta-image/sistemas/mdm-apple.png",
+      "secure-mdm-android": "/meta-image/sistemas/mdm-android.png",
+      "cryptcom": "/meta-image/sistemas/cryptcom.png",
+      "chat-mail": "/meta-image/sistemas/chatmail.png",
+      "armadillo-v2": "/meta-image/sistemas/armadillo.png",
+      "vault-chat-v2": "/meta-image/sistemas/vaultchat.png",
+      "dec-secure": "/meta-image/sistemas/dec-secure.png",
+      "intactphone": "/meta-image/sistemas/intactphone.png",
+      "renati": "/meta-image/sistemas/renati.png",
+      "securecrypt": "/meta-image/sistemas/securecrypt.png",
+      "ultra-x": "/meta-image/sistemas/ultra-x.png",
+    };
+
+    // Obtener imagen de metadatos
+    let metaImage = metaImageMap[slug] || shareConfig?.metaImage;
     if (!metaImage && product.images?.[0]?.src) {
       metaImage = product.images[0].src;
     }

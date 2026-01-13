@@ -44,8 +44,16 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = product.description || "Descubre este producto SIM en Encriptados";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
-    // Imagen para Open Graph
-    let metaImage = product.images?.[0]?.src;
+    // Determinar imagen de metadatos basada en el slug
+    const metaImageMap: Record<string, string> = {
+      "sim-encriptada": "/meta-image/sim-encriptados/encriptados-sim-fisica.png",
+      "esim-encriptada": "/meta-image/sim-encriptados/encriptados-esim.png",
+      "tim-sim": "/meta-image/sim-tim/tim-fisica.png",
+      "esim-tim": "/meta-image/sim-tim/tim-esim-datos.png",
+    };
+
+    // Obtener imagen de metadatos
+    let metaImage = metaImageMap[slug] || product.images?.[0]?.src;
     if (!metaImage) {
       metaImage = "/images/sim/default-sim.png";
     }
