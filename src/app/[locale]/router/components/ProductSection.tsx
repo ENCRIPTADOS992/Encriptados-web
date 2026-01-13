@@ -144,7 +144,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                 icon={<ShoppingCart color="white" height={20} width={20} />}
                 iconPosition="right"
               >
-                Comprar ahora
+                Comprar
               </Button>
               <TelegramButton />
             </div>

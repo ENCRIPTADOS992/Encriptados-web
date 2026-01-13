@@ -82,7 +82,7 @@ const RouterCamaleon = () => {
           {/* Botones */}
           <div className="flex flex-row gap-4 mb-6">
             <button className="bg-black text-white px-6 py-[10px] h-[54px] rounded-full text-[14px] flex items-center gap-2 hover:opacity-90">
-              Comprar ahora
+              Comprar
               <Image
                 src="/images/apps/cryptcom/shopping_cart.png"
                 alt="Carrito"

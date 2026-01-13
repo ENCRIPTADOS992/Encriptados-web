@@ -197,7 +197,7 @@ export default function RouterPage() {
     price: formatPrice(currentPrice),
     subtitle: (product as any)?.description?.substring(0, 50) + "..." || "Privacidad total",
     iconUrl: productIconUrl,
-    ctaLabel: "Comprar ahora",
+    ctaLabel: "Comprar",
     categoryId: ROUTER_CONFIG.categoryId,
     productId: ROUTER_CONFIG.productId,
     onBuy: handleBuy,
