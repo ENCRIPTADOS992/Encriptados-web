@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 type Props = {
   isOpen: boolean;
@@ -19,13 +19,16 @@ export default function Navigation({
     <nav className={`flex items-center justify-between ${className}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => setIsOpen(true)}
         aria-expanded={isOpen} // Mejora de accesibilidad
-        className={`text-white text-sm hover:text-gray-300 flex items-center ${buttonClassName}`}
+        className={`text-white text-sm hover:text-gray-200 flex items-center transition-colors duration-200 ${buttonClassName} ${
+          isOpen ? "text-gray-200" : ""
+        }`}
       >
         {label}
-        <ChevronRight
-          className={`w-4 h-4 ml-1 transition-transform ${
-            isOpen ? "rotate-90" : ""
+        <ChevronDown
+          className={`w-4 h-4 ml-1 transition-transform duration-300 ease-out ${
+            isOpen ? "rotate-180" : "rotate-0"
           }`}
         />
       </button>

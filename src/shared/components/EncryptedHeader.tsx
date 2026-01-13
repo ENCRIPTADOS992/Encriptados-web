@@ -90,7 +90,11 @@ export default function EncryptedHeader() {
   }
 
   return (
-    <header className="relative z-50" ref={headerRef}>
+    <header 
+      className="relative z-50" 
+      ref={headerRef}
+      onMouseLeave={closeMegaMenu}
+    >
       <div className="bg-[#151515] border-b border-[#1A1A1A]">
         <SectionWrapper maxWidth="header" className="py-4">
           <nav className="flex items-center justify-between gap-4">
