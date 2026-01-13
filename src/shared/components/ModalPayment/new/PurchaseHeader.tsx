@@ -88,8 +88,6 @@ const PurchaseHeader: React.FC<Props> = ({
     /threema/i.test(product.name) &&
     !/work/i.test(product.name);
 
-  const shouldShowLicense = showLicense && !isOnlyThreema;
-
   const variants = product?.variants ?? [];
   const [showCoupon, setShowCoupon] = React.useState(false);
 
@@ -119,6 +117,9 @@ const PurchaseHeader: React.FC<Props> = ({
     normVariants.find((v) => v.id === (selectedVariantId ?? -1))?.months ??
     normVariants[0]?.months ??
     productMonths;
+
+  // Ocultar licencia si: no se debe mostrar, es Threema simple, o la licencia es 0 meses
+  const shouldShowLicense = showLicense && !isOnlyThreema && currentMonths > 0;
 
   const subtotal = unitPrice * quantity;
   const [includeEsimAddon, setIncludeEsimAddon] = React.useState(false);

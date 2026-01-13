@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import { getProductById } from "@/features/products/services";
-import { getShareConfigByProductId } from "@/shared/constants/shareConfig";
 
 interface Props {
   params: { locale: string };
@@ -12,27 +10,6 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
 
   try {
-    // Obtener configuración de compartir para Router
-    const shareConfig = getShareConfigByProductId(181); // Router - valor típico
-
-    if (!shareConfig) {
-      return {
-        title: "Router | Encriptados",
-        description: "Descubre nuestros routers de comunicación encriptada en Encriptados",
-      };
-    }
-
-    // Obtener datos del producto desde la API si es necesario
-    let product;
-    try {
-      product = await getProductById(String(shareConfig.productId), locale || "es");
-    } catch (err) {
-      // Si falla, usamos la configuración de shareConfig
-    }
-
-    // Preparar metadatos
-    const productName = product?.name || shareConfig.name;
-    const productDescription = product?.description || shareConfig.description;
     const productUrl = `${baseUrl}/${locale}/router`;
 
     // Usar imagen de metadatos específica para Router
@@ -41,16 +18,18 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
       metaImage = `${baseUrl}${metaImage}`;
-    } else if (!metaImage.startsWith("http")) {
-      metaImage = `${baseUrl}/${metaImage}`;
     }
 
+    // Título y descripción cortos
+    const shortTitle = "Camaleón Router";
+    const shortDescription = "¡Compra ahora!";
+
     return {
-      title: `${productName} | Encriptados`,
-      description: productDescription,
+      title: shortTitle,
+      description: shortDescription,
       openGraph: {
-        title: productName,
-        description: productDescription,
+        title: shortTitle,
+        description: shortDescription,
         url: productUrl,
         siteName: "Encriptados",
         images: [
@@ -58,7 +37,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
             url: metaImage,
             width: 1200,
             height: 630,
-            alt: productName,
+            alt: shortTitle,
             type: "image/png",
           },
         ],
@@ -67,8 +46,8 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       },
       twitter: {
         card: "summary_large_image",
-        title: productName,
-        description: productDescription,
+        title: shortTitle,
+        description: shortDescription,
         images: [metaImage],
       },
       alternates: {
@@ -78,8 +57,8 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   } catch (error) {
     console.error("Error generando metadata para Router:", error);
     return {
-      title: "Router | Encriptados",
-      description: "Descubre nuestros routers de comunicación encriptada en Encriptados",
+      title: "Camaleón Router",
+      description: "¡Compra ahora!",
     };
   }
 }
