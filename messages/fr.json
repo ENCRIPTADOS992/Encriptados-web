@@ -205,7 +205,7 @@
       }
     },
     "renatiTitle": "Téléphone Portable Crypté Renati",
-    "buyNow": "Acheter Maintenant",
+    "buyNow": "Acheter",
     "encryptedPhone": "Téléphone Crypté",
     "saveMoney": "Économisez jusqu'à",
     "downloadApp": "Téléchargez l'application pour iOS et Android et achetez votre carte SIM maintenant",
@@ -268,7 +268,7 @@
       ],
       "priceRange": "25 - 500 USD",
       "rating": "5/5",
-      "buyNow": "Acheter Maintenant"
+      "buyNow": "Acheter"
     },
     "characteristics": {
       "title": "Caractéristiques principales"
@@ -650,14 +650,14 @@
         "description": "Vos données n'expirent jamais, peu importe le temps que vous mettez à les consommer"
       },
       "buyButton": "Acheter ici",
-      "moreInfo": "Plus d'informations"
+      "moreInfo": "Info"
     },
     "silentCircle": {
       "badge": "Silent Circle",
       "title": "Silent Phone",
       "description": "Développée par des experts en technologie mobile, cette application protège vos données avec une sécurité maximale à tout moment.",
       "cta": "Achetez votre Silent Phone ici facilement et sans complications",
-      "moreInfo": "Plus d'informations"
+      "moreInfo": "Info"
     },
     "smsBanner": {
       "title": "Activez des Apps par SMS avec Encriptados",
@@ -671,7 +671,7 @@
       "fromPrice": "À partir de",
       "consultPrice": "Consultez nos prix",
       "buy": "Acheter",
-      "moreInfo": "Plus d'informations"
+      "moreInfo": "Info"
     },
     "secureCommunication": {
       "title": "Nous sommes spécialistes en solutions de communication sécurisée :",
@@ -684,7 +684,7 @@
     },
     "productCard": {
       "buy": "Acheter",
-      "moreInfo": "Plus d'informations"
+      "moreInfo": "Info"
     },
     "faqs": {
       "title": "Questions fr\u00e9quentes",
@@ -1230,7 +1230,7 @@
       "licenseUnique": "Unique",
       "priceFrom": "À partir de",
       "priceConsult": "Consulter le prix",
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "selectPlan": "Sélectionnez un forfait",
       "downloadAppStore": "Télécharger sur l'App Store",
       "downloadGooglePlay": "Télécharger sur Google Play",
@@ -1258,7 +1258,7 @@
       "pricePrefix": "Application cryptée",
       "price": "15$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Support chat"
       }
     },
@@ -1349,7 +1349,7 @@
       "pricePrefix": "À partir de",
       "price": "250$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Assistance par chat"
       }
     },
@@ -1433,7 +1433,7 @@
       "pricePrefix": "À partir de",
       "price": "729$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Assistance chat"
       }
     },
@@ -1558,7 +1558,7 @@
       "pricePrefix": "À partir de",
       "price": "650$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Assistance chat"
       }
     },
@@ -1683,7 +1683,7 @@
       "pricePrefix": "À partir de",
       "price": "650$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Support en ligne"
       }
     },
@@ -1804,7 +1804,7 @@
       "Licence 6 Mois"
     ],
     "buttons": {
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "supportChat": "Chat d'assistance"
     },
     "benefits": {
@@ -1869,7 +1869,7 @@
       "Téléphone + Licence de 6 Mois"
     ],
     "buttons": {
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "supportChat": "Chat d'assistance"
     },
     "benefits": {
@@ -1934,7 +1934,7 @@
       "Téléphone + 6 mois de licence"
     ],
     "buttons": {
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "supportChat": "Chat support"
     },
     "benefits": {
@@ -2007,7 +2007,7 @@
       "Licence 6 mois"
     ],
     "buttons": {
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "supportChat": "Chat support"
     },
     "benefits": {
@@ -2080,7 +2080,7 @@
       "IntactPhone ARCANE Cellulaire (12 Mois)"
     ],
     "buttons": {
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "supportChat": "Chat support"
     },
     "benefits": {
@@ -2131,7 +2131,7 @@
       "Licence 6 mois"
     ],
     "buttons": {
-      "buyNow": "Acheter maintenant",
+      "buyNow": "Acheter",
       "supportChat": "Chat support"
     },
     "benefits": {
@@ -2223,7 +2223,7 @@
       "pricePrefix": "À partir de",
       "price": "550$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Assistance par chat"
       }
     },
@@ -2313,7 +2313,7 @@
       "pricePrefix": "À partir de",
       "price": "600$ USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Support par chat"
       }
     },
@@ -2389,7 +2389,7 @@
       "pricePrefix": "À partir de",
       "price": "375 USD",
       "buttons": {
-        "buyNow": "Acheter maintenant",
+        "buyNow": "Acheter",
         "chatSupport": "Support chat"
       }
     },

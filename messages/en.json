@@ -210,7 +210,7 @@
       }
     },
     "renatiTitle": "Encrypted Cell Phone Renati",
-    "buyNow": "Buy Now",
+    "buyNow": "Buy",
     "encryptedPhone": "Encrypted Phone",
     "saveMoney": "Save up to",
     "downloadApp": "Download the App for iOS & Android and buy your SIM now",
@@ -273,7 +273,7 @@
       ],
       "priceRange": "25 - 500 USD",
       "rating": "5/5",
-      "buyNow": "Buy Now"
+      "buyNow": "Buy"
     },
     "characteristics": {
       "title": "Main Features"
@@ -657,14 +657,14 @@
         "description": "Your data never expires no matter how long it takes you to use it"
       },
       "buyButton": "Buy here",
-      "moreInfo": "More information"
+      "moreInfo": "Info"
     },
     "silentCircle": {
       "badge": "Silent Circle",
       "title": "Silent Phone",
       "description": "Developed by mobile technology experts, this app protects your data with maximum security at all times.",
       "cta": "Buy your Silent Phone here easily and hassle-free",
-      "moreInfo": "More information"
+      "moreInfo": "Info"
     },
     "smsBanner": {
       "title": "Activate Apps via SMS with Encriptados",
@@ -678,7 +678,7 @@
       "fromPrice": "From",
       "consultPrice": "Check our prices",
       "buy": "Buy",
-      "moreInfo": "More information"
+      "moreInfo": "Info"
     },
     "secureCommunication": {
       "title": "We are specialists in secure communication solutions:",
@@ -691,7 +691,7 @@
     },
     "productCard": {
       "buy": "Buy",
-      "moreInfo": "More information"
+      "moreInfo": "Info"
     }
   },
   "DistributorsPage": {
@@ -1214,7 +1214,7 @@
       "licenseUnique": "One-time",
       "priceFrom": "From",
       "priceConsult": "Contact for price",
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "selectPlan": "Select a plan",
       "downloadAppStore": "Download on App Store",
       "downloadGooglePlay": "Download on Google Play",
@@ -1236,7 +1236,7 @@
       "Timed messages"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1286,7 +1286,7 @@
       "Encrypted calls"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1352,7 +1352,7 @@
       "Encrypted chat"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1417,7 +1417,7 @@
       "Private gateways"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1472,7 +1472,7 @@
       "Secure voice calls"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1537,7 +1537,7 @@
       "Secure messaging"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1612,7 +1612,7 @@
       "Private polls in the chat"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "characteristics": {
@@ -1696,7 +1696,7 @@
       "pricePrefix": "From",
       "price": "250$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Chat support"
       }
     },
@@ -1780,7 +1780,7 @@
       "pricePrefix": "From",
       "price": "729$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Support chat"
       }
     },
@@ -1905,7 +1905,7 @@
       "pricePrefix": "From",
       "price": "650$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Chat support"
       }
     },
@@ -2030,7 +2030,7 @@
       "pricePrefix": "From",
       "price": "650$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Support chat"
       }
     },
@@ -2151,7 +2151,7 @@
       "6-Month License"
     ],
     "buttons": {
-      "buyNow": "Buy Now",
+      "buyNow": "Buy",
       "supportChat": "Chat support"
     },
     "benefits": {
@@ -2216,7 +2216,7 @@
       "Phone + 6-month license"
     ],
     "buttons": {
-      "buyNow": "Buy now",
+      "buyNow": "Buy",
       "supportChat": "Support chat"
     },
     "benefits": {
@@ -2281,7 +2281,7 @@
       "Phone + 6-month License"
     ],
     "buttons": {
-      "buyNow": "Buy Now",
+      "buyNow": "Buy",
       "supportChat": "Chat Support"
     },
     "benefits": {
@@ -2354,7 +2354,7 @@
       "6-Month License"
     ],
     "buttons": {
-      "buyNow": "Buy Now",
+      "buyNow": "Buy",
       "supportChat": "Support Chat"
     },
     "benefits": {
@@ -2427,7 +2427,7 @@
       "IntactPhone ARCANE Cellular (12 Months)"
     ],
     "buttons": {
-      "buyNow": "Buy Now",
+      "buyNow": "Buy",
       "supportChat": "Support Chat"
     },
     "benefits": {
@@ -2478,7 +2478,7 @@
       "6-Month License"
     ],
     "buttons": {
-      "buyNow": "Buy Now",
+      "buyNow": "Buy",
       "supportChat": "Support Chat"
     },
     "benefits": {
@@ -2569,7 +2569,7 @@
       "pricePrefix": "Encrypted App",
       "price": "15$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Chat support"
       }
     },
@@ -2660,7 +2660,7 @@
       "pricePrefix": "From",
       "price": "550$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Support chat"
       }
     },
@@ -2750,7 +2750,7 @@
       "pricePrefix": "From",
       "price": "600$ USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Support chat"
       }
     },
@@ -2826,7 +2826,7 @@
       "pricePrefix": "From",
       "price": "375 USD",
       "buttons": {
-        "buyNow": "Buy now",
+        "buyNow": "Buy",
         "chatSupport": "Chat support"
       }
     },
