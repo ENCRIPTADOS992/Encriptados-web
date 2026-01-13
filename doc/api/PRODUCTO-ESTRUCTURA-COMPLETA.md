@@ -1,3 +1,4 @@
+
 # 📦 Estructura Completa de Producto - API Backend
 
 > **Fecha:** Diciembre 2024  

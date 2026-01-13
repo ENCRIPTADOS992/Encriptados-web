@@ -44,37 +44,19 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = product.description || "Descubre este producto SIM en Encriptados";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
-    // DERIVAR family y format desde los campos del backend (ÚNICA FUENTE DE VERDAD)
-    // provider: "Sim Encriptados" → family = "encrypted"
-    // provider: "Sim TIM" → family = "tim"
-    const providerLower = (product.provider || "").toLowerCase();
-    const family = providerLower.includes("encript") ? "encrypted" : "tim";
+    // Mapeo de slug a imagen de metadatos
+    // Basado en el SLUG de la URL, no en campos del backend
+    const metaImageMap: Record<string, string> = {
+      // SIM Encriptados (carpeta: public/meta-image/sim-encriptados/)
+      "sim-encriptada": "/meta-image/sim-encriptados/encriptados-sim-fisica.png",
+      "esim-encriptada": "/meta-image/sim-encriptados/encriptados-esim.png",
+      // SIM TIM (carpeta: public/meta-image/sim-tim/)
+      "tim-sim": "/meta-image/sim-tim/tim-fisica.png",
+      "esim-tim": "/meta-image/sim-tim/tim-esim-datos.png",
+    };
     
-    // type_product: "Fisico" → format = "physical"
-    // type_product: "Digital" → format = "digital"
-    const typeProductLower = (product.type_product || "").toLowerCase();
-    const format = typeProductLower === "digital" ? "digital" : "physical";
-    
-    // Seleccionar imagen basada en family + format (derivado del backend, NO del slug de URL)
-    let metaImage: string;
-    
-    if (family === "tim") {
-      // Productos TIM
-      if (format === "digital") {
-        metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
-      } else {
-        // physical
-        metaImage = "/meta-image/sim-tim/tim-fisica.png";
-      }
-    } else {
-      // Productos Encriptados
-      if (format === "digital") {
-        metaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
-      } else {
-        // physical
-        metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
-      }
-    }
+    // Seleccionar imagen basada en el slug de la URL
+    let metaImage = metaImageMap[slug] || "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
 
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
