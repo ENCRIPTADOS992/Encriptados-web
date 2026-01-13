@@ -950,23 +950,46 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             } else if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
               // SIM Encriptadas expandidas: usar el tag de la variante
               const selectedVar = product._selectedVariant as any;
-              // Buscar minutos: puede venir como minutes, o calcularse del precio
-              let minutesValue = selectedVar.minutes;
-              if (!minutesValue && selectedVar.price) {
-                // Mapeo de precios a minutos basado en los datos conocidos
-                const priceToMinutesMap: Record<number, number> = {
-                  200: 100,
-                  500: 250,
-                  1000: 500,
-                };
-                minutesValue = priceToMinutesMap[Number(selectedVar.price)];
+              
+              // Determinar si es un producto de minutos o de datos
+              const isMinutesRecharge = isMinutosProduct; // "Recarga Minutos"
+              const isDataRecharge = simName.includes("recarga datos") || simName.includes("data");
+              
+              let tag: string | undefined;
+              
+              if (isMinutesRecharge) {
+                // Para "Recarga Minutos": mostrar minutos basados en precio
+                let minutesValue = selectedVar.minutes;
+                if (!minutesValue && selectedVar.price) {
+                  // Mapeo de precios a minutos basado en los datos conocidos
+                  const priceToMinutesMap: Record<number, number> = {
+                    200: 100,
+                    500: 250,
+                    1000: 500,
+                  };
+                  minutesValue = priceToMinutesMap[Number(selectedVar.price)];
+                }
+                if (minutesValue) {
+                  tag = `${minutesValue} min`;
+                }
+              } else if (isDataRecharge) {
+                // Para "Recarga Datos": mostrar GB
+                if (selectedVar.gb) {
+                  tag = selectedVar.gb;
+                } else if (selectedVar.name) {
+                  // Buscar GB en el nombre de la variante (ej: "25 GB", "50 GB")
+                  const gbMatch = selectedVar.name.match(/(\d+)\s*GB/i);
+                  if (gbMatch) {
+                    tag = `${gbMatch[1]} GB`;
+                  } else {
+                    tag = selectedVar.name;
+                  }
+                }
+              } else {
+                // Para otros productos: usar gb o name
+                tag = selectedVar.gb || selectedVar.name || undefined;
               }
               
-              const tag = minutesValue 
-                ? `${minutesValue} min`
-                : selectedVar.gb 
-                  ? selectedVar.gb 
-                  : selectedVar.name || undefined;
               if (tag) {
                 badges = { tag };
               }
