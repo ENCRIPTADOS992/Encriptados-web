@@ -1,0 +1,92 @@
+import { Metadata } from "next";
+import { getProductById } from "@/features/products/services";
+import { getShareConfigByProductId } from "@/shared/constants/shareConfig";
+
+interface Props {
+  params: { locale: string };
+  children: React.ReactNode;
+}
+
+export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
+  const { locale } = params;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+
+  try {
+    // Obtener configuración de compartir para Router
+    const shareConfig = getShareConfigByProductId(181); // Router - valor típico
+
+    if (!shareConfig) {
+      return {
+        title: "Router | Encriptados",
+        description: "Descubre nuestros routers de comunicación encriptada en Encriptados",
+      };
+    }
+
+    // Obtener datos del producto desde la API si es necesario
+    let product;
+    try {
+      product = await getProductById(String(shareConfig.productId), locale || "es");
+    } catch (err) {
+      // Si falla, usamos la configuración de shareConfig
+    }
+
+    // Preparar metadatos
+    const productName = product?.name || shareConfig.name;
+    const productDescription = product?.description || shareConfig.description;
+    const productUrl = `${baseUrl}/${locale}/router`;
+
+    // Imagen para Open Graph
+    let metaImage = shareConfig.metaImage;
+    if (product?.images?.[0]?.src) {
+      metaImage = product.images[0].src;
+    }
+
+    // Asegurar que la imagen sea URL absoluta
+    if (metaImage.startsWith("/")) {
+      metaImage = `${baseUrl}${metaImage}`;
+    } else if (!metaImage.startsWith("http")) {
+      metaImage = `${baseUrl}/${metaImage}`;
+    }
+
+    return {
+      title: `${productName} | Encriptados`,
+      description: productDescription,
+      openGraph: {
+        title: productName,
+        description: productDescription,
+        url: productUrl,
+        siteName: "Encriptados",
+        images: [
+          {
+            url: metaImage,
+            width: 1200,
+            height: 630,
+            alt: productName,
+            type: "image/png",
+          },
+        ],
+        locale: locale || "es",
+        type: "product",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: productName,
+        description: productDescription,
+        images: [metaImage],
+      },
+      alternates: {
+        canonical: productUrl,
+      },
+    };
+  } catch (error) {
+    console.error("Error generando metadata para Router:", error);
+    return {
+      title: "Router | Encriptados",
+      description: "Descubre nuestros routers de comunicación encriptada en Encriptados",
+    };
+  }
+}
+
+export default function RouterLayout({ children }: Props) {
+  return <>{children}</>;
+}
