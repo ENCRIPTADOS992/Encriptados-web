@@ -94,6 +94,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       languageCode: "es",
       selectedOption: Number(filters.selectedOption),
       initialPrice: numericPrice,
+      variantId: variantId,  // Pasar variantId para que el modal seleccione la variante correcta
     });
   };
 
@@ -198,17 +199,22 @@ const CardProduct: React.FC<CardSimProps> = ({
 
           {badges?.tag ? (
             <div
-              className="
+              className={`
                 inline-flex items-center justify-center flex-shrink-0
                 rounded-full
-                bg-[#1CB9EC]
                 text-[9px] sm:text-[11px]
                 font-semibold
                 h-[16px] sm:h-[20px]
                 px-2 sm:px-3
                 shadow-md
                 whitespace-nowrap
-              "
+                ${
+                  // SIM y SIM TIM (categoría 40) usan azul, Apps/Sistemas/Router usan gris
+                  filters.selectedOption === "40"
+                    ? "bg-[#1CB9EC] text-[#010101]"
+                    : "bg-[#DEDEDE] text-[#010101]"
+                }
+              `}
             >
               {badges.tag}
             </div>

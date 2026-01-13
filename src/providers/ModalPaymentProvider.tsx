@@ -27,6 +27,8 @@ interface ModalPaymentParams {
   sourceUrl?: string;
   /** Variantes disponibles para productos con múltiples precios */
   variants?: ProductVariant[];
+  /** ID de la variante seleccionada (para productos con múltiples licencias) */
+  variantId?: number;
 }
 
 interface ModalPaymentContextProps {

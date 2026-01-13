@@ -113,8 +113,18 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const products: Product[] = data ?? [];
   console.log("📦 [ListOfProducts] productos recibidos:", products.length);
   
+  // Deduplicar productos por ID (evitar duplicados de la API)
+  const uniqueProductsMap = new Map<number, Product>();
+  for (const p of products) {
+    if (!uniqueProductsMap.has(p.id)) {
+      uniqueProductsMap.set(p.id, p);
+    }
+  }
+  const uniqueProducts = Array.from(uniqueProductsMap.values());
+  console.log("📦 [ListOfProducts] productos únicos después de deduplicar:", uniqueProducts.length);
+  
   // Debug: mostrar todos los productos TIM recibidos de la API
-  const allTimProducts = products.filter(p => p.provider?.toLowerCase() === "tim");
+  const allTimProducts = uniqueProducts.filter(p => p.provider?.toLowerCase() === "tim");
   console.log("📦 [ListOfProducts] productos TIM en respuesta API:", allTimProducts.length);
   if (allTimProducts.length > 0) {
     console.log("📦 [ListOfProducts] lista productos TIM:", allTimProducts.map(p => ({
@@ -127,16 +137,16 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   }
 
   // 👉 log general de recargas ANTES de cualquier filtro
-  logRecargaSummary("ANTES DE FILTROS", products);
+  logRecargaSummary("ANTES DE FILTROS", uniqueProducts);
 
-  let filteredProducts: Product[] = products;
+  let filteredProducts: Product[] = uniqueProducts;
 
   // Filtro por provider (solo categoría 40)
   if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
     const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
 
-    filteredProducts = products.filter((product) => {
+    filteredProducts = uniqueProducts.filter((product) => {
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
       
@@ -555,6 +565,138 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
+  // ========== EXPANSIÓN DE VARIANTES SIM ENCRIPTADAS (categoría 40, NO TIM) ==========
+  // Para productos SIM Encriptadas con variantes (minutos, datos, etc.), crear una tarjeta por cada variante
+  if (selectedOption === 40 && filters.provider !== "tim") {
+    console.log("🔄 [Expansión SIM Encriptadas] Iniciando expansión de variantes", {
+      categoría: selectedOption,
+      provider: filters.provider,
+      productosAntes: productsToRender.length
+    });
+
+    const expandedBySim: ExpandedProduct[] = [];
+
+    for (const product of productsToRender) {
+      // Saltar productos TIM (ya tienen su propia expansión)
+      const providerLower = (product.provider ?? "").toLowerCase();
+      if (providerLower === "tim" || providerLower.includes("tim")) {
+        expandedBySim.push(product);
+        continue;
+      }
+
+      // Usar variants del producto
+      const variants = product.variants ?? [];
+      
+      console.log(`🔄 [Expansión SIM Encriptadas] Producto "${product.name}" (id: ${product.id})`, {
+        provider: product.provider,
+        totalVariants: variants.length,
+        variantes: variants.map((v: any) => ({
+          id: v.id,
+          name: v.name,
+          gb: v.gb,
+          minutes: v.minutes,
+          cost: v.cost,
+          price: v.price
+        }))
+      });
+
+      // Si no hay variantes o solo hay 1, mostrar el producto tal cual
+      if (variants.length <= 1) {
+        if (variants.length === 1) {
+          expandedBySim.push({
+            ...product,
+            _selectedVariant: variants[0],
+            _variantIndex: 0,
+          });
+        } else {
+          expandedBySim.push(product);
+        }
+        continue;
+      }
+
+      // Crear una tarjeta por cada variante
+      for (let i = 0; i < variants.length; i++) {
+        const variant = variants[i];
+        expandedBySim.push({
+          ...product,
+          _selectedVariant: variant,
+          _variantIndex: i,
+        });
+      }
+    }
+
+    productsToRender = expandedBySim;
+    console.log("🔄 [Expansión SIM Encriptadas] Resultado:", {
+      productosAntes: filteredProducts.length,
+      tarjetasExpandidas: expandedBySim.length
+    });
+  }
+
+  // ========== EXPANSIÓN DE VARIANTES DE LICENCIA (Apps, Sistemas, Router) ==========
+  // Para productos con variantes de licencia (3 meses, 6 meses, etc.), crear una tarjeta por cada variante
+  // SOLO si hay más de una variante con licensetime diferente
+  if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38) {
+    console.log("🔄 [Expansión Licencias] Iniciando expansión de variantes de licencia", {
+      categoría: selectedOption,
+      productosAntes: productsToRender.length
+    });
+
+    const expandedByLicense: ExpandedProduct[] = [];
+
+    for (const product of productsToRender) {
+      // Usar licenseVariants que vienen del mapeo en services.ts
+      const licenseVariants = (product as any).licenseVariants ?? [];
+      
+      // Filtrar solo variantes con licensetime válido
+      const variantsWithLicense = licenseVariants.filter((v: any) => 
+        v.licensetime && v.licensetime !== "" && v.licensetime !== "0"
+      );
+
+      console.log(`🔄 [Expansión Licencias] Producto "${product.name}" (id: ${product.id})`, {
+        totalLicenseVariants: licenseVariants.length,
+        variantesConLicencia: variantsWithLicense.length,
+        licencias: variantsWithLicense.map((v: any) => ({
+          id: v.id,
+          licensetime: v.licensetime,
+          price: v.price
+        }))
+      });
+
+      // SOLO expandir si hay MÁS DE UNA variante con licensetime
+      // Si hay 0 o 1 variante, mostrar el producto tal cual (sin duplicar)
+      if (variantsWithLicense.length <= 1) {
+        // Sin variantes múltiples de licencia, mostrar el producto tal cual
+        // Si hay exactamente 1 variante, asociarla al producto
+        if (variantsWithLicense.length === 1) {
+          expandedByLicense.push({
+            ...product,
+            _selectedVariant: variantsWithLicense[0],
+            _variantIndex: 0,
+          });
+        } else {
+          expandedByLicense.push(product);
+        }
+        continue;
+      }
+
+      // Crear una tarjeta por cada variante de licencia (solo si hay múltiples)
+      for (let i = 0; i < variantsWithLicense.length; i++) {
+        const variant = variantsWithLicense[i];
+        expandedByLicense.push({
+          ...product,
+          _selectedVariant: variant,
+          _variantIndex: i,
+        });
+      }
+    }
+
+    productsToRender = expandedByLicense;
+    console.log("🔄 [Expansión Licencias] Resultado:", {
+      productosAntes: filteredProducts.length,
+      tarjetasExpandidas: expandedByLicense.length
+    });
+  }
+
   const productCount = productsToRender.length;
   console.log("✅ [ListOfProducts] total a renderizar:", productCount);
   logRecargaSummary("FINAL (ANTES DE RENDER)", filteredProducts);
@@ -734,7 +876,19 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             };
             
             const variant = isTimProvider ? getVariantForRegion() : product.variants?.[0];
-            const variantId = isTim ? variant?.id : undefined;
+            
+            // Para TIM usamos el id de la variante de región, para Apps/Sistemas/Router usamos la variante de licencia
+            let variantId: number | undefined = isTim ? variant?.id : undefined;
+            
+            // Si es producto expandido por licencia (Apps, Sistemas, Router), usar su _selectedVariant
+            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38) && product._selectedVariant) {
+              variantId = (product._selectedVariant as any).id;
+            }
+            
+            // Si es producto SIM Encriptadas expandido, usar su _selectedVariant
+            if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
+              variantId = (product._selectedVariant as any).id;
+            }
 
             // Para TIM, usar el cost de la variante correspondiente a la región
             const effectivePlanDataAmount = isTimProvider && variant
@@ -767,18 +921,104 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               priceToShow = Number(variant.cost);
             }
 
+            // Para productos de Apps/Sistemas/Router expandidos, usar el precio de la variante de licencia
+            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38) && product._selectedVariant) {
+              const variantPrice = (product._selectedVariant as any).price;
+              if (variantPrice) {
+                priceToShow = Number(variantPrice);
+              }
+            }
+
+            // Para productos SIM Encriptadas expandidos, usar el precio de la variante
+            if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
+              const variantPrice = (product._selectedVariant as any).price ?? (product._selectedVariant as any).cost;
+              if (variantPrice) {
+                priceToShow = Number(variantPrice);
+              }
+            }
+
             // 🔑 NUEVA KEY: siempre única en cada render (incluye variantId para expansión TIM)
             const variantIdForKey = product._selectedVariant?.id || "";
             const key = `prod-${product.id ?? "noid"}-${variantIdForKey || index}`;
 
             // Construir badges: TIM usa buildTimBadges, Encriptados Minutos usa tag de variante
+            // Apps (38), Sistemas (35) y Router (36) usan licensetime para mostrar meses
+            // SIM Encriptadas expandidas usan el tag de la variante (minutos, GB, etc.)
             let badges: TimBadges | undefined;
             if (showTimBadges) {
               badges = buildTimBadges(product);
+            } else if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
+              // SIM Encriptadas expandidas: usar el tag de la variante
+              const selectedVar = product._selectedVariant as any;
+              // Buscar minutos: puede venir como minutes, o calcularse del precio
+              let minutesValue = selectedVar.minutes;
+              if (!minutesValue && selectedVar.price) {
+                // Mapeo de precios a minutos basado en los datos conocidos
+                const priceToMinutesMap: Record<number, number> = {
+                  200: 100,
+                  500: 250,
+                  1000: 500,
+                };
+                minutesValue = priceToMinutesMap[Number(selectedVar.price)];
+              }
+              
+              const tag = minutesValue 
+                ? `${minutesValue} min`
+                : selectedVar.gb 
+                  ? selectedVar.gb 
+                  : selectedVar.name || undefined;
+              if (tag) {
+                badges = { tag };
+              }
             } else if (isEncryptedMinutes) {
               const minutesTag = getMinutesTag();
               if (minutesTag) {
                 badges = { tag: minutesTag };
+              }
+            } else if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38) {
+              // Para Apps, Sistemas y Router: mostrar licencia en meses
+              // Si el producto fue expandido, usar la variante seleccionada
+              const getLicenseTag = (): string | undefined => {
+                // Si hay una variante seleccionada (del proceso de expansión), usarla
+                if (product._selectedVariant) {
+                  const time = (product._selectedVariant as any).licensetime;
+                  if (time) {
+                    if (time === "0" || time === "Única") return "Única";
+                    return `${time} Meses`;
+                  }
+                }
+                
+                // Fallback: buscar en variantes (no debería llegar aquí si se expandió)
+                const variants = product.variants ?? [];
+                const licenseVariants = (product as any).licenseVariants ?? [];
+                
+                // Si hay variantes con licensetime, usar la primera
+                if (variants.length > 0 && variants[0]?.licensetime) {
+                  const time = variants[0].licensetime;
+                  if (time === "0" || time === "Única") return "Única";
+                  return `${time} Meses`;
+                }
+                
+                // Si hay licenseVariants, usar la primera
+                if (licenseVariants.length > 0 && licenseVariants[0]?.licensetime) {
+                  const time = licenseVariants[0].licensetime;
+                  if (time === "0" || time === "Única") return "Única";
+                  return `${time} Meses`;
+                }
+                
+                // Fallback al licensetime del producto
+                const productLicense = product.licensetime;
+                if (productLicense && productLicense !== "0" && productLicense !== "") {
+                  if (productLicense === "Única") return "Única";
+                  return `${productLicense} Meses`;
+                }
+                
+                return undefined;
+              };
+              
+              const licenseTag = getLicenseTag();
+              if (licenseTag) {
+                badges = { tag: licenseTag };
               }
             }
 
