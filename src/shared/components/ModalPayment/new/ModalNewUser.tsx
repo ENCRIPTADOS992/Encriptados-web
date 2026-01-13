@@ -27,7 +27,7 @@ type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 
 export default function ModalNewUser() {
   const { params, openModal, closeModal } = useModalPayment();
-  const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
+  const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
   const { payUserId, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
 
@@ -52,7 +52,15 @@ export default function ModalNewUser() {
   const [userChangedVariant, setUserChangedVariant] = React.useState(false);
 
   React.useEffect(() => {
-    // Si hay un initialPrice, buscar la variante que coincida con ese precio
+    // Prioridad 1: Si hay variantId, usarlo directamente
+    if (variantId != null && variants.length > 0) {
+      const matchingVariant = variants.find((v) => v.id === variantId);
+      if (matchingVariant) {
+        setSelectedVariant(matchingVariant);
+        return;
+      }
+    }
+    // Prioridad 2: Si hay un initialPrice, buscar la variante que coincida con ese precio
     if (initialPrice != null && initialPrice > 0 && variants.length > 0) {
       const matchingVariant = variants.find((v) => v.price === initialPrice);
       if (matchingVariant) {
@@ -62,7 +70,7 @@ export default function ModalNewUser() {
     }
     // Si no hay match o no hay initialPrice, usar el primero
     setSelectedVariant(variants.length ? variants[0] : null);
-  }, [product, initialPrice]);
+  }, [product, initialPrice, variantId]);
 
   const unitPrice =
     (variants.length ? selectedVariant?.price ?? variants[0]?.price : Number(product?.price)) || 0;
