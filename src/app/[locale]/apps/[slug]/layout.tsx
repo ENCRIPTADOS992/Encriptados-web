@@ -68,9 +68,12 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       "vault-chat-v2": "/meta-image/sistemas/vaultchat.png",
       "dec-secure": "/meta-image/sistemas/dec-secure.png",
       "intactphone": "/meta-image/sistemas/intactphone.png",
+      "intact-phone": "/meta-image/sistemas/intactphone.png",
       "renati": "/meta-image/sistemas/renati.png",
       "securecrypt": "/meta-image/sistemas/securecrypt.png",
+      "secure-crypt": "/meta-image/sistemas/securecrypt.png",
       "ultra-x": "/meta-image/sistemas/ultra-x.png",
+      "ultrax": "/meta-image/sistemas/ultra-x.png",
     };
 
     // Obtener imagen de metadatos

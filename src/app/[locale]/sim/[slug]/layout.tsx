@@ -44,25 +44,34 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     const productDescription = product.description || "Descubre este producto SIM en Encriptados";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
-    // Determinar imagen de metadatos basada en el provider y slug del producto
-    const provider = product.provider || "encriptados"; // Puede ser "tim" o "encriptados"
+    // DERIVAR family y format desde los campos del backend (ÚNICA FUENTE DE VERDAD)
+    // provider: "Sim Encriptados" → family = "encrypted"
+    // provider: "Sim TIM" → family = "tim"
+    const providerLower = (product.provider || "").toLowerCase();
+    const family = providerLower.includes("encript") ? "encrypted" : "tim";
     
+    // type_product: "Fisico" → format = "physical"
+    // type_product: "Digital" → format = "digital"
+    const typeProductLower = (product.type_product || "").toLowerCase();
+    const format = typeProductLower === "digital" ? "digital" : "physical";
+    
+    // Seleccionar imagen basada en family + format (derivado del backend, NO del slug de URL)
     let metaImage: string;
     
-    if (provider === "tim") {
-      // Productos TIM: tim-fisica.png, tim-esim-datos.png
-      if (slug === "esim-tim") {
+    if (family === "tim") {
+      // Productos TIM
+      if (format === "digital") {
         metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
       } else {
-        // tim-sim
+        // physical
         metaImage = "/meta-image/sim-tim/tim-fisica.png";
       }
     } else {
-      // Productos Encriptados: encriptados-sim-fisica.png, encriptados-esim.png
-      if (slug === "esim-encriptada") {
+      // Productos Encriptados
+      if (format === "digital") {
         metaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
       } else {
-        // sim-encriptada
+        // physical
         metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
       }
     }

@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
-import { getShareConfigByProductId } from "@/shared/constants/shareConfig";
 
 interface Props {
   params: { locale: string };
@@ -12,31 +11,35 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
 
   try {
-    // Obtener configuración de compartir para TIM SIM
-    const shareConfig = getShareConfigByProductId(448); // TIM SIM Física
+    // ID correcto para TIM SIM Física según simProductConfig.ts
+    const TIM_SIM_PRODUCT_ID = 59835;
     
-    if (!shareConfig) {
-      return {
-        title: "TIM SIM | Encriptados",
-        description: "Descubre las opciones de SIM TIM en Encriptados",
-      };
-    }
-
-    // Obtener datos del producto desde la API si es necesario
+    // Obtener datos del producto desde la API
     let product;
     try {
-      product = await getProductById(String(shareConfig.productId), locale || "es");
-    } catch (err) {
-      // Si falla, usamos la configuración de shareConfig
+      product = await getProductById(String(TIM_SIM_PRODUCT_ID), locale || "es");
+    } catch {
+      // Si falla, usamos valores por defecto
     }
 
     // Preparar metadatos
-    const productName = product?.name || shareConfig.name;
-    const productDescription = product?.description || shareConfig.description;
+    const productName = product?.name || "TIM SIM";
+    const productDescription = product?.description || "Descubre las opciones de SIM TIM en Encriptados";
     const productUrl = `${baseUrl}/${locale}/tim-sim`;
 
-    // Usar imagen de metadatos específica para TIM SIM
-    let metaImage = "/meta-image/sim-tim/tim-fisica.png";
+    // Derivar imagen basada en provider del backend (ÚNICA fuente de verdad)
+    const providerLower = (product?.provider || "").toLowerCase();
+    const typeProductLower = (product?.type_product || "").toLowerCase();
+    const isTim = providerLower.includes("tim");
+    const isDigital = typeProductLower === "digital";
+    
+    // Seleccionar imagen según provider y type_product del backend
+    let metaImage: string;
+    if (isTim) {
+      metaImage = isDigital ? "/meta-image/sim-tim/tim-esim-datos.png" : "/meta-image/sim-tim/tim-fisica.png";
+    } else {
+      metaImage = isDigital ? "/meta-image/sim-encriptados/encriptados-esim.png" : "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
+    }
     
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
