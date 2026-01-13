@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
           },
         ],
         locale: locale || "es",
-        type: "product",
+        type: "website",
       },
       twitter: {
         card: "summary_large_image",
