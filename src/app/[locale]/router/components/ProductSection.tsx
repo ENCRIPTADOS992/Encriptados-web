@@ -62,10 +62,15 @@ const ProductSection: React.FC<ProductSectionProps> = ({
       return;
     }
 
+    // Extraer precio numérico del string price
+    const match = price?.match(/[\d.]+/);
+    const numericPrice = match ? parseFloat(match[0]) : undefined;
+
     openModal({
       productid: String(productId),
       languageCode,
       selectedOption: Number(selectedOption ?? 0),
+      initialPrice: numericPrice,
     });
   };
 

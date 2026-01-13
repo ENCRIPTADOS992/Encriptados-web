@@ -35,13 +35,15 @@ const ProductBenefitsGridMobile: React.FC<ProductBenefitsGridMobileProps> = ({
                 gap-[14px] mx-auto
               "
             >
-              <img
-                src={benefit.icon}
-                alt={benefit.title}
-                className="w-[44px] h-[44px]"
-                draggable={false}
-                loading="lazy"
-              />
+              <div className="bg-[#323232] rounded-[8.38px] p-2 w-fit">
+                <img
+                  src={benefit.icon}
+                  alt={benefit.title}
+                  className="w-8 h-8"
+                  draggable={false}
+                  loading="lazy"
+                />
+              </div>
               <h4 className="font-inter font-semibold text-[18px] text-white leading-[22px]">
                 {benefit.title}
               </h4>

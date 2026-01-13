@@ -7,6 +7,7 @@ import MegaMenu from "./HeaderComponents/MegaMenu";
 import MobileMenu from "./HeaderComponents/MobileMenu";
 import LanguageDropdown from "./HeaderComponents/LanguageSelector";
 import EncryptedLogo from "./HeaderComponents/EncryptedLogo";
+import ProductSearch from "./HeaderComponents/ProductSearch";
 import Link from "next/link";
 import {
   useTranslatedProductsCategories,
@@ -91,14 +92,21 @@ export default function EncryptedHeader() {
   return (
     <header className="relative z-50" ref={headerRef}>
       <div className="bg-[#151515] border-b border-[#1A1A1A]">
-        <SectionWrapper className="py-4">
-          <nav className="flex items-center justify-between">
-            <div className="flex flex-row">
+        <SectionWrapper maxWidth="header" className="py-4">
+          <nav className="flex items-center justify-between gap-4">
+            {/* Logo y Selector de idioma */}
+            <div className="flex flex-row items-center flex-shrink-0">
               <EncryptedLogo />
               <LanguageDropdown />
             </div>
 
-            <div className="hidden lg:flex items-center gap-0">
+            {/* Buscador de productos - Centro */}
+            <div className="flex-1 max-w-[400px] mx-4">
+              <ProductSearch />
+            </div>
+
+            {/* Navegación - Derecha */}
+            <div className="hidden lg:flex items-center gap-0 flex-shrink-0">
               <Link
                 href="/"
                 prefetch

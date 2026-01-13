@@ -1,0 +1,259 @@
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
+import { Check } from "lucide-react";
+import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
+import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
+import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
+import Button from "@/shared/components/Button";
+import TelegramButton from "@/shared/components/TelegramButton";
+import ShoppingCart from "@/shared/svgs/ShoppingCart";
+import SimIconSvg from "@/shared/svgs/SimIconSvg";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
+
+interface ProductInfoSectionProps {
+  productName: string;
+  productImage: string;
+  features: string[];
+  price: string;
+  onBuy: () => void;
+  appStoreUrl?: string;
+  googlePlayUrl?: string;
+  apkUrl?: string;
+  translations?: {
+    priceFrom?: string;
+    buyNow?: string;
+    benefitsTitle?: string;
+  };
+}
+
+// Variantes de animación
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const textVariants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, x: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
+const featureVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+};
+
+const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
+  productName,
+  productImage,
+  features,
+  price,
+  onBuy,
+  appStoreUrl,
+  googlePlayUrl,
+  apkUrl,
+  translations,
+}) => {
+  const { isFromAppMobile } = useAppMobile();
+  
+  const t = {
+    priceFrom: translations?.priceFrom || "Desde",
+    buyNow: translations?.buyNow || "Comprar Ahora",
+    benefitsTitle: translations?.benefitsTitle || "Características principales",
+  };
+
+  const hasStoreLinks = appStoreUrl || googlePlayUrl || apkUrl;
+
+  return (
+    <section className="bg-white py-10 sm:py-12 lg:py-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Product Image - Primera en móvil, segunda en desktop */}
+          <motion.div className="space-y-4 order-1 lg:order-2" variants={imageVariants}>
+            {/* Product Image */}
+            <div className="rounded-2xl overflow-hidden bg-[#1a1a1a]">
+              <motion.img
+                src={productImage}
+                alt={productName}
+                className="w-full h-auto object-contain"
+                draggable={false}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+
+            {/* Download Buttons - Ocultos en móvil, visibles en desktop */}
+            {hasStoreLinks && (
+              <motion.div 
+                className="hidden lg:grid grid-cols-3 gap-3 w-full"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+              >
+                {appStoreUrl && (
+                  <motion.a
+                    href={appStoreUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Download on App Store"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <AppStoreFooter className="w-full h-auto" />
+                  </motion.a>
+                )}
+                {googlePlayUrl && (
+                  <motion.a
+                    href={googlePlayUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Get it on Google Play"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <PlayStoreSvg className="w-full h-auto" />
+                  </motion.a>
+                )}
+                {apkUrl && (
+                  <motion.a
+                    href={apkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center hover:opacity-80 transition-opacity"
+                    aria-label="Download APK"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <DownloadApkSvg className="w-full h-auto" />
+                  </motion.a>
+                )}
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Benefits Column - Segunda en móvil, primera en desktop */}
+          <motion.div className="space-y-6 order-2 lg:order-1" variants={textVariants}>
+            {/* Icon and Title */}
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ background: "#35CDFB" }}
+              >
+                <SimIconSvg width={24} height={24} color="white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">{productName}</h2>
+            </div>
+
+            {/* Beneficios */}
+            {features.length > 0 && (
+              <div className="space-y-4">
+                <p className="text-sm text-gray-500">{t.benefitsTitle}</p>
+                <motion.ul 
+                  className="space-y-2"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } }
+                  }}
+                >
+                  {features.map((feature, idx) => (
+                    <motion.li 
+                      key={idx} 
+                      className="flex items-center gap-2"
+                      variants={featureVariants}
+                    >
+                      <Check className="w-5 h-5 text-gray-900 flex-shrink-0" />
+                      <span className="font-medium text-gray-900">{feature}</span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </div>
+            )}
+
+            {/* Línea punteada separadora */}
+            <motion.hr 
+              className="border-dashed border-gray-300"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.35, duration: 0.4 }}
+              style={{ originX: 0 }}
+            />
+
+            {/* Precio */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+            >
+              <p className="text-sm text-gray-500 mb-1">{t.priceFrom}</p>
+              <p className="text-4xl font-bold text-gray-900 mb-6">{price}</p>
+
+              {/* Botones - Ocultos cuando viene de app_mobile */}
+              {!isFromAppMobile && (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full sm:w-auto"
+                  >
+                    <Button
+                      intent="dark"
+                      size="md"
+                      onClick={onBuy}
+                      icon={<ShoppingCart color="white" height={20} width={20} />}
+                      iconPosition="right"
+                      className="w-full"
+                    >
+                      {t.buyNow}
+                    </Button>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full sm:w-auto"
+                  >
+                    <TelegramButton className="w-full" />
+                  </motion.div>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default ProductInfoSection;

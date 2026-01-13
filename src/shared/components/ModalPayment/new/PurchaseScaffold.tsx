@@ -4,10 +4,9 @@
 import React from "react";
 import Image from "next/image";
 import PurchaseHeader from "./PurchaseHeader";
-import PurchaseTabs, { Mode } from "./PurchaseTabs";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
 
-type UIMode = Mode | "sim";
+type UIMode = "new_user" | "roning_code" | "recharge" | "sim";
 
 const TelegramButton =
   TelegramButtonOriginal as unknown as React.ComponentType<{
@@ -42,13 +41,7 @@ export default function PurchaseScaffold({
   return (
     <div className={`flex flex-col gap-3 ${className ?? ""}`}>
       <PurchaseHeader {...headerProps} />
-      {mode !== "sim" && (
-        <PurchaseTabs
-          active={mode}
-          enableSwitching={enableTabSwitch}
-          onSelect={onSelectMode as any}
-        />
-      )}
+      {/* Tabs are now handled inside UnifiedPurchaseForm based on formPolicy */}
 
       {children}
 

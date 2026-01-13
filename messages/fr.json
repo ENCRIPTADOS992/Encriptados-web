@@ -227,6 +227,26 @@
     }
   },
   "EncryptedSimPage": {
+    "SimTimBanner": {
+      "title": "Connectez-vous depuis n'importe où",
+      "titleHighlight": "dans le monde avec un anonymat total",
+      "subtitle": "Vos données n'expirent jamais, peu importe le temps que vous mettez à les utiliser",
+      "personAlt": "Personne heureuse",
+      "features": {
+        "anonymity": "Anonymat",
+        "anonymityHighlight": "total",
+        "payForUse": "Payez pour",
+        "payForUseHighlight": "ce que vous utilisez",
+        "compatible": "Compatible:",
+        "compatibleHighlight": "iOS et Android",
+        "coverage": "Couverture dans",
+        "coverageHighlight": "175 pays",
+        "noExpiry": "Vos données",
+        "noExpiryHighlight": "n'expirent pas",
+        "instantActivation": "Activation",
+        "instantActivationHighlight": "instantanée"
+      }
+    },
     "connectAllWorldTitle": "Connectez-vous dans le monde entier",
     "totalSecurityTitle": "avec une sécurité totale dans vos communications",
     "addYourSimSubtitle": "Obtenez votre SIM/eSIM avec des données mobiles et profitez d'un anonymat total dans les appels, filtres, changements d'IMSI et plus encore",
@@ -619,6 +639,48 @@
       "licenseTitle": "Durée de licence",
       "selectPlacerholder": "Sélectionner",
       "searchPlaceholder": "Chercher"
+    },
+    "simCards": {
+      "encrypted": {
+        "title": "Carte SIM Cryptée",
+        "description": "Protégez-vous des cybercriminels et gardez vos informations personnelles en sécurité"
+      },
+      "tim": {
+        "title": "SIM TIM Connectez-vous avec un anonymat total",
+        "description": "Vos données n'expirent jamais, peu importe le temps que vous mettez à les consommer"
+      },
+      "buyButton": "Acheter ici",
+      "moreInfo": "Plus d'informations"
+    },
+    "silentCircle": {
+      "badge": "Silent Circle",
+      "title": "Silent Phone",
+      "description": "Développée par des experts en technologie mobile, cette application protège vos données avec une sécurité maximale à tout moment.",
+      "cta": "Achetez votre Silent Phone ici facilement et sans complications",
+      "moreInfo": "Plus d'informations"
+    },
+    "smsBanner": {
+      "title": "Activez des Apps par SMS avec Encriptados",
+      "subtitle": "Inscrivez-vous à n'importe quelle application avec un numéro de téléphone virtuel",
+      "note": "*Un numéro colombien est généré",
+      "button": "Acheter maintenant"
+    },
+    "secureMdm": {
+      "badge": "Sécurité de bout en bout",
+      "title": "Systèmes cryptés avec sécurité chiffrée",
+      "fromPrice": "À partir de",
+      "consultPrice": "Consultez nos prix",
+      "buy": "Acheter",
+      "moreInfo": "Plus d'informations"
+    },
+    "secureCommunication": {
+      "title": "Nous sommes spécialistes en solutions de communication sécurisée :",
+      "checks": {
+        "item1": "Téléphones Sécurisés",
+        "item2": "Cartes SIM Cryptées",
+        "item3": "Protection de Niveau Entreprise",
+        "item4": "Systèmes de Sécurité Éprouvés"
+      }
     },
     "productCard": {
       "buy": "Acheter",
@@ -1149,6 +1211,37 @@
   },
   "RechargeSim": {
     "errorInput": "Doit être un numéro de téléphone valide avec au moins 6 chiffres."
+  },
+  "appsShared": {
+    "encryptedSim": {
+      "title": "Carte SIM cryptée",
+      "description": "Protégez-vous des cybercriminels et gardez vos informations personnelles en sécurité",
+      "button": "Acheter",
+      "link": "Plus d'informations"
+    },
+    "simDataPlans": {
+      "title": "E-SIM Cryptée",
+      "subtitle": "Connectivité mondiale sécurisée",
+      "button": "Voir plus"
+    },
+    "productTemplate": {
+      "license": "Licence",
+      "licenseMonths": "{count} {count, plural, one {Mois} other {Mois}}",
+      "licenseUnique": "Unique",
+      "priceFrom": "À partir de",
+      "priceConsult": "Consulter le prix",
+      "buyNow": "Acheter maintenant",
+      "selectPlan": "Sélectionnez un forfait",
+      "downloadAppStore": "Télécharger sur l'App Store",
+      "downloadGooglePlay": "Télécharger sur Google Play",
+      "faqTitle": "Questions fréquentes",
+      "featuresTitle": "Caractéristiques principales",
+      "securityFeaturesTitle": "Fonctionnalités de sécurité de {productName}",
+      "videoTitle": "{productName}, votre application de communication sécurisée",
+      "productNotAvailable": "Ce produit n'est pas encore disponible dans le catalogue.",
+      "productComingSoon": "Ce produit sera ajouté prochainement.",
+      "productLoadError": "Impossible de charger les informations du produit."
+    }
   },
   "ThreemaPage": {
     "product": {
@@ -2362,5 +2455,47 @@
         }
       ]
     }
+  }
+,
+  "paymentModal": {
+    "purchaseDetails": "Détails de l'achat",
+    "quantity": "Quantité",
+    "license": "Licence",
+    "months": "Mois",
+    "totalToPay": "Total à payer",
+    "enterPromoCode": "Entrez un code promo",
+    "apply": "Appliquer",
+    "share": "Partager",
+    "paymentMethod": "Méthode de paiement",
+    "creditCard": "Carte de crédit",
+    "cryptocurrency": "Cryptomonnaies",
+    "payNow": "Payer maintenant",
+    "continue": "Continuer",
+    "confirmPayment": "Confirmer le paiement",
+    "processing": "Traitement en cours",
+    "acceptTerms": "J'accepte les",
+    "termsAndConditions": "termes et conditions",
+    "ofPurchase": "de l'achat",
+    "emailLabel": "Email pour recevoir la licence",
+    "emailLabelRoning": "Email pour recevoir mon code Roning",
+    "emailPlaceholder": "Email",
+    "cardholderName": "Nom du titulaire",
+    "postalCode": "Code postal",
+    "loadingPaymentForm": "Chargement du formulaire de paiement...",
+    "licenseQuestion": "Comment voulez-vous recevoir votre licence ?",
+    "newLicense": "Nouvelle licence",
+    "renewLicense": "Renouveler licence",
+    "wantMyUser": "Je veux mon utilisateur",
+    "roningCode": "Code RONING",
+    "recharge": "Recharger",
+    "suggestedUsernames": "Entrez les noms d'utilisateur suggérés",
+    "usernameHint": "Vous pouvez suggérer des noms d'utilisateur avec un minimum de 4 caractères et un maximum de 20 caractères alphanumériques.",
+    "usernamePlaceholder": "Entrez un nom d'utilisateur",
+    "rechargeTitle": "Si vous voulez recharger",
+    "rechargeSubtitle": "contactez-nous",
+    "goToTelegram": "Aller sur Telegram",
+    "linkCopied": "Lien copié dans le presse-papiers",
+    "includeEsim": "Inclure eSIM",
+    "shipping": "Livraison"
   }
 }

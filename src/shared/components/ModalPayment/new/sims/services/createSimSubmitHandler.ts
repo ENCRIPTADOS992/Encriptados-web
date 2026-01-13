@@ -9,8 +9,15 @@ import {
   type FormType,
   type TottoliCheckoutPayload,
   type TottoliMethod,
+  type SuccessPaymentData,
 } from "../types/modalSimTypes";
 import { tottoliCheckout } from "@/features/products/payments/tottoliCheckout";
+import {
+  deriveProductFamily,
+  deriveProductFormat,
+  deriveProductSlug,
+  hydrateCanonicalPath,
+} from "@/app/[locale]/sim/[slug]/simProductConfig";
 
 type Params = {
   formType: FormType;
@@ -30,6 +37,7 @@ type Params = {
     currency: string;
     metadata?: Record<string, any>;
   }) => Promise<any>;
+  onSuccess?: (data: SuccessPaymentData) => void;
 };
 
 export function createSimSubmitHandler({
@@ -43,6 +51,7 @@ export function createSimSubmitHandler({
   selectedPlanId,
   stripeConfirm,
   payUserId,
+  onSuccess,
 }: Params) {
   return async function handleSubmit(data: Shipping) {
     console.log("[createSimSubmitHandler] submit 👉", {
@@ -69,7 +78,9 @@ export function createSimSubmitHandler({
       product?.provider || product?.brand || ""
     ).toLowerCase();
     const isEncryptedProvider = providerName.includes("encript");
+    const isTimProvider = providerName.includes("tim");
 
+    // Productos que van por Tottoli (Encrypted)
     const isTottoliSim =
       isEncryptedProvider &&
       (formType === "encrypted_esim" ||
@@ -78,10 +89,17 @@ export function createSimSubmitHandler({
         formType === "encrypted_physical" ||
         formType === "encrypted_esimData");
 
+    // Productos TIM (física o eSIM)
+    const isTimSim =
+      isTimProvider &&
+      (formType === "tim_physical" || formType === "tim_esim");
+
     console.log("[createSimSubmitHandler] provider / flags", {
       providerName,
       isEncryptedProvider,
+      isTimProvider,
       isTottoliSim,
+      isTimSim,
       formType,
     });
 
@@ -186,7 +204,16 @@ export function createSimSubmitHandler({
           );
 
           if (confirmRes?.status === "succeeded") {
-            alert("Pago realizado correctamente 🎉");
+            const paymentIntent = confirmRes.intent || confirmRes.paymentIntent;
+            onSuccess?.({
+              intent: {
+                id: paymentIntent?.id || (res as any).provider_ref || "unknown",
+                amount: amountUsd * 100, // convertir a centavos
+                currency: "usd",
+                created: Math.floor(Date.now() / 1000),
+              },
+              orderId: (res as any).order_id || null,
+            });
             return;
           }
 
@@ -242,6 +269,12 @@ export function createSimSubmitHandler({
       const provider: PayProvider =
         data.method === "card" ? "stripe" : "kriptomus";
 
+      // Derivar valores para metadata
+      const productFamily = deriveProductFamily(product?.provider || product?.brand);
+      const productFormat = deriveProductFormat(product?.type_product);
+      const slug = deriveProductSlug(productFamily, productFormat);
+      const canonicalPath = hydrateCanonicalPath(slug);
+
       await payUserId({
         productId: productIdNum,
         email: data.email,
@@ -249,7 +282,11 @@ export function createSimSubmitHandler({
         amount: amountUsd,
         currency: "USD",
         metadata: {
-          type: "SIM_GENERIC",
+          type: formType,
+          productFamily,
+          productFormat,
+          slug,
+          sourcePage: canonicalPath,
           telegram: data.telegram,
           fullName: data.fullName,
           address: data.address,

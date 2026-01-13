@@ -6,6 +6,7 @@ import CardSimEsim from "./svgs/CardSimEsim";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useRouter, usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface CardOurProductsProps {
   filters: ProductFilters;
@@ -15,6 +16,7 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
   const { openModal } = useModalPayment();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("OurProductsPage.simCards");
 
   const buildSimMoreInfoUrl = (productId: string) => {
     const basePath = `/our-products/sim-more-info?productId=${productId}`;
@@ -45,16 +47,16 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
     <div className="relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1">
       {/* SIM Encriptada → productId = 508 */}
       <CardSimEsim
-        title="SIM Card encriptada"
-        description="Protegete de los ciberdelincuentes y mantén tu información personal segura"
+        title={t("encrypted.title")}
+        description={t("encrypted.description")}
         imageSrc={SimMinutosDatos.src}
         altText="Sim Card"
         background="bg-custom-gradient-our-products-black"
         titleColor="text-white"
         descriptionColor="text-white"
         showMoreInfo={true}
-        buyText="Comprar aquí"
-        moreInfoText="Más información"
+        buyText={t("buyButton")}
+        moreInfoText={t("moreInfo")}
         moreInfoColor="text-[#10B4E7]"
         onBuyClick={() => handleBuy("508")}
         moreInfoUrl="/our-products/sim-more-info?productId=508"
@@ -63,15 +65,15 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
 
       {/* SIM TIM → productId = 454 */}
       <CardSimEsim
-        title="SIM TIM Conéctate con total anonimato"
-        description="Tus datos no expiran sin importar el tiempo que tardes en consumirlos"
+        title={t("tim.title")}
+        description={t("tim.description")}
         imageSrc={EsimMinutosDatos.src}
         altText="eSim"
         background="bg-custom-gradient-our-sim-blue2"
         titleColor="text-black"
         descriptionColor="text-black"
-        buyText="Comprar aquí"
-        moreInfoText="Más información"
+        buyText={t("buyButton")}
+        moreInfoText={t("moreInfo")}
         moreInfoColor="text-black"
         onBuyClick={() => handleBuy("454")}
         moreInfoUrl="/our-products/sim-more-info?productId=454"

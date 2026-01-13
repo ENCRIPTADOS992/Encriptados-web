@@ -7,7 +7,6 @@ import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
 import RoutersBarIcon from "./icons/RoutersBarIcon";
-import SearchProduct from "./SearchProduct";
 import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterProviderServices from "./FilterProviderServices";
 import FilterRegionCountry from "./FilterRegionCountry";
@@ -225,8 +224,8 @@ export default function FilterProductsBar({
           />
         </div>
 
-        {/* Subfiltros + búsqueda */}
-        <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-end xl:justify-between">
+        {/* Subfiltros */}
+        <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-end xl:justify-start">
           <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1">
             {subfilters.map((child, idx) => {
               const element = React.isValidElement(child) ? child : null;
@@ -246,14 +245,6 @@ export default function FilterProductsBar({
                 </div>
               );
             })}
-          </div>
-
-          <div className="w-full mt-2 xl:mt-0 xl:w-56 xl:ml-auto">
-            <SearchProduct
-              name="searchinputproduct"
-              placeholder={t("filterProducts.searchPlaceholder")}
-              containerClassName="w-full"
-            />
           </div>
         </div>
       </div>

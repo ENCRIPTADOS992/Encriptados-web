@@ -6,6 +6,7 @@ import type { Product } from "@/features/products/types/AllProductsResponse";
 import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
 import Button from "@/shared/components/Button";
+import { useTranslations } from "next-intl";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -20,6 +21,7 @@ const toNumber = (v?: string | number | null) => {
 
 const BannerSecureMdmNew = () => {
   const { data: products } = useGetProducts(35, "all");
+  const t = useTranslations("OurProductsPage.secureMdm");
 
   const filteredPhones: Product[] =
     products?.filter((p: Product) =>
@@ -63,7 +65,7 @@ const BannerSecureMdmNew = () => {
         {/* Texto */}
         <div className="lg:flex-[0_0_320px] w-full flex flex-col items-center md:items-start lg:mr-12 xl:mr-20 space-y-3 md:space-y-4">
           <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-3 sm:px-4 py-1 rounded-full text-xs font-semibold">
-            Seguridad de inicio a fin
+            {t("badge")}
           </div>
           
           <Typography 
@@ -71,8 +73,7 @@ const BannerSecureMdmNew = () => {
             as="h2" 
             className="text-2xl md:text-3xl lg:text-[38px] leading-tight md:leading-snug text-center md:text-left"
           >
-            Sistemas encriptados <br className="hidden md:block" /> 
-            <span className="md:inline"> </span>con seguridad cifrada
+            {t("title")}
           </Typography>
         </div>
 
@@ -120,8 +121,8 @@ const BannerSecureMdmNew = () => {
                         className="text-sm"
                       >
                         {card.price !== null
-                          ? `Desde ${card.price} ${card.currency}`
-                          : "Consulta nuestros precios"}
+                          ? `${t("fromPrice")} ${card.price} ${card.currency}`
+                          : t("consultPrice")}
                       </Paragraph>
                     </div>
 
@@ -132,7 +133,7 @@ const BannerSecureMdmNew = () => {
                         onClick={() => window.location.href = card.buyUrl}
                         className="flex-1 max-w-[124px]"
                       >
-                        Comprar
+                        {t("buy")}
                       </Button>
 
                       <Button
@@ -141,7 +142,7 @@ const BannerSecureMdmNew = () => {
                         onClick={() => window.location.href = card.infoUrl}
                         className="text-white/90 hover:text-white text-sm"
                       >
-                        Más información
+                        {t("moreInfo")}
                       </Button>
                     </div>
                   </div>

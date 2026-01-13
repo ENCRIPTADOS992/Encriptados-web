@@ -1,8 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClientProviders } from "@/shared/components/Providers";
-import { ModalPaymentProvider } from "@/providers/ModalPaymentProvider";
-import ModalPaymentController from "@/shared/components/ModalPayment/ModalPaymentController";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,12 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientProviders>
-          {/* Solo un ModalPaymentProvider para la ventana de pagos */}
-          <ModalPaymentProvider>
-            {children}
-            {/* Aquí montamos el “controller” que escucha isModalOpen */}
-              <ModalPaymentController />
-          </ModalPaymentProvider>
+          {children}
         </ClientProviders>
       </body>
     </html>

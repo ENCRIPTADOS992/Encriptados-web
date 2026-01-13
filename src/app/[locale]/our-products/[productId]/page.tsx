@@ -1,3 +1,14 @@
+/**
+ * Página de Producto por ID
+ * 
+ * ⚠️ IMPORTANTE: Esta ruta se usa SOLO para productos SIM (categoría 40)
+ * 
+ * Para Apps, Software y Router usar:
+ * - Apps/Software: /apps/[slug]  
+ * - Router: /router
+ * 
+ * Ver productConfig.ts para la lista de slugs disponibles
+ */
 import React from "react";
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
@@ -13,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const product = await getProductById(productId, locale || "es");
     const productName = product?.name || "Producto";
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://encriptados.com";
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
     
     // Obtener la imagen del producto y asegurar que sea URL absoluta
     let productImage = product?.images?.[0]?.src || "/images/default-product.png";

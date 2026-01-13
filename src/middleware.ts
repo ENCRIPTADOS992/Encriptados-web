@@ -9,6 +9,14 @@ const intlMiddleware = createMiddleware(routing);
 export async function middleware(
   request: NextRequest
 ): Promise<NextResponse | undefined> {
+  // Protección contra rutas inválidas con "/null" o "/undefined"
+  const pathname = request.nextUrl.pathname;
+  if (pathname.endsWith("/null") || pathname.endsWith("/undefined") || 
+      pathname.includes("/null/") || pathname.includes("/undefined/")) {
+    console.warn(`[Middleware] ⚠️ Ruta inválida detectada: ${pathname}, redirigiendo a home`);
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   // Manejo de internacionalización
   const intlResponse = await intlMiddleware(request);
 

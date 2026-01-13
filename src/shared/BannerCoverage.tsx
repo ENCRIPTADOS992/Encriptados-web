@@ -1,10 +1,9 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
-import SectionWrapper from "./components/SectionWrapper";
 
 const BannerCoverage = () => {
-  const FloatSimCard = "/images/encrypted-sim/Encrypted_world.png"; // Ruta de la imagen
+  const FloatSimCard = "/images/encrypted-sim/Encrypted_world.png";
 
   const t = useTranslations("EncryptedSimPage");
 
@@ -18,26 +17,32 @@ const BannerCoverage = () => {
         style={{ objectFit: "cover" }}
         className="z-0"
       />
-      <div className="absolute inset-0 bg-black opacity-35 z-10" />
+      
+      {/* Gradiente overlay - de negro a transparente */}
+      <div 
+        className="absolute inset-0 z-10"
+        style={{ 
+          background: "linear-gradient(90deg, #000000 22%, rgba(65, 93, 130, 0) 100%)" 
+        }}
+      />
 
-      {/* Overlay centrándose con SectionWrapper */}
-      <div className="absolute inset-0 flex items-center justify-center z-20">
-        <SectionWrapper className="text-center w-full">
-          <div className="max-w-[900px] mx-auto px-6 md:px-8">
-            <h2 className="text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] font-bold mb-4 md:mb-6">
-              <span className="bg-gradient-to-r from-white to-white bg-clip-text text-transparent">
-                {t("coverageMoreThan200CountriesTitle").split("200")[0]}
+      {/* Contenido alineado a la izquierda */}
+      <div className="absolute inset-0 flex items-center z-20">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12 w-full">
+          <div className="max-w-[500px]">
+            <h2 className="text-[28px] sm:text-[36px] md:text-[44px] lg:text-[52px] font-bold leading-[1.1] mb-3 md:mb-4">
+              <span className="text-[#33CDFB]">
+                {t("coverageMoreThan200CountriesTitle").split("más")[0]}
               </span>
-              <span className="bg-gradient-to-r from-[#33CDFB] to-[#10B4E7] bg-clip-text text-transparent">200</span>
-              <span className="bg-gradient-to-r from-white to-white bg-clip-text text-transparent">
-                {t("coverageMoreThan200CountriesTitle").split("200")[1]}
+              <span className="text-white">
+                más{t("coverageMoreThan200CountriesTitle").split("más")[1]}
               </span>
             </h2>
-            <p className="text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-white max-w-[750px] mx-auto leading-relaxed">
+            <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-gray-300 leading-relaxed">
               {t("coverageMoreThan200CountriesDescription")}
             </p>
           </div>
-        </SectionWrapper>
+        </div>
       </div>
     </div>
   );

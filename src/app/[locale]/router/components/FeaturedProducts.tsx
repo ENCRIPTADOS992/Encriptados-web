@@ -21,7 +21,7 @@ interface FeaturedProductsProps {
 
 const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
   <section className="w-full hidden lg:flex justify-center bg-[#F6FAFC] py-8">
-    <div className="flex gap-4 w-full max-w-[1272px] px-4">
+    <div className="flex gap-4 w-full max-w-[1400px] px-4">
       {/* LEFT CARD */}
       <div
         className="relative flex flex-col justify-between rounded-[34px] flex-1 min-h-[306px] px-10 py-8 overflow-hidden"

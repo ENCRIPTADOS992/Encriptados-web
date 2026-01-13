@@ -232,6 +232,26 @@
     }
   },
   "EncryptedSimPage": {
+    "SimTimBanner": {
+      "title": "Connect from anywhere",
+      "titleHighlight": "in the world with total anonymity",
+      "subtitle": "Your data never expires, no matter how long it takes you to use it",
+      "personAlt": "Happy person",
+      "features": {
+        "anonymity": "Total",
+        "anonymityHighlight": "anonymity",
+        "payForUse": "Pay for",
+        "payForUseHighlight": "what you use",
+        "compatible": "Compatible:",
+        "compatibleHighlight": "iOS & Android",
+        "coverage": "Coverage in",
+        "coverageHighlight": "175 countries",
+        "noExpiry": "Your data",
+        "noExpiryHighlight": "never expires",
+        "instantActivation": "Instant",
+        "instantActivationHighlight": "activation"
+      }
+    },
     "connectAllWorldTitle": "Connect worldwide",
     "totalSecurityTitle": "with complete security in your communications",
     "addYourSimSubtitle": "Get your SIM/eSIM with mobile data and enjoy total anonymity in calls, filters, IMSI changes, and more",
@@ -626,6 +646,48 @@
       "searchPlaceholder": "Search",
       "regionTitle": "Regiónes",
       "countryTitle": "Países"
+    },
+    "simCards": {
+      "encrypted": {
+        "title": "Encrypted SIM Card",
+        "description": "Protect yourself from cybercriminals and keep your personal information safe"
+      },
+      "tim": {
+        "title": "TIM SIM Connect with total anonymity",
+        "description": "Your data never expires no matter how long it takes you to use it"
+      },
+      "buyButton": "Buy here",
+      "moreInfo": "More information"
+    },
+    "silentCircle": {
+      "badge": "Silent Circle",
+      "title": "Silent Phone",
+      "description": "Developed by mobile technology experts, this app protects your data with maximum security at all times.",
+      "cta": "Buy your Silent Phone here easily and hassle-free",
+      "moreInfo": "More information"
+    },
+    "smsBanner": {
+      "title": "Activate Apps via SMS with Encriptados",
+      "subtitle": "Register for any app with a virtual phone number",
+      "note": "*A Colombian number is generated",
+      "button": "Buy now"
+    },
+    "secureMdm": {
+      "badge": "End-to-end security",
+      "title": "Encrypted systems with cipher security",
+      "fromPrice": "From",
+      "consultPrice": "Check our prices",
+      "buy": "Buy",
+      "moreInfo": "More information"
+    },
+    "secureCommunication": {
+      "title": "We are specialists in secure communication solutions:",
+      "checks": {
+        "item1": "Secure Phones",
+        "item2": "Encrypted SIM Cards",
+        "item3": "Enterprise-Level Protection",
+        "item4": "Proven Security Systems"
+      }
     },
     "productCard": {
       "buy": "Buy",
@@ -1142,9 +1204,28 @@
       "link": "More information"
     },
     "simDataPlans": {
-      "title": "Encrypted E-SIM Data or Minute Plans",
-      "description": "Lorem Ipsum Dolor met",
+      "title": "Encrypted E-SIM",
+      "subtitle": "Secure global connectivity",
       "button": "See more"
+    },
+    "productTemplate": {
+      "license": "License",
+      "licenseMonths": "{count} {count, plural, one {Month} other {Months}}",
+      "licenseUnique": "One-time",
+      "priceFrom": "From",
+      "priceConsult": "Contact for price",
+      "buyNow": "Buy now",
+      "selectPlan": "Select a plan",
+      "downloadAppStore": "Download on App Store",
+      "downloadGooglePlay": "Download on Google Play",
+      "faqTitle": "Frequently asked questions",
+      "featuresTitle": "Main features",
+      "benefitsTitle": "Secure your communications",
+      "securityFeaturesTitle": "Security features of {productName}",
+      "videoTitle": "{productName}, your secure communication app",
+      "productNotAvailable": "This product is not yet available in the catalog.",
+      "productComingSoon": "This product will be added soon.",
+      "productLoadError": "Could not load product information."
     }
   },
   "silentCircle": {
@@ -2894,5 +2975,46 @@
         }
       ]
     }
+  },
+  "paymentModal": {
+    "purchaseDetails": "Purchase Details",
+    "quantity": "Quantity",
+    "license": "License",
+    "months": "Months",
+    "totalToPay": "Total to pay",
+    "enterPromoCode": "Enter promo code",
+    "apply": "Apply",
+    "share": "Share",
+    "paymentMethod": "Payment method",
+    "creditCard": "Credit card",
+    "cryptocurrency": "Cryptocurrency",
+    "payNow": "Pay now",
+    "continue": "Continue",
+    "confirmPayment": "Confirm payment",
+    "processing": "Processing…",
+    "acceptTerms": "I accept",
+    "termsAndConditions": "terms and conditions",
+    "ofPurchase": "of purchase",
+    "emailLabel": "Email to receive license",
+    "emailLabelRoning": "Email to receive my Roning code",
+    "emailPlaceholder": "Email",
+    "cardholderName": "Cardholder name",
+    "postalCode": "Postal code",
+    "loadingPaymentForm": "Loading payment form...",
+    "licenseQuestion": "How do you want to receive your license?",
+    "newLicense": "New license",
+    "renewLicense": "Renew license",
+    "wantMyUser": "I want my user",
+    "roningCode": "RONING Code",
+    "recharge": "Recharge",
+    "suggestedUsernames": "Enter suggested usernames",
+    "usernameHint": "You can suggest usernames with a minimum of 4 characters and a maximum of 20 alphanumeric characters.",
+    "usernamePlaceholder": "Enter username",
+    "rechargeTitle": "If you want to recharge",
+    "rechargeSubtitle": "contact us",
+    "goToTelegram": "Go to Telegram",
+    "linkCopied": "Link copied to clipboard",
+    "includeEsim": "Include eSIM",
+    "shipping": "Shipping"
   }
 }

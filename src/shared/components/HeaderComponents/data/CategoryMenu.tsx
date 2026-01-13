@@ -1,4 +1,3 @@
-import { link } from "fs";
 import { useTranslations } from "next-intl";
 
 // Hook para obtener categorías de productos traducidas

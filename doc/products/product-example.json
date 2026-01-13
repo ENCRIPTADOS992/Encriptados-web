@@ -1,0 +1,102 @@
+{
+  "id": 122,
+  "name": "Silent Phone",
+  "description": "Es una app diseñada por las mejores mentes en tecnología móvil para proteger tus comunicaciones personales y empresariales con cifrado de extremo a extremo.",
+  
+  "category": {
+    "id": 38,
+    "name": "Apps"
+  },
+  
+  "price": "59",
+  "licensetime": "6",
+  "on_sale": false,
+  "sale_price": "",
+  
+  "image_full": "https://encriptados.es/wp-content/uploads/2025/03/Silent-Circle-Hero-Thumbnail-producto.jpg",
+  
+  "checks": [
+    { "name": "Llamadas cifradas de extremo a extremo" },
+    { "name": "Mensajes con autodestrucción" },
+    { "name": "Sin permisos de ubicación" },
+    { "name": "Protocolo SRTP con cifrado AES-256" }
+  ],
+  
+  "variants": [
+    { "id": 59801, "licensetime": "3", "price": 59, "sku": "SILENT-3M", "image": "" },
+    { "id": 59803, "licensetime": "6", "price": 99, "sku": "SILENT-6M", "image": "" },
+    { "id": 59805, "licensetime": "12", "price": 159, "sku": "SILENT-12M", "image": "" }
+  ],
+  
+  "features": [
+    {
+      "name": "Protocolo de Cifrado Único",
+      "description": "Silent Phone utiliza el protocolo ZRTP diseñado específicamente para comunicaciones de voz seguras.",
+      "image": "https://encriptados.es/wp-content/uploads/2025/06/feature-cifrado.png"
+    },
+    {
+      "name": "Verificación de Identidad",
+      "description": "Confirma la identidad de tus contactos mediante códigos de verificación únicos.",
+      "image": "https://encriptados.es/wp-content/uploads/2025/06/feature-verificacion.png"
+    }
+  ],
+  
+  "advantages": [
+    {
+      "name": "Chat Seguro",
+      "description": "Los mensajes se eliminan automáticamente después del tiempo configurado.",
+      "image": "https://encriptados.es/wp-content/uploads/2025/06/icon-chat.png"
+    },
+    {
+      "name": "Llamadas Cifradas",
+      "description": "Realiza llamadas de voz y video con cifrado de extremo a extremo.",
+      "image": "https://encriptados.es/wp-content/uploads/2025/06/icon-llamadas.png"
+    },
+    {
+      "name": "Transferencia de Archivos",
+      "description": "Comparte documentos, fotos y videos de forma segura.",
+      "image": "https://encriptados.es/wp-content/uploads/2025/06/icon-archivos.png"
+    }
+  ],
+  
+  "image_benefits": "https://encriptados.es/wp-content/uploads/2025/06/celular-con-logo-silent.png",
+  
+  "faqs": [
+    {
+      "name": "¿Qué tan segura es la aplicación?",
+      "description": "Silent Phone es una de las aplicaciones más seguras del mercado. Utiliza cifrado de extremo a extremo con el protocolo ZRTP."
+    },
+    {
+      "name": "¿Puedo usar en múltiples dispositivos?",
+      "description": "Sí, puedes vincular tu cuenta a múltiples dispositivos. Sin embargo, las llamadas activas solo pueden mantenerse en un dispositivo a la vez."
+    }
+  ],
+  
+  "heroBanners": {
+    "desktop": "https://encriptados.es/wp-content/uploads/2025/06/hero-desktop.png",
+    "tablet": "https://encriptados.es/wp-content/uploads/2025/06/hero-tablet.png",
+    "mobile": "https://encriptados.es/wp-content/uploads/2025/06/hero-mobile.jpg"
+  },
+  
+  "productImage": "https://encriptados.es/wp-content/uploads/2025/06/producto-banner.png",
+  
+  "iconUrl": "https://encriptados.es/wp-content/uploads/2025/06/logo-app.png",
+  
+  "videoUrl": "https://www.youtube.com/embed/X9iE-f8briY",
+  
+  "appStoreUrl": "https://apps.apple.com/app/silent-phone",
+  
+  "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.silentcircle.silentphone",
+  
+  "activation": "Inmediata",
+  "type_product": "Digital",
+  "provider": "Silent Circle Inc.",
+  "shipping": "",
+  "brand": "Silent Circle",
+  "sku": "SILENT-CIRCLE",
+  "stock_quantity": null,
+  "purchase_note": "",
+  "images": [
+    { "src": "https://encriptados.es/wp-content/uploads/2025/03/Silent-Circle-Hero-Thumbnail-producto.jpg" }
+  ]
+}

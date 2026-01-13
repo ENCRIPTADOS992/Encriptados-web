@@ -367,7 +367,7 @@ const DeliveriesMapClient = () => {
   });
 
   return (
-    <section className="relative w-full flex flex-col items-center py-10 bg-[#eaf2f6]">
+    <section className="relative w-full flex flex-col items-center pt-10 pb-0 bg-[#eaf2f6]">
       <div className="flex flex-col items-center gap-2 mb-4">
         <img
           src="/images/deliveries/material-symbols_store-outline.png"

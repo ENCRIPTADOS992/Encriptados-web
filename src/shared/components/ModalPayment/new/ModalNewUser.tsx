@@ -6,29 +6,39 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import NewUserForm from "./NewUserForm";
+import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
+import { useFormPolicy } from "./useFormPolicy";
 
-type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
-type Variant = { id: number; licensetime: number; price: number; sku?: string; image?: string };
+type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
-type ModalProduct = ProductFromAPI & {
+type ModalProduct = {
   variants?: Variant[];
   images?: { src: string }[];
   price?: number | string;
   name?: string;
   licensetime?: number | string;
+  id?: number;
+  description?: string;
+  category?: { id: number; name: string };
 };
+
+type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 
 export default function ModalNewUser() {
   const { params, openModal, closeModal } = useModalPayment();
-  const { productid } = (params || {}) as { productid?: string };
-  const { payUserId, loading } = useCheckout(); 
+  const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
+  const { payUserId, loading } = useCheckout();
+  const { formType, policy } = useFormPolicy();
 
-  const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
+  // Estado para Silent Phone: modo de tabs
+  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("new_user");
+
+  const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
@@ -38,9 +48,21 @@ export default function ModalNewUser() {
 
   const variants = product?.variants ?? [];
 
+  // Track si el usuario ha cambiado manualmente la variante
+  const [userChangedVariant, setUserChangedVariant] = React.useState(false);
+
   React.useEffect(() => {
+    // Si hay un initialPrice, buscar la variante que coincida con ese precio
+    if (initialPrice != null && initialPrice > 0 && variants.length > 0) {
+      const matchingVariant = variants.find((v) => v.price === initialPrice);
+      if (matchingVariant) {
+        setSelectedVariant(matchingVariant);
+        return;
+      }
+    }
+    // Si no hay match o no hay initialPrice, usar el primero
     setSelectedVariant(variants.length ? variants[0] : null);
-  }, [product]);
+  }, [product, initialPrice]);
 
   const unitPrice =
     (variants.length ? selectedVariant?.price ?? variants[0]?.price : Number(product?.price)) || 0;
@@ -50,33 +72,57 @@ export default function ModalNewUser() {
   const amount = Math.max(unitPrice * quantity - discount, 0);
   const productIdNum = Number(productid);
 
+  // Show loading skeleton while product is loading
+  if (isLoadingProduct) {
+    return (
+      <div className="flex flex-col gap-4 p-4 animate-pulse">
+        <div className="flex gap-4">
+          <div className="w-[120px] h-[120px] bg-gray-200 rounded-lg" />
+          <div className="flex-1 space-y-3">
+            <div className="h-5 bg-gray-200 rounded w-3/4" />
+            <div className="h-4 bg-gray-200 rounded w-1/2" />
+            <div className="h-4 bg-gray-200 rounded w-1/3" />
+          </div>
+        </div>
+        <div className="h-10 bg-gray-200 rounded" />
+        <div className="h-10 bg-gray-200 rounded" />
+        <div className="h-12 bg-gray-300 rounded" />
+      </div>
+    );
+  }
+
    return (
     <PurchaseScaffold
       mode="new_user"
-      enableTabSwitch={true}
+      enableTabSwitch={false}
       onSelectMode={(m) => openModal({ ...params, mode: m })}
       showRechargeCTA={false}
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
-      onChangeVariant={(id) => setSelectedVariant(variants.find((v) => v.id === id) ?? null)}
+      onChangeVariant={(id) => {
+        setSelectedVariant(variants.find((v) => v.id === id) ?? null);
+        setUserChangedVariant(true);
+      }}
       quantity={quantity}
       setQuantity={setQuantity}
       coupon={coupon}
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
       unitPrice={unitPrice}
+      sourceUrl={params.sourceUrl}
     >
-      <NewUserForm
+      <UnifiedPurchaseForm
         quantity={quantity}
         email=""
         productId={productIdNum}
         amountUsd={amount}
-        orderType="userid"
-        onPayCrypto={async (email) => {
+        silentPhoneMode={silentPhoneMode}
+        onSilentPhoneModeChange={setSilentPhoneMode}
+        onPayCrypto={async (formData: FormData) => {
           await payUserId({
             productId: productIdNum,
-            email,
-            username: undefined,
+            email: formData.email,
+            username: formData.telegramId || formData.usernames?.[0],
             provider: "kriptomus",
             amount,
             currency: "USD",

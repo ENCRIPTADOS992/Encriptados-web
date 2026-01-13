@@ -40,13 +40,15 @@ const ProductBenefitsGridTablet: React.FC<ProductBenefitsGridProps> = ({
                   gap-[12px]
                 "
               >
-                <img
-                  src={benefit.icon}
-                  alt={benefit.title}
-                  className="w-[34px] h-[34px]"
-                  draggable={false}
-                  loading="lazy"
-                />
+                <div className="bg-[#323232] rounded-[8.38px] p-1.5 w-fit">
+                  <img
+                    src={benefit.icon}
+                    alt={benefit.title}
+                    className="w-6 h-6"
+                    draggable={false}
+                    loading="lazy"
+                  />
+                </div>
                 <h4 className="font-inter font-semibold text-[14px] text-white leading-[17px]">
                   {benefit.title}
                 </h4>

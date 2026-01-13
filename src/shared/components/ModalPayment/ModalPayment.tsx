@@ -98,13 +98,10 @@ const ModalPayment: React.FC<Props> = ({
   const isDark = theme === "dark";
 
   const handleOverlayClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    const isOutside = e.target === e.currentTarget;
-    console.log("[ModalPayment] overlay click", {
-      isOutside,
-      targetTag: (e.target as HTMLElement).tagName,
-    });
-
-    if (isOutside) onClose();
+    // Solo cerrar si el click fue directamente en el overlay (fuera del panel)
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
   };
 
   return (
@@ -119,7 +116,12 @@ const ModalPayment: React.FC<Props> = ({
         overlayClassName ?? "",
       ].join(" ")}
       style={{ WebkitOverflowScrolling: "touch" }}
-      onClick={handleOverlayClick}
+      onMouseDown={(e) => {
+        // Solo procesar si el click fue directamente en el overlay
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
     >
       <div
         ref={panelRef}
@@ -132,6 +134,8 @@ const ModalPayment: React.FC<Props> = ({
           "p-4 sm:p-5 lg:p-6",
           panelClassName ?? "",
         ].join(" ")}
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <button
           onClick={() => {

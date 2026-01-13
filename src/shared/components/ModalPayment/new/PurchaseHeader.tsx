@@ -3,7 +3,9 @@
 
 import React from "react";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
+import { getShareConfigByProductId, generateSimShareUrl, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 
 type Variant = {
   id: number;
@@ -44,6 +46,8 @@ type Props = {
   esimAddonLabel?: string;
   onTotalChange?: (total: number) => void;
   onChangeEsimAddon?: (checked: boolean) => void;
+  /** URL de origen para compartir (se captura al abrir el modal) */
+  sourceUrl?: string;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -67,7 +71,10 @@ const PurchaseHeader: React.FC<Props> = ({
   esimAddonLabel = "Lleva E-SIM",
   onTotalChange,
   onChangeEsimAddon,
+  sourceUrl,
 }) => {
+  const locale = useLocale();
+  const t = useTranslations("paymentModal");
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
 
@@ -176,20 +183,33 @@ const PurchaseHeader: React.FC<Props> = ({
     );
   }, [product]);
 
-  const RECHARGE_AMOUNTS = [
-  { id: 25, label: "25 USD" },
-  { id: 50, label: "50 USD" },
-  { id: 100, label: "100 USD" },
-  { id: 150, label: "150 USD" },
-  { id: 200, label: "200 USD" },
-  { id: 250, label: "250 USD" },
-  { id: 500, label: "500 USD" },
-];
+  const RECHARGE_AMOUNTS = React.useMemo(() => {
+    // Si el producto tiene variantes, usarlas
+    const productVariants = (product as any)?.variants ?? [];
+    if (productVariants.length > 0) {
+      return productVariants.map((v: any) => ({
+        id: v.id ?? v.price,
+        label: `${v.price} USD`,
+        value: Number(v.price),
+      }));
+    }
+    
+    // Fallback a valores fijos
+    return [
+      { id: 25, label: "25 USD", value: 25 },
+      { id: 50, label: "50 USD", value: 50 },
+      { id: 100, label: "100 USD", value: 100 },
+      { id: 150, label: "150 USD", value: 150 },
+      { id: 200, label: "200 USD", value: 200 },
+      { id: 250, label: "250 USD", value: 250 },
+      { id: 500, label: "500 USD", value: 500 },
+    ];
+  }, [product]);
   return (
     <div className="w-full">
       {/* Título */}
       <div className="text-center text-sm font-medium text-gray-600 pb-2">
-        Detalles de compra
+        {t("purchaseDetails")}
       </div>
 
       {/* Layout Grid Responsivo */}
@@ -211,13 +231,46 @@ const PurchaseHeader: React.FC<Props> = ({
               onClick={() => {
                 // Obtener el ID del producto desde params si está disponible
                 const productId = (product as any)?.id || (product as any)?.productId;
-                const shareUrl = productId 
-                  ? `${window.location.origin}/our-products/${productId}`
-                  : window.location.href;
+                
+                // Usar la configuración de compartir para obtener la URL correcta con ?buy=1
+                const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
+                
+                // Generar la URL de compartir
+                let shareUrl: string;
+                if (shareConfig?.shareUrl) {
+                  // Si existe en shareConfig, usar esa URL con locale
+                  shareUrl = getShareUrlWithLocale(shareConfig.shareUrl, locale);
+                } else if (productId && unitPrice) {
+                  // Para SIMs: generar URL dinámica con productId y precio
+                  // Detectar el tipo de SIM basándose en el provider o nombre
+                  const productName = (product?.name || '').toLowerCase();
+                  const provider = (product?.provider || '').toLowerCase();
+                  
+                  let simType: 'sim-encriptada' | 'esim-encriptada' | 'tim-sim' | 'esim-tim' = 'esim-encriptada';
+                  if (provider.includes('tim') || productName.includes('tim')) {
+                    simType = productName.includes('esim') ? 'esim-tim' : 'tim-sim';
+                  } else if (productName.includes('esim') || productName.includes('e-sim')) {
+                    simType = 'esim-encriptada';
+                  } else if (productName.includes('sim') && !productName.includes('esim')) {
+                    simType = 'sim-encriptada';
+                  }
+                  
+                  shareUrl = generateSimShareUrl(Number(productId), unitPrice, simType, locale);
+                } else if (sourceUrl) {
+                  // Usar sourceUrl si está disponible
+                  const currentUrl = new URL(sourceUrl);
+                  currentUrl.searchParams.set('buy', '1');
+                  shareUrl = currentUrl.toString();
+                } else {
+                  // Fallback a URL actual
+                  const currentUrl = new URL(window.location.href);
+                  currentUrl.searchParams.set('buy', '1');
+                  shareUrl = currentUrl.toString();
+                }
                 
                 const shareData = {
-                  title: product?.name ?? "Producto",
-                  text: `${product?.name ?? "Producto"} - ${unitPrice} ${currency}`,
+                  title: shareConfig?.title || product?.name || "Producto",
+                  text: shareConfig?.description || `${product?.name ?? "Producto"} - ${unitPrice} ${currency}. ¡Compra aquí!`,
                   url: shareUrl,
                 };
                 
@@ -225,14 +278,14 @@ const PurchaseHeader: React.FC<Props> = ({
                   navigator.share(shareData).catch(() => {});
                 } else {
                   navigator.clipboard.writeText(shareUrl).then(() => {
-                    alert('Enlace copiado al portapapeles');
+                    alert(t("linkCopied"));
                   }).catch(() => {});
                 }
               }}
               className="absolute bottom-2 left-3 z-10 flex items-center gap-2 bg-[#0AAEE1] hover:bg-[#0AAEE1]/90 text-white pl-4 pr-3 py-2 rounded-full text-sm font-medium transition-colors shadow-lg whitespace-nowrap"
-              aria-label="Compartir producto"
+              aria-label={t("share")}
             >
-              Compartir
+              {t("share")}
               <CopyPaste width={18} height={18} color="white" />
             </button>
           </div>
@@ -259,7 +312,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 value={String(selectedPlanId ?? RECHARGE_AMOUNTS[0].id)}
                 onChange={(e) => onChangePlan?.(Number(e.target.value))}
               >
-                {RECHARGE_AMOUNTS.map((opt) => (
+                {RECHARGE_AMOUNTS.map((opt: { id: number; label: string; value: number }) => (
                   <option key={opt.id} value={opt.id}>
                     {opt.label}
                   </option>
@@ -317,7 +370,7 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Cantidad */}
           <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">Cantidad</span>
+            <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
             <div className="justify-self-end flex items-center bg-[#EBEBEB] rounded-md h-9 px-4 gap-2 select-none">
               <button
                 onClick={dec}
@@ -344,7 +397,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Licencia (ocultable) */}
           {shouldShowLicense && (
             <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Licencia</span>
+              <span className="text-base text-[#3D3D3D]">{t("license")}</span>
 
               {showSelect ? (
                 <div ref={licenseRef} className="relative justify-self-end z-[1000]">
@@ -356,7 +409,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     className="relative w-32 h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
                   >
                     <span className="truncate">
-                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} Meses
+                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
                     </span>
                     <span className="ml-1 text-[#3D3D3D]">▾</span>
                   </button>
@@ -417,7 +470,7 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Total a pagar */}
           <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">Total a pagar</span>
+            <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
             <span className="justify-self-end text-base font-bold text-[#141414]">
               {total} {currency}
             </span>
@@ -462,7 +515,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 type="button"
                 className="shrink-0 h-full px-5 rounded-md bg-black text-white text-xs font-bold hover:bg-black/90"
               >
-                Aplicar
+                {t("apply")}
               </button>
               <button
                 type="button"
@@ -479,7 +532,7 @@ const PurchaseHeader: React.FC<Props> = ({
               onClick={() => setShowCoupon(true)}
               className="self-end text-xs underline text-[#3D3D3D] hover:text-black"
             >
-              Ingresa código de promoción
+              {t("enterPromoCode")}
             </button>
           )}
         </div>

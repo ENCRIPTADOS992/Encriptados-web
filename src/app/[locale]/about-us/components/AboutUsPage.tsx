@@ -120,14 +120,14 @@ export default function AboutUsPage() {
         </div>
 
         {/* Download banners (ya tienes desktop/mobile) */}
-        <div className="relative z-10">
+        {/* <div className="relative z-10">
           <div className="hidden lg:block">
             <DownloadBanner />
           </div>
           <div className="block lg:hidden">
             <DownloadBannerMobile />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSearchParams, useParams } from "next/navigation";
 import CardProduct from "./CardProduct";
 import CardProductBanner from "./CardProductBanner";
 import Features from "./Features";
@@ -24,10 +25,41 @@ import OurObjetive from "@/app/[locale]/encrypted-sim/components/OurObjetive";
 import BannerSecure from "@/app/[locale]/encrypted-sim/components/BannerSecure";
 import PayForUse from "@/app/[locale]/encrypted-sim/components/PayForUse";
 import WhyCallSim from "@/app/[locale]/encrypted-sim/components/WhyCallSim/WhyCallSim";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 const ProductByIdPage = () => {
   const e = useTranslations("EncryptedSimPage");
   const { currentProduct } = useProductById();
+  const searchParams = useSearchParams();
+  const params = useParams();
+  const { openModal } = useModalPayment();
+
+  // === AUTO-ABRIR POPUP si viene con ?buy=1 ===
+  useEffect(() => {
+    const buyParam = searchParams.get("buy");
+    if (buyParam === "1" && currentProduct) {
+      const timer = setTimeout(() => {
+        const productId = params.productId as string;
+        const numericPrice = typeof currentProduct.price === 'string' 
+          ? parseFloat(currentProduct.price) 
+          : (currentProduct.price || 0);
+        
+        openModal({
+          productid: productId,
+          languageCode: (params.locale as string) || "es",
+          selectedOption: (currentProduct as any)?.category?.id || 40,
+          initialPrice: numericPrice,
+        });
+        
+        // Limpiar el parámetro de la URL sin recargar
+        const url = new URL(window.location.href);
+        url.searchParams.delete("buy");
+        window.history.replaceState({}, "", url.toString());
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams, currentProduct, params, openModal]);
 
 if (currentProduct === null) {
     return (
@@ -159,29 +191,32 @@ if (currentProduct === null) {
             </div>
           </div>
 
+          {/* Features - Solo se muestra si hay datos */}
           <div className="mt-24">
             <Features />
           </div>
 
-          <div className="">
-            <Advantages />
-          </div>
+          {/* Advantages - Solo se muestra si hay datos */}
+          <Advantages />
 
           <div className="">
             <BannerCoverage />
           </div>
 
-          <div className="px-2 2xl:px-96 xl:px-10 lg:px-0  mt-24 mb-24">
-            <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5  font-bold text-[#333333]">
-              Preguntas frecuentes
-            </h1>
-            <Accordion
-              items={currentProduct.faqs.map((faq) => ({
-                title: faq.name,
-                content: faq.description,
-              }))}
-            />
-          </div>
+          {/* FAQs - Solo se muestra si hay datos */}
+          {currentProduct.faqs && currentProduct.faqs.length > 0 && (
+            <div className="px-2 2xl:px-96 xl:px-10 lg:px-0 mt-24 mb-24">
+              <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5 font-bold text-[#333333]">
+                Preguntas frecuentes
+              </h1>
+              <Accordion
+                items={currentProduct.faqs.map((faq) => ({
+                  title: faq.name,
+                  content: faq.description,
+                }))}
+              />
+            </div>
+          )}
         </>
       )}
     </>

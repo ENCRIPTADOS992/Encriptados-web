@@ -5,30 +5,32 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import RoningForm from "./RoningForm";
+import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
 
-type ProductFromAPI = Awaited<ReturnType<typeof getProductById>>;
 type Variant = {
   id: number;
-  licensetime: number;
+  licensetime: number | string;
   price: number;
   sku?: string;
   image?: string;
 };
 
-type ModalProduct = ProductFromAPI & {
+type ModalProduct = {
   variants?: Variant[];
   images?: { src: string }[];
   price?: number | string;
   name?: string;
   licensetime?: number | string;
+  id?: number;
+  description?: string;
+  category?: { id: number; name: string };
 };
 
 export default function ModalRoning() {
   const { params, openModal, closeModal } = useModalPayment();
-  const { productid } = (params || {}) as { productid?: string };
+  const { productid, initialPrice } = (params || {}) as { productid?: string; initialPrice?: number };
   const { loading, payRoaming } = useCheckout();
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
@@ -46,9 +48,21 @@ export default function ModalRoning() {
 
   const variants = product?.variants ?? [];
 
+  // Track si el usuario ha cambiado manualmente la variante
+  const [userChangedVariant, setUserChangedVariant] = React.useState(false);
+
   React.useEffect(() => {
+    // Si hay un initialPrice, buscar la variante que coincida con ese precio
+    if (initialPrice != null && initialPrice > 0 && variants.length > 0) {
+      const matchingVariant = variants.find((v) => v.price === initialPrice);
+      if (matchingVariant) {
+        setSelectedVariant(matchingVariant);
+        return;
+      }
+    }
+    // Si no hay match o no hay initialPrice, usar el primero
     setSelectedVariant(variants.length ? variants[0] : null);
-  }, [product]);
+  }, [product, initialPrice]);
 
   const unitPrice =
     (variants.length
@@ -60,73 +74,47 @@ export default function ModalRoning() {
 
   const amountUsd = Math.max(Number(unitPrice) * quantity - discount, 0);
 
-  const payWithCrypto = async (email: string) => {
+  const payWithCrypto = async (formData: FormData) => {
     const provider: PayProvider = "kriptomus";
     await payRoaming({
       productId: Number(productid),
       qty: quantity,
-      email,
+      email: formData.email,
       provider,
       amount: amountUsd,
       currency: "USD",
     });
   };
 
-  const handleSubmit = async (data: {
-    email: string;
-    method: "card" | "crypto";
-  }) => {
-    try {
-      const productIdNum = Number(productid);
-      const amount = Math.max(Number(unitPrice) * quantity - discount, 0);
-      const currency = "USD";
-      const provider: PayProvider =
-        data.method === "card" ? "stripe" : "kriptomus";
-
-      await payRoaming({
-        productId: productIdNum,
-        qty: quantity,
-        email: data.email,
-        provider,
-        amount,
-        currency,
-      });
-    } catch (e: any) {
-      if (e?.code === "out_of_stock") {
-        alert("Stock insuficiente");
-      } else {
-        alert(e?.message || "Error procesando el pago");
-      }
-    }
-  };
-
   return (
     <PurchaseScaffold
       mode="roning_code"
-      enableTabSwitch={true}
+      enableTabSwitch={false}
       onSelectMode={(m) => openModal({ ...params, mode: m })}
       showRechargeCTA={false}
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
-      onChangeVariant={(id) =>
-        setSelectedVariant(variants.find((v) => v.id === id) ?? null)
-      }
+      onChangeVariant={(id) => {
+        setSelectedVariant(variants.find((v) => v.id === id) ?? null);
+        setUserChangedVariant(true);
+      }}
       quantity={quantity}
       setQuantity={setQuantity}
       coupon={coupon}
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
       unitPrice={unitPrice}
+      sourceUrl={params.sourceUrl}
     >
-      <RoningForm
+      <UnifiedPurchaseForm
         quantity={quantity}
         email=""
-        loading={loading}
         productId={Number(productid)}
-        orderType="roaming"             
         amountUsd={amountUsd}
+        orderType="roaming"
         onPayCrypto={payWithCrypto}
         onPaid={() => closeModal?.()}
+        loading={loading}
       />
     </PurchaseScaffold>
   );

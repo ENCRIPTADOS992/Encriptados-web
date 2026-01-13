@@ -22,7 +22,7 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
 
 }) => {
   return (
-    <div className="bg-transparent sm:bg-custom-linear-2 md:bg-custom-linear-2 p-8 rounded-2xl overflow-hidden flex flex-col justify-center">
+    <div className="w-full max-w-[320px] sm:max-w-none sm:w-[55%] md:w-auto mx-auto sm:mx-0 bg-transparent sm:bg-custom-linear-2 md:bg-custom-linear-2 p-8 rounded-2xl overflow-hidden flex flex-col justify-center">
       {/* Logo en la parte superior */}
       <div className="mb-6 flex justify-center">
         <Image
@@ -41,9 +41,19 @@ const CardDescription: React.FC<CardDescriptionProps> = ({
       <p className="text-black mb-8 text-base">{description}</p>
 
       {/* Aquí pintamos la cuadrícula de iconos + texto */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-center">
+      {/* Mobile: primeros 4, Tablet: primeros 3, Desktop: todos */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center">
         {features.map((feature, index) => (
-          <div key={index} className="flex flex-col items-center">
+          <div 
+            key={index} 
+            className={`flex flex-col items-center ${
+              // Mobile: mostrar primeros 4 (ocultar 5+)
+              index >= 4 ? 'hidden sm:flex' : ''
+            } ${
+              // Tablet: mostrar primeros 3 (ocultar 4+)
+              index >= 3 ? 'sm:hidden lg:flex' : ''
+            }`}
+          >
             <div className="h-[80px] sm:h-[100px] md:h-[100px] lg:h-[100px] w-full bg-[#E6F4F9] rounded-2xl flex items-center justify-center p-2">
               <Image
                 src={feature.icon}

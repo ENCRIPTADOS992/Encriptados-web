@@ -7,8 +7,7 @@ const BannerSecure = () => {
   const t = useTranslations("EncryptedSimPage");
 
   return (
-    <section className="bg-[#E7F4F8]">
-      <div className="mx-auto max-w-5xl flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+    <div className="mx-auto max-w-5xl flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
         {/* Imagen */}
         <div className="relative w-full lg:w-1/2 max-w-[594px] aspect-[4/3] rounded-3xl overflow-hidden">
           <Image
@@ -30,13 +29,12 @@ const BannerSecure = () => {
               shadow-md
               w-full
               lg:w-[500px]
-              min-h-[120px]
-              lg:h-[158px]
+              h-[158px]
               flex
               items-center
               justify-center
-              px-6 py-6
-              lg:px-8 lg:py-0
+              px-6
+              lg:px-8
             "
           >
             <h2 className="text-[22px] sm:text-[24px] lg:text-[30px] font-bold leading-[1.4] text-[#010101] text-center lg:text-left">
@@ -52,13 +50,12 @@ const BannerSecure = () => {
               shadow-md
               w-full
               lg:w-[500px]
-              min-h-[120px]
-              lg:h-[158px]
+              h-[158px]
               flex
               items-center
               justify-center
-              px-6 py-6
-              lg:px-8 lg:py-0
+              px-6
+              lg:px-8
             "
           >
             <p className="text-base leading-relaxed text-[#6E6E6E] text-center lg:text-left">
@@ -67,7 +64,6 @@ const BannerSecure = () => {
           </div>
         </div>
       </div>
-    </section>
   );
 };
 

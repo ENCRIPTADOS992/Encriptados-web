@@ -80,6 +80,7 @@ const ListOfOffers = () => {
                 checks={p.checks || []}
                 badges={undefined}
                 provider={p.provider}
+                typeProduct={p.type_product}
                 planDataAmount={p.plan_data_amount}
               />
             );

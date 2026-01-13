@@ -36,7 +36,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   const qpProvider = (search.get("provider") || "").toLowerCase();
   const qpSelectedOption = search.get("selectedOption");
 
-  const { theme = "light", mode = "roning_code" } = (params || {}) as {
+  const { theme = "light", mode = "new_user" } = (params || {}) as {
     theme?: "light" | "dark";
     mode?: Mode;
   };
@@ -104,15 +104,29 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     );
   }, [params, qpProvider, qpSelectedOption, product]);
 
+  // Track if we've already set the initial mode for this modal session
+  const hasSetInitialMode = React.useRef(false);
+
   React.useEffect(() => {
-    if (!isModalOpen || !product) return;
+    // Reset the ref when modal closes
+    if (!isModalOpen) {
+      hasSetInitialMode.current = false;
+      return;
+    }
+
+    if (!product || hasSetInitialMode.current) return;
 
     const wantSimMode = kind === "SIM";
 
+    // Only auto-switch mode on initial load, not on user interaction
     if (wantSimMode && mode !== "sim") {
       openModal({ ...(params || {}), mode: "sim" });
+      hasSetInitialMode.current = true;
     } else if (!wantSimMode && mode === "sim") {
       openModal({ ...(params || {}), mode: "roning_code" });
+      hasSetInitialMode.current = true;
+    } else {
+      hasSetInitialMode.current = true;
     }
   }, [isModalOpen, product, kind, mode, openModal, params]);
 

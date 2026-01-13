@@ -77,8 +77,9 @@ export function getProductCategoryKind(
   }
 
   // C) APLICACIONES (apps móviles, desktop, plugins, etc.)
-  // Señales: “app”, sistema operativo en brand/tags, store-language, etc.
+  // Señales: "app", sistema operativo en brand/tags, store-language, categoryId 38, etc.
   if (
+    String(catId) === "38" ||
     /app|aplicaci(o|ó)n|mobile|android|ios|macos|windows|plugin|extension/.test(name) ||
     /app|software/.test(typeProd) && /android|ios|mac|win|linux/.test(brand + " " + tags) ||
     inCategory(catId, catName, /app|aplicaci(o|ó)n/)

@@ -31,15 +31,19 @@ export default function PurchaseTabs({
 
   const Btn = ({ label, mode }: { label: string; mode: Mode }) => {
     const isActive = active === mode;
+    const handleClick = () => {
+      if (enableSwitching && onSelect) {
+        onSelect(mode);
+      }
+    };
     return (
       <button
         type="button"
         aria-pressed={isActive}
-        className={[base, isActive ? clsActive : clsInactive, !enableSwitching && "cursor-not-allowed"]
+        className={[base, isActive ? clsActive : clsInactive, !enableSwitching && "cursor-not-allowed opacity-60"]
           .filter(Boolean)
           .join(" ")}
-        onClick={enableSwitching ? () => onSelect?.(mode) : undefined}
-        disabled={!enableSwitching}
+        onClick={handleClick}
       >
         {label}
       </button>

@@ -214,7 +214,7 @@ html {
   display: none;
 }
 
-@media screen and (orientation: landscape) and (max-width: 1024px) {
+@media screen and (orientation: landscape) and (max-width: 767px) {
   .rotate-warning {
     position: fixed;
     inset: 0;
@@ -244,4 +244,25 @@ html {
     font-size: 0.95rem;
     opacity: 0.85;
   }
+}
+
+/* Stripe Elements - Estilos para iframes de Stripe */
+#card-number-el,
+#card-expiry-el,
+#card-cvc-el {
+  min-height: 24px;
+}
+
+#card-number-el .StripeElement,
+#card-expiry-el .StripeElement,
+#card-cvc-el .StripeElement {
+  width: 100% !important;
+  min-height: 24px;
+}
+
+#card-number-el iframe,
+#card-expiry-el iframe,
+#card-cvc-el iframe {
+  width: 100% !important;
+  min-height: 24px;
 }

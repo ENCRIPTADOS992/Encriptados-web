@@ -18,7 +18,7 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
   return (
     <section className="hidden lg:flex w-full justify-center py-16 md:py-20 lg:py-24">
       {/* Fondo negro con medidas exactas */}
-      <div className="bg-[#000000] w-full max-w-[1272px] rounded-[44px] py-16 px-16 mx-auto">
+      <div className="bg-[#000000] w-full max-w-[1400px] rounded-[44px] py-16 px-16 mx-auto">
         {/* Contenido interno con separación de Figma */}
         <div className="flex flex-col items-center gap-12 h-full">
           {/* Título */}
@@ -43,14 +43,16 @@ const ProductBenefitsGrid: React.FC<ProductBenefitsGridProps> = ({
                   shadow-lg items-start
                 "
               >
-                <img
-                  src={benefit.icon}
-                  alt={benefit.title}
-                  className="w-10 h-10 mb-2"
-                  draggable={false}
-                  loading="lazy"
-                  aria-hidden="true"
-                />
+                <div className="bg-[#323232] rounded-[8.38px] p-2 w-fit">
+                  <img
+                    src={benefit.icon}
+                    alt={benefit.title}
+                    className="w-8 h-8"
+                    draggable={false}
+                    loading="lazy"
+                    aria-hidden="true"
+                  />
+                </div>
                 <h4 className="font-medium text-[22px] text-white leading-[1.5] mb-2">
                   {benefit.title}
                 </h4>

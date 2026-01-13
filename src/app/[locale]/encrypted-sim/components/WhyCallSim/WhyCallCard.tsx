@@ -14,11 +14,11 @@ const WhyCallCard: React.FC<WhyCallCardProps> = ({
   textColor,
 }) => {
   return (
-    <article className={`${bgColor} p-8 md:p-10 rounded-[2rem] shadow-md`}>
-      <div aria-hidden="true">{icon}</div>
-      <div className="flex items-center space-x-4">
+    <article className={`${bgColor} px-6 py-8 sm:px-8 sm:py-10 rounded-[2rem] shadow-md h-[280px] flex flex-col`}>
+      <div aria-hidden="true" className="flex-shrink-0">{icon}</div>
+      <div className="flex-1 flex items-center">
         <h3
-          className={`text-[22px] font-medium leading-[1.5] mt-5 ${textColor}`}
+          className={`text-[20px] sm:text-[22px] font-medium leading-[1.4] ${textColor}`}
         >
           {title}
         </h3>
