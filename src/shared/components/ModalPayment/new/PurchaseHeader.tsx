@@ -5,7 +5,8 @@ import React from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
-import { getShareConfigByProductId, generateSimShareUrl, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
+import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
+import { getSimProductUrl } from "@/shared/utils/productRouteResolver";
 
 type Variant = {
   id: number;
@@ -19,10 +20,14 @@ type ProductLike = {
   name?: string;
   headerTitle?: string;
   provider?: string;
+  brand?: string;
+  type_product?: string;
   price?: number | string;
   licensetime?: number | string;
   images?: { src: string }[];
   variants?: Variant[];
+  id?: number | string;
+  productId?: number | string;
 };
 
 type Props = {
@@ -231,46 +236,64 @@ const PurchaseHeader: React.FC<Props> = ({
               onClick={() => {
                 // Obtener el ID del producto desde params si está disponible
                 const productId = (product as any)?.id || (product as any)?.productId;
+                const provider = (product as any)?.provider || (product as any)?.brand;
+                const typeProduct = (product as any)?.type_product;
                 
-                // Usar la configuración de compartir para obtener la URL correcta con ?buy=1
-                const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
+                // Detectar si es un producto SIM (categoría 40) basándose en el provider
+                // Solo "Sim Encriptados", "Sim TIM", "encrypted", "tim" son productos SIM
+                const providerLower = (provider || "").toLowerCase();
+                const isSimProduct = providerLower.includes("encript") || 
+                                     providerLower.includes("tim") ||
+                                     providerLower === "encrypted";
+                
+                // Debug: mostrar datos del producto para verificar derivación
+                console.log("🔗 [PurchaseHeader] Share button clicked:", {
+                  productId,
+                  unitPrice,
+                  provider,
+                  typeProduct,
+                  isSimProduct,
+                  productName: product?.name,
+                });
                 
                 // Generar la URL de compartir
                 let shareUrl: string;
-                if (shareConfig?.shareUrl) {
-                  // Si existe en shareConfig, usar esa URL con locale
-                  shareUrl = getShareUrlWithLocale(shareConfig.shareUrl, locale);
-                } else if (productId && unitPrice) {
-                  // Para SIMs: generar URL dinámica con productId y precio
-                  // Detectar el tipo de SIM basándose en el provider o nombre
-                  const productName = (product?.name || '').toLowerCase();
-                  const provider = (product?.provider || '').toLowerCase();
+                
+                // Para productos SIM (categoría 40): derivar URL desde provider/typeProduct
+                // Esto asegura que el link de Compartir sea igual al de "Más información"
+                if (isSimProduct && productId && unitPrice != null) {
+                  // Para SIMs: usar MISMA función que CardProduct "Más información"
+                  const relativePath = getSimProductUrl(provider, typeProduct);
                   
-                  let simType: 'sim-encriptada' | 'esim-encriptada' | 'tim-sim' | 'esim-tim' = 'esim-encriptada';
-                  if (provider.includes('tim') || productName.includes('tim')) {
-                    simType = productName.includes('esim') ? 'esim-tim' : 'tim-sim';
-                  } else if (productName.includes('esim') || productName.includes('e-sim')) {
-                    simType = 'esim-encriptada';
-                  } else if (productName.includes('sim') && !productName.includes('esim')) {
-                    simType = 'sim-encriptada';
-                  }
+                  // Construir URL absoluta con productId, price y buy=1
+                  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://encriptados.io';
+                  shareUrl = `${baseUrl}/${locale}${relativePath}?productId=${productId}&price=${unitPrice}&buy=1`;
                   
-                  shareUrl = generateSimShareUrl(Number(productId), unitPrice, simType, locale);
-                } else if (sourceUrl) {
-                  // Usar sourceUrl si está disponible
-                  const currentUrl = new URL(sourceUrl);
-                  currentUrl.searchParams.set('buy', '1');
-                  shareUrl = currentUrl.toString();
+                  console.log("🔗 [PurchaseHeader] Generated SIM share URL:", { provider, typeProduct, relativePath, shareUrl });
                 } else {
-                  // Fallback a URL actual
-                  const currentUrl = new URL(window.location.href);
-                  currentUrl.searchParams.set('buy', '1');
-                  shareUrl = currentUrl.toString();
+                  // Para Apps/Sistemas/Router: usar shareConfig (URLs hardcodeadas)
+                  const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
+                  
+                  if (shareConfig?.shareUrl) {
+                    shareUrl = getShareUrlWithLocale(shareConfig.shareUrl, locale);
+                  } else if (sourceUrl) {
+                    // Usar sourceUrl si está disponible
+                    const currentUrl = new URL(sourceUrl);
+                    currentUrl.searchParams.set('buy', '1');
+                    shareUrl = currentUrl.toString();
+                  } else {
+                    // Fallback a URL actual
+                    const currentUrl = new URL(window.location.href);
+                    currentUrl.searchParams.set('buy', '1');
+                    shareUrl = currentUrl.toString();
+                  }
                 }
                 
+                console.log("🔗 [PurchaseHeader] Final shareUrl:", shareUrl);
+                
                 const shareData = {
-                  title: shareConfig?.title || product?.name || "Producto",
-                  text: shareConfig?.description || `${product?.name ?? "Producto"} - ${unitPrice} ${currency}. ¡Compra aquí!`,
+                  title: product?.name || "Producto",
+                  text: `${product?.name ?? "Producto"} - ${unitPrice} ${currency}. ¡Compra aquí!`,
                   url: shareUrl,
                 };
                 

@@ -88,13 +88,16 @@ const CardProduct: React.FC<CardSimProps> = ({
   });
 
   const handleBuy = () => {
-    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId });
+    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct });
     openModal({
       productid: id.toString(),
       languageCode: "es",
       selectedOption: Number(filters.selectedOption),
       initialPrice: numericPrice,
-      variantId: variantId,  // Pasar variantId para que el modal seleccione la variante correcta
+      variantId: variantId,
+      // Pasar provider y typeProduct para que el modal use los mismos valores que "Más información"
+      provider: provider,
+      typeProduct: typeProduct,
     });
   };
 

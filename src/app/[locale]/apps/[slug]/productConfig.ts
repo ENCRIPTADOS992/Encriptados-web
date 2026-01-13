@@ -352,9 +352,29 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  // Ultra X - Slug canónico: ultrax
+  // Ultra X - Slugs: ultrax, ultra-x (alias)
   "ultrax": {
     slug: "ultrax",
+    productId: 182,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/ultrax/hero-desktop.png",
+      tablet: "/images/apps/ultrax/hero-tablet.png",
+      mobile: "/images/apps/ultrax/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/ultrax/banner.png",
+    iconUrl: "/images/apps/ultrax/logo.png",
+    benefitIcon: "/images/apps/ultrax/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // Alias: ultra-x -> ultrax
+  "ultra-x": {
+    slug: "ultra-x",
     productId: 182,
     categoryId: 35,
     templateType: "software",

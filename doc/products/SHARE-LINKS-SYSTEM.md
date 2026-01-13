@@ -85,14 +85,14 @@ public/meta-image/
 | Producto | Product ID | Slug | Imagen Meta | Enlace de Compartir |
 |----------|------------|------|-------------|---------------------|
 | SIM Física Encriptados | 508 | sim-encriptada | `/meta-image/sim-encriptados/encriptados-sim-fisica.png` | `/sim/sim-encriptada?productId=508&price=15&buy=1` |
-| eSIM Encriptados | 449 | esim-encriptada | `/meta-image/sim-encriptados/encriptados-esim.png` | `/sim/esim-encriptada?productId=449&price=12&buy=1` |
+| eSIM Encriptados | 454 | esim-encriptada | `/meta-image/sim-encriptados/encriptados-esim.png` | `/sim/esim-encriptada?productId=454&price=12&buy=1` |
 
 ### 🔹 SIM TIM (Categoría 40)
 
 | Producto | Product ID | Slug | Imagen Meta | Enlace de Compartir |
 |----------|------------|------|-------------|---------------------|
-| TIM SIM Física | 448 | tim-sim | `/meta-image/sim-tim/tim-fisica.png` | `/sim/tim-sim?productId=448&price=10&buy=1` |
-| TIM eSIM | 442 | esim-tim | `/meta-image/sim-tim/tim-esim-datos.png` | `/sim/esim-tim?productId=442&price=10&buy=1` |
+| TIM SIM Física | 59835 | tim-sim | `/meta-image/sim-tim/tim-fisica.png` | `/sim/tim-sim?productId=59835&price=10&buy=1` |
+| TIM eSIM | 59836 | esim-tim | `/meta-image/sim-tim/tim-esim-datos.png` | `/sim/esim-tim?productId=59836&price=10&buy=1` |
 
 ### 🔹 ROUTER (Categoría 36)
 
