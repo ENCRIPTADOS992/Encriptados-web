@@ -9,7 +9,7 @@ import SectionWrapper from "@/shared/components/SectionWrapper";
 const BannerDistributors = () => {
   const t = useTranslations("DistributorsPage.banner");
   const BannerDistributorsImage =
-    "/images/distributors/bannerdistributors1.png";
+    "/images/distributors/bannerdistributors1.webp";
 
   const { openModal } = useJoinUsModal();
 

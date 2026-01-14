@@ -8,8 +8,8 @@ import TelegramButton from "@/shared/components/TelegramButton";
 
 export default function BeDistributorEncryptedMobile() {
     const t = useTranslations("DistributorsPage");
-    const Build = "/images/distributors/build.png";
-    const ManHow = "/images/distributors/man-how.png";
+    const Build = "/images/distributors/build.webp";
+    const ManHow = "/images/distributors/man-how.webp";
 
     return (
         <div className="w-full bg-black flex justify-center py-12 px-4">

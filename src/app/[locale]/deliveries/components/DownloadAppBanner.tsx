@@ -11,12 +11,12 @@ const DownloadAppBanner = () => {
           </h2>
           <div className="flex space-x-4 mb-3">
             <img
-              src="/images/deliveries/Group 480955701.png"
+              src="/images/deliveries/Group 480955701.webp"
               alt="App Store"
               className="w-40 cursor-pointer"
             />
             <img
-              src="/images/deliveries/Group 480955702.png"
+              src="/images/deliveries/Group 480955702.webp"
               alt="Google Play"
               className="w-40 cursor-pointer"
             />
@@ -29,7 +29,7 @@ const DownloadAppBanner = () => {
         {/* Imagen del celular con QR */}
         <div className="w-1/2 flex justify-end pr-10 items-end -mb-10 mr-20">
           <img
-            src="/images/deliveries/iPhone 15 Pro Black Titanium Mockup Portrait (1).png"
+            src="/images/deliveries/iPhone 15 Pro Black Titanium Mockup Portrait (1).webp"
             alt="Código QR en Celular"
             className="w-60"
           />

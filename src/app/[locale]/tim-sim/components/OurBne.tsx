@@ -1,7 +1,7 @@
 import OurBneCard from "./svgs/OurBneCard";
-import EligeUnPlan from "/public/images/bne-sim/elige-un-plan.png";
-import Comprala from "../../../../../public/images/bne-sim/compralo.png";
-import Disfrutalo from "../../../../../public/images/bne-sim/disfrutalo.png";
+import EligeUnPlan from "/public/images/bne-sim/elige-un-plan.webp";
+import Comprala from "../../../../../public/images/bne-sim/compralo.webp";
+import Disfrutalo from "../../../../../public/images/bne-sim/disfrutalo.webp";
 import { useTranslations } from "next-intl";
 
 

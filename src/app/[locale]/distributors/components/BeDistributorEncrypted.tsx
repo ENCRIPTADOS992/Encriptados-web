@@ -8,8 +8,8 @@ import SectionWrapper from "@/shared/components/SectionWrapper";
 export default function BeDistributorEncrypted() {
   const t = useTranslations("DistributorsPage");
 
-  const Build = "/images/distributors/build.png";
-  const ManHow = "/images/distributors/man-how.png";
+  const Build = "/images/distributors/build.webp";
+  const ManHow = "/images/distributors/man-how.webp";
 
   return (
     <div className="w-full bg-gradient-to-r from-[#00372B] via-black to-[#022530] flex justify-center items-center py-0 md:py-0">

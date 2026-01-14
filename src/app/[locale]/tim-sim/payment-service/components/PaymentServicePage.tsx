@@ -18,7 +18,7 @@ const PaymentServicePage = () => {
   const { watch } = useFormContext();
 
   console.log(watch());
-  const AllWorld = "/images/maya-data/payment-service/allworld.png";
+  const AllWorld = "/images/maya-data/payment-service/allworld.webp";
 
   const benefits = [
     "Conexiones anónimas",

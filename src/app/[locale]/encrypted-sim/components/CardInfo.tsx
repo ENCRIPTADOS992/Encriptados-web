@@ -213,7 +213,7 @@ const CardInfo = () => {
 
           <div className="relative w-[482px] h-[398px] max-w-full">
             <Image
-              src="/images/encrypted-sim/principal.png"
+              src="/images/encrypted-sim/principal.webp"
               alt="Tarjeta Encriptados"
               fill
               className="object-contain"

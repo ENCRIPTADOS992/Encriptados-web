@@ -1,5 +1,5 @@
 import Image from "next/image";
-import BneSimImg from "/public/images/bne-sim/bne_men.png";
+import BneSimImg from "/public/images/bne-sim/bne_men.webp";
 import { useTranslations } from "next-intl";
 
 const PromoBanner: React.FC = () => {

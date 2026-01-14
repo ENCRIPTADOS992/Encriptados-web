@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import TelegramButton from "@/shared/components/TelegramButton";
 
 const PaymentServicePage = () => {
-  const AllWorld = "/images/maya-data/payment-service/allworld.png";
+  const AllWorld = "/images/maya-data/payment-service/allworld.webp";
 
   const benefits = [
     "Conexiones anónimas",

@@ -11,7 +11,7 @@ const OurObjetive = ({ variant = "encrypted" }: OurObjetiveProps) => {
   
   const imageSrc = isTimVariant 
     ? "/images/encrypted-sim/tim.sim.webp" 
-    : "/images/encrypted-sim/Encrypted_float_image.png";
+    : "/images/encrypted-sim/Encrypted_float_image.webp";
   
   const containerBgColor = isTimVariant ? "#009DFF" : "white";
 

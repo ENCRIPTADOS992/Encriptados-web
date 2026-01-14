@@ -12,7 +12,7 @@ const products = [
     name: "ChatMail",
     price: "$649 USD",
     discount: "Ahorra hasta 100 USD",
-    image: "/images/deliveries/chatmail.png",
+    image: "/images/deliveries/chatmail.webp",
     href: "/apps/chat-mail",
   },
   {
@@ -20,7 +20,7 @@ const products = [
     name: "Cryptcom",
     price: "$729 USD",
     discount: "Ahorra hasta 100 USD",
-    image: "/images/deliveries/cryptcom.png",
+    image: "/images/deliveries/cryptcom.webp",
     href: "/apps/cryptcom",
   },
   {
@@ -28,7 +28,7 @@ const products = [
     name: "Renati",
     price: "$650 USD",
     discount: "Ahorra hasta 100 USD",
-    image: "/images/deliveries/renati.png",
+    image: "/images/deliveries/renati.webp",
     href: "/apps/renati",
   },
   {
@@ -36,7 +36,7 @@ const products = [
     name: "Secure MDM Android",
     price: "$250 USD",
     discount: "Ahorra hasta 50 USD",
-    image: "/images/deliveries/secure mdm android.png",
+    image: "/images/deliveries/secure mdm android.webp",
     href: "/apps/secure-mdm-android",
   },
   {
@@ -44,7 +44,7 @@ const products = [
     name: "Secure MDM iPhone",
     price: "$600 USD",
     discount: "Ahorra hasta 50 USD",
-    image: "/images/deliveries/secure mdm iphone.png",
+    image: "/images/deliveries/secure mdm iphone.webp",
     href: "/apps/secure-mdm-iphone",
   },
   {
@@ -52,7 +52,7 @@ const products = [
     name: "SecureCrypt",
     price: "$449 USD",
     discount: "Ahorra hasta 150 USD",
-    image: "/images/deliveries/securecrypt.png",
+    image: "/images/deliveries/securecrypt.webp",
     href: "/apps/secureCrypt",
   },
   {
@@ -60,7 +60,7 @@ const products = [
     name: "TotalSec",
     price: "$500 USD",
     discount: "Ahorra hasta 100 USD",
-    image: "/images/deliveries/totalsec.png",
+    image: "/images/deliveries/totalsec.webp",
     href: "/system8",
   },
   {
@@ -68,7 +68,7 @@ const products = [
     name: "VaultChat",
     price: "$415 USD",
     discount: "Ahorra hasta 130 USD",
-    image: "/images/deliveries/vaultchat.png",
+    image: "/images/deliveries/vaultchat.webp",
     href: "/apps/vault-chat-v2",
   },
 ];

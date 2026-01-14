@@ -270,7 +270,7 @@ export default function NewUserForm({
                 method === "card" ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]" : "bg-[#EBEBEB] border border-transparent",
               ].join(" ")}
             >
-              <img src="/images/home/add_card.png" alt="" className="w-5 h-5" />
+              <img src="/images/home/add_card.webp" alt="" className="w-5 h-5" />
               <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Tarjeta de crédito</span>
             </button>
 
@@ -284,7 +284,7 @@ export default function NewUserForm({
                 method === "crypto" ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]" : "bg-[#EBEBEB] border border-transparent",
               ].join(" ")}
             >
-              <img src="/images/home/send_money.png" alt="" className="w-5 h-5" />
+              <img src="/images/home/send_money.webp" alt="" className="w-5 h-5" />
               <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Criptomonedas</span>
             </button>
           </div>

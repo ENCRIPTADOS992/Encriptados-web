@@ -5,7 +5,7 @@ export default function CardTestLayout({
   currentStep?: number;
   totalSteps?: number;
 }) {
-  const ManCoffe = "/images/encrypted-test/man-coffe.png";
+  const ManCoffe = "/images/encrypted-test/man-coffe.webp";
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
       <div className="w-full max-w-5xl  border   border-[#232323] rounded-3xl overflow-hidden">

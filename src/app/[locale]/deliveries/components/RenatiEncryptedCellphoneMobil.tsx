@@ -62,7 +62,7 @@ const FeaturedProductCardMobile = () => {
         {/* bloque texto 374px */}
         <div className="relative z-10 w-full w-[374px] h-[228px] flex flex-col gap-4 text-white">
           <img
-            src="/images/deliveries/image 316.png"
+            src="/images/deliveries/image 316.webp"
             alt="Renati Logo"
             className="w-[79px] h-[73px] mb-1"
           />
@@ -106,7 +106,7 @@ const FeaturedProductCardMobile = () => {
         "
       >
         <img
-          src="/images/deliveries/cellphone.png"
+          src="/images/deliveries/cellphone.webp"
           alt="Celular Encriptado Renati"
           className="
             w-[375px] 

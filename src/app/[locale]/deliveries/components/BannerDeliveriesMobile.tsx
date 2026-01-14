@@ -95,7 +95,7 @@ const BannerDeliveriesMobile = () => {
           "
         >
           <img
-            src="/images/deliveries/Group%20480956537.png"
+            src="/images/deliveries/Group%20480956537.webp"
             alt="Entrega rápida"
             className="w-full h-full object-contain"
           />

@@ -38,7 +38,7 @@ export function PaymentMethodSection({ method, setValue }: Props) {
           ].join(" ")}
         >
           <img
-            src="/images/home/add_card.png"
+            src="/images/home/add_card.webp"
             alt=""
             className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
           />
@@ -65,7 +65,7 @@ export function PaymentMethodSection({ method, setValue }: Props) {
           ].join(" ")}
         >
           <img
-            src="/images/home/send_money.png"
+            src="/images/home/send_money.webp"
             alt=""
             className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
           />

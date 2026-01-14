@@ -47,7 +47,7 @@ const SimSteps = () => {
           <div className="w-full lg:w-1/2 flex justify-center">
             <div className="relative w-full max-w-[520px] aspect-[16/10] rounded-[32px] overflow-hidden">
               <Image
-                src="/images/encrypted-sim/step1.png"
+                src="/images/encrypted-sim/step1.webp"
                 alt="Selecciona el destino para tu eSIM"
                 fill
                 className="object-cover"
@@ -62,7 +62,7 @@ const SimSteps = () => {
           <div className="w-full lg:w-1/2 flex justify-center">
             <div className="relative w-full max-w-[520px] aspect-[16/10] rounded-[32px] overflow-hidden">
               <Image
-                src="/images/encrypted-sim/step2.png"
+                src="/images/encrypted-sim/step2.webp"
                 alt="Selecciona tu plan de datos"
                 fill
                 className="object-cover"
@@ -133,7 +133,7 @@ const SimSteps = () => {
           <div className="w-full lg:w-1/2 flex justify-center">
             <div className="relative w-full max-w-[521px] aspect-[16/12] rounded-[32px] overflow-hidden ">
               <Image
-                src="/images/encrypted-sim/step3.png"
+                src="/images/encrypted-sim/step3.webp"
                 alt="Activa y usa tu eSIM"
                 fill
                 className="object-contain"

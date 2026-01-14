@@ -18,16 +18,16 @@ const AnonymousBanner: React.FC = () => {
           {/* Desktop: >= 1024px */}
           <source
             media="(min-width: 1024px)"
-            srcSet="/images/bne-sim/anonymous-desktop.png"
+            srcSet="/images/bne-sim/anonymous-desktop.webp"
           />
           {/* Tablet: 768px - 1023px */}
           <source
             media="(min-width: 768px)"
-            srcSet="/images/bne-sim/anonymous-tablet.png"
+            srcSet="/images/bne-sim/anonymous-tablet.webp"
           />
           {/* Móvil: < 768px */}
           <Image
-            src="/images/bne-sim/anonymous-movil.png"
+            src="/images/bne-sim/anonymous-movil.webp"
             alt="Ilustración de compra anónima con SIM TIM"
             width={800}
             height={600}

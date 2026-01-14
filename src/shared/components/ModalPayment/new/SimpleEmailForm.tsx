@@ -216,7 +216,7 @@ export default function SimpleEmailForm({
                 method === "card" ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]" : "bg-[#EBEBEB] border border-transparent",
               ].join(" ")}
             >
-              <Image src="/images/home/add_card.png" alt="" width={20} height={20} />
+              <Image src="/images/home/add_card.webp" alt="" width={20} height={20} />
               <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Tarjeta de crédito</span>
             </button>
 
@@ -230,7 +230,7 @@ export default function SimpleEmailForm({
                 method === "crypto" ? "bg-[#FAFAFA] border-2 border-[#3D3D3D]" : "bg-[#EBEBEB] border border-transparent",
               ].join(" ")}
             >
-              <Image src="/images/home/send_money.png" alt="" width={20} height={20} />
+              <Image src="/images/home/send_money.webp" alt="" width={20} height={20} />
               <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Criptomonedas</span>
             </button>
           </div>

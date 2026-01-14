@@ -49,7 +49,7 @@ export default function PurchaseScaffold({
         <div className="pt-2">
           <div className="text-center py-4">
             <Image
-              src="/images/home/currency_exchange.png"
+              src="/images/home/currency_exchange.webp"
               alt="Recargar"
               width={28}
               height={28}

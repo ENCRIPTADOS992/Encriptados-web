@@ -14,8 +14,8 @@ import QRBanner from "./QRBanner";
 
 import Accordion from "@/shared/components/Accordion";
 import BannerBackground from "@/shared/components/BannerBackground";
-import PilaresBackground from "../../../../../public/images/fastdeliverypage/pilares.jpg";
-import PilaresBackgroundMobile from "../../../../../public/images/fastdeliverypage/pilaresmobile.jpg";
+import PilaresBackground from "../../../../../public/images/fastdeliverypage/pilares.webp";
+import PilaresBackgroundMobile from "../../../../../public/images/fastdeliverypage/pilaresmobile.webp";
 
 const FastDeliveryPage = () => {
   const t = useTranslations("DeliveryPage");

@@ -252,7 +252,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
     if (product?.images && product.images.length > 0) {
       return product.images[0].src;
     }
-    return config?.productImage || "/images/encrypted-sim/Encrypted_sim_card.png";
+    return config?.productImage || "/images/encrypted-sim/Encrypted_sim_card.webp";
   }, [product, config]);
 
   const handleBuy = (productId?: string, priceOverride?: number) => {

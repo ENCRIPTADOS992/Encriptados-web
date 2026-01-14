@@ -48,7 +48,7 @@ const FeaturedProductCard = () => {
       >
         <div className="w-[45%] relative bottom-[-25px] left-6">
           <img
-            src="/images/deliveries/image 315.png"
+            src="/images/deliveries/image 315.webp"
             alt="Celular Encriptado Renati"
             className="w-[90%] h-auto"
           />
@@ -56,7 +56,7 @@ const FeaturedProductCard = () => {
 
         <div className="w-1/2 text-white pl-6 ">
           <img
-            src="/images/deliveries/image 316.png"
+            src="/images/deliveries/image 316.webp"
             alt="Renati Logo"
             className="w-16 mb-2"
           />

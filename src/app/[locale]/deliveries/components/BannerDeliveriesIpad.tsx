@@ -26,7 +26,7 @@ const BannerDeliveriesIpad = () => {
           "
         >
           <img
-            src="/images/deliveries/image313.png"
+            src="/images/deliveries/image313.webp"
             alt="Entrega Chica"
             className="w-full h-full object-contain"
           />
@@ -40,7 +40,7 @@ const BannerDeliveriesIpad = () => {
           "
         >
           <img
-            src="/images/deliveries/image314.png"
+            src="/images/deliveries/image314.webp"
             alt="Entrega Chico"
             className="w-full h-full object-contain"
           />
