@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const BannerPostById = () => {
-  const Banner = "/images/blog/blogidbanner.png";
+  const Banner = "/images/blog/blogidbanner.webp";
   const t = useTranslations("BlogPage");
 
   return (

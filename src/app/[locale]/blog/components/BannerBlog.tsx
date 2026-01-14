@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const BannerBlog = () => {
-  const Banner = "/images/blog/blogbanner.jpeg";
+  const Banner = "/images/blog/blogbanner.webp";
 
   const t = useTranslations("BlogPage");
 

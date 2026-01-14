@@ -42,7 +42,7 @@ export default function AmbassadorBanner() {
             {/* Imagen */}
             <div className="w-full md:w-1/2 lg:w-5/12">
               <Image
-                src="/images/ambassadors/ambassadors-banner.png"
+                src="/images/ambassadors/ambassadors-banner.webp"
                 alt="Ambassadors Banner"
                 width={400}
                 height={400}

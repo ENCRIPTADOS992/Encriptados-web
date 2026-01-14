@@ -30,7 +30,7 @@ export default function OurGoalsTablet() {
             description={t("AboutUsPage.cards.communicationCard.description")}
             icon={
               <Image
-                src="/images/about-us/bring_your_own_ip.png"
+                src="/images/about-us/bring_your_own_ip.webp"
                 alt="communication icon"
                 width={26}
                 height={26}
@@ -47,7 +47,7 @@ export default function OurGoalsTablet() {
             description={t("AboutUsPage.cards.privacyCard.description")}
             icon={
               <Image
-                src="/images/about-us/lock_reset.png"
+                src="/images/about-us/lock_reset.webp"
                 alt="privacy icon"
                 width={26}
                 height={26}
@@ -64,7 +64,7 @@ export default function OurGoalsTablet() {
             description={t("AboutUsPage.cards.informationCard.description")}
             icon={
               <Image
-                src="/images/about-us/key_visualizer.png"
+                src="/images/about-us/key_visualizer.webp"
                 alt="information icon"
                 width={26}
                 height={26}

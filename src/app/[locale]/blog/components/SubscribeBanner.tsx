@@ -14,7 +14,7 @@ export default function SubscribeBanner() {
           <div className="w-full lg:w-1/2 relative lg:h-[460px] -mb-10 lg:mb-0 lg:translate-y-0 transform translate-y-4 sm:translate-y-6">
             <div className="relative w-full h-[200px] sm:h-[300px] lg:h-[460px]">
               <Image
-                src="/images/blog/girlandman.png"
+                src="/images/blog/girlandman.webp"
                 alt="Personas mirando un teléfono móvil"
                 layout="fill"
                 objectFit="cover"
