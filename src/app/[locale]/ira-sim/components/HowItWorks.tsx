@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const HowItWorks = () => {
-  const FullWorld = "/images/maya-data/fullworld.png";
-  const Balance = "/images/maya-data/balancecharge.png";
-  const StepperMan = "/images/maya-data/stepperman.png";
+  const FullWorld = "/images/maya-data/fullworld.webp";
+  const Balance = "/images/maya-data/balancecharge.webp";
+  const StepperMan = "/images/maya-data/stepperman.webp";
 
   const t = useTranslations("MayaData");
 

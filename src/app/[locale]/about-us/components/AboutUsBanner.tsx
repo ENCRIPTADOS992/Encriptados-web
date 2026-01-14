@@ -7,7 +7,7 @@ import Typography from "@/shared/components/Typography";
 
 export default function AboutUsBannerDesktop() {
   const t = useTranslations();
-  const Banner = "/images/about-us/phone-hand.png";
+  const Banner = "/images/about-us/phone-hand.webp";
 
   return (
     <SectionWrapper className="relative z-10 !px-0 py-6 md:py-8 lg:py-10 hidden lg:block">

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 const BannerSecure = () => {
-  const FloatSimCard = "/images/encrypted-sim/Encryped_manwithphone.png";
+  const FloatSimCard = "/images/encrypted-sim/Encryped_manwithphone.webp";
   const t = useTranslations("EncryptedSimPage");
 
   return (

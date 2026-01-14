@@ -3,9 +3,9 @@ import Image from "next/image";
 import CircleTitle from "@/shared/components/CircleTitle";
 import { useTranslations } from "next-intl";
 
-const Women = "/images/encrypted-sim/Encrypted_Women.png";
-const Man = "/images/encrypted-sim/Encrypted_Man.png";
-const Sim = "/images/encrypted-sim/Encrypted_sim_card.png";
+const Women = "/images/encrypted-sim/Encrypted_Women.webp";
+const Man = "/images/encrypted-sim/Encrypted_Man.webp";
+const Sim = "/images/encrypted-sim/Encrypted_sim_card.webp";
 
 const EncryptedSimBanner = () => {
   const t = useTranslations("EncryptedSimPage");

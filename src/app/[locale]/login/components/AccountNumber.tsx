@@ -20,7 +20,7 @@ import { useTranslations } from "next-intl";
 const AccountNumber = () => {
   const t = useTranslations();
   const router = useRouter();
-  const Mans = "/images/login/mans.png";
+  const Mans = "/images/login/mans.webp";
 
   const { setValue, getValues } = useFormContext();
   const [generatedNumber, setGeneratedNumber] = useState("");

@@ -177,7 +177,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
               >
                 <div className="w-10 h-10 lg:w-12 lg:h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
                   <Image
-                    src="/images/encrypted-sim/Encrypted_sim_card.png"
+                    src="/images/encrypted-sim/Encrypted_sim_card.webp"
                     alt="SIM"
                     width={40}
                     height={28}

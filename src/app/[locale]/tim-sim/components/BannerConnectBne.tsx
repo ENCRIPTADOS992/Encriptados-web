@@ -45,7 +45,7 @@ export default function BannerConnectBne() {
           <div className="relative flex justify-center sm:justify-end self-end">
             <div className="absolute -right-6 lg:-right-12 xl:-right-16 top-1/2 -translate-y-1/2 w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] xl:w-[550px] xl:h-[550px] 2xl:w-[600px] 2xl:h-[600px] opacity-20 pointer-events-none hidden lg:block overflow-visible">
               <Image
-                src="/images/bne-sim/logo-tim.png"
+                src="/images/bne-sim/logo-tim.webp"
                 alt="TIM Logo Background"
                 width={800}
                 height={800}
@@ -57,7 +57,7 @@ export default function BannerConnectBne() {
             <div className="relative max-w-xs lg:max-w-sm xl:max-w-md w-full">
               <div className="relative z-10">
                 <Image
-                  src="/images/bne-sim/hombre-feliz.png"
+                  src="/images/bne-sim/hombre-feliz.webp"
                   alt="Hombre Feliz"
                   width={400}
                   height={400}
@@ -157,7 +157,7 @@ export default function BannerConnectBne() {
 
         <div className="absolute right-0 top-0 bottom-0 w-full opacity-20 pointer-events-none flex items-center justify-end">
           <Image
-            src="/images/bne-sim/logo-tim.png"
+            src="/images/bne-sim/logo-tim.webp"
             alt="TIM Logo Background"
             width={600}
             height={600}
@@ -167,7 +167,7 @@ export default function BannerConnectBne() {
 
         {/* Man Image */}
         <div className="relative w-full max-w-xs mb-0 z-10">
-          <Image src="/images/bne-sim/hombre-feliz.png" alt="Hombre Feliz" width={300} height={300} className="w-full h-auto" />
+          <Image src="/images/bne-sim/hombre-feliz.webp" alt="Hombre Feliz" width={300} height={300} className="w-full h-auto" />
         </div>
       </div>
 

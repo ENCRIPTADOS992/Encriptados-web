@@ -51,7 +51,7 @@ const FeaturedProductCardTablet = () => {
         +{" "}
         <div className="w-[265px] h-[315px] flex-shrink-0 mt-8">
           <img
-            src="/images/deliveries/cellphone.png"
+            src="/images/deliveries/cellphone.webp"
             alt="Celular Encriptado Renati"
             className="w-[265px] h-[315px] object-contain"
           />
@@ -67,7 +67,7 @@ const FeaturedProductCardTablet = () => {
   "
         >
           <img
-            src="/images/deliveries/image 316.png"
+            src="/images/deliveries/image 316.webp"
             alt="Renati Logo"
             className="w-16 mb-1"
           />

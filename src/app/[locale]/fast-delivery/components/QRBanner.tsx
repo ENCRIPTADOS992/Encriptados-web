@@ -27,7 +27,7 @@ const QRBanner = ({ title }: { title: string }) => {
           height={220}
           quality={100}
           title="Image"
-          src={"/images/fastdeliverypage/QR.png"}
+          src={"/images/fastdeliverypage/QR.webp"}
           alt="Image"
           className="mt-6 md:mt-0 lg:translate-y-[65px] translate-y-[72px]"
         />

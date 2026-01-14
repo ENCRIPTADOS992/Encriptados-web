@@ -23,9 +23,9 @@ import OurGoalsMobile from "./OurGoalsMobile";
 import DownloadBanner from "../../ambassadors/components/DownloadBanner";
 import DownloadBannerMobile from "../../ambassadors/components/DownloadBannerMobile";
 
-const PeopleImage = "/images/about-us/peopleimage.png";
-const Spiral = "/images/about-us/spiral.png";
-const SpiralLeft = "/images/about-us/spiralleft.png";
+const PeopleImage = "/images/about-us/peopleimage.webp";
+const Spiral = "/images/about-us/spiral.webp";
+const SpiralLeft = "/images/about-us/spiralleft.webp";
 
 export default function AboutUsPage() {
   return (

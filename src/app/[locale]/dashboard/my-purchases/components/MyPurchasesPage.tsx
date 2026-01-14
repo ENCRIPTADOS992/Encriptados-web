@@ -2,7 +2,7 @@ import React from "react";
 import CardPurchase from "./CardPurchase";
 
 const MyPurchasesPage = () => {
-  const Product = "/images/encrypted-sim/Encrypted_sim_card.png";
+  const Product = "/images/encrypted-sim/Encrypted_sim_card.webp";
 
   return (
     <div>

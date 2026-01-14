@@ -1,8 +1,8 @@
 import Button from "@/shared/components/Button";
 import Image from "next/image";
 import React from "react";
-import Renati from "../../../../../public/images/fastdeliverypage/renati.png";
-import CellRenati from "../../../../../public/images/fastdeliverypage/cellrenati.png";
+import Renati from "../../../../../public/images/fastdeliverypage/renati.webp";
+import CellRenati from "../../../../../public/images/fastdeliverypage/cellrenati.webp";
 
 const PhoneBanner = () => {
   return (

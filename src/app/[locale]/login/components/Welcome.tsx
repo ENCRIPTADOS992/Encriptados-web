@@ -15,7 +15,7 @@ import Button from "@/shared/components/Button";
 const Welcome = () => {
   const t = useTranslations();
   const router = useRouter();
-  const Mans = "/images/login/mans.png";
+  const Mans = "/images/login/mans.webp";
 
   const { handleSubmit, setValue } = useFormContext();
   const { success, error: errorToast } = useToast();

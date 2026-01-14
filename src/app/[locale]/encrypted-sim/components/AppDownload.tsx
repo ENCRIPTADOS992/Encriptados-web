@@ -56,7 +56,7 @@ const AppDownload = () => {
               "
             >
               <Image
-                src="/images/encrypted-sim/iphone_app_download.png"
+                src="/images/encrypted-sim/iphone_app_download.webp"
                 alt="Vista de la app para descarga"
                 fill
                 className="object-contain"

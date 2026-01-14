@@ -34,12 +34,12 @@ const DownloadBannerMobile = () => {
           </Typography>
           <div className="flex space-x-4 mb-6">
             <img
-              src="/images/deliveries/Group 480955701.png"
+              src="/images/deliveries/Group 480955701.webp"
               alt="App Store"
               className="w-32 sm:w-40 cursor-pointer"
             />
             <img
-              src="/images/deliveries/Group 480955702.png"
+              src="/images/deliveries/Group 480955702.webp"
               alt="Google Play"
               className="w-32 sm:w-40 cursor-pointer"
             />
@@ -77,7 +77,7 @@ const DownloadBannerMobile = () => {
 
           {/* Imagen del celular con QR */}
           <img
-            src="/images/deliveries/iPhone 15 Pro Black Titanium Mockup Portrait (1).png"
+            src="/images/deliveries/iPhone 15 Pro Black Titanium Mockup Portrait (1).webp"
             alt="Código QR en Celular"
             className="w-48 sm:w-60 md:w-72 lg:w-80 relative z-10 mt-5"
           />

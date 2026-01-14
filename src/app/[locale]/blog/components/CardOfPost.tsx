@@ -17,20 +17,19 @@ export default function CardOfPost({
   author,
 }: CardOfPostProps) {
   return (
-    <div className="flex flex-col w-full rounded-2xl bg-white shadow-lg overflow-hidden">
-      <div className="relative w-full h-48 sm:h-60 md:h-72 lg:h-80">
+    <div className="flex flex-col w-full rounded-2xl shadow-lg overflow-hidden">
+      <div className="relative w-full h-40 sm:h-48 md:h-52 lg:h-56">
         <Image
           alt={title}
-          className="object-cover"
+          className="object-cover rounded-t-2xl"
           src={image}
           fill
           sizes="(max-width: 768px) 100vw, 
                  (max-width: 1200px) 50vw, 
                  33vw"
-          style={{ objectFit: "cover" }}
         />
       </div>
-      <div className="flex flex-col justify-between flex-grow p-6">
+      <div className="flex flex-col justify-between flex-grow p-6 bg-white">
         <h3 className="line-clamp-2 text-[22px] leading-[1.5] font-medium text-gray-900 mb-3">
           {title}
         </h3>

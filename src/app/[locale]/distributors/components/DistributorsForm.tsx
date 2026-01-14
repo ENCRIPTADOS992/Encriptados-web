@@ -17,7 +17,7 @@ export default function DistributorForm() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
             style={{
-              backgroundImage: "url(/images/distributors/man-modal-black.png)",
+              backgroundImage: "url(/images/distributors/man-modal-black.webp)",
             }}
           />
           <div className="relative z-10 space-y-4 p-6 h-full flex flex-col ">

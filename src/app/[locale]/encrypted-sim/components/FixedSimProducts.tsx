@@ -16,9 +16,9 @@ import CharacteristicComunicationsSvg from "/public/images/encrypted-sim/icons/c
 import CharacteristicTopUpSvg from "/public/images/encrypted-sim/icons/characteristic-top-up.svg";
 
 // Fallback images (se usan si la API no devuelve imagen)
-import EncryptedSimDataFallback from "/public/images/encrypted-sim/Encrypted_sim_card.png";
-import EncryptedSimMinutesFallback from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.png";
-import EncriptedEsimFallback from "/public/images/encrypted-sim/Encrypted_sim_card_eSIM.png";
+import EncryptedSimDataFallback from "/public/images/encrypted-sim/Encrypted_sim_card.webp";
+import EncryptedSimMinutesFallback from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.webp";
+import EncriptedEsimFallback from "/public/images/encrypted-sim/Encrypted_sim_card_eSIM.webp";
 
 import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
 import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";

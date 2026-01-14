@@ -3,9 +3,9 @@ import Button from "@/shared/components/Button";
 import React from "react";
 import Slider from "react-slick";
 import Image from "next/image";
-import CellPhone1 from "../../../../../../public/images/fastdeliverypage/cell1.png";
-import CellPhone2 from "../../../../../../public/images/fastdeliverypage/cell2.png";
-import CellPhone3 from "../../../../../../public/images/fastdeliverypage/cell3.png";
+import CellPhone1 from "../../../../../../public/images/fastdeliverypage/cell1.webp";
+import CellPhone2 from "../../../../../../public/images/fastdeliverypage/cell2.webp";
+import CellPhone3 from "../../../../../../public/images/fastdeliverypage/cell3.webp";
 import { useTranslations } from "next-intl";
 
 const SlickCarouselProducts = () => {

@@ -6,7 +6,7 @@ import ButtonGradientClasic from "@/shared/components/ButtonGradientClasic";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const BannerEncryptedTest = () => {
-  const EncryptedTest = "/images/encrypted-test/banner-test.png";
+  const EncryptedTest = "/images/encrypted-test/banner-test.webp";
   const t = useTranslations("EncryptedTestPage");
 
   return (

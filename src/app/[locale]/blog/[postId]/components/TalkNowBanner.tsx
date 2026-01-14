@@ -3,7 +3,7 @@ import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 
 export default function TalkNowBanner() {
-  const ManWoman = "/images/blog/man-woman.png";
+  const ManWoman = "/images/blog/man-woman.webp";
   const t = useTranslations("BlogPage");
 
   return (

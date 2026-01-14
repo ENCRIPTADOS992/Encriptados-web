@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 
 const PayForUse = () => {
-  const Man = "/images/encrypted-sim/Encrypted_man_cellphone.png";
+  const Man = "/images/encrypted-sim/Encrypted_man_cellphone.webp";
   const t = useTranslations("EncryptedSimPage");
 
   return (

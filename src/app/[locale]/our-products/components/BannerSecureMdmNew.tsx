@@ -33,9 +33,9 @@ const BannerSecureMdmNew = () => {
 
     const img =
       lower.includes("iphone")
-        ? "/images/home/iphone.png"
+        ? "/images/home/iphone.webp"
         : lower.includes("android")
-        ? "/images/home/android.png"
+        ? "/images/home/android.webp"
         : p.images?.[0]?.src ?? "/images/home/secure-mdm-placeholder.png";
 
     const v0 = p.variants?.[0];

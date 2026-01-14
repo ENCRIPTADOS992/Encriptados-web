@@ -18,7 +18,7 @@ const DownloadAppSectionUnified: React.FC<DownloadAppSectionProps> = ({
   appStoreUrl = "#",
   googlePlayUrl = "#",
   apkUrl,
-  qrImageUrl = "/images/encrypted-sim/download.png",
+  qrImageUrl = "/images/encrypted-sim/download.webp",
 }) => {
   return (
     <section className="w-full bg-black py-12 lg:py-16">

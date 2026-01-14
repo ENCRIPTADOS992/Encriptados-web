@@ -361,7 +361,7 @@ const DeliveriesMapClient = () => {
   }, [isOpen]);
 
   const customIcon = L.icon({
-    iconUrl: "/images/deliveries/encryptedlogo.png",
+    iconUrl: "/images/deliveries/encryptedlogo.webp",
     iconSize: [32, 32],
     iconAnchor: [16, 32],
   });

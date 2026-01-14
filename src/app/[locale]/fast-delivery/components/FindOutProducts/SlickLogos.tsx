@@ -3,10 +3,10 @@
 import React from "react";
 import Slider from "react-slick";
 import Image from "next/image";
-import Logo1 from "../../../../../../public/images/fastdeliverypage/logo1.png";
-import Logo2 from "../../../../../../public/images/fastdeliverypage/logo2.png";
-import Logo3 from "../../../../../../public/images/fastdeliverypage/logo3.png";
-import Logo4 from "../../../../../../public/images/fastdeliverypage/logo4.png";
+import Logo1 from "../../../../../../public/images/fastdeliverypage/logo1.webp";
+import Logo2 from "../../../../../../public/images/fastdeliverypage/logo2.webp";
+import Logo3 from "../../../../../../public/images/fastdeliverypage/logo3.webp";
+import Logo4 from "../../../../../../public/images/fastdeliverypage/logo4.webp";
 
 const products = [
   {

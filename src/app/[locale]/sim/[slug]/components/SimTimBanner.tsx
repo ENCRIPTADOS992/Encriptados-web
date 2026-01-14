@@ -173,7 +173,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
             >
               <Image
-                src="/images/bne-sim/hombre-feliz.png"
+                src="/images/bne-sim/hombre-feliz.webp"
                 alt={t("personAlt")}
                 width={280}
                 height={280}
@@ -403,7 +403,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
             >
               <Image
-                src="/images/bne-sim/hombre-feliz.png"
+                src="/images/bne-sim/hombre-feliz.webp"
                 alt={t("personAlt")}
                 width={320}
                 height={320}

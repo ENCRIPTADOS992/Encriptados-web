@@ -6,21 +6,21 @@ const steps = [
     title: "Selecciona un punto de entrega",
     description:
       "Consulta la ubicación más cercana donde te gustaría recoger tu celular encriptado",
-    image: "/images/deliveries/imagemap.png",
+    image: "/images/deliveries/imagemap.webp",
   },
   {
     id: 2,
     title: "Contáctanos por Telegram",
     description:
       "Contáctanos por nuestro canal de Telegram y coordina la compra de tu celular encriptado",
-    image: "/images/deliveries/imagepeople.png",
+    image: "/images/deliveries/imagepeople.webp",
   },
   {
     id: 3,
     title: "Recoge tu celular encriptado",
     description:
       "Una vez coordinada la entrega, recoge tu celular encriptado y disfruta de comunicaciones seguras",
-    image: "/images/deliveries/image (6).png",
+    image: "/images/deliveries/image (6).webp",
   },
 ];
 

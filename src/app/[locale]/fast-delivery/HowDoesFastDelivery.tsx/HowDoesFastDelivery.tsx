@@ -1,9 +1,9 @@
 import React from "react";
 import HowDoesFastDeliveryCard from "./HowDoesFastDeliveryCard";
 import { useTranslations } from "next-intl";
-import PhoneContact from "../../../../../public/images/fastdeliverypage/phone.png";
-import SelectedProduct from "../../../../../public/images/fastdeliverypage/selectproduct.png";
-import Telegram from "../../../../../public/images/fastdeliverypage/contacttelegram.png";
+import PhoneContact from "../../../../../public/images/fastdeliverypage/phone.webp";
+import SelectedProduct from "../../../../../public/images/fastdeliverypage/selectproduct.webp";
+import Telegram from "../../../../../public/images/fastdeliverypage/contacttelegram.webp";
 
 const HowDoesFastDelivery = () => {
   const t = useTranslations("DeliveryPage.howDoesFastDeliveryOptions");

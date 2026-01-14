@@ -6,7 +6,7 @@ import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const BeDistributor = () => {
   const t = useTranslations("DistributorsPage");
-  const ManDistributor = "/images/distributors/girlandman.png";
+  const ManDistributor = "/images/distributors/girlandman.webp";
 
   return (
     <div className="w-full bg-black flex justify-center items-center py-12 md:py-16 lg:py-20">

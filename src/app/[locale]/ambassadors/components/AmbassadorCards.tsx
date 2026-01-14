@@ -4,9 +4,9 @@ import AmbassadorCardDistributor from "./AmbassadorCardDistributor";
 import { useTranslations } from "next-intl";
 
 const AmbassadorCards = () => {
-  const Distributor = "/images/ambassadors/ambassor-distributor.png";
-  const Promotor = "/images/ambassadors/ambassor-promotor.png";
-  const BackgroundSpiral = "/images/ambassadors/spiral.png";
+  const Distributor = "/images/ambassadors/ambassor-distributor.webp";
+  const Promotor = "/images/ambassadors/ambassor-promotor.webp";
+  const BackgroundSpiral = "/images/ambassadors/spiral.webp";
 
   const t = useTranslations();
 

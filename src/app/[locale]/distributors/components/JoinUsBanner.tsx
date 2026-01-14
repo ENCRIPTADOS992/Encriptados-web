@@ -8,7 +8,7 @@ import SectionWrapper from "@/shared/components/SectionWrapper";
 const JoinUsBanner = () => {
   const t = useTranslations("DistributorsPage.banner");
   const title = useTranslations("DistributorsPage");
-  const BannerDistributorsImage = "/images/distributors/black-white-man.png";
+  const BannerDistributorsImage = "/images/distributors/black-white-man.webp";
 
   return (
     <div className="w-full bg-black relative overflow-hidden py-12 md:py-16 lg:py-20 px-2 md:px-4">

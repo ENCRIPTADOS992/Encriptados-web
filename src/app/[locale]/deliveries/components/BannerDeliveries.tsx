@@ -20,7 +20,7 @@ const BannerDeliveries = () => {
       <div className="relative w-full max-w-[1440px] h-[580px] bg-gradient-to-b from-white to-[#D3F5FF] text-black flex justify-center items-center px-4">
         <div className="absolute bottom-0 left-0 w-1/3 max-w-xs md:max-w-sm z-0">
           <img
-            src="/images/deliveries/image313.png"
+            src="/images/deliveries/image313.webp"
             alt="Entrega Chica"
             className="w-full"
           />
@@ -28,7 +28,7 @@ const BannerDeliveries = () => {
 
         <div className="absolute bottom-0 right-0 w-1/3 max-w-xs md:max-w-sm">
           <img
-            src="/images/deliveries/image314.png"
+            src="/images/deliveries/image314.webp"
             alt="Entrega Chico"
             className="w-full"
           />

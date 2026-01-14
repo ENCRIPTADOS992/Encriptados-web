@@ -11,19 +11,19 @@ const OurProductsDistributors = () => {
     {
       id: 1,
       title: t("cards.card1"),
-      imageSrc: "/images/distributors/encrypted-sim-distributors.png",
+      imageSrc: "/images/distributors/encrypted-sim-distributors.webp",
       altText: "Phones Distributors",
     },
     {
       id: 2,
       title: t("cards.card2"),
-      imageSrc: "/images/distributors/apps-distributors.png",
+      imageSrc: "/images/distributors/apps-distributors.webp",
       altText: "Sim Distributors",
     },
     {
       id: 3,
       title: t("cards.card3"),
-      imageSrc: "/images/distributors/phones-distributors.png",
+      imageSrc: "/images/distributors/phones-distributors.webp",
       altText: "App Distributors",
     },
   ];

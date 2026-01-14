@@ -12,8 +12,8 @@ import LineUp from "../svgs/LineUp";
 import { useTranslations } from "next-intl";
 
 const BannerMaya = () => {
-  const MayaMan = "/images/maya-data/mayamen.png";
-  const MayaWomen = "/images/maya-data/mayawomen.png";
+  const MayaMan = "/images/maya-data/mayamen.webp";
+  const MayaWomen = "/images/maya-data/mayawomen.webp";
 
   const t = useTranslations("MayaData");
 

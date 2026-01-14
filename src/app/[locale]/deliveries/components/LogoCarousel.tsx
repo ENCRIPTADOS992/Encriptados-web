@@ -5,11 +5,11 @@ import "slick-carousel/slick/slick-theme.css";
 
 const logos = [
   { id: 1, image: "/images/deliveries/ChatMaillogo.svg" },
-  { id: 2, image: "/images/deliveries/cryptcomlogo.png" },
-  { id: 3, image: "/images/deliveries/renatilogo.png" },
+  { id: 2, image: "/images/deliveries/cryptcomlogo.webp" },
+  { id: 3, image: "/images/deliveries/renatilogo.webp" },
   { id: 4, image: "/images/deliveries/secure_MDMlogo_android.svg" },
-  { id: 5, image: "/images/deliveries/securecryptlogo.png" },
-  { id: 6, image: "/images/deliveries/securemdmlogoapple.png" },
+  { id: 5, image: "/images/deliveries/securecryptlogo.webp" },
+  { id: 6, image: "/images/deliveries/securemdmlogoapple.webp" },
   { id: 8, image: "/images/deliveries/VaultChatlogo.svg" },
 ];
 

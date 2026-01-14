@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 const BannerCoverage = () => {
-  const FloatSimCard = "/images/encrypted-sim/Encrypted_world.png";
+  const FloatSimCard = "/images/encrypted-sim/Encrypted_world.webp";
 
   const t = useTranslations("EncryptedSimPage");
 

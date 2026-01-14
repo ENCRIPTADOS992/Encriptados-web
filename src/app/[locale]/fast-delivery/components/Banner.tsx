@@ -2,8 +2,8 @@ import Button from "@/shared/components/Button";
 import { useTranslations } from "next-intl";
 import CircleTitle from "@/shared/components/CircleTitle";
 import Image from "next/image";
-import Man from "../../../../../public/images/fastdeliverypage/man.png";
-import Women from "../../../../../public/images/fastdeliverypage/women.png";
+import Man from "../../../../../public/images/fastdeliverypage/man.webp";
+import Women from "../../../../../public/images/fastdeliverypage/women.webp";
 
 const Banner = () => {
   const t = useTranslations("DeliveryPage");
