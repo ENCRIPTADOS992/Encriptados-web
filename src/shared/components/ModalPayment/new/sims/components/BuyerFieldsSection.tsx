@@ -72,18 +72,20 @@ export function BuyerFieldsSection({
             </div>
           </div>
         ) : (
-          <div
-            className={[
-              getFieldWrapperClassName(!!errors.email),
-              "w-full sm:w-[312px] lg:w-[360px]",
-            ].join(" ")}
-          >
-            <input
-              {...register("email", { required: true })}
-              placeholder="Ingresa tu Email"
-              type="email"
-              className="w-full bg-transparent outline-none text-[14px]"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div
+              className={[
+                getFieldWrapperClassName(!!errors.email),
+                "w-full",
+              ].join(" ")}
+            >
+              <input
+                {...register("email", { required: true })}
+                placeholder="Ingresa tu Email"
+                type="email"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
           </div>
         )
       ) : (

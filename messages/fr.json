@@ -2496,6 +2496,9 @@
     "goToTelegram": "Aller sur Telegram",
     "linkCopied": "Lien copié dans le presse-papiers",
     "includeEsim": "Inclure eSIM",
-    "shipping": "Livraison"
+    "shipping": "Livraison",
+    "enterProductId": "Entrez votre ID {productName}",
+    "enterIdPlaceholder": "Entrez votre ID",
+    "product": "produit"
   }
 }

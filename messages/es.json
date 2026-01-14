@@ -2627,6 +2627,9 @@
     "goToTelegram": "Ir a Telegram",
     "linkCopied": "Enlace copiado al portapapeles",
     "includeEsim": "Incluir eSIM",
-    "shipping": "Envío"
+    "shipping": "Envío",
+    "enterProductId": "Ingresa tu ID de {productName}",
+    "enterIdPlaceholder": "Ingresa tu ID",
+    "product": "producto"
   }
 }

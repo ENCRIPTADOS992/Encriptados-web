@@ -45,6 +45,7 @@ export interface FormData {
   telegramId?: string;
   usernames?: string[];
   licenseType?: LicenseType;
+  renewId?: string;
   osType?: OsType;
   silentPhoneMode?: SilentPhoneMode;
 }
@@ -62,7 +63,7 @@ export default function UnifiedPurchaseForm({
   onSilentPhoneModeChange,
 }: Props) {
   const t = useTranslations("paymentModal");
-  const { policy, formType, isLoading: policyLoading } = useFormPolicy();
+  const { policy, formType, isLoading: policyLoading, productName } = useFormPolicy();
 
   // Estado del formulario
   const [emailVal, setEmailVal] = React.useState(email);
@@ -72,6 +73,9 @@ export default function UnifiedPurchaseForm({
 
   // Para Software: tipo de licencia
   const [licenseType, setLicenseType] = React.useState<LicenseType>("new");
+  
+  // Para renovación: ID del producto a renovar
+  const [renewId, setRenewId] = React.useState("");
   
   // Para SecureCrypt: sistema operativo
   const [osType, setOsType] = React.useState<OsType>("android");
@@ -178,6 +182,7 @@ export default function UnifiedPurchaseForm({
     telegramId: telegramId.trim() || undefined,
     usernames: policy.showUsernameFields ? usernames : undefined,
     licenseType: policy.showLicenseTabs && policy.licenseTabType === "new_renew" ? licenseType : undefined,
+    renewId: licenseType === "renew" ? renewId.trim() || undefined : undefined,
     osType: policy.showOsSelector ? osType : undefined,
     silentPhoneMode: formType === "SILENT_PHONE" ? silentPhoneMode : undefined,
   });
@@ -333,6 +338,25 @@ export default function UnifiedPurchaseForm({
           </div>
         )}
 
+        {/* === RENEW ID FIELD (cuando se selecciona Renovar licencia) === */}
+        {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew" && (
+          <div className="space-y-1.5">
+            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+              {t("enterProductId", { productName: productName || t("product") })}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <input
+                  value={renewId}
+                  onChange={(e) => setRenewId(e.target.value)}
+                  placeholder={t("enterIdPlaceholder")}
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* === THREE-WAY TABS (Silent Phone) === */}
         {policy.showLicenseTabs && policy.licenseTabType === "three_way" && (
           <div className="space-y-1.5">
@@ -419,7 +443,7 @@ export default function UnifiedPurchaseForm({
             </div>
             <div className="space-y-2">
               {usernames.map((u, idx) => (
-                <div key={idx} className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div key={idx} className="w-full sm:w-[calc(50%-6px)] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
                   <input
                     value={u}
                     onChange={(e) => setUsernameAt(idx, e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20))}
@@ -463,15 +487,17 @@ export default function UnifiedPurchaseForm({
                 </div>
               </div>
             ) : (
-              // Solo email
-              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                <input
-                  value={emailVal}
-                  onChange={(e) => setEmailVal(e.target.value)}
-                  placeholder={policy.emailPlaceholder}
-                  type="email"
-                  className="w-full bg-transparent outline-none text-[14px]"
-                />
+              // Solo email - ocupa media columna
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={emailVal}
+                    onChange={(e) => setEmailVal(e.target.value)}
+                    placeholder={policy.emailPlaceholder}
+                    type="email"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
               </div>
             )}
           </div>
