@@ -1,6 +1,7 @@
 import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
+import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
 import { Check } from "lucide-react";
 import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
@@ -19,6 +20,7 @@ interface ProductSectionProps {
   productImage: string;
   appStoreUrl?: string;
   googlePlayUrl?: string;
+  apkUrl?: string;
   loading?: boolean;
 }
 
@@ -35,6 +37,7 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
   productImage,
   appStoreUrl,
   googlePlayUrl,
+  apkUrl,
   loading = false,
 }) => {
   return (
@@ -124,6 +127,9 @@ const ProductSectionTablet: React.FC<ProductSectionProps> = ({
             </div>
             <div className="w-[148px] h-[44px] flex items-center justify-center">
               <PlayStoreSvg />
+            </div>
+            <div className="w-[148px] h-[44px] flex items-center justify-center">
+              <DownloadApkSvg />
             </div>
           </div>
         </div>

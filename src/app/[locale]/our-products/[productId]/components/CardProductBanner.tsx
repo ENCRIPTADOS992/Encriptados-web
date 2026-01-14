@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
 
 import { useProductById } from "../context/ProductByIdContext";
 
@@ -16,6 +17,7 @@ const CardProductBanner = () => {
   const iconUrl = (currentProduct as any)?.iconUrl;
   const appStoreUrl = (currentProduct as any)?.appStoreUrl;
   const googlePlayUrl = (currentProduct as any)?.googlePlayUrl;
+  const apkUrl = (currentProduct as any)?.apkUrl;
   
   // Prioridad: productImage > images[0].src
   const imageUrl = productImage || currentProduct?.images?.[0]?.src;
@@ -54,7 +56,7 @@ const CardProductBanner = () => {
       </div>
       
       {/* Botones de descarga (solo si vienen las URLs) */}
-      {(appStoreUrl || googlePlayUrl) && (
+      {(appStoreUrl || googlePlayUrl || apkUrl) && (
         <div className="flex justify-center gap-4 mt-4">
           {appStoreUrl && (
             <a 
@@ -84,6 +86,16 @@ const CardProductBanner = () => {
                 width={120}
                 height={40}
               />
+            </a>
+          )}
+          {apkUrl && (
+            <a 
+              href={apkUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-80"
+            >
+              <DownloadApkSvg className="w-[120px] h-auto" />
             </a>
           )}
         </div>

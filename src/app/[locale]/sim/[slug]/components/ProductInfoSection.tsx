@@ -99,7 +99,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
           animate="visible"
         >
           {/* Product Image - Primera en móvil, segunda en desktop */}
-          <motion.div className="space-y-4 order-1 lg:order-2" variants={imageVariants}>
+          <motion.div className="space-y-4 order-1 lg:order-2 max-w-md lg:max-w-lg mx-auto lg:mx-0" variants={imageVariants}>
             {/* Product Image */}
             <div className="rounded-2xl overflow-hidden bg-[#1a1a1a]">
               <motion.img
@@ -173,13 +173,13 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
               >
                 <SimIconSvg width={24} height={24} color="white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">{productName}</h2>
+              <h1 className="text-[36px] font-bold text-gray-900 leading-tight">{productName}</h1>
             </div>
 
             {/* Beneficios */}
             {features.length > 0 && (
               <div className="space-y-4">
-                <p className="text-sm text-gray-500">{t.benefitsTitle}</p>
+                <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">{t.benefitsTitle}</p>
                 <motion.ul 
                   className="space-y-2"
                   initial="hidden"

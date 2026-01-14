@@ -237,6 +237,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
   const videoText = (product as any)?.video_text || t("videoTitle", { productName: product?.name || "" });
   const appStoreUrl = (product as any)?.appStoreUrl || config?.appStoreUrl;
   const googlePlayUrl = (product as any)?.googlePlayUrl || config?.googlePlayUrl;
+  const apkUrl = (product as any)?.apkUrl || config?.apkUrl;
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "";
   
   // Imagen del producto - Prioridad: buyNowImage > productImage > image_full > images[0] > config
@@ -270,6 +271,7 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
           productImage={productImage}
           appStoreUrl={appStoreUrl}
           googlePlayUrl={googlePlayUrl}
+          apkUrl={apkUrl}
           translations={productSectionTranslations}
         />
       </div>

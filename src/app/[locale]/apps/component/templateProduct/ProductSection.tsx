@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
+import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
 import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
@@ -17,6 +18,7 @@ interface ProductSectionTranslations {
   selectPlan: string;
   downloadAppStore: string;
   downloadGooglePlay: string;
+  downloadApk?: string;
 }
 
 interface ProductSectionProps {
@@ -31,6 +33,7 @@ interface ProductSectionProps {
   productImage: string;
   appStoreUrl?: string;
   googlePlayUrl?: string;
+  apkUrl?: string;
   productId?: number | string;
   selectedOption?: number | string;
   languageCode?: string;
@@ -103,6 +106,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   productImage,
   appStoreUrl,
   googlePlayUrl,
+  apkUrl,
   productId,
   selectedOption,
   languageCode = "es",
@@ -118,6 +122,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
     selectPlan: translations?.selectPlan || "Selecciona un plan",
     downloadAppStore: translations?.downloadAppStore || "Descargar en App Store",
     downloadGooglePlay: translations?.downloadGooglePlay || "Descargar en Google Play",
+    downloadApk: translations?.downloadApk || "Descargar APK",
   };
 
   const handleBuy = () => {
@@ -149,32 +154,35 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   return (
     <section className="w-full bg-white py-8 sm:py-12 lg:py-16 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Grid: 1 col mobile, 2 col tablet+ */}
+        {/* Grid: 1 col mobile, 2 col desktop */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-14 items-start sm:items-center"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           
-          {/* Imagen + Store buttons - Primera en mobile, segunda en tablet+ */}
+          {/* Imagen + Store buttons - Primera en mobile, segunda en desktop */}
           <motion.div 
-            className="order-1 sm:order-2 flex flex-col items-start"
+            className="space-y-4 order-1 lg:order-2 max-w-md lg:max-w-lg mx-auto lg:mx-0"
             variants={imageVariants}
           >
-            <motion.img
-              src={productImage}
-              alt={`${title} screenshot`}
-              className="w-full max-w-sm sm:max-w-md lg:max-w-lg h-auto rounded-2xl object-contain"
-              draggable={false}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            />
+            {/* Product Image */}
+            <div className="rounded-2xl overflow-hidden">
+              <motion.img
+                src={productImage}
+                alt={`${title} screenshot`}
+                className="w-full h-auto object-contain"
+                draggable={false}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
             
-            {/* Store buttons - Ocultos en móvil, visibles desde sm - Siempre visibles */}
+            {/* Store buttons - Ocultos en móvil, visibles en desktop */}
             {showStoreIcons && (
               <motion.div 
-                className="hidden sm:flex flex-wrap gap-3 mt-4"
+                className="hidden lg:grid grid-cols-3 gap-3 w-full"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
@@ -185,18 +193,18 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label={t.downloadAppStore}
-                    className="flex-shrink-0"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                   >
-                    <AppStoreFooter />
+                    <AppStoreFooter className="w-full h-auto" />
                   </motion.a>
                 ) : (
                   <motion.div 
-                    className="flex-shrink-0 opacity-70"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center justify-center"
+                    whileHover={{ scale: 1.03 }}
                   >
-                    <AppStoreFooter />
+                    <AppStoreFooter className="w-full h-auto" />
                   </motion.div>
                 )}
                 {googlePlayUrl ? (
@@ -205,33 +213,53 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label={t.downloadGooglePlay}
-                    className="flex-shrink-0"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                   >
-                    <PlayStoreSvg />
+                    <PlayStoreSvg className="w-full h-auto" />
                   </motion.a>
                 ) : (
                   <motion.div 
-                    className="flex-shrink-0 opacity-70"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center justify-center"
+                    whileHover={{ scale: 1.03 }}
                   >
-                    <PlayStoreSvg />
+                    <PlayStoreSvg className="w-full h-auto" />
+                  </motion.div>
+                )}
+                {apkUrl ? (
+                  <motion.a 
+                    href={apkUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    aria-label={t.downloadApk}
+                    className="flex items-center justify-center"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <DownloadApkSvg className="w-full h-auto" />
+                  </motion.a>
+                ) : (
+                  <motion.div 
+                    className="flex items-center justify-center"
+                    whileHover={{ scale: 1.03 }}
+                  >
+                    <DownloadApkSvg className="w-full h-auto" />
                   </motion.div>
                 )}
               </motion.div>
             )}
           </motion.div>
 
-          {/* Contenido */}
+          {/* Contenido - Segunda en móvil, primera en desktop */}
           <motion.div 
-            className="order-2 sm:order-1 flex flex-col gap-4 sm:gap-5 lg:gap-6"
+            className="space-y-6 order-2 lg:order-1"
             variants={textVariants}
           >
             {/* Título y descripción */}
-            <div className="space-y-3 sm:space-y-4">
+            <div>
               <motion.h1 
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight"
+                className="text-[36px] font-bold text-gray-900 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -239,7 +267,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 {title}
               </motion.h1>
               <motion.p 
-                className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed"
+                className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed mt-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -251,7 +279,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
             {/* Features */}
             {features.length > 0 && (
               <motion.ul 
-                className="space-y-2 sm:space-y-3" 
+                className="space-y-2" 
                 role="list"
                 initial="hidden"
                 animate="visible"
@@ -262,14 +290,14 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 {features.map((feature, idx) => (
                   <motion.li 
                     key={idx} 
-                    className="flex items-start gap-2 sm:gap-3"
+                    className="flex items-center gap-2"
                     variants={featureVariants}
                   >
                     <Check 
-                      className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-gray-800 flex-shrink-0 mt-0.5" 
+                      className="w-5 h-5 text-gray-900 flex-shrink-0" 
                       aria-hidden="true" 
                     />
-                    <span className="text-sm sm:text-base text-gray-800">{feature}</span>
+                    <span className="font-medium text-gray-900">{feature}</span>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -304,7 +332,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
             )}
 
             <motion.hr 
-              className="border-gray-200"
+              className="border-dashed border-gray-300"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.5, duration: 0.4 }}
@@ -313,56 +341,42 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
 
             {/* Precio */}
             <motion.div 
-              className="space-y-1"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55, duration: 0.4 }}
             >
-              <span className="text-xs sm:text-sm text-gray-500">{t.priceFrom}</span>
-              <motion.p 
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900"
-                key={price}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {price}
-              </motion.p>
-            </motion.div>
+              <p className="text-sm text-gray-500 mb-1">{t.priceFrom}</p>
+              <p className="text-4xl font-bold text-gray-900 mb-6">{price}</p>
 
-            {/* Botones - Ocultos cuando viene de app_mobile */}
-            {!isFromAppMobile && (
-              <motion.div 
-                className="flex flex-row gap-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.4 }}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex-1 sm:flex-none"
-                >
-                  <Button
-                    intent="dark"
-                    size="md"
-                    onClick={handleBuy}
-                    icon={<ShoppingCart color="white" height={20} width={20} />}
-                    iconPosition="right"
-                    className="w-full"
+              {/* Botones - Ocultos cuando viene de app_mobile */}
+              {!isFromAppMobile && (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full sm:w-auto"
                   >
-                    {t.buyNow}
-                  </Button>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex-1 sm:flex-none"
-                >
-                  <TelegramButton className="w-full" />
-                </motion.div>
-              </motion.div>
-            )}
+                    <Button
+                      intent="dark"
+                      size="md"
+                      onClick={handleBuy}
+                      icon={<ShoppingCart color="white" height={20} width={20} />}
+                      iconPosition="right"
+                      className="w-full"
+                    >
+                      {t.buyNow}
+                    </Button>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full sm:w-auto"
+                  >
+                    <TelegramButton className="w-full" />
+                  </motion.div>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
