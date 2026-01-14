@@ -2,6 +2,7 @@
 import React from "react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
+import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
 import { Check } from "lucide-react";
 import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
@@ -23,6 +24,7 @@ interface ProductSectionProps {
   productImage: string;
   appStoreUrl?: string;
   googlePlayUrl?: string;
+  apkUrl?: string;
   loading?: boolean;
 
   productId?: number | string;
@@ -43,6 +45,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   productImage,
   appStoreUrl,
   googlePlayUrl,
+  apkUrl,
   loading = false,
   productId,
   selectedOption,
@@ -162,6 +165,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           <div className="flex gap-3 mt-6">
             <AppStoreFooter />
             <PlayStoreSvg />
+            <DownloadApkSvg />
           </div>
         </div>
       </div>
