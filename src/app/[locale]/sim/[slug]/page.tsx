@@ -372,7 +372,7 @@ function SimProductPageContent({ slug, locale }: { slug: string; locale: string 
 
             <div className="max-w-3xl mx-auto">
               <SearchInput
-                inputClassName="h-[84px] rounded-full border-2 border-[#DCF2F8] px-6 py-2.5 focus:outline-none focus:border-[#33CDFB]"
+                inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
                 iconPosition="left"
                 name="searchinputcountry"
                 placeholder={t("searchPlaceholder")}
