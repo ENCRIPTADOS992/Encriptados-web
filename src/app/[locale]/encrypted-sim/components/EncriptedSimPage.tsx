@@ -31,30 +31,30 @@ const EncryptedSim = () => {
           <BannerConnect />
         </div>
 
-        <div className="flex justify-center">
-          <div className="w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-6/12 py-12 md:py-16">
+        <div className="py-12 md:py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <BasicFormProvider>
-              <div className="p-4">
-                <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
-                  <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">
-                    {t("coverageTitle")}
-                  </span>
-                </h2>
-                <div className="flex justify-center text-center mb-6">
-                  <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
-                    {t("coverageDescription")}
-                  </p>
-                </div>
+              <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
+                <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">
+                  {t("coverageTitle")}
+                </span>
+              </h2>
+              <div className="max-w-3xl mx-auto text-center mb-6">
+                <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
+                  {t("coverageDescription")}
+                </p>
+              </div>
 
+              <div className="max-w-3xl mx-auto">
                 <SearchInput
                   inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
                   iconPosition="left"
                   name="searchinputcountry"
                   placeholder={t("searchPlaceholder")}
                 />
-                <div className="mt-4 w-full">
-                  <ListOfPlans data={ListOfProductsData} />
-                </div>
+              </div>
+              <div className="max-w-3xl mx-auto mt-4">
+                <ListOfPlans data={ListOfProductsData} />
               </div>
             </BasicFormProvider>
           </div>
