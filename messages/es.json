@@ -1165,15 +1165,25 @@
     "deliveries": {
       "label": "Entregas"
     },
+    "offers": "Ofertas",
+    "distributors": "Distribuidores",
+    "blogs": "Blogs",
+    "securityTest": "Test de seguridad",
+    "aboutUs": "Nosotros",
+    "ambassadors": "Sé embajador",
+    "locations": "¿Dónde estamos?",
     "categories": {
       "products": "Productos",
       "others": "Otros",
       "us": "Nosotros"
     },
-    "aboutUs": "Nosotros",
     "suggestions": {
       "question": "¿Viste algo mal?",
       "link": "envíanos una sugerencia aquí"
+    },
+    "downloadApp": {
+      "title": "Descarga la Aplicación",
+      "description": "Disponible para todos los sistemas operativos"
     }
   },
   "encryptedHeader": {
