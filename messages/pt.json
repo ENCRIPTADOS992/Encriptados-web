@@ -2506,6 +2506,9 @@
     "goToTelegram": "Ir para Telegram",
     "linkCopied": "Link copiado para a área de transferência",
     "includeEsim": "Incluir eSIM",
-    "shipping": "Frete"
+    "shipping": "Frete",
+    "enterProductId": "Digite seu ID de {productName}",
+    "enterIdPlaceholder": "Digite seu ID",
+    "product": "produto"
   }
 }

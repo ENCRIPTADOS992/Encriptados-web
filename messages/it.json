@@ -2506,6 +2506,9 @@
     "goToTelegram": "Vai su Telegram",
     "linkCopied": "Link copiato negli appunti",
     "includeEsim": "Includi eSIM",
-    "shipping": "Spedizione"
+    "shipping": "Spedizione",
+    "enterProductId": "Inserisci il tuo ID {productName}",
+    "enterIdPlaceholder": "Inserisci il tuo ID",
+    "product": "prodotto"
   }
 }

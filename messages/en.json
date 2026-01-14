@@ -3025,6 +3025,9 @@
     "goToTelegram": "Go to Telegram",
     "linkCopied": "Link copied to clipboard",
     "includeEsim": "Include eSIM",
-    "shipping": "Shipping"
+    "shipping": "Shipping",
+    "enterProductId": "Enter your {productName} ID",
+    "enterIdPlaceholder": "Enter your ID",
+    "product": "product"
   }
 }

@@ -197,7 +197,7 @@ export default function FooterEncrypted() {
                 <p className="text-[#787878] text-sm">{t("downloadAppDescription")}</p>
               </div>
               <div className="relative flex items-start justify-end w-full">
-                <Image src="/images/footer/movil.png" alt="Encriptados App" width={390} height={780} quality={95} sizes="180px" className="w-full h-auto object-contain object-top" />
+                <Image src="/images/footer/image-movil.webp" alt="Encriptados App" width={390} height={780} quality={95} sizes="180px" className="w-full h-auto object-contain object-top" />
               </div>
             </div>
             <div className="flex flex-wrap justify-center gap-3">
