@@ -1160,15 +1160,25 @@
     "deliveries": {
       "label": "Deliveries"
     },
+    "offers": "Offers",
+    "distributors": "Distributors",
+    "blogs": "Blogs",
+    "securityTest": "Security Test",
+    "aboutUs": "About us",
+    "ambassadors": "Become ambassador",
+    "locations": "Where are we?",
     "categories": {
       "products": "Products",
       "others": "Others",
       "us": "About us"
     },
-    "aboutUs": "About us",
     "suggestions": {
       "question": "Did you see something wrong?",
       "link": "send us a suggestion here"
+    },
+    "downloadApp": {
+      "title": "Download the App",
+      "description": "Available for all operating systems"
     }
   },
   "encryptedHeader": {
