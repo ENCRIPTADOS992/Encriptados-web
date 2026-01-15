@@ -23,8 +23,7 @@ export interface SimProductRouteItem {
 export const SIM_PRODUCT_ROUTES: SimProductRouteItem[] = [
   { name: "SIM Encriptada", link: "/sim-encriptada", categoryId: 40, productId: 508 },
   { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: 40, productId: 454 },
-  { name: "TIM-SIM", link: "/tim-sim", categoryId: 40, productId: 59835 },
-  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: 40, productId: 59836 },
+  // 59835 y 59836 se manejan dinámicamente por provider/type en productRouteResolver
 ];
 
 export const PRODUCT_ROUTES: ProductRouteItem[] = [

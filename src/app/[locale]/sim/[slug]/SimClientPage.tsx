@@ -40,6 +40,7 @@ import {
   shouldShowEsimInfo,
   shouldShowShippingInfo,
   validateProductMatchesSlug,
+  getSlugFromBackendFields,
   type ProductFamily,
   type ProductFormat,
 } from "./simProductConfig";
@@ -128,17 +129,15 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   useEffect(() => {
     if (!product || isLoading || validationChecked) return;
 
-    // Derivar el slug correcto desde los campos del backend
-    const expectedSlug = getSlugFromBackendFields(product.provider, product.type_product);
-    const isValid = expectedSlug === currentSlug;
-
+    const validation = validateProductMatchesSlug(product, slug, locale);
+    
     // Debug para identificar por qué redirige
-    if (!isValid) {
+    if (!validation.isValid) {
       console.warn(`[SIM Page] Validation mismatch for Product ${product.id}:`, {
         provider: product.provider,
         type: product.type_product,
-        currentSlug,
-        expectedSlug,
+        currentSlug: slug,
+        expectedSlug: validation.expectedSlug,
         derivedFamily: deriveProductFamily(product.provider),
         derivedFormat: deriveProductFormat(product.type_product)
       });
