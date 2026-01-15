@@ -34,12 +34,15 @@ import FAQSection from "./FAQSection";
 import FAQSectionMobile from "./FAQSectionMobile";
 import FAQSectionTablet from "./FAQSectionTablet";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { plans } from "../consts/plans";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import { useLocale } from "next-intl";
 
 const RouterPage = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const locale = useLocale();
   const { openModal } = useModalPayment();
   const plan = searchParams.get("plan");
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
@@ -297,16 +300,16 @@ const featuresGrid = [
           description:
             "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
-          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          onButtonClick: () => router.push(`/${locale}/sim/sim-encriptada`),
           moreInfoLabel: "Más información",
-          onMoreInfo: () => alert("Más información de SIM Card"),
+          onMoreInfo: () => router.push(`/${locale}/sim/sim-encriptada`),
           image: "/images/apps/silent-circle/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
-          onButtonClick: () => alert("Ver más E-SIM"),
+          onButtonClick: () => router.push(`/${locale}/sim/esim-encriptada`),
           image: "/images/apps/silent-circle/phone.png",
         }}
       />
@@ -316,16 +319,16 @@ const featuresGrid = [
           description:
             "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
-          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          onButtonClick: () => router.push(`/${locale}/sim/sim-encriptada`),
           moreInfoLabel: "Más información",
-          onMoreInfo: () => alert("Más información de SIM Card"),
+          onMoreInfo: () => router.push(`/${locale}/sim/sim-encriptada`),
           image: "/images/apps/silent-circle/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
-          onButtonClick: () => alert("Ver más E-SIM"),
+          onButtonClick: () => router.push(`/${locale}/sim/esim-encriptada`),
           image: "/images/apps/silent-circle/phone.png",
         }}
       />
@@ -335,16 +338,16 @@ const featuresGrid = [
           description:
             "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Comprar",
-          onButtonClick: () => alert("Comprar SIM Card encriptada"),
+          onButtonClick: () => router.push(`/${locale}/sim/sim-encriptada`),
           moreInfoLabel: "Más información",
-          onMoreInfo: () => alert("Más información de SIM Card"),
+          onMoreInfo: () => router.push(`/${locale}/sim/sim-encriptada`),
           image: "/images/apps/silent-circle/sim.png",
         }}
         right={{
           title: "E-SIM Encriptada Planes datos o minutos",
           subtitle: "Subtitle element copy",
           buttonLabel: "Ver más",
-          onButtonClick: () => alert("Ver más E-SIM"),
+          onButtonClick: () => router.push(`/${locale}/sim/esim-encriptada`),
           image: "/images/apps/silent-circle/phone.png",
         }}
       />

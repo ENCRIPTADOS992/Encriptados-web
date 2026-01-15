@@ -2626,6 +2626,7 @@
     "rechargeSubtitle": "comunícate con nosotros",
     "goToTelegram": "Ir a Telegram",
     "linkCopied": "Enlace copiado al portapapeles",
+    "linkCopyFailed": "No se pudo copiar el enlace",
     "includeEsim": "Incluir eSIM",
     "shipping": "Envío",
     "enterProductId": "Ingresa tu ID de {productName}",

@@ -2495,6 +2495,7 @@
     "rechargeSubtitle": "contactez-nous",
     "goToTelegram": "Aller sur Telegram",
     "linkCopied": "Lien copié dans le presse-papiers",
+    "linkCopyFailed": "Impossible de copier le lien",
     "includeEsim": "Inclure eSIM",
     "shipping": "Livraison",
     "enterProductId": "Entrez votre ID {productName}",

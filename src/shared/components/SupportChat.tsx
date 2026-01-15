@@ -5,10 +5,12 @@ import Button from "./Button";
 import ChatSupport from "../svgs/ChatSupport";
 import Accordion from "./Accordion";
 import { useTranslations } from "next-intl";
+import { useToast } from "@/shared/context/ToastContext";
 
 export default function SupportChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -109,7 +111,7 @@ export default function SupportChat() {
           />
 
           <div className="mt-4">
-            <Button intent="primary" onClick={() => alert("Iniciando chat...")}>
+            <Button intent="primary" onClick={() => toast.success("Iniciando chat...")}>
               Iniciar Chat
             </Button>
           </div>

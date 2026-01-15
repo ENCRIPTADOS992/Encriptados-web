@@ -18,6 +18,7 @@ import {
   deriveProductSlug,
   hydrateCanonicalPath,
 } from "@/app/[locale]/sim/[slug]/simProductConfig";
+import toast from "react-hot-toast";
 
 type Params = {
   formType: FormType;
@@ -169,9 +170,7 @@ export function createSimSubmitHandler({
         );
 
         if (!clientSecret) {
-          alert(
-            "Pedido creado, pero no se recibió client_secret para Stripe."
-          );
+          toast.error("Pedido creado, pero no se recibió client_secret para Stripe.");
           return;
         }
 
@@ -179,9 +178,7 @@ export function createSimSubmitHandler({
           console.warn(
             "[createSimSubmitHandler] stripeConfirm todavía no está listo"
           );
-          alert(
-            "Stripe todavía se está inicializando. Espera un momento y vuelve a intentar."
-          );
+          toast.error("Stripe todavía se está inicializando. Espera un momento y vuelve a intentar.");
           return;
         }
 
@@ -218,20 +215,17 @@ export function createSimSubmitHandler({
           }
 
           if (confirmRes?.error) {
-            alert(confirmRes.error);
+            toast.error(String(confirmRes.error));
             return;
           }
 
-          alert("No se pudo completar el pago con la tarjeta.");
+          toast.error("No se pudo completar el pago con la tarjeta.");
         } catch (err: any) {
           console.error(
             "[createSimSubmitHandler] error confirmando pago Stripe",
             err
           );
-          alert(
-            err?.message ||
-              "Error confirmando el pago con Stripe."
-          );
+          toast.error(err?.message || "Error confirmando el pago con Stripe.");
         }
 
         return;
@@ -248,7 +242,7 @@ export function createSimSubmitHandler({
             "[createSimSubmitHandler] provider cryptomus pero sin payment_url en respuesta",
             res
           );
-          alert("Pedido creado, pero no se recibió URL de pago.");
+          toast.error("Pedido creado, pero no se recibió URL de pago.");
         }
         return;
       }
@@ -260,7 +254,7 @@ export function createSimSubmitHandler({
           res,
         }
       );
-      alert("Método de pago Tottoli desconocido.");
+      toast.error("Método de pago Tottoli desconocido.");
       return;
     }
 
@@ -300,9 +294,9 @@ export function createSimSubmitHandler({
       });
     } catch (e: any) {
       if (e?.code === "out_of_stock") {
-        alert("Stock insuficiente");
+        toast.error("Stock insuficiente");
       } else {
-        alert(e?.message || "Error procesando el pago");
+        toast.error(e?.message || "Error procesando el pago");
       }
     }
   };

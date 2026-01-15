@@ -3024,6 +3024,7 @@
     "rechargeSubtitle": "contact us",
     "goToTelegram": "Go to Telegram",
     "linkCopied": "Link copied to clipboard",
+    "linkCopyFailed": "Couldn't copy the link",
     "includeEsim": "Include eSIM",
     "shipping": "Shipping",
     "enterProductId": "Enter your {productName} ID",

@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 import { getSimProductUrl } from "@/shared/utils/productRouteResolver";
+import { useToast } from "@/shared/context/ToastContext";
 
 type Variant = {
   id: number;
@@ -80,6 +81,7 @@ const PurchaseHeader: React.FC<Props> = ({
 }) => {
   const locale = useLocale();
   const t = useTranslations("paymentModal");
+  const toast = useToast();
   const inc = () => setQuantity(Math.min(99, quantity + 1));
   const dec = () => setQuantity(Math.max(1, quantity - 1));
 
@@ -301,9 +303,16 @@ const PurchaseHeader: React.FC<Props> = ({
                 if (navigator.share) {
                   navigator.share(shareData).catch(() => {});
                 } else {
-                  navigator.clipboard.writeText(shareUrl).then(() => {
-                    alert(t("linkCopied"));
-                  }).catch(() => {});
+                  navigator.clipboard
+                    .writeText(shareUrl)
+                    .then(() => toast.success(t("linkCopied")))
+                    .catch(() =>
+                      toast.error(
+                        t("linkCopyFailed", {
+                          defaultValue: "No se pudo copiar el enlace",
+                        })
+                      )
+                    );
                 }
               }}
               className="absolute bottom-2 left-3 z-10 flex items-center gap-2 bg-[#0AAEE1] hover:bg-[#0AAEE1]/90 text-white pl-4 pr-3 py-2 rounded-full text-sm font-medium transition-colors shadow-lg whitespace-nowrap"

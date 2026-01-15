@@ -2505,6 +2505,7 @@
     "rechargeSubtitle": "contattaci",
     "goToTelegram": "Vai su Telegram",
     "linkCopied": "Link copiato negli appunti",
+    "linkCopyFailed": "Impossibile copiare il link",
     "includeEsim": "Includi eSIM",
     "shipping": "Spedizione",
     "enterProductId": "Inserisci il tuo ID {productName}",
