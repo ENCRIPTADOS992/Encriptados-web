@@ -18,8 +18,9 @@ interface HeroBannerProps {
  */
 const HeroBannerUnified: React.FC<HeroBannerProps> = ({ imageUrl, alt = "Banner" }) => {
   const desktopSrc = imageUrl.desktop;
-  const tabletSrc = imageUrl.tablet || desktopSrc;
-  const mobileSrc = imageUrl.mobile || tabletSrc;
+  const mobileSrc = imageUrl.mobile || desktopSrc;
+  // Si tablet está vacío, usar mobile como fallback
+  const tabletSrc = imageUrl.tablet || mobileSrc;
 
   return (
     <motion.div
