@@ -131,13 +131,23 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     const validation = validateProductMatchesSlug(product, slug, locale);
     setValidationChecked(true);
 
-    // Protección contra redirecciones a URLs inválidas
+    // Protección contra redirecciones a URLs inválidas y bucles infinitos
     if (!validation.isValid && validation.redirectUrl && validation.expectedSlug) {
-      // Verificar que el expectedSlug sea un slug válido conocido
+      // 1. Verificar que el expectedSlug sea un slug válido conocido
       if (!isValidSimProductSlug(validation.expectedSlug)) {
         console.error(
           `[SIM Page] ⚠️ Slug inválido detectado, no redirigiendo:`,
           { expectedSlug: validation.expectedSlug, product: product.id, provider: product.provider }
+        );
+        return;
+      }
+
+      // 2. Protección contra bucles de redirección
+      const isRedirected = searchParams.get("rd") === "1";
+      if (isRedirected) {
+        console.warn(
+          `[SIM Page] 🛑 Bucle de redirección detectado. Se detiene la redirección automática.`,
+          { currentSlug: slug, expectedSlug: validation.expectedSlug, productId: product.id }
         );
         return;
       }
@@ -148,13 +158,21 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         `debería estar en "${validation.expectedSlug}", no en "${slug}". ` +
         `Redirigiendo a ${validation.redirectUrl}`
       );
-      // Mantener el productId en la URL de redirección
-      const redirectWithId = productIdFromUrl 
-        ? `${validation.redirectUrl}?productId=${productIdFromUrl}`
-        : validation.redirectUrl;
-      router.replace(redirectWithId);
+      
+      // Construir URL de redirección
+      const targetUrl = new URL(validation.redirectUrl, window.location.origin);
+      
+      // Mantener params existentes (productId, price, buy)
+      searchParams.forEach((value, key) => {
+        targetUrl.searchParams.set(key, value);
+      });
+      
+      // Marcar como redirigido para evitar bucles
+      targetUrl.searchParams.set("rd", "1");
+
+      router.replace(targetUrl.pathname + targetUrl.search);
     }
-  }, [product, isLoading, slug, locale, router, validationChecked, productIdFromUrl]);
+  }, [product, isLoading, slug, locale, router, validationChecked, productIdFromUrl, searchParams]);
 
   // Obtener config basado en el producto cargado (no en la URL)
   const config = useMemo(() => {
