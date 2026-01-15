@@ -269,7 +269,7 @@
       ],
       "priceRange": "25 - 500 USD",
       "rating": "5/5",
-      "buyNow": "Comprar"
+      "buyNow": "¡Compra ahora!"
     },
     "characteristics": {
       "title": "Características principales"
@@ -1229,7 +1229,7 @@
       "licenseUnique": "Única",
       "priceFrom": "Desde",
       "priceConsult": "Consultar precio",
-      "buyNow": "Comprar",
+      "buyNow": "¡Compra ahora!",
       "selectPlan": "Selecciona un plan",
       "downloadAppStore": "Descargar en App Store",
       "downloadGooglePlay": "Descargar en Google Play",
