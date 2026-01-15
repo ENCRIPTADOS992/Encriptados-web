@@ -5,6 +5,7 @@ const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
 
 type GetAllProductsOptions = {
   simCountry?: string | null;
+  simRegion?: string | null;
   provider?: string | null;
 };
 
@@ -20,6 +21,9 @@ export const getAllProducts = async (
     };
     if (options?.simCountry && categoryId === 40) {
       params.sim_country = options.simCountry;
+    }
+    if (options?.simRegion && categoryId === 40) {
+      params.sim_region = options.simRegion;
     }
     // Enviar provider a la API si está disponible (solo para categoría 40)
     if (options?.provider && options.provider !== "all" && categoryId === 40) {

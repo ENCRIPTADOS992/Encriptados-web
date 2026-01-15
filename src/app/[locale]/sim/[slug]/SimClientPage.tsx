@@ -22,6 +22,7 @@ import PayForUse from "@/app/[locale]/encrypted-sim/components/PayForUse";
 import WhyCallSim from "@/app/[locale]/encrypted-sim/components/WhyCallSim/WhyCallSim";
 import BannerCoverage from "@/shared/BannerCoverage";
 import FAQSection from "@/app/[locale]/apps/component/templateProduct/FAQSection";
+import WhereUseSimSection from "@/app/[locale]/tim-sim/components/WhereUseSimSection";
 
 // Hooks y servicios
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -368,6 +369,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             apkUrl="https://encriptados.io/apk"
             translations={heroTranslations}
           />
+          <WhereUseSimSection locale={locale} />
         </>
       ) : (
         <HeroSimSection
