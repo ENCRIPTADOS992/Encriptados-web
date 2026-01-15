@@ -1,6 +1,7 @@
 import { getProductById } from "@/features/products/services";
 import { getSimProductConfig } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
+import { getTranslations } from "next-intl/server";
 
 interface PageProps {
   params: { slug: string; locale: string };
@@ -9,6 +10,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { slug, locale } = params;
   const staticConfig = getSimProductConfig(slug);
+  const t = await getTranslations({ locale, namespace: "EncryptedSimPage" });
   
   if (!staticConfig?.productId) return {};
 
@@ -17,13 +19,14 @@ export async function generateMetadata({ params }: PageProps) {
     if (!product) return {};
 
     const imageUrl = product.iconUrl || product.images?.[0]?.src || "/images/logo-encriptados.png";
+    const buyNowText = t("CardSim.buyNow") || "¡Compra ahora!";
 
     return {
       title: `${product.name} | Encriptados`,
-      description: product.description || `Compra ${product.name} en Encriptados`,
+      description: buyNowText,
       openGraph: {
         title: product.name,
-        description: product.description,
+        description: buyNowText,
         images: [
           {
             url: imageUrl,
