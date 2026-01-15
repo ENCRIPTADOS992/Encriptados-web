@@ -268,9 +268,11 @@ export function getProductBannerImages(
 ): ProductBannerImages {
   const heroBanners = (product as any)?.heroBanners;
   
+  // Priorizar API: si heroBanners existe (incluso con string vacío), usarlo
+  // Solo usar config como fallback si el campo NO está definido en API
   return {
-    desktop: heroBanners?.desktop || config?.heroBanners?.desktop || "",
-    tablet: heroBanners?.tablet || config?.heroBanners?.tablet || "",
-    mobile: heroBanners?.mobile || config?.heroBanners?.mobile || "",
+    desktop: heroBanners?.desktop !== undefined ? heroBanners.desktop : (config?.heroBanners?.desktop || ""),
+    tablet: heroBanners?.tablet !== undefined ? heroBanners.tablet : (config?.heroBanners?.tablet || ""),
+    mobile: heroBanners?.mobile !== undefined ? heroBanners.mobile : (config?.heroBanners?.mobile || ""),
   };
 }

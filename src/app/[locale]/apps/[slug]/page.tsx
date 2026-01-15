@@ -225,11 +225,13 @@ function ProductPageContent({ slug, locale }: { slug: string; locale: string }) 
     );
   }
 
-  // Hero banner images - Solo heroBanners del API o config estático
+  // Hero banner images - Priorizar heroBanners del API, solo usar config si API no tiene el campo
+  // Si API devuelve string vacío "", respetarlo (no usar fallback del config)
+  const apiHeroBanners = (product as any)?.heroBanners;
   const heroBannerImages = {
-    desktop: (product as any)?.heroBanners?.desktop || config?.heroBanners.desktop || "",
-    tablet: (product as any)?.heroBanners?.tablet || config?.heroBanners.tablet || "",
-    mobile: (product as any)?.heroBanners?.mobile || config?.heroBanners.mobile || "",
+    desktop: apiHeroBanners?.desktop !== undefined ? apiHeroBanners.desktop : (config?.heroBanners?.desktop || ""),
+    tablet: apiHeroBanners?.tablet !== undefined ? apiHeroBanners.tablet : (config?.heroBanners?.tablet || ""),
+    mobile: apiHeroBanners?.mobile !== undefined ? apiHeroBanners.mobile : (config?.heroBanners?.mobile || ""),
   };
 
   // URLs de video y tiendas de apps - Priorizar datos del backend

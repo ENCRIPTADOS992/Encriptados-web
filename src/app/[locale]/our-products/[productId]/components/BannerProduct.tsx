@@ -8,8 +8,9 @@ export default function BannerProduct() {
   const heroBanners = (currentProduct as any)?.heroBanners;
 
   const desktopSrc = heroBanners?.desktop || "";
-  const tabletSrc = heroBanners?.tablet || desktopSrc;
-  const mobileSrc = heroBanners?.mobile || tabletSrc;
+  const mobileSrc = heroBanners?.mobile || desktopSrc;
+  // Si tablet está vacío, usar mobile como fallback
+  const tabletSrc = heroBanners?.tablet || mobileSrc;
 
   // NO mostrar si no hay ninguna imagen disponible
   if (!desktopSrc && !mobileSrc) {
