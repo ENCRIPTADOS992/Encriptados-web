@@ -240,28 +240,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
  * Estructura: /sim/[slug]?productId=X&price=Y&buy=1
  * ════════════════════════════════════════════════════════════════
  */
-export const SIM_ENCRIPTADOS_SHARE_CONFIG: ShareConfig[] = [
-  {
-    productId: 508,
-    slug: "sim-encriptada",
-    name: "SIM Física Encriptados",
-    metaImage: "/meta-image/sim-encriptados/encriptados-sim-fisica.png",
-    title: "SIM Física Encriptados - Cobertura Global",
-    description: "Compra aquí SIM Física Encriptados.",
-    shareUrl: `${BASE_URL}/sim/sim-encriptada?productId=508&price=15&buy=1`,
-    category: "sim-encriptados",
-  },
-  {
-    productId: 454,
-    slug: "esim-encriptada",
-    name: "eSIM Encriptados",
-    metaImage: "/meta-image/sim-encriptados/encriptados-esim.png",
-    title: "eSIM Encriptados - Activa al Instante",
-    description: "Compra aquí eSIM Encriptados.",
-    shareUrl: `${BASE_URL}/sim/esim-encriptada?productId=454&price=12&buy=1`,
-    category: "sim-encriptados",
-  },
-];
+export const SIM_ENCRIPTADOS_SHARE_CONFIG: ShareConfig[] = [];
 
 /**
  * ════════════════════════════════════════════════════════════════
@@ -269,28 +248,7 @@ export const SIM_ENCRIPTADOS_SHARE_CONFIG: ShareConfig[] = [
  * Estructura: /sim/[slug]?productId=X&price=Y&buy=1
  * ════════════════════════════════════════════════════════════════
  */
-export const SIM_TIM_SHARE_CONFIG: ShareConfig[] = [
-  {
-    productId: 59835,
-    slug: "tim-sim",
-    name: "TIM SIM Física",
-    metaImage: "/meta-image/sim-tim/tim-fisica.png",
-    title: "TIM SIM Física - Datos Globales",
-    description: "Compra aquí TIM SIM Física.",
-    shareUrl: `${BASE_URL}/sim/tim-sim?productId=59835&price=10&buy=1`,
-    category: "sim-tim",
-  },
-  {
-    productId: 59836,
-    slug: "esim-tim",
-    name: "TIM eSIM",
-    metaImage: "/meta-image/sim-tim/tim-esim-datos.png",
-    title: "TIM eSIM - Activa Inmediata",
-    description: "Compra aquí TIM eSIM.",
-    shareUrl: `${BASE_URL}/sim/esim-tim?productId=59836&price=10&buy=1`,
-    category: "sim-tim",
-  },
-];
+export const SIM_TIM_SHARE_CONFIG: ShareConfig[] = [];
 
 /**
  * ════════════════════════════════════════════════════════════════

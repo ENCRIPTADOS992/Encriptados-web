@@ -10,14 +10,14 @@ export function useTranslatedProductsCategories(): any {
       description: t("sims.description", {
         defaultValue: "Conoce nuestras eSIM/SIM",
       }),
-      link: "/sim-encriptada",
+      link: "/sim/sim-encriptada",
       image: "/images/mega-menu/virtual-sim.jpeg",
       items: [
         {
           title: t("sims.items.encryptedSim.title", {
             defaultValue: "SIM Encriptada",
           }),
-          link: "/sim-encriptada",
+          link: "/sim/sim-encriptada",
           image: "/images/mega-menu/virtual-sim.jpeg",
           description: t("sims.items.encryptedSim.description", {
             defaultValue: "Conoce cómo funciona la SIM Encriptada",
@@ -375,4 +375,3 @@ export function useTranslatedUsCategories(): any[] {
     },
   ];
 }
-

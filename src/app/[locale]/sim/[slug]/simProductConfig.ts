@@ -54,11 +54,11 @@ export interface SimProductStaticConfig {
  * 
  * SIM ENCRIPTADAS:
  * - sim-encriptada (508): SIM física encriptada
- * - esim-encriptada (454): eSIM encriptada digital
+ * - esim-encriptada (449): eSIM encriptada digital
  * 
  * TIM-SIM (Planes de datos):
- * - tim-sim (59835): SIM TIM con datos
- * - esim-tim (59836): eSIM TIM con datos
+ * - tim-sim (448): SIM TIM física con datos
+ * - esim-tim (454): eSIM TIM con datos
  */
 export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   // ════════════════════════════════════════════════════════════════
@@ -71,11 +71,11 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
     categoryId: 40,
     templateType: "sim",
     heroBanners: {
-      desktop: "/images/encrypted-sim/principal.png",
-      tablet: "/images/encrypted-sim/principal.png",
-      mobile: "/images/encrypted-sim/principal.png",
+      desktop: "/images/encrypted-sim/men-cel.webp",
+      tablet: "/images/encrypted-sim/men-cel.webp",
+      mobile: "/images/encrypted-sim/men-cel.webp",
     },
-    productImage: "/images/encrypted-sim/Encrypted_sim_card.png",
+    productImage: "/images/encrypted-sim/Encrypted_sim_card.webp",
     iconUrl: "/images/encrypted-sim/icons/sim-icon.png",
     benefitIcon: "/images/encrypted-sim/icons/check-icon.png",
     videoUrl: "",
@@ -91,15 +91,15 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
 
   "esim-encriptada": {
     slug: "esim-encriptada",
-    productId: 454,
+    productId: 449,
     categoryId: 40,
     templateType: "esim",
     heroBanners: {
-      desktop: "/images/encrypted-sim/Encrypted_sim_card_eSIM.png",
-      tablet: "/images/encrypted-sim/Encrypted_sim_card_eSIM.png",
-      mobile: "/images/encrypted-sim/Encrypted_sim_card_eSIM.png",
+      desktop: "/images/encrypted-sim/men-cel.webp",
+      tablet: "/images/encrypted-sim/men-cel.webp",
+      mobile: "/images/encrypted-sim/men-cel.webp",
     },
-    productImage: "/images/encrypted-sim/Encrypted_sim_card_eSIM.png",
+    productImage: "/images/encrypted-sim/Encrypted_sim_card_eSIM.webp",
     iconUrl: "/images/encrypted-sim/icons/esim-icon.png",
     benefitIcon: "/images/encrypted-sim/icons/check-icon.png",
     videoUrl: "",
@@ -119,7 +119,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   
   "tim-sim": {
     slug: "tim-sim",
-    productId: 59835,
+    productId: 448,
     categoryId: 40,
     templateType: "tim-sim",
     heroBanners: {
@@ -143,7 +143,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
 
   "esim-tim": {
     slug: "esim-tim",
-    productId: 59836, // Ajustar al ID correcto de la API
+    productId: 454,
     categoryId: 40,
     templateType: "esim-tim",
     heroBanners: {

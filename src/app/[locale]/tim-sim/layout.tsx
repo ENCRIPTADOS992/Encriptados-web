@@ -11,8 +11,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
 
   try {
-    // ID correcto para TIM SIM Física según simProductConfig.ts
-    const TIM_SIM_PRODUCT_ID = 59835;
+    const TIM_SIM_PRODUCT_ID = 448;
     
     // Obtener datos del producto desde la API
     let product;
