@@ -138,7 +138,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         type: product.type_product,
         currentSlug: slug,
         expectedSlug: validation.expectedSlug,
-        derivedFamily: deriveProductFamily(product.provider),
+        derivedFamily: deriveProductFamily(product.provider, product.id),
         derivedFormat: deriveProductFormat(product.type_product)
       });
     }
@@ -212,8 +212,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // DERIVACIÓN: Determinar family y format desde campos del backend
   // ═══════════════════════════════════════════════════════════════════════════
   const productFamily: ProductFamily = useMemo(() => {
-    return deriveProductFamily(product?.provider);
-  }, [product?.provider]);
+    return deriveProductFamily(product?.provider, product?.id);
+  }, [product?.provider, product?.id]);
 
   const productFormat: ProductFormat = useMemo(() => {
     return deriveProductFormat(product?.type_product);

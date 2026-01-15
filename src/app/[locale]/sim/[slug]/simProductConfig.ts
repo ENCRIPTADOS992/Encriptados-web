@@ -202,7 +202,14 @@ export type SimSlug = "sim-encriptada" | "esim-encriptada" | "tim-sim" | "esim-t
  * @example deriveProductFamily("Sim TIM") → "tim"
  * @example deriveProductFamily("tim") → "tim"
  */
-export function deriveProductFamily(provider: string | undefined): ProductFamily {
+export function deriveProductFamily(
+  provider: string | undefined, 
+  productId?: number | string
+): ProductFamily {
+  // Excepción explícita para productos TIM conocidos que podrían tener provider incorrecto
+  const sid = String(productId);
+  if (sid === "59835" || sid === "59836") return "tim";
+
   const prov = (provider || "").toLowerCase();
   // Nuevos valores del backend: "encrypted", "tim"
   if (prov === "encrypted" || prov.includes("encript")) return "encrypted";
@@ -262,9 +269,10 @@ export function hydrateCanonicalPath(slug: SimSlug): string {
  */
 export function deriveCanonicalPath(
   provider: string | undefined,
-  typeProduct: string | undefined
+  typeProduct: string | undefined,
+  productId?: number | string
 ): string {
-  const family = deriveProductFamily(provider);
+  const family = deriveProductFamily(provider, productId);
   const format = deriveProductFormat(typeProduct);
   const slug = deriveProductSlug(family, format);
   return hydrateCanonicalPath(slug);
@@ -276,9 +284,10 @@ export function deriveCanonicalPath(
  */
 export function getSlugFromBackendFields(
   provider: string | undefined,
-  typeProduct: string | undefined
+  typeProduct: string | undefined,
+  productId?: number | string
 ): SimSlug {
-  const family = deriveProductFamily(provider);
+  const family = deriveProductFamily(provider, productId);
   const format = deriveProductFormat(typeProduct);
   return deriveProductSlug(family, format);
 }
@@ -337,7 +346,7 @@ export interface ProductValidationResult {
  * // result.redirectUrl = "/es/sim/esim-encriptada"
  */
 export function validateProductMatchesSlug(
-  product: { provider?: string; type_product?: string } | null,
+  product: { id?: number | string; provider?: string; type_product?: string } | null,
   currentSlug: string,
   locale: string
 ): ProductValidationResult {
@@ -352,7 +361,7 @@ export function validateProductMatchesSlug(
   }
 
   // Derivar el slug correcto desde los campos del backend
-  const expectedSlug = getSlugFromBackendFields(product.provider, product.type_product);
+  const expectedSlug = getSlugFromBackendFields(product.provider, product.type_product, product.id);
   const isValid = expectedSlug === currentSlug;
 
   return {
@@ -368,9 +377,9 @@ export function validateProductMatchesSlug(
  * El slug se deriva del backend (provider + type_product), no de la URL.
  */
 export function getConfigForProduct(
-  product: { provider?: string; type_product?: string } | null
+  product: { id?: number | string; provider?: string; type_product?: string } | null
 ): SimProductStaticConfig | null {
   if (!product) return null;
-  const slug = getSlugFromBackendFields(product.provider, product.type_product);
+  const slug = getSlugFromBackendFields(product.provider, product.type_product, product.id);
   return simProductConfigs[slug] || null;
 }
