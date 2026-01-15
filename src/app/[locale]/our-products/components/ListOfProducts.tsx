@@ -779,9 +779,20 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             const isTimProvider = providerLower === "tim" || providerLower.includes("tim");
             const isTim = filters.provider === "tim";
             const simName = (product.name ?? "").toLowerCase().trim();
+            const skuLower = (product.sku ?? "").toLowerCase().trim();
+            const minuteUnit = t("minuteAbbr");
 
             // Debug para productos de minutos
-            const isMinutosProduct = simName.includes("minutos") || simName.includes("minutes") || simName.includes("recarga minutos");
+            const isMinutesSku =
+              skuLower.includes("minutes") ||
+              skuLower.includes("minute") ||
+              skuLower === "minutes-sim-encriptados";
+            const isMinutosProduct =
+              isMinutesSku ||
+              simName.includes("minutos") ||
+              simName.includes("minutes") ||
+              simName.includes("minuti") ||
+              simName.includes("recarga minutos");
 
             // Lista de nombres de productos SIM que deben mostrar badges TIM
             const isSim =
@@ -817,14 +828,14 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               
               const minutes = priceToMinutesMap[productPrice];
               if (minutes) {
-                return `${minutes} min`;
+                return `${minutes} ${minuteUnit}`;
               }
               
               // Fallback: buscar en el nombre del producto
               const productName = product.name ?? "";
               const minutesMatch = productName.match(/(\d+)\s*min/i);
               if (minutesMatch) {
-                return `${minutesMatch[1]} min`;
+                return `${minutesMatch[1]} ${minuteUnit}`;
               }
               
               return undefined;
@@ -970,7 +981,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                   minutesValue = priceToMinutesMap[Number(selectedVar.price)];
                 }
                 if (minutesValue) {
-                  tag = `${minutesValue} min`;
+                  tag = `${minutesValue} ${minuteUnit}`;
                 }
               } else if (isDataRecharge) {
                 // Para "Recarga Datos": mostrar GB
@@ -1002,12 +1013,27 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               // Para Apps, Sistemas y Router: mostrar licencia en meses
               // Si el producto fue expandido, usar la variante seleccionada
               const getLicenseTag = (): string | undefined => {
+                const uniqueLicense = t("uniqueLicense");
+                const monthsLabel = t("monthsLabel");
+                const isUnique = (value: unknown) => {
+                  if (value === 0 || value === "0") return true;
+                  if (!value) return false;
+                  const normalized = String(value).trim().toLowerCase();
+                  return (
+                    normalized === "única" ||
+                    normalized === "unica" ||
+                    normalized === "unique" ||
+                    normalized === "single" ||
+                    normalized === "one-time"
+                  );
+                };
+
                 // Si hay una variante seleccionada (del proceso de expansión), usarla
                 if (product._selectedVariant) {
                   const time = (product._selectedVariant as any).licensetime;
                   if (time) {
-                    if (time === "0" || time === "Única") return "Única";
-                    return `${time} Meses`;
+                    if (isUnique(time)) return uniqueLicense;
+                    return `${time} ${monthsLabel}`;
                   }
                 }
                 
@@ -1018,22 +1044,22 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 // Si hay variantes con licensetime, usar la primera
                 if (variants.length > 0 && variants[0]?.licensetime) {
                   const time = variants[0].licensetime;
-                  if (time === "0" || time === "Única") return "Única";
-                  return `${time} Meses`;
+                  if (isUnique(time)) return uniqueLicense;
+                  return `${time} ${monthsLabel}`;
                 }
                 
                 // Si hay licenseVariants, usar la primera
                 if (licenseVariants.length > 0 && licenseVariants[0]?.licensetime) {
                   const time = licenseVariants[0].licensetime;
-                  if (time === "0" || time === "Única") return "Única";
-                  return `${time} Meses`;
+                  if (isUnique(time)) return uniqueLicense;
+                  return `${time} ${monthsLabel}`;
                 }
                 
                 // Fallback al licensetime del producto
                 const productLicense = product.licensetime;
                 if (productLicense && productLicense !== "0" && productLicense !== "") {
-                  if (productLicense === "Única") return "Única";
-                  return `${productLicense} Meses`;
+                  if (isUnique(productLicense)) return uniqueLicense;
+                  return `${productLicense} ${monthsLabel}`;
                 }
                 
                 return undefined;
