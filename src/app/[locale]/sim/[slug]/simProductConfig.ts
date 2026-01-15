@@ -95,9 +95,9 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
     categoryId: 40,
     templateType: "esim",
     heroBanners: {
-      desktop: "/images/encrypted-sim/Encrypted_sim_card_eSIM.webp",
-      tablet: "/images/encrypted-sim/Encrypted_sim_card_eSIM.webp",
-      mobile: "/images/encrypted-sim/Encrypted_sim_card_eSIM.webp",
+      desktop: "/images/encrypted-sim/men-cel.webp",
+      tablet: "/images/encrypted-sim/men-cel.webp",
+      mobile: "/images/encrypted-sim/men-cel.webp",
     },
     productImage: "/images/encrypted-sim/Encrypted_sim_card_eSIM.webp",
     iconUrl: "/images/encrypted-sim/icons/esim-icon.png",
