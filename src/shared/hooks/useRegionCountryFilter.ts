@@ -181,12 +181,26 @@ export function useRegionCountryFilter({
   }, [open]);
 
   useEffect(() => {
-    if (!filters.regionOrCountryType) {
-      updateFilters({ regionOrCountryType: "region" });
+    const next: Partial<ProductFilters> = {};
+    if (!filters.regionOrCountryType) next.regionOrCountryType = "region";
+    if (!filters.regionOrCountry) next.regionOrCountry = "global";
+
+    const effectiveType = filters.regionOrCountryType ?? next.regionOrCountryType;
+    const effectiveCode = filters.regionOrCountry ?? next.regionOrCountry;
+
+    if (effectiveType === "region") {
+      if (!filters.simRegion) {
+        const simRegion = mapRegionCodeToSimRegion(effectiveCode);
+        if (simRegion) next.simRegion = simRegion;
+      }
+    } else if (effectiveType === "country") {
+      if (!filters.simCountry && typeof effectiveCode === "string") {
+        const iso2 = normalizeAlpha2(effectiveCode) ?? effectiveCode;
+        next.simCountry = iso2.toUpperCase();
+      }
     }
-    if (!filters.regionOrCountry) {
-      updateFilters({ regionOrCountry: "global" });
-    }
+
+    if (Object.keys(next).length > 0) updateFilters(next);
   }, [filters.regionOrCountryType, filters.regionOrCountry, updateFilters]);
 
   const selectedInfo = useMemo(() => {

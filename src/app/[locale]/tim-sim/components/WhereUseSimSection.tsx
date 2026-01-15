@@ -50,8 +50,8 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
   const [filters, setFilters] = useState<ProductFilters>({
     selectedOption: "40",
     provider: "tim",
-    timService: "sim_fisica",
-    timprovider: "physicsimtim",
+    timService: "esim_datos",
+    timprovider: "esimplusdatatim",
     regionOrCountry: "GLOBAL",
     regionOrCountryType: "region",
     simRegion: "global",
