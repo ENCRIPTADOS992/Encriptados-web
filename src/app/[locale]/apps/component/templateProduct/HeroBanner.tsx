@@ -27,6 +27,8 @@ const HeroBannerUnified: React.FC<HeroBannerProps> = ({ imageUrl, alt = "Banner"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full"
+      style={{ position: 'relative' }}
     >
       <picture className="block w-full">
         {/* Desktop: lg (1024px+) */}
@@ -37,7 +39,8 @@ const HeroBannerUnified: React.FC<HeroBannerProps> = ({ imageUrl, alt = "Banner"
         <img
           src={mobileSrc}
           alt={alt}
-          className="w-full h-44 sm:h-36 lg:h-72 object-cover"
+          className="w-full block"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
           draggable={false}
           loading="eager"
         />

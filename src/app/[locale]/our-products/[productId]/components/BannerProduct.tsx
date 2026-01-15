@@ -18,16 +18,19 @@ export default function BannerProduct() {
   }
 
   return (
-    <div className="relative w-full h-[150px] md:h-[359px] bg-gray-200">
+    <div className="w-full" style={{ position: 'relative' }}>
       {/* Mobile */}
       {mobileSrc && (
         <Image
           src={mobileSrc}
           alt={`${currentProduct?.name || 'Product'} Banner Mobile`}
-          fill
+          width={1200}
+          height={400}
           sizes="100vw"
-          className="block md:hidden object-cover"
+          className="block md:hidden w-full h-auto"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
           quality={100}
+          priority
         />
       )}
 
@@ -36,10 +39,13 @@ export default function BannerProduct() {
         <Image
           src={desktopSrc}
           alt={`${currentProduct?.name || 'Product'} Banner Desktop`}
-          fill
+          width={1920}
+          height={600}
           quality={100}
           sizes="100vw"
-          className="hidden md:block object-cover"
+          className="hidden md:block w-full h-auto"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+          priority
         />
       )}
     </div>
