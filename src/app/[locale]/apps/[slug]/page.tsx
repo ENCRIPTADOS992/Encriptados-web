@@ -40,8 +40,18 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export default function ProductPage({ params }: PageProps) {
+export default async function ProductPage({ params }: PageProps) {
   const { slug, locale } = params;
+  const config = getProductConfig(slug);
+  let initialProduct = null;
+
+  if (config?.productId) {
+    try {
+      initialProduct = await getProductById(String(config.productId), locale);
+    } catch (error) {
+      console.error("Error fetching product server-side:", error);
+    }
+  }
   
-  return <ProductPageContent slug={slug} locale={locale} />;
+  return <ProductPageContent slug={slug} locale={locale} initialProduct={initialProduct} />;
 }

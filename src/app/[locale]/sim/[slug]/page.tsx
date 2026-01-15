@@ -40,8 +40,18 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export default function SimProductPage({ params }: PageProps) {
+export default async function SimProductPage({ params }: PageProps) {
   const { slug, locale } = params;
+  const staticConfig = getSimProductConfig(slug);
+  let initialProduct = null;
+
+  if (staticConfig?.productId) {
+    try {
+      initialProduct = await getProductById(String(staticConfig.productId), locale);
+    } catch (error) {
+       console.error("Error fetching SIM product server-side:", error);
+    }
+  }
   
-  return <SimProductPageContent slug={slug} locale={locale} />;
+  return <SimProductPageContent slug={slug} locale={locale} initialProduct={initialProduct} />;
 }

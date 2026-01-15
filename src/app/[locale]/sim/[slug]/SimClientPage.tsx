@@ -45,7 +45,9 @@ import {
 } from "./simProductConfig";
 
 interface PageProps {
-  params: { slug: string; locale: string };
+  slug: string; 
+  locale: string; 
+  initialProduct: ProductById | null;
 }
 
 // Variantes de animación para secciones
@@ -58,7 +60,7 @@ const sectionVariants = {
   },
 };
 
-export default function SimProductPageContent({ slug, locale }: { slug: string; locale: string }) {
+export default function SimProductPageContent({ slug, locale, initialProduct }: PageProps) {
   const { openModal } = useModalPayment();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -66,8 +68,8 @@ export default function SimProductPageContent({ slug, locale }: { slug: string; 
   // Traducciones
   const t = useTranslations("EncryptedSimPage");
 
-  const [product, setProduct] = useState<ProductById | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [product, setProduct] = useState<ProductById | null>(initialProduct);
+  const [isLoading, setIsLoading] = useState(!initialProduct);
   const [error, setError] = useState<string | null>(null);
   const [validationChecked, setValidationChecked] = useState(false);
 
@@ -94,6 +96,12 @@ export default function SimProductPageContent({ slug, locale }: { slug: string; 
       if (!productIdToLoad) {
         setIsLoading(false);
         setError("Producto no disponible - No se especificó ID");
+        return;
+      }
+
+      // Si ya tenemos el producto cargado (desde el server) y coincide con el ID que necesitamos, no recargar
+      if (product && String(product.id) === String(productIdToLoad)) {
+        setIsLoading(false);
         return;
       }
 
