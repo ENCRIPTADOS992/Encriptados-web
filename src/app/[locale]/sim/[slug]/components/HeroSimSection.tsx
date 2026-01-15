@@ -115,7 +115,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
             src={heroBannerSrc}
             alt="Hero Background"
             fill
-            className="object-cover object-[70%_center] sm:object-center"
+            className="object-cover object-[70%_top] sm:object-top"
             priority
           />
           {/* Gradient transition from black to image */}
