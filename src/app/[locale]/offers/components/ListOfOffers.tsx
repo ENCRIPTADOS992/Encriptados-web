@@ -46,7 +46,7 @@ const ListOfOffers = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-black mt-9 min-h-[320px] sm:min-h-[420px]">
+        <div className="w-full max-w-7xl mx-auto px-2 md:px-4 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 text-black mt-9 min-h-[320px] sm:min-h-[420px]">
           {isFetching && (
             <div className="col-span-full text-white">Cargando ofertas…</div>
           )}
