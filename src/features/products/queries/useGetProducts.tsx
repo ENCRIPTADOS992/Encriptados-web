@@ -7,18 +7,20 @@ export const useGetProducts = (
   categoryId: number,
   provider: string,
   country?: string,
+  region?: string,
   options?: { enabled?: boolean }
 ) => {
   const locale = useLocale();
   const enabled = options?.enabled ?? true;
 
   return useQuery<Allproducts>({
-    queryKey: ["products", categoryId, provider, country, locale],
+    queryKey: ["products", categoryId, provider, country, region, locale],
     queryFn: async () => {
       console.log("🔍 [useGetProducts] LOCALE DETECTADO:", locale);
-      console.log("🔍 [useGetProducts] PARAMS:", { categoryId, provider, country });
+      console.log("🔍 [useGetProducts] PARAMS:", { categoryId, provider, country, region });
       const res = await getAllProducts(categoryId, locale, {
         simCountry: country ?? null,
+        simRegion: region ?? null,
         provider: provider ?? null,
       });
       console.log("✅ [useGetProducts] productos recibidos:", res);

@@ -82,7 +82,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const { data, isFetching, isError } = useGetProducts(
     selectedOption,
     filters.provider,
-    filters.simCountry
+    filters.simCountry,
+    filters.simRegion
   );
 
   console.log("🎛️ [ListOfProducts] filtros actuales =>", {
