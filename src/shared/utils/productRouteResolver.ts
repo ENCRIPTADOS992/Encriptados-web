@@ -100,7 +100,7 @@ export const getProductLink = (
     }
     
     // ÚLTIMO FALLBACK: SIM encriptada por defecto
-    return `/sim-encriptada`;
+    return `/sim/sim-encriptada`;
   }
 
   const item = PRODUCT_ROUTES.find(

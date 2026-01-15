@@ -21,9 +21,10 @@ export interface SimProductRouteItem {
 
 // Rutas de productos SIM (categoría 40)
 export const SIM_PRODUCT_ROUTES: SimProductRouteItem[] = [
-  { name: "SIM Encriptada", link: "/sim-encriptada", categoryId: 40, productId: 508 },
-  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: 40, productId: 454 },
-  // 59835 y 59836 se manejan dinámicamente por provider/type en productRouteResolver
+  { name: "SIM Encriptada", link: "/sim/sim-encriptada", categoryId: 40, productId: 508 },
+  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: 40, productId: 449 },
+  { name: "SIM TIM", link: "/sim/tim-sim", categoryId: 40, productId: 448 },
+  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: 40, productId: 454 },
 ];
 
 export const PRODUCT_ROUTES: ProductRouteItem[] = [

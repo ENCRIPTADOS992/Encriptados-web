@@ -54,11 +54,11 @@ export interface SimProductStaticConfig {
  * 
  * SIM ENCRIPTADAS:
  * - sim-encriptada (508): SIM física encriptada
- * - esim-encriptada (454): eSIM encriptada digital
+ * - esim-encriptada (449): eSIM encriptada digital
  * 
  * TIM-SIM (Planes de datos):
- * - tim-sim (59835): SIM TIM con datos
- * - esim-tim (59836): eSIM TIM con datos
+ * - tim-sim (448): SIM TIM física con datos
+ * - esim-tim (454): eSIM TIM con datos
  */
 export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   // ════════════════════════════════════════════════════════════════
@@ -91,7 +91,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
 
   "esim-encriptada": {
     slug: "esim-encriptada",
-    productId: 454,
+    productId: 449,
     categoryId: 40,
     templateType: "esim",
     heroBanners: {
@@ -119,7 +119,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   
   "tim-sim": {
     slug: "tim-sim",
-    productId: 59835,
+    productId: 448,
     categoryId: 40,
     templateType: "tim-sim",
     heroBanners: {
@@ -143,7 +143,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
 
   "esim-tim": {
     slug: "esim-tim",
-    productId: 59836, // Ajustar al ID correcto de la API
+    productId: 454,
     categoryId: 40,
     templateType: "esim-tim",
     heroBanners: {
@@ -202,14 +202,7 @@ export type SimSlug = "sim-encriptada" | "esim-encriptada" | "tim-sim" | "esim-t
  * @example deriveProductFamily("Sim TIM") → "tim"
  * @example deriveProductFamily("tim") → "tim"
  */
-export function deriveProductFamily(
-  provider: string | undefined, 
-  productId?: number | string
-): ProductFamily {
-  // Excepción explícita para productos TIM conocidos que podrían tener provider incorrecto
-  const sid = String(productId);
-  if (sid === "59835" || sid === "59836") return "tim";
-
+export function deriveProductFamily(provider: string | undefined): ProductFamily {
   const prov = (provider || "").toLowerCase();
   // Nuevos valores del backend: "encrypted", "tim"
   if (prov === "encrypted" || prov.includes("encript")) return "encrypted";
@@ -269,10 +262,9 @@ export function hydrateCanonicalPath(slug: SimSlug): string {
  */
 export function deriveCanonicalPath(
   provider: string | undefined,
-  typeProduct: string | undefined,
-  productId?: number | string
+  typeProduct: string | undefined
 ): string {
-  const family = deriveProductFamily(provider, productId);
+  const family = deriveProductFamily(provider);
   const format = deriveProductFormat(typeProduct);
   const slug = deriveProductSlug(family, format);
   return hydrateCanonicalPath(slug);
@@ -284,10 +276,9 @@ export function deriveCanonicalPath(
  */
 export function getSlugFromBackendFields(
   provider: string | undefined,
-  typeProduct: string | undefined,
-  productId?: number | string
+  typeProduct: string | undefined
 ): SimSlug {
-  const family = deriveProductFamily(provider, productId);
+  const family = deriveProductFamily(provider);
   const format = deriveProductFormat(typeProduct);
   return deriveProductSlug(family, format);
 }
@@ -346,7 +337,7 @@ export interface ProductValidationResult {
  * // result.redirectUrl = "/es/sim/esim-encriptada"
  */
 export function validateProductMatchesSlug(
-  product: { id?: number | string; provider?: string; type_product?: string } | null,
+  product: { provider?: string; type_product?: string } | null,
   currentSlug: string,
   locale: string
 ): ProductValidationResult {
@@ -361,7 +352,7 @@ export function validateProductMatchesSlug(
   }
 
   // Derivar el slug correcto desde los campos del backend
-  const expectedSlug = getSlugFromBackendFields(product.provider, product.type_product, product.id);
+  const expectedSlug = getSlugFromBackendFields(product.provider, product.type_product);
   const isValid = expectedSlug === currentSlug;
 
   return {
@@ -377,9 +368,9 @@ export function validateProductMatchesSlug(
  * El slug se deriva del backend (provider + type_product), no de la URL.
  */
 export function getConfigForProduct(
-  product: { id?: number | string; provider?: string; type_product?: string } | null
+  product: { provider?: string; type_product?: string } | null
 ): SimProductStaticConfig | null {
   if (!product) return null;
-  const slug = getSlugFromBackendFields(product.provider, product.type_product, product.id);
+  const slug = getSlugFromBackendFields(product.provider, product.type_product);
   return simProductConfigs[slug] || null;
 }
