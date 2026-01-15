@@ -37,10 +37,12 @@ import {
 } from "./productUtils";
 
 interface PageProps {
-  params: { slug: string; locale: string };
+  slug: string; 
+  locale: string;
+  initialProduct: ProductById | null;
 }
 
-export default function ProductPageContent({ slug, locale }: { slug: string; locale: string }) {
+export default function ProductPageContent({ slug, locale, initialProduct }: PageProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -52,8 +54,8 @@ export default function ProductPageContent({ slug, locale }: { slug: string; loc
   const t = useTranslations("appsShared.productTemplate");
   const tSim = useTranslations("appsShared");
 
-  const [product, setProduct] = useState<ProductById | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [product, setProduct] = useState<ProductById | null>(initialProduct);
+  const [isLoading, setIsLoading] = useState(!initialProduct);
   const [error, setError] = useState<string | null>(null);
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
@@ -80,6 +82,12 @@ export default function ProductPageContent({ slug, locale }: { slug: string; loc
 
   useEffect(() => {
     async function loadProduct() {
+      // Si ya tenemos el producto (desde server) y coincide, no recargar
+      if (product && String(product.id) === String(config?.productId)) {
+        setIsLoading(false);
+        return;
+      }
+
       if (!config || config.productId === 0) {
         setIsLoading(false);
         setError(t("productNotAvailable"));
