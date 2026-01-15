@@ -17,6 +17,7 @@ interface HeroSimSectionProps {
   // Datos del producto (de la API)
   productName: string;
   productImage: string;
+  heroImage?: string;
   features: string[];
   price: string;
   
@@ -79,6 +80,7 @@ const featureVariants = {
 const HeroSimSection: React.FC<HeroSimSectionProps> = ({
   productName,
   productImage,
+  heroImage,
   features,
   price,
   onBuy,
@@ -96,6 +98,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
   };
 
   const hasStoreLinks = appStoreUrl || googlePlayUrl || apkUrl;
+  const heroBannerSrc = heroImage || "/images/encrypted-sim/principal.webp";
 
   return (
     <>
@@ -109,7 +112,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
         {/* Right Half - Hero Image with Gradient Overlay */}
         <div className="absolute top-0 right-0 bottom-0 left-0 sm:left-[35%] md:left-[40%] lg:left-1/2 overflow-hidden">
           <Image
-            src="/images/encrypted-sim/men-banner-sim.webp"
+            src={heroBannerSrc}
             alt="Hero Background"
             fill
             className="object-cover object-[70%_center] sm:object-center"
@@ -157,11 +160,11 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
                     $25.00 <span className="text-xs lg:text-sm text-gray-400">USD</span>
                   </p>
                 </div>
-                <button
-                  className="bg-white/10 hover:bg-white/20 text-white text-[10px] lg:text-xs px-3 lg:px-4 py-1.5 lg:py-2 flex-shrink-0 rounded-md transition-colors border border-white/10"
+                <div
+                  className="bg-white/10 text-white text-[10px] lg:text-xs px-3 lg:px-4 py-1.5 lg:py-2 flex-shrink-0 rounded-md border border-white/10 cursor-default"
                 >
                   Recargar saldo
-                </button>
+                </div>
               </div>
 
               {/* Floating Square - decorativo abajo izquierda */}
@@ -190,12 +193,11 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
                   <p className="text-[10px] lg:text-xs text-gray-400">25 días</p>
                 </div>
                 {!isFromAppMobile && (
-                  <button
-                    onClick={onBuy}
-                    className="bg-white/10 hover:bg-white/20 text-white text-[10px] lg:text-xs px-3 py-1.5 flex-shrink-0 rounded-md transition-colors border border-white/10"
+                  <div
+                    className="bg-white/10 text-white text-[10px] lg:text-xs px-3 py-1.5 flex-shrink-0 rounded-md border border-white/10 cursor-default"
                   >
                     + Comprar
-                  </button>
+                  </div>
                 )}
               </div>
             </div>

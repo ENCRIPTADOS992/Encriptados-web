@@ -373,6 +373,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         <HeroSimSection
           productName={product?.name || config?.slug || "SIM Encriptada"}
           productImage={productImage}
+          heroImage={config?.heroBanners?.desktop}
           features={features}
           price={formatPrice(effectivePrice)}
           onBuy={() => handleBuy()}
