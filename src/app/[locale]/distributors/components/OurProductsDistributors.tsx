@@ -3,9 +3,11 @@ import React from "react";
 import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import { Link, useRouter } from "@/i18n/routing";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 const OurProductsDistributors = () => {
   const t = useTranslations("DistributorsPage.ourProducts");
+  const { isFromAppMobile } = useAppMobile();
 
   const distributors = [
     {
@@ -126,12 +128,16 @@ const OurProductsDistributors = () => {
                   />
                 </div>
                 <div className="w-full flex justify-center items-end mt-6">
-                  <Link
-                    href={`/?selectedOption=${redirectMap[distributor.id]}#buysimappsection` as any}
-                    className="px-5 py-2 rounded-full text-xs font-normal text-white bg-[#1CB9EC] hover:bg-[#12b4e7] shadow-md"
-                  >
-                    {t("seeProducts")}
-                  </Link>
+                  {!isFromAppMobile && (
+                    <Link
+                      href={
+                        `/?selectedOption=${redirectMap[distributor.id]}#buysimappsection` as any
+                      }
+                      className="px-5 py-2 rounded-full text-xs font-normal text-white bg-[#1CB9EC] hover:bg-[#12b4e7] shadow-md"
+                    >
+                      {t("seeProducts")}
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
