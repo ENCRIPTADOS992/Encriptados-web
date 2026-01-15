@@ -40,6 +40,7 @@ import {
   shouldShowEsimInfo,
   shouldShowShippingInfo,
   validateProductMatchesSlug,
+  getSlugFromBackendFields,
   type ProductFamily,
   type ProductFormat,
 } from "./simProductConfig";
@@ -129,6 +130,19 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     if (!product || isLoading || validationChecked) return;
 
     const validation = validateProductMatchesSlug(product, slug, locale);
+    
+    // Debug para identificar por qué redirige
+    if (!validation.isValid) {
+      console.warn(`[SIM Page] Validation mismatch for Product ${product.id}:`, {
+        provider: product.provider,
+        type: product.type_product,
+        currentSlug: slug,
+        expectedSlug: validation.expectedSlug,
+        derivedFamily: deriveProductFamily(product.provider),
+        derivedFormat: deriveProductFormat(product.type_product)
+      });
+    }
+
     setValidationChecked(true);
 
     // Protección contra redirecciones a URLs inválidas y bucles infinitos
