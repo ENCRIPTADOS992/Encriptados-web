@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
@@ -90,11 +91,21 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
   translations,
 }) => {
   const { isFromAppMobile } = useAppMobile();
+  const tHero = useTranslations("EncryptedSimPage.HeroSimSection");
   
   const t = {
-    priceFrom: translations?.priceFrom || "Desde",
-    buyNow: translations?.buyNow || "Comprar ahora",
-    benefitsTitle: translations?.benefitsTitle || "Beneficios para ti:",
+    priceFrom: translations?.priceFrom || tHero("priceFrom"),
+    buyNow: translations?.buyNow || tHero("buyNow"),
+    benefitsTitle: translations?.benefitsTitle || tHero("benefitsTitle"),
+    titleAccent: tHero("titleAccent"),
+    titleLine1Rest: tHero("titleLine1Rest"),
+    titleLine2: tHero("titleLine2"),
+    subtitle: tHero("subtitle"),
+    balanceLabel: tHero("balanceLabel"),
+    topUpCta: tHero("topUpCta"),
+    exampleProductTitle: tHero("exampleProductTitle"),
+    exampleProductDuration: tHero("exampleProductDuration"),
+    exampleBuyCta: tHero("exampleBuyCta"),
   };
 
   const hasStoreLinks = appStoreUrl || googlePlayUrl || apkUrl;
@@ -132,12 +143,12 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
             {/* Left Content - Text on Black Background */}
             <div className="flex flex-col justify-center items-center md:items-start text-center md:text-left space-y-3 sm:space-y-4 max-w-md mx-auto md:mx-0">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight text-balance text-white">
-                <span className="text-[#35CDFB]">Seguridad</span> encriptada
+                <span className="text-[#35CDFB]">{t.titleAccent}</span> {t.titleLine1Rest}
                 <br />
-                en tus comunicaciones
+                {t.titleLine2}
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-white/90 text-pretty">
-                Conecta con seguridad y confianza ahora
+                {t.subtitle}
               </p>
             </div>
 
@@ -155,7 +166,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
                 style={{ background: "#101010D9", backdropFilter: "blur(10px)" }}
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] lg:text-xs text-gray-400">Saldo disponible</p>
+                  <p className="text-[10px] lg:text-xs text-gray-400">{t.balanceLabel}</p>
                   <p className="text-lg lg:text-xl font-bold whitespace-nowrap text-white">
                     $25.00 <span className="text-xs lg:text-sm text-gray-400">USD</span>
                   </p>
@@ -163,7 +174,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
                 <div
                   className="bg-white/10 text-white text-[10px] lg:text-xs px-3 lg:px-4 py-1.5 lg:py-2 flex-shrink-0 rounded-md border border-white/10 cursor-default"
                 >
-                  Recargar saldo
+                  {t.topUpCta}
                 </div>
               </div>
 
@@ -188,15 +199,15 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs lg:text-sm text-white font-medium truncate">SIM Encriptados (Físico)</p>
+                  <p className="text-xs lg:text-sm text-white font-medium truncate">{t.exampleProductTitle}</p>
                   <p className="text-sm lg:text-base text-white font-semibold">$25.00 USD</p>
-                  <p className="text-[10px] lg:text-xs text-gray-400">25 días</p>
+                  <p className="text-[10px] lg:text-xs text-gray-400">{t.exampleProductDuration}</p>
                 </div>
                 {!isFromAppMobile && (
                   <div
                     className="bg-white/10 text-white text-[10px] lg:text-xs px-3 py-1.5 flex-shrink-0 rounded-md border border-white/10 cursor-default"
                   >
-                    + Comprar
+                    {t.exampleBuyCta}
                   </div>
                 )}
               </div>

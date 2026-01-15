@@ -247,6 +247,20 @@
         "instantActivationHighlight": "istantanea"
       }
     },
+    "HeroSimSection": {
+      "titleAccent": "Sicurezza",
+      "titleLine1Rest": "crittografata",
+      "titleLine2": "nelle tue comunicazioni",
+      "subtitle": "Connettiti in sicurezza e con fiducia ora",
+      "balanceLabel": "Saldo disponibile",
+      "topUpCta": "Ricarica saldo",
+      "exampleProductTitle": "SIM Encriptados (Fisica)",
+      "exampleProductDuration": "25 giorni",
+      "exampleBuyCta": "+ Acquista",
+      "priceFrom": "Da",
+      "buyNow": "Acquista ora",
+      "benefitsTitle": "Caratteristiche principali"
+    },
     "connectAllWorldTitle": "Connettiti in tutto il mondo",
     "totalSecurityTitle": "con totale sicurezza nelle tue comunicazioni",
     "addYourSimSubtitle": "Acquista la tua SIM/eSIM con dati mobili e goditi il totale anonimato nelle chiamate, filtri, cambi IMSI e altro",
