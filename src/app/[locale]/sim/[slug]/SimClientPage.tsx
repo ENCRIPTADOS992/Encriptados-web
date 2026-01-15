@@ -128,7 +128,22 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   useEffect(() => {
     if (!product || isLoading || validationChecked) return;
 
-    const validation = validateProductMatchesSlug(product, slug, locale);
+    // Derivar el slug correcto desde los campos del backend
+    const expectedSlug = getSlugFromBackendFields(product.provider, product.type_product);
+    const isValid = expectedSlug === currentSlug;
+
+    // Debug para identificar por qué redirige
+    if (!isValid) {
+      console.warn(`[SIM Page] Validation mismatch for Product ${product.id}:`, {
+        provider: product.provider,
+        type: product.type_product,
+        currentSlug,
+        expectedSlug,
+        derivedFamily: deriveProductFamily(product.provider),
+        derivedFormat: deriveProductFormat(product.type_product)
+      });
+    }
+
     setValidationChecked(true);
 
     // Protección contra redirecciones a URLs inválidas y bucles infinitos
