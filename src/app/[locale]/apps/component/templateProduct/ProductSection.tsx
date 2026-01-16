@@ -34,6 +34,11 @@ interface ProductSectionProps {
   appStoreUrl?: string;
   googlePlayUrl?: string;
   apkUrl?: string;
+  storeButtons?: {
+    appStore?: boolean;
+    googlePlay?: boolean;
+    apk?: boolean;
+  };
   productId?: number | string;
   selectedOption?: number | string;
   languageCode?: string;
@@ -107,6 +112,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   appStoreUrl,
   googlePlayUrl,
   apkUrl,
+  storeButtons,
   productId,
   selectedOption,
   languageCode = "es",
@@ -149,7 +155,39 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   };
 
   // Siempre mostrar los iconos de tiendas, con o sin URLs
+  const enabledStores = {
+    appStore: storeButtons?.appStore !== false,
+    googlePlay: storeButtons?.googlePlay !== false,
+    apk: storeButtons?.apk !== false,
+  };
   const showStoreIcons = true;
+  const storeItems = [
+    {
+      key: "appStore",
+      enabled: enabledStores.appStore && Boolean(appStoreUrl),
+      url: appStoreUrl,
+      ariaLabel: t.downloadAppStore,
+      content: <AppStoreFooter className="w-full h-auto" />,
+    },
+    {
+      key: "googlePlay",
+      enabled: enabledStores.googlePlay && Boolean(googlePlayUrl),
+      url: googlePlayUrl,
+      ariaLabel: t.downloadGooglePlay,
+      content: <PlayStoreSvg className="w-full h-auto" />,
+    },
+    {
+      key: "apk",
+      enabled: enabledStores.apk && Boolean(apkUrl),
+      url: apkUrl,
+      ariaLabel: t.downloadApk,
+      content: <DownloadApkSvg className="w-full h-auto" />,
+    },
+  ] as const;
+  const orderedStoreItems = [
+    ...storeItems.filter((s) => s.enabled),
+    ...storeItems.filter((s) => !s.enabled),
+  ];
 
   return (
     <section className="w-full bg-white py-8 sm:py-12 lg:py-16 overflow-hidden">
@@ -187,66 +225,45 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
               >
-                {appStoreUrl ? (
-                  <motion.a 
-                    href={appStoreUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label={t.downloadAppStore}
-                    className="flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <AppStoreFooter className="w-full h-auto" />
-                  </motion.a>
-                ) : (
-                  <motion.div 
-                    className="flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                  >
-                    <AppStoreFooter className="w-full h-auto" />
-                  </motion.div>
-                )}
-                {googlePlayUrl ? (
-                  <motion.a 
-                    href={googlePlayUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label={t.downloadGooglePlay}
-                    className="flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <PlayStoreSvg className="w-full h-auto" />
-                  </motion.a>
-                ) : (
-                  <motion.div 
-                    className="flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                  >
-                    <PlayStoreSvg className="w-full h-auto" />
-                  </motion.div>
-                )}
-                {apkUrl ? (
-                  <motion.a 
-                    href={apkUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label={t.downloadApk}
-                    className="flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <DownloadApkSvg className="w-full h-auto" />
-                  </motion.a>
-                ) : (
-                  <motion.div 
-                    className="flex items-center justify-center"
-                    whileHover={{ scale: 1.03 }}
-                  >
-                    <DownloadApkSvg className="w-full h-auto" />
-                  </motion.div>
-                )}
+                {orderedStoreItems.map((s) => {
+                  if (!s.enabled) {
+                    return (
+                      <div
+                        key={s.key}
+                        className="flex items-center justify-center opacity-0 pointer-events-none select-none"
+                      >
+                        {s.content}
+                      </div>
+                    );
+                  }
+
+                  if (s.url) {
+                    return (
+                      <motion.a
+                        key={s.key}
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={s.ariaLabel}
+                        className="flex items-center justify-center"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        {s.content}
+                      </motion.a>
+                    );
+                  }
+
+                  return (
+                    <motion.div
+                      key={s.key}
+                      className="flex items-center justify-center"
+                      whileHover={{ scale: 1.03 }}
+                    >
+                      {s.content}
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             )}
           </motion.div>
