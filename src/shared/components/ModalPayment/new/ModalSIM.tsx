@@ -217,6 +217,9 @@ export default function ModalSIM() {
         quantity={quantity}
         discount={discount}
         hideSimField={hideSimField || isEsimDataCombo}
+        selectedPlanId={selectedPlanId}
+        selectedVariantId={selectedVariant?.id ?? null}
+        sourceUrl={params.sourceUrl}
         onSuccess={handlePaymentSuccess}
       />
 

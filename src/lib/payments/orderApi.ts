@@ -4,6 +4,38 @@ const API_BASE_URL = `${WP_API}/encriptados/v1`;
 
 export type OrderType = "roaming" | "userid";
 
+const omitUndefined = (obj: Record<string, any>) => {
+  const out: Record<string, any> = {};
+  Object.entries(obj).forEach(([k, v]) => {
+    if (v !== undefined) out[k] = v;
+  });
+  return out;
+};
+
+async function postJsonWithFallback<T>(url: string, extended: any, minimal: any): Promise<T> {
+  const attempt = async (payload: any) => {
+    const r = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const text = await r.text();
+    const data = text ? JSON.parse(text) : {};
+    return { ok: r.ok, status: r.status, data } as const;
+  };
+
+  const r1 = await attempt(extended);
+  if (r1.ok) return r1.data as T;
+
+  if (r1.status === 400 || r1.status === 422) {
+    const r2 = await attempt(minimal);
+    if (r2.ok) return r2.data as T;
+    throw new Error(r2.data?.message || r2.data?.error || `HTTP ${r2.status}`);
+  }
+
+  throw new Error(r1.data?.message || r1.data?.error || `HTTP ${r1.status}`);
+}
+
 // =====================
 // ROAMING
 // =====================
@@ -14,6 +46,16 @@ export async function createOrderAndIntent({
   quantity,
   amountUsd,
   currency = "USD",
+  variantId,
+  sku,
+  licensetime,
+  couponCode,
+  discount,
+  sourceUrl,
+  selectedOption,
+  silentPhoneMode,
+  usernames,
+  meta,
 }: {
   orderType: "roaming";
   productId: number;
@@ -21,6 +63,16 @@ export async function createOrderAndIntent({
   quantity: number;
   amountUsd: number;
   currency?: "USD";
+  variantId?: number;
+  sku?: string;
+  licensetime?: number | string;
+  couponCode?: string;
+  discount?: number;
+  sourceUrl?: string;
+  selectedOption?: number;
+  silentPhoneMode?: string;
+  usernames?: string[];
+  meta?: Record<string, any>;
 }): Promise<{
   ok: boolean;
   order_id: number;
@@ -32,29 +84,30 @@ export async function createOrderAndIntent({
 }> {
   const url = `${API_BASE_URL}/orders/roaming`;
 
-  const payload = {
+  const minimal = omitUndefined({
     product_id: productId,
     qty: quantity,
     email,
     payment_provider: "stripe",
     amount: Number(amountUsd.toFixed(2)),
     currency,
-  };
-
-  const r = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" }, // según tu doc para /roaming
-    body: JSON.stringify(payload),
+  });
+  const extended = omitUndefined({
+    ...minimal,
+    variant_id: variantId,
+    sku,
+    licensetime,
+    coupon_code: couponCode,
+    discount,
+    source_url: sourceUrl,
+    selected_option: selectedOption,
+    silent_phone_mode: silentPhoneMode,
+    usernames,
+    meta,
   });
 
-  const text = await r.text();
-  const data = text ? JSON.parse(text) : {};
-  if (!r.ok) {
-    throw new Error(data?.message || data?.error || `HTTP ${r.status} creando orden roaming`);
-  }
-  if (!data?.order_id || !data?.client_secret) {
-    throw new Error("Respuesta inválida: falta order_id o client_secret");
-  }
+  const data: any = await postJsonWithFallback(url, extended, minimal);
+  if (!data?.order_id || !data?.client_secret) throw new Error("Respuesta inválida: falta order_id o client_secret");
   return data;
 }
 
@@ -67,12 +120,40 @@ export async function createUserIdOrderAndIntent({
   username,
   amountUsd,
   currency = "USD",
+  qty,
+  variantId,
+  sku,
+  licensetime,
+  licenseType,
+  renewId,
+  osType,
+  silentPhoneMode,
+  usernames,
+  couponCode,
+  discount,
+  sourceUrl,
+  selectedOption,
+  meta,
 }: {
   productId: number;
   email: string;
   username?: string;
   amountUsd: number;
   currency?: "USD";
+  qty?: number;
+  variantId?: number;
+  sku?: string;
+  licensetime?: number | string;
+  licenseType?: "new" | "renew";
+  renewId?: string;
+  osType?: "android" | "ios";
+  silentPhoneMode?: string;
+  usernames?: string[];
+  couponCode?: string;
+  discount?: number;
+  sourceUrl?: string;
+  selectedOption?: number;
+  meta?: Record<string, any>;
 }): Promise<{
   ok: boolean;
   order_id: number;
@@ -84,29 +165,34 @@ export async function createUserIdOrderAndIntent({
 }> {
   const url = `${API_BASE_URL}/orders/userid`;
 
-  const payload = {
+  const minimal = omitUndefined({
     product_id: productId,
     email,
     username: username || undefined,
     payment_provider: "stripe",
     amount: Number(amountUsd.toFixed(2)),
     currency,
-  };
-
-  const r = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" }, 
-    body: JSON.stringify(payload),
+  });
+  const extended = omitUndefined({
+    ...minimal,
+    qty,
+    variant_id: variantId,
+    sku,
+    licensetime,
+    license_type: licenseType,
+    renew_id: renewId,
+    os_type: osType,
+    silent_phone_mode: silentPhoneMode,
+    usernames,
+    coupon_code: couponCode,
+    discount,
+    source_url: sourceUrl,
+    selected_option: selectedOption,
+    meta,
   });
 
-  const text = await r.text();
-  const data = text ? JSON.parse(text) : {};
-  if (!r.ok) {
-    throw new Error(data?.message || data?.error || `HTTP ${r.status} creando orden userid`);
-  }
-  if (!data?.order_id || !data?.client_secret) {
-    throw new Error("Respuesta inválida: falta order_id o client_secret");
-  }
+  const data: any = await postJsonWithFallback(url, extended, minimal);
+  if (!data?.order_id || !data?.client_secret) throw new Error("Respuesta inválida: falta order_id o client_secret");
   return data;
 }
 
@@ -124,4 +210,3 @@ export async function fetchPublicStatus(orderId: number): Promise<{
   if (!r.ok) throw new Error(`HTTP ${r.status} consultando estado público`);
   return r.json();
 }
-

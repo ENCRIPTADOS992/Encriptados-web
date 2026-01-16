@@ -9,11 +9,67 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ message:'faltan campos', issues: parsed.error.flatten() }, { status: 400 });
     }
-    const { product_id, email, username, payment_provider, amount, currency } = parsed.data;
+    const {
+      product_id,
+      email,
+      username,
+      payment_provider,
+      amount,
+      currency,
+      qty,
+      variant_id,
+      sku,
+      licensetime,
+      license_type,
+      renew_id,
+      os_type,
+      silent_phone_mode,
+      usernames,
+      coupon_code,
+      discount,
+      source_url,
+      selected_option,
+      meta,
+    } = parsed.data;
     const { order, paymentUrl } = await checkoutUserId({
       productId: product_id, email, suggestedUsername: username,
       paymentProvider: payment_provider, amount, currency
     });
+    if (
+      qty != null ||
+      variant_id != null ||
+      sku != null ||
+      licensetime != null ||
+      license_type != null ||
+      renew_id != null ||
+      os_type != null ||
+      silent_phone_mode != null ||
+      usernames != null ||
+      coupon_code != null ||
+      discount != null ||
+      source_url != null ||
+      selected_option != null ||
+      meta != null
+    ) {
+      const cur = (order.meta ?? {}) as Record<string, any>;
+      order.meta = {
+        ...cur,
+        qty,
+        variant_id,
+        sku,
+        licensetime,
+        license_type,
+        renew_id,
+        os_type,
+        silent_phone_mode,
+        usernames,
+        coupon_code,
+        discount,
+        source_url,
+        selected_option,
+        meta,
+      };
+    }
     return NextResponse.json({
       ok: true,
       order_id: order.id,

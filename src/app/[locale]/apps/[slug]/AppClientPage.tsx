@@ -282,6 +282,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           googlePlayUrl={googlePlayUrl}
           apkUrl={apkUrl}
           storeButtons={config?.storeButtons}
+          languageCode={locale}
           translations={productSectionTranslations}
         />
       </div>

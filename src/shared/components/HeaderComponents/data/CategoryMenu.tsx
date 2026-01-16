@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 // Hook para obtener categorías de productos traducidas
 export function useTranslatedProductsCategories(): any {
   const t = useTranslations("productsCategories");
+  
 
   return [
     {
@@ -10,14 +11,14 @@ export function useTranslatedProductsCategories(): any {
       description: t("sims.description", {
         defaultValue: "Conoce nuestras eSIM/SIM",
       }),
-      link: "/sim/sim-encriptada",
+      link: "/sim-encriptada",
       image: "/images/mega-menu/virtual-sim.jpeg",
       items: [
         {
           title: t("sims.items.encryptedSim.title", {
             defaultValue: "SIM Encriptada",
           }),
-          link: "/sim/sim-encriptada",
+          link: "/sim-encriptada",
           image: "/images/mega-menu/virtual-sim.jpeg",
           description: t("sims.items.encryptedSim.description", {
             defaultValue: "Conoce cómo funciona la SIM Encriptada",
