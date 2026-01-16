@@ -78,6 +78,10 @@ export const getProductLink = (
     return "/apps/silent-circle";
   }
 
+  if (categoryId === 36) {
+    return "/router";
+  }
+
   // SIM products (categoryId 40) - Derivar URL desde backend fields
   if (categoryId === 40) {
     // PRIORIDAD: Derivar desde provider + type_product (backend es fuente de verdad)

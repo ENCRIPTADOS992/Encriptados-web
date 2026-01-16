@@ -8,7 +8,7 @@ import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 
 const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
@@ -74,6 +74,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
+  const locale = useLocale();
   const t = useTranslations("OurProductsPage.productCard");
 
   console.log("🧩 [CardProduct] props =>", {
@@ -272,7 +273,10 @@ const CardProduct: React.FC<CardSimProps> = ({
                   typeProduct
                 );
                 console.log("🔗 [CardProduct] Go to info:", { url, id, provider, typeProduct, numericPrice });
-                if (url) router.push(`${url}?productId=${id}&price=${numericPrice ?? ''}`);
+                if (!url) return;
+                const qs = `productId=${id}&price=${numericPrice ?? ""}`;
+                const href = url.startsWith("/") ? `/${locale}${url}?${qs}` : `${url}?${qs}`;
+                router.push(href);
               }}
               className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center"
             >
