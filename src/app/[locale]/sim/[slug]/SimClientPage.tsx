@@ -309,7 +309,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // Loading state
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-black">
+      <main className="min-h-screen bg-white text-black">
         <div className="animate-pulse">
           <div className="h-[200px] sm:h-[284px] bg-gray-900" />
           <div className="bg-white py-16">
@@ -337,7 +337,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // Error state
   if (error && !product) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-4">
+      <main className="min-h-screen flex items-center justify-center px-4 bg-white text-black">
         <div className="text-center max-w-md">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">
             {config?.slug || "Producto SIM"}
@@ -349,7 +349,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white text-black">
       {/* Banner Hero - Dinámico según productFamily */}
       {showTimSections ? (
         <>

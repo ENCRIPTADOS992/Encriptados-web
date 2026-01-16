@@ -35,6 +35,11 @@ export interface ProductStaticConfig {
   appStoreUrl?: string;
   googlePlayUrl?: string;
   apkUrl?: string;
+  storeButtons?: {
+    appStore?: boolean;
+    googlePlay?: boolean;
+    apk?: boolean;
+  };
   relatedProducts: {
     simProductId: string;
     esimProductId: string;
@@ -77,6 +82,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     appStoreUrl: "https://apps.apple.com/app/silent-phone",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.silentcircle.silentphone",
     apkUrl: "https://encriptados.io/descargas/silent-phone.apk",
+    storeButtons: { apk: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -96,7 +102,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/vault-chat-video",
     appStoreUrl: "https://apps.apple.com/app/vaultchat",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vaultchat",
-    apkUrl: "https://encriptados.io/descargas/vault-chat.apk",
+    apkUrl: "https://encriptados.io/vaultchat_official.apk",
+    storeButtons: { appStore: false, googlePlay: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -116,7 +123,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/armadillo-video",
     appStoreUrl: "https://apps.apple.com/app/armadillo-chat",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.armadillo",
-    apkUrl: "https://encriptados.io/descargas/armadillo.apk",
+    apkUrl: "https://encriptados.io/armadillo_chat_base.apk",
+    storeButtons: { appStore: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -136,7 +144,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/threema-video",
     appStoreUrl: "https://apps.apple.com/app/threema",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=ch.threema.app",
-    apkUrl: "https://encriptados.io/descargas/threema.apk",
+    apkUrl: "https://encriptados.io/Threema-4.63.apk",
+    storeButtons: { appStore: false, googlePlay: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -156,7 +165,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/threema-work-video",
     appStoreUrl: "https://apps.apple.com/app/threema-work",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=ch.threema.app.work",
-    apkUrl: "https://encriptados.io/descargas/threema-work.apk",
+    apkUrl: "https://encriptados.io/threema_work_base.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -176,7 +185,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/vnc-lagoon-video",
     appStoreUrl: "https://apps.apple.com/app/vnc-lagoon",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vnc.lagoon",
-    apkUrl: "https://encriptados.io/descargas/vnc-lagoon.apk",
+    apkUrl: "https://encriptados.io/VNCtalk.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -196,7 +205,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/salt-video",
     appStoreUrl: "https://apps.apple.com/app/salt-communications",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.salt",
-    apkUrl: "https://encriptados.io/descargas/salt.apk",
+    apkUrl: "https://encriptados.io/saltIm_base.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
@@ -216,7 +225,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/nord-vpn-video",
     appStoreUrl: "https://apps.apple.com/app/nordvpn",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.nordvpn.android",
-    apkUrl: "https://encriptados.io/descargas/nordvpn.apk",
+    apkUrl: "https://encriptados.io/NordVPN_Layer_base.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 

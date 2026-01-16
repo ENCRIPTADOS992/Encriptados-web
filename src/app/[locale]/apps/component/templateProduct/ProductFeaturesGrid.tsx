@@ -87,14 +87,14 @@ const ProductFeaturesGridUnified: React.FC<ProductFeaturesGridProps> = ({
             >
               {/* Imagen container - altura fija para uniformidad */}
               <motion.div
-                className="bg-white rounded-2xl flex items-center justify-center p-4 sm:p-5 lg:p-6 shadow-sm h-[280px] sm:h-[320px] lg:h-[350px] overflow-hidden"
+                className="bg-white rounded-2xl flex items-center justify-center p-6 sm:p-7 lg:p-8 shadow-sm h-[280px] sm:h-[320px] lg:h-[350px] overflow-hidden"
                 whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(0,0,0,0.1)" }}
                 transition={{ duration: 0.3 }}
               >
                 <img
                   src={feature.image}
                   alt={feature.title}
-                  className="w-full h-full object-contain"
+                  className="max-h-full max-w-full h-auto w-auto object-contain"
                   draggable={false}
                   loading="lazy"
                 />

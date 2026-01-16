@@ -239,9 +239,12 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   // URLs de video y tiendas de apps - Priorizar datos del backend
   const videoUrl = (product as any)?.videoUrl || config?.videoUrl;
   const videoText = (product as any)?.video_text || t("videoTitle", { productName: product?.name || "" });
-  const appStoreUrl = (product as any)?.appStoreUrl || config?.appStoreUrl;
-  const googlePlayUrl = (product as any)?.googlePlayUrl || config?.googlePlayUrl;
-  const apkUrl = (product as any)?.apkUrl || config?.apkUrl;
+  const apiAppStoreUrl = (product as any)?.appStoreUrl;
+  const apiGooglePlayUrl = (product as any)?.googlePlayUrl;
+  const apiApkUrl = (product as any)?.apkUrl;
+  const appStoreUrl = apiAppStoreUrl !== undefined ? apiAppStoreUrl : config?.appStoreUrl;
+  const googlePlayUrl = apiGooglePlayUrl !== undefined ? apiGooglePlayUrl : config?.googlePlayUrl;
+  const apkUrl = apiApkUrl !== undefined ? apiApkUrl : config?.apkUrl;
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "";
   
   // Imagen del producto - Prioridad: buyNowImage > productImage > image_full > images[0] > config
@@ -254,7 +257,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     "";
 
   return (
-    <main>
+    <main className="bg-white text-black">
       {/* Hero Banner */}
       <HeroBanner 
         imageUrl={heroBannerImages} 
@@ -276,6 +279,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           appStoreUrl={appStoreUrl}
           googlePlayUrl={googlePlayUrl}
           apkUrl={apkUrl}
+          storeButtons={config?.storeButtons}
           translations={productSectionTranslations}
         />
       </div>
