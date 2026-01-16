@@ -278,7 +278,15 @@ const PurchaseHeader: React.FC<Props> = ({
                   const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
                   
                   if (shareConfig?.shareUrl) {
-                    shareUrl = getShareUrlWithLocale(shareConfig.shareUrl, locale);
+                    const localized = getShareUrlWithLocale(shareConfig.shareUrl, locale);
+                    if (typeof window !== "undefined") {
+                      const u = new URL(localized);
+                      u.protocol = window.location.protocol;
+                      u.host = window.location.host;
+                      shareUrl = u.toString();
+                    } else {
+                      shareUrl = localized;
+                    }
                   } else if (sourceUrl) {
                     // Usar sourceUrl si está disponible
                     const currentUrl = new URL(sourceUrl);

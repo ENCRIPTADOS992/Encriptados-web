@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useMemo } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 // Componentes Template Producto
 import HeroBanner from "../apps/component/templateProduct/HeroBanner";
@@ -118,7 +118,9 @@ function formatPrice(price: number | string | undefined): string {
 export default function RouterPage() {
   const params = useParams();
   const locale = (params?.locale as string) || "es";
+  const searchParams = useSearchParams();
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const hasAutoOpenedRef = useRef(false);
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
 
@@ -178,16 +180,38 @@ export default function RouterPage() {
 
   const handleBuy = () => {
     const selectedPlan = plans.find((p) => p.label === selectedRadio);
+    const selectedVariantId = selectedPlan ? Number(selectedPlan.value) : undefined;
     openModal({
-      productid: selectedPlan?.value || String(ROUTER_CONFIG.productId),
+      productid: String(ROUTER_CONFIG.productId),
       languageCode: locale,
       selectedOption: ROUTER_CONFIG.categoryId,
+      initialPrice: selectedPlan?.price || (product as any)?.price || 0,
+      variantId: Number.isFinite(selectedVariantId) ? selectedVariantId : undefined,
     });
   };
 
   const handleChat = () => {
     window.open("https://t.me/Encriptados", "_blank");
   };
+
+  useEffect(() => {
+    if (searchParams?.get("buy") !== "1") {
+      hasAutoOpenedRef.current = false;
+      return;
+    }
+    if (isLoading || !product) return;
+    if (hasAutoOpenedRef.current) return;
+    hasAutoOpenedRef.current = true;
+
+    const timer = setTimeout(() => {
+      handleBuy();
+      const url = new URL(window.location.href);
+      url.searchParams.delete("buy");
+      window.history.replaceState({}, "", url.toString());
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [searchParams, isLoading, product, handleBuy]);
 
   // Producto Info para StickyBanner - Priorizar datos del backend
   const productIconUrl = (product as any)?.iconUrl || ROUTER_CONFIG.iconUrl;
