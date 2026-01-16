@@ -49,8 +49,28 @@ interface ProductSectionProps {
  * Limpia el texto de la opción para mostrar solo la duración
  * Ej: "Licencia 3 Meses" -> "3 Meses", "License 3 Months" -> "3 Months"
  */
-const formatRadioLabel = (option: string): string => {
-  return option.replace(/^(Licencia|License|Licence|Licenza|Licen[çc]a)\s*/i, "").trim();
+const formatRadioLabel = (option: string, languageCode: string): string => {
+  const cleaned = option.replace(/^(Licencia|License|Licence|Licenza|Licen[çc]a)\s*/i, "").trim();
+  const [first] = cleaned.split(/\s+/);
+  if (first && first.toUpperCase() === "PHONE") return translateLicenseType("PHONE", languageCode);
+  return cleaned;
+};
+
+const translateLicenseType = (type: string, languageCode: string): string => {
+  const normalized = type.toUpperCase();
+  if (normalized !== "PHONE") return type;
+  switch (languageCode) {
+    case "es":
+      return "Celular";
+    case "en":
+      return "Phone";
+    case "fr":
+      return "Téléphone";
+    case "it":
+      return "Cellulare";
+    default:
+      return "Phone";
+  }
 };
 
 // Variantes de animación
@@ -342,7 +362,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                       onChange={() => onRadioChange(option)}
                       className="w-4 h-4 text-primary focus:ring-primary focus:ring-2 accent-primary"
                     />
-                    <span>{formatRadioLabel(option)}</span>
+                    <span>{formatRadioLabel(option, languageCode)}</span>
                   </label>
                 ))}
               </motion.fieldset>

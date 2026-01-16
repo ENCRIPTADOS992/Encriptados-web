@@ -91,6 +91,29 @@ export default function ModalRoning() {
       provider,
       amount: amountUsd,
       currency: "USD",
+      variantId: selectedVariant?.id ?? undefined,
+      sku: selectedVariant?.sku,
+      licensetime: selectedVariant?.licensetime,
+      couponCode: coupon.trim() || undefined,
+      discount,
+      sourceUrl: params.sourceUrl,
+      selectedOption: (params as any)?.selectedOption,
+      silentPhoneMode: formData.silentPhoneMode,
+      usernames: formData.usernames,
+      meta: {
+        productId: Number(productid),
+        quantity,
+        unitPrice,
+        variantId: selectedVariant?.id ?? undefined,
+        sku: selectedVariant?.sku,
+        licensetime: selectedVariant?.licensetime,
+        couponCode: coupon.trim() || undefined,
+        discount,
+        sourceUrl: params.sourceUrl,
+        selectedOption: (params as any)?.selectedOption,
+        silentPhoneMode: formData.silentPhoneMode,
+        usernames: formData.usernames,
+      },
     });
   };
 
@@ -120,6 +143,15 @@ export default function ModalRoning() {
         productId={Number(productid)}
         amountUsd={amountUsd}
         orderType="roaming"
+        purchaseMeta={{
+          variantId: selectedVariant?.id ?? undefined,
+          sku: selectedVariant?.sku,
+          licensetime: selectedVariant?.licensetime,
+          couponCode: coupon.trim() || undefined,
+          discount,
+          sourceUrl: params.sourceUrl,
+          selectedOption: (params as any)?.selectedOption,
+        }}
         onPayCrypto={payWithCrypto}
         onPaid={() => closeModal?.()}
         loading={loading}

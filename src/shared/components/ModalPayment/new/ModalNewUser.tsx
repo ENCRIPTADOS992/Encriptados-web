@@ -126,6 +126,15 @@ export default function ModalNewUser() {
         amountUsd={amount}
         silentPhoneMode={silentPhoneMode}
         onSilentPhoneModeChange={setSilentPhoneMode}
+        purchaseMeta={{
+          variantId: selectedVariant?.id ?? undefined,
+          sku: selectedVariant?.sku,
+          licensetime: selectedVariant?.licensetime,
+          couponCode: coupon.trim() || undefined,
+          discount,
+          sourceUrl: params.sourceUrl,
+          selectedOption: (params as any)?.selectedOption,
+        }}
         onPayCrypto={async (formData: FormData) => {
           await payUserId({
             productId: productIdNum,
@@ -134,6 +143,37 @@ export default function ModalNewUser() {
             provider: "kriptomus",
             amount,
             currency: "USD",
+            qty: quantity,
+            variantId: selectedVariant?.id ?? undefined,
+            sku: selectedVariant?.sku,
+            licensetime: selectedVariant?.licensetime,
+            licenseType: formData.licenseType,
+            renewId: formData.renewId,
+            osType: formData.osType,
+            silentPhoneMode: formData.silentPhoneMode,
+            usernames: formData.usernames,
+            couponCode: coupon.trim() || undefined,
+            discount,
+            sourceUrl: params.sourceUrl,
+            selectedOption: (params as any)?.selectedOption,
+            meta: {
+              formType,
+              productId: productIdNum,
+              quantity,
+              unitPrice,
+              variantId: selectedVariant?.id ?? undefined,
+              sku: selectedVariant?.sku,
+              licensetime: selectedVariant?.licensetime,
+              licenseType: formData.licenseType,
+              renewId: formData.renewId,
+              osType: formData.osType,
+              silentPhoneMode: formData.silentPhoneMode,
+              usernames: formData.usernames,
+              couponCode: coupon.trim() || undefined,
+              discount,
+              sourceUrl: params.sourceUrl,
+              selectedOption: (params as any)?.selectedOption,
+            },
           });
         }}
         onPaid={() => {

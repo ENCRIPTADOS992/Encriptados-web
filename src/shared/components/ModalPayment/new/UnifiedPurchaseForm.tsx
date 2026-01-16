@@ -38,6 +38,15 @@ type Props = {
   // Para Silent Phone: modo activo de las tabs
   silentPhoneMode?: SilentPhoneMode;
   onSilentPhoneModeChange?: (mode: SilentPhoneMode) => void;
+  purchaseMeta?: {
+    variantId?: number;
+    sku?: string;
+    licensetime?: number | string;
+    couponCode?: string;
+    discount?: number;
+    sourceUrl?: string;
+    selectedOption?: number;
+  };
 };
 
 export interface FormData {
@@ -61,6 +70,7 @@ export default function UnifiedPurchaseForm({
   loading = false,
   silentPhoneMode = "new_user",
   onSilentPhoneModeChange,
+  purchaseMeta,
 }: Props) {
   const t = useTranslations("paymentModal");
   const { policy, formType, isLoading: policyLoading, productName } = useFormPolicy();
@@ -198,7 +208,19 @@ export default function UnifiedPurchaseForm({
     if (!clientSecret) {
       try {
         setStripeError(null);
-        const primaryUsername = usernames[0]?.trim() || telegramId.trim() || undefined;
+        const form = getFormData();
+        const primaryUsername = usernames[0]?.trim() || form.telegramId?.trim() || undefined;
+        const meta = {
+          ...purchaseMeta,
+          email: form.email,
+          telegramId: form.telegramId,
+          usernames: form.usernames,
+          licenseType: form.licenseType,
+          renewId: form.renewId,
+          osType: form.osType,
+          silentPhoneMode: form.silentPhoneMode,
+          quantity,
+        };
 
         // Usar la API correcta según el tipo de orden
         let orderResult: { order_id: number; client_secret: string };
@@ -211,6 +233,16 @@ export default function UnifiedPurchaseForm({
             quantity,
             amountUsd,
             currency: "USD",
+            variantId: purchaseMeta?.variantId,
+            sku: purchaseMeta?.sku,
+            licensetime: purchaseMeta?.licensetime,
+            couponCode: purchaseMeta?.couponCode,
+            discount: purchaseMeta?.discount,
+            sourceUrl: purchaseMeta?.sourceUrl,
+            selectedOption: purchaseMeta?.selectedOption,
+            silentPhoneMode: form.silentPhoneMode,
+            usernames: form.usernames,
+            meta,
           });
         } else {
           orderResult = await createUserIdOrderAndIntent({
@@ -219,6 +251,20 @@ export default function UnifiedPurchaseForm({
             username: primaryUsername,
             amountUsd,
             currency: "USD",
+            qty: quantity,
+            variantId: purchaseMeta?.variantId,
+            sku: purchaseMeta?.sku,
+            licensetime: purchaseMeta?.licensetime,
+            licenseType: form.licenseType,
+            renewId: form.renewId,
+            osType: form.osType,
+            silentPhoneMode: form.silentPhoneMode,
+            usernames: form.usernames,
+            couponCode: purchaseMeta?.couponCode,
+            discount: purchaseMeta?.discount,
+            sourceUrl: purchaseMeta?.sourceUrl,
+            selectedOption: purchaseMeta?.selectedOption,
+            meta,
           });
         }
 

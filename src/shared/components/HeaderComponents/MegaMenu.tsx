@@ -40,6 +40,7 @@ export default function MegaMenu({
   closeMegaMenu,
 }: Props) {
   const t = useTranslations("megaMenu");
+  const isExternal = (href: string) => /^https?:\/\//i.test(href);
 
   const activeCategoryData = categories[activeCategory] || {};
   const activeItems = activeCategoryData.items || [];
@@ -63,36 +64,68 @@ export default function MegaMenu({
             {/* Categorías */}
             <div className="col-span-4 space-y-6">
               {categories.map((category, index) => (
-                <Link
-                  prefetch={true}
-                  href={category.link}
-                  key={index}
-                  className={`block p-4 rounded-lg ${
-                    activeCategory === index
-                      ? "bg-[#1A1A1A]"
-                      : "hover:bg-[#1A1A1A]"
-                  }`}
-                  onClick={closeMegaMenu}
-                  onMouseEnter={() => {
-                    setActiveCategory(index);
-                    setHoveredItem({
-                      title: "",
-                      link: "",
-                      description: "",
-                      image: "",
-                    }); // Asegúrate de resetear el hoveredItem
-                  }}
-                >
-                  <h3 className="text-white font-medium flex items-center">
-                    {category.title}
-                    {activeCategory === index && (
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    )}
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-1">
-                    {category.description}
-                  </p>
-                </Link>
+                isExternal(category.link) ? (
+                  <a
+                    href={category.link}
+                    key={index}
+                    className={`block p-4 rounded-lg ${
+                      activeCategory === index
+                        ? "bg-[#1A1A1A]"
+                        : "hover:bg-[#1A1A1A]"
+                    }`}
+                    onClick={closeMegaMenu}
+                    onMouseEnter={() => {
+                      setActiveCategory(index);
+                      setHoveredItem({
+                        title: "",
+                        link: "",
+                        description: "",
+                        image: "",
+                      });
+                    }}
+                  >
+                    <h3 className="text-white font-medium flex items-center">
+                      {category.title}
+                      {activeCategory === index && (
+                        <ArrowRight className="w-4 h-4 ml-1" />
+                      )}
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-1">
+                      {category.description}
+                    </p>
+                  </a>
+                ) : (
+                  <Link
+                    prefetch={true}
+                    href={category.link}
+                    key={index}
+                    className={`block p-4 rounded-lg ${
+                      activeCategory === index
+                        ? "bg-[#1A1A1A]"
+                        : "hover:bg-[#1A1A1A]"
+                    }`}
+                    onClick={closeMegaMenu}
+                    onMouseEnter={() => {
+                      setActiveCategory(index);
+                      setHoveredItem({
+                        title: "",
+                        link: "",
+                        description: "",
+                        image: "",
+                      });
+                    }}
+                  >
+                    <h3 className="text-white font-medium flex items-center">
+                      {category.title}
+                      {activeCategory === index && (
+                        <ArrowRight className="w-4 h-4 ml-1" />
+                      )}
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-1">
+                      {category.description}
+                    </p>
+                  </Link>
+                )
               ))}
             </div>
 

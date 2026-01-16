@@ -10,11 +10,55 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ message:'faltan campos', issues: parsed.error.flatten() }, { status: 400 });
     }
-    const { product_id, qty, email, payment_provider, amount, currency } = parsed.data;
+    const {
+      product_id,
+      qty,
+      email,
+      payment_provider,
+      amount,
+      currency,
+      variant_id,
+      sku,
+      licensetime,
+      coupon_code,
+      discount,
+      source_url,
+      selected_option,
+      silent_phone_mode,
+      usernames,
+      meta,
+    } = parsed.data;
     const { order, paymentUrl } = await checkoutRoaming({
       productId: product_id, qty, email,
       paymentProvider: payment_provider, amount, currency
     });
+    if (
+      variant_id != null ||
+      sku != null ||
+      licensetime != null ||
+      coupon_code != null ||
+      discount != null ||
+      source_url != null ||
+      selected_option != null ||
+      silent_phone_mode != null ||
+      usernames != null ||
+      meta != null
+    ) {
+      const cur = (order.meta ?? {}) as Record<string, any>;
+      order.meta = {
+        ...cur,
+        variant_id,
+        sku,
+        licensetime,
+        coupon_code,
+        discount,
+        source_url,
+        selected_option,
+        silent_phone_mode,
+        usernames,
+        meta,
+      };
+    }
     return NextResponse.json({
       ok: true,
       order_id: order.id,

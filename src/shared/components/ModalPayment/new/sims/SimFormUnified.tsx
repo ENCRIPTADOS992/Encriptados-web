@@ -27,6 +27,9 @@ type SimFormUnifiedProps = {
   quantity: number;
   discount?: number;
   hideSimField?: boolean;
+  selectedPlanId?: string | number | null;
+  selectedVariantId?: number | null;
+  sourceUrl?: string;
   onSuccess?: (data: SuccessPaymentData) => void;
   loading?: boolean;
 };
@@ -43,6 +46,9 @@ export default function SimFormUnified({
   quantity,
   discount = 0,
   hideSimField = false,
+  selectedPlanId = null,
+  selectedVariantId = null,
+  sourceUrl = undefined,
   onSuccess,
   loading = false,
 }: SimFormUnifiedProps) {
@@ -169,6 +175,16 @@ export default function SimFormUnified({
         amount: amountUsd,
         currency: "USD",
         product: productName,
+        meta: {
+          formType,
+          quantity,
+          unitPrice,
+          discount,
+          shippingFee,
+          selectedPlanId,
+          selectedVariantId,
+          sourceUrl,
+        },
       };
 
       // Agregar campos específicos según el tipo

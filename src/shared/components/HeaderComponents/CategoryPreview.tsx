@@ -18,24 +18,39 @@ export default function CategoryPreview({
   setHoveredItem,
   closeMegaMenu, // Recibe la función para cerrar el menú
 }: Props) {
+  const isExternal = (href: string) => /^https?:\/\//i.test(href);
   return (
     <div className="col-span-3">
       <div className="space-y-4">
         {/* Renderiza todos los elementos de la categoría */}
         {items.map((item, index) =>
           item.link ? (
-            <Link
-              passHref={true}
-              key={index}
-              href={item.link} // Usa el enlace definido en `item.link`
-              className="block text-gray-300 hover:text-white transition-colors"
-              onMouseEnter={() => setHoveredItem(item)} // Actualiza el estado del elemento seleccionado
-              onClick={() => closeMegaMenu && closeMegaMenu()} // Cierra el menú si `closeMegaMenu` está definido
-            >
-              <div>
-                <p className="font-medium">{item.title}</p>
-              </div>
-            </Link>
+            isExternal(item.link) ? (
+              <a
+                key={index}
+                href={item.link}
+                className="block text-gray-300 hover:text-white transition-colors"
+                onMouseEnter={() => setHoveredItem(item)}
+                onClick={() => closeMegaMenu && closeMegaMenu()}
+              >
+                <div>
+                  <p className="font-medium">{item.title}</p>
+                </div>
+              </a>
+            ) : (
+              <Link
+                passHref={true}
+                key={index}
+                href={item.link} // Usa el enlace definido en `item.link`
+                className="block text-gray-300 hover:text-white transition-colors"
+                onMouseEnter={() => setHoveredItem(item)} // Actualiza el estado del elemento seleccionado
+                onClick={() => closeMegaMenu && closeMegaMenu()} // Cierra el menú si `closeMegaMenu` está definido
+              >
+                <div>
+                  <p className="font-medium">{item.title}</p>
+                </div>
+              </Link>
+            )
           ) : (
             <div key={index} className="block text-gray-500">
               {item.title} (Enlace no disponible)

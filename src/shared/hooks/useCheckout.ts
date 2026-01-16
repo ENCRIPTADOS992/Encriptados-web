@@ -16,6 +16,20 @@ export function useCheckout() {
     provider: Provider;
     amount: number;
     currency: string;
+    qty?: number;
+    variantId?: number;
+    sku?: string;
+    licensetime?: number | string;
+    licenseType?: "new" | "renew";
+    renewId?: string;
+    osType?: "android" | "ios";
+    silentPhoneMode?: string;
+    usernames?: string[];
+    couponCode?: string;
+    discount?: number;
+    sourceUrl?: string;
+    selectedOption?: number;
+    meta?: Record<string, any>;
   }) => {
     setLoading(true);
     try {
@@ -26,6 +40,20 @@ export function useCheckout() {
         payment_provider: args.provider,
         amount: args.amount,
         currency: args.currency,
+        qty: args.qty,
+        variant_id: args.variantId,
+        sku: args.sku,
+        licensetime: args.licensetime,
+        license_type: args.licenseType,
+        renew_id: args.renewId,
+        os_type: args.osType,
+        silent_phone_mode: args.silentPhoneMode,
+        usernames: args.usernames,
+        coupon_code: args.couponCode,
+        discount: args.discount,
+        source_url: args.sourceUrl,
+        selected_option: args.selectedOption,
+        meta: args.meta,
       });
       setLastOrderId(res.order_id);
       window.location.href = res.payment_url; // redirige al checkout
@@ -42,6 +70,16 @@ export function useCheckout() {
     provider: Provider;
     amount: number;
     currency: string;
+    variantId?: number;
+    sku?: string;
+    licensetime?: number | string;
+    couponCode?: string;
+    discount?: number;
+    sourceUrl?: string;
+    selectedOption?: number;
+    silentPhoneMode?: string;
+    usernames?: string[];
+    meta?: Record<string, any>;
   }) => {
     setLoading(true);
     try {
@@ -52,6 +90,16 @@ export function useCheckout() {
         payment_provider: args.provider,
         amount: args.amount,
         currency: args.currency,
+        variant_id: args.variantId,
+        sku: args.sku,
+        licensetime: args.licensetime,
+        coupon_code: args.couponCode,
+        discount: args.discount,
+        source_url: args.sourceUrl,
+        selected_option: args.selectedOption,
+        silent_phone_mode: args.silentPhoneMode,
+        usernames: args.usernames,
+        meta: args.meta,
       });
       setLastOrderId(res.order_id);
       window.location.href = res.payment_url;

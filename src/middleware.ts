@@ -77,9 +77,8 @@ export const config = {
   matcher: [
     "/", // Raíz del sitio
     "/(en|es|fr|it|pt|)/:path*", // Soporte para idiomas
-    "/((?!_next|_vercel|.*\\..*).*)", // Excluye rutas internas y archivos estáticos
+    "/((?!api|_next|_vercel|.*\\..*).*)", // Excluye API, rutas internas y archivos estáticos
   ],
 };
-
 
 
