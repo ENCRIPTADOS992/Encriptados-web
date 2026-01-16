@@ -291,24 +291,16 @@ export default function RouterPage() {
         left={{
           title: "SIM Card encriptada",
           description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          buttonLabel: "Comprar",
-          onButtonClick: () => {
-            openModal({
-              productid: ROUTER_CONFIG.relatedProducts.simProductId,
-              languageCode: locale,
-              selectedOption: 40,
-            });
-          },
-          moreInfoLabel: "Más información",
-          onMoreInfo: () => window.location.href = `/${locale}/encrypted-sim`,
-          image: "/images/apps/silent-circle/sim.png",
+          buttonLabel: "Más información",
+          onButtonClick: () => window.location.href = `/${locale}/sim-encriptada`,
+          image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
         }}
         right={{
-          title: "E-SIM Encriptada",
-          subtitle: "Planes datos o minutos",
-          buttonLabel: "Ver más",
-          onButtonClick: () => window.location.href = `/${locale}/encrypted-sim`,
-          image: "/images/apps/silent-circle/phone.png",
+          title: "SIM TIM Conéctate con total anonimato",
+          subtitle: "Tus datos no expiran sin importar el tiempo que tardes en consumirlos",
+          buttonLabel: "Más información",
+          onButtonClick: () => window.location.href = `/${locale}/tim-sim`,
+          image: "/images/our-products/timpersona.png",
         }}
       />
 

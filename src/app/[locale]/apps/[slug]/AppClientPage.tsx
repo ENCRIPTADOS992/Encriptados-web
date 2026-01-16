@@ -53,6 +53,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   // Traducciones
   const t = useTranslations("appsShared.productTemplate");
   const tSim = useTranslations("appsShared");
+  const tOurProducts = useTranslations("OurProductsPage.simCards");
 
   const [product, setProduct] = useState<ProductById | null>(initialProduct);
   const [isLoading, setIsLoading] = useState(!initialProduct);
@@ -191,6 +192,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   const handleMoreInfo = (slug: string) => router.push(buildSimUrl(slug));
   const handleSimBuy = (productId: string) => openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
+  const handleFeaturedSimInfo = (path: string) => router.push(`/${locale}${path}`);
 
   const productInfo = useMemo(() => 
     buildProductInfo(product, config, selectedPlan, handleBuy, handleChat, buildTranslations),
@@ -316,20 +318,18 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       {/* Featured Products */}
       <FeaturedProducts
         left={{
-          title: tSim("encryptedSim.title"),
-          description: tSim("encryptedSim.description"),
-          buttonLabel: tSim("encryptedSim.button"),
-          onButtonClick: () => handleSimBuy(config?.relatedProducts.simProductId || "508"),
-          moreInfoLabel: tSim("encryptedSim.link"),
-          onMoreInfo: () => handleMoreInfo("sim-encriptada"),
-          image: "/images/apps/armadillo-v2/sim.png",
+          title: tOurProducts("encrypted.title"),
+          description: tOurProducts("encrypted.description"),
+          buttonLabel: tOurProducts("moreInfo"),
+          onButtonClick: () => handleFeaturedSimInfo("/sim-encriptada"),
+          image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
         }}
         right={{
-          title: tSim("simDataPlans.title"),
-          subtitle: tSim("simDataPlans.subtitle"),
-          buttonLabel: tSim("simDataPlans.button"),
-          onButtonClick: () => handleMoreInfo("sim-encriptada"),
-          image: "/images/apps/armadillo-v2/phone.png",
+          title: tOurProducts("tim.title"),
+          subtitle: tOurProducts("tim.description"),
+          buttonLabel: tOurProducts("moreInfo"),
+          onButtonClick: () => handleFeaturedSimInfo("/tim-sim"),
+          image: "/images/our-products/timpersona.png",
         }}
       />
 

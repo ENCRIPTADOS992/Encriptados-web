@@ -33,7 +33,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
   showMoreInfo = true,
   buyText = "Comprar aquí",
   moreInfoText = "Más información",
-  moreInfoUrl = "#",
+  moreInfoUrl,
   onBuyClick,
   onMoreInfoClick,
   moreInfoColor,
@@ -52,7 +52,17 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
             {buyText}
           </button>
           {showMoreInfo && (
-            <Link href={moreInfoUrl} passHref>
+            moreInfoUrl ? (
+              <Link href={moreInfoUrl} passHref>
+                <button
+                  type="button"
+                  onClick={onMoreInfoClick}
+                  className={`hidden sm:inline-block text-sm transition mt-6 ${moreInfoColor || "text-gray-300 hover:text-white"}`}
+                >
+                  {moreInfoText}
+                </button>
+              </Link>
+            ) : (
               <button
                 type="button"
                 onClick={onMoreInfoClick}
@@ -60,7 +70,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
               >
                 {moreInfoText}
               </button>
-            </Link>
+            )
           )}
         </div>
          <div className="w-full sm:w-[45%] h-full">
