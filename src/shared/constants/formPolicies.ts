@@ -165,6 +165,12 @@ const SYSTEMS_SUPPORT_ONLY_NAMES = [
   "dec secure",
 ];
 
+const APPS_SUPPORT_ONLY_NAMES = [
+  "vaultchat",
+  "vnc lagoon",
+  "salt",
+];
+
 function shouldHideTelegramField(productName: string, categoryId: number): boolean {
   if (categoryId !== 35) return false;
   const nameLower = productName.toLowerCase().trim();
@@ -173,6 +179,13 @@ function shouldHideTelegramField(productName: string, categoryId: number): boole
 
 function shouldUseSupportOnly(productName: string, categoryId: number): boolean {
   const nameLower = productName.toLowerCase().trim();
+  if (nameLower.includes("armadillo chat")) return false;
+  if (categoryId === 38) {
+    return APPS_SUPPORT_ONLY_NAMES.some((k) => nameLower.includes(k));
+  }
+  if (categoryId === 35) {
+    return SYSTEMS_SUPPORT_ONLY_NAMES.some((k) => nameLower.includes(k));
+  }
   return SYSTEMS_SUPPORT_ONLY_NAMES.some((k) => nameLower.includes(k));
 }
 
