@@ -2,7 +2,7 @@
 "use client";
 
 import * as React from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -32,6 +32,7 @@ type UseModalPaymentControllerResult = {
 export function useModalPaymentController(): UseModalPaymentControllerResult {
   const { isModalOpen, closeModal, params, openModal } = useModalPayment();
   const search = useSearchParams();
+  const pathname = usePathname();
 
   const qpProvider = (search.get("provider") || "").toLowerCase();
   const qpSelectedOption = search.get("selectedOption");
@@ -120,6 +121,36 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       packed.includes("decsecure")
     );
   }, [product]);
+
+  const buyAutoOpenedRef = React.useRef(false);
+
+  React.useEffect(() => {
+    const buy = search.get("buy");
+    if (buy !== "1") {
+      buyAutoOpenedRef.current = false;
+      return;
+    }
+    if (buyAutoOpenedRef.current) return;
+    if (isModalOpen) return;
+
+    const isRouterPath = pathname === "/router" || pathname.endsWith("/router");
+    if (!isRouterPath) return;
+
+    buyAutoOpenedRef.current = true;
+
+    const match = pathname.match(/^\/(en|es|fr|it|pt)(\/|$)/);
+    const locale = match?.[1] ?? "es";
+
+    openModal({
+      productid: "59747",
+      languageCode: locale,
+      selectedOption: 36,
+    });
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("buy");
+    window.history.replaceState({}, "", url.toString());
+  }, [search, pathname, isModalOpen, openModal]);
 
   // Track if we've already set the initial mode for this modal session
   const hasSetInitialMode = React.useRef(false);

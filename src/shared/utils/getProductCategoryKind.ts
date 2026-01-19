@@ -54,7 +54,17 @@ export function getProductCategoryKind(
     // (dejamos que reglas fuertes re-clasifiquen si aplica)
   }
 
-  // A) SIM (eSIM o física)
+  // A) ROUTERS
+  if (
+    /router|mifi|hotspot|cpe/.test(name) ||
+    /router|mifi|hotspot|cpe/.test(typeProd) ||
+    inCategory(catId, catName, /router|mifi|hotspot|cpe/) ||
+    /router|mifi|hotspot|cpe/.test(tags)
+  ) {
+    return { kind: "ROUTERS", reason: "nombre/type_product/categoría/tags señalan router" };
+  }
+
+  // B) SIM (eSIM o física)
   // Señales: config_sim, nombre, categoría, shipping “si”, type_product con “sim|esim”
   if (
     ["esim", "data", "minutes"].includes(cfgProd) ||
@@ -64,16 +74,6 @@ export function getProductCategoryKind(
     isTrue(shipProd) // muchas SIM físicas requieren envío
   ) {
     return { kind: "SIM", reason: "config_sim/type_product/name/categoría/ship señalan SIM" };
-  }
-
-  // B) ROUTERS
-  if (
-    /router|mifi|hotspot|cpe/.test(name) ||
-    /router|mifi|hotspot|cpe/.test(typeProd) ||
-    inCategory(catId, catName, /router|mifi|hotspot|cpe/) ||
-    /router|mifi|hotspot|cpe/.test(tags)
-  ) {
-    return { kind: "ROUTERS", reason: "nombre/type_product/categoría/tags señalan router" };
   }
 
   // C) APLICACIONES (apps móviles, desktop, plugins, etc.)

@@ -228,6 +228,13 @@ export function getFormPolicyForProduct(
   const formType = getFormTypeForProduct(productName, categoryId);
   const base = FORM_POLICIES[formType];
   if (!base) return FORM_POLICIES.APP_RONING;
+  if (categoryId === 36) {
+    return {
+      ...base,
+      emailLabel: "Correo electrónico",
+      emailPlaceholder: "Email",
+    };
+  }
   if (shouldUseSupportOnly(productName, categoryId)) {
     return {
       ...base,

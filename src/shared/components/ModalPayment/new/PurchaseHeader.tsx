@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
-import { getSimProductUrl } from "@/shared/utils/productRouteResolver";
+import { getProductLink, getSimProductUrl } from "@/shared/utils/productRouteResolver";
 import { useToast } from "@/shared/context/ToastContext";
 
 type Variant = {
@@ -287,16 +287,26 @@ const PurchaseHeader: React.FC<Props> = ({
                     } else {
                       shareUrl = localized;
                     }
-                  } else if (sourceUrl) {
-                    // Usar sourceUrl si está disponible
-                    const currentUrl = new URL(sourceUrl);
-                    currentUrl.searchParams.set('buy', '1');
-                    shareUrl = currentUrl.toString();
                   } else {
-                    // Fallback a URL actual
-                    const currentUrl = new URL(window.location.href);
-                    currentUrl.searchParams.set('buy', '1');
-                    shareUrl = currentUrl.toString();
+                    const categoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
+                    const productName = String(product?.name || "");
+                    const derivedLink = Number.isFinite(categoryId)
+                      ? getProductLink(productName, categoryId, Number(productId), provider, typeProduct)
+                      : null;
+                    if (derivedLink) {
+                      const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://encriptados.io";
+                      shareUrl = `${baseUrl}/${locale}${derivedLink}?buy=1`;
+                    } else if (sourceUrl) {
+                      // Usar sourceUrl si está disponible
+                      const currentUrl = new URL(sourceUrl);
+                      currentUrl.searchParams.set("buy", "1");
+                      shareUrl = currentUrl.toString();
+                    } else {
+                      // Fallback a URL actual
+                      const currentUrl = new URL(window.location.href);
+                      currentUrl.searchParams.set("buy", "1");
+                      shareUrl = currentUrl.toString();
+                    }
                   }
                 }
                 
