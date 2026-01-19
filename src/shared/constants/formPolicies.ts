@@ -143,6 +143,26 @@ export const PRODUCT_FORM_MAPPING: Record<string, FormType> = {
   // El resto se determina por categoría
 };
 
+const SYSTEMS_HIDE_TELEGRAM_NAMES = [
+  "secure mdm iphone",
+  "secure mdm android",
+  "cryptcom",
+  "renati",
+  "chatmail",
+  "armadillo",
+  "vaultchat",
+  "ultra x",
+  "intact phone",
+  "dec secure",
+  "securecrypt",
+];
+
+function shouldHideTelegramField(productName: string, categoryId: number): boolean {
+  if (categoryId !== 35) return false;
+  const nameLower = productName.toLowerCase().trim();
+  return SYSTEMS_HIDE_TELEGRAM_NAMES.some((k) => nameLower.includes(k));
+}
+
 /**
  * Determina el tipo de formulario basándose en el nombre del producto y la categoría
  */
@@ -180,5 +200,10 @@ export function getFormPolicyForProduct(
   categoryId: number
 ): FormPolicy {
   const formType = getFormTypeForProduct(productName, categoryId);
-  return FORM_POLICIES[formType];
+  const base = FORM_POLICIES[formType];
+  if (!base) return FORM_POLICIES.APP_RONING;
+  if (shouldHideTelegramField(productName, categoryId) && base.showTelegramField) {
+    return { ...base, showTelegramField: false };
+  }
+  return base;
 }
