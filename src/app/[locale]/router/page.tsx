@@ -195,23 +195,33 @@ export default function RouterPage() {
   };
 
   useEffect(() => {
-    if (searchParams?.get("buy") !== "1") {
+    const buy = searchParams?.get("buy");
+    if (buy !== "1") {
       hasAutoOpenedRef.current = false;
       return;
     }
-    if (isLoading || !product) return;
     if (hasAutoOpenedRef.current) return;
     hasAutoOpenedRef.current = true;
 
+    const selectedPlan = plans.find((p) => p.label === selectedRadio);
+    const selectedVariantId = selectedPlan ? Number(selectedPlan.value) : undefined;
+    const initialPrice = selectedPlan?.price ?? currentPrice ?? 0;
+
     const timer = setTimeout(() => {
-      handleBuy();
+      openModal({
+        productid: String(ROUTER_CONFIG.productId),
+        languageCode: locale,
+        selectedOption: ROUTER_CONFIG.categoryId,
+        initialPrice: Number(initialPrice) || 0,
+        variantId: Number.isFinite(selectedVariantId) ? selectedVariantId : undefined,
+      });
       const url = new URL(window.location.href);
       url.searchParams.delete("buy");
       window.history.replaceState({}, "", url.toString());
     }, 350);
 
     return () => clearTimeout(timer);
-  }, [searchParams, isLoading, product, handleBuy]);
+  }, [searchParams, plans, selectedRadio, currentPrice, openModal, locale]);
 
   // Producto Info para StickyBanner - Priorizar datos del backend
   const productIconUrl = (product as any)?.iconUrl || ROUTER_CONFIG.iconUrl;

@@ -77,7 +77,14 @@ export default function ModalNewUser() {
 
   const onApplyCoupon = () => setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
 
-  const amount = Math.max(unitPrice * quantity - discount, 0);
+  const selectedOption = Number((params as any)?.selectedOption ?? NaN);
+  const isRouterCheckout =
+    selectedOption === 36 ||
+    product?.category?.id === 36 ||
+    /router|mifi|hotspot|cpe/i.test(product?.name ?? "");
+  const shipping = isRouterCheckout ? 80 : undefined;
+
+  const amount = Math.max(unitPrice * quantity + (shipping ?? 0) - discount, 0);
   const productIdNum = Number(productid);
 
   // Show loading skeleton while product is loading
@@ -117,6 +124,7 @@ export default function ModalNewUser() {
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
       unitPrice={unitPrice}
+      shipping={shipping}
       sourceUrl={params.sourceUrl}
     >
       <UnifiedPurchaseForm
@@ -161,12 +169,18 @@ export default function ModalNewUser() {
               productId: productIdNum,
               quantity,
               unitPrice,
+              shipping,
               variantId: selectedVariant?.id ?? undefined,
               sku: selectedVariant?.sku,
               licensetime: selectedVariant?.licensetime,
               licenseType: formData.licenseType,
               renewId: formData.renewId,
               renewIds: formData.renewIds,
+              shippingAddress: formData.shippingAddress,
+              shippingFullName: formData.shippingFullName,
+              shippingCountry: formData.shippingCountry,
+              shippingPostalCode: formData.shippingPostalCode,
+              shippingPhone: formData.shippingPhone,
               osType: formData.osType,
               silentPhoneMode: formData.silentPhoneMode,
               usernames: formData.usernames,

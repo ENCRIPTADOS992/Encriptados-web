@@ -56,6 +56,11 @@ export interface FormData {
   licenseType?: LicenseType;
   renewId?: string;
   renewIds?: string[];
+  shippingAddress?: string;
+  shippingFullName?: string;
+  shippingCountry?: string;
+  shippingPostalCode?: string;
+  shippingPhone?: string;
   osType?: OsType;
   silentPhoneMode?: SilentPhoneMode;
 }
@@ -74,7 +79,7 @@ export default function UnifiedPurchaseForm({
   purchaseMeta,
 }: Props) {
   const t = useTranslations("paymentModal");
-  const { policy, formType, isLoading: policyLoading, productName } = useFormPolicy();
+  const { policy, formType, isLoading: policyLoading, productName, categoryId } = useFormPolicy();
 
   // Estado del formulario
   const [emailVal, setEmailVal] = React.useState(email);
@@ -93,6 +98,13 @@ export default function UnifiedPurchaseForm({
 
   // Para Silent Phone: usernames
   const [usernames, setUsernames] = React.useState<string[]>([]);
+
+  const isRouterCheckout = categoryId === 36 || purchaseMeta?.selectedOption === 36;
+  const [shippingAddress, setShippingAddress] = React.useState("");
+  const [shippingFullName, setShippingFullName] = React.useState("");
+  const [shippingCountry, setShippingCountry] = React.useState("");
+  const [shippingPostalCode, setShippingPostalCode] = React.useState("");
+  const [shippingPhone, setShippingPhone] = React.useState("");
 
   // Card fields
   const [cardName, setCardName] = React.useState("");
@@ -175,6 +187,13 @@ export default function UnifiedPurchaseForm({
   const renewIdsOk =
     !requiresRenewIds ||
     (renewIds.length === quantity && renewIds.every((id) => id.trim().length > 0));
+  const shippingOk =
+    !isRouterCheckout ||
+    (shippingAddress.trim().length > 0 &&
+      shippingFullName.trim().length > 0 &&
+      shippingCountry.trim().length > 0 &&
+      shippingPostalCode.trim().length > 0 &&
+      shippingPhone.trim().length > 0);
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
 
   const phase = method === "crypto" ? "crypto" : clientSecret ? "card_confirm" : "card_init";
@@ -185,6 +204,7 @@ export default function UnifiedPurchaseForm({
     emailOk &&
     usernamesOk &&
     renewIdsOk &&
+    shippingOk &&
     (phase === "crypto" ? true : stripeStatus === "ready" && cardName.trim().length > 1);
 
   const buttonLabel =
@@ -228,6 +248,11 @@ export default function UnifiedPurchaseForm({
       licenseType === "renew"
         ? renewIds.map((x) => x.trim()).filter((x) => x.length > 0)
         : undefined,
+    shippingAddress: isRouterCheckout ? shippingAddress.trim() || undefined : undefined,
+    shippingFullName: isRouterCheckout ? shippingFullName.trim() || undefined : undefined,
+    shippingCountry: isRouterCheckout ? shippingCountry.trim() || undefined : undefined,
+    shippingPostalCode: isRouterCheckout ? shippingPostalCode.trim() || undefined : undefined,
+    shippingPhone: isRouterCheckout ? shippingPhone.trim() || undefined : undefined,
     osType: policy.showOsSelector ? osType : undefined,
     silentPhoneMode: formType === "SILENT_PHONE" ? silentPhoneMode : undefined,
   });
@@ -253,6 +278,11 @@ export default function UnifiedPurchaseForm({
           licenseType: form.licenseType,
           renewId: form.renewId,
           renewIds: form.renewIds,
+          shippingAddress: form.shippingAddress,
+          shippingFullName: form.shippingFullName,
+          shippingCountry: form.shippingCountry,
+          shippingPostalCode: form.shippingPostalCode,
+          shippingPhone: form.shippingPhone,
           osType: form.osType,
           silentPhoneMode: form.silentPhoneMode,
           quantity,
@@ -613,6 +643,57 @@ export default function UnifiedPurchaseForm({
             )}
           </div>
         )}
+
+            {isRouterCheckout && (
+              <div className="space-y-3">
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={shippingAddress}
+                    onChange={(e) => setShippingAddress(e.target.value)}
+                    placeholder="Dirección de envío"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={shippingFullName}
+                      onChange={(e) => setShippingFullName(e.target.value)}
+                      placeholder="Nombre completo"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={shippingCountry}
+                      onChange={(e) => setShippingCountry(e.target.value)}
+                      placeholder="País"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={shippingPostalCode}
+                      onChange={(e) => setShippingPostalCode(e.target.value)}
+                      placeholder="Código postal"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={shippingPhone}
+                      onChange={(e) => setShippingPhone(e.target.value)}
+                      placeholder="Teléfono"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
 
         {/* === TERMS === */}
         <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
