@@ -124,16 +124,22 @@ export function createSimSubmitHandler({
           qty: quantity,
         };
       } else if (formType === "encrypted_data") {
+        const nums = (quantity > 1 ? (data.simNumbers ?? []) : [data.simNumber])
+          .map((x) => String(x ?? "").trim())
+          .filter((x) => x.length > 0);
         payload = {
           ...common,
           product: "data",
-          sim_number: data.simNumber,
+          sim_number: nums.join(","),
         };
       } else if (formType === "encrypted_minutes") {
+        const nums = (quantity > 1 ? (data.simNumbers ?? []) : [data.simNumber])
+          .map((x) => String(x ?? "").trim())
+          .filter((x) => x.length > 0);
         payload = {
           ...common,
           product: "minutes",
-          sim_number: data.simNumber,
+          sim_number: nums.join(","),
         };
       } else {
         payload = {

@@ -42,6 +42,7 @@ export default function SimForm({
       email: "",
       telegram: "",
       simNumber: "",
+      simNumbers: [""],
       fullName: "",
       address: "",
       country: "",

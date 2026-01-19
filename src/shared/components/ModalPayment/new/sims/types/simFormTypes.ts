@@ -31,6 +31,7 @@ export type SimFormValues = {
   email: string;
   telegram: string;
   simNumber: string;
+  simNumbers?: string[];
   fullName: string;
   address: string;
   country: string;

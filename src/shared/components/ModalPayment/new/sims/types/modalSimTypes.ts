@@ -56,6 +56,7 @@ export type Shipping = {
   phone: string;
   method: "card" | "crypto";
   simNumber?: string;
+  simNumbers?: string[];
   cardPostal?: string;
 };
 
