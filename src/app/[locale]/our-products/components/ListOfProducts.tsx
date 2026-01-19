@@ -473,6 +473,45 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
+  if (selectedOption === 35) {
+    const normKey = (s: string) =>
+      (s ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "");
+
+    const SYSTEMS_ORDER = [
+      "securemdmiphone",
+      "securemdmandroid",
+      "cryptcom",
+      "renati",
+      "chatmail",
+      "securecrypt",
+      "armadillo",
+      "vaultchat",
+      "ultrax",
+      "intactphone",
+      "decsecure",
+    ];
+
+    const rankByName = (name: string) => {
+      const base = normKey((name || "").split(" - ")[0]);
+      const idx = SYSTEMS_ORDER.findIndex((k) => base.includes(k));
+      return idx === -1 ? 999 : idx;
+    };
+
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      const ra = rankByName(a.name || "");
+      const rb = rankByName(b.name || "");
+      if (ra !== rb) return ra - rb;
+      const na = normKey(a.name || "");
+      const nb = normKey(b.name || "");
+      if (na !== nb) return na.localeCompare(nb);
+      return Number(a.id) - Number(b.id);
+    });
+  }
+
   // ========== EXPANSIÓN DE VARIANTES TIM ==========
   // Para productos TIM con variantes de GB, crear una tarjeta por cada variante
   // filtrando por la región/país seleccionado
