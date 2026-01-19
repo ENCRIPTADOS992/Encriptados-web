@@ -166,6 +166,7 @@ export default function ModalNewUser() {
               licensetime: selectedVariant?.licensetime,
               licenseType: formData.licenseType,
               renewId: formData.renewId,
+              renewIds: formData.renewIds,
               osType: formData.osType,
               silentPhoneMode: formData.silentPhoneMode,
               usernames: formData.usernames,

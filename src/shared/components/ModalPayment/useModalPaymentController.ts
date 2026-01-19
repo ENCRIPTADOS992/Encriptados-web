@@ -104,6 +104,18 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     );
   }, [params, qpProvider, qpSelectedOption, product]);
 
+  const supportOnly = React.useMemo(() => {
+    const name = norm((product as any)?.name || "");
+    const packed = name.replace(/[^a-z0-9]/g, "");
+    return (
+      packed.includes("armadillo") ||
+      packed.includes("vaultchat") ||
+      packed.includes("ultrax") ||
+      packed.includes("intactphone") ||
+      packed.includes("decsecure")
+    );
+  }, [product]);
+
   // Track if we've already set the initial mode for this modal session
   const hasSetInitialMode = React.useRef(false);
 
@@ -115,6 +127,12 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     }
 
     if (!product || hasSetInitialMode.current) return;
+
+    if (supportOnly) {
+      if (mode !== "new_user") openModal({ ...(params || {}), mode: "new_user" });
+      hasSetInitialMode.current = true;
+      return;
+    }
 
     const wantSimMode = kind === "SIM";
 
@@ -128,7 +146,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     } else {
       hasSetInitialMode.current = true;
     }
-  }, [isModalOpen, product, kind, mode, openModal, params]);
+  }, [isModalOpen, product, kind, mode, openModal, params, supportOnly]);
 
   const panelClassName = getModalPanelClassName({ mode, kind });
   const contentClassName = getModalContentClassName({ mode, kind });

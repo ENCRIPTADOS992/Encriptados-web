@@ -55,6 +55,7 @@ export interface FormData {
   usernames?: string[];
   licenseType?: LicenseType;
   renewId?: string;
+  renewIds?: string[];
   osType?: OsType;
   silentPhoneMode?: SilentPhoneMode;
 }
@@ -84,8 +85,8 @@ export default function UnifiedPurchaseForm({
   // Para Software: tipo de licencia
   const [licenseType, setLicenseType] = React.useState<LicenseType>("new");
   
-  // Para renovación: ID del producto a renovar
-  const [renewId, setRenewId] = React.useState("");
+  // Para renovación: IDs del producto a renovar (uno por licencia según cantidad)
+  const [renewIds, setRenewIds] = React.useState<string[]>([]);
   
   // Para SecureCrypt: sistema operativo
   const [osType, setOsType] = React.useState<OsType>("android");
@@ -125,6 +126,21 @@ export default function UnifiedPurchaseForm({
   }, [quantity, policy.showUsernameFields]);
 
   React.useEffect(() => {
+    const shouldCollectRenewIds =
+      policy.showLicenseTabs &&
+      policy.licenseTabType === "new_renew" &&
+      licenseType === "renew";
+    if (!shouldCollectRenewIds) return;
+
+    setRenewIds((prev) => {
+      const next = [...prev];
+      if (quantity > prev.length) next.push(...Array(quantity - prev.length).fill(""));
+      else if (quantity < prev.length) next.length = quantity;
+      return next;
+    });
+  }, [quantity, policy.showLicenseTabs, policy.licenseTabType, licenseType]);
+
+  React.useEffect(() => {
     return () => {
       if (pollRef.current) clearInterval(pollRef.current);
     };
@@ -132,6 +148,14 @@ export default function UnifiedPurchaseForm({
 
   const setUsernameAt = (idx: number, val: string) => {
     setUsernames((prev) => {
+      const next = [...prev];
+      next[idx] = val;
+      return next;
+    });
+  };
+
+  const setRenewIdAt = (idx: number, val: string) => {
+    setRenewIds((prev) => {
       const next = [...prev];
       next[idx] = val;
       return next;
@@ -146,6 +170,11 @@ export default function UnifiedPurchaseForm({
   const usernamesOk = !requiresUsernames || 
     (usernames.length === quantity && usernames.every((u) => reUser.test(u)));
   const emailOk = /\S+@\S+\.\S+/.test(emailVal) && emailVal.length <= 100 && emailVal.length > 5;
+  const requiresRenewIds =
+    policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew";
+  const renewIdsOk =
+    !requiresRenewIds ||
+    (renewIds.length === quantity && renewIds.every((id) => id.trim().length > 0));
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
 
   const phase = method === "crypto" ? "crypto" : clientSecret ? "card_confirm" : "card_init";
@@ -155,6 +184,7 @@ export default function UnifiedPurchaseForm({
     terms &&
     emailOk &&
     usernamesOk &&
+    renewIdsOk &&
     (phase === "crypto" ? true : stripeStatus === "ready" && cardName.trim().length > 1);
 
   const buttonLabel =
@@ -192,7 +222,12 @@ export default function UnifiedPurchaseForm({
     telegramId: telegramId.trim() || undefined,
     usernames: policy.showUsernameFields ? usernames : undefined,
     licenseType: policy.showLicenseTabs && policy.licenseTabType === "new_renew" ? licenseType : undefined,
-    renewId: licenseType === "renew" ? renewId.trim() || undefined : undefined,
+    renewId:
+      licenseType === "renew" ? renewIds.find((x) => x.trim().length > 0)?.trim() || undefined : undefined,
+    renewIds:
+      licenseType === "renew"
+        ? renewIds.map((x) => x.trim()).filter((x) => x.length > 0)
+        : undefined,
     osType: policy.showOsSelector ? osType : undefined,
     silentPhoneMode: formType === "SILENT_PHONE" ? silentPhoneMode : undefined,
   });
@@ -217,6 +252,7 @@ export default function UnifiedPurchaseForm({
           usernames: form.usernames,
           licenseType: form.licenseType,
           renewId: form.renewId,
+          renewIds: form.renewIds,
           osType: form.osType,
           silentPhoneMode: form.silentPhoneMode,
           quantity,
@@ -264,7 +300,7 @@ export default function UnifiedPurchaseForm({
             discount: purchaseMeta?.discount,
             sourceUrl: purchaseMeta?.sourceUrl,
             selectedOption: purchaseMeta?.selectedOption,
-            meta,
+            meta: { ...meta, renewIds: form.renewIds },
           });
         }
 
@@ -314,6 +350,7 @@ export default function UnifiedPurchaseForm({
   // Determinar si mostrar el formulario de pago (ocultar cuando Silent Phone está en modo recharge)
   const isRechargeMode = formType === "SILENT_PHONE" && silentPhoneMode === "recharge";
   const showPaymentForm = !isRechargeMode;
+  const supportOnly = policy.paymentMethods.length === 0;
 
   if (policyLoading) {
     return (
@@ -321,6 +358,29 @@ export default function UnifiedPurchaseForm({
         <div className="h-10 bg-gray-200 rounded" />
         <div className="h-10 bg-gray-200 rounded" />
         <div className="h-12 bg-gray-300 rounded" />
+      </div>
+    );
+  }
+
+  if (supportOnly) {
+    return (
+      <div className="flex flex-col items-center justify-center text-center py-10 sm:py-14">
+        <p className="text-[18px] leading-[22px] font-semibold text-black">{t("needHelp")}</p>
+        <div className="mt-5 w-full max-w-[320px]">
+          <TelegramButton
+            className="
+              w-full h-[48px]
+              rounded-full px-4
+              flex items-center justify-center gap-[10px]
+              !bg-[#1CB9EC] text-white
+              min-w-0
+              [&>svg]:w-5 [&>svg]:h-5
+              [&>svg]:mr-[10px]
+            "
+          >
+            {t("chatNow")}
+          </TelegramButton>
+        </div>
       </div>
     );
   }
@@ -391,14 +451,19 @@ export default function UnifiedPurchaseForm({
               {t("enterProductId", { productName: productName || t("product") })}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                <input
-                  value={renewId}
-                  onChange={(e) => setRenewId(e.target.value)}
-                  placeholder={t("enterIdPlaceholder")}
-                  className="w-full bg-transparent outline-none text-[14px]"
-                />
-              </div>
+              {renewIds.map((val, idx) => (
+                <div
+                  key={idx}
+                  className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center"
+                >
+                  <input
+                    value={val}
+                    onChange={(e) => setRenewIdAt(idx, e.target.value)}
+                    placeholder={t("enterIdPlaceholder")}
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -487,9 +552,9 @@ export default function UnifiedPurchaseForm({
                 {t("usernameHint")}
               </p>
             </div>
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {usernames.map((u, idx) => (
-                <div key={idx} className="w-full sm:w-[calc(50%-6px)] h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div key={idx} className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
                   <input
                     value={u}
                     onChange={(e) => setUsernameAt(idx, e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20))}
