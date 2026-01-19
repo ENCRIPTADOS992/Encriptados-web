@@ -107,9 +107,14 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   const supportOnly = React.useMemo(() => {
     const name = norm((product as any)?.name || "");
     const packed = name.replace(/[^a-z0-9]/g, "");
+    const isArmadilloChat = packed.includes("armadillochat");
+    const isArmadilloSystem = packed === "armadillo" || packed.includes("armadillophone");
     return (
-      packed.includes("armadillo") ||
+      (!isArmadilloChat && isArmadilloSystem) ||
       packed.includes("vaultchat") ||
+      packed.includes("vnclagoon") ||
+      packed === "salt" ||
+      packed.includes("saltapp") ||
       packed.includes("ultrax") ||
       packed.includes("intactphone") ||
       packed.includes("decsecure")

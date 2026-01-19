@@ -512,6 +512,42 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
+  if (selectedOption === 38) {
+    const normKey = (s: string) =>
+      (s ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "");
+
+    const APPS_ORDER = [
+      "silentphone",
+      "threemawork",
+      "threema",
+      "armadillochat",
+      "nordvpn",
+      "vaultchat",
+      "salt",
+      "vnclagoon",
+    ];
+
+    const rankByName = (name: string) => {
+      const base = normKey((name || "").split(" - ")[0]);
+      const idx = APPS_ORDER.findIndex((k) => base.includes(k));
+      return idx === -1 ? 999 : idx;
+    };
+
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      const ra = rankByName(a.name || "");
+      const rb = rankByName(b.name || "");
+      if (ra !== rb) return ra - rb;
+      const na = normKey(a.name || "");
+      const nb = normKey(b.name || "");
+      if (na !== nb) return na.localeCompare(nb);
+      return Number(a.id) - Number(b.id);
+    });
+  }
+
   // ========== EXPANSIÓN DE VARIANTES TIM ==========
   // Para productos TIM con variantes de GB, crear una tarjeta por cada variante
   // filtrando por la región/país seleccionado
@@ -719,9 +755,15 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         continue;
       }
 
-      // Crear una tarjeta por cada variante de licencia (solo si hay múltiples)
-      for (let i = 0; i < variantsWithLicense.length; i++) {
-        const variant = variantsWithLicense[i];
+      // Crear una tarjeta por cada variante de licencia (orden ascendente por meses)
+      const orderedVariants = [...variantsWithLicense].sort((a: any, b: any) => {
+        const ma = parseInt(String(a.licensetime), 10);
+        const mb = parseInt(String(b.licensetime), 10);
+        if (Number.isFinite(ma) && Number.isFinite(mb)) return ma - mb;
+        return String(a.licensetime).localeCompare(String(b.licensetime));
+      });
+      for (let i = 0; i < orderedVariants.length; i++) {
+        const variant = orderedVariants[i];
         expandedByLicense.push({
           ...product,
           _selectedVariant: variant,
