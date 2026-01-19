@@ -350,6 +350,7 @@ export default function UnifiedPurchaseForm({
   // Determinar si mostrar el formulario de pago (ocultar cuando Silent Phone está en modo recharge)
   const isRechargeMode = formType === "SILENT_PHONE" && silentPhoneMode === "recharge";
   const showPaymentForm = !isRechargeMode;
+  const supportOnly = policy.paymentMethods.length === 0;
 
   if (policyLoading) {
     return (
@@ -357,6 +358,29 @@ export default function UnifiedPurchaseForm({
         <div className="h-10 bg-gray-200 rounded" />
         <div className="h-10 bg-gray-200 rounded" />
         <div className="h-12 bg-gray-300 rounded" />
+      </div>
+    );
+  }
+
+  if (supportOnly) {
+    return (
+      <div className="flex flex-col items-center justify-center text-center py-10 sm:py-14">
+        <p className="text-[18px] leading-[22px] font-semibold text-black">{t("needHelp")}</p>
+        <div className="mt-5 w-full max-w-[320px]">
+          <TelegramButton
+            className="
+              w-full h-[48px]
+              rounded-full px-4
+              flex items-center justify-center gap-[10px]
+              !bg-[#1CB9EC] text-white
+              min-w-0
+              [&>svg]:w-5 [&>svg]:h-5
+              [&>svg]:mr-[10px]
+            "
+          >
+            {t("chatNow")}
+          </TelegramButton>
+        </div>
       </div>
     );
   }

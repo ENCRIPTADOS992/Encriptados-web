@@ -157,10 +157,23 @@ const SYSTEMS_HIDE_TELEGRAM_NAMES = [
   "securecrypt",
 ];
 
+const SYSTEMS_SUPPORT_ONLY_NAMES = [
+  "armadillo",
+  "vaultchat",
+  "ultra x",
+  "intact phone",
+  "dec secure",
+];
+
 function shouldHideTelegramField(productName: string, categoryId: number): boolean {
   if (categoryId !== 35) return false;
   const nameLower = productName.toLowerCase().trim();
   return SYSTEMS_HIDE_TELEGRAM_NAMES.some((k) => nameLower.includes(k));
+}
+
+function shouldUseSupportOnly(productName: string, categoryId: number): boolean {
+  const nameLower = productName.toLowerCase().trim();
+  return SYSTEMS_SUPPORT_ONLY_NAMES.some((k) => nameLower.includes(k));
 }
 
 /**
@@ -202,6 +215,18 @@ export function getFormPolicyForProduct(
   const formType = getFormTypeForProduct(productName, categoryId);
   const base = FORM_POLICIES[formType];
   if (!base) return FORM_POLICIES.APP_RONING;
+  if (shouldUseSupportOnly(productName, categoryId)) {
+    return {
+      ...base,
+      showLicenseTabs: false,
+      licenseTabType: "none",
+      showOsSelector: false,
+      showUsernameFields: false,
+      showEmailField: false,
+      showTelegramField: false,
+      paymentMethods: [],
+    };
+  }
   if (shouldHideTelegramField(productName, categoryId) && base.showTelegramField) {
     return { ...base, showTelegramField: false };
   }
