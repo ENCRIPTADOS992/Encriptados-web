@@ -66,6 +66,7 @@ export default function SimFormUnified({
       email: "",
       telegram: "",
       simNumber: "",
+      simNumbers: [""],
       fullName: "",
       address: "",
       country: "",
@@ -82,6 +83,7 @@ export default function SimFormUnified({
 
   const email = watch("email");
   const simNumber = watch("simNumber");
+  const simNumbers = watch("simNumbers") ?? [];
   const fullName = watch("fullName");
   const address = watch("address");
   const country = watch("country");
@@ -108,7 +110,14 @@ export default function SimFormUnified({
   // Validaciones
   const emailOk = /\S+@\S+\.\S+/.test(email) && email.length <= 100;
   const phoneOk = phone.trim().length >= 7;
-  const simOk = simNumber.trim().length >= 6;
+  const useMultiSimNumbers = quantity > 1;
+  const normalizedSimNumbers = (useMultiSimNumbers ? simNumbers : [simNumber])
+    .map((x) => String(x ?? "").trim())
+    .filter((x) => x.length > 0);
+  const simOk = CFG.showSimNumber
+    ? normalizedSimNumbers.length === (useMultiSimNumbers ? quantity : 1) &&
+      normalizedSimNumbers.every((n) => n.length >= 6)
+    : true;
   const postalOk = postalCode.trim().length > 0;
   const fullNameOk = fullName.trim() !== "";
   const addressOk = address.trim() !== "";
@@ -131,6 +140,19 @@ export default function SimFormUnified({
       : stripeStatus === "ready" && cardName.trim().length > 1;
 
   const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting;
+
+  React.useEffect(() => {
+    const needsSimNumbers =
+      (formType === "encrypted_data" && CFG.showSimNumber) ||
+      formType === "encrypted_minutes";
+    if (!needsSimNumbers) return;
+    if (quantity <= 1) return;
+    const current = (watch("simNumbers") ?? []) as string[];
+    const next = [...current];
+    if (quantity > next.length) next.push(...Array(quantity - next.length).fill(""));
+    else if (quantity < next.length) next.length = quantity;
+    setValue("simNumbers", next, { shouldValidate: false });
+  }, [quantity, formType, CFG.showSimNumber, setValue, watch]);
 
   // Calcular montos
   const shippingFee = isPhysical ? 75 : 0;
@@ -184,6 +206,12 @@ export default function SimFormUnified({
           selectedPlanId,
           selectedVariantId,
           sourceUrl,
+          simNumbers:
+            quantity > 1
+              ? (data.simNumbers ?? [])
+                  .map((x) => String(x ?? "").trim())
+                  .filter((x) => x.length > 0)
+              : [String(data.simNumber ?? "").trim()].filter((x) => x.length > 0),
         },
       };
 
@@ -191,7 +219,10 @@ export default function SimFormUnified({
       if (productName === "esim") {
         payload.qty = quantity;
       } else if (productName === "data" || productName === "minutes") {
-        payload.sim_number = data.simNumber;
+        const nums = (quantity > 1 ? (data.simNumbers ?? []) : [data.simNumber])
+          .map((x) => String(x ?? "").trim())
+          .filter((x) => x.length > 0);
+        payload.sim_number = nums.join(",");
       } else {
         payload.shipping_payload = {
           shipping_name: data.fullName,
@@ -319,6 +350,7 @@ export default function SimFormUnified({
         register={register}
         errors={errors}
         countryValue={country}
+        quantity={quantity}
       />
 
       <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F] !mt-1.5">

@@ -18,6 +18,7 @@ type Props = {
   register: UseFormRegister<SimFormValues>;
   errors: FieldErrors<SimFormValues>;
   countryValue: string;
+  quantity?: number;
 };
 
 export function BuyerFieldsSection({
@@ -26,6 +27,7 @@ export function BuyerFieldsSection({
   register,
   errors,
   countryValue,
+  quantity = 1,
 }: Props) {
   const { emailFullWidth } = cfg;
 
@@ -39,14 +41,9 @@ export function BuyerFieldsSection({
     <>
       {emailFullWidth ? (
         cfg.showSimNumber ? (
-          <div className="flex flex-col gap-[6px] sm:flex-row">
-            <div className="flex-1">
-              <div
-                className={[
-                  getFieldWrapperClassName(!!errors.email),
-                  "w-full",
-                ].join(" ")}
-              >
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className={getFieldWrapperClassName(!!errors.email)}>
                 <input
                   {...register("email", { required: true })}
                   placeholder="Ingresa tu Email"
@@ -54,31 +51,44 @@ export function BuyerFieldsSection({
                   className="w-full bg-transparent outline-none text-[14px] py-2"
                 />
               </div>
+              <div />
             </div>
 
-            <div className="flex-1">
-              <div
-                className={[
-                  getFieldWrapperClassName(!!errors.simNumber),
-                  "w-full",
-                ].join(" ")}
-              >
-                <input
-                  {...register("simNumber", { required: cfg.reqSimNumber })}
-                  placeholder="Número de SIM"
-                  className="w-full bg-transparent outline-none text-[14px] py-2"
-                />
+            {quantity <= 1 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className={getFieldWrapperClassName(!!errors.simNumber)}>
+                  <input
+                    {...register("simNumber", { required: cfg.reqSimNumber })}
+                    placeholder="Número de SIM"
+                    className="w-full bg-transparent outline-none text-[14px] py-2"
+                  />
+                </div>
+                <div />
               </div>
-            </div>
-          </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {Array.from({ length: quantity }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={getFieldWrapperClassName(
+                      !!(errors as any).simNumbers?.[idx]
+                    )}
+                  >
+                    <input
+                      {...register(`simNumbers.${idx}` as const, {
+                        required: cfg.reqSimNumber,
+                      })}
+                      placeholder={`Número de SIM ${idx + 1}`}
+                      className="w-full bg-transparent outline-none text-[14px] py-2"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div
-              className={[
-                getFieldWrapperClassName(!!errors.email),
-                "w-full",
-              ].join(" ")}
-            >
+            <div className={getFieldWrapperClassName(!!errors.email)}>
               <input
                 {...register("email", { required: true })}
                 placeholder="Ingresa tu Email"
@@ -113,19 +123,38 @@ export function BuyerFieldsSection({
       )}
 
       {cfg.showSimNumber && !emailFullWidth && (
-        <div
-          className={[
-            getFieldWrapperClassName(!!errors.simNumber),
-            "w-full sm:w-[416px] max-w-full",
-          ].join(" ")}
-        >
-          <input
-            {...register("simNumber", { required: cfg.reqSimNumber })}
-            placeholder="Número de SIM"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
+        quantity <= 1 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className={getFieldWrapperClassName(!!errors.simNumber)}>
+              <input
+                {...register("simNumber", { required: cfg.reqSimNumber })}
+                placeholder="Número de SIM"
+                className="w-full bg-transparent outline-none text-[14px]"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {Array.from({ length: quantity }).map((_, idx) => (
+              <div
+                key={idx}
+                className={getFieldWrapperClassName(
+                  !!(errors as any).simNumbers?.[idx]
+                )}
+              >
+                <input
+                  {...register(`simNumbers.${idx}` as const, {
+                    required: cfg.reqSimNumber,
+                  })}
+                  placeholder={`Número de SIM ${idx + 1}`}
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            ))}
+          </div>
+        )
       )}
+
 
       {cfg.showAddress && (
         <div className={getFieldWrapperClassName(!!errors.address)}>
