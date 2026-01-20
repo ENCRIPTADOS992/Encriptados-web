@@ -8,6 +8,7 @@ export type MinutesPlan = {
   id: string | number;
   label: string;
   value: number;
+  minutes?: number;
 };
 
 type Params = {
@@ -33,21 +34,61 @@ export function buildMinutesPlans({
     return [];
   }
 
+  const parseNum = (v: unknown): number | undefined => {
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+    if (typeof v === "string") {
+      const n = parseInt(v, 10);
+      return Number.isFinite(n) ? n : undefined;
+    }
+    return undefined;
+  };
+
+  const parseMinutesFromText = (text: unknown): number | undefined => {
+    const s = String(text ?? "");
+    const m = s.match(/(\d+)\s*(min(?:uto)?s?|minutes?)/i);
+    if (!m) return undefined;
+    const n = parseInt(m[1], 10);
+    return Number.isFinite(n) ? n : undefined;
+  };
+
+  const deriveMinutes = (v: Variant, cost: number): number | undefined => {
+    const fromField = parseNum((v as any).minutes);
+    if (fromField && fromField > 0) return fromField;
+
+    const fromLabel = parseMinutesFromText((v as any).label) ?? parseMinutesFromText((v as any).name);
+    if (fromLabel && fromLabel > 0) return fromLabel;
+
+    const fromTags =
+      parseMinutesFromText((v as any).tags) ??
+      parseMinutesFromText((v as any).tag) ??
+      parseMinutesFromText((v as any).tag_name);
+    if (fromTags && fromTags > 0) return fromTags;
+
+    const minutePrice = parseNum((v as any).minute_price);
+    if (minutePrice && minutePrice > 0 && cost > 0) {
+      const calc = Math.round(cost / minutePrice);
+      if (calc > 0) return calc;
+    }
+
+    if (cost > 0 && Number.isFinite(cost) && cost % 2 === 0) {
+      const calc = cost / 2;
+      if (calc > 0) return calc;
+    }
+
+    return undefined;
+  };
+
   const fromVariants =
     (variants ?? [])
       .map((v, i) => {
-        const minutes =
-          typeof v.minutes === "number" ? v.minutes : undefined;
-        
         // Intentar obtener el precio de múltiples fuentes
         const rawPrice = v.cost ?? v.price ?? (v as any).regular_price ?? (v as any).sale_price ?? 0;
         const cost = typeof rawPrice === "string" ? parseFloat(rawPrice) : Number(rawPrice);
+        const minutes = deriveMinutes(v, cost);
 
         // Crear label: priorizar minutes > label > name > precio formateado
         let label = "Plan";
-        if (typeof minutes === "number" && minutes > 0) {
-          label = `${minutes} Min`;
-        } else if (v.label && String(v.label).trim()) {
+        if (v.label && String(v.label).trim()) {
           label = String(v.label);
         } else if (v.name && String(v.name).trim()) {
           label = String(v.name);
@@ -60,6 +101,7 @@ export function buildMinutesPlans({
           id: v.id ?? i,
           label,
           value: !Number.isNaN(cost) ? cost : 0,
+          minutes,
         };
 
         console.log("[buildMinutesPlans] fromVariants item", {
@@ -94,9 +136,7 @@ export function buildMinutesPlans({
 
       // Generar label: priorizar minutos > nombre/sku > precio
       let label = "Plan";
-      if (numMinutes > 0) {
-        label = `${numMinutes} Min`;
-      } else if ((c as any).name && String((c as any).name).trim()) {
+      if ((c as any).name && String((c as any).name).trim()) {
         label = String((c as any).name);
       } else if (c.sku && String(c.sku).trim()) {
         label = String(c.sku);
@@ -108,6 +148,7 @@ export function buildMinutesPlans({
         id: c.sku || c.code || i,
         label,
         value: !Number.isNaN(price) ? price : 0,
+        minutes: numMinutes > 0 ? numMinutes : undefined,
       };
 
       console.log("[buildMinutesPlans] fromConfigSim item", {

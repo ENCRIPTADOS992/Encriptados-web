@@ -44,7 +44,7 @@ type Props = {
   shipping?: number;
   showLicense?: boolean;
   currency?: string;
-  minutesPlans?: Array<{ id: string | number; label: string; value?: number }>;
+  minutesPlans?: Array<{ id: string | number; label: string; value?: number; minutes?: number }>;
   selectedPlanId?: string | number | null;
   onChangePlan?: (id: string | number) => void;
   showEsimAddon?: boolean;
@@ -375,8 +375,17 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Plan (solo si hay minutesPlans) */}
           {!!minutesPlans?.length && (
             <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Minutos</span>
+              <span className="text-base text-[#3D3D3D]">{t("minutes")}</span>
               <div ref={planRef} className="relative justify-self-end z-[1000]">
+                {(() => {
+                  const current =
+                    minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
+                    minutesPlans[0];
+                  const label =
+                    typeof current?.minutes === "number" && current.minutes > 0
+                      ? `${current.minutes} ${t("minutes")}`
+                      : current?.label ?? "Plan";
+                  return (
                 <button
                   type="button"
                   aria-haspopup="listbox"
@@ -385,10 +394,12 @@ const PurchaseHeader: React.FC<Props> = ({
                   className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
                 >
                   <span className="truncate">
-                    {minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__"))?.label ?? minutesPlans[0]?.label ?? "Plan"}
+                    {label}
                   </span>
                   <span className="ml-1 text-[#3D3D3D]">▾</span>
                 </button>
+                  );
+                })()}
 
                 {openPlan && (
                   <div
@@ -398,6 +409,10 @@ const PurchaseHeader: React.FC<Props> = ({
                   >
                     {minutesPlans.map((p) => {
                       const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
+                      const label =
+                        typeof p.minutes === "number" && p.minutes > 0
+                          ? `${p.minutes} ${t("minutes")}`
+                          : p.label;
                       return (
                         <button
                           key={String(p.id)}
@@ -409,7 +424,7 @@ const PurchaseHeader: React.FC<Props> = ({
                           }}
                           className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                         >
-                          {p.label}
+                          {label}
                         </button>
                       );
                     })}
