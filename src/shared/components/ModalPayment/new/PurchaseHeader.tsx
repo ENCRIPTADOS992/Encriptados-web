@@ -31,6 +31,11 @@ type ProductLike = {
   productId?: number | string;
 };
 
+type RechargeAmountOpt = {
+  id: number;
+  value: number;
+};
+
 type Props = {
   product: ProductLike | undefined;
   selectedVariantId?: number | null;
@@ -156,16 +161,22 @@ const PurchaseHeader: React.FC<Props> = ({
     };
   }, []);
 
-  const providerNorm = (product?.provider || "").toLowerCase();
+  const providerNorm = ((product?.provider || product?.brand) ?? "").toLowerCase();
   const titleNorm = (product?.name || product?.headerTitle || "").toLowerCase();
 
-  const isEncryptedProvider = providerNorm.includes("encript");
+  const isEncryptedProvider =
+    providerNorm.includes("encript") || providerNorm.includes("encrypted");
 
   const isRecargaDatos =
-    titleNorm.includes("recarga") && titleNorm.includes("datos");
+    titleNorm.includes("recarga") &&
+    (titleNorm.includes("datos") || titleNorm.includes("data"));
+
+  const isEsimDataComboTitle =
+    titleNorm.includes("esim") &&
+    (titleNorm.includes("datos") || titleNorm.includes("data"));
 
   const showRechargeAmount =
-    isEncryptedProvider && isRecargaDatos;
+    isEncryptedProvider && (isRecargaDatos || isEsimDataComboTitle);
 
   const isEncryptedDataRecharge = React.useMemo(() => {
     const p: any = product || {};
@@ -191,26 +202,25 @@ const PurchaseHeader: React.FC<Props> = ({
     );
   }, [product]);
 
-  const RECHARGE_AMOUNTS = React.useMemo(() => {
+  const RECHARGE_AMOUNTS = React.useMemo<RechargeAmountOpt[]>(() => {
     // Si el producto tiene variantes, usarlas
     const productVariants = (product as any)?.variants ?? [];
     if (productVariants.length > 0) {
       return productVariants.map((v: any) => ({
-        id: v.id ?? v.price,
-        label: `${v.price} USD`,
-        value: Number(v.price),
+        id: v.id ?? v.price ?? v.cost,
+        value: Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0),
       }));
     }
     
     // Fallback a valores fijos
     return [
-      { id: 25, label: "25 USD", value: 25 },
-      { id: 50, label: "50 USD", value: 50 },
-      { id: 100, label: "100 USD", value: 100 },
-      { id: 150, label: "150 USD", value: 150 },
-      { id: 200, label: "200 USD", value: 200 },
-      { id: 250, label: "250 USD", value: 250 },
-      { id: 500, label: "500 USD", value: 500 },
+      { id: 25, value: 25 },
+      { id: 50, value: 50 },
+      { id: 100, value: 100 },
+      { id: 150, value: 150 },
+      { id: 200, value: 200 },
+      { id: 250, value: 250 },
+      { id: 500, value: 500 },
     ];
   }, [product]);
   return (
@@ -357,15 +367,15 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Monto de recarga */}
           {showRechargeAmount && (
             <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Monto de recarga</span>
+              <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
               <select
                 className="justify-self-end h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10"
-                value={String(selectedPlanId ?? RECHARGE_AMOUNTS[0].id)}
+                value={String(selectedPlanId ?? RECHARGE_AMOUNTS[0].value)}
                 onChange={(e) => onChangePlan?.(Number(e.target.value))}
               >
-                {RECHARGE_AMOUNTS.map((opt: { id: number; label: string; value: number }) => (
-                  <option key={opt.id} value={opt.id}>
-                    {opt.label}
+                {RECHARGE_AMOUNTS.filter((x: RechargeAmountOpt) => Number(x.value) > 0).map((opt: RechargeAmountOpt) => (
+                  <option key={opt.id} value={opt.value}>
+                    {opt.value} {currency}
                   </option>
                 ))}
               </select>

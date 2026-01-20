@@ -95,6 +95,17 @@ export default function ModalSIM() {
     [formType, variants, product]
   );
 
+  const dataAmounts = React.useMemo(() => {
+    const toNumber = (v: unknown): number => {
+      const n = typeof v === "string" ? parseFloat(v) : Number(v);
+      return Number.isFinite(n) ? n : 0;
+    };
+    const amounts = (variants ?? [])
+      .map((v: any) => toNumber(v.price ?? v.cost ?? v.regular_price ?? v.sale_price))
+      .filter((n) => n > 0);
+    return Array.from(new Set(amounts)).sort((a, b) => a - b);
+  }, [variants]);
+
   React.useEffect(() => {
     // Si hay un initialPrice, buscar la variante que coincida con ese precio
     if (initialPrice != null && initialPrice > 0 && minutesPlans.length > 0) {
@@ -116,6 +127,13 @@ export default function ModalSIM() {
     });
     setSelectedPlanId(minutesPlans[0]?.id ?? null);
   }, [minutesPlans, initialPrice]);
+
+  React.useEffect(() => {
+    if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
+    if (selectedPlanId != null) return;
+    if (!dataAmounts.length) return;
+    setSelectedPlanId(dataAmounts[0]);
+  }, [formType, selectedPlanId, dataAmounts]);
 
   // Track si el usuario ha cambiado manualmente el plan
   const [userChangedPlan, setUserChangedPlan] = React.useState(false);
