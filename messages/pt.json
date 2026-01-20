@@ -2489,6 +2489,8 @@
     "quantity": "Quantidade",
     "license": "Licença",
     "months": "Meses",
+    "minutes": "Minutos",
+    "rechargeAmount": "Valor da recarga",
     "totalToPay": "Total a pagar",
     "enterPromoCode": "Digite código promocional",
     "apply": "Aplicar",
