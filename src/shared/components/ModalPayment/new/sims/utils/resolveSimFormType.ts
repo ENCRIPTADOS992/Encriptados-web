@@ -68,6 +68,11 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
     if (cfgType.replace(/[^a-z]/g, "") === "esimdata") return "encrypted_esimData";
   }
 
+  if (family === "tim" && cfgType) {
+    if (cfgType === "data") return "tim_data";
+    if (cfgType === "minutes") return "tim_minutes";
+  }
+
   // Mapeo principal: family + format → FormType
   if (family === "encrypted") {
     return format === "digital" ? "encrypted_esim" : "encrypted_physical";

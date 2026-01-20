@@ -115,6 +115,25 @@ export function buildSimFormConfig(
         reqSimNumber: false,
       };
 
+    case "tim_data":
+    case "tim_minutes":
+      return {
+        emailFullWidth: true,
+        showTelegram: false,
+        showFullName: false,
+        reqFullName: false,
+        showAddress: false,
+        reqAddress: false,
+        showCountry: false,
+        reqCountry: false,
+        showPostal: false,
+        reqPostal: false,
+        showPhone: false,
+        reqPhone: false,
+        showSimNumber: true,
+        reqSimNumber: true,
+      };
+
     case "encrypted_generic":
     default:
       return {
