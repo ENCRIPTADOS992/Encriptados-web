@@ -17,11 +17,11 @@ import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { getProductById } from "@/features/products/services";
+import { getProductById, getProductBySlug } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 // Configuración y utilidades locales
-import { getProductConfig, isValidProductSlug } from "./productConfig";
+import { getProductConfig } from "./productConfig";
 import {
   transformChecksToFeatures,
   transformVariantsToPlans,
@@ -62,9 +62,13 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   const config = useMemo(() => getProductConfig(slug), [slug]);
 
-  if (!isValidProductSlug(slug)) {
-    notFound();
-  }
+  // Si no tenemos producto inicial y tampoco config estática, mostramos 404
+  // (Esto cubre el caso de que el cliente intente cargar algo que no existe)
+  useEffect(() => {
+     if (!initialProduct && !config && !isLoading) {
+        notFound();
+     }
+  }, [initialProduct, config, isLoading]);
 
   // Traducciones para licencias (memoizadas)
   const licenseTranslations: LicenseTranslations = useMemo(() => ({
@@ -84,24 +88,39 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   useEffect(() => {
     async function loadProduct() {
       // Si ya tenemos el producto (desde server) y coincide, no recargar
-      if (product && String(product.id) === String(config?.productId)) {
+      if (product) {
         setIsLoading(false);
         return;
       }
 
-      if (!config || config.productId === 0) {
-        setIsLoading(false);
-        setError(t("productNotAvailable"));
-        return;
+      // Si tenemos config estática, cargar por ID
+      if (config?.productId) {
+         try {
+           setIsLoading(true);
+           setError(null);
+           const productData = await getProductById(String(config.productId), locale);
+           setProduct(productData);
+         } catch (err) {
+           console.error("Error cargando producto por ID:", err);
+           setError(t("productLoadError"));
+         } finally {
+           setIsLoading(false);
+         }
+         return;
       }
 
+      // Si no hay config estática, intentar cargar por Slug
       try {
         setIsLoading(true);
         setError(null);
-        const productData = await getProductById(String(config.productId), locale);
-        setProduct(productData);
+        const productData = await getProductBySlug(slug, locale);
+        if (productData) {
+           setProduct(productData);
+        } else {
+           setError(t("productNotAvailable"));
+        }
       } catch (err) {
-        console.error("Error cargando producto:", err);
+        console.error("Error cargando producto por Slug:", err);
         setError(t("productLoadError"));
       } finally {
         setIsLoading(false);
@@ -109,7 +128,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     }
 
     loadProduct();
-  }, [config, locale, t]);
+  }, [config, slug, locale, t]);
 
   const plans = useMemo(() => {
     if (!product) return [];
@@ -145,14 +164,28 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   // === AUTO-ABRIR POPUP si viene con ?buy=1 ===
   useEffect(() => {
     const buyParam = searchParams.get("buy");
+    const productIdParam = searchParams.get("productId");
+    const priceParam = searchParams.get("price");
+
     if (buyParam === "1" && product && !isLoading) {
       // Pequeño delay para asegurar que todo está cargado
       const timer = setTimeout(() => {
-        const priceStr = selectedPlan?.price ?? product?.price ?? 0;
-        const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+        // Prioridad: 1. Precio de URL, 2. Precio del plan seleccionado, 3. Precio base
+        let numericPrice = 0;
+        if (priceParam) {
+           numericPrice = parseFloat(priceParam);
+        } else {
+           const priceStr = selectedPlan?.price ?? product?.price ?? 0;
+           numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+        }
         
+        // Prioridad: 1. ProductId de URL, 2. ProductId del plan seleccionado, 3. ProductId base
+        // Nota: selectedPlan puede ser una variante con su propio ID (si aplica)
+        // En transformVariantsToPlans definimos 'variantId', no 'id' para los planes
+        const targetProductId = productIdParam || String(selectedPlan?.variantId || product?.id || config?.productId);
+
         openModal({
-          productid: String(product?.id || config?.productId),
+          productid: targetProductId,
           languageCode: locale,
           selectedOption: (product as any)?.category?.id || config?.categoryId || 38,
           initialPrice: numericPrice,

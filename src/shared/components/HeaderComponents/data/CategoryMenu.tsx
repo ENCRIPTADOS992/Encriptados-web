@@ -1,9 +1,19 @@
 import { useTranslations } from "next-intl";
+import { generateSlug } from "@/shared/utils/slugUtils";
 
 // Hook para obtener categorías de productos traducidas
 export function useTranslatedProductsCategories(): any {
   const t = useTranslations("productsCategories");
   
+  // Función helper para generar URLs de Apps/Sistemas de forma dinámica
+  // replica la lógica de getProductLink para apps/sistemas
+  const getAppUrl = (name: string) => {
+    // Aseguramos que el nombre esté limpio antes de generar el slug
+    // Esto evita problemas con espacios o mayúsculas
+    const cleanName = name.trim();
+    const slug = generateSlug(cleanName);
+    return `/apps/${slug}`;
+  };
 
   return [
     {
@@ -56,7 +66,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("apps.items.silentPhone.title", { defaultValue: "Silent phone" }),
           image: "/images/mega-menu/apps/Silent-Circle_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/silent-circle",
+          link: getAppUrl("Silent Phone"),
           description: t("apps.items.silentPhone.description", {
             defaultValue: "Silent phone es una aplicación de mensajería segura.",
           }),
@@ -64,7 +74,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("apps.items.vaultChat.title", { defaultValue: "VaultChat" }),
           image: "/images/mega-menu/apps/VaultChat_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/vault-chat",
+          link: getAppUrl("VaultChat"),
           description: t("apps.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
@@ -72,7 +82,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("apps.items.armadillo.title", { defaultValue: "Armadillo" }),
           image: "/images/mega-menu/apps/Armadillo_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/armadillo",
+          link: getAppUrl("Armadillo Chat"),
           description: t("apps.items.armadillo.description", {
             defaultValue: "Armadillo es una aplicación de mensajería segura.",
           }),
@@ -80,43 +90,43 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("apps.items.threema.title", { defaultValue: "Threema" }),
           image: "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/threema",
+          link: getAppUrl("Threema"),
           description: t("apps.items.threema.description", {
             defaultValue: "Threema es una aplicación de mensajería segura.",
           }),
         },
         {
           title: t("apps.items.threemaWork.title", {
-            defaultValue: "Threema Work",
+            defaultValue: "ThreemaWork",
           }),
           image: "/images/mega-menu/apps/Threema-Work_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/threema-work",
+          link: getAppUrl("Threema Work"),
           description: t("apps.items.threemaWork.description", {
-            defaultValue: "Threema Work es una aplicación de mensajería segura.",
+            defaultValue: "ThreemaWork es una aplicación de mensajería segura.",
           }),
         },
         {
-          title: t("apps.items.vnclagoon.title", { defaultValue: "VncLagoon" }),
+          title: t("apps.items.vnclagoon.title", { defaultValue: "VNClagoon" }),
           image: "/images/mega-menu/apps/VNC-lagoon_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/vnc-lagoon",
+          link: getAppUrl("VNC Lagoon"),
           description: t("apps.items.vnclagoon.description", {
-            defaultValue: "VncLagoon es una aplicación de mensajería segura.",
+            defaultValue: "VNClagoon es una aplicación de mensajería segura.",
           }),
         },
         {
           title: t("apps.items.salt.title", { defaultValue: "Salt" }),
           image: "/images/mega-menu/apps/Salt_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/salt",
+          link: getAppUrl("Salt App"),
           description: t("apps.items.salt.description", {
             defaultValue: "Salt es una aplicación de mensajería segura.",
           }),
         },
         {
-          title: t("apps.items.nordVpn.title", { defaultValue: "NordVPN" }),
+          title: t("apps.items.nordVpn.title", { defaultValue: "Nord VPN" }),
           image: "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.jpg",
-          link: "/apps/nord-vpn",
+          link: getAppUrl("NordVPN"),
           description: t("apps.items.nordVpn.description", {
-            defaultValue: "NordVPN es una aplicación de mensajería segura.",
+            defaultValue: "Nord VPN es una aplicación de mensajería segura.",
           }),
         },
       ],
@@ -135,7 +145,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/SecureMDM-IOS_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/secure-mdm-iphone",
+          link: getAppUrl("Secure MDM iPhone"),
           description: t("systems.items.secureMdmIphone.description", {
             defaultValue:
               "Secure MDM iPhone es una aplicación de mensajería segura.",
@@ -147,7 +157,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/SecureMDM-android_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/secure-mdm-android",
+          link: getAppUrl("Secure MDM Android"),
           description: t("systems.items.secureMdmAndroid.description", {
             defaultValue:
               "Secure MDM Android es una aplicación de mensajería segura.",
@@ -159,7 +169,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/cryptcom",
+          link: getAppUrl("Cryptcom"),
           description: t("systems.items.cryptcom.description", {
             defaultValue: "Cryptcom es una aplicación de mensajería segura.",
           }),
@@ -168,7 +178,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("systems.items.renati.title", { defaultValue: "Renati" }),
           image:
             "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/renati",
+          link: getAppUrl("Renati"),
           description: t("systems.items.renati.description", {
             defaultValue: "Renati es una aplicación de mensajería segura.",
           }),
@@ -179,7 +189,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/chat-mail",
+          link: getAppUrl("ChatMail"),
           description: t("systems.items.chatMail.description", {
             defaultValue: "ChatMail es una aplicación de mensajería segura.",
           }),
@@ -190,7 +200,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/armadillo-v2",
+          link: getAppUrl("Armadillo"),
           description: t("systems.items.armadillo.description", {
             defaultValue: "Armadillo es una aplicación de mensajería segura.",
           }),
@@ -201,7 +211,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/vault-chat-v2",
+          link: getAppUrl("VaultChat"),
           description: t("systems.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
@@ -210,7 +220,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("systems.items.ultraX.title", { defaultValue: "Ultra X" }),
           image:
             "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/ultrax",
+          link: getAppUrl("Ultra X"),
           description: t("systems.items.ultraX.description", {
             defaultValue: "Ultra X es una aplicación de mensajería segura.",
           }),
@@ -221,7 +231,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/IntacPhone_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/intact-phone",
+          link: getAppUrl("Intact Phone"),
           description: t("systems.items.intactPhone.description", {
             defaultValue:
               "Intact Phone es una aplicación de mensajería segura.",
@@ -233,7 +243,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: "/apps/dec-secure",
+          link: getAppUrl("DEC Secure"),
           description: t("systems.items.decSecure.description", {
             defaultValue: "DEC Secure es una aplicación de mensajería segura.",
           }),
@@ -244,7 +254,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/SecureCrypt.jpg",
-          link: "/apps/secureCrypt",
+          link: getAppUrl("SecureCrypt"),
           description: t("systems.items.secureCrypt.description", {
             defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
           }),
@@ -288,7 +298,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "",
-          link: "/router",
+          link: getAppUrl("Router Camaleón"),
           description: t("router.items.routerCamaleon.description", {
             defaultValue:
               "",

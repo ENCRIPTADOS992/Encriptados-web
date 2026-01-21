@@ -196,6 +196,9 @@ export default function RouterPage() {
 
   useEffect(() => {
     const buy = searchParams?.get("buy");
+    const productIdParam = searchParams?.get("productId");
+    const priceParam = searchParams?.get("price");
+
     if (buy !== "1") {
       hasAutoOpenedRef.current = false;
       return;
@@ -204,16 +207,27 @@ export default function RouterPage() {
     hasAutoOpenedRef.current = true;
 
     const selectedPlan = plans.find((p) => p.label === selectedRadio);
-    const selectedVariantId = selectedPlan ? Number(selectedPlan.value) : undefined;
-    const initialPrice = selectedPlan?.price ?? currentPrice ?? 0;
+    
+    // Prioridad para precio: 1. URL, 2. Plan, 3. Producto
+    let initialPrice = 0;
+    if (priceParam) {
+       initialPrice = parseFloat(priceParam);
+    } else {
+       initialPrice = selectedPlan?.price ?? currentPrice ?? 0;
+    }
+    
+    // Prioridad para productId: 1. URL, 2. Plan (variant ID), 3. Config base
+    // Nota: selectedPlan.value trae el ID de la variante si existe
+    const targetProductId = productIdParam || (selectedPlan ? selectedPlan.value : String(ROUTER_CONFIG.productId));
 
     const timer = setTimeout(() => {
       openModal({
-        productid: String(ROUTER_CONFIG.productId),
+        productid: targetProductId,
         languageCode: locale,
         selectedOption: ROUTER_CONFIG.categoryId,
         initialPrice: Number(initialPrice) || 0,
-        variantId: Number.isFinite(selectedVariantId) ? selectedVariantId : undefined,
+        // Si el productId viene de URL, no forzamos variantId, o asumimos que el productId ES la variante
+        variantId: undefined, 
       });
       const url = new URL(window.location.href);
       url.searchParams.delete("buy");
