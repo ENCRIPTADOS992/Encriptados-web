@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useMemo } from "react";
-import { useRouter, usePathname, notFound, useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 // Componentes template de producto
@@ -61,14 +61,6 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const config = useMemo(() => getProductConfig(slug), [slug]);
-
-  // Si no tenemos producto inicial y tampoco config estática, mostramos 404
-  // (Esto cubre el caso de que el cliente intente cargar algo que no existe)
-  useEffect(() => {
-     if (!initialProduct && !config && !isLoading) {
-        notFound();
-     }
-  }, [initialProduct, config, isLoading]);
 
   // Traducciones para licencias (memoizadas)
   const licenseTranslations: LicenseTranslations = useMemo(() => ({
@@ -233,7 +225,6 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     [product, config, selectedPlan, locale, openModal, buildTranslations]
   );
 
-  // Traducciones para ProductSection
   const productSectionTranslations = useMemo(() => ({
     priceFrom: t("priceFrom"),
     buyNow: t("buyNow"),
@@ -242,10 +233,6 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     downloadGooglePlay: t("downloadGooglePlay"),
   }), [t]);
 
-  // Loading state
-  if (isLoading) return <ProductPageSkeleton />;
-
-  // Error state
   if (error && !product) {
     return (
       <main className="min-h-screen flex items-center justify-center px-4">
@@ -299,115 +286,67 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
         alt={`${product?.name || slug} Hero Banner`} 
       />
 
-      {/* Product Section with price block ref */}
-      <div ref={priceBlockRef}>
-        <ProductSection
-          title={product?.name || ""}
-          description={product?.description || ""}
-          features={features}
-          price={currentPrice}
-          radioOptions={radioOptions}
-          selectedRadio={selectedRadio}
-          onRadioChange={handleRadioChange}
-          onBuy={handleBuy}
-          productImage={productImage}
-          appStoreUrl={appStoreUrl}
-          googlePlayUrl={googlePlayUrl}
-          apkUrl={apkUrl}
-          storeButtons={config?.storeButtons}
-          languageCode={locale}
-          translations={productSectionTranslations}
-        />
-      </div>
-
-      {/* Sticky Price Banner */}
-      <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
-
-      {/* Features Grid - Screenshots/imágenes grandes del producto */}
-      {featuresGrid.length > 0 && (
-        <ProductFeaturesGrid 
-          features={featuresGrid} 
-          title={t("featuresTitle")}
-        />
-      )}
-
-      {/* Benefits Grid - Beneficios con iconos */}
-      {benefits.length > 0 && (
-        <ProductBenefitsGrid 
-          benefits={benefits}
-          title={(product as any)?.title_benefits || t("benefitsTitle")}
-          imageBenefits={(product as any)?.image_benefits}
-          productName={product?.name}
-        />
-      )}
-
-      {/* Hero Video Section */}
-      {videoUrl && (
-        <HeroVideoSection 
-          title={videoText} 
-          videoUrl={videoUrl} 
-        />
-      )}
-
-      {/* Featured Products */}
-      <FeaturedProducts
-        left={{
-          title: tOurProducts("encrypted.title"),
-          description: tOurProducts("encrypted.description"),
-          buttonLabel: tOurProducts("moreInfo"),
-          onButtonClick: () => handleFeaturedSimInfo("/sim-encriptada"),
-          image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
-        }}
-        right={{
-          title: tOurProducts("tim.title"),
-          subtitle: tOurProducts("tim.description"),
-          buttonLabel: tOurProducts("moreInfo"),
-          onButtonClick: () => handleFeaturedSimInfo("/tim-sim"),
-          image: "/images/our-products/timpersona.png",
-        }}
-      />
-
-      {/* FAQ Section */}
-      {faqs.length > 0 && (
-        <FAQSection faqs={faqs} title={t("faqTitle")} />
-      )}
-    </main>
-  );
-}
-
-function ProductPageSkeleton() {
-  return (
-    <main className="min-h-screen animate-pulse">
-      {/* Hero skeleton */}
-      <div className="h-44 sm:h-36 lg:h-72 bg-gray-200" />
-      
-      {/* Content skeleton */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-          {/* Text content */}
-          <div className="space-y-6 order-2 lg:order-1">
-            <div className="h-10 bg-gray-200 rounded w-3/4" />
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-full" />
-              <div className="h-4 bg-gray-200 rounded w-5/6" />
-              <div className="h-4 bg-gray-200 rounded w-4/6" />
-            </div>
-            <div className="space-y-2">
-              <div className="h-5 bg-gray-200 rounded w-1/4" />
-              <div className="h-12 bg-gray-200 rounded w-1/3" />
-            </div>
-            <div className="flex gap-3">
-              <div className="h-12 bg-gray-200 rounded w-40" />
-              <div className="h-12 bg-gray-200 rounded w-32" />
-            </div>
+      {!product ? (
+        <div className="min-h-[45vh]" />
+      ) : (
+        <>
+          <div ref={priceBlockRef}>
+            <ProductSection
+              title={product?.name || ""}
+              description={product?.description || ""}
+              features={features}
+              price={currentPrice}
+              radioOptions={radioOptions}
+              selectedRadio={selectedRadio}
+              onRadioChange={handleRadioChange}
+              onBuy={handleBuy}
+              productImage={productImage}
+              appStoreUrl={appStoreUrl}
+              googlePlayUrl={googlePlayUrl}
+              apkUrl={apkUrl}
+              storeButtons={config?.storeButtons}
+              languageCode={locale}
+              translations={productSectionTranslations}
+            />
           </div>
-          
-          {/* Image placeholder */}
-          <div className="order-1 lg:order-2">
-            <div className="h-64 lg:h-80 bg-gray-200 rounded-2xl" />
-          </div>
-        </div>
-      </div>
+
+          <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
+
+          {featuresGrid.length > 0 && (
+            <ProductFeaturesGrid features={featuresGrid} title={t("featuresTitle")} />
+          )}
+
+          {benefits.length > 0 && (
+            <ProductBenefitsGrid
+              benefits={benefits}
+              title={(product as any)?.title_benefits || t("benefitsTitle")}
+              imageBenefits={(product as any)?.image_benefits}
+              productName={product?.name}
+            />
+          )}
+
+          {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
+
+          <FeaturedProducts
+            left={{
+              title: tOurProducts("encrypted.title"),
+              description: tOurProducts("encrypted.description"),
+              buttonLabel: tOurProducts("moreInfo"),
+              onButtonClick: () => handleFeaturedSimInfo("/sim-encriptada"),
+              image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
+            }}
+            right={{
+              title: tOurProducts("tim.title"),
+              subtitle: tOurProducts("tim.description"),
+              buttonLabel: tOurProducts("moreInfo"),
+              onButtonClick: () => handleFeaturedSimInfo("/tim-sim"),
+              image: "/images/our-products/timpersona.png",
+            }}
+          />
+
+          {faqs.length > 0 && <FAQSection faqs={faqs} title={t("faqTitle")} />}
+        </>
+      )}
     </main>
   );
 }
