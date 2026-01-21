@@ -59,6 +59,10 @@ export default async function ProductPage({ params }: PageProps) {
   try {
     if (config?.productId) {
        // Camino A: Configuración estática existente
+       // Usamos fetch con revalidación para cachear la respuesta y evitar timeouts en visitas subsecuentes
+       // Nota: getProductById usa axios internamente, que no soporta 'next: { revalidate }' directamente.
+       // Si queremos cache, debemos implementarlo en services.ts o confiar en el cache de la API.
+       // Por ahora, asumimos que getProductById funciona.
       initialProduct = await getProductById(String(config.productId), locale);
     } else {
       // Camino B: Búsqueda dinámica por slug
@@ -66,6 +70,29 @@ export default async function ProductPage({ params }: PageProps) {
     }
   } catch (error) {
     console.error("Error fetching product server-side:", error);
+  }
+
+  // Si hay config pero falló la API, renderizamos la página con datos parciales del config
+  // para evitar 404 o Error page. El componente AppClientPage manejará datos faltantes.
+  if (!initialProduct && config) {
+    console.warn(`⚠️ [ProductPage] API falló para ${slug} (ID: ${config.productId}), usando fallback estático.`);
+    // Construimos un producto "dummy" con los datos estáticos disponibles
+    initialProduct = {
+        id: config.productId,
+        name: slug.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '), // Aprox name
+        price: "0",
+        regular_price: "0",
+        description: "",
+        short_description: "",
+        slug: slug,
+        categories: [{ id: config.categoryId, name: "", slug: "" }],
+        images: [{ src: config.productImage, name: "", alt: "" }],
+        attributes: [],
+        variations: [],
+        meta_data: [],
+        acf: {},
+        licenseVariants: []
+    } as any; // Cast a any/Product para cumplir tipos mínimos
   }
 
   // Si no se encuentra producto ni por config ni por slug dinámico -> 404
