@@ -134,18 +134,41 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     if (isModalOpen) return;
 
     const isRouterPath = pathname === "/router" || pathname.endsWith("/router");
-    if (!isRouterPath) return;
+    const isSimPath = pathname.includes("/sim/");
+    const isEncryptedSimPath =
+      pathname === "/encrypted-sim" || pathname.endsWith("/encrypted-sim");
+    const isTimSimPath = pathname === "/tim-sim" || pathname.endsWith("/tim-sim");
+
+    if (!isRouterPath && !isSimPath && !isEncryptedSimPath && !isTimSimPath) {
+      return;
+    }
 
     buyAutoOpenedRef.current = true;
 
     const match = pathname.match(/^\/(en|es|fr|it|pt)(\/|$)/);
     const locale = match?.[1] ?? "es";
 
-    openModal({
-      productid: "59747",
-      languageCode: locale,
-      selectedOption: 36,
-    });
+    if (isRouterPath) {
+      openModal({
+        productid: "59747",
+        languageCode: locale,
+        selectedOption: 36,
+      });
+    } else {
+      const productIdFromUrl = search.get("productId");
+      if (!productIdFromUrl) return;
+
+      const priceFromUrl = search.get("price");
+      const parsedPrice = priceFromUrl ? Number.parseFloat(priceFromUrl) : NaN;
+
+      openModal({
+        productid: productIdFromUrl,
+        languageCode: locale,
+        selectedOption: 40,
+        initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
+        mode: "sim",
+      });
+    }
 
     const url = new URL(window.location.href);
     url.searchParams.delete("buy");
