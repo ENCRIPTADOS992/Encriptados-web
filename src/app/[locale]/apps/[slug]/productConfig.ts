@@ -49,22 +49,15 @@ export interface ProductStaticConfig {
 /**
  * ════════════════════════════════════════════════════════════════
  * PRODUCTOS UNIFICADOS
+ * Claves basadas en slugs generados por generateSlug(name)
  * ════════════════════════════════════════════════════════════════
- * 
- * APLICACIONES (8): silent-circle, vault-chat, armadillo, threema,
- *                   threema-work, vnc-lagoon, salt, nord-vpn
- * 
- * SISTEMAS (11): secure-mdm-iphone, secure-mdm-android, cryptcom,
- *                renati, chat-mail, armadillo-v2, vault-chat-v2,
- *                ultrax, intact-phone, dec-secure, secureCrypt
- * 
- * ROUTER (1): router-camaleon (usa /router, no /apps/[slug])
  */
 export const productConfigs: Record<string, ProductStaticConfig> = {
   // ════════════════════════════════════════════════════════════════
   // APLICACIONES (Categoría 38)
   // ════════════════════════════════════════════════════════════════
   
+  // Name: "Silent Phone" -> slug: "silent-phone"
   "silent-phone": {
     slug: "silent-phone",
     productId: 122,
@@ -85,8 +78,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     storeButtons: { apk: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-
-  "silent-circle": { // Mantener alias legacy por si acaso
+  // Alias legacy
+  "silent-circle": {
     slug: "silent-phone",
     productId: 122,
     categoryId: 38,
@@ -106,9 +99,10 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     storeButtons: { apk: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-  
-  "vault-chat": {
-    slug: "vault-chat",
+
+  // Name: "VaultChat" -> slug: "vaultchat"
+  "vaultchat": {
+    slug: "vaultchat",
     productId: 127,
     categoryId: 38,
     templateType: "app",
@@ -127,7 +121,29 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     storeButtons: { appStore: false, googlePlay: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-  
+  // Alias legacy
+  "vault-chat": {
+    slug: "vaultchat",
+    productId: 127,
+    categoryId: 38,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/apps/vault-chat/hero-desktop.png",
+      tablet: "/images/apps/vault-chat/hero-tablet.png",
+      mobile: "/images/apps/vault-chat/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/vault-chat/banner.png",
+    iconUrl: "/images/apps/vault-chat/logo.png",
+    benefitIcon: "/images/apps/vault-chat/icono.png",
+    videoUrl: "https://www.youtube.com/embed/vault-chat-video",
+    appStoreUrl: "https://apps.apple.com/app/vaultchat",
+    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vaultchat",
+    apkUrl: "https://encriptados.io/vaultchat_official.apk",
+    storeButtons: { appStore: false, googlePlay: false },
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // Name: "Armadillo Chat" -> slug: "armadillo-chat"
   "armadillo-chat": {
     slug: "armadillo-chat",
     productId: 177,
@@ -149,27 +165,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  "armadillo": { // Alias legacy
-    slug: "armadillo-chat",
-    productId: 177,
-    categoryId: 38,
-    templateType: "app",
-    heroBanners: {
-      desktop: "/images/apps/armadillo/hero-desktop.png",
-      tablet: "/images/apps/armadillo/hero-tablet.png",
-      mobile: "/images/apps/armadillo/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/armadillo/banner.png",
-    iconUrl: "/images/apps/armadillo/logo.png",
-    benefitIcon: "/images/apps/armadillo/icono.png",
-    videoUrl: "https://www.youtube.com/embed/armadillo-video",
-    appStoreUrl: "https://apps.apple.com/app/armadillo-chat",
-    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.armadillo",
-    apkUrl: "https://encriptados.io/armadillo_chat_base.apk",
-    storeButtons: { appStore: false },
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-  
+  // Name: "Threema" -> slug: "threema"
   "threema": {
     slug: "threema",
     productId: 136,
@@ -190,7 +186,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     storeButtons: { appStore: false, googlePlay: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-  
+
+  // Name: "Threema Work" -> slug: "threema-work"
   "threema-work": {
     slug: "threema-work",
     productId: 135,
@@ -210,7 +207,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     apkUrl: "https://encriptados.io/threema_work_base.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-  
+
+  // Name: "VNC Lagoon" -> slug: "vnc-lagoon"
   "vnc-lagoon": {
     slug: "vnc-lagoon",
     productId: 134,
@@ -230,7 +228,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     apkUrl: "https://encriptados.io/VNCtalk.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-  
+
+  // Name: "Salt App" -> slug: "salt-app"
   "salt-app": {
     slug: "salt-app",
     productId: 133,
@@ -250,8 +249,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     apkUrl: "https://encriptados.io/saltIm_base.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-
-  "salt": { // Alias legacy
+  // Alias legacy
+  "salt": {
     slug: "salt-app",
     productId: 133,
     categoryId: 38,
@@ -270,7 +269,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     apkUrl: "https://encriptados.io/saltIm_base.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-  
+
+  // Name: "Nord VPN" -> slug: "nord-vpn"
   "nord-vpn": {
     slug: "nord-vpn",
     productId: 137,
@@ -295,6 +295,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // SISTEMAS / SOFTWARE (Categoría 35)
   // ════════════════════════════════════════════════════════════════
 
+  // Name: "Secure MDM iPhone" -> slug: "secure-mdm-iphone"
   "secure-mdm-iphone": {
     slug: "secure-mdm-iphone",
     productId: 168,
@@ -314,6 +315,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "Secure MDM Android" -> slug: "secure-mdm-android"
   "secure-mdm-android": {
     slug: "secure-mdm-android",
     productId: 169,
@@ -333,6 +335,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "Cryptcom" -> slug: "cryptcom"
   "cryptcom": {
     slug: "cryptcom",
     productId: 139,
@@ -352,6 +355,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "Renati" -> slug: "renati"
   "renati": {
     slug: "renati",
     productId: 151,
@@ -371,8 +375,28 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "ChatMail" -> slug: "chatmail"
+  "chatmail": {
+    slug: "chatmail",
+    productId: 142,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/chat-mail/hero-desktop.png",
+      tablet: "/images/apps/chat-mail/hero-tablet.png",
+      mobile: "/images/apps/chat-mail/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/chat-mail/banner.png",
+    iconUrl: "/images/apps/chat-mail/logo.png",
+    benefitIcon: "/images/apps/chat-mail/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+  // Alias legacy
   "chat-mail": {
-    slug: "chat-mail",
+    slug: "chatmail",
     productId: 142,
     categoryId: 35,
     templateType: "software",
@@ -390,10 +414,29 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  // Armadillo como Sistema (diferente del app)
-  // Slug canónico: armadillo-v2 (para distinguir del app armadillo)
+  // Name: "Armadillo" (System) -> slug: "armadillo"
+  // ¡IMPORTANTE! Este es el sistema (ID 180), NO la app.
+  "armadillo": {
+    slug: "armadillo",
+    productId: 180,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/armadillo/hero-desktop.png",
+      tablet: "/images/apps/armadillo/hero-tablet.png",
+      mobile: "/images/apps/armadillo/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/armadillo/banner.png",
+    iconUrl: "/images/apps/armadillo/logo.png",
+    benefitIcon: "/images/apps/armadillo/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+  // Alias legacy para sistema
   "armadillo-v2": {
-    slug: "armadillo-v2",
+    slug: "armadillo",
     productId: 180,
     categoryId: 35,
     templateType: "software",
@@ -411,8 +454,12 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  // VaultChat como Sistema (diferente del app)
-  // Slug canónico: vault-chat-v2 (para distinguir del app vault-chat)
+  // Name: "VaultChat" (System) -> slug: "vaultchat"
+  // COLLISION WARNING: La app también genera "vaultchat".
+  // Mantenemos "vaultchat" apuntando a la APP (arriba) por ser el uso más común.
+  // Para el sistema, usamos el alias explícito si es necesario, o asumimos que
+  // el link "VaultChat" en sistemas debería apuntar aquí si pudiéramos diferenciarlos.
+  // Por ahora, agregamos el alias legacy del sistema.
   "vault-chat-v2": {
     slug: "vault-chat-v2",
     productId: 148,
@@ -432,27 +479,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  // Ultra X - Slugs: ultrax, ultra-x (alias)
-  "ultrax": {
-    slug: "ultrax",
-    productId: 182,
-    categoryId: 35,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/ultrax/hero-desktop.png",
-      tablet: "/images/apps/ultrax/hero-tablet.png",
-      mobile: "/images/apps/ultrax/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/ultrax/banner.png",
-    iconUrl: "/images/apps/ultrax/logo.png",
-    benefitIcon: "/images/apps/ultrax/icono.png",
-    videoUrl: "",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  // Alias: ultra-x -> ultrax
+  // Name: "Ultra X" -> slug: "ultra-x"
   "ultra-x": {
     slug: "ultra-x",
     productId: 182,
@@ -471,7 +498,27 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
+  // Alias legacy
+  "ultrax": {
+    slug: "ultra-x",
+    productId: 182,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/ultrax/hero-desktop.png",
+      tablet: "/images/apps/ultrax/hero-tablet.png",
+      mobile: "/images/apps/ultrax/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/ultrax/banner.png",
+    iconUrl: "/images/apps/ultrax/logo.png",
+    benefitIcon: "/images/apps/ultrax/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
 
+  // Name: "Intact Phone" -> slug: "intact-phone"
   "intact-phone": {
     slug: "intact-phone",
     productId: 188,
@@ -491,6 +538,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "DEC Secure" -> slug: "dec-secure"
   "dec-secure": {
     slug: "dec-secure",
     productId: 233,
@@ -510,28 +558,28 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "SecureCrypt" -> slug: "securecrypt"
+  "securecrypt": {
+    slug: "securecrypt",
+    productId: 174,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/secureCrypt/hero-desktop.png",
+      tablet: "/images/apps/secureCrypt/hero-tablet.png",
+      mobile: "/images/apps/secureCrypt/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/secureCrypt/banner.png",
+    iconUrl: "/images/apps/secureCrypt/logo.png",
+    benefitIcon: "/images/apps/secureCrypt/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+  // Alias legacy
   "secure-crypt": {
-    slug: "secure-crypt",
-    productId: 174,
-    categoryId: 35,
-    templateType: "software",
-    heroBanners: {
-      desktop: "/images/apps/secureCrypt/hero-desktop.png",
-      tablet: "/images/apps/secureCrypt/hero-tablet.png",
-      mobile: "/images/apps/secureCrypt/hero-mobile.jpg",
-    },
-    productImage: "/images/apps/secureCrypt/banner.png",
-    iconUrl: "/images/apps/secureCrypt/logo.png",
-    benefitIcon: "/images/apps/secureCrypt/icono.png",
-    videoUrl: "",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
-
-  // Alias para compatibilidad con URLs en camelCase
-  "secureCrypt": {
-    slug: "secureCrypt",
+    slug: "securecrypt",
     productId: 174,
     categoryId: 35,
     templateType: "software",
@@ -550,9 +598,10 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   },
 
   // ════════════════════════════════════════════════════════════════
-  // ROUTER (Categoría 36) - Usa /router pero comparte config
+  // ROUTER (Categoría 36)
   // ════════════════════════════════════════════════════════════════
 
+  // Name: "Router Camaleón" -> slug: "router-camaleon"
   "router-camaleon": {
     slug: "router-camaleon",
     productId: 59747,
