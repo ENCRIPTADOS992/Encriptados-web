@@ -103,14 +103,6 @@ const SilentCircleBanner: React.FC = () => {
         {silentProduct && (
           <div className="relative z-10 mt-6 px-4 xs:px-6 space-y-3">
             <CardProductItem product={silentProduct} />
-
-            <Button
-              intent="link"
-              onClick={handleMoreInfo}
-              className="w-full text-sm font-semibold underline text-white justify-center"
-            >
-              {t("moreInfo")}
-            </Button>
           </div>
         )}
       </div>
@@ -163,14 +155,6 @@ const SilentCircleBanner: React.FC = () => {
             <div className="w-full lg:w-2/5 flex justify-center lg:justify-end mt-4 lg:mt-0 mr-0 sm:mr-4 md:mr-8 lg:mr-20">
               <div className="w-full max-w-sm space-y-3">
                 <CardProductItem product={silentProduct} />
-
-                <Button
-                  intent="link"
-                  onClick={handleMoreInfo}
-                  className="text-xs md:text-sm font-semibold underline text-white w-full text-right justify-end"
-                >
-                  {t("moreInfo")}
-                </Button>
               </div>
             </div>
           )}
