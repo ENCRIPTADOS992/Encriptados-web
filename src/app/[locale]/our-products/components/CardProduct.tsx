@@ -1,8 +1,8 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
-import { useRouter } from "next/navigation";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -74,21 +74,17 @@ const CardProduct: React.FC<CardSimProps> = ({
   variantId,
   variants,
 }) => {
-  const router = useRouter();
   const { openModal } = useModalPayment();
   const locale = useLocale();
   const t = useTranslations("OurProductsPage.productCard");
 
-  console.log("🧩 [CardProduct] props =>", {
-    id,
-    headerTitle,
-    selectedOption: filters.selectedOption,
-    badges,
-    provider,
-    typeProduct,
-    planDataAmount,
-    variantId,
-  });
+  // Extraer el precio numérico para pasar al modal (MOVIDO ANTES de moreInfoUrl)
+  const numericPrice = (() => {
+    if (planDataAmount != null) return planDataAmount;
+    // Extraer número de priceRange (ej: "57.5$" -> 57.5)
+    const match = priceRange.match(/[\d.]+/);
+    return match ? parseFloat(match[0]) : undefined;
+  })();
 
   const handleBuy = () => {
     console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct });
@@ -129,24 +125,26 @@ const CardProduct: React.FC<CardSimProps> = ({
       return priceRange;
     })();
 
-    // Extraer el precio numérico para pasar al modal
-    const numericPrice = (() => {
-      if (planDataAmount != null) return planDataAmount;
-      // Extraer número de priceRange (ej: "57.5$" -> 57.5)
-      const match = priceRange.match(/[\d.]+/);
-      return match ? parseFloat(match[0]) : undefined;
-    })();
-
-    console.log("💰 [CardProduct] price debug =>", {
-    id,
-    headerTitle,
-    provider,
-    planDataAmount,
-    priceRange,
-    displayPrice,
-    numericPrice,
-  });
-
+    // Pre-calcular URL de "Más información" para usar en un Link nativo
+  // Esto mejora SEO, accesibilidad y velocidad (prefetching de Next.js)
+  const moreInfoUrl = (() => {
+    const url = getProductLink(
+      headerTitle,
+      Number(filters.selectedOption),
+      id,
+      provider,
+      typeProduct
+    );
+    if (!url) return "#";
+    const qs = `productId=${id}&price=${numericPrice ?? ""}`;
+    // Si la URL ya empieza con /, asumimos que es relativa a la raíz sin locale (next-intl lo maneja si usamos Link)
+    // O si usamos <a> nativo, necesitamos inyectar locale. 
+    // Dado que getProductLink devuelve rutas como "/apps/slug", lo mejor es usar <Link> de next-intl o next/link
+    // Pero aquí estamos en un componente cliente.
+    
+    // Construimos la ruta completa con query params
+    return `${url}?${qs}`;
+  })();
 
   return (
     <div className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
@@ -265,26 +263,12 @@ const CardProduct: React.FC<CardSimProps> = ({
             >{t("buy")}
               <LocalMallSvgNew />
             </button>
-            <span
-              onClick={() => {
-                // Derivar URL correcta desde campos del backend (provider, typeProduct)
-                const url = getProductLink(
-                  headerTitle,
-                  Number(filters.selectedOption),
-                  id,
-                  provider,
-                  typeProduct
-                );
-                console.log("🔗 [CardProduct] Go to info:", { url, id, provider, typeProduct, numericPrice });
-                if (!url) return;
-                const qs = `productId=${id}&price=${numericPrice ?? ""}`;
-                const href = url.startsWith("/") ? `/${locale}${url}?${qs}` : `${url}?${qs}`;
-                router.push(href);
-              }}
+            <Link
+              href={moreInfoUrl.startsWith("/") ? `/${locale}${moreInfoUrl}` : moreInfoUrl}
               className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center"
             >
               {t("moreInfo")}
-            </span>
+            </Link>
           </div>
         </div>
       </div>
