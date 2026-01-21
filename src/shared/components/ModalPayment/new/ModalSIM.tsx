@@ -22,11 +22,13 @@ import { buildDataPlans } from "./sims/utils/buildDataPlans";
 
 export default function ModalSIM() {
   const { params } = useModalPayment();
-  const { productid, initialPrice, provider: paramProvider, typeProduct: paramTypeProduct } = (params || {}) as { 
+  const { productid, initialPrice, provider: paramProvider, typeProduct: paramTypeProduct, variantId: paramVariantId } = (params || {}) as { 
     productid?: string; 
     initialPrice?: number;
     provider?: string;
     typeProduct?: string;
+    variantId?: number;
+    variants?: any[];
   };
   const [hideSimField, setHideSimField] = React.useState(false);
 
@@ -76,15 +78,22 @@ export default function ModalSIM() {
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
 
-  const variants: Variant[] = (product?.variants ?? []) as Variant[];
+  const variants: Variant[] = (((params as any)?.variants?.length ? (params as any).variants : product?.variants) ?? []) as Variant[];
 
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(
     null
   );
 
   React.useEffect(() => {
+    if (paramVariantId != null) {
+      const match = variants.find((v) => v.id === paramVariantId) ?? null;
+      if (match) {
+        setSelectedVariant(match);
+        return;
+      }
+    }
     setSelectedVariant(variants[0] ?? null);
-  }, [product, variants]);
+  }, [product, variants, paramVariantId]);
 
   const minutesPlans = React.useMemo(
     () =>
@@ -118,6 +127,7 @@ export default function ModalSIM() {
   }, [variants]);
 
   React.useEffect(() => {
+    if (formType !== "encrypted_minutes") return;
     // Si hay un initialPrice, buscar la variante que coincida con ese precio
     if (initialPrice != null && initialPrice > 0 && minutesPlans.length > 0) {
       const matchingPlan = minutesPlans.find((p) => p.value === initialPrice);
@@ -137,17 +147,18 @@ export default function ModalSIM() {
       firstId: minutesPlans[0]?.id ?? null,
     });
     setSelectedPlanId(minutesPlans[0]?.id ?? null);
-  }, [minutesPlans, initialPrice]);
+  }, [formType, minutesPlans, initialPrice]);
 
   React.useEffect(() => {
     if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
     if (selectedPlanId != null) return;
     if (!dataAmounts.length) return;
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
-    const isEsimRecargaDatos = titleNorm.includes("esim + recarga datos");
+    const isEsimPlusDatos =
+      titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
     const base = 12;
 
-    if (formType === "encrypted_esimData" && isEsimRecargaDatos && initialPrice != null && initialPrice > 0) {
+    if (formType === "encrypted_esimData" && isEsimPlusDatos && initialPrice != null && initialPrice > 0) {
       const totals = dataAmounts;
       const rechargeCandidates = totals.map((t) => Math.max(t - base, 0));
       if (totals.includes(initialPrice)) {
@@ -162,7 +173,7 @@ export default function ModalSIM() {
       return;
     }
 
-    if (formType === "encrypted_esimData" && isEsimRecargaDatos) {
+    if (formType === "encrypted_esimData" && isEsimPlusDatos) {
       setSelectedPlanId(Math.max(dataAmounts[0] - base, 0));
       return;
     }
@@ -171,26 +182,43 @@ export default function ModalSIM() {
   }, [formType, selectedPlanId, dataAmounts, product, initialPrice]);
 
   React.useEffect(() => {
-    if (formType !== "tim_data") return;
+    const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    const isTimEsimData =
+      formType === "tim_esim" &&
+      titleNorm.includes("esim") &&
+      (titleNorm.includes("datos") || titleNorm.includes("data"));
+    const isTimDataLike = formType === "tim_data" || isTimEsimData;
+    if (!isTimDataLike) return;
     if (!dataPlans.length) return;
 
-    if (initialPrice != null && initialPrice > 0) {
-      const matching = dataPlans.find((p) => p.value === initialPrice);
-      if (matching) {
-        setSelectedPlanId(matching.id);
-        setSelectedVariant(variants.find((v) => v.id === matching.id) ?? null);
-        return;
-      }
-    }
+    const syncVariant = (planId: string | number) => {
+      setSelectedVariant(
+        variants.find((v) => String(v.id) === String(planId)) ?? null
+      );
+    };
 
-    if (selectedPlanId == null) {
-      setSelectedPlanId(dataPlans[0].id);
-      setSelectedVariant(variants.find((v) => v.id === dataPlans[0].id) ?? null);
+    if (selectedPlanId != null) {
+      syncVariant(selectedPlanId);
       return;
     }
 
-    setSelectedVariant(variants.find((v) => v.id === selectedPlanId) ?? null);
-  }, [formType, dataPlans, selectedPlanId, variants, initialPrice]);
+    let initPlanId: string | number | null = null;
+
+    if (paramVariantId != null) {
+      const match = dataPlans.find((p) => String(p.id) === String(paramVariantId));
+      if (match) initPlanId = match.id;
+    }
+
+    if (initPlanId == null && initialPrice != null && initialPrice > 0) {
+      const matching = dataPlans.find((p) => Number(p.value) === Number(initialPrice));
+      if (matching) initPlanId = matching.id;
+    }
+
+    if (initPlanId == null) initPlanId = dataPlans[0].id;
+
+    setSelectedPlanId(initPlanId);
+    syncVariant(initPlanId);
+  }, [formType, dataPlans, variants, selectedPlanId, initialPrice, product, paramVariantId]);
 
   // Track si el usuario ha cambiado manualmente el plan
   const [userChangedPlan, setUserChangedPlan] = React.useState(false);
@@ -198,18 +226,46 @@ export default function ModalSIM() {
   // Handler para cuando el usuario cambia el plan manualmente
   const handlePlanChange = React.useCallback((planId: string | number) => {
     setSelectedPlanId(planId);
-    const nextVariant = variants.find((v) => v.id === planId);
+    const nextVariant = variants.find((v) => String(v.id) === String(planId));
     if (nextVariant) setSelectedVariant(nextVariant);
     setUserChangedPlan(true);
   }, [variants]);
 
   const unitPrice = React.useMemo(
     () => {
+      const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+      const isTimEsimData =
+        formType === "tim_esim" &&
+        titleNorm.includes("esim") &&
+        (titleNorm.includes("datos") || titleNorm.includes("data"));
+      const isEncryptedEsimPlusData =
+        formType === "encrypted_esimData" &&
+        (titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos"));
+
       // Para productos de minutos, siempre usar el precio del plan seleccionado
       if (formType === "encrypted_minutes" && minutesPlans.length > 0) {
         const selectedPlan = minutesPlans.find((p) => p.id === selectedPlanId) ?? minutesPlans[0];
         console.log("[ModalSIM] Usando precio del plan seleccionado:", selectedPlan.value);
         return selectedPlan.value;
+      }
+
+      if (formType === "tim_data" || isTimEsimData) {
+        const selected =
+          dataPlans.find((p) => String(p.id) === String(selectedPlanId ?? "__none__")) ??
+          dataPlans[0];
+        const value = Number(selected?.value ?? 0);
+        if (value > 0) return value;
+      }
+
+      if (isEncryptedEsimPlusData) {
+        return calcSimUnitPrice({
+          formType,
+          minutesPlans,
+          selectedPlanId,
+          variants,
+          selectedVariant,
+          product,
+        });
       }
       
       // Si se pasó un precio inicial desde la card y el usuario no ha cambiado nada, usarlo
@@ -271,6 +327,7 @@ export default function ModalSIM() {
         formType === "encrypted_minutes" ||
         formType === "encrypted_esim" ||
         formType === "encrypted_esimData" ||
+        formType === "tim_esim" ||
         formType === "tim_data" ||
         formType === "tim_minutes"
           ? undefined

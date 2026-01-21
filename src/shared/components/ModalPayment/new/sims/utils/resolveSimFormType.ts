@@ -73,6 +73,13 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
     if (cfgType === "minutes") return "tim_minutes";
   }
 
+  if (family === "tim" && !cfgType) {
+    if (nameRaw.includes("recarga") && (nameRaw.includes("datos") || nameRaw.includes("data")))
+      return "tim_data";
+    if (nameRaw.includes("recarga") && nameRaw.includes("min"))
+      return "tim_minutes";
+  }
+
   // Mapeo principal: family + format → FormType
   if (family === "encrypted") {
     return format === "digital" ? "encrypted_esim" : "encrypted_physical";

@@ -17,7 +17,9 @@ type Params = {
 };
 
 export function buildDataPlans({ formType, variants, product }: Params): DataPlan[] {
-  if (formType !== "tim_data") return [];
+  const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+  const isTimEsimData = formType === "tim_esim" && titleNorm.includes("esim") && (titleNorm.includes("datos") || titleNorm.includes("data"));
+  if (formType !== "tim_data" && !isTimEsimData) return [];
 
   const parseNum = (v: unknown): number | undefined => {
     if (typeof v === "number" && Number.isFinite(v)) return v;
@@ -106,4 +108,3 @@ export function buildDataPlans({ formType, variants, product }: Params): DataPla
     })
     .filter((p) => p.value > 0);
 }
-

@@ -7,8 +7,17 @@ export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
 export interface ProductVariant {
   id: number;
-  price: number;
-  sku: string;
+  price?: number;
+  cost?: number;
+  sku?: string;
+  name?: string;
+  label?: string;
+  gb?: string;
+  currency?: string;
+  purchase_url?: string;
+  regular_price?: string | number;
+  sale_price?: string | number;
+  scope?: { type?: string; code?: string };
 }
 
 interface ModalPaymentParams {

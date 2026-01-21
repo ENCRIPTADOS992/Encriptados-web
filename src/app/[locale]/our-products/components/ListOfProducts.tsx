@@ -1170,6 +1170,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 typeProduct={product.type_product}
                 planDataAmount={effectivePlanDataAmount}
                 variantId={variantId}
+                variants={isTimProvider ? (product.variants ?? []) : undefined}
               />
             );
           })}

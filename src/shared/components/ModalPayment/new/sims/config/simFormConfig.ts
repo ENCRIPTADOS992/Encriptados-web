@@ -23,6 +23,42 @@ export function buildSimFormConfig(
   hideSimField: boolean
 ): SimFormConfig {
   switch (formType) {
+    case "tim_physical":
+      return {
+        emailFullWidth: false,
+        showTelegram: true,
+        showFullName: true,
+        reqFullName: true,
+        showAddress: true,
+        reqAddress: true,
+        showCountry: true,
+        reqCountry: true,
+        showPostal: true,
+        reqPostal: true,
+        showPhone: true,
+        reqPhone: true,
+        showSimNumber: false,
+        reqSimNumber: false,
+      };
+
+    case "tim_esim":
+      return {
+        emailFullWidth: true,
+        showTelegram: false,
+        showFullName: false,
+        reqFullName: false,
+        showAddress: false,
+        reqAddress: false,
+        showCountry: false,
+        reqCountry: false,
+        showPostal: false,
+        reqPostal: false,
+        showPhone: false,
+        reqPhone: false,
+        showSimNumber: false,
+        reqSimNumber: false,
+      };
+
     case "encrypted_physical":
       return {
         emailFullWidth: false,
