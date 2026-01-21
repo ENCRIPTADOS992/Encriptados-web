@@ -45,7 +45,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
           alt={product.name}
           width={140}
           height={140}
-          className="object-contain"
+          className="object-contain rounded-xl"
         />
       </div>
 
