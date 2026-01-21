@@ -87,16 +87,8 @@ const CardProductItem: FC<CardProductItemProps> = ({
             })
           }
           type="button"
-          className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-lg transition-colors"
+          className="w-full bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold py-2 rounded-lg transition-colors border-none outline-none ring-0"
         >{t("buy")}
-        </button>
-
-        <button
-          onClick={handleMoreInfo}
-          className="text-sm text-[#10B4E7] underline text-center hover:text-[#7EE0FF]"
-        >
-          {t("moreInfo")}
-          Más información
         </button>
       </div>
     </div>
