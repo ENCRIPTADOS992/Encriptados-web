@@ -27,15 +27,20 @@ const nextConfig = {
         destination: "/:locale/apps/armadillo",
         permanent: true,
       },
-      {
-        source: "/:locale/apps/vault-chat-v2",
-        destination: "/:locale/apps/vaultchat",
-        permanent: true,
-      },
       // Redirección para NordVPN (legacy 'nordvpn' a nuevo 'nord-vpn')
       {
         source: "/:locale/apps/nordvpn",
         destination: "/:locale/apps/nord-vpn",
+        permanent: true,
+      },
+      {
+        source: "/:locale/apps/salt",
+        destination: "/:locale/apps/salt-app",
+        permanent: true,
+      },
+      {
+        source: "/:locale/apps/vnclagoon",
+        destination: "/:locale/apps/vnc-lagoon",
         permanent: true,
       },
       // También sin locale explícito (next-intl maneja esto, pero por seguridad)
@@ -50,13 +55,18 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/apps/vault-chat-v2",
-        destination: "/apps/vaultchat",
+        source: "/apps/nordvpn",
+        destination: "/apps/nord-vpn",
         permanent: true,
       },
       {
-        source: "/apps/nordvpn",
-        destination: "/apps/nord-vpn",
+        source: "/apps/salt",
+        destination: "/apps/salt-app",
+        permanent: true,
+      },
+      {
+        source: "/apps/vnclagoon",
+        destination: "/apps/vnc-lagoon",
         permanent: true,
       },
     ];

@@ -3,6 +3,10 @@ import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
 import { generateSlug } from "@/shared/utils/slugUtils";
 
 const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
+const api = axios.create({
+  baseURL: WP_API_BASE,
+  timeout: 8000,
+});
 
 type GetAllProductsOptions = {
   simCountry?: string | null;
@@ -31,20 +35,13 @@ export const getAllProducts = async (
       params.provider = options.provider;
     }
 
-    console.log("🚀 [getAllProducts] Iniciando petición...");
-    console.log("🚀 [getAllProducts] URL:", `${WP_API_BASE}/encriptados/v1/products/by-category-language`);
-    console.log("🚀 [getAllProducts] Params enviados:", params);
-    
-    const response = await axios.get<{
+    const response = await api.get<{
       message: string;
       products: Record<string, Product>;
-    }>(`${WP_API_BASE}/encriptados/v1/products/by-category-language`, {
+    }>("/encriptados/v1/products/by-category-language", {
       params,
     });
     const rawProducts = response.data.products;
-    console.log("🛰️ [getAllProducts] respuesta recibida");
-    console.log("🛰️ [getAllProducts] message:", response.data.message);
-    console.log("🛰️ [getAllProducts] cantidad de productos (keys):", Object.keys(rawProducts).length);
     const products: Allproducts = Object.values(rawProducts).map((p: any) => {
       const licenseVariants =
         p.variants?.map((v: any) => ({
@@ -61,11 +58,6 @@ export const getAllProducts = async (
       } as Product;
     });
 
-    console.log("📦 [getAllProducts] mapped products length:", products.length);
-    if (products.length) {
-      console.log("📦 [getAllProducts] first product sample:", products[0]);
-    }
-
     return products;
   } catch (error) {
     console.error("Error en getAllProducts:", error);
@@ -78,12 +70,12 @@ export const getProductById = async (
   lang: string = "es"
 ): Promise<ProductById> => {
   try {
-    const url = `${WP_API_BASE}/encriptados/v1/products/${encodeURIComponent(
-      productId
-    )}`;
-    const response = await axios.get<ProductById>(url, {
+    const response = await api.get<ProductById>(
+      `/encriptados/v1/products/${encodeURIComponent(productId)}`,
+      {
       params: { lang },
-    });
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error en getProductById:", error);

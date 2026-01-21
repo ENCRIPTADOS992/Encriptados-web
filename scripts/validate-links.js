@@ -1,6 +1,4 @@
-const axios = require('axios');
-
-const BASE_URL = 'http://localhost:3000/es';
+const BASE_URL = process.env.BASE_URL || "http://localhost:3001/es";
 
 const links = [
   // SIMs
@@ -35,37 +33,40 @@ const links = [
 ];
 
 async function checkLinks() {
-  console.log('🚀 Iniciando validación de enlaces...');
+  console.log(`Iniciando validación de enlaces contra: ${BASE_URL}`);
   let hasErrors = false;
 
   for (const link of links) {
     try {
       const url = `${BASE_URL}${link}`;
-      // Usar get con validateStatus para que axios no lance error en 404/500 automáticamente
-      // y podamos manejarlo manualmente.
-      const response = await axios.get(url, { 
-        validateStatus: () => true, // Siempre resuelve, nunca lanza throw
-        timeout: 5000, // Timeout de 5s
-        headers: { 'Accept': 'text/html' } // Simular navegador
-      });
-      
-      if (response.status === 200) {
-        console.log(`✅ OK: ${link} (${response.status})`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { Accept: "text/html" },
+        signal: controller.signal,
+        redirect: "follow",
+      }).finally(() => clearTimeout(timeoutId));
+
+      if (response.status >= 200 && response.status < 300) {
+        console.log(`OK: ${link} (${response.status})`);
       } else {
-        console.error(`❌ ERROR: ${link} devolvió ${response.status}`);
+        console.error(`ERROR: ${link} devolvió ${response.status}`);
         hasErrors = true;
       }
     } catch (error) {
-      console.error(`❌ EXCEPTION: ${link} falló con ${error.message}`);
+      const message = error?.name === "AbortError" ? "timeout" : (error?.message || String(error));
+      console.error(`EXCEPTION: ${link} falló (${message})`);
       hasErrors = true;
     }
   }
 
   if (hasErrors) {
-    console.error('\n⚠️ Se encontraron errores en algunos enlaces.');
+    console.error("\nSe encontraron errores en algunos enlaces.");
     process.exit(1);
   } else {
-    console.log('\n✨ Todos los enlaces funcionan correctamente.');
+    console.log("\nTodos los enlaces funcionan correctamente.");
   }
 }
 
