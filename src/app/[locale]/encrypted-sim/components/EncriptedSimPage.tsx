@@ -1,5 +1,8 @@
 "use client";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
 import BannerConnect from "./BannerConnect";
 import EncryptedSimBanner from "./EncryptedSimBanner";
 import FeaturesList from "./FeaturesList";
@@ -16,9 +19,40 @@ import { ListOfProductsData } from "../constants/ListOfProductsData";
 import SearchInput from "@/shared/components/SearchInput";
 import StorePage from "../../dashboard/store/components/StorePage";
 import FixedSimProducts from "./FixedSimProducts";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 const EncryptedSim = () => {
   const t = useTranslations("EncryptedSimPage");
+  const locale = useLocale();
+  const searchParams = useSearchParams();
+  const { openModal } = useModalPayment();
+  const buyPopupTriggered = useRef(false);
+
+  useEffect(() => {
+    const buyParam = searchParams.get("buy");
+    const productId = searchParams.get("productId");
+    const priceParam = searchParams.get("price");
+
+    if (buyParam !== "1" || !productId || buyPopupTriggered.current) return;
+    buyPopupTriggered.current = true;
+
+    const timer = setTimeout(() => {
+      const parsedPrice = priceParam ? Number.parseFloat(priceParam) : NaN;
+
+      openModal({
+        productid: String(productId),
+        languageCode: locale,
+        selectedOption: 40,
+        initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
+      });
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("buy");
+      window.history.replaceState({}, "", url.toString());
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchParams, openModal, locale]);
 
   return (
     <>
