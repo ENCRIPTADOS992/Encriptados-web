@@ -188,6 +188,7 @@ const PurchaseHeader: React.FC<Props> = ({
     (titleNorm.includes("datos") || titleNorm.includes("data"));
 
   const isEsimRecargaDatosTitle = titleNorm.includes("esim + recarga datos");
+  const isEsimDatosTitle = titleNorm.includes("esim + datos");
   const ESIM_RECARGA_BASE_PRICE = 12;
 
   const showRechargeAmount =
@@ -225,7 +226,7 @@ const PurchaseHeader: React.FC<Props> = ({
         id: v.id ?? v.price ?? v.cost,
         value: Math.max(
           Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0) -
-            (isEsimRecargaDatosTitle ? ESIM_RECARGA_BASE_PRICE : 0),
+            (isEsimRecargaDatosTitle || isEsimDatosTitle ? ESIM_RECARGA_BASE_PRICE : 0),
           0
         ),
       }));
@@ -372,7 +373,7 @@ const PurchaseHeader: React.FC<Props> = ({
         </div>
 
         {/* Columna 2: Información del producto */}
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col">
           {/* Encabezado: nombre + precio */}
           <div className="flex items-center justify-between gap-4">
             <h3 className="text-base font-semibold text-black truncate">
@@ -383,11 +384,12 @@ const PurchaseHeader: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Fila: Monto de recarga */}
-          {showRechargeAmount && (
-            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
-              <div ref={rechargeRef} className="relative justify-self-end z-[1000]">
+          <div className="mt-1 flex flex-col gap-2">
+            {/* Fila: Monto de recarga */}
+            {showRechargeAmount && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
+                <div ref={rechargeRef} className="relative z-[1000]">
                 {(() => {
                   const opts = RECHARGE_AMOUNTS.filter(
                     (x: RechargeAmountOpt) => Number(x.value) > 0
@@ -415,6 +417,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     role="listbox"
                     tabIndex={-1}
                     className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    onMouseDown={(e) => e.stopPropagation()}
                   >
                     {RECHARGE_AMOUNTS.filter(
                       (x: RechargeAmountOpt) => Number(x.value) > 0
@@ -430,6 +433,7 @@ const PurchaseHeader: React.FC<Props> = ({
                             onChangePlan?.(Number(opt.value));
                             setOpenRecharge(false);
                           }}
+                          onMouseDown={(e) => e.stopPropagation()}
                           className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                         >
                           {label}
@@ -438,17 +442,17 @@ const PurchaseHeader: React.FC<Props> = ({
                     })}
                   </div>
                 )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {!!dataPlans?.length && (
-            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{t("chooseGigas")}</span>
-              <div ref={dataPlanRef} className="relative justify-self-end z-[1000]">
+            {!!dataPlans?.length && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                <span className="text-base text-[#3D3D3D]">{t("chooseGigas")}</span>
+                <div ref={dataPlanRef} className="relative z-[1000]">
                 {(() => {
                   const current =
-                    dataPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
+                    dataPlans.find((p) => String(p.id) === String(selectedPlanId ?? "__none__")) ??
                     dataPlans[0];
                   const label = current?.label ?? "Plan";
                   return (
@@ -457,6 +461,7 @@ const PurchaseHeader: React.FC<Props> = ({
                       aria-haspopup="listbox"
                       aria-expanded={openDataPlan}
                       onClick={() => setOpenDataPlan((v) => !v)}
+                      onMouseDown={(e) => e.stopPropagation()}
                       className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
                     >
                       <span className="truncate">{label}</span>
@@ -470,9 +475,10 @@ const PurchaseHeader: React.FC<Props> = ({
                     role="listbox"
                     tabIndex={-1}
                     className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    onMouseDown={(e) => e.stopPropagation()}
                   >
                     {dataPlans.map((p) => {
-                      const isActive = (selectedPlanId ?? dataPlans[0]?.id) === p.id;
+                      const isActive = String(selectedPlanId ?? dataPlans[0]?.id) === String(p.id);
                       return (
                         <button
                           key={String(p.id)}
@@ -482,6 +488,7 @@ const PurchaseHeader: React.FC<Props> = ({
                             onChangePlan?.(p.id);
                             setOpenDataPlan(false);
                           }}
+                          onMouseDown={(e) => e.stopPropagation()}
                           className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                         >
                           {p.label}
@@ -490,15 +497,15 @@ const PurchaseHeader: React.FC<Props> = ({
                     })}
                   </div>
                 )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Fila: Plan (solo si hay minutesPlans) */}
-          {!!minutesPlans?.length && (
-            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{t("minutes")}</span>
-              <div ref={planRef} className="relative justify-self-end z-[1000]">
+            {/* Fila: Plan (solo si hay minutesPlans) */}
+            {!!minutesPlans?.length && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                <span className="text-base text-[#3D3D3D]">{t("minutes")}</span>
+                <div ref={planRef} className="relative z-[1000]">
                 {(() => {
                   const current =
                     minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
@@ -552,14 +559,14 @@ const PurchaseHeader: React.FC<Props> = ({
                     })}
                   </div>
                 )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Fila: Cantidad */}
-          <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
-            <div className="justify-self-end flex items-center bg-[#EBEBEB] rounded-md h-9 px-4 gap-2 select-none">
+            {/* Fila: Cantidad */}
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
+              <div className="flex items-center bg-[#EBEBEB] rounded-md h-9 px-4 gap-2 select-none">
               <button
                 onClick={dec}
                 className="text-base font-bold leading-none hover:opacity-70"
@@ -579,16 +586,16 @@ const PurchaseHeader: React.FC<Props> = ({
               >
                 +
               </button>
+              </div>
             </div>
-          </div>
 
           {/* Fila: Licencia (ocultable) */}
           {shouldShowLicense && (
-            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("license")}</span>
 
               {showSelect ? (
-                <div ref={licenseRef} className="relative justify-self-end z-[1000]">
+                <div ref={licenseRef} className="relative z-[1000]">
                   <button
                     type="button"
                     aria-haspopup="listbox"
@@ -629,7 +636,7 @@ const PurchaseHeader: React.FC<Props> = ({
                   )}
                 </div>
               ) : (
-                <div className="justify-self-end w-36 h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none">
+                <div className="w-36 h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none">
                   {currentMonths} Meses
                 </div>
               )}
@@ -638,9 +645,9 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Envío */}
           {typeof shipping === "number" && (
-            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-sm text-[#3D3D3D]">Envío</span>
-              <span className="justify-self-end text-base text-[#141414]">
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">Envío</span>
+              <span className="text-base text-[#141414]">
                 {shipping} {currency}
               </span>
             </div>
@@ -648,20 +655,21 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Descuento */}
           {showCoupon && (
-            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-              <span className="text-sm text-[#3D3D3D]">Descuento</span>
-              <span className="justify-self-end text-base font-bold text-[#141414]">
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">Descuento</span>
+              <span className="text-base font-bold text-[#141414]">
                 {discountAmount.toFixed(2)} {currency}
               </span>
             </div>
           )}
 
           {/* Fila: Total a pagar */}
-          <div className="grid grid-cols-[auto_1fr] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
-            <span className="justify-self-end text-base font-bold text-[#141414]">
-              {total} {currency}
-            </span>
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
+              <span className="text-base font-bold text-[#141414]">
+                {total} {currency}
+              </span>
+            </div>
           </div>
 
           {/* Upsell eSIM */}

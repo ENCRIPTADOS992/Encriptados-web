@@ -56,6 +56,7 @@ interface CardSimProps {
   typeProduct?: string;  // Campo type_product del backend
   planDataAmount?: number;
   variantId?: number;  // ID de la variante seleccionada (para TIM)
+  variants?: any[];
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -71,6 +72,7 @@ const CardProduct: React.FC<CardSimProps> = ({
   typeProduct,
   planDataAmount,
   variantId,
+  variants,
 }) => {
   const router = useRouter();
   const { openModal } = useModalPayment();
@@ -96,6 +98,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       selectedOption: Number(filters.selectedOption),
       initialPrice: numericPrice,
       variantId: variantId,
+      variants,
       // Pasar provider y typeProduct para que el modal use los mismos valores que "Más información"
       provider: provider,
       typeProduct: typeProduct,

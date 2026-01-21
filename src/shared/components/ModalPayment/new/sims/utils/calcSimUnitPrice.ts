@@ -22,6 +22,11 @@ export function calcSimUnitPrice({
   selectedVariant,
   product,
 }: Params): number {
+  const toNumber = (v: unknown): number => {
+    const n = typeof v === "string" ? parseFloat(v) : Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+
   if (formType === "encrypted_minutes" && minutesPlans.length) {
     const selected =
       minutesPlans.find((p) => p.id === selectedPlanId) ??
@@ -53,17 +58,13 @@ export function calcSimUnitPrice({
   }
 
   if (formType === "encrypted_esimData") {
-    const toNumber = (v: unknown): number => {
-      const n = typeof v === "string" ? parseFloat(v) : Number(v);
-      return Number.isFinite(n) ? n : 0;
-    };
-
     const amounts = (variants ?? [])
       .map((v) => toNumber((v as any).price ?? (v as any).cost ?? (v as any).regular_price ?? (v as any).sale_price))
       .filter((n) => n > 0);
 
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
-    const isEsimRecargaDatos = titleNorm.includes("esim + recarga datos");
+    const isEsimRecargaDatos =
+      titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
     const fixedBase = 12;
 
     if (isEsimRecargaDatos) {
@@ -110,9 +111,27 @@ export function calcSimUnitPrice({
 
   if (variants.length) {
     const v = selectedVariant ?? variants[0];
-    const valueNumber = Number(
-      v.price ?? v.cost ?? product?.price ?? 0
-    );
+    const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    const isTimProvider =
+      String((product as any)?.provider ?? (product as any)?.brand ?? "")
+        .toLowerCase()
+        .includes("tim");
+    const isTimEsimData =
+      isTimProvider &&
+      titleNorm.includes("esim") &&
+      (titleNorm.includes("datos") || titleNorm.includes("data"));
+
+    const raw =
+      isTimEsimData
+        ? (v as any).regular_price ??
+          (v as any).price ??
+          (v as any).cost ??
+          (v as any).sale_price ??
+          product?.price ??
+          0
+        : v.price ?? v.cost ?? product?.price ?? 0;
+
+    const valueNumber = toNumber(raw);
 
     console.log("[calcSimUnitPrice] VARIANT", {
       formType,
