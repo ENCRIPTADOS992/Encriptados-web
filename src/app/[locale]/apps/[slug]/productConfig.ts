@@ -65,8 +65,29 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // APLICACIONES (Categoría 38)
   // ════════════════════════════════════════════════════════════════
   
-  "silent-circle": {
-    slug: "silent-circle",
+  "silent-phone": {
+    slug: "silent-phone",
+    productId: 122,
+    categoryId: 38,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/apps/silent-circle/hero-desktop.png",
+      tablet: "/images/apps/silent-circle/hero-tablet.png",
+      mobile: "/images/apps/silent-circle/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/silent-circle/banner.png",
+    iconUrl: "/images/apps/silent-circle/logo.png",
+    benefitIcon: "/images/apps/silent-circle/icono.png",
+    videoUrl: "https://www.youtube.com/embed/X9iE-f8briY",
+    appStoreUrl: "https://apps.apple.com/app/silent-phone",
+    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.silentcircle.silentphone",
+    apkUrl: "https://encriptados.io/descargas/silent-phone.apk",
+    storeButtons: { apk: false },
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "silent-circle": { // Mantener alias legacy por si acaso
+    slug: "silent-phone",
     productId: 122,
     categoryId: 38,
     templateType: "app",
@@ -107,8 +128,29 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
-  "armadillo": {
-    slug: "armadillo",
+  "armadillo-chat": {
+    slug: "armadillo-chat",
+    productId: 177,
+    categoryId: 38,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/apps/armadillo/hero-desktop.png",
+      tablet: "/images/apps/armadillo/hero-tablet.png",
+      mobile: "/images/apps/armadillo/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/armadillo/banner.png",
+    iconUrl: "/images/apps/armadillo/logo.png",
+    benefitIcon: "/images/apps/armadillo/icono.png",
+    videoUrl: "https://www.youtube.com/embed/armadillo-video",
+    appStoreUrl: "https://apps.apple.com/app/armadillo-chat",
+    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.armadillo",
+    apkUrl: "https://encriptados.io/armadillo_chat_base.apk",
+    storeButtons: { appStore: false },
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "armadillo": { // Alias legacy
+    slug: "armadillo-chat",
     productId: 177,
     categoryId: 38,
     templateType: "app",
@@ -189,8 +231,28 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   
-  "salt": {
-    slug: "salt",
+  "salt-app": {
+    slug: "salt-app",
+    productId: 133,
+    categoryId: 38,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/apps/salt/hero-desktop.png",
+      tablet: "/images/apps/salt/hero-tablet.png",
+      mobile: "/images/apps/salt/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/salt/banner.png",
+    iconUrl: "/images/apps/salt/logo.png",
+    benefitIcon: "/images/apps/salt/icono.png",
+    videoUrl: "https://www.youtube.com/embed/salt-video",
+    appStoreUrl: "https://apps.apple.com/app/salt-communications",
+    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.salt",
+    apkUrl: "https://encriptados.io/saltIm_base.apk",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  "salt": { // Alias legacy
+    slug: "salt-app",
     productId: 133,
     categoryId: 38,
     templateType: "app",
