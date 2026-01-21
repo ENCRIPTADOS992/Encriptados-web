@@ -290,25 +290,24 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
         <div className="min-h-[45vh]" />
       ) : (
         <>
-          <div ref={priceBlockRef}>
-            <ProductSection
-              title={product?.name || ""}
-              description={product?.description || ""}
-              features={features}
-              price={currentPrice}
-              radioOptions={radioOptions}
-              selectedRadio={selectedRadio}
-              onRadioChange={handleRadioChange}
-              onBuy={handleBuy}
-              productImage={productImage}
-              appStoreUrl={appStoreUrl}
-              googlePlayUrl={googlePlayUrl}
-              apkUrl={apkUrl}
-              storeButtons={config?.storeButtons}
-              languageCode={locale}
-              translations={productSectionTranslations}
-            />
-          </div>
+          <ProductSection
+            title={product?.name || ""}
+            description={product?.description || ""}
+            features={features}
+            price={currentPrice}
+            radioOptions={radioOptions}
+            selectedRadio={selectedRadio}
+            onRadioChange={handleRadioChange}
+            onBuy={handleBuy}
+            productImage={productImage}
+            appStoreUrl={appStoreUrl}
+            googlePlayUrl={googlePlayUrl}
+            apkUrl={apkUrl}
+            storeButtons={config?.storeButtons}
+            priceBlockRef={priceBlockRef}
+            languageCode={locale}
+            translations={productSectionTranslations}
+          />
 
           <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
 
