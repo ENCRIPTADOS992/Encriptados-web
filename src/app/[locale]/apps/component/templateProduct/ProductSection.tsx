@@ -39,6 +39,7 @@ interface ProductSectionProps {
     googlePlay?: boolean;
     apk?: boolean;
   };
+  priceBlockRef?: React.RefObject<HTMLDivElement>;
   productId?: number | string;
   selectedOption?: number | string;
   languageCode?: string;
@@ -133,6 +134,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   googlePlayUrl,
   apkUrl,
   storeButtons,
+  priceBlockRef,
   productId,
   selectedOption,
   languageCode = "es",
@@ -377,7 +379,8 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
             />
 
             {/* Precio */}
-            <motion.div 
+            <motion.div
+              ref={priceBlockRef}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55, duration: 0.4 }}

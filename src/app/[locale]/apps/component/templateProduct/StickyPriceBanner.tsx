@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 interface StickyPriceBannerProps {
@@ -16,110 +16,54 @@ interface StickyPriceBannerProps {
   };
 }
 
-/**
- * StickyPriceBanner - Componente unificado y responsive
- * Mobile: barra fija en el bottom, layout compacto
- * Tablet/Desktop: banner flotante centrado con más detalles
- * Se oculta completamente cuando from=app_mobile
- */
 const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
   visible,
   productInfo,
 }) => {
-  const [dismissed, setDismissed] = useState(false);
   const { isFromAppMobile } = useAppMobile();
 
-  // Ocultar completamente cuando viene de app móvil
-  if (!visible || dismissed || isFromAppMobile) return null;
+  if (!visible || isFromAppMobile) return null;
 
   return (
-    <>
-      {/* Mobile version - Fixed bottom bar */}
-      <div className="fixed bottom-0 inset-x-0 z-50 bg-neutral-900 p-4 shadow-2xl lg:hidden">
-        <div className="flex items-center justify-between gap-4">
-          {/* Icon + Info */}
-          <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-11 h-11 rounded-lg bg-white flex-shrink-0 overflow-hidden">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-[1320px]">
+      <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-[#1b1b1b] to-[#0f0f0f] shadow-[0_24px_60px_rgba(0,0,0,0.55)] px-4 py-4 sm:px-6 sm:py-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+          <div className="flex items-center gap-4 min-w-0">
+            <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
               <img
                 src={productInfo.iconUrl}
                 alt={productInfo.title}
-                className="w-full h-full object-cover"
+                className="h-10 w-10 sm:h-11 sm:w-11 object-contain"
               />
             </div>
-            
-            <div className="min-w-0 flex-1">
-              <p className="text-xs text-white font-semibold truncate">
+            <div className="min-w-0">
+              <div className="text-white font-semibold text-lg sm:text-xl truncate">
                 {productInfo.title}
-              </p>
-              <p className="text-base text-white font-bold">
-                {productInfo.price}
-              </p>
+              </div>
             </div>
           </div>
 
-          {/* CTA Button */}
-          <button
-            onClick={productInfo.onBuy}
-            className="bg-cyan-500 text-white text-sm font-semibold px-5 py-3 rounded-full flex-shrink-0 hover:bg-cyan-600 transition-colors"
-          >
-            Comprar
-          </button>
-        </div>
-      </div>
-
-      {/* Tablet/Desktop version - Floating banner */}
-      <div className="hidden lg:block fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4">
-        <div className="bg-neutral-900 border border-neutral-700/60 rounded-2xl p-6 shadow-2xl flex items-center justify-between gap-6">
-          {/* Left: Icon + Info */}
-          <div className="flex items-center gap-5">
-            <div className="w-14 h-14 rounded-xl bg-white/5 overflow-hidden flex-shrink-0">
-              <img
-                src={productInfo.iconUrl}
-                alt={productInfo.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <p className="text-white text-base font-semibold">
-                {productInfo.title}
-              </p>
-              <p className="text-neutral-400 text-sm">
-                {productInfo.subtitle ?? "Comunicación cifrada y segura"}
-              </p>
-            </div>
-          </div>
-
-          {/* Right: Price + CTA */}
-          <div className="flex items-center gap-8">
-            <div className="text-right">
-              <span className="text-neutral-400 text-xs uppercase tracking-wide">
+          <div className="flex items-center justify-between gap-4 lg:justify-end lg:gap-10">
+            <div className="text-left lg:text-right">
+              <div className="text-white/75 text-xs sm:text-sm leading-none">
                 Desde
-              </span>
-              <p className="text-white text-2xl font-bold">
+              </div>
+              <div className="text-white font-bold text-2xl sm:text-3xl leading-tight">
                 {productInfo.price}
-              </p>
+              </div>
             </div>
 
             <button
+              type="button"
               onClick={productInfo.onBuy}
-              className="bg-white text-neutral-900 text-sm font-semibold px-6 py-3 rounded-lg hover:bg-neutral-100 transition-colors"
+              className="bg-[#12B6E0] hover:bg-[#0ea4ca] text-white text-sm sm:text-base font-semibold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full whitespace-nowrap transition-colors"
             >
               {productInfo.ctaLabel ?? "Comprar ahora"}
             </button>
           </div>
-
-          {/* Close button */}
-          <button
-            onClick={() => setDismissed(true)}
-            className="absolute top-3 right-3 text-white/40 hover:text-white w-7 h-7 flex items-center justify-center text-sm transition-colors"
-            aria-label="Cerrar banner"
-          >
-            ✕
-          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

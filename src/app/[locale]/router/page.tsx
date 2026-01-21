@@ -291,19 +291,18 @@ export default function RouterPage() {
       />
 
       {/* Product Section */}
-      <div ref={priceBlockRef}>
-        <ProductSection
-          title={(product as any)?.name || "Camaleón Router"}
-          description={(product as any)?.description || "El Router Camaleón es la solución ideal para aquellos que buscan privacidad total y una conexión segura a Internet."}
-          features={features}
-          price={formatPrice(currentPrice)}
-          radioOptions={radioOptions}
-          selectedRadio={selectedRadio}
-          onRadioChange={handleRadioChange}
-          onBuy={handleBuy}
-          productImage={(product as any)?.buyNowImage || (product as any)?.productImage || (product as any)?.image_full || product?.images?.[0]?.src || ROUTER_CONFIG.productImage}
-        />
-      </div>
+      <ProductSection
+        title={(product as any)?.name || "Camaleón Router"}
+        description={(product as any)?.description || "El Router Camaleón es la solución ideal para aquellos que buscan privacidad total y una conexión segura a Internet."}
+        features={features}
+        price={formatPrice(currentPrice)}
+        radioOptions={radioOptions}
+        selectedRadio={selectedRadio}
+        onRadioChange={handleRadioChange}
+        onBuy={handleBuy}
+        productImage={(product as any)?.buyNowImage || (product as any)?.productImage || (product as any)?.image_full || product?.images?.[0]?.src || ROUTER_CONFIG.productImage}
+        priceBlockRef={priceBlockRef}
+      />
 
       {/* Sticky Price Banner */}
       <StickyPriceBanner
