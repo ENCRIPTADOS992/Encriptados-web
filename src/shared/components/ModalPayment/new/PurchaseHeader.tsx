@@ -304,39 +304,36 @@ const PurchaseHeader: React.FC<Props> = ({
                   
                   console.log("🔗 [PurchaseHeader] Generated SIM share URL:", { provider, typeProduct, relativePath, shareUrl });
                 } else {
-                  // Para Apps/Sistemas/Router: usar shareConfig (URLs hardcodeadas)
-                  const shareConfig = productId ? getShareConfigByProductId(Number(productId)) : null;
+                  // Para Apps/Sistemas/Router: usar getProductLink con lógica dinámica de slugs
+                  const categoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
+                  const productName = String(product?.name || "");
                   
-                  if (shareConfig?.shareUrl) {
-                    const localized = getShareUrlWithLocale(shareConfig.shareUrl, locale);
-                    if (typeof window !== "undefined") {
-                      const u = new URL(localized);
-                      u.protocol = window.location.protocol;
-                      u.host = window.location.host;
-                      shareUrl = u.toString();
-                    } else {
-                      shareUrl = localized;
+                  // Generar el slug dinámicamente basado en el nombre (ej: "Silent Phone" -> "/apps/silent-phone")
+                  const derivedLink = Number.isFinite(categoryId)
+                    ? getProductLink(productName, categoryId, Number(productId), provider, typeProduct)
+                    : null;
+
+                  if (derivedLink) {
+                    const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://encriptados.io";
+                    // Asegurar que usamos productId y price correctos en la URL
+                    shareUrl = `${baseUrl}/${locale}${derivedLink}?productId=${productId}&price=${unitPrice}&buy=1`;
+                  } else if (sourceUrl) {
+                    // Usar sourceUrl si está disponible
+                    const currentUrl = new URL(sourceUrl);
+                    currentUrl.searchParams.set("buy", "1");
+                    // Asegurar productId y price si faltan
+                    if (!currentUrl.searchParams.has("productId") && productId) {
+                       currentUrl.searchParams.set("productId", String(productId));
                     }
+                    if (!currentUrl.searchParams.has("price") && unitPrice != null) {
+                       currentUrl.searchParams.set("price", String(unitPrice));
+                    }
+                    shareUrl = currentUrl.toString();
                   } else {
-                    const categoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
-                    const productName = String(product?.name || "");
-                    const derivedLink = Number.isFinite(categoryId)
-                      ? getProductLink(productName, categoryId, Number(productId), provider, typeProduct)
-                      : null;
-                    if (derivedLink) {
-                      const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://encriptados.io";
-                      shareUrl = `${baseUrl}/${locale}${derivedLink}?buy=1`;
-                    } else if (sourceUrl) {
-                      // Usar sourceUrl si está disponible
-                      const currentUrl = new URL(sourceUrl);
-                      currentUrl.searchParams.set("buy", "1");
-                      shareUrl = currentUrl.toString();
-                    } else {
-                      // Fallback a URL actual
-                      const currentUrl = new URL(window.location.href);
-                      currentUrl.searchParams.set("buy", "1");
-                      shareUrl = currentUrl.toString();
-                    }
+                    // Fallback a URL actual
+                    const currentUrl = new URL(window.location.href);
+                    currentUrl.searchParams.set("buy", "1");
+                    shareUrl = currentUrl.toString();
                   }
                 }
                 

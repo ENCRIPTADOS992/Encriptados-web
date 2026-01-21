@@ -1,4 +1,5 @@
 import { PRODUCT_ROUTES, SIM_PRODUCT_ROUTES } from "@/shared/constants/productRoutes";
+import { generateSlug } from "@/shared/utils/slugUtils";
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DERIVACIÓN DE URL PARA PRODUCTOS SIM
@@ -62,7 +63,7 @@ export function getSimProductUrl(
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// FUNCIÓN PRINCIPAL (actualizada para usar derivación)
+// FUNCIÓN PRINCIPAL (actualizada para usar derivación y slugify como la App)
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const getProductLink = (
@@ -72,17 +73,12 @@ export const getProductLink = (
   provider?: string,
   typeProduct?: string
 ): string | null => {
-  const baseName = productName.split(" - ")[0].trim();
-
-  if (baseName.toLowerCase().includes("silent phone")) {
-    return "/apps/silent-circle";
-  }
-
+  // 1. Routers
   if (categoryId === 36) {
     return "/router";
   }
 
-  // SIM products (categoryId 40) - Derivar URL desde backend fields
+  // 2. SIMs (Categoría 40)
   if (categoryId === 40) {
     // PRIORIDAD: Derivar desde provider + type_product (backend es fuente de verdad)
     if (provider || typeProduct) {
@@ -95,10 +91,6 @@ export const getProductLink = (
         (route) => route.productId === productId
       );
       if (simRoute) {
-        console.warn(
-          `[productRouteResolver] Usando fallback por productId ${productId}. ` +
-          `Preferir pasar provider y type_product para derivación correcta.`
-        );
         return simRoute.link;
       }
     }
@@ -107,9 +99,13 @@ export const getProductLink = (
     return `/sim/sim-encriptada`;
   }
 
-  const item = PRODUCT_ROUTES.find(
-    (route) => route.name === baseName && route.categoryId === categoryId
-  );
+  // 3. Apps (38) y Software (35) - Generación dinámica por slug
+  // Usamos generateSlug (mismo que slugify en la App)
+  
+  const baseName = productName.split(" - ")[0].trim();
+  const slug = generateSlug(baseName);
 
-  return item ? item.link : null;
+  // Retornar ruta generada dinámicamente
+  return `/apps/${slug}`;
 };
+

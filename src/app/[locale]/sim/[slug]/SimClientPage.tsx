@@ -253,20 +253,23 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   
   useEffect(() => {
     const buyParam = searchParams.get("buy");
+    // Nota: productIdFromUrl y priceFromUrl ya se obtienen arriba del componente
+
     if (buyParam === "1" && product && !isLoading && !buyPopupTriggered.current) {
       buyPopupTriggered.current = true;
       
       // Pequeño delay para asegurar que todo está cargado (igual que en Apps)
       const timer = setTimeout(() => {
+        // Usar effectivePrice que ya prioriza el precio de la URL
         console.log("[SIM Page] 🔗 Auto-abriendo popup desde buy=1", {
-          productId: product.id,
+          productId: productIdFromUrl || product.id,
           price: effectivePrice,
           locale,
         });
         
         // Abrir el modal de pago
         openModal({
-          productid: String(product.id),
+          productid: String(productIdFromUrl || product.id),
           languageCode: locale,
           selectedOption: 40,
           initialPrice: effectivePrice,
@@ -280,7 +283,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       
       return () => clearTimeout(timer);
     }
-  }, [searchParams, product, isLoading, locale, effectivePrice, openModal]);
+  }, [searchParams, product, isLoading, locale, effectivePrice, openModal, productIdFromUrl]);
 
   // Obtener imagen del producto de la API
   const productImage = useMemo(() => {

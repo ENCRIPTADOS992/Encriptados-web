@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
+import { generateSlug } from "@/shared/utils/slugUtils";
 
 const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
 
@@ -72,10 +73,6 @@ export const getAllProducts = async (
   }
 };
 
-type ResponseProduct = {
-  data: Product;
-};
-
 export const getProductById = async (
   productId: string,
   lang: string = "es"
@@ -91,5 +88,42 @@ export const getProductById = async (
   } catch (error) {
     console.error("Error en getProductById:", error);
     throw error;
+  }
+};
+
+export const getProductBySlug = async (
+  slug: string,
+  lang: string = "es"
+): Promise<ProductById | null> => {
+  try {
+    // Categorías a buscar: 38 (Apps), 35 (Software), 36 (Routers)
+    const categories = [38, 35, 36];
+
+    // Ejecutar peticiones en paralelo
+    // getAllProducts retorna Allproducts (Product[]), atrapamos errores para no fallar todo
+    const results = await Promise.all(
+      categories.map((catId) =>
+        getAllProducts(catId, lang, { simRegion: "global" }).catch((err) => {
+          console.error(`Error fetching category ${catId} for slug search:`, err);
+          return [] as Product[];
+        })
+      )
+    );
+
+    // Buscar en los resultados
+    for (const products of results) {
+      if (Array.isArray(products)) {
+        const found = products.find((p) => generateSlug(p.name) === slug);
+        if (found) {
+          // Una vez encontrado, obtenemos el detalle completo por ID
+          return getProductById(String(found.id), lang);
+        }
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error en getProductBySlug:", error);
+    return null;
   }
 };
