@@ -57,7 +57,6 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         showMoreInfo={true}
         buyText={t("buyButton")}
         moreInfoText={t("moreInfo")}
-        moreInfoColor="text-[#10B4E7]"
         onBuyClick={() => handleBuy("508")}
         moreInfoUrl="/our-products/sim-more-info?productId=508"
         onMoreInfoClick={() => handleMoreInfo("508")}
