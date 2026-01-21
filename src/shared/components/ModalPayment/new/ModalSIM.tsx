@@ -18,6 +18,7 @@ import {
 } from "./sims/types/modalSimTypes";
 import { buildMinutesPlans } from "./sims/utils/buildMinutesPlans";
 import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
+import { buildDataPlans } from "./sims/utils/buildDataPlans";
 
 export default function ModalSIM() {
   const { params } = useModalPayment();
@@ -95,6 +96,16 @@ export default function ModalSIM() {
     [formType, variants, product]
   );
 
+  const dataPlans = React.useMemo(
+    () =>
+      buildDataPlans({
+        formType,
+        variants,
+        product,
+      }),
+    [formType, variants, product]
+  );
+
   const dataAmounts = React.useMemo(() => {
     const toNumber = (v: unknown): number => {
       const n = typeof v === "string" ? parseFloat(v) : Number(v);
@@ -132,8 +143,54 @@ export default function ModalSIM() {
     if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
     if (selectedPlanId != null) return;
     if (!dataAmounts.length) return;
+    const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    const isEsimRecargaDatos = titleNorm.includes("esim + recarga datos");
+    const base = 12;
+
+    if (formType === "encrypted_esimData" && isEsimRecargaDatos && initialPrice != null && initialPrice > 0) {
+      const totals = dataAmounts;
+      const rechargeCandidates = totals.map((t) => Math.max(t - base, 0));
+      if (totals.includes(initialPrice)) {
+        setSelectedPlanId(Math.max(initialPrice - base, 0));
+        return;
+      }
+      if (rechargeCandidates.includes(initialPrice)) {
+        setSelectedPlanId(initialPrice);
+        return;
+      }
+      setSelectedPlanId(Math.max(initialPrice - base, 0));
+      return;
+    }
+
+    if (formType === "encrypted_esimData" && isEsimRecargaDatos) {
+      setSelectedPlanId(Math.max(dataAmounts[0] - base, 0));
+      return;
+    }
+
     setSelectedPlanId(dataAmounts[0]);
-  }, [formType, selectedPlanId, dataAmounts]);
+  }, [formType, selectedPlanId, dataAmounts, product, initialPrice]);
+
+  React.useEffect(() => {
+    if (formType !== "tim_data") return;
+    if (!dataPlans.length) return;
+
+    if (initialPrice != null && initialPrice > 0) {
+      const matching = dataPlans.find((p) => p.value === initialPrice);
+      if (matching) {
+        setSelectedPlanId(matching.id);
+        setSelectedVariant(variants.find((v) => v.id === matching.id) ?? null);
+        return;
+      }
+    }
+
+    if (selectedPlanId == null) {
+      setSelectedPlanId(dataPlans[0].id);
+      setSelectedVariant(variants.find((v) => v.id === dataPlans[0].id) ?? null);
+      return;
+    }
+
+    setSelectedVariant(variants.find((v) => v.id === selectedPlanId) ?? null);
+  }, [formType, dataPlans, selectedPlanId, variants, initialPrice]);
 
   // Track si el usuario ha cambiado manualmente el plan
   const [userChangedPlan, setUserChangedPlan] = React.useState(false);
@@ -141,8 +198,10 @@ export default function ModalSIM() {
   // Handler para cuando el usuario cambia el plan manualmente
   const handlePlanChange = React.useCallback((planId: string | number) => {
     setSelectedPlanId(planId);
+    const nextVariant = variants.find((v) => v.id === planId);
+    if (nextVariant) setSelectedVariant(nextVariant);
     setUserChangedPlan(true);
-  }, []);
+  }, [variants]);
 
   const unitPrice = React.useMemo(
     () => {
@@ -211,11 +270,14 @@ export default function ModalSIM() {
         formType === "encrypted_data" ||
         formType === "encrypted_minutes" ||
         formType === "encrypted_esim" ||
-        formType === "encrypted_esimData"
+        formType === "encrypted_esimData" ||
+        formType === "tim_data" ||
+        formType === "tim_minutes"
           ? undefined
           : 75
       }
       minutesPlans={minutesPlans}
+      dataPlans={dataPlans}
       selectedPlanId={selectedPlanId}
       onChangePlan={handlePlanChange}
       showEsimAddon={

@@ -50,6 +50,7 @@ type Props = {
   showLicense?: boolean;
   currency?: string;
   minutesPlans?: Array<{ id: string | number; label: string; value?: number; minutes?: number }>;
+  dataPlans?: Array<{ id: string | number; label: string; value?: number; gb?: number }>;
   selectedPlanId?: string | number | null;
   onChangePlan?: (id: string | number) => void;
   showEsimAddon?: boolean;
@@ -75,6 +76,7 @@ const PurchaseHeader: React.FC<Props> = ({
   showLicense = true,
   currency = "USD",
   minutesPlans,
+  dataPlans,
   selectedPlanId,
   onChangePlan,
   showEsimAddon = false,
@@ -141,6 +143,10 @@ const PurchaseHeader: React.FC<Props> = ({
   const licenseRef = React.useRef<HTMLDivElement | null>(null);
   const [openPlan, setOpenPlan] = React.useState(false);
   const planRef = React.useRef<HTMLDivElement | null>(null);
+  const [openRecharge, setOpenRecharge] = React.useState(false);
+  const rechargeRef = React.useRef<HTMLDivElement | null>(null);
+  const [openDataPlan, setOpenDataPlan] = React.useState(false);
+  const dataPlanRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
@@ -148,10 +154,16 @@ const PurchaseHeader: React.FC<Props> = ({
         setOpenLicense(false);
       if (planRef.current && !planRef.current.contains(e.target as Node))
         setOpenPlan(false);
+      if (rechargeRef.current && !rechargeRef.current.contains(e.target as Node))
+        setOpenRecharge(false);
+      if (dataPlanRef.current && !dataPlanRef.current.contains(e.target as Node))
+        setOpenDataPlan(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenLicense(false);
       if (e.key === "Escape") setOpenPlan(false);
+      if (e.key === "Escape") setOpenRecharge(false);
+      if (e.key === "Escape") setOpenDataPlan(false);
     };
     document.addEventListener("mousedown", onDocClick);
     document.addEventListener("keydown", onKey);
@@ -174,6 +186,9 @@ const PurchaseHeader: React.FC<Props> = ({
   const isEsimDataComboTitle =
     titleNorm.includes("esim") &&
     (titleNorm.includes("datos") || titleNorm.includes("data"));
+
+  const isEsimRecargaDatosTitle = titleNorm.includes("esim + recarga datos");
+  const ESIM_RECARGA_BASE_PRICE = 12;
 
   const showRechargeAmount =
     isEncryptedProvider && (isRecargaDatos || isEsimDataComboTitle);
@@ -208,7 +223,11 @@ const PurchaseHeader: React.FC<Props> = ({
     if (productVariants.length > 0) {
       return productVariants.map((v: any) => ({
         id: v.id ?? v.price ?? v.cost,
-        value: Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0),
+        value: Math.max(
+          Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0) -
+            (isEsimRecargaDatosTitle ? ESIM_RECARGA_BASE_PRICE : 0),
+          0
+        ),
       }));
     }
     
@@ -368,17 +387,110 @@ const PurchaseHeader: React.FC<Props> = ({
           {showRechargeAmount && (
             <div className="grid grid-cols-[auto_1fr] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
-              <select
-                className="justify-self-end h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10"
-                value={String(selectedPlanId ?? RECHARGE_AMOUNTS[0].value)}
-                onChange={(e) => onChangePlan?.(Number(e.target.value))}
-              >
-                {RECHARGE_AMOUNTS.filter((x: RechargeAmountOpt) => Number(x.value) > 0).map((opt: RechargeAmountOpt) => (
-                  <option key={opt.id} value={opt.value}>
-                    {opt.value} {currency}
-                  </option>
-                ))}
-              </select>
+              <div ref={rechargeRef} className="relative justify-self-end z-[1000]">
+                {(() => {
+                  const opts = RECHARGE_AMOUNTS.filter(
+                    (x: RechargeAmountOpt) => Number(x.value) > 0
+                  );
+                  const current =
+                    opts.find((p) => Number(p.value) === Number(selectedPlanId)) ??
+                    opts[0];
+                  const label = current ? `${current.value} ${currency}` : `${currency}`;
+                  return (
+                    <button
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded={openRecharge}
+                      onClick={() => setOpenRecharge((v) => !v)}
+                      className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                    >
+                      <span className="truncate">{label}</span>
+                      <span className="ml-1 text-[#3D3D3D]">▾</span>
+                    </button>
+                  );
+                })()}
+
+                {openRecharge && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                  >
+                    {RECHARGE_AMOUNTS.filter(
+                      (x: RechargeAmountOpt) => Number(x.value) > 0
+                    ).map((opt: RechargeAmountOpt) => {
+                      const isActive = Number(selectedPlanId) === Number(opt.value);
+                      const label = `${opt.value} ${currency}`;
+                      return (
+                        <button
+                          key={String(opt.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangePlan?.(Number(opt.value));
+                            setOpenRecharge(false);
+                          }}
+                          className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {!!dataPlans?.length && (
+            <div className="grid grid-cols-[auto_1fr] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("chooseGigas")}</span>
+              <div ref={dataPlanRef} className="relative justify-self-end z-[1000]">
+                {(() => {
+                  const current =
+                    dataPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
+                    dataPlans[0];
+                  const label = current?.label ?? "Plan";
+                  return (
+                    <button
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded={openDataPlan}
+                      onClick={() => setOpenDataPlan((v) => !v)}
+                      className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                    >
+                      <span className="truncate">{label}</span>
+                      <span className="ml-1 text-[#3D3D3D]">▾</span>
+                    </button>
+                  );
+                })()}
+
+                {openDataPlan && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                  >
+                    {dataPlans.map((p) => {
+                      const isActive = (selectedPlanId ?? dataPlans[0]?.id) === p.id;
+                      return (
+                        <button
+                          key={String(p.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangePlan?.(p.id);
+                            setOpenDataPlan(false);
+                          }}
+                          className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                        >
+                          {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           )}
 

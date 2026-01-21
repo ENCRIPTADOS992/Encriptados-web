@@ -117,7 +117,7 @@ export function createSimSubmitHandler({
 
       let payload: TottoliCheckoutPayload;
 
-      if (formType === "encrypted_esim") {
+      if (formType === "encrypted_esim" || formType === "encrypted_esimData") {
         payload = {
           ...common,
           product: "esim",

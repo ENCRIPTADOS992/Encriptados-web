@@ -25,7 +25,9 @@ export type FormType =
   | "encrypted_esimData"
   // TIM products
   | "tim_physical"
-  | "tim_esim";
+  | "tim_esim"
+  | "tim_data"
+  | "tim_minutes";
 
 export type SimFormValues = {
   email: string;

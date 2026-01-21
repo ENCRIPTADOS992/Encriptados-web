@@ -62,6 +62,30 @@ export function calcSimUnitPrice({
       .map((v) => toNumber((v as any).price ?? (v as any).cost ?? (v as any).regular_price ?? (v as any).sale_price))
       .filter((n) => n > 0);
 
+    const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    const isEsimRecargaDatos = titleNorm.includes("esim + recarga datos");
+    const fixedBase = 12;
+
+    if (isEsimRecargaDatos) {
+      const defaultTotal = amounts[0] ?? 0;
+      const defaultRecharge = Math.max(defaultTotal - fixedBase, 0);
+      const selected = selectedPlanId != null ? toNumber(selectedPlanId) : defaultRecharge;
+      const unitPrice = amounts.includes(selected)
+        ? selected
+        : Math.max(fixedBase + selected, 0);
+
+      console.log("[calcSimUnitPrice] ESIM+RECARGA_DATOS", {
+        formType,
+        selectedPlanId,
+        fixedBase,
+        defaultTotal,
+        defaultRecharge,
+        unitPrice,
+      });
+
+      return unitPrice;
+    }
+
     const defaultAmount = amounts[0] ?? 0;
     const selectedAmount = selectedPlanId != null ? toNumber(selectedPlanId) : defaultAmount;
     const productPrice = toNumber(product?.price);

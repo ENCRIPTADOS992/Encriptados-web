@@ -142,17 +142,14 @@ export default function SimFormUnified({
   const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting;
 
   React.useEffect(() => {
-    const needsSimNumbers =
-      (formType === "encrypted_data" && CFG.showSimNumber) ||
-      formType === "encrypted_minutes";
-    if (!needsSimNumbers) return;
+    if (!CFG.showSimNumber) return;
     if (quantity <= 1) return;
     const current = (watch("simNumbers") ?? []) as string[];
     const next = [...current];
     if (quantity > next.length) next.push(...Array(quantity - next.length).fill(""));
     else if (quantity < next.length) next.length = quantity;
     setValue("simNumbers", next, { shouldValidate: false });
-  }, [quantity, formType, CFG.showSimNumber, setValue, watch]);
+  }, [quantity, CFG.showSimNumber, setValue, watch]);
 
   // Calcular montos
   const shippingFee = isPhysical ? 75 : 0;
@@ -179,10 +176,13 @@ export default function SimFormUnified({
         switch (formType) {
           case "encrypted_esim":
           case "encrypted_esimData":
+          case "tim_esim":
             return "esim";
           case "encrypted_data":
+          case "tim_data":
             return "data";
           case "encrypted_minutes":
+          case "tim_minutes":
             return "minutes";
           default:
             return "sim_physical";
