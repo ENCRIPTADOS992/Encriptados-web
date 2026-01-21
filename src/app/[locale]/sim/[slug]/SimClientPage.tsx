@@ -253,29 +253,24 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   
   useEffect(() => {
     const buyParam = searchParams.get("buy");
-    // Nota: productIdFromUrl y priceFromUrl ya se obtienen arriba del componente
+    const productIdToUse = productIdFromUrl || (staticConfig?.productId ? String(staticConfig.productId) : null);
 
-    if (buyParam === "1" && product && !isLoading && !buyPopupTriggered.current) {
+    if (buyParam === "1" && productIdToUse && !buyPopupTriggered.current) {
       buyPopupTriggered.current = true;
       
-      // Pequeño delay para asegurar que todo está cargado (igual que en Apps)
       const timer = setTimeout(() => {
-        // Usar effectivePrice que ya prioriza el precio de la URL
-        console.log("[SIM Page] 🔗 Auto-abriendo popup desde buy=1", {
-          productId: productIdFromUrl || product.id,
-          price: effectivePrice,
-          locale,
-        });
-        
-        // Abrir el modal de pago
+        const price =
+          typeof effectivePrice === "number" && !Number.isNaN(effectivePrice)
+            ? effectivePrice
+            : undefined;
+
         openModal({
-          productid: String(productIdFromUrl || product.id),
+          productid: String(productIdToUse),
           languageCode: locale,
           selectedOption: 40,
-          initialPrice: effectivePrice,
+          initialPrice: price,
         });
         
-        // Limpiar el parámetro buy de la URL
         const url = new URL(window.location.href);
         url.searchParams.delete("buy");
         window.history.replaceState({}, "", url.toString());
@@ -283,7 +278,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       
       return () => clearTimeout(timer);
     }
-  }, [searchParams, product, isLoading, locale, effectivePrice, openModal, productIdFromUrl]);
+  }, [searchParams, locale, effectivePrice, openModal, productIdFromUrl, staticConfig]);
 
   // Obtener imagen del producto de la API
   const productImage = useMemo(() => {

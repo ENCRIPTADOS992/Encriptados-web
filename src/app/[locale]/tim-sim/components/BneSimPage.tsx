@@ -11,6 +11,9 @@ import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import StepperBuy from "@/shared/components/StepperBuy/StepperBuy";
 import WhereUseSimSection from "./WhereUseSimSection";
 import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 interface BneSimPageProps {
   locale: string;
@@ -18,6 +21,35 @@ interface BneSimPageProps {
 
 const BneSimPage = ({ locale }: BneSimPageProps) => {
   const t = useTranslations('BneSimPage.faqs');
+  const searchParams = useSearchParams();
+  const { openModal } = useModalPayment();
+  const buyPopupTriggered = useRef(false);
+
+  useEffect(() => {
+    const buyParam = searchParams.get("buy");
+    const productId = searchParams.get("productId");
+    const priceParam = searchParams.get("price");
+
+    if (buyParam !== "1" || !productId || buyPopupTriggered.current) return;
+    buyPopupTriggered.current = true;
+
+    const timer = setTimeout(() => {
+      const parsedPrice = priceParam ? Number.parseFloat(priceParam) : NaN;
+
+      openModal({
+        productid: String(productId),
+        languageCode: locale,
+        selectedOption: 40,
+        initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
+      });
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("buy");
+      window.history.replaceState({}, "", url.toString());
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchParams, openModal, locale]);
 
   const faqs = [
     {
