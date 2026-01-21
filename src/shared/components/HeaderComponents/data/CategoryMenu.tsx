@@ -124,7 +124,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("apps.items.nordVpn.title", { defaultValue: "Nord VPN" }),
           image: "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.jpg",
-          link: getAppUrl("NordVPN"),
+          link: getAppUrl("Nord VPN"),
           description: t("apps.items.nordVpn.description", {
             defaultValue: "Nord VPN es una aplicación de mensajería segura.",
           }),
@@ -211,7 +211,7 @@ export function useTranslatedProductsCategories(): any {
           }),
           image:
             "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.jpg",
-          link: getAppUrl("VaultChat"),
+          link: "/apps/vault-chat-v2",
           description: t("systems.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),

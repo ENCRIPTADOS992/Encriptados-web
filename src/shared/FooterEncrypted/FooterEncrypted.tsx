@@ -36,7 +36,7 @@ export default function FooterEncrypted() {
   const locale = useLocale();
 
   // Helper para generar URLs dinámicas consistentes
-  const getAppUrl = (name: string) => `/apps/${generateSlug(name)}`;
+  const getAppUrl = (name: string) => `/apps/${generateSlug(name.trim())}`;
 
   const socialMedia = [
     {
@@ -91,7 +91,7 @@ export default function FooterEncrypted() {
     "Renati": getAppUrl("Renati"),
     "Chatmail": getAppUrl("ChatMail"),
     "Armadillo": getAppUrl("Armadillo"),
-    "VaultChat": getAppUrl("VaultChat"),
+    "VaultChat": "/apps/vault-chat-v2",
     "UltraX": getAppUrl("Ultra X"),
     "Intact": getAppUrl("Intact Phone"),
     "DecSecure": getAppUrl("DEC Secure"),
@@ -127,7 +127,7 @@ export default function FooterEncrypted() {
     { name: "Renati", href: getAppUrl("Renati") },
     { name: "ChatMail", href: getAppUrl("ChatMail") },
     { name: "Armadillo", href: getAppUrl("Armadillo") },
-    { name: "VaultChat", href: getAppUrl("VaultChat") },
+    { name: "VaultChat", href: "/apps/vault-chat-v2" },
     { name: "Ultra X", href: getAppUrl("Ultra X") },
     { name: "Intact Phone", href: getAppUrl("Intact Phone") },
     { name: "DEC Secure", href: getAppUrl("DEC Secure") },
