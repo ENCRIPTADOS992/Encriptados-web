@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import type { Product } from "@/features/products/types/AllProductsResponse";
 import Typography from "@/shared/components/Typography";
@@ -20,6 +22,8 @@ const toNumber = (v?: string | number | null) => {
 };
 
 const BannerSecureMdmNew = () => {
+  const router = useRouter();
+  const { openModal } = useModalPayment();
   const { data: products } = useGetProducts(35, "all");
   const t = useTranslations("OurProductsPage.secureMdm");
 
@@ -130,7 +134,12 @@ const BannerSecureMdmNew = () => {
                       <Button
                         intent="primary"
                         size="md"
-                        onClick={() => window.location.href = card.buyUrl}
+                        onClick={() =>
+                          openModal({
+                            productid: card.id.toString(),
+                            languageCode: "es",
+                          })
+                        }
                         className="flex-1 max-w-[124px]"
                       >
                         {t("buy")}
@@ -139,7 +148,12 @@ const BannerSecureMdmNew = () => {
                       <Button
                         intent="link"
                         size="sm"
-                        onClick={() => window.location.href = card.infoUrl}
+                        onClick={() => {
+                          const link = card.title.toLowerCase().includes("iphone")
+                            ? "/apps/secure-mdm-iphone"
+                            : "/apps/secure-mdm-android";
+                          router.push(link);
+                        }}
                         className="text-white/90 hover:text-white text-sm"
                       >
                         {t("moreInfo")}

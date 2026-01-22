@@ -1,6 +1,6 @@
 import React from "react";
 
-const EncryptedSimIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
+const EncryptedSimIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
     <svg
       width="115"
@@ -8,7 +8,7 @@ const EncryptedSimIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
       viewBox="0 0 115 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="ml-[11px] text-white"
+      className={`text-white ${className || ""}`}
       {...props}
     >
       <path

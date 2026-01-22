@@ -294,63 +294,7 @@ const featuresGrid = [
         imageUrl="/images/router/router.png"
         alt="Router Camaleón"
       />
-      <FeaturedProducts
-        left={{
-          title: "SIM Card encriptada",
-          description:
-            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          buttonLabel: "Comprar",
-          onButtonClick: () => router.push(`/${locale}/sim/sim-encriptada`),
-          moreInfoLabel: "Más información",
-          onMoreInfo: () => router.push(`/${locale}/sim/sim-encriptada`),
-          image: "/images/apps/silent-circle/sim.png",
-        }}
-        right={{
-          title: "E-SIM Encriptada Planes datos o minutos",
-          subtitle: "Subtitle element copy",
-          buttonLabel: "Ver más",
-          onButtonClick: () => router.push(`/${locale}/sim/esim-encriptada`),
-          image: "/images/apps/silent-circle/phone.png",
-        }}
-      />
-      <FeaturedProductsMobile
-        left={{
-          title: "SIM Card encriptada",
-          description:
-            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          buttonLabel: "Comprar",
-          onButtonClick: () => router.push(`/${locale}/sim/sim-encriptada`),
-          moreInfoLabel: "Más información",
-          onMoreInfo: () => router.push(`/${locale}/sim/sim-encriptada`),
-          image: "/images/apps/silent-circle/sim.png",
-        }}
-        right={{
-          title: "E-SIM Encriptada Planes datos o minutos",
-          subtitle: "Subtitle element copy",
-          buttonLabel: "Ver más",
-          onButtonClick: () => router.push(`/${locale}/sim/esim-encriptada`),
-          image: "/images/apps/silent-circle/phone.png",
-        }}
-      />
-      <FeaturedProductsTablet
-        left={{
-          title: "SIM Card encriptada",
-          description:
-            "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          buttonLabel: "Comprar",
-          onButtonClick: () => router.push(`/${locale}/sim/sim-encriptada`),
-          moreInfoLabel: "Más información",
-          onMoreInfo: () => router.push(`/${locale}/sim/sim-encriptada`),
-          image: "/images/apps/silent-circle/sim.png",
-        }}
-        right={{
-          title: "E-SIM Encriptada Planes datos o minutos",
-          subtitle: "Subtitle element copy",
-          buttonLabel: "Ver más",
-          onButtonClick: () => router.push(`/${locale}/sim/esim-encriptada`),
-          image: "/images/apps/silent-circle/phone.png",
-        }}
-      />
+      <RouterSims />
       <FAQSection faqs={Faqs} />
       <FAQSectionMobile faqs={Faqs} />
       <FAQSectionTablet faqs={Faqs} />

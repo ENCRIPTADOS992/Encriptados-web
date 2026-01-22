@@ -1,7 +1,7 @@
 // src/app/[locale]/our-products/components/FilterProductsBar/FilterProductsBar.tsx
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
@@ -34,6 +34,7 @@ interface FilterProductsBarProps {
   updateFilters: (newFilters: Partial<ProductFilters>) => void;
   products?: Product[];
   variant?: "static" | "floating";
+  onClose?: () => void;
 }
 
 export default function FilterProductsBar({
@@ -41,6 +42,7 @@ export default function FilterProductsBar({
   updateFilters,
   products,
   variant = "static",
+  onClose,
 }: FilterProductsBarProps) {
   const t = useTranslations("OurProductsPage");
   const router = useRouter();
@@ -53,8 +55,8 @@ export default function FilterProductsBar({
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-        ? "Software"
-        : label,
+          ? "Software"
+          : label,
     icon: (
       <Icon
         color={
@@ -118,19 +120,21 @@ export default function FilterProductsBar({
     }
   }
 
-  // Variante flotante (barra fija abajo en mobile)
+  // Variante flotante (barra fija abajo - responsive para mobile/tablet/desktop)
   if (variant === "floating") {
+    const modalRef = useRef<HTMLDivElement>(null);
+
     const navItems: {
       key: "sims" | "apps" | "systems" | "routers" | "offers";
       label: string;
       catId?: number;
     }[] = [
-      { key: "sims", label: "SIMs", catId: 40 },
-      { key: "apps", label: "Apps", catId: 38 },
-      { key: "systems", label: "Sistemas", catId: 35 },
-      { key: "routers", label: "Routers", catId: 36 },
-      { key: "offers", label: "Ofertas" },
-    ];
+        { key: "sims", label: "SIM's", catId: 40 },
+        { key: "apps", label: "Apps", catId: 38 },
+        { key: "systems", label: "Sistemas", catId: 35 },
+        { key: "routers", label: "Routers", catId: 36 },
+        { key: "offers", label: "Ofertas" },
+      ];
 
     const handleNavClick = (item: (typeof navItems)[number]) => {
       if (item.key === "offers") {
@@ -152,25 +156,46 @@ export default function FilterProductsBar({
       }
     };
 
+    // Handler para cerrar al hacer click fuera
+    const handleOverlayClick = useCallback((e: React.MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        onClose?.();
+      }
+    }, [onClose]);
+
     return (
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#050505]/70 backdrop-blur-sm">
-        <SectionWrapper className="py-3">
+      <>
+        {/* Overlay para cerrar al hacer click fuera */}
+        <div
+          className="fixed inset-0 z-40"
+          onClick={handleOverlayClick}
+          aria-hidden="true"
+        />
+
+        {/* Modal flotante */}
+        <div
+          ref={modalRef}
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50"
+        >
           <div
             className="
-              w-full
               bg-[#161616]
-              rounded-xl
-              px-4 md:px-6 py-3
-              flex items-center justify-between gap-4
+              rounded-2xl
+              px-3 sm:px-4 md:px-6
+              py-2 sm:py-2.5 md:py-3
+              flex items-center 
+              gap-2 sm:gap-3 md:gap-6
+              shadow-xl
+              shadow-black/60
             "
           >
             {/* Logo / marca */}
-            <div className="flex items-center gap-3">
-              <MobileMenuSvg width={180} height={52} />
+            <div className="flex items-center gap-2 pr-2 sm:pr-4">
+              <MobileMenuSvg width={120} height={35} className="sm:w-[160px] md:w-[180px]" />
             </div>
 
-            {/* Tabs */}
-            <div className="flex items-center gap-2">
+            {/* Tabs - responsive con scroll horizontal en mobile */}
+            <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 overflow-x-auto scrollbar-hide">
               {navItems.map((item) => {
                 const isActive =
                   item.catId !== undefined && item.catId === selectedCat;
@@ -181,12 +206,16 @@ export default function FilterProductsBar({
                     type="button"
                     onClick={() => handleNavClick(item)}
                     className={`
-                      px-4 py-2 rounded-full text-sm font-medium
-                      transition-colors
-                      ${
-                        isActive
-                          ? "bg-[#2A2A2A] text-white"
-                          : "text-[#A3A3A3] hover:text-white"
+                      px-3 sm:px-4 md:px-5
+                      py-1.5 sm:py-2
+                      rounded-lg
+                      text-xs sm:text-sm
+                      font-medium
+                      whitespace-nowrap
+                      transition-all duration-200
+                      ${isActive
+                        ? "bg-[#404040] text-white"
+                        : "text-[#888888] hover:text-white hover:bg-[#404040]"
                       }
                     `}
                   >
@@ -196,8 +225,8 @@ export default function FilterProductsBar({
               })}
             </div>
           </div>
-        </SectionWrapper>
-      </div>
+        </div>
+      </>
     );
   }
 

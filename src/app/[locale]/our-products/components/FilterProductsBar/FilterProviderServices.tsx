@@ -77,12 +77,12 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             {
               label: " ",
               value: "encriptados",
-              icon: <EncryptedLogoSvg width={100} height={24} 
+              icon: <EncryptedSimIcon width={100} height={25} 
               />
             },
             { label: " ", 
               value: "tim", 
-              icon: <TimSimIcon 
+              icon: <TimSimIcon width={100} height={25}
               /> 
             },
           ]}
