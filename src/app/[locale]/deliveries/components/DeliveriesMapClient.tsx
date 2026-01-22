@@ -367,10 +367,10 @@ const DeliveriesMapClient = () => {
   });
 
   return (
-    <section className="relative w-full flex flex-col items-center pt-10 pb-0 bg-[#eaf2f6]">
-      <div className="flex flex-col items-center gap-2 mb-4">
+    <section className="relative w-full flex flex-col items-center py-20 bg-[#eaf2f6]">
+      <div className="flex flex-col items-center gap-2 mb-24 mt-6">
         <img
-          src="/images/deliveries/material-symbols_store-outline.png"
+          src="/images/fastdeliverypage/icons/house.svg"
           alt="Ícono de tienda"
           className="w-12 h-12"
         />
@@ -498,7 +498,7 @@ const DeliveriesMapClient = () => {
       </div> */}
 
       {/* Mapa */}
-      <div className="relative z-10 w-4/5 h-96 rounded-lg overflow-hidden shadow-lg">
+      <div className="relative z-10 w-4/5 h-[600px] rounded-lg overflow-hidden shadow-lg">
         <MapContainer
           center={mapCenter}
           zoom={mapZoom}

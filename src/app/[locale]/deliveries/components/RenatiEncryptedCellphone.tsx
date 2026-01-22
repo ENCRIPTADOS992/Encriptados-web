@@ -7,6 +7,31 @@ const FeaturedProductCard = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const [price, setPrice] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        const response = await fetch(
+          "https://encriptados.es/wp-json/encriptados/v1/products/by-category-language?category_id=35&lang=es&sim_region=global"
+        );
+        const data = await response.json();
+        const renatiProduct = data.products.find(
+          (p: any) => p.sku === "RENATI" || p.name === "Renati" // Check by SKU or Name to be safe
+        );
+
+        if (renatiProduct && renatiProduct.price) {
+          setPrice(renatiProduct.price);
+        }
+      } catch (error) {
+        console.error("Error fetching Renati price:", error);
+      }
+    };
+
+    fetchPrice();
+  }, []);
+
+
   const handleBuyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -16,9 +41,9 @@ const FeaturedProductCard = () => {
 
     const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
     if (match) {
-      const locale = match[1]; 
+      const locale = match[1];
       if (!baseHref.startsWith(`/${locale}/`)) {
-        finalHref = `/${locale}${baseHref}`; 
+        finalHref = `/${locale}${baseHref}`;
       }
     }
 
@@ -62,9 +87,9 @@ const FeaturedProductCard = () => {
           />
           <h2 className="text-xl font-bold">Celular Encriptado Renati</h2>
 
-         <div className="mt-2 flex items-baseline gap-1">
+          <div className="mt-2 flex items-baseline gap-1">
             <span className="text-xs font-normal">Desde:</span>
-            <span className="text-base font-normal">$650.00</span>
+            <span className="text-base font-normal">${price ? parseFloat(price).toFixed(2) : "..."}</span>
           </div>
 
 

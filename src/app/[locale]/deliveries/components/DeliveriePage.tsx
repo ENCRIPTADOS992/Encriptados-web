@@ -46,19 +46,19 @@ const DeliveriesPage = () => {
         <JoinUsModalProvider>
           <ModalJoinUsDeliveries />
           <BannerDeliveries />
-          <BannerDeliveriesIpad/>
-          <BannerDeliveriesMobile/>
+          <BannerDeliveriesIpad />
+          <BannerDeliveriesMobile />
           <div id="deliveries-map">
             <DeliveriesMap />
           </div>
-          <section className="w-full flex justify-center pt-10 pb-10 bg-[#eaf2f6]">
+          <section className="w-full flex justify-center pt-0 pb-16 bg-[#eaf2f6]">
             <TelegramButton />
           </section>
           <HowItWorksDeliveries />
           <HowItWorksDeliveriesTablet />
           <HowItWorksDeliveriesMobile />
           <RenatiEncryptedCellphone />
-          <RenatiEncryptedCellphoneIpad/>
+          <RenatiEncryptedCellphoneIpad />
           <RenatiEncryptedCellphoneMobil />
           <FeaturedProductsDeliveries />
           <LogoCarousel />
@@ -76,7 +76,7 @@ const DeliveriesPage = () => {
         </div>
       </div>
     </>
-    
+
   );
 };
 

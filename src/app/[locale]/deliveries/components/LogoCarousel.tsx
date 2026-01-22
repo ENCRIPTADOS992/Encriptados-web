@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const logos = [
-  { id: 1, image: "/images/deliveries/ChatMaillogo.svg" },
+  { id: 1, image: "/images/deliveries/ChatMaillogo.webp" },
   { id: 2, image: "/images/deliveries/cryptcomlogo.webp" },
   { id: 3, image: "/images/deliveries/renatilogo.webp" },
   { id: 4, image: "/images/deliveries/secure_MDMlogo_android.svg" },
