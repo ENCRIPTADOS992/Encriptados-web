@@ -64,8 +64,9 @@ const HowItWorksDeliveriesMobile: React.FC = () => {
           relative z-10
           grid grid-cols-1
           gap-6
-          w-[374px]
+          w-full max-w-[374px]
           mx-auto
+          px-4
         "
       >
         {steps.map((step) => (
@@ -74,7 +75,7 @@ const HowItWorksDeliveriesMobile: React.FC = () => {
             className="
               bg-white rounded-[18px] shadow-lg overflow-hidden
               flex flex-col
-              w-[374px] h-[370px]
+              w-full h-auto min-h-[370px]
               px-4 py-4
             "
           >
@@ -82,7 +83,7 @@ const HowItWorksDeliveriesMobile: React.FC = () => {
               className="
     flex flex-col
     gap-2
-    w-[318px]
+    w-full max-w-[318px]
     mx-auto
   "
             >
@@ -114,7 +115,7 @@ const HowItWorksDeliveriesMobile: React.FC = () => {
                 alt={step.title}
                 className="
                   mx-auto object-cover
-                  w-[318px] h-[215px]
+                  w-full max-w-[318px] h-[215px]
                   rounded-[16px]
                 "
               />

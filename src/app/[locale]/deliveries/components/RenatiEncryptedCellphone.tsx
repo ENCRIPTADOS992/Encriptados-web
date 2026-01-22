@@ -63,7 +63,7 @@ const FeaturedProductCard = () => {
   };
 
   return (
-    <section className="py-10 bg-[#EAF2F6] hidden lg:flex lg:justify-center">
+    <section className="py-10 bg-[#EAF2F6] hidden xl:flex lg:justify-center">
       <div
         className="relative w-full max-w-6xl rounded-2xl p-6 flex items-center overflow-hidden"
         style={{

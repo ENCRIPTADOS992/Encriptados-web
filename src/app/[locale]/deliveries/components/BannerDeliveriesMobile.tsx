@@ -16,16 +16,18 @@ const BannerDeliveriesMobile = () => {
         bg-gradient-to-b from-white to-[#D3F5FF]
         justify-center
         mt-[58px]
+        overflow-hidden
       "
     >
       <div className="relative w-full max-w-[414px] h-[634px] text-black px-4">
         <div
           className="
             absolute
-            top-[-10px] left-[20px]
-            w-[374px]
+            top-[15px] left-0 right-0 mx-auto
+            w-full max-w-[374px]
             flex flex-col items-center text-center
             gap-[44px]
+            px-4
           "
         >
           <div
@@ -50,7 +52,7 @@ const BannerDeliveriesMobile = () => {
                 className="
                   font-inter font-bold
                   text-[18px] leading-[1]
-                  max-w-[374px]
+                  w-full
                   mx-auto
                 "
               >
@@ -62,7 +64,7 @@ const BannerDeliveriesMobile = () => {
                 className="
                   font-normal
                   text-[16px] leading-[1]
-                  max-w-[374px]
+                  w-full
                   mx-auto
                 "
               >
@@ -77,8 +79,8 @@ const BannerDeliveriesMobile = () => {
               bg-[#35CDFB] text-black font-semibold
               shadow-lg hover:bg-[#007acc] transition
               rounded-[34px]
-              w-[269px] h-[44px]
-              px-[44px] py-[10px]
+              w-full max-w-[269px] h-[44px]
+              px-[20px] py-[10px]
               text-[14px]
             "
             onClick={handleScrollToMap}
@@ -90,8 +92,8 @@ const BannerDeliveriesMobile = () => {
         <div
           className="
             absolute
-            top-[253px] left-[63px]
-            w-[351px] h-[289px]
+            top-[253px] left-1/2 transform -translate-x-1/2
+            w-full max-w-[351px] h-[289px]
           "
         >
           <img
