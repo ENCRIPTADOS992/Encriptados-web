@@ -10,19 +10,20 @@ const BannerDeliveriesIpad = () => {
   return (
     <section
       className="
-        hidden sm:flex lg:hidden
+        hidden sm:flex xl:hidden
         w-full h-[310px]
         bg-gradient-to-b from-white to-[#D3F5FF]
         justify-center
         mt-[80px]
       "
     >
-      <div className="relative w-full max-w-[744px] h-[344px] text-black px-4">
+      <div className="relative w-full max-w-[1024px] h-[344px] text-black px-4 mx-auto">
         <div
           className="
             absolute z-0
-            top-[-40px] left-[-15px]
+            top-[-40px] left-0 lg:left-[50px]
             w-[270px] h-[350px]
+            hidden md:block
           "
         >
           <img
@@ -35,8 +36,9 @@ const BannerDeliveriesIpad = () => {
         <div
           className="
             absolute z-0
-            top-[-40px] left-[484px]
+            top-[-40px] right-0 lg:right-[50px]
             w-[270px] h-[350px]
+            hidden md:block
           "
         >
           <img
@@ -48,10 +50,11 @@ const BannerDeliveriesIpad = () => {
         <div
           className="
             absolute
-            top-[20px] left-[33px]
-            w-[678px]
+            top-[20px] left-0 right-0 mx-auto
+            w-full max-w-[678px]
             flex flex-col items-center text-center
-            gap-[44px]
+            gap-[24px]
+            z-10
           "
         >
           <div
@@ -68,8 +71,8 @@ const BannerDeliveriesIpad = () => {
             <h1
               className="
                 font-inter font-bold
-                text-[20px] leading-[1]
-                max-w-[478px]
+                text-[20px] md:text-[32px] leading-[1.2]
+                max-w-[478px] md:max-w-[600px]
                 mx-auto
               "
             >
@@ -80,8 +83,8 @@ const BannerDeliveriesIpad = () => {
             <p
               className="
                 font-normal
-                text-[17px] leading-[1]
-                max-w-[364px]
+                text-[17px] md:text-[20px] leading-[1]
+                max-w-[364px] md:max-w-[500px]
                 mx-auto
               "
             >

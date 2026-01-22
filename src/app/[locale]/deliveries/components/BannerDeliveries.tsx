@@ -10,7 +10,7 @@ const BannerDeliveries = () => {
   return (
     <section
       className="
-        hidden lg:flex
+        hidden xl:flex
         w-full h-[580px]
         bg-gradient-to-b from-white to-[#D3F5FF]
         flex justify-center
@@ -81,10 +81,10 @@ const BannerDeliveries = () => {
               Encuentra un punto de recogida cercano a ti
             </p>
           </div>
-          <button 
-          type="button"
-          className="mt-6 bg-[#35CDFB] text-black px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-[#007acc] transition text-lg"
-          onClick={handleScrollToMap}
+          <button
+            type="button"
+            className="mt-6 bg-[#35CDFB] text-black px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-[#007acc] transition text-lg"
+            onClick={handleScrollToMap}
           >
             Ver Lugares de Entrega
           </button>

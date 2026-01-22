@@ -57,7 +57,7 @@ const FeaturedProductCardTablet = () => {
   };
 
   return (
-    <section className="py-10 bg-[#EAF2F6] hidden sm:flex lg:hidden flex justify-center">
+    <section className="py-10 bg-[#EAF2F6] hidden sm:flex xl:hidden flex justify-center">
       <div
         className="
           relative

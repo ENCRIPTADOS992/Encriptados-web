@@ -84,7 +84,7 @@ const FeaturedProductCardMobile = () => {
         "
       >
         {/* bloque texto 374px */}
-        <div className="relative z-10 w-full w-[374px] h-[228px] flex flex-col gap-4 text-white">
+        <div className="relative z-10 w-full max-w-[374px] h-auto flex flex-col gap-4 text-white">
           <img
             src="/images/deliveries/image 316.webp"
             alt="Renati Logo"
@@ -112,7 +112,7 @@ const FeaturedProductCardMobile = () => {
                 hover:bg-gray-200
                 transition
                 self-start
-                w-[374px]
+                w-full max-w-[374px]
                 h-[54px]
                 "
           >
@@ -124,7 +124,7 @@ const FeaturedProductCardMobile = () => {
           className="
           relative
           mt-6
-          w-[375px] 
+          w-full max-w-[375px] 
           h-[180px]          
           self-center
         "
@@ -133,7 +133,7 @@ const FeaturedProductCardMobile = () => {
             src="/images/deliveries/cellphone.webp"
             alt="Celular Encriptado Renati"
             className="
-            w-[375px] 
+            w-full max-w-[375px] 
             h-[308px]
             object-cover
             object-top        
