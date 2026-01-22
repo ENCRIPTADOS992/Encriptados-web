@@ -7,6 +7,30 @@ const FeaturedProductCardMobile = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const [price, setPrice] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        const response = await fetch(
+          "https://encriptados.es/wp-json/encriptados/v1/products/by-category-language?category_id=35&lang=es&sim_region=global"
+        );
+        const data = await response.json();
+        const renatiProduct = data.products.find(
+          (p: any) => p.sku === "RENATI" || p.name === "Renati"
+        );
+
+        if (renatiProduct && renatiProduct.price) {
+          setPrice(renatiProduct.price);
+        }
+      } catch (error) {
+        console.error("Error fetching Renati price:", error);
+      }
+    };
+
+    fetchPrice();
+  }, []);
+
   const handleBuyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -73,7 +97,7 @@ const FeaturedProductCardMobile = () => {
 
           <div className="flex items-baseline gap-1">
             <span className="text-[12px] font-normal">Desde:</span>
-            <span className="text-[20px] font-medium">$650.00</span>
+            <span className="text-[20px] font-medium">${price ? parseFloat(price).toFixed(2) : "..."}</span>
           </div>
 
           <button
@@ -96,26 +120,26 @@ const FeaturedProductCardMobile = () => {
           </button>
         </div>
 
-          <div
-        className="
+        <div
+          className="
           relative
           mt-6
           w-[375px] 
           h-[180px]          
           self-center
         "
-      >
-        <img
-          src="/images/deliveries/cellphone.webp"
-          alt="Celular Encriptado Renati"
-          className="
+        >
+          <img
+            src="/images/deliveries/cellphone.webp"
+            alt="Celular Encriptado Renati"
+            className="
             w-[375px] 
             h-[308px]
             object-cover
             object-top        
           "
-        />
-      </div>
+          />
+        </div>
       </div>
     </section>
   );

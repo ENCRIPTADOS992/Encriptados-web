@@ -35,28 +35,13 @@ export const usePriceVisibility = (targetRef: React.RefObject<HTMLElement>) => {
       const observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
-          const rect = entry.boundingClientRect;
-          const rootBounds = entry.rootBounds;
-
-          if (!rootBounds) {
-            setIsVisible(entry.isIntersecting);
-            return;
-          }
-
-          const viewportTop = rootBounds.top;
-          const isBelowPrice = !entry.isIntersecting && rect.bottom <= viewportTop;
-
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          } else if (isBelowPrice) {
-            setIsVisible(false);
-          } else {
-            setIsVisible(true);
-          }
+          // Simplificado: visible si está intersecando con el viewport
+          setIsVisible(entry.isIntersecting);
         },
         {
           root: null,
-          threshold: 0.1,
+          threshold: 0,
+          rootMargin: "-50px 0px 0px 0px", // Margen superior para activar un poco antes
         }
       );
 

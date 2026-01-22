@@ -7,6 +7,30 @@ const FeaturedProductCardTablet = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const [price, setPrice] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        const response = await fetch(
+          "https://encriptados.es/wp-json/encriptados/v1/products/by-category-language?category_id=35&lang=es&sim_region=global"
+        );
+        const data = await response.json();
+        const renatiProduct = data.products.find(
+          (p: any) => p.sku === "RENATI" || p.name === "Renati"
+        );
+
+        if (renatiProduct && renatiProduct.price) {
+          setPrice(renatiProduct.price);
+        }
+      } catch (error) {
+        console.error("Error fetching Renati price:", error);
+      }
+    };
+
+    fetchPrice();
+  }, []);
+
   const handleBuyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -86,7 +110,7 @@ const FeaturedProductCardTablet = () => {
 
             <div className="mt-2 flex items-baseline gap-1">
               <span className="text-[12px] font-normal">Desde:</span>
-              <span className="text-[18px] font-normal">$650.00</span>
+              <span className="text-[18px] font-normal">${price ? parseFloat(price).toFixed(2) : "..."}</span>
             </div>
 
           </div>
