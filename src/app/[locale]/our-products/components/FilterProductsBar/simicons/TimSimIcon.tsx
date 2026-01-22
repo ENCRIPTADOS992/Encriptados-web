@@ -1,10 +1,17 @@
 import React from "react";
 
-const TimSimIcon = () => {
+interface TimSimIconProps {
+  width?: number | string;
+  height?: number | string;
+  className?: string;
+}
+
+const TimSimIcon = ({ width = 115, height = 25, className }: TimSimIconProps) => {
   return (
     <svg
-      width="115"
-      height="25"
+      width={width}
+      height={height}
+      className={className}
       viewBox="0 0 101 29"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

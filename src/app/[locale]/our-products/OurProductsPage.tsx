@@ -42,9 +42,26 @@ const OurProductsPage = () => {
   }, [filters]);
 
 
-const { isVisible: isCardVisible } = usePriceVisibility(cardSectionRef);
+  // Detectar cuando la barra de filtros estática sale del viewport
+  const { isVisible: isFilterVisible } = usePriceVisibility(filterRef);
 
-const showFloatingFilters = !isCardVisible;
+  // Estado para controlar si el usuario ha cerrado el modal flotante
+  const [isFloatingModalDismissed, setIsFloatingModalDismissed] = useState(false);
+
+  // Mostrar modal flotante cuando los filtros estáticos no son visibles y no ha sido cerrado
+  const showFloatingFilters = !isFilterVisible && !isFloatingModalDismissed;
+
+  // Handler para cerrar el modal flotante
+  const handleCloseFloatingModal = () => {
+    setIsFloatingModalDismissed(true);
+  };
+
+  // Reset del estado cuando los filtros vuelven a ser visibles (para que el modal pueda reaparecer)
+  useEffect(() => {
+    if (isFilterVisible) {
+      setIsFloatingModalDismissed(false);
+    }
+  }, [isFilterVisible]);
 
 
   return (
@@ -57,21 +74,21 @@ const showFloatingFilters = !isCardVisible;
 
         {/* Banner para dispositivos mayores que móvil */}
         <div
-        className="hidden sm:block w-full bg-black"
-        style={{
-          background:
-            "radial-gradient(circle at 75% -70%, #7EE0FF 0%, rgb(37, 191, 238) 20%, #000 60%)",
-        }}
-      >
-        <SectionWrapper>
-          <BannerOurProducts />
-        </SectionWrapper>
-      </div>
+          className="hidden sm:block w-full bg-black"
+          style={{
+            background:
+              "radial-gradient(circle at 75% -70%, #7EE0FF 0%, rgb(37, 191, 238) 20%, #000 60%)",
+          }}
+        >
+          <SectionWrapper>
+            <BannerOurProducts />
+          </SectionWrapper>
+        </div>
         <div className="bg-[#000]">
           <SectionWrapper className="bg-black py-1">
-            <Typography 
-              variant="h2" 
-              as="h1" 
+            <Typography
+              variant="h2"
+              as="h1"
               className="bg-gradient-to-r text-2xl sm:text-3xl md:text-[38px] justify-center font-bold mt-2 sm:mt-4 flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-6 sm:mb-7 text-center"
             >
               {t("filterProducts.title")}
@@ -92,6 +109,7 @@ const showFloatingFilters = !isCardVisible;
                   updateFilters={updateFilters}
                   products={products}
                   variant="floating"
+                  onClose={handleCloseFloatingModal}
                 />
               )}
 

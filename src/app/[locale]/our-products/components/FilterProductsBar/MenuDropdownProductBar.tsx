@@ -67,7 +67,7 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
                   onChangeExternal(item.value);
                 }
               }}
-              className={`flex items-center hover:bg-[#3E3E3E] transition duration-150 ease-in-out bg-[#222222] m-4 rounded-xl ${
+              className={`flex items-center hover:bg-[#3E3E3E] transition duration-150 ease-in-out bg-[#222222] mx-1 my-1 p-2 rounded-xl ${
                 selectedItem === item.value ? "bg-[#3E3E3E]" : ""
               }`}
             >
