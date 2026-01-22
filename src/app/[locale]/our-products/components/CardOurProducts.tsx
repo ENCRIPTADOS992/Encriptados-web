@@ -54,12 +54,9 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         background="bg-custom-gradient-our-products-black"
         titleColor="text-white"
         descriptionColor="text-white"
-        showMoreInfo={true}
-        buyText={t("buyButton")}
-        moreInfoText={t("moreInfo")}
-        onBuyClick={() => handleBuy("508")}
-        moreInfoUrl="/our-products/sim-more-info?productId=508"
-        onMoreInfoClick={() => handleMoreInfo("508")}
+        showMoreInfo={false}
+        buyText={t("moreInfo")}
+        onBuyClick={() => handleMoreInfo("508")}
       />
 
       {/* SIM TIM → productId = 454 */}
@@ -71,12 +68,9 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         background="bg-custom-gradient-our-sim-blue2"
         titleColor="text-black"
         descriptionColor="text-black"
-        buyText={t("buyButton")}
-        moreInfoText={t("moreInfo")}
-        moreInfoColor="text-black"
-        onBuyClick={() => handleBuy("454")}
-        moreInfoUrl="/our-products/sim-more-info?productId=454"
-        onMoreInfoClick={() => handleMoreInfo("454")}
+        showMoreInfo={false}
+        buyText={t("moreInfo")}
+        onBuyClick={() => handleMoreInfo("454")}
       />
     </div>
   );
