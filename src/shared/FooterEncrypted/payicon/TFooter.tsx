@@ -3,11 +3,10 @@ import React from "react";
 const TFooter = () => {
   return (
     <svg
-      width="45"
-      height="44"
       viewBox="0 0 45 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-full w-auto"
     >
       <path
         d="M22.6571 43.9418C34.6897 43.9418 44.444 34.1875 44.444 22.1549C44.444 10.1223 34.6897 0.36792 22.6571 0.36792C10.6245 0.36792 0.870117 10.1223 0.870117 22.1549C0.870117 34.1875 10.6245 43.9418 22.6571 43.9418Z"
