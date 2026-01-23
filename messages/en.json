@@ -1147,9 +1147,9 @@
       "title": "Security Test",
       "description": "How secure are your devices?"
     },
-    "offers": {
-      "title": "Offers",
-      "description": "Discover our offers"
+    "deliveries": {
+      "title": "Deliveries",
+      "description": "Learn about our shipping methods"
     }
   },
   "usCategories": {
@@ -1207,7 +1207,7 @@
         "label": "Store",
         "new": "New"
       },
-      "deliveries": "Deliveries",
+      "offers": "Offers",
       "aboutUs": "About Us",
       "login": "Log In",
       "notAvailable": "Not Available",

@@ -47,7 +47,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
           <button
             type="button"
             onClick={onBuyClick}
-            className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-6 py-2 transition w-full max-w-[180px] whitespace-nowrap mx-auto sm:mx-0"
+            className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-4 sm:px-6 py-2 transition w-auto min-w-[140px] sm:max-w-[180px] text-center mx-auto sm:mx-0"
           >
             {buyText}
           </button>
@@ -73,7 +73,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
             )
           )}
         </div>
-         <div className="w-full sm:w-[45%] h-full">
+        <div className="w-full sm:w-[45%] h-full">
           <div className="flex justify-center sm:absolute sm:bottom-0 ">
             <Image
               src={imageSrc}
