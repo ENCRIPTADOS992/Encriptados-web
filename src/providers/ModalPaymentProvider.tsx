@@ -24,14 +24,18 @@ interface ModalPaymentParams {
   languageCode?: string;
   productid?: string;
   theme?: string;
-   mode?: Mode;                        
+  mode?: Mode;
   layout?: "default" | "compact";
-  selectedOption?: number;        
-  categoryId?: number | string;  
-  categoryName?: string;          
-  provider?: string;              
+  selectedOption?: number;
+  categoryId?: number | string;
+  categoryName?: string;
+  provider?: string;
   brand?: string;
   initialPrice?: number;
+  /** GB label from URL to pre-select correct data plan (e.g., "5 GB") */
+  initialGb?: string;
+  /** Region/country for fetching regional pricing (e.g., "Emiratos Árabes Unidos") */
+  initialRegion?: string;
   /** URL de origen para compartir (se captura automáticamente al abrir el modal) */
   sourceUrl?: string;
   /** Variantes disponibles para productos con múltiples precios */
@@ -65,14 +69,14 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
 
 
   const openModal = (newParams?: ModalPaymentParams) => {
-        console.log("💠 [Provider] openModal() llamado con:", newParams);
+    console.log("💠 [Provider] openModal() llamado con:", newParams);
     // Capturar la URL de origen si no se proporciona
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
     setParams(prev => ({ ...prev, ...(newParams ?? {}), sourceUrl }));
     setIsModalOpen(true);
   };
   const closeModal = () => {
-        console.log("💠 [Provider] closeModal() llamado");
+    console.log("💠 [Provider] closeModal() llamado");
     setIsModalOpen(false);
     setParams({});
   };

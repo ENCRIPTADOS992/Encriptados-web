@@ -4,7 +4,7 @@ import { generateSlug } from "@/shared/utils/slugUtils";
 // Hook para obtener categorías de productos traducidas
 export function useTranslatedProductsCategories(): any {
   const t = useTranslations("productsCategories");
-  
+
   // Función helper para generar URLs de Apps/Sistemas de forma dinámica
   // replica la lógica de getProductLink para apps/sistemas
   const getAppUrl = (name: string) => {
@@ -51,7 +51,7 @@ export function useTranslatedProductsCategories(): any {
           description: t("sims.items.timSim.description", {
             defaultValue: "Conoce cómo funciona la SIM TIM",
           }),
-        }   
+        }
       ],
     },
     {
@@ -60,7 +60,7 @@ export function useTranslatedProductsCategories(): any {
         defaultValue:
           "Productos increíbles, aplicaciones y sistemas con encriptación de inicio a fin",
       }),
-      link:"",
+      link: "",
       image: "/images/mega-menu/aplicaciones.jpeg",
       items: [
         {
@@ -342,12 +342,12 @@ export function useTranslatedOthersCategories(): any[] {
       items: [],
     },
     {
-      title: t2("offers.title", { defaultValue: "Ofertas" }),
-      description: t2("offers.description", {
-        defaultValue: "Descubre nuestras ofertas",
+      title: t2("deliveries.title", { defaultValue: "Entregas" }),
+      description: t2("deliveries.description", {
+        defaultValue: "Conoce nuestros métodos de envío",
       }),
-      link: "/offers",
-      image: "/images/mega-menu/ofertas.jpeg",
+      link: "/deliveries",
+      image: "/images/mega-menu/entregas.webp",
       items: [],
     },
   ];
@@ -374,7 +374,7 @@ export function useTranslatedUsCategories(): any[] {
       image: "/images/mega-menu/embajador.png",
       link: "/ambassadors",
       items: [],
-    },    
+    },
     {
       title: t2("locations.title", { defaultValue: "Donde Estamos" }),
       description: t2("locations.description", {

@@ -21,8 +21,8 @@ export default function EncryptedHeader() {
   const t = useTranslations("encryptedHeader");
 
   const productsCategories = useTranslatedProductsCategories();
-  const othersCategories = useTranslatedOthersCategories(); 
-  const usCategories = useTranslatedUsCategories(); 
+  const othersCategories = useTranslatedOthersCategories();
+  const usCategories = useTranslatedUsCategories();
 
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
@@ -72,8 +72,8 @@ export default function EncryptedHeader() {
       menu === "products"
         ? productsCategories[0]?.items[0]
         : menu === "others"
-        ? othersCategories[0]?.items[0]
-        : usCategories[0]?.items[0]
+          ? othersCategories[0]?.items[0]
+          : usCategories[0]?.items[0]
     );
     setIsDesktopMenuOpen(true);
   };
@@ -90,8 +90,8 @@ export default function EncryptedHeader() {
   }
 
   return (
-    <header 
-      className="relative z-50" 
+    <header
+      className="relative z-50"
       ref={headerRef}
       onMouseLeave={closeMegaMenu}
     >
@@ -123,13 +123,13 @@ export default function EncryptedHeader() {
               </Link>
 
               <Link
-                href="/deliveries"
+                href="/offers"
                 prefetch
                 className="px-4 py-2 text-sm text-white hover:bg-[#054d6121] rounded-full transition-colors"
               >
-                {t("menu.deliveries", { defaultValue: "Entregas" })}
+                {t("menu.offers", { defaultValue: "Ofertas" })}
               </Link>
-              
+
               <Navigation
                 isOpen={isDesktopMenuOpen && currentMenu === "products"}
                 setIsOpen={() => handleMenuChange("products")}
@@ -151,7 +151,7 @@ export default function EncryptedHeader() {
                 label={t("menu.us")}
                 buttonClassName="px-4 py-2"
               />
-               
+
 
               {/* Ingresar */}
               {/* <Link

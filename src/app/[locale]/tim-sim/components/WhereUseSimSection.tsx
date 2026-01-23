@@ -19,25 +19,25 @@ const TIM_SERVICE_OPTIONS: {
   timprovider: string;
   icon: string;
 }[] = [
-  {
-    id: "sim_fisica",
-    translationKey: "physicalSim",
-    timprovider: "physicsimtim",
-    icon: "/images/encrypted-sim/icons/sim_card.png",
-  },
-  {
-    id: "recarga_datos",
-    translationKey: "recharge",
-    timprovider: "datarechargetim",
-    icon: "/images/encrypted-sim/icons/currency_exchange.png",
-  },
-  {
-    id: "esim_datos",
-    translationKey: "esimData",
-    timprovider: "esimplusdatatim",
-    icon: "/images/encrypted-sim/icons/apps.png",
-  },
-];
+    {
+      id: "sim_fisica",
+      translationKey: "physicalSim",
+      timprovider: "physicsimtim",
+      icon: "/images/encrypted-sim/icons/sim_card.png",
+    },
+    {
+      id: "recarga_datos",
+      translationKey: "recharge",
+      timprovider: "datarechargetim",
+      icon: "/images/encrypted-sim/icons/currency_exchange.png",
+    },
+    {
+      id: "esim_datos",
+      translationKey: "esimData",
+      timprovider: "esimplusdatatim",
+      icon: "/images/encrypted-sim/icons/apps.png",
+    },
+  ];
 
 interface WhereUseSimSectionProps {
   locale: string;
@@ -79,10 +79,10 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
           </p>
         </div>
 
-        <div className="w-full bg-white rounded-[24px] md:rounded-[32px] px-3 sm:px-4 md:px-8 py-5 sm:py-6 mb-10 shadow-lg">
+        <div className="w-fit mx-auto bg-white rounded-[24px] md:rounded-[32px] px-3 sm:px-4 md:px-8 py-5 sm:py-6 mb-10 shadow-lg">
           {/* Layout responsive con flex-wrap */}
-          <div className="flex flex-wrap items-start gap-4 lg:gap-6">
-            
+          <div className="flex flex-wrap items-start justify-center gap-4 lg:gap-6">
+
             {/* Categoría */}
             <div className="w-full lg:w-auto">
               <p className="text-[12px] font-medium text-[#7E7E7E] mb-3">
@@ -111,10 +111,9 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
                         rounded-lg
                         border
                         transition-all duration-200
-                        ${
-                          isActive
-                            ? "bg-white border-[#1E90FF] text-[#1E90FF] shadow-sm"
-                            : "bg-[#E8EAED] border-[#E8EAED] text-[#5F6368] hover:bg-white hover:border-[#1E90FF] hover:text-[#1E90FF] hover:shadow-sm"
+                        ${isActive
+                          ? "bg-white border-[#1E90FF] text-[#1E90FF] shadow-sm"
+                          : "bg-[#E8EAED] border-[#E8EAED] text-[#5F6368] hover:bg-white hover:border-[#1E90FF] hover:text-[#1E90FF] hover:shadow-sm"
                         }
                       `}
                     >
@@ -123,11 +122,10 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
                           src={option.icon}
                           alt={option.translationKey}
                           fill
-                          className={`object-contain transition-all duration-200 ${
-                            isActive 
-                              ? "[filter:brightness(0)_saturate(100%)_invert(42%)_sepia(99%)_saturate(2479%)_hue-rotate(200deg)_brightness(101%)_contrast(101%)]" 
+                          className={`object-contain transition-all duration-200 ${isActive
+                              ? "[filter:brightness(0)_saturate(100%)_invert(42%)_sepia(99%)_saturate(2479%)_hue-rotate(200deg)_brightness(101%)_contrast(101%)]"
                               : "[filter:brightness(0)_saturate(0%)_opacity(0.5)] group-hover:[filter:brightness(0)_saturate(100%)_invert(42%)_sepia(99%)_saturate(2479%)_hue-rotate(200deg)_brightness(101%)_contrast(101%)]"
-                          }`}
+                            }`}
                         />
                       </span>
                       <span className="text-[9px] sm:text-[12px] font-medium text-center leading-tight px-1">
@@ -141,7 +139,7 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
 
             {/* Región/País */}
             {shouldShowTimRegion && (
-              <div className="w-full lg:w-auto lg:flex-1 lg:min-w-[200px]">
+              <div className="w-full lg:w-auto">
                 <p className="text-[12px] font-medium text-[#7E7E7E] mb-3">
                   {t('region')}
                 </p>

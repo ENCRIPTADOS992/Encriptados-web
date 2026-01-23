@@ -21,6 +21,8 @@ interface ProductInfoSectionProps {
   appStoreUrl?: string;
   googlePlayUrl?: string;
   apkUrl?: string;
+  gbBadge?: string;
+  regionBadge?: string;
   translations?: {
     priceFrom?: string;
     buyNow?: string;
@@ -77,10 +79,12 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
   appStoreUrl,
   googlePlayUrl,
   apkUrl,
+  gbBadge,
+  regionBadge,
   translations,
 }) => {
   const { isFromAppMobile } = useAppMobile();
-  
+
   const t = {
     priceFrom: translations?.priceFrom || "Desde",
     buyNow: translations?.buyNow || "Comprar Ahora",
@@ -100,8 +104,8 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
         >
           {/* Product Image - Primera en móvil, segunda en desktop */}
           <motion.div className="space-y-4 order-1 lg:order-2 max-w-md lg:max-w-lg mx-auto lg:mx-0" variants={imageVariants}>
-            {/* Product Image */}
-            <div className="rounded-2xl overflow-hidden bg-[#1a1a1a]">
+            {/* Product Image with Region Badge Overlay */}
+            <div className="relative rounded-2xl overflow-hidden bg-[#1a1a1a]">
               <motion.img
                 src={productImage}
                 alt={productName}
@@ -110,11 +114,16 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               />
+              {regionBadge && (
+                <div className="absolute left-3 bottom-3 inline-flex items-center justify-center rounded-full bg-[#7DDA58] text-[#010101] text-sm font-semibold px-3 py-1.5 shadow-md">
+                  {regionBadge}
+                </div>
+              )}
             </div>
 
             {/* Download Buttons - Ocultos en móvil, visibles en desktop */}
             {hasStoreLinks && (
-              <motion.div 
+              <motion.div
                 className="hidden lg:grid grid-cols-3 gap-3 w-full"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -166,7 +175,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
           {/* Benefits Column - Segunda en móvil, primera en desktop */}
           <motion.div className="space-y-6 order-2 lg:order-1" variants={textVariants}>
             {/* Icon and Title */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ background: "#35CDFB" }}
@@ -174,13 +183,18 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
                 <SimIconSvg width={24} height={24} color="white" />
               </div>
               <h1 className="text-[36px] font-bold text-gray-900 leading-tight">{productName}</h1>
+              {gbBadge && (
+                <span className="inline-flex items-center justify-center rounded-full bg-[#1CB9EC] text-[#010101] text-sm font-semibold px-3 py-1 shadow-md">
+                  {gbBadge}
+                </span>
+              )}
             </div>
 
             {/* Beneficios */}
             {features.length > 0 && (
               <div className="space-y-4">
                 <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">{t.benefitsTitle}</p>
-                <motion.ul 
+                <motion.ul
                   className="space-y-2"
                   initial="hidden"
                   animate="visible"
@@ -189,8 +203,8 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
                   }}
                 >
                   {features.map((feature, idx) => (
-                    <motion.li 
-                      key={idx} 
+                    <motion.li
+                      key={idx}
                       className="flex items-center gap-2"
                       variants={featureVariants}
                     >
@@ -203,7 +217,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
             )}
 
             {/* Línea punteada separadora */}
-            <motion.hr 
+            <motion.hr
               className="border-dashed border-gray-300"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -212,7 +226,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
             />
 
             {/* Precio */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}

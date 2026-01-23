@@ -30,7 +30,7 @@ import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 
 // Configuración y utilidades locales
-import { 
+import {
   getSimProductConfig,
   getConfigForProduct,
   isValidSimProductSlug,
@@ -47,8 +47,8 @@ import {
 } from "./simProductConfig";
 
 interface PageProps {
-  slug: string; 
-  locale: string; 
+  slug: string;
+  locale: string;
   initialProduct: ProductById | null;
 }
 
@@ -66,7 +66,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   const { openModal } = useModalPayment();
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // Traducciones
   const t = useTranslations("EncryptedSimPage");
 
@@ -78,7 +78,9 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // Obtener productId desde query params
   const productIdFromUrl = searchParams.get("productId");
   const priceFromUrl = searchParams.get("price");
-  
+  const gbFromUrl = searchParams.get("gb");
+  const regionFromUrl = searchParams.get("region");
+
   // Config estático para assets (banners, imágenes) - fallback al slug de la URL
   const staticConfig = useMemo(() => getSimProductConfig(slug), [slug]);
 
@@ -94,7 +96,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     async function loadProduct() {
       // Determinar qué productId usar
       const productIdToLoad = productIdFromUrl || (staticConfig?.productId ? String(staticConfig.productId) : null);
-      
+
       if (!productIdToLoad) {
         setIsLoading(false);
         setError("Producto no disponible - No se especificó ID");
@@ -131,7 +133,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     if (!product || isLoading || validationChecked) return;
 
     const validation = validateProductMatchesSlug(product, slug, locale);
-    
+
     // Debug para identificar por qué redirige
     if (!validation.isValid) {
       console.warn(`[SIM Page] Validation mismatch for Product ${product.id}:`, {
@@ -173,15 +175,15 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         `debería estar en "${validation.expectedSlug}", no en "${slug}". ` +
         `Redirigiendo a ${validation.redirectUrl}`
       );
-      
+
       // Construir URL de redirección
       const targetUrl = new URL(validation.redirectUrl, window.location.origin);
-      
+
       // Mantener params existentes (productId, price, buy)
       searchParams.forEach((value, key) => {
         targetUrl.searchParams.set(key, value);
       });
-      
+
       // Marcar como redirigido para evitar bucles
       targetUrl.searchParams.set("rd", "1");
 
@@ -240,8 +242,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       const urlPrice = parseFloat(priceFromUrl);
       if (!isNaN(urlPrice)) return urlPrice;
     }
-    const productPrice = typeof product?.price === "string" 
-      ? parseFloat(product.price) 
+    const productPrice = typeof product?.price === "string"
+      ? parseFloat(product.price)
       : product?.price;
     return productPrice ?? 0;
   }, [priceFromUrl, product?.price]);
@@ -250,14 +252,14 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // AUTO-POPUP: Detectar parámetro buy=1 y abrir modal automáticamente
   // ═══════════════════════════════════════════════════════════════════════════
   const buyPopupTriggered = useRef(false);
-  
+
   useEffect(() => {
     const buyParam = searchParams.get("buy");
     const productIdToUse = productIdFromUrl || (staticConfig?.productId ? String(staticConfig.productId) : null);
 
     if (buyParam === "1" && productIdToUse && !buyPopupTriggered.current) {
       buyPopupTriggered.current = true;
-      
+
       const timer = setTimeout(() => {
         const price =
           typeof effectivePrice === "number" && !Number.isNaN(effectivePrice)
@@ -270,12 +272,12 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           selectedOption: 40,
           initialPrice: price,
         });
-        
+
         const url = new URL(window.location.href);
         url.searchParams.delete("buy");
         window.history.replaceState({}, "", url.toString());
       }, 500);
-      
+
       return () => clearTimeout(timer);
     }
   }, [searchParams, locale, effectivePrice, openModal, productIdFromUrl, staticConfig]);
@@ -294,6 +296,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       languageCode: locale,
       selectedOption: 40,
       initialPrice: priceOverride ?? effectivePrice,
+      initialGb: gbFromUrl || undefined,
+      initialRegion: regionFromUrl || undefined,
     });
   };
 
@@ -365,6 +369,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             appStoreUrl="https://apps.apple.com/app/encriptados"
             googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
             apkUrl="https://encriptados.io/apk"
+            gbBadge={gbFromUrl || undefined}
+            regionBadge={regionFromUrl || undefined}
             translations={heroTranslations}
           />
           <WhereUseSimSection locale={locale} />
@@ -383,42 +389,44 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           translations={heroTranslations}
         />
       )}
-      
-      {/* Sección de Cobertura con buscador */}
-      <motion.section 
-        className="py-12 md:py-16"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <BasicFormProvider>
-            <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
-              <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">
-                {t("coverageTitle")}
-              </span>
-            </h2>
-            <div className="max-w-3xl mx-auto text-center mb-6">
-              <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
-                {t("coverageDescription")}
-              </p>
-            </div>
 
-            <div className="max-w-3xl mx-auto">
-              <SearchInput
-                inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
-                iconPosition="left"
-                name="searchinputcountry"
-                placeholder={t("searchPlaceholder")}
-              />
-            </div>
-            <div className="max-w-3xl mx-auto mt-4">
-              <ListOfPlans data={ListOfProductsData} />
-            </div>
-          </BasicFormProvider>
-        </div>
-      </motion.section>
+      {/* Sección de Cobertura con buscador - Solo para Encriptados, no TIM */}
+      {showEncryptedSections && (
+        <motion.section
+          className="py-12 md:py-16"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <BasicFormProvider>
+              <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] text-center font-bold leading-[1.3] mb-6">
+                <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">
+                  {t("coverageTitle")}
+                </span>
+              </h2>
+              <div className="max-w-3xl mx-auto text-center mb-6">
+                <p className="text-base sm:text-lg leading-relaxed text-[#012029]">
+                  {t("coverageDescription")}
+                </p>
+              </div>
+
+              <div className="max-w-3xl mx-auto">
+                <SearchInput
+                  inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
+                  iconPosition="left"
+                  name="searchinputcountry"
+                  placeholder={t("searchPlaceholder")}
+                />
+              </div>
+              <div className="max-w-3xl mx-auto mt-4">
+                <ListOfPlans data={ListOfProductsData} />
+              </div>
+            </BasicFormProvider>
+          </div>
+        </motion.section>
+      )}
 
       {/* Sección de Características de Seguridad */}
       <motion.section
@@ -431,7 +439,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       </motion.section>
 
       {/* Sección Nuestro Objetivo */}
-      <motion.section 
+      <motion.section
         className="bg-[#f4f8fa] py-12 md:py-16 lg:py-20"
         variants={sectionVariants}
         initial="hidden"
@@ -444,7 +452,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       </motion.section>
 
       {/* Sección Comunícate desde cualquier lugar */}
-      <motion.section 
+      <motion.section
         className="bg-[#F4F8FA] py-12 md:py-16 lg:py-20"
         variants={sectionVariants}
         initial="hidden"
@@ -462,7 +470,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       </motion.section>
 
       {/* Sección Paga solo por lo que usas */}
-      <motion.section 
+      <motion.section
         className="py-12 md:py-16 lg:py-20"
         variants={sectionVariants}
         initial="hidden"
@@ -475,7 +483,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       </motion.section>
 
       {/* Sección Por qué llamar con la SIM Encriptada */}
-      <motion.section 
+      <motion.section
         className="py-16 md:py-20"
         variants={sectionVariants}
         initial="hidden"
@@ -493,7 +501,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       </motion.section>
 
       {/* Sección Cobertura en más de 200 países */}
-      <motion.section 
+      <motion.section
         className="pt-12 md:pt-16"
         variants={sectionVariants}
         initial="hidden"

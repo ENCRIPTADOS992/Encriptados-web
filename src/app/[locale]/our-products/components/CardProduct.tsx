@@ -109,23 +109,23 @@ const CardProduct: React.FC<CardSimProps> = ({
     }
   }, [badges, id]);
 
-    const displayPrice = (() => {
-      const normalizedProvider = provider?.toLowerCase().trim() ?? "";
+  const displayPrice = (() => {
+    const normalizedProvider = provider?.toLowerCase().trim() ?? "";
 
-      // Soportar tanto "Sim TIM" como "tim" del backend
-      const isSimTim =
-        normalizedProvider === "tim" || 
-        normalizedProvider.includes("sim tim") || 
-        normalizedProvider.includes("tim");
+    // Soportar tanto "Sim TIM" como "tim" del backend
+    const isSimTim =
+      normalizedProvider === "tim" ||
+      normalizedProvider.includes("sim tim") ||
+      normalizedProvider.includes("tim");
 
-      if (isSimTim && planDataAmount != null) {
-        return `$ ${planDataAmount} USD`;
-      }
+    if (isSimTim && planDataAmount != null) {
+      return `$ ${planDataAmount} USD`;
+    }
 
-      return priceRange;
-    })();
+    return priceRange;
+  })();
 
-    // Pre-calcular URL de "Más información" para usar en un Link nativo
+  // Pre-calcular URL de "Más información" para usar en un Link nativo
   // Esto mejora SEO, accesibilidad y velocidad (prefetching de Next.js)
   const moreInfoUrl = (() => {
     const url = getProductLink(
@@ -136,14 +136,15 @@ const CardProduct: React.FC<CardSimProps> = ({
       typeProduct
     );
     if (!url) return "#";
-    const qs = `productId=${id}&price=${numericPrice ?? ""}`;
-    // Si la URL ya empieza con /, asumimos que es relativa a la raíz sin locale (next-intl lo maneja si usamos Link)
-    // O si usamos <a> nativo, necesitamos inyectar locale. 
-    // Dado que getProductLink devuelve rutas como "/apps/slug", lo mejor es usar <Link> de next-intl o next/link
-    // Pero aquí estamos en un componente cliente.
-    
-    // Construimos la ruta completa con query params
-    return `${url}?${qs}`;
+
+    // Build query string with all relevant params
+    const params = new URLSearchParams();
+    params.set("productId", String(id));
+    if (numericPrice != null) params.set("price", String(numericPrice));
+    if (badges?.tag) params.set("gb", badges.tag);
+    if (badges?.country?.label) params.set("region", badges.country.label);
+
+    return `${url}?${params.toString()}`;
   })();
 
   return (
@@ -214,10 +215,10 @@ const CardProduct: React.FC<CardSimProps> = ({
                 shadow-md
                 whitespace-nowrap
                 ${
-                  // SIM y SIM TIM (categoría 40) usan azul, Apps/Sistemas/Router usan gris
-                  filters.selectedOption === "40"
-                    ? "bg-[#1CB9EC] text-[#010101]"
-                    : "bg-[#DEDEDE] text-[#010101]"
+                // SIM y SIM TIM (categoría 40) usan azul, Apps/Sistemas/Router usan gris
+                filters.selectedOption === "40"
+                  ? "bg-[#1CB9EC] text-[#010101]"
+                  : "bg-[#DEDEDE] text-[#010101]"
                 }
               `}
             >

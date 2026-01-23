@@ -24,12 +24,12 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
   right,
 }) => (
   <section className="w-full hidden sm:flex lg:hidden justify-center py-8 mt-[30px]">
-    <div className="flex flex-row gap-[20px] w-full max-w-[718px]">
+    <div className="flex flex-row gap-[20px] w-full max-w-[718px] px-6">
       {" "}
       {/* 349*2 + gap */}
       {/* LEFT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[16px] w-[349px] h-[218px] px-4 py-4"
+        className="relative flex flex-col justify-between rounded-[16px] flex-1 h-[218px] px-4 py-4"
         style={{
           background:
             "radial-gradient(120% 120% at 100% 0%, #004A60 0%, #000 100%)",
@@ -43,13 +43,14 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
             {left.description}
           </p>
           <button
-            className="bg-[#E3F8FF] text-[#101010] font-medium rounded-full px-4 py-2 w-[110px] text-[13px] mt-1 mb-1"
+            className="bg-[#E3F8FF] text-[#101010] font-medium rounded-full px-6 py-2 min-w-[140px] text-[14px] mt-1 mb-1 transition-all hover:bg-[#cbf2ff]"
             onClick={left.onButtonClick}
+            style={{ textAlign: 'center', display: 'block' }}
           >
             {left.buttonLabel}
           </button>
           <button
-            className="text-white text-[13px] font-medium underline w-fit"
+            className="text-white text-[13px] font-medium underline w-fit hover:text-gray-200 transition-colors"
             onClick={left.onMoreInfo}
             style={{ marginTop: "-4px" }}
           >
@@ -65,7 +66,7 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
       </div>
       {/* RIGHT CARD */}
       <div
-        className="relative flex flex-col justify-between rounded-[16px] w-[349px] h-[218px] px-4 py-4"
+        className="relative flex flex-col justify-between rounded-[16px] flex-1 h-[218px] px-4 py-4"
         style={{
           background: "linear-gradient(90deg, #35CDFB 0%, #A8EBFF 100%)",
         }}
@@ -78,8 +79,9 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
             {right.subtitle}
           </p>
           <button
-            className="bg-white text-[#101010] font-medium rounded-full px-4 py-2 w-[110px] text-[13px] mt-4"
+            className="bg-white text-[#101010] font-medium rounded-full px-6 py-2 min-w-[140px] text-[13px] mt-4 transition-all hover:bg-gray-50"
             onClick={right.onButtonClick}
+            style={{ textAlign: 'center', display: 'block' }}
           >
             {right.buttonLabel}
           </button>

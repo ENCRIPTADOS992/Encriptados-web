@@ -270,7 +270,6 @@
     "encryptedTitleButon": "SIM Card Encriptada",
     "encryptedTitle": "La SIM Encriptada te brinda la mayor seguridad y anonimato en cualquier parte del mundo",
     "encryptedDescription": "Seguridad y privacidad en tus comunicaciones, realiza llamadas anónimas e irrastreables y protégete contra IMSI Catcher",
-
     "CardSim": {
       "headerTitle": "Recarga de Datos",
       "availableCountries": "+200 países disponibles",
@@ -288,7 +287,6 @@
     "characteristics": {
       "title": "Características principales"
     },
-
     "commonFeatures": {
       "dataMobile": "Datos móviles",
       "speed": "Velocidad de 4/5G LTE",
@@ -304,7 +302,6 @@
       "ultraFastConnection": "Conexión 5G ultra rápida",
       "easyToUseApp": "Aplicación fácil de usar"
     },
-
     "products": {
       "data": {
         "title": "Compra tu plan de DATOS móviles y comunícate con total privacidad",
@@ -318,7 +315,6 @@
         "priceRange": "25 - 500 USD",
         "headerTitle": "Recarga de Datos"
       },
-
       "minutes": {
         "title": "Compra MINUTOS para hacer llamadas anónimas e imposibles de rastrear",
         "description": "Disponible en más de 200 países",
@@ -332,7 +328,6 @@
         "priceRange": "110 - 360 USD",
         "headerTitle": "Recarga de minutos"
       },
-
       "imsi": {
         "title": "Compra cambios de IMSI el equivalente a reemplazar tu SIM por una nueva",
         "description": "Disponible en más de 200 países",
@@ -345,7 +340,6 @@
         "priceRange": "5 - 50 USD",
         "headerTitle": "Recarga de cambio de IMSI"
       },
-
       "esim": {
         "title": "Compra tu eSIM y mejora tu seguridad al instante",
         "description": "Disponible en más de 200 países",
@@ -358,7 +352,6 @@
         "priceRange": "10 USD",
         "headerTitle": "eSIM Virtual"
       },
-
       "sim": {
         "title": "Compra tu SIM y recíbela en cualquier parte del mundo",
         "description": "Disponible en más de 200 países",
@@ -394,7 +387,6 @@
         "title": "Filtros de voz",
         "description": "Utiliza 7 filtros de voz diferentes para mayor anonimato en tus llamadas"
       },
-
       "callback": {
         "title": "Devolución de llamada",
         "description": "Genera un número aleatorio para cada llamada que aparecerá en el identificador del receptor"
@@ -415,7 +407,6 @@
         "title": "Enmascara el IMSI",
         "description": "Oculta tu IMSI para evitar interceptaciones o antenas falsas como IMSI Catcher"
       },
-
       "providerPrivateRed": {
         "title": "Proveedor de red privado",
         "description": "Somos una MVNO privada con total discreción en el uso de tus datos personales"
@@ -466,7 +457,6 @@
       "unlimitedDataTitle": "Datos ilimitados",
       "unlimitedDataDescription": "Encuentra planes ilimitados para que las gigas no sean un problema. Mantente conectado"
     },
-
     "howItWorks": {
       "title": "Así funciona",
       "chooseRegionTitle": "Elige la región donde quieres usar tu",
@@ -656,7 +646,6 @@
       "buttonAppEncriptados": "Apps Encriptados",
       "goToStore": "Ir a tienda"
     },
-
     "filterProducts": {
       "title": "Nuestros productos",
       "categoryTitle": "Categoría",
@@ -757,7 +746,6 @@
       "title": "Nuestros productos",
       "subtitle": "Conoce nuestros productos Encriptados",
       "seeProducts": "Ver productos",
-
       "cards": {
         "card1": "SIMS Encriptadas",
         "card2": "Aplicaciones de mensajería segura",
@@ -795,7 +783,6 @@
       "description": "Ingresa una contraseña y descubre su nivel de seguridad"
     }
   },
-
   "passwordTest": {
     "verificationTitle": "Verificador de Fortaleza de Contraseña",
     "verificationSubtitle": "Verificaciones",
@@ -991,7 +978,6 @@
       }
     }
   },
-
   "productsCategories": {
     "sims": {
       "title": "SIMS",
@@ -1152,9 +1138,9 @@
       "title": "Test de seguridad",
       "description": "¿Qué tan seguro son tus dispositivos?"
     },
-    "offers": {
-      "title": "Ofertas",
-      "description": "Descubre nuestras ofertas"
+    "deliveries": {
+      "title": "Entregas",
+      "description": "Conoce nuestros métodos de envío"
     }
   },
   "usCategories": {
@@ -1212,7 +1198,7 @@
         "label": "Tienda",
         "new": "Nuevo"
       },
-      "deliveries": "Entregas",
+      "offers": "Ofertas",
       "aboutUs": "Nosotros",
       "login": "Ingresar",
       "notAvailable": "No disponible",

@@ -8,11 +8,11 @@ interface OurObjetiveProps {
 
 const OurObjetive = ({ variant = "encrypted" }: OurObjetiveProps) => {
   const isTimVariant = variant === "tim";
-  
-  const imageSrc = isTimVariant 
-    ? "/images/encrypted-sim/tim.sim.webp" 
+
+  const imageSrc = isTimVariant
+    ? "/images/bne-sim/tim.webp"
     : "/images/encrypted-sim/Encrypted_float_image.webp";
-  
+
   const containerBgColor = isTimVariant ? "#009DFF" : "white";
 
   const t = useTranslations("EncryptedSimPage");
@@ -31,9 +31,9 @@ const OurObjetive = ({ variant = "encrypted" }: OurObjetiveProps) => {
 
       {/* Imagen */}
       <div className="w-full lg:w-1/2 flex justify-center">
-        <div 
+        <div
           className="rounded-xl lg:rounded-3xl flex justify-center items-center p-4 sm:p-6 lg:p-8 w-full max-w-[374px] lg:max-w-[519px]"
-          style={{ 
+          style={{
             aspectRatio: "374/309",
             borderRadius: "12px",
             backgroundColor: containerBgColor,
