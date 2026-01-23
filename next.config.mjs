@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   images: {
+    unoptimized: true, // Desactivar optimización de Vercel - las webp ya están optimizadas
     remotePatterns: [
       { protocol: 'https', hostname: 'encriptados.io' },
       { protocol: 'https', hostname: 'encriptados.nyc3.cdn.digitaloceanspaces.com' },
