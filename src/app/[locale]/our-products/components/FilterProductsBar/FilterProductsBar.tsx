@@ -8,9 +8,11 @@ import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
 import RoutersBarIcon from "./icons/RoutersBarIcon";
 import FilterAppWithLicense from "./FilterAppWithLicense";
-import FilterProviderServices from "./FilterProviderServices";
 import FilterRegionCountry from "./FilterRegionCountry";
 import SectionWrapper from "@/shared/components/SectionWrapper";
+import MenuDropdownProductBar from "./MenuDropdownProductBar";
+import EncryptedSimIcon from "./simicons/EncryptedSimIcon";
+import TimSimIcon from "./simicons/TimSimIcon";
 
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { Product } from "@/features/products/types/AllProductsResponse";
@@ -75,53 +77,115 @@ export default function FilterProductsBar({
   const isTimSimFisica = isTim && activeTimService === "sim_fisica";
   const shouldShowTimRegion = isTim && !isTimSimFisica;
 
-  let subfilters: React.ReactNode[] = [];
+  // Logic for SIM Provider/Services (Inline)
+  type ProviderType = "encriptados" | "tim" | undefined;
+  const currentProvider = filters.provider as ProviderType;
 
-  if (selectedCat === 40) {
-    // SIMs
-    subfilters = [
-      <FilterProviderServices
-        filters={filters}
-        updateFilters={updateFilters}
-        key="provider-services"
-      />,
-    ];
+  // Helper to capitalize text in Title Case
+  const toTitleCase = (str: string) => {
+    return str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
 
-    if (shouldShowTimRegion) {
-      subfilters.push(
-        <FilterRegionCountry
-          filters={filters}
-          updateFilters={updateFilters}
-          service={activeTimService}
-          key="region-country"
+  const optionByProvider: Record<any, JSX.Element | undefined> = {
+    encriptados: (
+      <div className="w-full">
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <MenuDropdownProductBar
+          name="encriptadosprovider"
+          externalValue={filters.encriptadosprovider}
+          options={[
+            { label: "Todos", value: "all" },
+            { label: "Sim Física", value: "physicsim" },
+            { label: "eSim", value: "esim" },
+            { label: "Recarga Datos", value: "datarecharge" },
+            { label: "Recarga Minutos", value: "minuterecharge" },
+            { label: "eSIM + Datos", value: "eSimData" },
+          ]}
+          onChangeExternal={(value) => {
+            const normalized = Array.isArray(value)
+              ? value[value.length - 1]
+              : value;
+            updateFilters({ encriptadosprovider: normalized });
+          }}
         />
-      );
-    }
-  } else if (selectedCat === 38 || selectedCat === 35) {
-    // Apps / Software
-    subfilters = [
-      <FilterAppWithLicense
-        filters={filters}
-        updateFilters={updateFilters}
-        products={products}
-        key="app-license"
-      />,
-    ];
-
-    if (shouldShowTimRegion) {
-      subfilters.push(
-        <FilterRegionCountry
-          filters={filters}
-          updateFilters={updateFilters}
-          service={activeTimService}
-          key="region-country"
+      </div>
+    ),
+    tim: (
+      <div className="w-full">
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <MenuDropdownProductBar
+          name="timprovider"
+          externalValue={filters.timprovider}
+          options={[
+            { label: "Todos", value: "all" },
+            { label: "Sim Física", value: "physicsimtim" },
+            { label: "eSIM + Datos", value: "esimplusdatatim" },
+            { label: "Recarga Datos", value: "datarechargetim" },
+          ]}
+          onChangeExternal={(value) => {
+            updateFilters({ timprovider: value });
+          }}
         />
-      );
-    }
-  }
+      </div>
+    ),
+  };
+
+  // Rendering logic for subfilters based on Flex to fill space dynamically
+  const renderSimFilters = () => (
+    <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-row gap-3 w-full items-end">
+      {/* 1. Proveedor */}
+      <div className="flex-1 w-full min-w-0">
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
+        <MenuDropdownProductBar
+          name="provider"
+          externalValue={filters.provider}
+          options={[
+            {
+              label: " ",
+              value: "encriptados",
+              icon: <EncryptedSimIcon width={115} height={25} />
+            },
+            {
+              label: " ",
+              value: "tim",
+              icon: <TimSimIcon width={88} height={25} />
+            },
+          ]}
+          onChangeExternal={(value) => {
+            updateFilters({
+              provider: value,
+              encriptadosprovider: "all",
+              timprovider: "all",
+              timService: undefined
+            });
+          }}
+        />
+      </div>
+
+      {/* 2. Servicios */}
+      <div className="flex-1 w-full min-w-0">
+        {currentProvider && optionByProvider[currentProvider]}
+      </div>
+
+      {/* 3. Región */}
+      {shouldShowTimRegion && (
+        <div className="flex-1 w-full min-w-0">
+          <FilterRegionCountry
+            filters={filters}
+            updateFilters={updateFilters}
+            service={activeTimService}
+          />
+        </div>
+      )}
+    </div>
+  );
+
 
   // Variante flotante (barra fija abajo - responsive para mobile/tablet/desktop)
   if (variant === "floating") {
+    // ... (Mantener lógica variante flotante sin cambios) ...
     const modalRef = useRef<HTMLDivElement>(null);
 
     const navItems: {
@@ -165,14 +229,11 @@ export default function FilterProductsBar({
 
     return (
       <>
-        {/* Overlay para cerrar al hacer click fuera */}
         <div
           className="fixed inset-0 z-40"
           onClick={handleOverlayClick}
           aria-hidden="true"
         />
-
-        {/* Modal flotante */}
         <div
           ref={modalRef}
           className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50"
@@ -189,12 +250,9 @@ export default function FilterProductsBar({
               shadow-black/60
             "
           >
-            {/* Logo / marca */}
             <div className="flex items-center gap-2 pr-2 sm:pr-4">
               <MobileMenuSvg width={120} height={35} className="sm:w-[160px] md:w-[180px]" />
             </div>
-
-            {/* Tabs - responsive con scroll horizontal en mobile */}
             <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 overflow-x-auto scrollbar-hide">
               {navItems.map((item) => {
                 const isActive =
@@ -232,7 +290,14 @@ export default function FilterProductsBar({
 
   // Variante estática
   return (
-    <div className="w-full max-w-screen-xl mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6">
+    <div
+      className={`w-full mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6 ${selectedCat === 36
+        ? "max-w-fit"
+        : (selectedCat === 38 || selectedCat === 35 || (selectedCat === 40 && !shouldShowTimRegion))
+          ? "max-w-4xl"
+          : "max-w-screen-xl"
+        }`}
+    >
       <div
         className="
           flex flex-col gap-4
@@ -240,7 +305,7 @@ export default function FilterProductsBar({
         "
       >
         {/* Categoría */}
-        <div className="w-full xl:w-[360px]">
+        <div className={`w-full xl:shrink-0 ${selectedCat === 36 ? "w-auto" : "xl:w-[360px] xl:mr-6"}`}>
           <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
             {t("filterProducts.categoryTitle")}
           </h2>
@@ -254,29 +319,33 @@ export default function FilterProductsBar({
         </div>
 
         {/* Subfiltros */}
-        <div className="flex flex-col flex-1 gap-2 xl:flex-row xl:items-end xl:justify-start">
-          <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 flex-1">
-            {subfilters.map((child, idx) => {
-              const element = React.isValidElement(child) ? child : null;
-              const childKey = element?.key?.toString();
-              const isRegion = childKey === "region-country";
-
-              return (
-                <div
-                  key={idx}
-                  className={
-                    isRegion
-                      ? "relative w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0"
-                      : "relative w-full sm:w-[200px] sm:flex-auto min-w-0"
-                  }
-                >
-                  {child}
+        <div className="flex-1 w-full">
+          {selectedCat === 40 ? (
+            renderSimFilters()
+          ) : (selectedCat === 38 || selectedCat === 35) ? (
+            // Apps / Software - Keeping layout as is or adapting if they need filtering
+            <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 w-full">
+              <div className="w-full sm:flex-auto min-w-0">
+                <FilterAppWithLicense
+                  filters={filters}
+                  updateFilters={updateFilters}
+                  products={products}
+                />
+              </div>
+              {/* Region for Apps? Check original logic */}
+              {shouldShowTimRegion && (
+                <div className="w-full sm:w-[200px] md:w-[150px] min-w-0 flex-shrink-0">
+                  <FilterRegionCountry
+                    filters={filters}
+                    updateFilters={updateFilters}
+                    service={activeTimService}
+                  />
                 </div>
-              );
-            })}
-          </div>
+              )}
+            </div>
+          ) : null}
         </div>
       </div>
-    </div>
+    </div >
   );
 }

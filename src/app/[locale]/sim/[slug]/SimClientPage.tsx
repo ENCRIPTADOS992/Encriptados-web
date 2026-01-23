@@ -80,6 +80,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   const priceFromUrl = searchParams.get("price");
   const gbFromUrl = searchParams.get("gb");
   const regionFromUrl = searchParams.get("region");
+  const regionCodeFromUrl = searchParams.get("regionCode");
+  const flagUrlFromUrl = searchParams.get("flagUrl");
 
   // Config estático para assets (banners, imágenes) - fallback al slug de la URL
   const staticConfig = useMemo(() => getSimProductConfig(slug), [slug]);
@@ -371,6 +373,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             apkUrl="https://encriptados.io/apk"
             gbBadge={gbFromUrl || undefined}
             regionBadge={regionFromUrl || undefined}
+            regionCode={regionCodeFromUrl || undefined}
+            flagUrl={flagUrlFromUrl || undefined}
             translations={heroTranslations}
           />
           <WhereUseSimSection locale={locale} />

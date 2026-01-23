@@ -1,16 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
+import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
+import { CircleFlag } from "react-circle-flags";
+import { useLocale, useTranslations } from "next-intl";
+
 import CardProduct from "./CardProduct";
 import Loader from "@/shared/components/Loader";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
+import { getProductLink } from "@/shared/utils/productRouteResolver";
+import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 interface ListOfProductsProps {
   filters: ProductFilters;
 }
-
-import { useTranslations } from 'next-intl';
 
 const providerMap: Record<string, string[]> = {
   encriptados: ["Sim Encriptados", "encrypted", "encriptados"],
@@ -113,7 +120,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   const products: Product[] = data ?? [];
   console.log("📦 [ListOfProducts] productos recibidos:", products.length);
-  
+
   // Deduplicar productos por ID (evitar duplicados de la API)
   const uniqueProductsMap = new Map<number, Product>();
   for (const p of products) {
@@ -123,7 +130,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   }
   const uniqueProducts = Array.from(uniqueProductsMap.values());
   console.log("📦 [ListOfProducts] productos únicos después de deduplicar:", uniqueProducts.length);
-  
+
   // Debug: mostrar todos los productos TIM recibidos de la API
   const allTimProducts = uniqueProducts.filter(p => p.provider?.toLowerCase() === "tim");
   console.log("📦 [ListOfProducts] productos TIM en respuesta API:", allTimProducts.length);
@@ -150,7 +157,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     filteredProducts = uniqueProducts.filter((product) => {
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
-      
+
       // Verificar si coincide con cualquiera de los valores aceptados
       return providerValues.some(value => {
         const valueNormalized = value.toLowerCase().trim();
@@ -198,7 +205,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   if (providerServiceKey) {
     const before = filteredProducts.length;
-    
+
     // Mapeo independiente del idioma usando patrones de nombre
     const namePatterns: Record<string, RegExp[]> = {
       // Patrones para TIM
@@ -242,14 +249,14 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         /cambio\s+imsi/i
       ],
       minuterecharge: [
-        /^(minutos?\s+)?(recarga|recharge|ricarica)/i, 
+        /^(minutos?\s+)?(recarga|recharge|ricarica)/i,
         /^(recharge|ricarica)\s+minutes?/i,
         /^recarga\s+minut/i
       ],
     };
 
     const patterns = namePatterns[providerServiceKey];
-    
+
     if (!patterns) {
       console.warn("⚠️ [Filtro Servicio] key sin patterns definidos", {
         providerServiceKey,
@@ -312,7 +319,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         hasVariants: (p.variants ?? []).length > 0,
         variantScopes: (p.variants ?? []).map(v => v.scope?.code)
       })));
-      
+
       filteredProducts = filteredProducts.filter((product) =>
         (product.variants ?? []).some(
           (v) => v.scope?.code?.toUpperCase() === regionCode
@@ -450,13 +457,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       const combinedText = normalizeText(searchableFields.join(" "));
 
       // Buscar si todas las palabras de búsqueda están presentes
-      const matchesAllWords = searchWords.every(word => 
+      const matchesAllWords = searchWords.every(word =>
         combinedText.includes(word)
       );
 
       // También hacer búsqueda exacta sin normalizar para mayor precisión
       const exactSearchTerm = searchTerm.toLowerCase();
-      const exactMatch = searchableFields.some(field => 
+      const exactMatch = searchableFields.some(field =>
         field.toLowerCase().includes(exactSearchTerm)
       );
 
@@ -551,7 +558,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   // ========== EXPANSIÓN DE VARIANTES TIM ==========
   // Para productos TIM con variantes de GB, crear una tarjeta por cada variante
   // filtrando por la región/país seleccionado
-  type ExpandedProduct = Product & { 
+  type ExpandedProduct = Product & {
     _selectedVariant?: Product["variants"] extends (infer V)[] | undefined ? V : never;
     _variantIndex?: number;
   };
@@ -561,7 +568,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   if (filters.provider === "tim") {
     const regionCode = (filters.simCountry || filters.regionOrCountry || "").toUpperCase();
     const isCountryType = filters.regionOrCountryType === "country";
-    
+
     console.log("🔄 [Expansión TIM] Iniciando expansión de variantes", {
       regionCode,
       isCountryType,
@@ -572,7 +579,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
     for (const product of filteredProducts) {
       const variants = product.variants ?? [];
-      
+
       if (variants.length === 0) {
         // Sin variantes, mostrar el producto tal cual
         expanded.push(product);
@@ -581,7 +588,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
       // Filtrar variantes por región/país si hay uno seleccionado
       let matchingVariants = variants;
-      
+
       if (regionCode && regionCode !== "ALL" && regionCode !== "GLOBAL") {
         if (isCountryType) {
           // Filtrar por país específico
@@ -597,9 +604,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       } else if (regionCode === "GLOBAL") {
         // Para GLOBAL, mostrar variantes globales o sin scope
         matchingVariants = variants.filter(
-          v => !v.scope?.code || 
-               v.scope?.code?.toUpperCase() === "GLOBAL" || 
-               v.scope?.code?.toUpperCase() === "WW"
+          v => !v.scope?.code ||
+            v.scope?.code?.toUpperCase() === "GLOBAL" ||
+            v.scope?.code?.toUpperCase() === "WW"
         );
         // Si no hay variantes globales, mostrar todas
         if (matchingVariants.length === 0) {
@@ -662,7 +669,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
       // Usar variants del producto
       const variants = product.variants ?? [];
-      
+
       console.log(`🔄 [Expansión SIM Encriptadas] Producto "${product.name}" (id: ${product.id})`, {
         provider: product.provider,
         totalVariants: variants.length,
@@ -722,9 +729,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     for (const product of productsToRender) {
       // Usar licenseVariants que vienen del mapeo en services.ts
       const licenseVariants = (product as any).licenseVariants ?? [];
-      
+
       // Filtrar solo variantes con licensetime válido
-      const variantsWithLicense = licenseVariants.filter((v: any) => 
+      const variantsWithLicense = licenseVariants.filter((v: any) =>
         v.licensetime && v.licensetime !== "" && v.licensetime !== "0"
       );
 
@@ -838,9 +845,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
     const country: TimBadges["country"] = countryLabel
       ? {
-          label: countryLabel,
-          ...(flagCode ? { code: flagCode } : {}),
-        }
+        label: countryLabel,
+        ...(flagCode ? { code: flagCode } : {}),
+      }
       : undefined;
 
     return { country, tag };
@@ -891,8 +898,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             const showTimBadges = isCategory40 && isTim && isSim;
 
             // Detectar si es "Recarga Minutos" de Encriptados para mostrar badge
-            const isEncryptedMinutes = 
-              isCategory40 && 
+            const isEncryptedMinutes =
+              isCategory40 &&
               !isTimProvider &&
               isMinutosProduct;
 
@@ -900,33 +907,33 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             const getMinutesTag = (): string | undefined => {
               // Para "Recarga Minutos", usar directamente el mapeo de precio a minutos
               const productPrice = Number(product.price) || Number(product.sale_price) || 0;
-              
+
               // Mapeo de precios a minutos basado en los datos conocidos
               const priceToMinutesMap: Record<number, number> = {
                 200: 100,
                 500: 250,
                 1000: 500,
               };
-              
+
               const minutes = priceToMinutesMap[productPrice];
               if (minutes) {
                 return `${minutes} ${minuteUnit}`;
               }
-              
+
               // Fallback: buscar en el nombre del producto
               const productName = product.name ?? "";
               const minutesMatch = productName.match(/(\d+)\s*min/i);
               if (minutesMatch) {
                 return `${minutesMatch[1]} ${minuteUnit}`;
               }
-              
+
               return undefined;
             };
 
             // Para TIM, buscar la variante que corresponde a la región/país seleccionado
             const selectedRegionOrCountry = (filters.simCountry || filters.regionOrCountry || "").toUpperCase();
             const isCountryType = filters.regionOrCountryType === "country";
-            
+
             // Usar variante pre-seleccionada si existe (del proceso de expansión)
             // o buscar la variante correspondiente a la región
             const getVariantForRegion = () => {
@@ -934,50 +941,50 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               if (product._selectedVariant) {
                 return product._selectedVariant;
               }
-              
+
               const variants = product.variants ?? [];
               if (variants.length === 0) return undefined;
-              
+
               // Si hay un país seleccionado, buscar la variante que coincida con ese país
               if (isCountryType && selectedRegionOrCountry && selectedRegionOrCountry !== "GLOBAL" && selectedRegionOrCountry !== "ALL") {
                 const matchingVariant = variants.find(
-                  v => v.scope?.code?.toUpperCase() === selectedRegionOrCountry && 
-                       (v.scope?.type === "country" || !v.scope?.type)
+                  v => v.scope?.code?.toUpperCase() === selectedRegionOrCountry &&
+                    (v.scope?.type === "country" || !v.scope?.type)
                 );
                 if (matchingVariant) return matchingVariant;
               }
-              
+
               // Si hay una región seleccionada (no es país), buscar variantes de esa región
               if (!isCountryType && selectedRegionOrCountry && selectedRegionOrCountry !== "GLOBAL" && selectedRegionOrCountry !== "ALL") {
                 const matchingVariant = variants.find(
-                  v => v.scope?.code?.toUpperCase() === selectedRegionOrCountry && 
-                       v.scope?.type === "region"
+                  v => v.scope?.code?.toUpperCase() === selectedRegionOrCountry &&
+                    v.scope?.type === "region"
                 );
                 if (matchingVariant) return matchingVariant;
-                
+
                 // Si no hay variante de región específica, buscar el precio mínimo de variantes 
                 // que pertenezcan a esa región (esto requiere un mapeo de países a regiones)
               }
-              
+
               // Si es GLOBAL o no se encontró variante específica, retornar la primera (o buscar GLOBAL)
               const globalVariant = variants.find(
-                v => v.scope?.code?.toUpperCase() === "GLOBAL" || 
-                     v.scope?.code?.toUpperCase() === "WW" ||
-                     v.scope?.type === "global"
+                v => v.scope?.code?.toUpperCase() === "GLOBAL" ||
+                  v.scope?.code?.toUpperCase() === "WW" ||
+                  v.scope?.type === "global"
               );
               return globalVariant ?? variants[0];
             };
-            
+
             const variant = isTimProvider ? getVariantForRegion() : product.variants?.[0];
-            
+
             // Para TIM usamos el id de la variante de región, para Apps/Sistemas/Router usamos la variante de licencia
             let variantId: number | undefined = isTim ? variant?.id : undefined;
-            
+
             // Si es producto expandido por licencia (Apps, Sistemas, Router), usar su _selectedVariant
             if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38) && product._selectedVariant) {
               variantId = (product._selectedVariant as any).id;
             }
-            
+
             // Si es producto SIM Encriptadas expandido, usar su _selectedVariant
             if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
               variantId = (product._selectedVariant as any).id;
@@ -1043,13 +1050,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             } else if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
               // SIM Encriptadas expandidas: usar el tag de la variante
               const selectedVar = product._selectedVariant as any;
-              
+
               // Determinar si es un producto de minutos o de datos
               const isMinutesRecharge = isMinutosProduct; // "Recarga Minutos"
               const isDataRecharge = simName.includes("recarga datos") || simName.includes("data");
-              
+
               let tag: string | undefined;
-              
+
               if (isMinutesRecharge) {
                 // Para "Recarga Minutos": mostrar minutos basados en precio
                 let minutesValue = selectedVar.minutes;
@@ -1082,7 +1089,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 // Para otros productos: usar gb o name
                 tag = selectedVar.gb || selectedVar.name || undefined;
               }
-              
+
               if (tag) {
                 badges = { tag };
               }
@@ -1118,35 +1125,35 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                     return `${time} ${monthsLabel}`;
                   }
                 }
-                
+
                 // Fallback: buscar en variantes (no debería llegar aquí si se expandió)
                 const variants = product.variants ?? [];
                 const licenseVariants = (product as any).licenseVariants ?? [];
-                
+
                 // Si hay variantes con licensetime, usar la primera
                 if (variants.length > 0 && variants[0]?.licensetime) {
                   const time = variants[0].licensetime;
                   if (isUnique(time)) return uniqueLicense;
                   return `${time} ${monthsLabel}`;
                 }
-                
+
                 // Si hay licenseVariants, usar la primera
                 if (licenseVariants.length > 0 && licenseVariants[0]?.licensetime) {
                   const time = licenseVariants[0].licensetime;
                   if (isUnique(time)) return uniqueLicense;
                   return `${time} ${monthsLabel}`;
                 }
-                
+
                 // Fallback al licensetime del producto
                 const productLicense = product.licensetime;
                 if (productLicense && productLicense !== "0" && productLicense !== "") {
                   if (isUnique(productLicense)) return uniqueLicense;
                   return `${productLicense} ${monthsLabel}`;
                 }
-                
+
                 return undefined;
               };
-              
+
               const licenseTag = getLicenseTag();
               if (licenseTag) {
                 badges = { tag: licenseTag };

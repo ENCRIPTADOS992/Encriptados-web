@@ -11,6 +11,25 @@ import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import SimIconSvg from "@/shared/svgs/SimIconSvg";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
+import { CircleFlag } from "react-circle-flags";
+import Image from "next/image";
+
+const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
+  return (
+    <span
+      className="rounded-full flex items-center justify-center bg-white"
+      style={{ width: size, height: size }}
+    >
+      <svg viewBox="0 0 24 24" width={size * 0.6} height={size * 0.6} fill="none">
+        <circle cx="12" cy="12" r="10.5" stroke="#3393F7" strokeWidth="1.5" />
+        <path
+          d="M6.5 10.5l1.2-.6 1 .5v1l1 1 .4 1.4-.3 1.2 1.4.6.5 1 .9.4h1l.4-1v-1l1-1 .5-1 .5-.5 1 .5h1l1-1v-1l-.5-1-.5-.5H17l-.5-1 .4-.9v-1l-1-.5-1 .5-.5 1-1 .5h-1l-1-.5-.5-1-1-.5-1 .5-.5 1-.5.5-.5 1z"
+          fill="#3393F7"
+        />
+      </svg>
+    </span>
+  );
+};
 
 interface ProductInfoSectionProps {
   productName: string;
@@ -23,6 +42,8 @@ interface ProductInfoSectionProps {
   apkUrl?: string;
   gbBadge?: string;
   regionBadge?: string;
+  regionCode?: string;
+  flagUrl?: string;
   translations?: {
     priceFrom?: string;
     buyNow?: string;
@@ -81,6 +102,8 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
   apkUrl,
   gbBadge,
   regionBadge,
+  regionCode,
+  flagUrl,
   translations,
 }) => {
   const { isFromAppMobile } = useAppMobile();
@@ -115,8 +138,25 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
                 transition={{ duration: 0.3 }}
               />
               {regionBadge && (
-                <div className="absolute left-3 bottom-3 inline-flex items-center justify-center rounded-full bg-[#7DDA58] text-[#010101] text-sm font-semibold px-3 py-1.5 shadow-md">
-                  {regionBadge}
+                <div className="absolute left-3 bottom-3 inline-flex items-center justify-center rounded-full bg-white text-[#010101] text-sm font-semibold px-2 py-1 shadow-md border border-gray-100 gap-1.5">
+                  <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center relative">
+                    {flagUrl ? (
+                      <Image
+                        src={flagUrl}
+                        alt={regionBadge}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : regionCode ? (
+                      <CircleFlag
+                        countryCode={regionCode.toLowerCase()}
+                        className="w-full h-full"
+                      />
+                    ) : (
+                      <RegionIcon size={20} />
+                    )}
+                  </div>
+                  <span className="leading-none">{regionBadge}</span>
                 </div>
               )}
             </div>
@@ -182,7 +222,13 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
               >
                 <SimIconSvg width={24} height={24} color="white" />
               </div>
-              <h1 className="text-[36px] font-bold text-gray-900 leading-tight">{productName}</h1>
+              <h1 className="text-[36px] font-bold text-gray-900 leading-tight">
+                {(() => {
+                  if (!productName) return "";
+                  const withSpaces = productName.replace(/-/g, " ");
+                  return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
+                })()}
+              </h1>
               {gbBadge && (
                 <span className="inline-flex items-center justify-center rounded-full bg-[#1CB9EC] text-[#010101] text-sm font-semibold px-3 py-1 shadow-md">
                   {gbBadge}

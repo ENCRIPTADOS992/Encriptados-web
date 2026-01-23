@@ -143,6 +143,8 @@ const CardProduct: React.FC<CardSimProps> = ({
     if (numericPrice != null) params.set("price", String(numericPrice));
     if (badges?.tag) params.set("gb", badges.tag);
     if (badges?.country?.label) params.set("region", badges.country.label);
+    if (badges?.country?.code) params.set("regionCode", badges.country.code);
+    if (badges?.country?.flagUrl) params.set("flagUrl", badges.country.flagUrl);
 
     return `${url}?${params.toString()}`;
   })();
@@ -184,7 +186,21 @@ const CardProduct: React.FC<CardSimProps> = ({
               )}
             </div>
             <span className="ml-1 sm:ml-1.5 text-[10px] sm:text-[12px] font-bold text-black leading-none">
-              {badges.country.label}
+              {(() => {
+                if (!badges.country.label) return "";
+                let text = badges.country.label;
+                // Reemplazar guiones y guiones bajos por espacios
+                text = text.replace(/[-_]/g, ' ');
+                // Separar CamelCase (ej: NorteAmerica -> Norte America)
+                text = text.replace(/([a-z])([A-Z])/g, '$1 $2');
+                // Formatear a Title Case
+                return text
+                  .toLowerCase()
+                  .trim()
+                  .split(/\s+/)
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ');
+              })()}
             </span>
           </div>
         ) : null}

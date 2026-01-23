@@ -3,6 +3,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { CircleFlag } from "react-circle-flags";
+import { ChevronDown } from "lucide-react";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
 import {
@@ -12,7 +13,7 @@ import {
   formatMinFrom,
 } from "@/shared/hooks/useRegionCountryFilter";
 
-interface FilterRegionCountryProps extends UseRegionCountryFilterArgs {}
+interface FilterRegionCountryProps extends UseRegionCountryFilterArgs { }
 
 const RegionIcon: React.FC<{ size?: number }> = ({ size = 36 }) => (
   <span
@@ -60,7 +61,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
 
       <div
         ref={dropdownRef}
-        className="relative flex-1 min-w-0 max-w-full lg:max-w-[120px] xl:max-w-[120px]"
+        className="relative flex-1 min-w-0 max-w-full"
       >
         {/* Trigger */}
         <button
@@ -68,14 +69,13 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
           onClick={() => setOpen((v) => !v)}
           className={`
             flex items-center justify-between
-            w-full lg:w-[120px]
+            w-full
             border rounded-2xl shadow-md
             px-4 py-4
             transition duration-150 ease-in-out
-            ${
-              open
-                ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
-                : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
+            ${open
+              ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
+              : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
             }
           `}
           style={{
@@ -95,30 +95,29 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
               <RegionIcon size={22} />
             )}
 
-            <span className="uppercase truncate text-left">
-              {filters.regionOrCountryType === "country" &&
-              selectedInfo.code !== "global"
-                ? selectedInfo.code.toUpperCase()
-                : selectedInfo.label}
+            <span className="truncate text-left">
+              {(() => {
+                const text =
+                  filters.regionOrCountryType === "country" &&
+                    selectedInfo.code !== "global"
+                    ? selectedInfo.label || selectedInfo.code
+                    : selectedInfo.label;
+
+                if (!text) return "";
+                // Title Case conversion
+                return text.replace(/\w\S*/g, (txt) =>
+                  txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                );
+              })()}
             </span>
           </span>
 
-          <svg
+          <ChevronDown
             className={`
-              ml-2 w-4 h-4
+              ml-2 w-4 h-4 ml-2 opacity-60
               ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
             `}
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M7 10l5 5 5-5"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          />
         </button>
 
         {open && (
@@ -140,10 +139,9 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                 className={`
                   w-full md:w-auto px-4 py-2 rounded-full text-sm font-semibold
                   transition
-                  ${
-                    filters.regionOrCountryType === "region"
-                      ? "bg-[#3393F7] text-white"
-                      : "bg-transparent text-[#3393F7] border border-[#3393F7]"
+                  ${filters.regionOrCountryType === "region"
+                    ? "bg-[#3393F7] text-white"
+                    : "bg-transparent text-[#3393F7] border border-[#3393F7]"
                   }
                 `}
                 type="button"
@@ -159,10 +157,9 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                 className={`
                   w-full md:w-auto px-4 py-2 rounded-full text-sm font-semibold
                   transition
-                  ${
-                    filters.regionOrCountryType === "country"
-                      ? "bg-[#3393F7] text-white"
-                      : "bg-transparent text-[#3393F7] border border-[#3393F7]"
+                  ${filters.regionOrCountryType === "country"
+                    ? "bg-[#3393F7] text-white"
+                    : "bg-transparent text-[#3393F7] border border-[#3393F7]"
                   }
                 `}
                 type="button"
@@ -254,11 +251,11 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                           <span className="w-5 h-5 flex items-center justify-center">
                             <span
                               className="
-                                block w-4 h-4 rounded-full border border-[#555] bg-[#232427]
+                                flex items-center justify-center w-4 h-4 rounded-full border border-[#555] bg-[#232427]
                               "
                             >
                               {isActive && (
-                                <span className="block m-auto w-2 h-2 rounded-full bg-white" />
+                                <span className="w-2 h-2 rounded-full bg-white" />
                               )}
                             </span>
                           </span>
@@ -340,16 +337,15 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                           <span className="w-5 h-5 flex items-center justify-center">
                             <span
                               className={`
-                                block w-4 h-4 rounded-full border transition-all
-                                ${
-                                  isActive
-                                    ? "border-[#3393F7] bg-[#3393F7]"
-                                    : "border-[#555] bg-[#232427]"
+                                flex items-center justify-center w-4 h-4 rounded-full border transition-all
+                                ${isActive
+                                  ? "border-[#3393F7] bg-[#3393F7]"
+                                  : "border-[#555] bg-[#232427]"
                                 }
                               `}
                             >
                               {isActive && (
-                                <span className="block m-auto w-2 h-2 rounded-full bg-white" />
+                                <span className="w-2 h-2 rounded-full bg-white" />
                               )}
                             </span>
                           </span>
