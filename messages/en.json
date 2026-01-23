@@ -368,6 +368,18 @@
         ],
         "priceRange": "10 USD",
         "headerTitle": "Physical SIM"
+      },
+      "esimData": {
+        "title": "Buy your eSIM and communicate with total privacy with mobile data",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "Receive it instantly",
+          "Data added instantly",
+          "Untraceable eSIM",
+          "Protected against IMSI CATCHER'S"
+        ],
+        "priceRange": "$32.5 - $507.5",
+        "headerTitle": "eSIM + Data Recharge"
       }
     },
     "improveYourSecurity": {

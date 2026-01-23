@@ -8,7 +8,7 @@ const ENCRYPTED_SIM_PRODUCT_IDS = {
   DATA: 443,                    // Recarga Datos (variantes: 25, 50, 100, 150, 250, 500)
   MINUTES: 446,                 // Recarga Minutos (variantes: 200, 500, 1000)
   ESIM: 449,                    // eSIM (precio único: 12)
-  ESIM_DATA: 454,               // eSIM + Datos
+  ESIM_DATA: 59835,             // eSIM + Recarga Datos (variantes: 32.5, 57.5, 107.5, 162.5, 207.5, 262.5, 507.5)
   SIM_FISICA_TIM: 448,          // SIM Física TIM (precio único: 10)
   SIM_FISICA_ENCRYPTED: 508     // SIM Física Encrypted (precio único: 15)
 };
@@ -52,32 +52,32 @@ export const useEncryptedSimProducts = () => {
     queryKey: ["encrypted-sim-products", locale],
     queryFn: async () => {
       console.log("🔐 [useEncryptedSimProducts] Fetching encrypted SIM products...");
-      
+
       // Obtener todos los productos de la categoría 40 (SIMs)
       const products = await getAllProducts(40, locale);
-      
+
       console.log("🔐 [useEncryptedSimProducts] Products received:", products.length);
-      
+
       // Mapear productos únicos por ID (evitar duplicados de variantes)
       // Pero acumular las variantes de todos los productos con el mismo ID
       const uniqueProductsMap = new Map<number, Product>();
-      
+
       products.forEach((product) => {
         if (!uniqueProductsMap.has(product.id)) {
           uniqueProductsMap.set(product.id, product);
         }
       });
-      
+
       const uniqueProducts = Array.from(uniqueProductsMap.values());
       console.log("🔐 [useEncryptedSimProducts] Unique products:", uniqueProducts.map(p => ({ id: p.id, name: p.name, variants: p.variants?.length })));
-      
+
       // Filtrar y mapear los productos específicos que necesitamos
       const mappedProducts: EncryptedSimProduct[] = uniqueProducts
         .filter((p) => Object.values(ENCRYPTED_SIM_PRODUCT_IDS).includes(p.id))
         .map((product) => {
           // Determinar el tipo basado en el ID
           let productType: EncryptedSimProduct["type"] = "data";
-          
+
           if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.DATA) {
             productType = "data";
           } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.MINUTES) {
@@ -86,11 +86,11 @@ export const useEncryptedSimProducts = () => {
             productType = "esim";
           } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA) {
             productType = "esim_data";
-          } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_TIM || 
-                     product.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED) {
+          } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_TIM ||
+            product.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED) {
             productType = "sim_fisica";
           }
-          
+
           // Mapear variantes (la API puede usar 'price' o 'cost')
           const variants: ProductVariant[] = (product.variants || []).map((v) => {
             // Obtener precio de price o cost (la API usa ambos dependiendo del producto)
@@ -103,16 +103,16 @@ export const useEncryptedSimProducts = () => {
               image: v.image
             };
           });
-          
+
           // Calcular precio base
-          const basePrice = product.on_sale 
-            ? parseFloat(String(product.sale_price)) 
+          const basePrice = product.on_sale
+            ? parseFloat(String(product.sale_price))
             : parseFloat(String(product.price));
-          
+
           // Calcular rango de precios
           let minPrice = basePrice;
           let maxPrice = basePrice;
-          
+
           if (variants.length > 0) {
             const variantPrices = variants.map(v => v.price).filter(p => !isNaN(p) && p > 0);
             if (variantPrices.length > 0) {
@@ -120,12 +120,12 @@ export const useEncryptedSimProducts = () => {
               maxPrice = Math.max(...variantPrices);
             }
           }
-          
+
           // Crear string de rango de precios
-          const priceRange = minPrice === maxPrice 
-            ? `$${minPrice}` 
+          const priceRange = minPrice === maxPrice
+            ? `$${minPrice}`
             : `$${minPrice} - $${maxPrice}`;
-          
+
           return {
             id: product.id,
             name: product.name,
@@ -144,16 +144,16 @@ export const useEncryptedSimProducts = () => {
             priceRange
           };
         });
-      
-      console.log("🔐 [useEncryptedSimProducts] Mapped products with variants:", 
-        mappedProducts.map(p => ({ 
-          id: p.id, 
-          name: p.name, 
-          priceRange: p.priceRange, 
-          variantsCount: p.variants.length 
+
+      console.log("🔐 [useEncryptedSimProducts] Mapped products with variants:",
+        mappedProducts.map(p => ({
+          id: p.id,
+          name: p.name,
+          priceRange: p.priceRange,
+          variantsCount: p.variants.length
         }))
       );
-      
+
       return mappedProducts;
     },
     staleTime: 5 * 60 * 1000, // 5 minutos
