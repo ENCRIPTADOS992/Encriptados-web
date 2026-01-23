@@ -439,7 +439,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        <FeaturesList />
+        <FeaturesList variant={showTimSections ? "tim" : "encrypted"} />
       </motion.section>
 
       {/* Sección Nuestro Objetivo */}

@@ -367,6 +367,7 @@
     },
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Améliorez votre sécurité avec ces fonctionnalités",
+      "titleKnowBenefits": "Découvrez les avantages",
       "untraceable": {
         "title": "Non traçable",
         "description": "Communiquez depuis n'importe où en étant totalement anonyme et non traçable"
@@ -390,6 +391,10 @@
       "callback": {
         "title": "Rappel",
         "description": "Générez un numéro aléatoire pour chaque appel qui apparaîtra dans l'identifiant du destinataire"
+      },
+      "callbackTim": {
+        "title": "Callback",
+        "description": "Utilise un opérateur intermédiaire pour relier l'appel et le rendre totalement intraçable"
       },
       "plans": {
         "title": "Plans sans date de clôture",
@@ -2472,8 +2477,7 @@
         }
       ]
     }
-  }
-,
+  },
   "paymentModal": {
     "purchaseDetails": "Détails de l'achat",
     "quantity": "Quantité",

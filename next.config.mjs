@@ -6,14 +6,15 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   images: {
-    domains: [
-      "encriptados.io", 
-      "encriptados.nyc3.cdn.digitaloceanspaces.com",
-      "encriptados.es"
+    remotePatterns: [
+      { protocol: 'https', hostname: 'encriptados.io' },
+      { protocol: 'https', hostname: 'encriptados.nyc3.cdn.digitaloceanspaces.com' },
+      { protocol: 'https', hostname: 'encriptados.es' },
+      { protocol: 'http', hostname: 'encriptados.es' },
     ],
   },
-   eslint: {
-    ignoreDuringBuilds: true, 
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   async redirects() {
     return [

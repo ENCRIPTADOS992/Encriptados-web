@@ -17,7 +17,7 @@ import WithOutNumberSvg from "../svgs/WithOutNumberSvg";
 
 // Contenedor del ícono con fondo #E6F5F9, 64x64, border-radius 14px
 const IconWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div 
+  <div
     className="w-16 h-16 rounded-[14px] flex items-center justify-center"
     style={{ backgroundColor: "#E6F5F9" }}
   >
@@ -35,9 +35,9 @@ interface FeatureCardProps {
 }
 
 const FeatureCard = ({ title, description, icon }: FeatureCardProps) => (
-  <article 
+  <article
     className="flex flex-col gap-4 bg-white rounded-2xl"
-    style={{ 
+    style={{
       padding: "34px 20px",
       minHeight: "280px",
     }}
@@ -52,10 +52,15 @@ const FeatureCard = ({ title, description, icon }: FeatureCardProps) => (
   </article>
 );
 
-const FeaturesList = () => {
+interface FeaturesListProps {
+  variant?: "encrypted" | "tim";
+}
+
+const FeaturesList = ({ variant = "encrypted" }: FeaturesListProps) => {
   const t = useTranslations("EncryptedSimPage");
 
-  const features = [
+  // Características completas para SIM Encriptada
+  const allFeatures = [
     {
       title: t("improveYourSecurity.untraceable.title"),
       description: t("improveYourSecurity.untraceable.description"),
@@ -118,16 +123,48 @@ const FeaturesList = () => {
     },
   ];
 
+  // Características reducidas para TIM (solo 4 beneficios)
+  const timFeatures = [
+    {
+      title: t("improveYourSecurity.globalCoverage.title"),
+      description: t("improveYourSecurity.globalCoverage.description"),
+      icon: <IconWrapper><GlobalCoverage /></IconWrapper>,
+    },
+    {
+      title: t("improveYourSecurity.subtituteNumber.title"),
+      description: t("improveYourSecurity.subtituteNumber.description"),
+      icon: <IconWrapper><SubstituteNumberSvg /></IconWrapper>,
+    },
+    {
+      title: t("improveYourSecurity.voiceFilter.title"),
+      description: t("improveYourSecurity.voiceFilter.description"),
+      icon: <IconWrapper><VoiceFilterSvg /></IconWrapper>,
+    },
+    {
+      title: t("improveYourSecurity.callbackTim.title"),
+      description: t("improveYourSecurity.callbackTim.description"),
+      icon: <IconWrapper><CallbackSvg /></IconWrapper>,
+    },
+  ];
+
+  // Seleccionar features según variante
+  const features = variant === "tim" ? timFeatures : allFeatures;
+
+  // Títulos según variante
+  const title = variant === "tim"
+    ? t("improveYourSecurity.titleKnowBenefits")
+    : t("improveYourSecurity.titleImproveYourSecurity");
+
   return (
     <div className="w-full bg-[#F4F8FA] py-12 md:py-16 px-4">
       <div className="w-full lg:max-w-6xl mx-auto">
         {/* Título */}
         <h2 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] text-center mb-12 md:mb-16">
-          {t("improveYourSecurity.titleImproveYourSecurity")}
+          {title}
         </h2>
-        
+
         {/* Grid de tarjetas */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+        <div className={`grid gap-3 md:gap-4 ${variant === "tim" ? "grid-cols-2 lg:grid-cols-4" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"}`}>
           {features.map((feature, index) => (
             <FeatureCard
               key={index}
@@ -143,3 +180,4 @@ const FeaturesList = () => {
 };
 
 export default FeaturesList;
+

@@ -372,6 +372,7 @@
     },
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Enhance your security with these features",
+      "titleKnowBenefits": "Know the benefits",
       "untraceable": {
         "title": "Untraceable",
         "description": "Communicate from anywhere while being completely anonymous and untraceable"
@@ -395,6 +396,10 @@
       "callback": {
         "title": "Callback",
         "description": "Generate a random number for each call that will appear in the recipient's identifier"
+      },
+      "callbackTim": {
+        "title": "Callback",
+        "description": "Uses an intermediary operator to connect the call and make it completely untraceable"
       },
       "plans": {
         "title": "Plans without a cut-off date",
