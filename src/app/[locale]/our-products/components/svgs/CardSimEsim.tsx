@@ -41,13 +41,13 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
   return (
     <div className={`${background} min-w-0 h-full rounded-none sm:rounded-3xl overflow-hidden relative`}>
       <div className="p-6 sm:p-9 flex flex-col sm:flex-row gap-6 items-start justify-start h-full">
-        <div className="w-full sm:w-[55%] text-center sm:text-left">
+        <div className="w-full sm:w-[55%] text-center sm:text-left flex flex-col h-full">
           <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>{title}</h2>
           {description && <p className={`text-sm mb-6 ${descriptionColor}`}>{description}</p>}
           <button
             type="button"
             onClick={onBuyClick}
-            className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-4 sm:px-6 py-2 transition w-auto min-w-[140px] sm:max-w-[180px] text-center mx-auto sm:mx-0"
+            className="bg-[#10B4E7] hover:bg-[#7EE0FF] text-black font-bold rounded-lg px-4 sm:px-6 py-2 transition w-auto min-w-[140px] sm:max-w-[180px] text-center mx-auto sm:mx-0 mt-auto"
           >
             {buyText}
           </button>

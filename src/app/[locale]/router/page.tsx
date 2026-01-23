@@ -60,20 +60,20 @@ function transformVariantsToPlans(
       price: Number(v.price),
     }));
   }
-  
+
   // Si NO hay variantes, usar licensetime y price del producto
   if (product) {
     const licensetime = (product as any).licensetime || "0";
     const price = Number((product as any).price) || 0;
     const licenseLabel = licensetime === "0" ? "Única" : `${licensetime} meses`;
-    
+
     return [{
       label: `Licencia ${licenseLabel}`,
       value: String((product as any).id),
       price: price,
     }];
   }
-  
+
   return [];
 }
 
@@ -207,15 +207,15 @@ export default function RouterPage() {
     hasAutoOpenedRef.current = true;
 
     const selectedPlan = plans.find((p) => p.label === selectedRadio);
-    
+
     // Prioridad para precio: 1. URL, 2. Plan, 3. Producto
     let initialPrice = 0;
     if (priceParam) {
-       initialPrice = parseFloat(priceParam);
+      initialPrice = parseFloat(priceParam);
     } else {
-       initialPrice = selectedPlan?.price ?? currentPrice ?? 0;
+      initialPrice = selectedPlan?.price ?? currentPrice ?? 0;
     }
-    
+
     // Prioridad para productId: 1. URL, 2. Plan (variant ID), 3. Config base
     // Nota: selectedPlan.value trae el ID de la variante si existe
     const targetProductId = productIdParam || (selectedPlan ? selectedPlan.value : String(ROUTER_CONFIG.productId));
@@ -227,7 +227,7 @@ export default function RouterPage() {
         selectedOption: ROUTER_CONFIG.categoryId,
         initialPrice: Number(initialPrice) || 0,
         // Si el productId viene de URL, no forzamos variantId, o asumimos que el productId ES la variante
-        variantId: undefined, 
+        variantId: undefined,
       });
       const url = new URL(window.location.href);
       url.searchParams.delete("buy");
@@ -239,7 +239,7 @@ export default function RouterPage() {
 
   // Producto Info para StickyBanner - Priorizar datos del backend
   const productIconUrl = (product as any)?.iconUrl || ROUTER_CONFIG.iconUrl;
-  
+
   const productInfo = useMemo(() => ({
     title: (product as any)?.name || "Camaleón Router",
     price: formatPrice(currentPrice),
@@ -339,7 +339,7 @@ export default function RouterPage() {
           title: "SIM Card encriptada",
           description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
           buttonLabel: "Más información",
-          onButtonClick: () => window.location.href = `/${locale}/sim-encriptada`,
+          onButtonClick: () => window.location.href = `/${locale}/sim/sim-encriptada`,
           image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
         }}
         right={{
