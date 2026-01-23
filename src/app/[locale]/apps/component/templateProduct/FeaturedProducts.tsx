@@ -64,7 +64,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => {
     <section className="w-full bg-white">
       <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
         <motion.div
-          className="relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 flex flex-col xl:grid xl:grid-cols-2 gap-0 xl:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1"
+          className="relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 flex flex-col xl:grid xl:grid-cols-2 gap-2 xl:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

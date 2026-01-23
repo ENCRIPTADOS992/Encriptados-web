@@ -43,8 +43,13 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
     openModal({ productid: productId, languageCode: "es" });
   };
 
+  // Determinar el gap basado en la ruta actual
+  // Home (/) usa gap-4, /our-products usa gap-6
+  const isOurProductsPage = pathname.includes("/our-products");
+  const gapClass = isOurProductsPage ? "gap-6" : "gap-4";
+
   return (
-    <div className="relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1">
+    <div className={`relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 grid grid-cols-1 xl:grid-cols-2 ${gapClass} xl:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1`}>
       {/* SIM Encriptada → productId = 508 */}
       <CardSimEsim
         title={t("encrypted.title")}
