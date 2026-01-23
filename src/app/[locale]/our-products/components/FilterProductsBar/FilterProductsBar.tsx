@@ -236,7 +236,7 @@ export default function FilterProductsBar({
         />
         <div
           ref={modalRef}
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl"
         >
           <div
             className="
@@ -245,15 +245,16 @@ export default function FilterProductsBar({
               px-3 sm:px-4 md:px-6
               py-2 sm:py-2.5 md:py-3
               flex items-center 
+              justify-center sm:justify-between
               gap-2 sm:gap-3 md:gap-6
               shadow-xl
               shadow-black/60
             "
           >
-            <div className="flex items-center gap-2 pr-2 sm:pr-4">
+            <div className="hidden sm:flex items-center gap-2 pr-2 sm:pr-4">
               <MobileMenuSvg width={120} height={35} className="sm:w-[160px] md:w-[180px]" />
             </div>
-            <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center justify-center sm:justify-start gap-0.5 sm:gap-1 md:gap-2 overflow-x-auto scrollbar-hide">
               {navItems.map((item) => {
                 const isActive =
                   item.catId !== undefined && item.catId === selectedCat;
