@@ -39,7 +39,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
             {left.description}
           </p>
           <button
-            className="bg-[#E3F8FF] text-[#101010] font-medium rounded-full px-8 py-3 w-[160px] text-[16px] mt-2 mb-2"
+            className="bg-[#35CDFB] text-black font-medium rounded-full px-8 py-3 w-[160px] text-[16px] mt-2 mb-2"
             onClick={left.onButtonClick}
           >
             {left.buttonLabel}
@@ -77,7 +77,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ left, right }) => (
             {right.subtitle}
           </p>
           <button
-            className="bg-white text-[#101010] font-medium rounded-full px-8 py-3 w-[160px] text-[16px] mt-2"
+            className="bg-[#35CDFB] text-black font-medium rounded-full px-8 py-3 w-[160px] text-[16px] mt-2"
             onClick={right.onButtonClick}
           >
             {right.buttonLabel}

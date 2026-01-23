@@ -24,7 +24,7 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
   right,
 }) => (
   <section className="w-full hidden sm:flex lg:hidden justify-center py-8 mt-[30px]">
-    <div className="flex flex-row gap-[20px] w-full max-w-[718px] px-6">
+    <div className="flex flex-col gap-[20px] w-full max-w-[718px] px-6">
       {" "}
       {/* 349*2 + gap */}
       {/* LEFT CARD */}
