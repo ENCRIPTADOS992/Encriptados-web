@@ -44,6 +44,8 @@ interface ProductInfoSectionProps {
   regionBadge?: string;
   regionCode?: string;
   flagUrl?: string;
+  // Ref para detectar visibilidad del precio (para StickyBanner)
+  priceBlockRef?: React.RefObject<HTMLDivElement>;
   translations?: {
     priceFrom?: string;
     buyNow?: string;
@@ -104,6 +106,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
   regionBadge,
   regionCode,
   flagUrl,
+  priceBlockRef,
   translations,
 }) => {
   const { isFromAppMobile } = useAppMobile();
@@ -273,6 +276,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
 
             {/* Precio */}
             <motion.div
+              ref={priceBlockRef}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}

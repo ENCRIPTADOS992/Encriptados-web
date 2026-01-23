@@ -1,35 +1,14 @@
 "use client";
 
-"use client";
-
 import React from "react";
 import FiltersOffers from "./FiltersOffers";
 import { useTranslations } from "next-intl";
-import { useFormContext } from "react-hook-form";
-import { useGetProducts } from "@/features/products/queries/useGetProducts";
-import type { Product } from "@/features/products/types/AllProductsResponse";
-import CardProduct from "@/app/[locale]/our-products/components/CardProduct";
 
-const CATEGORY_BY_OFFER: Record<string, number> = {
-  sims: 40,
-  apps: 38,
-  system: 35,
-};
+// Temporalmente deshabilitado - no cargar productos
+const LOAD_OFFERS = false;
 
 const ListOfOffers = () => {
   const o = useTranslations("OffersPage");
-  const { watch } = useFormContext();
-  const current = watch("currentoffer") ?? "sims";
-  const categoryId = CATEGORY_BY_OFFER[current] ?? 40;
-
-  const { data, isFetching } = useGetProducts(categoryId, "encriptados");
-  const products = (data ?? []) as Product[];
-
-  const discounted = products.filter((p) => {
-    const price = parseFloat(p.price ?? "0");
-    const sale = parseFloat(p.sale_price ?? "0");
-    return Boolean(p.on_sale) || (sale > 0 && sale < price);
-  });
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto">
@@ -46,45 +25,14 @@ const ListOfOffers = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="w-full max-w-7xl mx-auto px-2 md:px-4 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 text-black mt-9 min-h-[320px] sm:min-h-[420px]">
-          {isFetching && (
-            <div className="col-span-full text-white">Cargando ofertas…</div>
-          )}
-          {!isFetching && discounted.length === 0 && (
-            <div className="col-span-full">
-              <div className="w-full bg-[#111111] rounded-2xl px-6 py-10 text-center text-white/80 min-h-[320px] sm:min-h-[420px] flex items-center justify-center">
-                <p className="text-base sm:text-lg">No hay productos en oferta en esta categoría.</p>
-              </div>
+        <div className="w-full max-w-7xl mx-auto px-2 md:px-4 grid grid-cols-1 gap-2 md:gap-4 text-black mt-9 min-h-[320px] sm:min-h-[420px]">
+          {/* Temporalmente deshabilitado - mostrar mensaje de próximamente */}
+          <div className="col-span-full">
+            <div className="w-full bg-[#111111] rounded-2xl px-6 py-10 text-center text-white/80 min-h-[320px] sm:min-h-[420px] flex flex-col items-center justify-center gap-4">
+              <p className="text-2xl sm:text-3xl font-bold text-white">Próximamente</p>
+              <p className="text-base sm:text-lg">Estamos preparando ofertas exclusivas para ti.</p>
             </div>
-          )}
-          {!isFetching && discounted.map((p, index) => {
-            const filters = {
-              selectedOption: String(categoryId),
-              provider: "encriptados",
-              os: "all",
-              license: "all",
-              encriptadosprovider: "all",
-              timprovider: "all",
-            } as any;
-            return (
-              <CardProduct
-                key={`offer-${p.id}-${index}`}
-                id={p.id}
-                priceDiscount={p.sale_price}
-                productImage={p.images?.[0]?.src ?? ""}
-                features={[]}
-                priceRange={`${p.price}$`}
-                headerIcon={""}
-                headerTitle={p.name}
-                filters={filters}
-                checks={p.checks || []}
-                badges={undefined}
-                provider={p.provider}
-                typeProduct={p.type_product}
-                planDataAmount={p.plan_data_amount}
-              />
-            );
-          })}
+          </div>
         </div>
       </div>
     </div>
@@ -92,3 +40,4 @@ const ListOfOffers = () => {
 };
 
 export default ListOfOffers;
+

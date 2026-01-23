@@ -69,13 +69,13 @@ export function transformVariantsToSimPlans(
   translations?: SimTranslations
 ): SimPlan[] {
   const t = translations || defaultSimTranslations;
-  
+
   // Si hay variantes, usarlas
   if (variants && variants.length > 0) {
     return variants.map(variant => {
       const dataAmount = variant.data_amount || variant.name || "";
       const duration = variant.duration || variant.licensetime || "30";
-      
+
       return {
         label: `${t.plan} ${dataAmount}`,
         value: String(variant.id),
@@ -87,11 +87,11 @@ export function transformVariantsToSimPlans(
       };
     });
   }
-  
+
   // Si NO hay variantes, usar datos del producto principal
   if (product) {
     const price = Number((product as any).price) || 0;
-    
+
     return [{
       label: `${t.plan} ${t.dataIncluded}`,
       value: String(product.id),
@@ -102,7 +102,7 @@ export function transformVariantsToSimPlans(
       duration: `30 ${t.days}`,
     }];
   }
-  
+
   return [];
 }
 
@@ -115,7 +115,7 @@ export function transformAdvantagesToFeaturesGrid(
   fallbackImage: string = "/images/encrypted-sim/icons/feature.png"
 ): FeatureGridItem[] {
   if (!product?.features) return [];
-  
+
   return product.features.map(feature => ({
     image: feature.image || fallbackImage,
     title: feature.name,
@@ -128,9 +128,9 @@ export function transformFeaturesToBenefitsGrid(
   config: SimProductStaticConfig | null
 ): BenefitGridItem[] {
   if (!product?.advantages) return [];
-  
+
   const fallbackIcon = config?.benefitIcon || "/images/encrypted-sim/icons/check-icon.png";
-  
+
   return product.advantages.map(advantage => ({
     icon: advantage.image || fallbackIcon,
     title: advantage.name,
@@ -140,7 +140,7 @@ export function transformFeaturesToBenefitsGrid(
 
 export function transformFaqs(product: ProductById | null): FAQItem[] {
   if (!product?.faqs) return [];
-  
+
   return product.faqs.map(faq => ({
     question: faq.name,
     answer: faq.description,
@@ -148,7 +148,7 @@ export function transformFaqs(product: ProductById | null): FAQItem[] {
 }
 
 export function formatPrice(
-  price: string | number, 
+  price: string | number,
   currency: string = "USD",
   consultText: string = "Consultar precio"
 ): string {
@@ -192,11 +192,11 @@ export function buildSimProductInfo(
   const t = translations || defaultBuildTranslations;
   return {
     title: product?.name || "Producto SIM",
-    price: selectedPlan 
-      ? formatPrice(selectedPlan.price, "USD", t.priceConsult) 
+    price: selectedPlan
+      ? formatPrice(selectedPlan.price, "USD", t.priceConsult)
       : formatPrice(product?.price || 0, "USD", t.priceConsult),
     subtitle: product?.description?.substring(0, 100) + "..." || t.defaultSubtitle,
-    iconUrl: config?.iconUrl || "/images/encrypted-sim/icons/sim-icon.png",
+    iconUrl: (product as any)?.iconUrl || config?.iconUrl || "/images/encrypted-sim/icons/sim-icon.png",
     ctaLabel: t.buyNow,
     categoryId: product?.category?.id || 40,
     productId: product?.id || config?.productId || 0,

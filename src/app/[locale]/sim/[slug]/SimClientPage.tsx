@@ -28,6 +28,8 @@ import WhereUseSimSection from "@/app/[locale]/tim-sim/components/WhereUseSimSec
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
+import StickyPriceBanner from "@/app/[locale]/apps/component/templateProduct/StickyPriceBanner";
 
 // Configuración y utilidades locales
 import {
@@ -231,6 +233,10 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   const _showEsimInfo = shouldShowEsimInfo(productFormat);
   const _showShippingInfo = shouldShowShippingInfo(productFormat);
 
+  // Ref para detectar visibilidad del bloque de precio (para StickyBanner)
+  const priceBlockRef = useRef<HTMLDivElement | null>(null);
+  const { isVisible: isPriceVisible } = usePriceVisibility(priceBlockRef);
+
   // Formatear precio
   const formatPrice = (price: number | string): string => {
     const numericPrice = typeof price === "string" ? parseFloat(price) : price;
@@ -310,6 +316,17 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     benefitsTitle: t("characteristics.title") || "Beneficios para ti:",
   }), [t]);
 
+  // ProductInfo para StickyPriceBanner - Carga dinámica según el producto
+  const productInfo = useMemo(() => ({
+    title: product?.name || config?.slug || "SIM",
+    price: formatPrice(effectivePrice),
+    subtitle: product?.description?.substring(0, 50) + "..." || "Comunicación segura",
+    iconUrl: (product as any)?.iconUrl || config?.iconUrl || "/images/encrypted-sim/icons/sim-icon.png",
+    ctaLabel: t("CardSim.buyNow") || "Comprar ahora",
+    onBuy: () => handleBuy(),
+    onChat: () => window.open("https://t.me/Encriptados", "_blank"),
+  }), [product, config, effectivePrice, t, handleBuy]);
+
   // Loading state
   if (isLoading) {
     return (
@@ -375,6 +392,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             regionBadge={regionFromUrl || undefined}
             regionCode={regionCodeFromUrl || undefined}
             flagUrl={flagUrlFromUrl || undefined}
+            priceBlockRef={priceBlockRef}
             translations={heroTranslations}
           />
           <WhereUseSimSection locale={locale} />
@@ -390,9 +408,13 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           appStoreUrl="https://apps.apple.com/app/encriptados"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
           apkUrl="https://encriptados.io/apk"
+          priceBlockRef={priceBlockRef}
           translations={heroTranslations}
         />
       )}
+
+      {/* Sticky Price Banner - Aparece cuando el bloque de precio no es visible */}
+      <StickyPriceBanner visible={!isPriceVisible} productInfo={productInfo} />
 
       {/* Sección de Cobertura con buscador - Solo para Encriptados, no TIM */}
       {showEncryptedSections && (
