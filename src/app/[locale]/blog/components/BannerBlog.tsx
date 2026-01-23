@@ -12,9 +12,11 @@ const BannerBlog = () => {
       <Image
         src={Banner}
         alt="Banner Background"
-        layout="fill"
-        objectFit="cover"
+        fill
+        sizes="100vw"
+        style={{ objectFit: "cover" }}
         className="absolute inset-0 z-0"
+        priority
       />
       <div className="absolute inset-0 bg-black opacity-80 z-10"></div>
 

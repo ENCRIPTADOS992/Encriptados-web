@@ -367,6 +367,7 @@
     },
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Migliora la tua sicurezza con queste caratteristiche",
+      "titleKnowBenefits": "Scopri i vantaggi",
       "untraceable": {
         "title": "Irrintracciabile",
         "description": "Comunica da qualsiasi luogo essendo completamente anonimo e irrintracciabile"
@@ -390,6 +391,10 @@
       "callback": {
         "title": "Richiamata",
         "description": "Genera un numero casuale per ogni chiamata che apparirà nell'identificatore del destinatario"
+      },
+      "callbackTim": {
+        "title": "Callback",
+        "description": "Utilizza un operatore intermediario per collegare la chiamata e renderla completamente irrintracciabile"
       },
       "plans": {
         "title": "Piani senza data di scadenza",
@@ -2482,8 +2487,7 @@
         }
       ]
     }
-  }
-,
+  },
   "paymentModal": {
     "purchaseDetails": "Dettagli dell'acquisto",
     "quantity": "Quantità",

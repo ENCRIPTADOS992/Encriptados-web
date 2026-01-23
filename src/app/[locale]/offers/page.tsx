@@ -3,10 +3,12 @@ import OffersBanner from "./components/OffersBanner";
 import ListOfOffers from "./components/ListOfOffers";
 import { BasicFormProvider } from "@/shared/components/BasicFormProvider";
 import CardSection from "./components/CardSection";
+import GlobalFloatingMenu from "@/shared/components/GlobalFloatingMenu";
 
 const OffersPage = () => {
   return (
     <>
+      <GlobalFloatingMenu />
       <BasicFormProvider defaultValue={{ currentoffer: "sims" }}>
         <OffersBanner />
         <div className="w-full bg-black flex justify-center items-center py-12 md:py-16 lg:py-20 px-4">

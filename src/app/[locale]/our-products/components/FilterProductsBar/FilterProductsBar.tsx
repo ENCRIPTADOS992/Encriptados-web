@@ -207,15 +207,26 @@ export default function FilterProductsBar({
       }
 
       if (item.catId) {
-        updateFilters({ selectedOption: String(item.catId) });
+        // Check if we're on the home page or our-products page
+        const currentPath = window.location.pathname;
+        const isHomePage = currentPath === "/" || currentPath.match(/^\/[a-z]{2}(\/)?$/) || currentPath.includes("/our-products");
 
-        const filtersEl = document.getElementById("filters-section");
-        if (filtersEl) {
-          const rect = filtersEl.getBoundingClientRect();
-          const offset = window.scrollY + rect.top - 16;
-          window.scrollTo({ top: offset, behavior: "smooth" });
+        if (isHomePage) {
+          // Si estamos en home, actualizar filtros y hacer scroll
+          updateFilters({ selectedOption: String(item.catId) });
+
+          const filtersEl = document.getElementById("filters-section");
+          if (filtersEl) {
+            const rect = filtersEl.getBoundingClientRect();
+            const offset = window.scrollY + rect.top - 16;
+            window.scrollTo({ top: offset, behavior: "smooth" });
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
         } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          // Si NO estamos en home, redirigir al home con el filtro seleccionado
+          const locale = currentPath.match(/^\/([a-z]{2})/)?.[1] || "es";
+          window.location.href = `/${locale}/?category=${item.catId}`;
         }
       }
     };

@@ -367,6 +367,7 @@
     },
     "improveYourSecurity": {
       "titleImproveYourSecurity": "Melhore sua segurança com esses recursos",
+      "titleKnowBenefits": "Conheça os benefícios",
       "untraceable": {
         "title": "Irreconhecível",
         "description": "Comunique-se de qualquer lugar sendo totalmente anônimo e irreconhecível"
@@ -390,6 +391,10 @@
       "callback": {
         "title": "Retorno de chamada",
         "description": "Gere um número aleatório para cada chamada que aparecerá no identificador do receptor"
+      },
+      "callbackTim": {
+        "title": "Callback",
+        "description": "Utiliza um operador intermediário para conectar a chamada e torná-la completamente irrastreável"
       },
       "plans": {
         "title": "Planos sem data de corte",
@@ -2482,8 +2487,7 @@
         }
       ]
     }
-  }
-,
+  },
   "paymentModal": {
     "purchaseDetails": "Detalhes da compra",
     "quantity": "Quantidade",

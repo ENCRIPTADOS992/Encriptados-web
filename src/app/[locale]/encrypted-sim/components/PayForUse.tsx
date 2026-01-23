@@ -28,7 +28,9 @@ const PayForUse = () => {
               src={Man}
               alt="Man with cellphone"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="-scale-x-100 object-cover object-top"
+              priority
             />
           </div>
         </div>

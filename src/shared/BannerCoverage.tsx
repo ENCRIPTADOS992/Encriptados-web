@@ -14,15 +14,17 @@ const BannerCoverage = () => {
         src={FloatSimCard}
         alt="Cobertura mundial"
         fill
+        sizes="100vw"
         style={{ objectFit: "cover" }}
         className="z-0"
+        priority
       />
-      
+
       {/* Gradiente overlay - de negro a transparente */}
-      <div 
+      <div
         className="absolute inset-0 z-10"
-        style={{ 
-          background: "linear-gradient(90deg, #000000 22%, rgba(65, 93, 130, 0) 100%)" 
+        style={{
+          background: "linear-gradient(90deg, #000000 22%, rgba(65, 93, 130, 0) 100%)"
         }}
       />
 
