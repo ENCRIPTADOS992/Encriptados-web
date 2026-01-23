@@ -21,15 +21,18 @@ interface HeroSimSectionProps {
   heroImage?: string;
   features: string[];
   price: string;
-  
+
   // Acciones
   onBuy: () => void;
-  
+
   // Opcional: URLs de tiendas
   appStoreUrl?: string;
   googlePlayUrl?: string;
   apkUrl?: string;
-  
+
+  // Ref para detectar visibilidad del precio (para StickyBanner)
+  priceBlockRef?: React.RefObject<HTMLDivElement>;
+
   // Traducciones
   translations?: {
     priceFrom?: string;
@@ -88,11 +91,12 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
   appStoreUrl,
   googlePlayUrl,
   apkUrl,
+  priceBlockRef,
   translations,
 }) => {
   const { isFromAppMobile } = useAppMobile();
   const tHero = useTranslations("EncryptedSimPage.HeroSimSection");
-  
+
   const t = {
     priceFrom: translations?.priceFrom || tHero("priceFrom"),
     buyNow: translations?.buyNow || tHero("buyNow"),
@@ -243,7 +247,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
 
               {/* Download Buttons - Ocultos en móvil, visibles en desktop */}
               {hasStoreLinks && (
-                <motion.div 
+                <motion.div
                   className="hidden lg:grid grid-cols-3 gap-3 w-full"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -309,7 +313,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
               {features.length > 0 && (
                 <div className="space-y-4">
                   <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">{t.benefitsTitle}</p>
-                  <motion.ul 
+                  <motion.ul
                     className="space-y-2"
                     initial="hidden"
                     animate="visible"
@@ -318,8 +322,8 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
                     }}
                   >
                     {features.map((feature, idx) => (
-                      <motion.li 
-                        key={idx} 
+                      <motion.li
+                        key={idx}
                         className="flex items-center gap-2"
                         variants={featureVariants}
                       >
@@ -332,7 +336,7 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
               )}
 
               {/* Línea punteada separadora */}
-              <motion.hr 
+              <motion.hr
                 className="border-dashed border-gray-300"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
@@ -341,7 +345,8 @@ const HeroSimSection: React.FC<HeroSimSectionProps> = ({
               />
 
               {/* Precio */}
-              <motion.div 
+              <motion.div
+                ref={priceBlockRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
