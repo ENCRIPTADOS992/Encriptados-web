@@ -39,7 +39,7 @@ const FALLBACK_IMAGES: Record<string, StaticImageData> = {
 };
 
 interface FixedCard {
-  id: number; 
+  id: number;
   logoSrc: StaticImageData;
   title: string;
   description: string;
@@ -61,7 +61,7 @@ const FixedSimProducts: React.FC = () => {
   const locale = useLocale();
 
   const { openModal } = useModalPayment();
-  
+
   // Obtener productos desde la API
   const { data: apiProducts } = useEncryptedSimProducts();
 
@@ -69,15 +69,15 @@ const FixedSimProducts: React.FC = () => {
     console.log(`🛒 Comprar clicado para ID=${id}`, { variants });
     // Si tiene variantes, pasar la primera como precio inicial
     const initialPrice = variants && variants.length > 0 ? variants[0].price : undefined;
-    openModal({ 
-      productid: id.toString(), 
-      languageCode: locale, 
+    openModal({
+      productid: id.toString(),
+      languageCode: locale,
       initialPrice,
       // Pasar variantes para que el modal pueda mostrar selector
       variants: variants?.map(v => ({ id: v.id, price: v.price, sku: v.sku }))
     });
   };
-  
+
   // Función helper para obtener imagen del producto desde API o fallback
   const getProductImage = (productId: number, type: string): string | StaticImageData => {
     const apiProduct = apiProducts?.find(p => p.id === productId);
@@ -86,7 +86,7 @@ const FixedSimProducts: React.FC = () => {
     }
     return FALLBACK_IMAGES[type] || EncryptedSimDataFallback;
   };
-  
+
   // Función helper para obtener el rango de precios desde API
   const getPriceLabel = (productId: number, fallbackPrice: string): string => {
     const apiProduct = apiProducts?.find(p => p.id === productId);
@@ -96,13 +96,13 @@ const FixedSimProducts: React.FC = () => {
     }
     return fallbackPrice;
   };
-  
+
   // Función helper para obtener las variantes del producto
   const getProductVariants = (productId: number) => {
     const apiProduct = apiProducts?.find(p => p.id === productId);
     return apiProduct?.variants || [];
   };
-  
+
   // Define aquí las 4 cards EXACTAS (datos, minutos, imsi, esim)
   const commonFeaturesData = [
     {
@@ -197,6 +197,30 @@ const FixedSimProducts: React.FC = () => {
     },
   ];
 
+  // Características para eSIM + Datos
+  const commonFeaturesEsimData = [
+    {
+      icon: CharacteristicAnonimitySvg,
+      alt: t("commonFeatures.privacyAnonymity"),
+      description: t("commonFeatures.privacyAnonymity"),
+    },
+    {
+      icon: CharacteristicTopUpSvg,
+      alt: t("commonFeatures.unlimitedDataPlans"),
+      description: t("commonFeatures.unlimitedDataPlans"),
+    },
+    {
+      icon: CharacteristicComunicationsSvg,
+      alt: t("commonFeatures.encryptedCommunications"),
+      description: t("commonFeatures.encryptedCommunications"),
+    },
+    {
+      icon: CharacteristicAppSvg,
+      alt: t("commonFeatures.appAvailable"),
+      description: t("commonFeatures.appAvailable"),
+    },
+  ];
+
   const cardData: FixedCard[] = [
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.DATA,
@@ -270,6 +294,24 @@ const FixedSimProducts: React.FC = () => {
       headerIcon: IcomSimSvg,
       headerTitle: t("products.sim.headerTitle"),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED),
+    },
+    {
+      id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA,
+      logoSrc: LogoSvg1,
+      title: t("products.esimData.title"),
+      description: t("products.esimData.description"),
+      features: commonFeaturesEsimData,
+      productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, "esim_data"),
+      featuresCardSim: [
+        t("products.esimData.featuresCardSim.0"),
+        t("products.esimData.featuresCardSim.1"),
+        t("products.esimData.featuresCardSim.2"),
+        t("products.esimData.featuresCardSim.3"),
+      ],
+      priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.priceRange")),
+      headerIcon: IcomSimSvg,
+      headerTitle: t("products.esimData.headerTitle"),
+      apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA),
     },
   ];
 
