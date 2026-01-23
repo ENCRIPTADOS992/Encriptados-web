@@ -35,6 +35,30 @@ const OurProductsPage = () => {
 
   useEffect(() => {
     console.log("[OurProductsPage] Página montada correctamente ✅");
+
+    // Leer parámetro 'category' de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get("category");
+
+    if (categoryParam) {
+      // Actualizar filtros con la categoría de la URL
+      updateFilters({ selectedOption: categoryParam });
+
+      // Hacer scroll a la sección de filtros después de un pequeño delay
+      setTimeout(() => {
+        const filtersEl = document.getElementById("filters-section");
+        if (filtersEl) {
+          const rect = filtersEl.getBoundingClientRect();
+          const offset = window.scrollY + rect.top - 16;
+          window.scrollTo({ top: offset, behavior: "smooth" });
+        }
+      }, 500);
+
+      // Limpiar el parámetro de la URL sin recargar la página
+      const url = new URL(window.location.href);
+      url.searchParams.delete("category");
+      window.history.replaceState({}, "", url.toString());
+    }
   }, []);
 
   useEffect(() => {

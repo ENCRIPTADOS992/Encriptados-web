@@ -1,10 +1,14 @@
 import React from "react";
 import AboutUsPage from "./components/AboutUsPage";
+import GlobalFloatingMenu from "@/shared/components/GlobalFloatingMenu";
 
 const Page = () => {
-  return <AboutUsPage />;
+  return (
+    <>
+      <GlobalFloatingMenu />
+      <AboutUsPage />
+    </>
+  );
 };
 
 export default Page;
-
-
