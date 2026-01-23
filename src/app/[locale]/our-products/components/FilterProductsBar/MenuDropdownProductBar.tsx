@@ -2,6 +2,7 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
+import { ChevronDown } from "lucide-react";
 import "@szhsin/react-menu/dist/index.css";
 import { useTranslations } from "next-intl";
 
@@ -14,16 +15,19 @@ interface Option {
 interface MenuDropdownProductBarProps {
   options: Option[];
   name: string;
-  onChangeExternal?: (value: string) => void; 
+  onChangeExternal?: (value: string) => void;
+  externalValue?: string;
 }
 
 const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
   options,
   name,
   onChangeExternal,
+  externalValue,
 }) => {
   const { control, watch } = useFormContext();
-  const selectedItem = watch(name);
+  const watchedValue = watch(name);
+  const selectedItem = externalValue !== undefined ? externalValue : watchedValue;
 
   const t = useTranslations("OurProductsPage");
 
@@ -38,11 +42,10 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
           menuClassName="bg-[#222222] border-none p-2 rounded-xl max-h-[60vh] overflow-y-auto"
           menuButton={
             <MenuButton
-              className={`flex items-center justify-between border rounded-2xl shadow-md p-4 w-full transition duration-150 ease-in-out ${
-                selectedItem
-                  ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
-                  : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
-              }`}
+              className={`flex items-center justify-between border rounded-2xl shadow-md p-4 w-full transition duration-150 ease-in-out ${selectedItem
+                ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
+                : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
+                }`}
             >
               <span className="flex items-center gap-x-2">
                 {selectedItem &&
@@ -50,10 +53,11 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
                 <span>
                   {selectedItem
                     ? options.find((option) => option.value === selectedItem)
-                        ?.label || t("filterProducts.selectPlacerholder")
+                      ?.label || t("filterProducts.selectPlacerholder")
                     : t("filterProducts.selectPlacerholder")}
                 </span>
               </span>
+              <ChevronDown className="w-4 h-4 ml-2 opacity-60" />
             </MenuButton>
           }
         >
@@ -61,15 +65,14 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
             <MenuItem
               key={index}
               onClick={() => {
-                onChange(item.value);  
+                onChange(item.value);
                 if (onChangeExternal) {
                   console.log(`[MenuDropdownProductBar] onChangeExternal ejecutado con: ${item.value}`);
                   onChangeExternal(item.value);
                 }
               }}
-              className={`flex items-center hover:bg-[#3E3E3E] transition duration-150 ease-in-out bg-[#222222] mx-1 my-1 p-2 rounded-xl ${
-                selectedItem === item.value ? "bg-[#3E3E3E]" : ""
-              }`}
+              className={`flex items-center hover:bg-[#3E3E3E] transition duration-150 ease-in-out bg-[#222222] mx-1 my-1 p-2 rounded-xl ${selectedItem === item.value ? "bg-[#3E3E3E]" : ""
+                }`}
             >
               <input
                 type="radio"
@@ -77,17 +80,15 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
                 value={item.value}
                 checked={selectedItem === item.value}
                 readOnly
-                className={`mr-2 accent-cyan-700 ${
-                  selectedItem === item.value ? "" : ""
-                }`}
+                className={`mr-2 accent-cyan-700 ${selectedItem === item.value ? "" : ""
+                  }`}
               />
               {item.icon && <span className="mr-2">{item.icon}</span>}
               <span
-                className={`font-semibold py-2 ${
-                  selectedItem === item.value
-                    ? "text-[#CCCCCC] ]"
-                    : "text-[#7E7E7E]"
-                }`}
+                className={`font-semibold py-2 ${selectedItem === item.value
+                  ? "text-[#CCCCCC] ]"
+                  : "text-[#7E7E7E]"
+                  }`}
               >
                 {item.label}
               </span>
