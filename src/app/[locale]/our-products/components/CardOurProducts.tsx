@@ -18,20 +18,16 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
   const pathname = usePathname();
   const t = useTranslations("OurProductsPage.simCards");
 
-  const buildSimMoreInfoUrl = (productId: string) => {
-    const basePath = `/our-products/sim-more-info?productId=${productId}`;
+  const buildSimUrl = (slug: string) => {
     const match = pathname.match(/^\/([a-zA-Z-]+)(\/|$)/);
-    if (!match) return basePath;
-
+    if (!match) return `/${slug}`;
     const locale = match[1];
-    if (basePath.startsWith(`/${locale}/`)) return basePath;
-
-    return `/${locale}${basePath}`;
+    return `/${locale}/${slug}`;
   };
 
-  const handleMoreInfo = (productId: string) => {
-    const href = buildSimMoreInfoUrl(productId);
-    console.log("[CardOurProducts] 👉 Navegando a más info:", { productId, href });
+  const handleMoreInfo = (slug: string) => {
+    const href = buildSimUrl(slug);
+    console.log("[CardOurProducts] 👉 Navegando a más info:", { slug, href });
     router.push(href);
   };
 
@@ -61,7 +57,7 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         descriptionColor="text-white"
         showMoreInfo={false}
         buyText={t("moreInfo")}
-        onBuyClick={() => handleMoreInfo("508")}
+        onBuyClick={() => handleMoreInfo("sim-encriptada")}
       />
 
       {/* SIM TIM → productId = 454 */}
@@ -75,7 +71,7 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
         descriptionColor="text-black"
         showMoreInfo={false}
         buyText={t("moreInfo")}
-        onBuyClick={() => handleMoreInfo("454")}
+        onBuyClick={() => handleMoreInfo("tim-sim")}
       />
     </div>
   );
