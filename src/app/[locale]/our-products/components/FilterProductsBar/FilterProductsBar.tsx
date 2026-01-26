@@ -133,54 +133,58 @@ export default function FilterProductsBar({
   };
 
   // Rendering logic for subfilters based on Flex to fill space dynamically
-  const renderSimFilters = () => (
-    <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-row gap-3 w-full items-end">
-      {/* 1. Proveedor */}
-      <div className="flex-1 w-full min-w-0">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
-        <MenuDropdownProductBar
-          name="provider"
-          externalValue={filters.provider}
-          options={[
-            {
-              label: " ",
-              value: "encriptados",
-              icon: <EncryptedSimIcon width={115} height={25} />
-            },
-            {
-              label: " ",
-              value: "tim",
-              icon: <TimSimIcon width={88} height={25} />
-            },
-          ]}
-          onChangeExternal={(value) => {
-            updateFilters({
-              provider: value,
-              encriptadosprovider: "all",
-              timprovider: "all",
-              timService: undefined
-            });
-          }}
-        />
-      </div>
+  const renderSimFilters = () => {
+    const gridColsSm = shouldShowTimRegion ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
-      {/* 2. Servicios */}
-      <div className="flex-1 w-full min-w-0">
-        {currentProvider && optionByProvider[currentProvider]}
-      </div>
-
-      {/* 3. Región */}
-      {shouldShowTimRegion && (
+    return (
+      <div className={`grid grid-cols-2 ${gridColsSm} lg:flex lg:flex-row gap-3 w-full items-end`}>
+        {/* 1. Proveedor */}
         <div className="flex-1 w-full min-w-0">
-          <FilterRegionCountry
-            filters={filters}
-            updateFilters={updateFilters}
-            service={activeTimService}
+          <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
+          <MenuDropdownProductBar
+            name="provider"
+            externalValue={filters.provider}
+            options={[
+              {
+                label: " ",
+                value: "encriptados",
+                icon: <EncryptedSimIcon width={115} height={25} />
+              },
+              {
+                label: " ",
+                value: "tim",
+                icon: <TimSimIcon width={88} height={25} />
+              },
+            ]}
+            onChangeExternal={(value) => {
+              updateFilters({
+                provider: value,
+                encriptadosprovider: "all",
+                timprovider: "all",
+                timService: undefined
+              });
+            }}
           />
         </div>
-      )}
-    </div>
-  );
+
+        {/* 2. Servicios */}
+        <div className="flex-1 w-full min-w-0">
+          {currentProvider && optionByProvider[currentProvider]}
+        </div>
+
+        {/* 3. Región */}
+        {shouldShowTimRegion && (
+          <div className="col-span-2 sm:col-span-1 flex-1 w-full min-w-0">
+            <FilterRegionCountry
+              filters={filters}
+              updateFilters={updateFilters}
+              service={activeTimService}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
 
 
   // Variante flotante (barra fija abajo - responsive para mobile/tablet/desktop)
