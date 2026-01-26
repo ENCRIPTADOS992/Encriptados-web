@@ -860,7 +860,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       </div>
 
       <div className="w-full">
-        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-5 w-full max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 w-full max-w-7xl mx-auto">
           {productsToRender.map((product, index) => {
             const isCategory40 = selectedOption === 40;
             const providerLower = (product.provider ?? "").toLowerCase();
