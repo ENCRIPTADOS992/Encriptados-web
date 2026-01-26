@@ -134,35 +134,44 @@ export function useRegionCountryFilter({
     };
   }, [service]);
 
+  // Helper para normalizar texto (quitar acentos, lowercase)
+  const normalizeText = (text: string) => {
+    return text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  };
+
   useEffect(() => {
-    if (debouncedSearch.trim().length < 2) {
+    // Si no hay búsqueda suficiente, mostrar todo
+    if (debouncedSearch.trim().length < 1) {
       setVisibleRegions(regions);
       setVisibleCountries(countries);
+      setLoadingSearch(false);
       return;
     }
 
-    let cancelled = false;
+    setLoadingSearch(true);
 
-    async function doSearch() {
-      setLoadingSearch(true);
-      try {
-        if (filters.regionOrCountryType === "region") {
-          const res = await searchRegions(debouncedSearch.trim());
-          if (!cancelled) setVisibleRegions(res);
-        } else {
-          const res = await searchCountries(debouncedSearch.trim());
-          if (!cancelled) setVisibleCountries(res);
-        }
-      } finally {
-        if (!cancelled) setLoadingSearch(false);
-      }
+    // Búsqueda LOCAL en lugar de API
+    // Esto permite filtrar por acentos correctamente ("mexico" -> "México") 
+    // y es más rápido ya que ya tenemos los datos
+    const term = normalizeText(debouncedSearch.trim());
+
+    if (filters.regionOrCountryType === "region") {
+      const filtered = regions.filter(r =>
+        normalizeText(r.name).includes(term)
+      );
+      setVisibleRegions(filtered);
+    } else {
+      const filtered = countries.filter(c =>
+        normalizeText(c.name).includes(term)
+      );
+      setVisibleCountries(filtered);
     }
 
-    doSearch();
+    setLoadingSearch(false);
 
-    return () => {
-      cancelled = true;
-    };
   }, [debouncedSearch, filters.regionOrCountryType, regions, countries]);
 
   useEffect(() => {
