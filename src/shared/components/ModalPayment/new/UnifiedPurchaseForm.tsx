@@ -89,10 +89,10 @@ export default function UnifiedPurchaseForm({
 
   // Para Software: tipo de licencia
   const [licenseType, setLicenseType] = React.useState<LicenseType>("new");
-  
+
   // Para renovación: IDs del producto a renovar (uno por licencia según cantidad)
   const [renewIds, setRenewIds] = React.useState<string[]>([]);
-  
+
   // Para SecureCrypt: sistema operativo
   const [osType, setOsType] = React.useState<OsType>("android");
 
@@ -179,7 +179,7 @@ export default function UnifiedPurchaseForm({
   // Solo validar usernames si showUsernameFields es true Y estamos en modo "new_user"
   // En modo "roning_code" o "recharge" no se requieren usernames
   const requiresUsernames = policy.showUsernameFields && silentPhoneMode === "new_user";
-  const usernamesOk = !requiresUsernames || 
+  const usernamesOk = !requiresUsernames ||
     (usernames.length === quantity && usernames.every((u) => reUser.test(u)));
   const emailOk = /\S+@\S+\.\S+/.test(emailVal) && emailVal.length <= 100 && emailVal.length > 5;
   const requiresRenewIds =
@@ -211,10 +211,10 @@ export default function UnifiedPurchaseForm({
     method === "crypto"
       ? t("payNow")
       : phase === "card_init"
-      ? t("continue")
-      : polling
-      ? t("processing")
-      : t("confirmPayment");
+        ? t("continue")
+        : polling
+          ? t("processing")
+          : t("confirmPayment");
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -231,7 +231,7 @@ export default function UnifiedPurchaseForm({
           clearInterval(pollRef.current!);
           setPolling(false);
         }
-      } catch {}
+      } catch { }
     };
 
     pollRef.current = setInterval(tick, 2000);
@@ -290,7 +290,7 @@ export default function UnifiedPurchaseForm({
 
         // Usar la API correcta según el tipo de orden
         let orderResult: { order_id: number; client_secret: string };
-        
+
         if (orderType === "roaming") {
           orderResult = await createOrderAndIntent({
             orderType: "roaming",
@@ -507,19 +507,19 @@ export default function UnifiedPurchaseForm({
             <div className="w-full h-11 grid grid-cols-3 gap-2">
               <button
                 type="button"
-                aria-pressed={silentPhoneMode === "new_user"}
-                onClick={() => onSilentPhoneModeChange?.("new_user")}
-                className={[baseBtnClass, silentPhoneMode === "new_user" ? activeClass : inactiveClass].join(" ")}
-              >
-                {t("wantMyUser")}
-              </button>
-              <button
-                type="button"
                 aria-pressed={silentPhoneMode === "roning_code"}
                 onClick={() => onSilentPhoneModeChange?.("roning_code")}
                 className={[baseBtnClass, silentPhoneMode === "roning_code" ? activeClass : inactiveClass].join(" ")}
               >
                 {t("roningCode")}
+              </button>
+              <button
+                type="button"
+                aria-pressed={silentPhoneMode === "new_user"}
+                onClick={() => onSilentPhoneModeChange?.("new_user")}
+                className={[baseBtnClass, silentPhoneMode === "new_user" ? activeClass : inactiveClass].join(" ")}
+              >
+                {t("wantMyUser")}
               </button>
               <button
                 type="button"
@@ -616,33 +616,33 @@ export default function UnifiedPurchaseForm({
                         placeholder={policy.emailPlaceholder}
                         type="email"
                         className="w-full bg-transparent outline-none text-[14px]"
-                  />
-                </div>
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                  <input
-                    value={telegramId}
-                    onChange={(e) => setTelegramId(e.target.value)}
-                    placeholder="ID Telegram (opcional)"
-                    className="w-full bg-transparent outline-none text-[14px]"
-                  />
-                </div>
-              </div>
-            ) : (
-              // Solo email - ocupa media columna
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                  <input
-                    value={emailVal}
-                    onChange={(e) => setEmailVal(e.target.value)}
-                    placeholder={policy.emailPlaceholder}
-                    type="email"
-                    className="w-full bg-transparent outline-none text-[14px]"
-                  />
-                </div>
+                      />
+                    </div>
+                    <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                      <input
+                        value={telegramId}
+                        onChange={(e) => setTelegramId(e.target.value)}
+                        placeholder="ID Telegram (opcional)"
+                        className="w-full bg-transparent outline-none text-[14px]"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  // Solo email - ocupa media columna
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                      <input
+                        value={emailVal}
+                        onChange={(e) => setEmailVal(e.target.value)}
+                        placeholder={policy.emailPlaceholder}
+                        type="email"
+                        className="w-full bg-transparent outline-none text-[14px]"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
-          </div>
-        )}
 
             {isRouterCheckout && (
               <div className="space-y-3">
@@ -695,125 +695,122 @@ export default function UnifiedPurchaseForm({
               </div>
             )}
 
-        {/* === TERMS === */}
-        <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
-          <input
-            type="checkbox"
-            checked={terms}
-            onChange={(e) => setTerms(e.target.checked)}
-            className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
-          />
-          <span className="select-none">
-            {t("acceptTerms")}{" "}
-            <Link href={TERMS_URL} target="_blank" className="underline font-medium">
-              {t("termsAndConditions")}
-            </Link>{" "}
-            {t("ofPurchase")}
-          </span>
-        </label>
+            {/* === TERMS === */}
+            <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+              <input
+                type="checkbox"
+                checked={terms}
+                onChange={(e) => setTerms(e.target.checked)}
+                className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+              />
+              <span className="select-none">
+                {t("acceptTerms")}{" "}
+                <Link href={TERMS_URL} target="_blank" className="underline font-medium">
+                  {t("termsAndConditions")}
+                </Link>{" "}
+                {t("ofPurchase")}
+              </span>
+            </label>
 
-        {/* === PAYMENT METHODS === */}
-        <div className="space-y-1.5">
-          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-            {t("paymentMethod")}
-          </p>
-          <div className="flex gap-3">
-            {policy.paymentMethods.includes("card") && (
-              <button
-                type="button"
-                onClick={() => setMethod("card")}
-                className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${
-                  method === "card" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
+            {/* === PAYMENT METHODS === */}
+            <div className="space-y-1.5">
+              <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+                {t("paymentMethod")}
+              </p>
+              <div className="flex gap-3">
+                {policy.paymentMethods.includes("card") && (
+                  <button
+                    type="button"
+                    onClick={() => setMethod("card")}
+                    className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${method === "card" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
+                      }`}
+                  >
+                    <Image src="/icons/tarjeta-credito-icono.svg" alt="" width={28} height={28} />
+                    <span className="text-[14px] font-medium">{t("creditCard")}</span>
+                  </button>
+                )}
+                {policy.paymentMethods.includes("crypto") && (
+                  <button
+                    type="button"
+                    onClick={() => setMethod("crypto")}
+                    className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${method === "crypto" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
+                      }`}
+                  >
+                    <Image src="/icons/cripto-icono.svg" alt="" width={28} height={28} />
+                    <span className="text-[14px] font-medium">{t("cryptocurrency")}</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* === CARD FIELDS (when card is selected) === */}
+            {method === "card" && (
+              <div className="space-y-3 mt-2">
+                {/* Cardholder name */}
+                <div className="space-y-1.5">
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={cardName}
+                      onChange={(e) => setCardName(onlyLetters(e.target.value))}
+                      placeholder={t("cardholderName")}
+                      className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
+                    />
+                  </div>
+                </div>
+
+                {/* Card number */}
+                <div className="space-y-1.5">
+                  <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                </div>
+
+                {/* Expiry + CVC */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                  </div>
+                </div>
+
+                {/* Postal code */}
+                <div className="space-y-1.5">
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={postal}
+                      onChange={(e) => setPostal(e.target.value)}
+                      placeholder={t("postalCode")}
+                      className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
+                    />
+                  </div>
+                </div>
+
+                {stripeStatus === "idle" && (
+                  <p className="text-[12px] text-gray-500">{t("loadingPaymentForm")}</p>
+                )}
+                {mountError && (
+                  <p className="text-[12px] text-red-500">{mountError}</p>
+                )}
+              </div>
+            )}
+
+            {/* === STRIPE ERROR === */}
+            {stripeError && (
+              <p className="text-[12px] text-red-500">{stripeError}</p>
+            )}
+
+            {/* === PAY BUTTON === */}
+            <button
+              type="button"
+              onClick={handlePay}
+              disabled={!canPay}
+              className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${canPay
+                  ? "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
-              >
-                <Image src="/icons/tarjeta-credito-icono.svg" alt="" width={28} height={28} />
-                <span className="text-[14px] font-medium">{t("creditCard")}</span>
-              </button>
-            )}
-            {policy.paymentMethods.includes("crypto") && (
-              <button
-                type="button"
-                onClick={() => setMethod("crypto")}
-                className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${
-                  method === "crypto" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
-                }`}
-              >
-                <Image src="/icons/cripto-icono.svg" alt="" width={28} height={28} />
-                <span className="text-[14px] font-medium">{t("cryptocurrency")}</span>
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* === CARD FIELDS (when card is selected) === */}
-        {method === "card" && (
-          <div className="space-y-3 mt-2">
-            {/* Cardholder name */}
-            <div className="space-y-1.5">
-              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                <input
-                  value={cardName}
-                  onChange={(e) => setCardName(onlyLetters(e.target.value))}
-                  placeholder={t("cardholderName")}
-                  className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
-                />
-              </div>
-            </div>
-
-            {/* Card number */}
-            <div className="space-y-1.5">
-              <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-            </div>
-
-            {/* Expiry + CVC */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-              </div>
-              <div className="space-y-1.5">
-                <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-              </div>
-            </div>
-
-            {/* Postal code */}
-            <div className="space-y-1.5">
-              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                <input
-                  value={postal}
-                  onChange={(e) => setPostal(e.target.value)}
-                  placeholder={t("postalCode")}
-                  className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
-                />
-              </div>
-            </div>
-
-            {stripeStatus === "idle" && (
-              <p className="text-[12px] text-gray-500">{t("loadingPaymentForm")}</p>
-            )}
-            {mountError && (
-              <p className="text-[12px] text-red-500">{mountError}</p>
-            )}
-          </div>
-        )}
-
-        {/* === STRIPE ERROR === */}
-        {stripeError && (
-          <p className="text-[12px] text-red-500">{stripeError}</p>
-        )}
-
-        {/* === PAY BUTTON === */}
-        <button
-          type="button"
-          onClick={handlePay}
-          disabled={!canPay}
-          className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${
-            canPay
-              ? "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          {buttonLabel}
-        </button>
+            >
+              {buttonLabel}
+            </button>
           </>
         )}
       </div>
