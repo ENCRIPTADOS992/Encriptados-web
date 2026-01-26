@@ -71,10 +71,10 @@ export default function SimpleEmailForm({
     method === "crypto"
       ? "Pagar ahora"
       : phase === "card_init"
-      ? "Continuar"
-      : polling
-      ? "Procesando…"
-      : "Confirmar pago";
+        ? "Continuar"
+        : polling
+          ? "Procesando…"
+          : "Confirmar pago";
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -91,7 +91,7 @@ export default function SimpleEmailForm({
           clearInterval(pollRef.current!);
           setPolling(false);
         }
-      } catch {}
+      } catch { }
     };
 
     pollRef.current = setInterval(tick, 2000);
@@ -168,7 +168,7 @@ export default function SimpleEmailForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
             <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              Correo electrónico para recibir mi código Roning
+              Correo electrónico para recibir tu licencia
             </p>
             <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
               <input
@@ -283,9 +283,8 @@ export default function SimpleEmailForm({
           onClick={handlePay}
           aria-disabled={!canPay}
           className={`mt-2 w-full h-[54px] rounded-lg px-4 inline-flex items-center justify-center gap-2.5
-          text-white text-[14px] font-semibold ${
-            canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
-          } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
+          text-white text-[14px] font-semibold ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
+            } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
         >
           {buttonLabel}
         </button>
