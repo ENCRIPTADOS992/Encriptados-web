@@ -221,9 +221,9 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
           initial="hidden"
           animate="visible"
         >
-          
+
           {/* Imagen + Store buttons - Primera en mobile, segunda en desktop */}
-          <motion.div 
+          <motion.div
             className="space-y-4 order-1 lg:order-2 max-w-md lg:max-w-lg mx-auto lg:mx-0"
             variants={imageVariants}
           >
@@ -238,10 +238,10 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 transition={{ duration: 0.3 }}
               />
             </div>
-            
+
             {/* Store buttons - Ocultos en móvil, visibles en desktop */}
             {showStoreIcons && (
-              <motion.div 
+              <motion.div
                 className="hidden lg:grid grid-cols-3 gap-3 w-full"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -291,13 +291,13 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
           </motion.div>
 
           {/* Contenido - Segunda en móvil, primera en desktop */}
-          <motion.div 
+          <motion.div
             className="space-y-6 order-2 lg:order-1"
             variants={textVariants}
           >
             {/* Título y descripción */}
             <div>
-              <motion.h1 
+              <motion.h1
                 className="text-[36px] font-bold text-gray-900 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -305,7 +305,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               >
                 {title}
               </motion.h1>
-              <motion.p 
+              <motion.p
                 className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed mt-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -317,8 +317,8 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
 
             {/* Features */}
             {features.length > 0 && (
-              <motion.ul 
-                className="space-y-2" 
+              <motion.ul
+                className="space-y-2"
                 role="list"
                 initial="hidden"
                 animate="visible"
@@ -327,14 +327,14 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 }}
               >
                 {features.map((feature, idx) => (
-                  <motion.li 
-                    key={idx} 
+                  <motion.li
+                    key={idx}
                     className="flex items-center gap-2"
                     variants={featureVariants}
                   >
-                    <Check 
-                      className="w-5 h-5 text-gray-900 flex-shrink-0" 
-                      aria-hidden="true" 
+                    <Check
+                      className="w-5 h-5 text-gray-900 flex-shrink-0"
+                      aria-hidden="true"
                     />
                     <span className="font-medium text-gray-900">{feature}</span>
                   </motion.li>
@@ -344,7 +344,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
 
             {/* Radio options - Sin palabra "Licencia" */}
             {radioOptions.length > 0 && (
-              <motion.fieldset 
+              <motion.fieldset
                 className="flex flex-wrap gap-3 sm:gap-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -370,7 +370,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               </motion.fieldset>
             )}
 
-            <motion.hr 
+            <motion.hr
               className="border-dashed border-gray-300"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -389,33 +389,31 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               <p className="text-4xl font-bold text-gray-900 mb-6">{price}</p>
 
               {/* Botones - Ocultos cuando viene de app_mobile */}
-              {!isFromAppMobile && (
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full sm:w-auto"
+              <div className="flex flex-col sm:flex-row gap-3">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto"
+                >
+                  <Button
+                    intent="dark"
+                    size="md"
+                    onClick={handleBuy}
+                    icon={<ShoppingCart color="white" height={20} width={20} />}
+                    iconPosition="right"
+                    className="w-full"
                   >
-                    <Button
-                      intent="dark"
-                      size="md"
-                      onClick={handleBuy}
-                      icon={<ShoppingCart color="white" height={20} width={20} />}
-                      iconPosition="right"
-                      className="w-full"
-                    >
-                      {t.buyNow}
-                    </Button>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full sm:w-auto"
-                  >
-                    <TelegramButton className="w-full" />
-                  </motion.div>
-                </div>
-              )}
+                    {t.buyNow}
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto"
+                >
+                  <TelegramButton className="w-full" />
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>

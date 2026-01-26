@@ -285,33 +285,31 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
               <p className="text-4xl font-bold text-gray-900 mb-6">{price}</p>
 
               {/* Botones - Ocultos cuando viene de app_mobile */}
-              {!isFromAppMobile && (
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full sm:w-auto"
+              <div className="flex flex-col sm:flex-row gap-3">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto"
+                >
+                  <Button
+                    intent="dark"
+                    size="md"
+                    onClick={onBuy}
+                    icon={<ShoppingCart color="white" height={20} width={20} />}
+                    iconPosition="right"
+                    className="w-full"
                   >
-                    <Button
-                      intent="dark"
-                      size="md"
-                      onClick={onBuy}
-                      icon={<ShoppingCart color="white" height={20} width={20} />}
-                      iconPosition="right"
-                      className="w-full"
-                    >
-                      {t.buyNow}
-                    </Button>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full sm:w-auto"
-                  >
-                    <TelegramButton className="w-full" />
-                  </motion.div>
-                </div>
-              )}
+                    {t.buyNow}
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto"
+                >
+                  <TelegramButton className="w-full" />
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
