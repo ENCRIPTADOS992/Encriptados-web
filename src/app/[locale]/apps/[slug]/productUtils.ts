@@ -67,11 +67,33 @@ export function transformVariantsToPlans(
   translations?: LicenseTranslations
 ): LicensePlan[] {
   const t = translations || defaultLicenseTranslations;
-  
+
   // Si hay variantes, usarlas
   if (variants && variants.length > 0) {
     return variants.map(variant => {
       const count = Number(variant.licensetime);
+
+      // Override especifico para "6+phone"
+      if (variant.licensetime === "6+phone") {
+        // Detectar idioma aproximado basado en t.months
+        // es/pt: Meses -> Celular
+        // en: Months -> Phone
+        // fr/it: Mois/Mesi -> Smartphone
+        let deviceLabel = "Celular";
+        const m = t.months.toLowerCase();
+
+        if (m === "months") deviceLabel = "Phone";
+        else if (m === "mois" || m === "mesi") deviceLabel = "Smartphone";
+
+        return {
+          label: `6 ${t.months} - ${deviceLabel}`,
+          value: String(variant.licensetime),
+          price: Number(variant.price),
+          variantId: variant.id,
+          sku: variant.sku || "",
+        };
+      }
+
       const monthLabel = count === 1 ? t.month : t.months;
       return {
         label: `${t.license} ${variant.licensetime} ${monthLabel}`,
@@ -82,16 +104,16 @@ export function transformVariantsToPlans(
       };
     });
   }
-  
+
   // Si NO hay variantes, usar licensetime y price del producto
   if (product) {
     const licensetime = (product as any).licensetime || "1";
     const price = Number((product as any).price) || 0;
     const count = Number(licensetime);
     const licenseLabel = licensetime === "0" || licensetime === "Única" || licensetime === "unique"
-      ? t.unique 
+      ? t.unique
       : `${licensetime} ${count === 1 ? t.month : t.months}`;
-    
+
     return [{
       label: `${t.license} ${licenseLabel}`,
       value: licensetime,
@@ -100,7 +122,7 @@ export function transformVariantsToPlans(
       sku: (product as any).sku || "",
     }];
   }
-  
+
   // Fallback si no hay nada
   return [{ label: `${t.license} ${t.unique}`, value: "1", price: 0, variantId: 0, sku: "" }];
 }
@@ -115,12 +137,12 @@ export function transformAdvantagesToFeaturesGrid(
 ): FeatureGridItem[] {
   // Usar 'features' de la API (tienen las screenshots/imágenes grandes)
   if (!product?.features) return [];
-  
+
   // Solo incluir features que tengan imagen Y (título o descripción)
   // Si no hay imagen, no tiene sentido mostrar en este grid visual
   return product.features
-    .filter(feature => 
-      feature.image?.trim() && 
+    .filter(feature =>
+      feature.image?.trim() &&
       (feature.name?.trim() || feature.description?.trim())
     )
     .map(feature => ({
@@ -136,9 +158,9 @@ export function transformFeaturesToBenefitsGrid(
 ): BenefitGridItem[] {
   // Usar 'advantages' de la API (tienen los iconos pequeños)
   if (!product?.advantages) return [];
-  
+
   const fallbackIcon = ""; // Vacío para que el componente use CheckCircle
-  
+
   // Filtrar advantages que tengan al menos título o descripción
   return product.advantages
     .filter(advantage => advantage.name?.trim() || advantage.description?.trim())
@@ -151,7 +173,7 @@ export function transformFeaturesToBenefitsGrid(
 
 export function transformFaqs(product: ProductById | null): FAQItem[] {
   if (!product?.faqs) return [];
-  
+
   return product.faqs.map(faq => ({
     question: faq.name,
     answer: faq.description,
@@ -159,7 +181,7 @@ export function transformFaqs(product: ProductById | null): FAQItem[] {
 }
 
 export function formatPrice(
-  price: string | number, 
+  price: string | number,
   currency: string = "USD",
   consultText: string = "Consultar precio"
 ): string {
@@ -201,10 +223,10 @@ export function buildProductInfo(
   translations?: BuildProductInfoTranslations
 ): ProductInfoForBanner {
   const t = translations || defaultBuildTranslations;
-  
+
   // Priorizar datos del backend sobre la configuración estática
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "/images/apps/default-logo.png";
-  
+
   return {
     title: product?.name || "Producto",
     price: selectedPlan ? formatPrice(selectedPlan.price, "USD", t.priceConsult) : formatPrice(product?.price || 0, "USD", t.priceConsult),
@@ -224,7 +246,7 @@ export function buildProductInfo(
  */
 export function transformSecurityFeatures(product: ProductById | null): SecurityFeatureItem[] {
   if (!product) return [];
-  
+
   // Primero intenta usar advantages si existen
   if (product.advantages && product.advantages.length > 0) {
     return product.advantages.map(adv => ({
@@ -232,7 +254,7 @@ export function transformSecurityFeatures(product: ProductById | null): Security
       description: adv.description || "",
     }));
   }
-  
+
   // Fallback a checks si no hay advantages
   if (product.checks && product.checks.length > 0) {
     return product.checks.map(check => ({
@@ -240,7 +262,7 @@ export function transformSecurityFeatures(product: ProductById | null): Security
       description: "", // checks solo tiene 'name', no 'description'
     }));
   }
-  
+
   return [];
 }
 
@@ -267,7 +289,7 @@ export function getProductBannerImages(
   config?: ProductStaticConfig | null
 ): ProductBannerImages {
   const heroBanners = (product as any)?.heroBanners;
-  
+
   // Priorizar API: si heroBanners existe (incluso con string vacío), usarlo
   // Solo usar config como fallback si el campo NO está definido en API
   return {
