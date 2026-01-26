@@ -35,7 +35,6 @@ export const PANEL_LG = `
   lg:w-[720px]
   lg:min-h-0
   lg:rounded-2xl
-  lg:max-h-[88vh]
 `;
 
 const BASE_PANEL = `
@@ -77,11 +76,7 @@ export function getModalContentClassName(_params: LayoutParams): string {
     flex-1
     min-h-0
     w-full
-    overflow-y-auto
-    overflow-x-hidden
-    overscroll-contain
     pb-4 md:pb-6 lg:pb-8
-    no-scrollbar-lg
   `
     .replace(/\s+/g, " ")
     .trim();
