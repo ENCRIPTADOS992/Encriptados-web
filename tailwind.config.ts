@@ -21,14 +21,14 @@ const config: Config = {
         tablet: { min: "801px", max: "1369px" },
         desktop: { min: "1370px" },
         "xs": "375px",
-        "lg-custom": "1358px", 
+        "lg-custom": "1358px",
         sm: '600px',
         md: '800px',
         lg: '1024px',
         xl: '1280px',
       },
       fontFamily: {
-        sans: ["Inter", "Roboto", "Helvetica", "Arial", "sans-serif"], 
+        sans: ["Inter", "Roboto", "Helvetica", "Arial", "sans-serif"],
       },
       fontSize: {
         'promo': ['54px', { lineHeight: '1.2', fontWeight: '700' }],
@@ -62,24 +62,25 @@ const config: Config = {
           "linear-gradient(180deg, rgba(25,25,25,1) 72%, rgba(16,180,231,1) 100%)",
         "custom-gradient-our-sim-blue":
           "linear-gradient(180deg, #6ADDFF 72%, #A8EBFF 100%)",
-        "custom-gradient-our-sim-blue2": 
-        "linear-gradient(140deg, #BDEFFF 0%, #FDFFFF 50%, #2CCDFF 100%)",
+        "custom-gradient-our-sim-blue2":
+          "linear-gradient(140deg, #BDEFFF 0%, #FDFFFF 50%, #2CCDFF 100%)",
         "custom-gradient-plans":
           "linear-gradient(90deg, rgba(168,235,255,1) 0%, rgba(106,221,255,1) 100%)",
         "custom-gradient-our-products-black":
           "linear-gradient(135deg, #03212A 40%, #090909 70%)",
         "custom-gradient-qr-black-y-grey":
-          "linear-gradient(90deg, #000000 40%, #272727 100%)",  
+          "linear-gradient(90deg, #000000 40%, #272727 100%)",
         "custom-gradient-secure-black-y-grey":
-          "linear-gradient(270deg, #000000 50%, #272727 100%)",   
+          "linear-gradient(270deg, #000000 50%, #272727 100%)",
       },
       borderWidth: {
         '0.5': '0.5px',
       },
     },
   },
-  plugins: [    
+  plugins: [
     require('@tailwindcss/typography'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 };
 

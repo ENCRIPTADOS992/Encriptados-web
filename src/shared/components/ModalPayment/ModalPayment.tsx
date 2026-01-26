@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ModalPayment: React.FC<Props> = ({
-  onClose = () => {},
+  onClose = () => { },
   visible = false,
   children,
   theme = "light",
@@ -115,7 +115,14 @@ const ModalPayment: React.FC<Props> = ({
         "backdrop-blur-sm",
         overlayClassName ?? "",
       ].join(" ")}
-      style={{ WebkitOverflowScrolling: "touch" }}
+      ref={(el) => {
+        if (el && visible) {
+          // Pequeño timeout para asegurar que el render ocurrió y el foco entra
+          setTimeout(() => el.focus(), 50);
+        }
+      }}
+      tabIndex={-1}
+      style={{ WebkitOverflowScrolling: "touch", outline: 'none' }}
       onMouseDown={(e) => {
         // Solo procesar si el click fue directamente en el overlay
         if (e.target === e.currentTarget) {
@@ -135,7 +142,6 @@ const ModalPayment: React.FC<Props> = ({
           panelClassName ?? "",
         ].join(" ")}
         onClick={(e) => e.stopPropagation()}
-        onMouseDown={(e) => e.stopPropagation()}
       >
         <button
           onClick={() => {

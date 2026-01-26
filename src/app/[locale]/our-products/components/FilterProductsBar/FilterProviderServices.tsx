@@ -26,7 +26,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
         <MenuDropdownProductBar
           name="encriptadosprovider"
           options={[
-            { label: "TODO", value: "all" },
+            { label: "Todo", value: "all" },
             { label: "Sim Física", value: "physicsim" },
             { label: "eSim", value: "esim" },
             { label: "Recarga Datos", value: "datarecharge" },
@@ -77,13 +77,14 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             {
               label: " ",
               value: "encriptados",
-              icon: <EncryptedSimIcon width={100} height={25} 
+              icon: <EncryptedSimIcon width={100} height={25}
               />
             },
-            { label: " ", 
-              value: "tim", 
+            {
+              label: " ",
+              value: "tim",
               icon: <TimSimIcon width={100} height={25}
-              /> 
+              />
             },
           ]}
           onChangeExternal={(value) => {
