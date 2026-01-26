@@ -25,9 +25,9 @@ const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
 const FILTER_OPTIONS = [
-  { key: "sim", label: "SIM", catId: 40, Icon: SimProductsBarIcon },
+  { key: "sim", label: "SIMs", catId: 40, Icon: SimProductsBarIcon },
   { key: "app", label: "Aplicaciones", catId: 38, Icon: AplicationsProductsBarIcon },
-  { key: "mobile", label: "Software", catId: 35, Icon: PhoneProductsBarIcon },
+  { key: "mobile", label: "Sistemas", catId: 35, Icon: PhoneProductsBarIcon },
   { key: "routers", label: "Routers", catId: 36, Icon: RoutersBarIcon },
 ] as const;
 
@@ -57,7 +57,7 @@ export default function FilterProductsBar({
       key === "app"
         ? t("filterProducts.apps")
         : key === "mobile"
-          ? "Software"
+          ? "Sistemas"
           : label,
     icon: (
       <Icon
