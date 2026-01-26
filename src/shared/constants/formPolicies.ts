@@ -29,37 +29,37 @@
  *    - Métodos de pago
  */
 
-export type FormType = 
+export type FormType =
   | "SILENT_PHONE"      // Silent Phone con tabs de 3 opciones + usernames
   | "APP_RONING"        // Apps normales: solo email para código Roning
   | "SOFTWARE_LICENSE"  // Software con tabs Nueva/Renovar + email + telegram
   | "SOFTWARE_WITH_OS"  // SecureCrypt: selector SO + tabs + email + telegram
   | "SIM_FORM";         // SIMs: formulario específico de SIM
 
-export type LicenseTabType = 
+export type LicenseTabType =
   | "three_way"   // Quiero mi usuario, Código RONING, Recargar
   | "new_renew"   // Nueva licencia, Renovar licencia
   | "none";       // Sin tabs
 
 export interface FormPolicy {
   formType: FormType;
-  
+
   // Tabs de licencia
   showLicenseTabs: boolean;
   licenseTabType: LicenseTabType;
-  
+
   // Selector de SO (solo para SecureCrypt)
   showOsSelector: boolean;
-  
+
   // Campos de formulario
   showUsernameFields: boolean;      // Nombres sugeridos (Silent Phone)
   showEmailField: boolean;          // Email siempre requerido
   showTelegramField: boolean;       // ID Telegram opcional
-  
+
   // Labels personalizados
   emailLabel: string;
   emailPlaceholder: string;
-  
+
   // Métodos de pago disponibles
   paymentMethods: ("card" | "crypto")[];
 }
@@ -78,7 +78,7 @@ export const FORM_POLICIES: Record<FormType, FormPolicy> = {
     emailPlaceholder: "Email",
     paymentMethods: ["card", "crypto"],
   },
-  
+
   APP_RONING: {
     formType: "APP_RONING",
     showLicenseTabs: false,
@@ -87,11 +87,11 @@ export const FORM_POLICIES: Record<FormType, FormPolicy> = {
     showUsernameFields: false,
     showEmailField: true,
     showTelegramField: false,
-    emailLabel: "Correo electrónico para recibir mi código Roning",
+    emailLabel: "Correo electrónico para recibir tu licencia",
     emailPlaceholder: "Email",
     paymentMethods: ["card", "crypto"],
   },
-  
+
   SOFTWARE_LICENSE: {
     formType: "SOFTWARE_LICENSE",
     showLicenseTabs: true,
@@ -104,7 +104,7 @@ export const FORM_POLICIES: Record<FormType, FormPolicy> = {
     emailPlaceholder: "Ingresa tu Email",
     paymentMethods: ["card", "crypto"],
   },
-  
+
   SOFTWARE_WITH_OS: {
     formType: "SOFTWARE_WITH_OS",
     showLicenseTabs: true,
@@ -117,7 +117,7 @@ export const FORM_POLICIES: Record<FormType, FormPolicy> = {
     emailPlaceholder: "Ingresa tu Email",
     paymentMethods: ["card", "crypto"],
   },
-  
+
   SIM_FORM: {
     formType: "SIM_FORM",
     showLicenseTabs: false,
@@ -136,10 +136,10 @@ export const FORM_POLICIES: Record<FormType, FormPolicy> = {
 export const PRODUCT_FORM_MAPPING: Record<string, FormType> = {
   // Silent Phone - formulario especial con 3 tabs y usernames
   "silent phone": "SILENT_PHONE",
-  
+
   // SecureCrypt - formulario con selector de SO
   "securecrypt": "SOFTWARE_WITH_OS",
-  
+
   // El resto se determina por categoría
 };
 
@@ -197,14 +197,14 @@ export function getFormTypeForProduct(
   categoryId: number
 ): FormType {
   const nameLower = productName.toLowerCase().trim();
-  
+
   // 1. Verificar mapeo directo por nombre
   for (const [key, formType] of Object.entries(PRODUCT_FORM_MAPPING)) {
     if (nameLower.includes(key)) {
       return formType;
     }
   }
-  
+
   // 2. Determinar por categoría
   switch (categoryId) {
     case 38: // Aplicaciones
