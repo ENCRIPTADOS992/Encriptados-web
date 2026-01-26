@@ -308,7 +308,7 @@ export default function FilterProductsBar({
   return (
     <div
       className={`w-full mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6 ${selectedCat === 36
-        ? "max-w-fit"
+        ? "max-w-4xl xl:max-w-fit"
         : (selectedCat === 38 || selectedCat === 35 || (selectedCat === 40 && !shouldShowTimRegion))
           ? "max-w-4xl"
           : "max-w-screen-xl"
@@ -321,7 +321,7 @@ export default function FilterProductsBar({
         "
       >
         {/* Categoría */}
-        <div className={`w-full xl:shrink-0 ${selectedCat === 36 ? "w-auto" : "xl:w-[360px] xl:mr-6"}`}>
+        <div className={`w-full xl:shrink-0 ${selectedCat === 36 ? "xl:w-auto" : "xl:w-[360px] xl:mr-6"}`}>
           <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
             {t("filterProducts.categoryTitle")}
           </h2>
