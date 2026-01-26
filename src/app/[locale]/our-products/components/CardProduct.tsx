@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
@@ -76,6 +77,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 }) => {
   const { openModal } = useModalPayment();
   const locale = useLocale();
+  const router = useRouter();
   const t = useTranslations("OurProductsPage.productCard");
 
   // Extraer el precio numérico para pasar al modal (MOVIDO ANTES de moreInfoUrl)
@@ -86,7 +88,8 @@ const CardProduct: React.FC<CardSimProps> = ({
     return match ? parseFloat(match[0]) : undefined;
   })();
 
-  const handleBuy = () => {
+  const handleBuy = (e: React.MouseEvent) => {
+    e.stopPropagation();
     console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct });
     openModal({
       productid: id.toString(),
@@ -149,8 +152,18 @@ const CardProduct: React.FC<CardSimProps> = ({
     return `${url}?${params.toString()}`;
   })();
 
+  const handleCardClick = () => {
+    const finalUrl = moreInfoUrl.startsWith("/") ? `/${locale}${moreInfoUrl}` : moreInfoUrl;
+    if (finalUrl && finalUrl !== "#") {
+      router.push(finalUrl);
+    }
+  };
+
   return (
-    <div className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
+    <div
+      onClick={handleCardClick}
+      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01]"
+    >
       {/* Imagen de cabecera - imagen completa sin recorte */}
       <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-[#1a1a1a]">
         <Image
@@ -276,13 +289,14 @@ const CardProduct: React.FC<CardSimProps> = ({
             <button
               onClick={handleBuy}
               type="button"
-              className="bg-black text-white text-[12px] xl:text-[14px] leading-[1.2] rounded-full px-3 xl:px-4 py-2 xl:py-2.5 flex items-center justify-center gap-1.5 xl:gap-2 hover:bg-gray-800 transition-colors"
+              className="bg-black text-white text-[12px] xl:text-[14px] leading-[1.2] rounded-full px-3 xl:px-4 py-2 xl:py-2.5 flex items-center justify-center gap-1.5 xl:gap-2 hover:bg-gray-800 transition-colors z-10"
             >{t("buy")}
               <LocalMallSvgNew />
             </button>
             <Link
               href={moreInfoUrl.startsWith("/") ? `/${locale}${moreInfoUrl}` : moreInfoUrl}
-              className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center"
+              onClick={(e) => e.stopPropagation()}
+              className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center z-10"
             >
               {t("moreInfo")}
             </Link>

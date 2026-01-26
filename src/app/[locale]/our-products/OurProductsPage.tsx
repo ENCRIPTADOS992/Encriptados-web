@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import FilterProductsBar from "./components/FilterProductsBar/FilterProductsBar";
 import CardOurProducts from "./components/CardOurProducts";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -24,6 +25,7 @@ const OurProductsPage = () => {
   const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
+  const pathname = usePathname();
 
   const filterRef = useRef<HTMLDivElement | null>(null);
   const cardSectionRef = useRef<HTMLDivElement | null>(null);
@@ -68,12 +70,49 @@ const OurProductsPage = () => {
 
   // Detectar cuando la barra de filtros estática sale del viewport
   const { isVisible: isFilterVisible } = usePriceVisibility(filterRef);
+  const [isPastFilter, setIsPastFilter] = useState(false);
+
+  // Check strict scroll position
+  useEffect(() => {
+    const checkScroll = () => {
+      // Lógica específica para HOME (ruta raíz o locale raíz)
+      const isHomePage = pathname === "/" || /^\/[a-z]{2}$/.test(pathname);
+
+      if (isHomePage) {
+        if (cardSectionRef.current) {
+          const rect = cardSectionRef.current.getBoundingClientRect();
+          // "apartir del componente de la imagen se mostrara el pupup"
+          // Significa que cuando llegamos a la sección de cards (visible en pantalla), se activa.
+          // rect.top < window.innerHeight significa que el componente ha entrado en el viewport.
+          // Usamos un offset (ej. window.innerHeight * 0.8) para que no sea tan inmediato si se quiere.
+          // Pero "apartir del componente" sugiere en cuanto visualmente estamos ahí.
+          setIsPastFilter(rect.top < window.innerHeight);
+        }
+      } else {
+        // Lógica anterior o por defecto para otras páginas (si se usa allí)
+        if (filterRef.current) {
+          const rect = filterRef.current.getBoundingClientRect();
+          setIsPastFilter(rect.bottom < 0);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    checkScroll(); // Check initial state
+
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+    };
+  }, [pathname]);
 
   // Estado para controlar si el usuario ha cerrado el modal flotante
   const [isFloatingModalDismissed, setIsFloatingModalDismissed] = useState(false);
 
-  // Mostrar modal flotante cuando los filtros estáticos no son visibles y no ha sido cerrado
-  const showFloatingFilters = !isFilterVisible && !isFloatingModalDismissed;
+  // Mostrar modal flotante SOLO cuando:
+  // 1. Los filtros estáticos NO son visibles (isFilterVisible === false)
+  // 2. El usuario ha hecho scroll MÁS ALLÁ de los filtros (isPastFilter === true)
+  // 3. No ha sido cerrado manualmente (!isFloatingModalDismissed)
+  const showFloatingFilters = !isFilterVisible && isPastFilter && !isFloatingModalDismissed;
 
   // Handler para cerrar el modal flotante
   const handleCloseFloatingModal = () => {
@@ -118,8 +157,8 @@ const OurProductsPage = () => {
               {t("filterProducts.title")}
             </Typography>
 
-            <div id="buysimappsection">
-              <div ref={filterRef} id="filters-section">
+            <div id="buysimappsection" ref={filterRef}>
+              <div id="filters-section">
                 <FilterProductsBar
                   filters={filters}
                   updateFilters={updateFilters}
