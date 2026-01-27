@@ -111,7 +111,12 @@ export default function ModalNewUser() {
     // product?.category?.id === 37 || // Removed as Systems are likely UserID/Manual
     /armadillo|threema|vault|vnc|nordvpn|salt/i.test(product?.name ?? "");
 
-  const resolvedOrderType = isRoamingProduct ? "roaming" : "userid";
+  const isSilentPhone = /silent/i.test(product?.name ?? "");
+
+  const resolvedOrderType =
+    isRoamingProduct || (isSilentPhone && silentPhoneMode === "roning_code")
+      ? "roaming"
+      : "userid";
 
   return (
     <PurchaseScaffold
