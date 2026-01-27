@@ -60,7 +60,7 @@ const FeaturedProductsTablet: React.FC<FeaturedProductsTabletProps> = ({
         <img
           src={left.image}
           alt="SIM Card encriptada"
-          className="absolute right-2 top-6 w-[180px] h-[175px] object-contain select-none pointer-events-none"
+          className="absolute right-0 bottom-0 max-w-[300px] max-h-[90%] w-auto h-auto object-contain object-bottom select-none pointer-events-none"
           draggable={false}
         />
       </div>

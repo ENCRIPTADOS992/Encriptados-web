@@ -73,14 +73,13 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
             )
           )}
         </div>
-        <div className="w-full sm:w-[45%] h-full">
-          <div className="flex justify-center sm:absolute sm:bottom-0 ">
-            <Image
+        <div className="w-full sm:w-[50%] h-full">
+          <div className="flex justify-center sm:absolute sm:bottom-0 sm:right-0 sm:h-full sm:w-[50%]">
+            <img
               src={imageSrc}
               alt={altText}
-              width={200}
-              height={160}
-              className="object-contain filter saturate-150"
+              className="object-contain object-bottom w-auto h-auto max-h-full select-none pointer-events-none"
+              draggable={false}
             />
           </div>
         </div>
