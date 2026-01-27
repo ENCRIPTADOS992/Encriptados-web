@@ -223,6 +223,24 @@ const FixedSimProducts: React.FC = () => {
 
   const cardData: FixedCard[] = [
     {
+      id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA,
+      logoSrc: LogoSvg1,
+      title: t("products.esimData.title"),
+      description: t("products.esimData.description"),
+      features: commonFeaturesEsimData,
+      productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, "esim_data"),
+      featuresCardSim: [
+        t("products.esimData.featuresCardSim.0"),
+        t("products.esimData.featuresCardSim.1"),
+        t("products.esimData.featuresCardSim.2"),
+        t("products.esimData.featuresCardSim.3"),
+      ],
+      priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.priceRange")),
+      headerIcon: IcomSimSvg,
+      headerTitle: t("products.esimData.headerTitle"),
+      apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA),
+    },
+    {
       id: ENCRYPTED_SIM_PRODUCT_IDS.DATA,
       logoSrc: LogoSvg1,
       title: t("products.data.title"),
@@ -294,24 +312,6 @@ const FixedSimProducts: React.FC = () => {
       headerIcon: IcomSimSvg,
       headerTitle: t("products.sim.headerTitle"),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED),
-    },
-    {
-      id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA,
-      logoSrc: LogoSvg1,
-      title: t("products.esimData.title"),
-      description: t("products.esimData.description"),
-      features: commonFeaturesEsimData,
-      productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, "esim_data"),
-      featuresCardSim: [
-        t("products.esimData.featuresCardSim.0"),
-        t("products.esimData.featuresCardSim.1"),
-        t("products.esimData.featuresCardSim.2"),
-        t("products.esimData.featuresCardSim.3"),
-      ],
-      priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.priceRange")),
-      headerIcon: IcomSimSvg,
-      headerTitle: t("products.esimData.headerTitle"),
-      apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA),
     },
   ];
 
