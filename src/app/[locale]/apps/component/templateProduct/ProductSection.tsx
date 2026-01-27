@@ -342,8 +342,9 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               </motion.ul>
             )}
 
-            {/* Radio options - Sin palabra "Licencia" */}
-            {radioOptions.length > 0 && (
+            {/* Radio options - Sin palabra "Licencia". Ocultar si es solo "Única" */}
+            {radioOptions.length > 0 && 
+             !(radioOptions.length === 1 && ["Única", "Unique", "Unica"].includes(formatRadioLabel(radioOptions[0], languageCode))) && (
               <motion.fieldset
                 className="flex flex-wrap gap-3 sm:gap-4"
                 initial={{ opacity: 0 }}
