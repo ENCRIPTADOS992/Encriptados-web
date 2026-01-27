@@ -16,7 +16,7 @@ import VisaFooter from "./payicon/VisaFooter";
 import MasterCardRedYellowFooter from "./payicon/MasterCardRedYellowFooter";
 import MaestroFooter from "./payicon/MaestroFooter";
 import EthFooter from "./payicon/EthFooter";
-import LFooter from "./payicon/LFooter";
+import TFooter from "./payicon/TFooter";
 import USDCFooter from "./payicon/USDCFooter";
 import ZcashFooter from "./payicon/ZcashFooter";
 import MoneroFooter from "./payicon/MoneroFooter";
@@ -56,8 +56,6 @@ export default function FooterEncrypted() {
     { name: "Brasil", flag: <BrasilFooterFlag /> },
   ];
 
-
-
   const paymentMethods = [
     { key: "bancolombia", icon: <BancolombiaFooter /> },
     { key: "visa", icon: <VisaFooter /> },
@@ -65,7 +63,7 @@ export default function FooterEncrypted() {
     { key: "maestro", icon: <MaestroFooter /> },
     { key: "bitcoin", icon: <BitCoinFooter /> },
     { key: "ethereum", icon: <EthFooter /> },
-    { key: "litecoin", icon: <LFooter /> },
+    { key: "tether", icon: <TFooter /> },
     { key: "usdc", icon: <USDCFooter /> },
     { key: "zcash", icon: <ZcashFooter /> },
     { key: "monero", icon: <MoneroFooter /> },
@@ -132,7 +130,6 @@ export default function FooterEncrypted() {
     { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
   ];
   const routersLinks = [{ name: "Router Camaleón", href: getAppUrl("Router Camaleón") }];
-
 
   return (
     <footer className="bg-[#000000] text-white overflow-x-hidden">
@@ -218,10 +215,26 @@ export default function FooterEncrypted() {
             <div className="w-full h-px bg-[#2C2C2C] scale-y-[0.5] origin-top"></div>
             <div className="py-4 flex flex-col md:flex-row flex-wrap items-center gap-3 md:gap-6 justify-center md:justify-center">
               <span className="text-[#787878] text-sm">{t("paymentMethodsTitle")}</span>
-              <div className="flex flex-wrap md:flex-nowrap items-center justify-center md:justify-start w-full md:w-auto max-w-[360px] md:max-w-none gap-2 sm:gap-3 md:gap-6 lg:gap-8 bg-[#000000] rounded-xl p-1 sm:p-2">
-                {paymentMethods.map(({ key, icon }) => (
-                  <div key={key} className="rounded flex items-center justify-center p-0.5 sm:p-1 h-7 sm:h-9 [&>svg]:h-full [&>svg]:w-auto [&>img]:h-full [&>img]:w-auto">{icon}</div>
-                ))}
+              <div className="flex flex-col items-center justify-center lg:items-start w-full lg:w-auto gap-2 bg-[#000000] rounded-xl p-1 sm:p-2">
+                {/* Mobile/Tablet: Row 1 (Traditional) */}
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:hidden">
+                  {paymentMethods.slice(0, 4).map(({ key, icon }) => (
+                    <div key={key} className="rounded flex items-center justify-center p-0.5 sm:p-1 h-7 sm:h-9 [&>svg]:h-full [&>svg]:w-auto [&>img]:h-full [&>img]:w-auto">{icon}</div>
+                  ))}
+                </div>
+                {/* Mobile/Tablet: Row 2 (Crypto) */}
+                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:hidden">
+                  {paymentMethods.slice(4).map(({ key, icon }) => (
+                    <div key={key} className="rounded flex items-center justify-center p-0.5 sm:p-1 h-7 sm:h-9 [&>svg]:h-full [&>svg]:w-auto [&>img]:h-full [&>img]:w-auto">{icon}</div>
+                  ))}
+                </div>
+
+                {/* Desktop: All in one flexible row (hidden on mobile/tablet) */}
+                <div className="hidden lg:flex flex-wrap items-center justify-center lg:justify-start gap-3 lg:gap-8">
+                  {paymentMethods.map(({ key, icon }) => (
+                    <div key={key} className="rounded flex items-center justify-center p-0.5 sm:p-1 h-7 sm:h-9 [&>svg]:h-full [&>svg]:w-auto [&>img]:h-full [&>img]:w-auto">{icon}</div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
