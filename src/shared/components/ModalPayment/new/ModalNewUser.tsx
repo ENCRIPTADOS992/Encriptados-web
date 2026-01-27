@@ -107,8 +107,8 @@ export default function ModalNewUser() {
   }
 
   const isRoamingProduct =
-    // product?.category?.id === 38 || // Removed to avoid capturing Silent Phone (which is UserID)
-    // product?.category?.id === 37 || // Removed as Systems are likely UserID/Manual
+    product?.category?.id === 35 || // Sistemas (Secure MDM, etc.) -> Roaming
+    (product?.category?.id === 38 && !/silent/i.test(product?.name ?? "")) || // Apps (except Silent Phone) -> Roaming
     /armadillo|threema|vault|vnc|nordvpn|salt/i.test(product?.name ?? "");
 
   const isSilentPhone = /silent/i.test(product?.name ?? "");
