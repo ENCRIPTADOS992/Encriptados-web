@@ -37,7 +37,7 @@ import {
 } from "./productUtils";
 
 interface PageProps {
-  slug: string; 
+  slug: string;
   locale: string;
   initialProduct: ProductById | null;
 }
@@ -49,7 +49,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
-  
+
   // Traducciones
   const t = useTranslations("appsShared.productTemplate");
   const tSim = useTranslations("appsShared");
@@ -87,18 +87,18 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
       // Si tenemos config estática, cargar por ID
       if (config?.productId) {
-         try {
-           setIsLoading(true);
-           setError(null);
-           const productData = await getProductById(String(config.productId), locale);
-           setProduct(productData);
-         } catch (err) {
-           console.error("Error cargando producto por ID:", err);
-           setError(t("productLoadError"));
-         } finally {
-           setIsLoading(false);
-         }
-         return;
+        try {
+          setIsLoading(true);
+          setError(null);
+          const productData = await getProductById(String(config.productId), locale);
+          setProduct(productData);
+        } catch (err) {
+          console.error("Error cargando producto por ID:", err);
+          setError(t("productLoadError"));
+        } finally {
+          setIsLoading(false);
+        }
+        return;
       }
 
       // Si no hay config estática, intentar cargar por Slug
@@ -107,9 +107,9 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
         setError(null);
         const productData = await getProductBySlug(slug, locale);
         if (productData) {
-           setProduct(productData);
+          setProduct(productData);
         } else {
-           setError(t("productNotAvailable"));
+          setError(t("productNotAvailable"));
         }
       } catch (err) {
         console.error("Error cargando producto por Slug:", err);
@@ -133,7 +133,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const featuresGrid = useMemo(() => transformAdvantagesToFeaturesGrid(product, config?.benefitIcon), [product, config]);
   const benefits = useMemo(() => transformFeaturesToBenefitsGrid(product, config), [product, config]);
   const faqs = useMemo(() => transformFaqs(product), [product]);
-  
+
   const isSoftwareTemplate = config?.templateType === "software";
 
   useEffect(() => {
@@ -165,12 +165,12 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
         // Prioridad: 1. Precio de URL, 2. Precio del plan seleccionado, 3. Precio base
         let numericPrice = 0;
         if (priceParam) {
-           numericPrice = parseFloat(priceParam);
+          numericPrice = parseFloat(priceParam);
         } else {
-           const priceStr = selectedPlan?.price ?? product?.price ?? 0;
-           numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+          const priceStr = selectedPlan?.price ?? product?.price ?? 0;
+          numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
         }
-        
+
         // Prioridad: 1. ProductId de URL, 2. ProductId del plan seleccionado, 3. ProductId base
         // Nota: selectedPlan puede ser una variante con su propio ID (si aplica)
         // En transformVariantsToPlans definimos 'variantId', no 'id' para los planes
@@ -182,13 +182,13 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           selectedOption: (product as any)?.category?.id || config?.categoryId || 38,
           initialPrice: numericPrice,
         });
-        
+
         // Limpiar el parámetro de la URL sin recargar
         const url = new URL(window.location.href);
         url.searchParams.delete("buy");
         window.history.replaceState({}, "", url.toString());
       }, 500);
-      
+
       return () => clearTimeout(timer);
     }
   }, [searchParams, product, isLoading, selectedPlan, config, locale, openModal]);
@@ -197,7 +197,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     // Extraer precio numérico
     const priceStr = selectedPlan?.price ?? product?.price ?? 0;
     const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
-    
+
     openModal({
       productid: String(product?.id || config?.productId),
       languageCode: locale,
@@ -219,7 +219,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const handleSimBuy = (productId: string) => openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
   const handleFeaturedSimInfo = (path: string) => router.push(`/${locale}${path}`);
 
-  const productInfo = useMemo(() => 
+  const productInfo = useMemo(() =>
     buildProductInfo(product, config, selectedPlan, handleBuy, handleChat, buildTranslations),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [product, config, selectedPlan, locale, openModal, buildTranslations]
@@ -268,22 +268,92 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const googlePlayUrl = apiGooglePlayUrl !== undefined ? apiGooglePlayUrl : config?.googlePlayUrl;
   const apkUrl = apiApkUrl !== undefined ? apiApkUrl : config?.apkUrl;
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "";
-  
-  // Imagen del producto - Prioridad: buyNowImage > productImage > image_full > images[0] > config
-  const productImage = 
-    (product as any)?.buyNowImage || 
-    (product as any)?.productImage || 
-    (product as any)?.image_full || 
+
+  // Imagen del producto - Prioridad: buyNowImage (dinámico) > buyNowImage (base) > productImage > image_full > images[0] > config
+  // Lógica para seleccionar imagen dinámica basada en variante y idioma
+  const buyNowVariants = (product as any)?.buyNowImage_variants;
+  let dynamicImage = "";
+
+  if (buyNowVariants && Array.isArray(buyNowVariants) && selectedPlan) {
+    // Intentar encontrar coincidencia exacta (duración + idioma)
+    // Nota: selectedPlan.licensetime puede ser "6 Meses", "6 Months", etc.
+    // La API devuelve "6", "12", "PHONE", etc. en license_duration.
+    // Limpiamos selectedPlan.value (que suele ser el ID) o usamos logic extra si necesario.
+    // En transformVariantsToPlans, 'value' es el ID de la variante.
+    // Necesitamos el 'raw' licensetime de la variante seleccionada.
+
+    // Buscar la variante original en product.variants usando el ID
+    // Buscar la variante original en product.variants usando el ID
+    const originalVariant = (product as any)?.variants?.find((v: any) => String(v.id) === selectedPlan.value);
+
+    // Si no encuentra por ID, intentar extraer duración del label del plan o usar el value directamente si parece una duración
+    let targetDuration = originalVariant?.licensetime || "0";
+
+    if (!originalVariant) {
+      // Fallback: Si selectedPlan.value es la duración
+      targetDuration = selectedPlan.value;
+    }
+
+    // Normalizar targetDuration (ej: si es "PHONE", la API espera "PHONE" o "phone"?)
+    // Asumimos coincidencia de string directa o parcial.
+
+    // DEBUG: Ver que está comparando
+    console.log("DynamicImage Debug:", {
+      selectedPlanValue: selectedPlan.value,
+      originalVariant,
+      targetDuration,
+      locale,
+      buyNowVariants
+    });
+
+    const normalizeDuration = (d: string | number) => String(d).toLowerCase().trim();
+
+    const matchedVariant = buyNowVariants.find((v: any) => {
+      const vDuration = normalizeDuration(v.license_duration);
+      const tDuration = normalizeDuration(targetDuration);
+
+      // 1. Coincidencia exacta normalizada
+      if (vDuration === tDuration) return v.lang === locale;
+
+      // 2. Coincidencia de número (ej: "6 meses" vs "6")
+      const vNum = vDuration.replace(/\D/g, '');
+      const tNum = tDuration.replace(/\D/g, '');
+      if (vNum && tNum && vNum === tNum) return v.lang === locale;
+
+      return false;
+    });
+
+    if (matchedVariant) {
+      dynamicImage = matchedVariant.image;
+    } else {
+      // Fallback: intentar solo por duración en idioma por defecto (es) o cualquier idioma si no existe
+      // Usar misma lógica relajada para fallback
+      const fallbackVariant = buyNowVariants.find((v: any) => {
+        const vDuration = normalizeDuration(v.license_duration);
+        const tDuration = normalizeDuration(targetDuration);
+        const isMatch = vDuration === tDuration ||
+          (vDuration.replace(/\D/g, '') === tDuration.replace(/\D/g, '') && vDuration.replace(/\D/g, '') !== '');
+        return isMatch && v.lang === 'es';
+      });
+      if (fallbackVariant) dynamicImage = fallbackVariant.image;
+    }
+  }
+
+  const productImage =
+    dynamicImage ||
+    (product as any)?.buyNowImage ||
+    (product as any)?.productImage ||
+    (product as any)?.image_full ||
     product?.images?.[0]?.src ||
-    config?.productImage || 
+    config?.productImage ||
     "";
 
   return (
     <main className="bg-white text-black">
       {/* Hero Banner */}
-      <HeroBanner 
-        imageUrl={heroBannerImages} 
-        alt={`${product?.name || slug} Hero Banner`} 
+      <HeroBanner
+        imageUrl={heroBannerImages}
+        alt={`${product?.name || slug} Hero Banner`}
       />
 
       {!product ? (
