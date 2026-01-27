@@ -291,8 +291,13 @@ export default function RouterPage() {
     let targetDuration = originalVariant?.licensetime || "0";
 
     if (!originalVariant) {
-      // Fallback: Si selectedPlan.value es la duración
-      targetDuration = selectedPlan.value;
+      // Fallback: Si no hay variante original (caso producto único sin variantes)
+      // En RouterPage, selectedPlan.value es el ID del producto (ver transformVariantsToPlans local)
+      if (selectedPlan.value === String(product?.id) && (!product?.variants || product?.variants.length === 0)) {
+        targetDuration = (product as any).licensetime || "0";
+      } else {
+        targetDuration = selectedPlan.value;
+      }
     }
 
     // Normalizar targetDuration
