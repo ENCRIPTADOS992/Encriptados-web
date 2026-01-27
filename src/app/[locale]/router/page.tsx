@@ -167,11 +167,15 @@ export default function RouterPage() {
     }
   }, [plans, selectedRadio]);
 
+  // Plan seleccionado actual
+  const selectedPlan = useMemo(() => {
+    return plans.find((p) => p.label === selectedRadio);
+  }, [plans, selectedRadio]);
+
   // Precio actual
   const currentPrice = useMemo(() => {
-    const selectedPlan = plans.find((p) => p.label === selectedRadio);
     return selectedPlan?.price || (product as any)?.price || 0;
-  }, [plans, selectedRadio, product]);
+  }, [selectedPlan, product]);
 
   // Handlers
   const handleRadioChange = (value: string) => {
@@ -272,6 +276,81 @@ export default function RouterPage() {
     );
   }
 
+  // Imagen del producto - Prioridad: buyNowImage (dinámico) > buyNowImage (base) > productImage > image_full > images[0] > config
+  // Lógica para seleccionar imagen dinámica basada en variante y idioma
+  const buyNowVariants = (product as any)?.buyNowImage_variants;
+  let dynamicImage = "";
+
+  if (buyNowVariants && Array.isArray(buyNowVariants) && selectedPlan) {
+    // Para Router, selectedPlan.value es el ID de la variante.
+    // Buscamos la variante original para obtener su licensetime.
+    // Buscar la variante original en product.variants usando el ID
+    const originalVariant = (product as any)?.variants?.find((v: any) => String(v.id) === selectedPlan.value);
+
+    // Si no encuentra por ID, intentar extraer duración del label del plan o usar el value directamente si parece una duración
+    let targetDuration = originalVariant?.licensetime || "0";
+
+    if (!originalVariant) {
+      // Fallback: Si no hay variante original (caso producto único sin variantes)
+      // En RouterPage, selectedPlan.value es el ID del producto (ver transformVariantsToPlans local)
+      if (selectedPlan.value === String(product?.id) && (!product?.variants || product?.variants.length === 0)) {
+        targetDuration = (product as any).licensetime || "0";
+      } else {
+        targetDuration = selectedPlan.value;
+      }
+    }
+
+    // Normalizar targetDuration
+
+    // DEBUG: Ver que está comparando
+    console.log("DynamicImage (Router) Debug:", {
+      selectedPlanValue: selectedPlan.value,
+      originalVariant,
+      targetDuration,
+      locale,
+      buyNowVariants
+    });
+
+    const normalizeDuration = (d: string | number) => String(d).toLowerCase().trim();
+
+    const matchedVariant = buyNowVariants.find((v: any) => {
+      const vDuration = normalizeDuration(v.license_duration);
+      const tDuration = normalizeDuration(targetDuration);
+
+      // 1. Coincidencia exacta normalizada
+      if (vDuration === tDuration) return v.lang === locale;
+
+      // 2. Coincidencia de número (ej: "6 meses" vs "6")
+      const vNum = vDuration.replace(/\D/g, '');
+      const tNum = tDuration.replace(/\D/g, '');
+      if (vNum && tNum && vNum === tNum) return v.lang === locale;
+
+      return false;
+    });
+
+    if (matchedVariant) {
+      dynamicImage = matchedVariant.image;
+    } else {
+      // Fallback: intentar solo por duración en es (default)
+      const fallbackVariant = buyNowVariants.find((v: any) => {
+        const vDuration = normalizeDuration(v.license_duration);
+        const tDuration = normalizeDuration(targetDuration);
+        const isMatch = vDuration === tDuration ||
+          (vDuration.replace(/\D/g, '') === tDuration.replace(/\D/g, '') && vDuration.replace(/\D/g, '') !== '');
+        return isMatch && v.lang === 'es';
+      });
+      if (fallbackVariant) dynamicImage = fallbackVariant.image;
+    }
+  }
+
+  const productImage =
+    dynamicImage ||
+    (product as any)?.buyNowImage ||
+    (product as any)?.productImage ||
+    (product as any)?.image_full ||
+    product?.images?.[0]?.src ||
+    ROUTER_CONFIG.productImage;
+
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Banner - Usar función con fallback inteligente (heroBanners > buyNowImage > images > config) */}
@@ -300,7 +379,7 @@ export default function RouterPage() {
         selectedRadio={selectedRadio}
         onRadioChange={handleRadioChange}
         onBuy={handleBuy}
-        productImage={(product as any)?.buyNowImage || (product as any)?.productImage || (product as any)?.image_full || product?.images?.[0]?.src || ROUTER_CONFIG.productImage}
+        productImage={productImage}
         priceBlockRef={priceBlockRef}
       />
 

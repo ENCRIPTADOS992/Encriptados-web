@@ -52,34 +52,37 @@ export type Product = {
   variants?: ProductVariant[];
   licenseVariants?: ProductLicenseVariant[];
   plan_data_amount?: number;
-  
+
   // ══════════════════════════════════════════════════════════════
   // NUEVOS CAMPOS - Estructura completa de página de producto
   // ══════════════════════════════════════════════════════════════
-  
+
   /** Imagen de alta resolución del producto */
   image_full?: string;
-  
+
   /** Imagen del celular con logotipo de la marca (para sección benefits) */
   image_benefits?: string;
-  
+
   /** Hero banners responsivos (desktop, tablet, mobile) */
   heroBanners?: HeroBanners;
-  
+
   /** Imagen principal del producto para secciones */
   productImage?: string;
-  
+
   /** Logo/icono del producto */
   iconUrl?: string;
-  
+
   /** URL embed de YouTube con texto acompañante */
   videoUrl?: string;
-  
+
   /** Link a App Store (opcional) */
   appStoreUrl?: string;
-  
+
   /** Link a Google Play (opcional) */
   googlePlayUrl?: string;
+
+  /** Imágenes dinámicas por variante (idioma/duración) */
+  buyNowImage_variants?: BuyNowImageVariant[];
 };
 
 export interface ProductById {
@@ -112,37 +115,46 @@ export interface ProductById {
   image?: string;
   /** Imagen de alta resolución del producto */
   image_full?: string;
-  
+
   // ══════════════════════════════════════════════════════════════
   // NUEVOS CAMPOS - Estructura completa de página de producto
   // ══════════════════════════════════════════════════════════════
-  
+
   /** Imagen del celular con logotipo de la marca (para sección benefits) */
   image_benefits?: string;
-  
+
   /** Título de la sección de beneficios/ventajas */
   title_benefits?: string;
-  
+
   /** Texto acompañante del video */
   video_text?: string;
-  
+
   /** Hero banners responsivos (desktop, tablet, mobile) */
   heroBanners?: HeroBanners;
-  
+
   /** Imagen principal del producto para secciones */
   productImage?: string;
-  
+
   /** Logo/icono del producto */
   iconUrl?: string;
-  
+
   /** URL embed de YouTube con texto acompañante */
   videoUrl?: string;
-  
+
   /** Link a App Store (opcional) */
   appStoreUrl?: string;
-  
+
   /** Link a Google Play (opcional) */
   googlePlayUrl?: string;
+
+  /** Imágenes dinámicas por variante (idioma/duración) */
+  buyNowImage_variants?: BuyNowImageVariant[];
+}
+
+export interface BuyNowImageVariant {
+  license_duration: string;
+  lang: string;
+  image: string;
 }
 
 /**
@@ -200,15 +212,15 @@ export interface ProductVariantScope {
 export interface ProductVariant {
   id: number;
   name?: string;
-  ussd?:string;        
-  gb?: string;         
+  ussd?: string;
+  gb?: string;
   cost?: number;
   price?: number;  // Algunas variantes usan price en lugar de cost
-  days?:number      
-  minutes?:number 
-  minute_price?:number;
-  currency?: string;    
-  label?: string;       
+  days?: number
+  minutes?: number
+  minute_price?: number;
+  currency?: string;
+  label?: string;
   purchase_url?: string;
   scope?: ProductVariantScope;
   licensetime?: string | null;

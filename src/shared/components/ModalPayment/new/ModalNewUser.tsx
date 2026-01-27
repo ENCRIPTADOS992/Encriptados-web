@@ -106,7 +106,14 @@ export default function ModalNewUser() {
     );
   }
 
-   return (
+  const isRoamingProduct =
+    // product?.category?.id === 38 || // Removed to avoid capturing Silent Phone (which is UserID)
+    // product?.category?.id === 37 || // Removed as Systems are likely UserID/Manual
+    /armadillo|threema|vault|vnc|nordvpn|salt/i.test(product?.name ?? "");
+
+  const resolvedOrderType = isRoamingProduct ? "roaming" : "userid";
+
+  return (
     <PurchaseScaffold
       mode="new_user"
       enableTabSwitch={false}
@@ -132,6 +139,7 @@ export default function ModalNewUser() {
         email=""
         productId={productIdNum}
         amountUsd={amount}
+        orderType={resolvedOrderType}
         silentPhoneMode={silentPhoneMode}
         onSilentPhoneModeChange={setSilentPhoneMode}
         purchaseMeta={{
