@@ -44,6 +44,13 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     filteredByBrand.forEach((p) => {
       p.licenseVariants?.forEach((v) => {
         if (!v.licensetime || v.licensetime === "0") return;
+
+        // Si la categoría es "Sistemas" (35), filtrar solo 3, 6 y 12 meses
+        if (filters.selectedOption === "35") {
+          const allowedTimes = ["3", "6", "12"];
+          if (!allowedTimes.includes(String(v.licensetime))) return;
+        }
+
         licenseSet.add(String(v.licensetime));
       });
     });
