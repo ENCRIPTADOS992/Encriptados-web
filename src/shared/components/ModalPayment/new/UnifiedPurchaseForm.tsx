@@ -47,6 +47,7 @@ type Props = {
     sourceUrl?: string;
     selectedOption?: number;
   };
+  onSuccess?: (data: { intent: any; orderId: number | null }) => void;
 };
 
 export interface FormData {
@@ -77,6 +78,7 @@ export default function UnifiedPurchaseForm({
   silentPhoneMode = "new_user",
   onSilentPhoneModeChange,
   purchaseMeta,
+  onSuccess,
 }: Props) {
   const t = useTranslations("paymentModal");
   const { policy, formType, isLoading: policyLoading, productName, categoryId } = useFormPolicy();
@@ -116,6 +118,30 @@ export default function UnifiedPurchaseForm({
   const [clientSecret, setClientSecret] = React.useState("");
   const [orderId, setOrderId] = React.useState<number | null>(null);
 
+  // Track individual element completion
+  const [cardState, setCardState] = React.useState({
+    number: false,
+    expiry: false,
+    cvc: false,
+  });
+
+  React.useEffect(() => {
+    if (stripeStatus !== "ready" || !splitRef.current) return;
+
+    const { number, expiry, cvc } = splitRef.current;
+
+    const onChange = (field: keyof typeof cardState) => (e: any) => {
+      setCardState((prev) => ({ ...prev, [field]: e.complete }));
+    };
+
+    number.on("change", onChange("number"));
+    expiry.on("change", onChange("expiry"));
+    cvc.on("change", onChange("cvc"));
+
+    // No dedicated cleanup needed as elements unmount handles it, 
+    // but safe to leave as-is since stripe logic is robust.
+  }, [stripeStatus, splitRef]);
+
   // Polling
   const [polling, setPolling] = React.useState(false);
   const pollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
@@ -124,6 +150,9 @@ export default function UnifiedPurchaseForm({
   // Success modal
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [successPI, setSuccessPI] = React.useState<any>(null);
+
+  // Loading state for direct payment
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   // Ajustar usernames cuando cambia la cantidad
   React.useEffect(() => {
@@ -200,21 +229,33 @@ export default function UnifiedPurchaseForm({
 
   const canPay =
     !loading &&
+    !isSubmitting &&
     terms &&
     emailOk &&
     usernamesOk &&
     renewIdsOk &&
     shippingOk &&
-    (phase === "crypto" ? true : stripeStatus === "ready" && cardName.trim().length > 1);
+    (method === "crypto"
+      ? true
+      : stripeStatus === "ready" &&
+      cardState.number &&
+      cardState.expiry &&
+      cardState.cvc &&
+      cardName.trim().length > 1 &&
+      postal.trim().length > 0);
 
-  const buttonLabel =
-    method === "crypto"
-      ? t("payNow")
-      : phase === "card_init"
-        ? t("continue")
-        : polling
-          ? t("processing")
-          : t("confirmPayment");
+  const isLoadingPayment = isSubmitting || polling || loading;
+  const buttonLabel = isLoadingPayment ? (
+    <div className="flex items-center justify-center gap-2">
+      <span className="opacity-0 w-0 h-0 overflow-hidden">{t("processing")}</span>
+      <svg className="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
+  ) : (
+    t("payNow")
+  );
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -260,14 +301,34 @@ export default function UnifiedPurchaseForm({
   const handlePay = async () => {
     if (!canPay) return;
 
+    setIsSubmitting(true);
+    setStripeError(null);
+
+    // === CRYPTO PAYMENT ===
     if (method === "crypto") {
-      await onPayCrypto?.(getFormData());
+      try {
+        await onPayCrypto?.(getFormData());
+      } catch (error) {
+        // Handle crypto error if any (usually handled in onPayCrypto)
+        console.error(error);
+      } finally {
+        setIsSubmitting(false);
+      }
       return;
     }
 
-    if (!clientSecret) {
-      try {
-        setStripeError(null);
+    // === CARD PAYMENT ===
+    try {
+      // 1. Validate Stripe elements
+      if (!stripeRef.current || !splitRef.current?.number) {
+        throw new Error("Stripe no está listo.");
+      }
+
+      // 2. Create Order & Intent (if not already created)
+      let currentClientSecret = clientSecret;
+      let currentOrderId = orderId;
+
+      if (!currentClientSecret) {
         const form = getFormData();
         const primaryUsername = usernames[0]?.trim() || form.telegramId?.trim() || undefined;
         const meta = {
@@ -288,7 +349,6 @@ export default function UnifiedPurchaseForm({
           quantity,
         };
 
-        // Usar la API correcta según el tipo de orden
         let orderResult: { order_id: number; client_secret: string };
 
         if (orderType === "roaming") {
@@ -334,22 +394,22 @@ export default function UnifiedPurchaseForm({
           });
         }
 
-        setOrderId(orderResult.order_id);
-        setClientSecret(orderResult.client_secret);
-      } catch (e: any) {
-        setStripeError(e?.message || "No se pudo iniciar el pago.");
+        currentOrderId = orderResult.order_id;
+        currentClientSecret = orderResult.client_secret;
+
+        setOrderId(currentOrderId);
+        setClientSecret(currentClientSecret);
       }
-      return;
-    }
 
-    try {
-      if (!stripeRef.current || !splitRef.current?.number) throw new Error("Stripe no está listo.");
-      setStripeError(null);
-      if (orderId && !polling) startPolling(orderId);
+      // 3. Start polling for status
+      if (currentOrderId && !polling) {
+        startPolling(currentOrderId);
+      }
 
+      // 4. Confirm Card Payment
       const res = await confirmCardPayment(
         stripeRef.current!,
-        clientSecret,
+        currentClientSecret,
         splitRef.current.number,
         {
           name: cardName.trim() || undefined,
@@ -359,16 +419,24 @@ export default function UnifiedPurchaseForm({
       );
 
       if (res?.status === "succeeded") {
-        setSuccessPI(res.intent ?? null);
-        setShowSuccess(true);
+        if (onSuccess) {
+          onSuccess({ intent: res.intent ?? null, orderId: currentOrderId });
+        } else {
+          setSuccessPI(res.intent ?? null);
+          setShowSuccess(true);
+        }
         if (pollRef.current) clearInterval(pollRef.current);
         setPolling(false);
-        return;
+      } else if (res.error) {
+        setStripeError(res.error);
+      } else {
+        setStripeError("Error desconocido al procesar el pago.");
       }
 
-      if (res.error) setStripeError(res.error);
     } catch (e: any) {
-      setStripeError(e?.message || "Error confirmando el pago.");
+      setStripeError(e?.message || "Error procesando el pago.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -415,417 +483,416 @@ export default function UnifiedPurchaseForm({
     );
   }
 
+  if (showSuccess) {
+    return (
+      <PaymentSuccessModal
+        open={showSuccess}
+        onClose={() => {
+          setShowSuccess(false);
+          onPaid?.();
+        }}
+        intent={successPI}
+      />
+    );
+  }
+
   return (
-    <>
-      <div className="flex flex-col gap-3">
-        {/* === OS SELECTOR (solo SecureCrypt) === */}
-        {policy.showOsSelector && (
-          <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              Selecciona tu sistema operativo
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                aria-pressed={osType === "android"}
-                onClick={() => setOsType("android")}
-                className={[baseBtnClass, osType === "android" ? activeClass : inactiveClass, "flex items-center justify-center gap-2"].join(" ")}
-              >
-                Android
-                <Image src="/icons/androi-icono.svg" alt="" width={20} height={20} />
-              </button>
-              <button
-                type="button"
-                aria-pressed={osType === "ios"}
-                onClick={() => setOsType("ios")}
-                className={[baseBtnClass, osType === "ios" ? activeClass : inactiveClass, "flex items-center justify-center gap-2"].join(" ")}
-              >
-                iOS (iPhone)
-                <Image src="/icons/ios-icono.svg" alt="" width={20} height={20} />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* === LICENSE TABS (Nueva/Renovar para Software) === */}
-        {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && (
-          <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              {t("licenseQuestion")}
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                aria-pressed={licenseType === "new"}
-                onClick={() => setLicenseType("new")}
-                className={[baseBtnClass, licenseType === "new" ? activeClass : inactiveClass].join(" ")}
-              >
-                {t("newLicense")}
-              </button>
-              <button
-                type="button"
-                aria-pressed={licenseType === "renew"}
-                onClick={() => setLicenseType("renew")}
-                className={[baseBtnClass, licenseType === "renew" ? activeClass : inactiveClass].join(" ")}
-              >
-                {t("renewLicense")}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* === RENEW ID FIELD (cuando se selecciona Renovar licencia) === */}
-        {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew" && (
-          <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              {t("enterProductId", { productName: productName || t("product") })}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {renewIds.map((val, idx) => (
-                <div
-                  key={idx}
-                  className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center"
-                >
-                  <input
-                    value={val}
-                    onChange={(e) => setRenewIdAt(idx, e.target.value)}
-                    placeholder={t("enterIdPlaceholder")}
-                    className="w-full bg-transparent outline-none text-[14px]"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* === THREE-WAY TABS (Silent Phone) === */}
-        {policy.showLicenseTabs && policy.licenseTabType === "three_way" && (
-          <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              {t("licenseQuestion")}
-            </p>
-            <div className="w-full h-11 grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                aria-pressed={silentPhoneMode === "roning_code"}
-                onClick={() => onSilentPhoneModeChange?.("roning_code")}
-                className={[baseBtnClass, silentPhoneMode === "roning_code" ? activeClass : inactiveClass].join(" ")}
-              >
-                {t("roningCode")}
-              </button>
-              <button
-                type="button"
-                aria-pressed={silentPhoneMode === "new_user"}
-                onClick={() => onSilentPhoneModeChange?.("new_user")}
-                className={[baseBtnClass, silentPhoneMode === "new_user" ? activeClass : inactiveClass].join(" ")}
-              >
-                {t("wantMyUser")}
-              </button>
-              <button
-                type="button"
-                aria-pressed={silentPhoneMode === "recharge"}
-                onClick={() => onSilentPhoneModeChange?.("recharge")}
-                className={[baseBtnClass, silentPhoneMode === "recharge" ? activeClass : inactiveClass].join(" ")}
-              >
-                {t("recharge")}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* === RECHARGE CTA (Silent Phone - Recargar) === */}
-        {formType === "SILENT_PHONE" && silentPhoneMode === "recharge" && (
-          <div className="pt-2">
-            <div className="text-center py-4">
-              <Image
-                src="/images/home/currency_exchange.webp"
-                alt={t("recharge")}
-                width={28}
-                height={28}
-                className="mx-auto"
-                priority
-              />
-              <p className="mt-3 text-[24px] leading-[22px] font-semibold text-black">
-                {t("rechargeTitle")}
-              </p>
-              <p className="text-[24px] leading-[28px] font-semibold text-black">
-                {t("rechargeSubtitle")}
-              </p>
-            </div>
-
-            <div className="w-full flex justify-center">
-              <TelegramButton
-                className="
-                  w-full sm:w-[416px] max-w-[416px] h-[54px]
-                  rounded-[8px] px-[10px] py-[10px]
-                  flex items-center justify-center gap-[10px]
-                  !bg-[#1CB9EC] text-white
-                  min-w-0
-                  [&>svg]:w-5 [&>svg]:h-5
-                  [&>svg]:mr-[10px]
-                "
-              >
-                {t("goToTelegram")}
-              </TelegramButton>
-            </div>
-          </div>
-        )}
-
-        {/* === USERNAME FIELDS (Silent Phone) === */}
-        {policy.showUsernameFields && silentPhoneMode === "new_user" && (
-          <div className="space-y-2">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              {t("suggestedUsernames")}
-            </p>
-            <div className="rounded-[12px] bg-[#E3F0FB] p-3">
-              <p className="text-[11px] leading-[14px] text-[#010C0F]/80">
-                {t("usernameHint")}
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {usernames.map((u, idx) => (
-                <div key={idx} className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                  <input
-                    value={u}
-                    onChange={(e) => setUsernameAt(idx, e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20))}
-                    placeholder={t("usernamePlaceholder")}
-                    className="w-full bg-transparent outline-none text-[14px]"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* === PAYMENT FORM (oculto cuando es Silent Phone en modo Recargar) === */}
-        {showPaymentForm && (
-          <>
-            {/* === EMAIL FIELD === */}
-            {policy.showEmailField && (
-              <div className="space-y-1.5">
-                <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-                  {policy.emailLabel}
-                </p>
-                {policy.showTelegramField ? (
-                  // Email + Telegram side by side
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                      <input
-                        value={emailVal}
-                        onChange={(e) => setEmailVal(e.target.value)}
-                        placeholder={policy.emailPlaceholder}
-                        type="email"
-                        className="w-full bg-transparent outline-none text-[14px]"
-                      />
-                    </div>
-                    <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                      <input
-                        value={telegramId}
-                        onChange={(e) => setTelegramId(e.target.value)}
-                        placeholder="ID Telegram (opcional)"
-                        className="w-full bg-transparent outline-none text-[14px]"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  // Solo email - ocupa media columna
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                      <input
-                        value={emailVal}
-                        onChange={(e) => setEmailVal(e.target.value)}
-                        placeholder={policy.emailPlaceholder}
-                        type="email"
-                        className="w-full bg-transparent outline-none text-[14px]"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {isRouterCheckout && (
-              <div className="space-y-3">
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                  <input
-                    value={shippingAddress}
-                    onChange={(e) => setShippingAddress(e.target.value)}
-                    placeholder="Dirección de envío"
-                    className="w-full bg-transparent outline-none text-[14px]"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                    <input
-                      value={shippingFullName}
-                      onChange={(e) => setShippingFullName(e.target.value)}
-                      placeholder="Nombre completo"
-                      className="w-full bg-transparent outline-none text-[14px]"
-                    />
-                  </div>
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                    <input
-                      value={shippingCountry}
-                      onChange={(e) => setShippingCountry(e.target.value)}
-                      placeholder="País"
-                      className="w-full bg-transparent outline-none text-[14px]"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                    <input
-                      value={shippingPostalCode}
-                      onChange={(e) => setShippingPostalCode(e.target.value)}
-                      placeholder="Código postal"
-                      className="w-full bg-transparent outline-none text-[14px]"
-                    />
-                  </div>
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                    <input
-                      value={shippingPhone}
-                      onChange={(e) => setShippingPhone(e.target.value)}
-                      placeholder="Teléfono"
-                      className="w-full bg-transparent outline-none text-[14px]"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* === TERMS === */}
-            <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
-              <input
-                type="checkbox"
-                checked={terms}
-                onChange={(e) => setTerms(e.target.checked)}
-                className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
-              />
-              <span className="select-none">
-                {t("acceptTerms")}{" "}
-                <Link href={TERMS_URL} target="_blank" className="underline font-medium">
-                  {t("termsAndConditions")}
-                </Link>{" "}
-                {t("ofPurchase")}
-              </span>
-            </label>
-
-            {/* === PAYMENT METHODS === */}
-            <div className="space-y-1.5">
-              <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-                {t("paymentMethod")}
-              </p>
-              <div className="flex gap-3">
-                {policy.paymentMethods.includes("card") && (
-                  <button
-                    type="button"
-                    onClick={() => setMethod("card")}
-                    className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${method === "card" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
-                      }`}
-                  >
-                    <Image src="/icons/tarjeta-credito-icono.svg" alt="" width={28} height={28} />
-                    <span className="text-[14px] font-medium">{t("creditCard")}</span>
-                  </button>
-                )}
-                {policy.paymentMethods.includes("crypto") && (
-                  <button
-                    type="button"
-                    onClick={() => setMethod("crypto")}
-                    className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${method === "crypto" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
-                      }`}
-                  >
-                    <Image src="/icons/cripto-icono.svg" alt="" width={28} height={28} />
-                    <span className="text-[14px] font-medium">{t("cryptocurrency")}</span>
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* === CARD FIELDS (when card is selected) === */}
-            {method === "card" && (
-              <div className="space-y-3 mt-2">
-                {/* Cardholder name */}
-                <div className="space-y-1.5">
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                    <input
-                      value={cardName}
-                      onChange={(e) => setCardName(onlyLetters(e.target.value))}
-                      placeholder={t("cardholderName")}
-                      className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
-                    />
-                  </div>
-                </div>
-
-                {/* Card number */}
-                <div className="space-y-1.5">
-                  <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-                </div>
-
-                {/* Expiry + CVC */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-                  </div>
-                </div>
-
-                {/* Postal code */}
-                <div className="space-y-1.5">
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-                    <input
-                      value={postal}
-                      onChange={(e) => setPostal(e.target.value)}
-                      placeholder={t("postalCode")}
-                      className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
-                    />
-                  </div>
-                </div>
-
-                {stripeStatus === "idle" && (
-                  <p className="text-[12px] text-gray-500">{t("loadingPaymentForm")}</p>
-                )}
-                {mountError && (
-                  <p className="text-[12px] text-red-500">{mountError}</p>
-                )}
-              </div>
-            )}
-
-            {/* === STRIPE ERROR === */}
-            {stripeError && (
-              <p className="text-[12px] text-red-500">{stripeError}</p>
-            )}
-
-            {/* === PAY BUTTON === */}
+    <div className="flex flex-col gap-3">
+      {/* === OS SELECTOR (solo SecureCrypt) === */}
+      {policy.showOsSelector && (
+        <div className="space-y-1.5">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+            Selecciona tu sistema operativo
+          </p>
+          <div className="flex gap-2">
             <button
               type="button"
-              onClick={handlePay}
-              disabled={!canPay}
-              className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${canPay
-                  ? "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+              aria-pressed={osType === "android"}
+              onClick={() => setOsType("android")}
+              className={[baseBtnClass, osType === "android" ? activeClass : inactiveClass, "flex items-center justify-center gap-2"].join(" ")}
             >
-              {buttonLabel}
+              Android
+              <Image src="/icons/androi-icono.svg" alt="" width={20} height={20} />
             </button>
-          </>
-        )}
-      </div>
-
-      {/* === SUCCESS MODAL === */}
-      {showSuccess && (
-        <PaymentSuccessModal
-          open={showSuccess}
-          onClose={() => {
-            setShowSuccess(false);
-            onPaid?.();
-          }}
-          intent={successPI}
-        />
+            <button
+              type="button"
+              aria-pressed={osType === "ios"}
+              onClick={() => setOsType("ios")}
+              className={[baseBtnClass, osType === "ios" ? activeClass : inactiveClass, "flex items-center justify-center gap-2"].join(" ")}
+            >
+              iOS (iPhone)
+              <Image src="/icons/ios-icono.svg" alt="" width={20} height={20} />
+            </button>
+          </div>
+        </div>
       )}
-    </>
+
+      {/* === LICENSE TABS (Nueva/Renovar para Software) === */}
+      {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && (
+        <div className="space-y-1.5">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+            {t("licenseQuestion")}
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              aria-pressed={licenseType === "new"}
+              onClick={() => setLicenseType("new")}
+              className={[baseBtnClass, licenseType === "new" ? activeClass : inactiveClass].join(" ")}
+            >
+              {t("newLicense")}
+            </button>
+            <button
+              type="button"
+              aria-pressed={licenseType === "renew"}
+              onClick={() => setLicenseType("renew")}
+              className={[baseBtnClass, licenseType === "renew" ? activeClass : inactiveClass].join(" ")}
+            >
+              {t("renewLicense")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* === RENEW ID FIELD (cuando se selecciona Renovar licencia) === */}
+      {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew" && (
+        <div className="space-y-1.5">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+            {t("enterProductId", { productName: productName || t("product") })}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {renewIds.map((val, idx) => (
+              <div
+                key={idx}
+                className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center"
+              >
+                <input
+                  value={val}
+                  onChange={(e) => setRenewIdAt(idx, e.target.value)}
+                  placeholder={t("enterIdPlaceholder")}
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* === THREE-WAY TABS (Silent Phone) === */}
+      {policy.showLicenseTabs && policy.licenseTabType === "three_way" && (
+        <div className="space-y-1.5">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+            {t("licenseQuestion")}
+          </p>
+          <div className="w-full h-11 grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              aria-pressed={silentPhoneMode === "roning_code"}
+              onClick={() => onSilentPhoneModeChange?.("roning_code")}
+              className={[baseBtnClass, silentPhoneMode === "roning_code" ? activeClass : inactiveClass].join(" ")}
+            >
+              {t("roningCode")}
+            </button>
+            <button
+              type="button"
+              aria-pressed={silentPhoneMode === "new_user"}
+              onClick={() => onSilentPhoneModeChange?.("new_user")}
+              className={[baseBtnClass, silentPhoneMode === "new_user" ? activeClass : inactiveClass].join(" ")}
+            >
+              {t("wantMyUser")}
+            </button>
+            <button
+              type="button"
+              aria-pressed={silentPhoneMode === "recharge"}
+              onClick={() => onSilentPhoneModeChange?.("recharge")}
+              className={[baseBtnClass, silentPhoneMode === "recharge" ? activeClass : inactiveClass].join(" ")}
+            >
+              {t("recharge")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* === RECHARGE CTA (Silent Phone - Recargar) === */}
+      {formType === "SILENT_PHONE" && silentPhoneMode === "recharge" && (
+        <div className="pt-2">
+          <div className="text-center py-4">
+            <Image
+              src="/images/home/currency_exchange.webp"
+              alt={t("recharge")}
+              width={28}
+              height={28}
+              className="mx-auto"
+              priority
+            />
+            <p className="mt-3 text-[24px] leading-[22px] font-semibold text-black">
+              {t("rechargeTitle")}
+            </p>
+            <p className="text-[24px] leading-[28px] font-semibold text-black">
+              {t("rechargeSubtitle")}
+            </p>
+          </div>
+
+          <div className="w-full flex justify-center">
+            <TelegramButton
+              className="
+                w-full sm:w-[416px] max-w-[416px] h-[54px]
+                rounded-[8px] px-[10px] py-[10px]
+                flex items-center justify-center gap-[10px]
+                !bg-[#1CB9EC] text-white
+                min-w-0
+                [&>svg]:w-5 [&>svg]:h-5
+                [&>svg]:mr-[10px]
+              "
+            >
+              {t("goToTelegram")}
+            </TelegramButton>
+          </div>
+        </div>
+      )}
+
+      {/* === USERNAME FIELDS (Silent Phone) === */}
+      {policy.showUsernameFields && silentPhoneMode === "new_user" && (
+        <div className="space-y-2">
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+            {t("suggestedUsernames")}
+          </p>
+          <div className="rounded-[12px] bg-[#E3F0FB] p-3">
+            <p className="text-[11px] leading-[14px] text-[#010C0F]/80">
+              {t("usernameHint")}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {usernames.map((u, idx) => (
+              <div key={idx} className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <input
+                  value={u}
+                  onChange={(e) => setUsernameAt(idx, e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20))}
+                  placeholder={t("usernamePlaceholder")}
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* === PAYMENT FORM (oculto cuando es Silent Phone en modo Recargar) === */}
+      {showPaymentForm && (
+        <>
+          {/* === EMAIL FIELD === */}
+          {policy.showEmailField && (
+            <div className="space-y-1.5">
+              <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+                {policy.emailLabel}
+              </p>
+              {policy.showTelegramField ? (
+                // Email + Telegram side by side
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={emailVal}
+                      onChange={(e) => setEmailVal(e.target.value)}
+                      placeholder={policy.emailPlaceholder}
+                      type="email"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={telegramId}
+                      onChange={(e) => setTelegramId(e.target.value)}
+                      placeholder="ID Telegram (opcional)"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                </div>
+              ) : (
+                // Solo email - ocupa media columna
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                    <input
+                      value={emailVal}
+                      onChange={(e) => setEmailVal(e.target.value)}
+                      placeholder={policy.emailPlaceholder}
+                      type="email"
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {isRouterCheckout && (
+            <div className="space-y-3">
+              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <input
+                  value={shippingAddress}
+                  onChange={(e) => setShippingAddress(e.target.value)}
+                  placeholder="Dirección de envío"
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={shippingFullName}
+                    onChange={(e) => setShippingFullName(e.target.value)}
+                    placeholder="Nombre completo"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={shippingCountry}
+                    onChange={(e) => setShippingCountry(e.target.value)}
+                    placeholder="País"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={shippingPostalCode}
+                    onChange={(e) => setShippingPostalCode(e.target.value)}
+                    placeholder="Código postal"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={shippingPhone}
+                    onChange={(e) => setShippingPhone(e.target.value)}
+                    placeholder="Teléfono"
+                    className="w-full bg-transparent outline-none text-[14px]"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* === TERMS === */}
+          <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F]">
+            <input
+              type="checkbox"
+              checked={terms}
+              onChange={(e) => setTerms(e.target.checked)}
+              className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+            />
+            <span className="select-none">
+              {t("acceptTerms")}{" "}
+              <Link href={TERMS_URL} target="_blank" className="underline font-medium">
+                {t("termsAndConditions")}
+              </Link>{" "}
+              {t("ofPurchase")}
+            </span>
+          </label>
+
+          {/* === PAYMENT METHODS === */}
+          <div className="space-y-1.5">
+            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
+              {t("paymentMethod")}
+            </p>
+            <div className="flex gap-3">
+              {policy.paymentMethods.includes("card") && (
+                <button
+                  type="button"
+                  onClick={() => setMethod("card")}
+                  className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${method === "card" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
+                    }`}
+                >
+                  <Image src="/icons/tarjeta-credito-icono.svg" alt="" width={28} height={28} />
+                  <span className="text-[14px] font-medium">{t("creditCard")}</span>
+                </button>
+              )}
+              {policy.paymentMethods.includes("crypto") && (
+                <button
+                  type="button"
+                  onClick={() => setMethod("crypto")}
+                  className={`flex-1 h-[90px] rounded-[8px] border-2 flex flex-col items-center justify-center gap-2 transition-all ${method === "crypto" ? "border-[#010C0F] bg-white" : "border-transparent bg-[#F5F5F5]"
+                    }`}
+                >
+                  <Image src="/icons/cripto-icono.svg" alt="" width={28} height={28} />
+                  <span className="text-[14px] font-medium">{t("cryptocurrency")}</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* === CARD FIELDS (when card is selected) === */}
+          {method === "card" && (
+            <div className="space-y-3 mt-2">
+              {/* Cardholder name */}
+              <div className="space-y-1.5">
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={cardName}
+                    onChange={(e) => setCardName(onlyLetters(e.target.value))}
+                    placeholder={t("cardholderName")}
+                    className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
+                  />
+                </div>
+              </div>
+
+              {/* Card number */}
+              <div className="space-y-1.5">
+                <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+              </div>
+
+              {/* Expiry + CVC */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                </div>
+                <div className="space-y-1.5">
+                  <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                </div>
+              </div>
+
+              {/* Postal code */}
+              <div className="space-y-1.5">
+                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <input
+                    value={postal}
+                    onChange={(e) => setPostal(e.target.value)}
+                    placeholder={t("postalCode")}
+                    className="w-full bg-transparent outline-none text-[14px] placeholder:text-[#9ca3af]"
+                  />
+                </div>
+              </div>
+
+              {stripeStatus === "idle" && (
+                <p className="text-[12px] text-gray-500">{t("loadingPaymentForm")}</p>
+              )}
+              {mountError && (
+                <p className="text-[12px] text-red-500">{mountError}</p>
+              )}
+            </div>
+          )}
+
+          {/* === STRIPE ERROR === */}
+          {stripeError && (
+            <p className="text-[12px] text-red-500">{stripeError}</p>
+          )}
+
+          {/* === PAY BUTTON === */}
+          <button
+            type="button"
+            onClick={handlePay}
+            disabled={!canPay}
+            className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${canPay
+              ? "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+          >
+            {buttonLabel}
+          </button>
+        </>
+      )}
+    </div>
   );
 }
