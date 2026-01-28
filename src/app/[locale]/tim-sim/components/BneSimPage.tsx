@@ -23,33 +23,9 @@ const BneSimPage = ({ locale }: BneSimPageProps) => {
   const t = useTranslations('BneSimPage.faqs');
   const searchParams = useSearchParams();
   const { openModal } = useModalPayment();
-  const buyPopupTriggered = useRef(false);
-
-  useEffect(() => {
-    const buyParam = searchParams.get("buy");
-    const productId = searchParams.get("productId");
-    const priceParam = searchParams.get("price");
-
-    if (buyParam !== "1" || !productId || buyPopupTriggered.current) return;
-    buyPopupTriggered.current = true;
-
-    const timer = setTimeout(() => {
-      const parsedPrice = priceParam ? Number.parseFloat(priceParam) : NaN;
-
-      openModal({
-        productid: String(productId),
-        languageCode: locale,
-        selectedOption: 40,
-        initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
-      });
-
-      const url = new URL(window.location.href);
-      url.searchParams.delete("buy");
-      window.history.replaceState({}, "", url.toString());
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchParams, openModal, locale]);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
+  // ═══════════════════════════════════════════════════════════════════════════
 
   const faqs = [
     {
@@ -77,7 +53,7 @@ const BneSimPage = ({ locale }: BneSimPageProps) => {
             selectedcardvalue: "esim_datos",
             selectedregion: "region",
           }}
-          submit={() => {}}
+          submit={() => { }}
         >
           <WhereUseSimSection locale={locale} />
         </BasicFormProvider>
@@ -115,11 +91,11 @@ const BneSimPage = ({ locale }: BneSimPageProps) => {
           <OurBne />
         </div>
 
-        <FAQSection 
+        <FAQSection
           title={t('title')}
-          faqs={faqs} 
-          layout="single" 
-          bgColor="bg-white" 
+          faqs={faqs}
+          layout="single"
+          bgColor="bg-white"
         />
         {/* <div className="max-w-[1100px] m-auto pb-20">
           <QRBanner title="Descarga la App para iOS & Android" />

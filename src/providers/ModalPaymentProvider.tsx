@@ -44,6 +44,8 @@ interface ModalPaymentParams {
   variantId?: number;
   /** Tipo de producto del backend (Fisico/Digital) para derivar URL correcta */
   typeProduct?: string;
+  flagUrl?: string;
+  initialRegionCode?: string;
 }
 
 interface ModalPaymentContextProps {
@@ -59,30 +61,34 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [params, setParams] = useState<ModalPaymentParams>({});
 
-  useEffect(() => {
-    console.log("💠 [Provider] isModalOpen cambió a:", isModalOpen);
-  }, [isModalOpen]);
+  // Debug: Generate a random ID to check for duplicate providers
+  const [providerId] = useState(() => Math.random().toString(36).substring(7));
 
   useEffect(() => {
-    console.log("💠 [Provider] params son ahora:", params);
+    console.log(`💠 [Provider ${providerId}] Mounted`);
+    // Expose on window for easy checking
+    (window as any).__modalProviderId = providerId;
+  }, []);
+
+  useEffect(() => {
+    console.log(`💠 [Provider ${providerId}] params updated:`, params);
   }, [params]);
 
-
   const openModal = (newParams?: ModalPaymentParams) => {
-    console.log("💠 [Provider] openModal() llamado con:", newParams);
-    // Capturar la URL de origen si no se proporciona
+    console.log(`💠 [Provider ${providerId}] openModal called with:`, newParams);
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
     setParams(prev => ({ ...prev, ...(newParams ?? {}), sourceUrl }));
     setIsModalOpen(true);
   };
+
   const closeModal = () => {
-    console.log("💠 [Provider] closeModal() llamado");
+    console.log(`💠 [Provider ${providerId}] closeModal() called`);
     setIsModalOpen(false);
     setParams({});
   };
 
   return (
-    <ModalPaymentContext.Provider value={{ isModalOpen, openModal, closeModal, params }}>
+    <ModalPaymentContext.Provider value={{ isModalOpen, openModal, closeModal, params, providerId } as any}>
       {children}
     </ModalPaymentContext.Provider>
   );

@@ -24,6 +24,7 @@ export type Variant = {
   currency?: string;
   label?: string;
   purchase_url?: string;
+  scope?: { type?: string; code?: string };
 };
 
 export type ConfigSim = {

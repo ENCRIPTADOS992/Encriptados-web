@@ -56,14 +56,14 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
 
   const { kind }: { kind: CategoryKind } = product
     ? getProductCategoryKind(product, {
-        selectedOption,
-        categoryId: (params as any)?.categoryId ?? product?.category?.id,
-        categoryName:
-          (params as any)?.categoryName ?? product?.category?.name,
-      })
+      selectedOption,
+      categoryId: (params as any)?.categoryId ?? product?.category?.id,
+      categoryName:
+        (params as any)?.categoryName ?? product?.category?.name,
+    })
     : { kind: "DESCONOCIDO" as CategoryKind, reason: "no product yet" };
 
-  const { allowedModes } = useUiPolicy(); 
+  const { allowedModes } = useUiPolicy();
 
   const norm = (s?: string) =>
     (s ?? "")
@@ -148,18 +148,25 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     const match = pathname.match(/^\/(en|es|fr|it|pt)(\/|$)/);
     const locale = match?.[1] ?? "es";
 
+    const productIdFromUrl = search.get("productId");
+    const priceFromUrl = search.get("price");
+    const parsedPrice = priceFromUrl ? Number.parseFloat(priceFromUrl) : NaN;
+
     if (isRouterPath) {
       openModal({
-        productid: "59747",
+        productid: productIdFromUrl || "59747",
         languageCode: locale,
         selectedOption: 36,
+        initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
       });
     } else {
-      const productIdFromUrl = search.get("productId");
       if (!productIdFromUrl) return;
 
-      const priceFromUrl = search.get("price");
-      const parsedPrice = priceFromUrl ? Number.parseFloat(priceFromUrl) : NaN;
+      // Extract additional SIM parameters from URL
+      const gbFromUrl = search.get("gb")?.toUpperCase();
+      const regionFromUrl = search.get("region");
+      const regionCodeFromUrl = search.get("regionCode");
+      const flagUrlFromUrl = search.get("flagUrl");
 
       openModal({
         productid: productIdFromUrl,
@@ -167,6 +174,11 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
         selectedOption: 40,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
         mode: "sim",
+        // Pass captured SIM params
+        initialGb: gbFromUrl || undefined,
+        initialRegion: regionFromUrl || undefined,
+        initialRegionCode: regionCodeFromUrl || undefined,
+        flagUrl: flagUrlFromUrl || undefined,
       });
     }
 

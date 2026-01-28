@@ -198,48 +198,9 @@ export default function RouterPage() {
     window.open("https://t.me/Encriptados", "_blank");
   };
 
-  useEffect(() => {
-    const buy = searchParams?.get("buy");
-    const productIdParam = searchParams?.get("productId");
-    const priceParam = searchParams?.get("price");
-
-    if (buy !== "1") {
-      hasAutoOpenedRef.current = false;
-      return;
-    }
-    if (hasAutoOpenedRef.current) return;
-    hasAutoOpenedRef.current = true;
-
-    const selectedPlan = plans.find((p) => p.label === selectedRadio);
-
-    // Prioridad para precio: 1. URL, 2. Plan, 3. Producto
-    let initialPrice = 0;
-    if (priceParam) {
-      initialPrice = parseFloat(priceParam);
-    } else {
-      initialPrice = selectedPlan?.price ?? currentPrice ?? 0;
-    }
-
-    // Prioridad para productId: 1. URL, 2. Plan (variant ID), 3. Config base
-    // Nota: selectedPlan.value trae el ID de la variante si existe
-    const targetProductId = productIdParam || (selectedPlan ? selectedPlan.value : String(ROUTER_CONFIG.productId));
-
-    const timer = setTimeout(() => {
-      openModal({
-        productid: targetProductId,
-        languageCode: locale,
-        selectedOption: ROUTER_CONFIG.categoryId,
-        initialPrice: Number(initialPrice) || 0,
-        // Si el productId viene de URL, no forzamos variantId, o asumimos que el productId ES la variante
-        variantId: undefined,
-      });
-      const url = new URL(window.location.href);
-      url.searchParams.delete("buy");
-      window.history.replaceState({}, "", url.toString());
-    }, 350);
-
-    return () => clearTimeout(timer);
-  }, [searchParams, plans, selectedRadio, currentPrice, openModal, locale]);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
+  // ═══════════════════════════════════════════════════════════════════════════
 
   // Producto Info para StickyBanner - Priorizar datos del backend
   const productIconUrl = (product as any)?.iconUrl || ROUTER_CONFIG.iconUrl;

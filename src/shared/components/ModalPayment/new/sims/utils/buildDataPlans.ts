@@ -72,10 +72,13 @@ export function buildDataPlans({ formType, variants, product }: Params): DataPla
       const value = toNumber(rawPrice);
       const gb = deriveGb(v);
 
+      // Relaxed Logic: If GB could not be parsed but we have a label/name, still include it.
+      // This is critical for cases where variants differ in region but maybe not explicit GBs,
+      // or if the GB format is unexpected.
       const label =
         typeof gb === "number" && gb > 0
           ? `${gb} GB`
-          : String((v as any).label || (v as any).name || `${value} USD`);
+          : String((v as any).label || (v as any).name || (v as any).sku || `${value} USD`);
 
       const plan: DataPlan = {
         id: (v as any).id ?? i,
