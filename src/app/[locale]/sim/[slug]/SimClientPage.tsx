@@ -80,7 +80,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // Obtener productId desde query params
   const productIdFromUrl = searchParams.get("productId");
   const priceFromUrl = searchParams.get("price");
-  const gbFromUrl = searchParams.get("gb");
+  const gbFromUrl = searchParams.get("gb")?.toUpperCase();
   const regionFromUrl = searchParams.get("region");
   const regionCodeFromUrl = searchParams.get("regionCode");
   const flagUrlFromUrl = searchParams.get("flagUrl");
@@ -261,34 +261,13 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // ═══════════════════════════════════════════════════════════════════════════
   const buyPopupTriggered = useRef(false);
 
-  useEffect(() => {
-    const buyParam = searchParams.get("buy");
-    const productIdToUse = productIdFromUrl || (staticConfig?.productId ? String(staticConfig.productId) : null);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
+  // ═══════════════════════════════════════════════════════════════════════════
+  // The global controller (useModalPaymentController) now handles buy=1 detection
+  // and parameter parsing for all SIM pages. This prevents race conditions.
+  // We keep this comment for documentation but remove the logic.
 
-    if (buyParam === "1" && productIdToUse && !buyPopupTriggered.current) {
-      buyPopupTriggered.current = true;
-
-      const timer = setTimeout(() => {
-        const price =
-          typeof effectivePrice === "number" && !Number.isNaN(effectivePrice)
-            ? effectivePrice
-            : undefined;
-
-        openModal({
-          productid: String(productIdToUse),
-          languageCode: locale,
-          selectedOption: 40,
-          initialPrice: price,
-        });
-
-        const url = new URL(window.location.href);
-        url.searchParams.delete("buy");
-        window.history.replaceState({}, "", url.toString());
-      }, 500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [searchParams, locale, effectivePrice, openModal, productIdFromUrl, staticConfig]);
 
   // Obtener imagen del producto de la API
   const productImage = useMemo(() => {
@@ -306,6 +285,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       initialPrice: priceOverride ?? effectivePrice,
       initialGb: gbFromUrl || undefined,
       initialRegion: regionFromUrl || undefined,
+      initialRegionCode: regionCodeFromUrl || undefined,
+      flagUrl: flagUrlFromUrl || undefined,
     });
   };
 

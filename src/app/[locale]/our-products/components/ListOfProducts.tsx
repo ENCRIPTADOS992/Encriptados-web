@@ -45,6 +45,7 @@ const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
   CO: "Colombia",
   MX: "México",
   US: "Estados Unidos",
+  AR: "Argentina",
 };
 
 // 👇 helper para ver qué está pasando con las recargas

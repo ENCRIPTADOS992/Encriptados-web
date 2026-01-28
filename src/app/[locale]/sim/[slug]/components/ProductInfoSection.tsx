@@ -150,7 +150,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
                         fill
                         className="object-cover"
                       />
-                    ) : regionCode ? (
+                    ) : regionCode && regionCode.length === 2 && regionCode.toUpperCase() !== 'GLOBAL' ? (
                       <CircleFlag
                         countryCode={regionCode.toLowerCase()}
                         className="w-full h-full"

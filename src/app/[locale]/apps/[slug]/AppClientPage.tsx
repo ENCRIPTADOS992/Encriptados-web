@@ -154,44 +154,9 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const handleRadioChange = (val: string) => setSelectedRadio(val);
 
   // === AUTO-ABRIR POPUP si viene con ?buy=1 ===
-  useEffect(() => {
-    const buyParam = searchParams.get("buy");
-    const productIdParam = searchParams.get("productId");
-    const priceParam = searchParams.get("price");
-
-    if (buyParam === "1" && product && !isLoading) {
-      // Pequeño delay para asegurar que todo está cargado
-      const timer = setTimeout(() => {
-        // Prioridad: 1. Precio de URL, 2. Precio del plan seleccionado, 3. Precio base
-        let numericPrice = 0;
-        if (priceParam) {
-          numericPrice = parseFloat(priceParam);
-        } else {
-          const priceStr = selectedPlan?.price ?? product?.price ?? 0;
-          numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
-        }
-
-        // Prioridad: 1. ProductId de URL, 2. ProductId del plan seleccionado, 3. ProductId base
-        // Nota: selectedPlan puede ser una variante con su propio ID (si aplica)
-        // En transformVariantsToPlans definimos 'variantId', no 'id' para los planes
-        const targetProductId = productIdParam || String(selectedPlan?.variantId || product?.id || config?.productId);
-
-        openModal({
-          productid: targetProductId,
-          languageCode: locale,
-          selectedOption: (product as any)?.category?.id || config?.categoryId || 38,
-          initialPrice: numericPrice,
-        });
-
-        // Limpiar el parámetro de la URL sin recargar
-        const url = new URL(window.location.href);
-        url.searchParams.delete("buy");
-        window.history.replaceState({}, "", url.toString());
-      }, 500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [searchParams, product, isLoading, selectedPlan, config, locale, openModal]);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
+  // ═══════════════════════════════════════════════════════════════════════════
 
   const handleBuy = () => {
     // Extraer precio numérico

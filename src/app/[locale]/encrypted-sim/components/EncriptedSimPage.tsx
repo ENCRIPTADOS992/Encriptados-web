@@ -26,33 +26,9 @@ const EncryptedSim = () => {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const { openModal } = useModalPayment();
-  const buyPopupTriggered = useRef(false);
-
-  useEffect(() => {
-    const buyParam = searchParams.get("buy");
-    const productId = searchParams.get("productId");
-    const priceParam = searchParams.get("price");
-
-    if (buyParam !== "1" || !productId || buyPopupTriggered.current) return;
-    buyPopupTriggered.current = true;
-
-    const timer = setTimeout(() => {
-      const parsedPrice = priceParam ? Number.parseFloat(priceParam) : NaN;
-
-      openModal({
-        productid: String(productId),
-        languageCode: locale,
-        selectedOption: 40,
-        initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
-      });
-
-      const url = new URL(window.location.href);
-      url.searchParams.delete("buy");
-      window.history.replaceState({}, "", url.toString());
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchParams, openModal, locale]);
+  // ═══════════════════════════════════════════════════════════════════════════
+  // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
+  // ═══════════════════════════════════════════════════════════════════════════
 
   return (
     <>

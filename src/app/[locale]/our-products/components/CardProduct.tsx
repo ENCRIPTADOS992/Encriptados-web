@@ -101,6 +101,10 @@ const CardProduct: React.FC<CardSimProps> = ({
       // Pasar provider y typeProduct para que el modal use los mismos valores que "Más información"
       provider: provider,
       typeProduct: typeProduct,
+      initialGb: badges?.tag,
+      initialRegion: badges?.country?.label,
+      initialRegionCode: badges?.country?.code,
+      flagUrl: badges?.country?.flagUrl,
     });
   };
 

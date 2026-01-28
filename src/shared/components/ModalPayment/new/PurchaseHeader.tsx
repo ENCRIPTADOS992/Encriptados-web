@@ -8,13 +8,19 @@ import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 import { getProductLink, getSimProductUrl } from "@/shared/utils/productRouteResolver";
 import { useToast } from "@/shared/context/ToastContext";
+import { CircleFlag } from "react-circle-flags";
+import { SIM_DEFAULT_IDS } from "@/shared/constants/simDefaultIds";
+import { RegionIcon } from "@/shared/components/RegionIcon";
 
 type Variant = {
   id: number;
   licensetime?: number | string;
   price: number;
+  cost?: number;
   sku?: string;
+  name?: string;
   image?: string;
+  scope?: { type?: string; code?: string };
 };
 
 type ProductLike = {
@@ -60,6 +66,12 @@ type Props = {
   onChangeEsimAddon?: (checked: boolean) => void;
   /** URL de origen para compartir (se captura al abrir el modal) */
   sourceUrl?: string;
+  gb?: string;
+  region?: string;
+  regionCode?: string;
+  flagUrl?: string;
+  /** Explicit Product ID to use for sharing (prioritized over product object) */
+  shareProductId?: string;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -85,6 +97,11 @@ const PurchaseHeader: React.FC<Props> = ({
   onTotalChange,
   onChangeEsimAddon,
   sourceUrl,
+  gb,
+  region,
+  regionCode,
+  flagUrl,
+  shareProductId,
 }) => {
   const locale = useLocale();
   const t = useTranslations("paymentModal");
@@ -99,6 +116,11 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const variants = product?.variants ?? [];
   const [showCoupon, setShowCoupon] = React.useState(false);
+  const [imgError, setImgError] = React.useState(false);
+
+  React.useEffect(() => {
+    setImgError(false);
+  }, [flagUrl]);
 
   const discountAmount = 0;
 
@@ -134,8 +156,8 @@ const PurchaseHeader: React.FC<Props> = ({
   const [includeEsimAddon, setIncludeEsimAddon] = React.useState(false);
   const total = Math.max(
     subtotal +
-      (shipping ?? 0) +
-      (showEsimAddon && includeEsimAddon ? esimAddonPrice : 0),
+    (shipping ?? 0) +
+    (showEsimAddon && includeEsimAddon ? esimAddonPrice : 0),
     0
   );
 
@@ -226,12 +248,12 @@ const PurchaseHeader: React.FC<Props> = ({
         id: v.id ?? v.price ?? v.cost,
         value: Math.max(
           Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0) -
-            (isEsimRecargaDatosTitle || isEsimDatosTitle ? ESIM_RECARGA_BASE_PRICE : 0),
+          (isEsimRecargaDatosTitle || isEsimDatosTitle ? ESIM_RECARGA_BASE_PRICE : 0),
           0
         ),
       }));
     }
-    
+
     // Fallback a valores fijos
     return [
       { id: 25, value: 25 },
@@ -267,20 +289,21 @@ const PurchaseHeader: React.FC<Props> = ({
             <button
               type="button"
               onClick={() => {
-                // Obtener el ID del producto desde params si está disponible
-                const productId = (product as any)?.id || (product as any)?.productId;
+                // Obtener el ID del producto desde prop explicito o params
+                const productId = shareProductId || (product as any)?.id || (product as any)?.productId;
                 const provider = (product as any)?.provider || (product as any)?.brand;
                 const typeProduct = (product as any)?.type_product;
-                
+
                 // Detectar si es un producto SIM (categoría 40) basándose en el provider
                 // Solo "Sim Encriptados", "Sim TIM", "encrypted", "tim" son productos SIM
                 const providerLower = (provider || "").toLowerCase();
-                const isSimProduct = providerLower.includes("encript") || 
-                                     providerLower.includes("tim") ||
-                                     providerLower === "encrypted";
-                
+                const isSimProduct = providerLower.includes("encript") ||
+                  providerLower.includes("tim") ||
+                  providerLower === "encrypted";
+
                 // Debug: mostrar datos del producto para verificar derivación
                 console.log("🔗 [PurchaseHeader] Share button clicked:", {
+                  shareProductId,
                   productId,
                   unitPrice,
                   provider,
@@ -288,26 +311,48 @@ const PurchaseHeader: React.FC<Props> = ({
                   isSimProduct,
                   productName: product?.name,
                 });
-                
+
                 // Generar la URL de compartir
                 let shareUrl: string;
-                
+
                 // Para productos SIM (categoría 40): derivar URL desde provider/typeProduct
-                // Esto asegura que el link de Compartir sea igual al de "Más información"
-                if (isSimProduct && productId && unitPrice != null) {
+                if (isSimProduct && (productId || shareProductId) && unitPrice != null) {
                   // Para SIMs: usar MISMA función que CardProduct "Más información"
                   const relativePath = getSimProductUrl(provider, typeProduct);
-                  
+
+                  // Intentar obtener el ID canónico para este slug
+                  // Esto evita que IDs de variantes (como Recargas) se propaguen al link de compartir
+                  const slug = relativePath.replace("/sim/", "").split("?")[0];
+                  const canonicalId = SIM_DEFAULT_IDS[slug];
+                  const finalProductId = canonicalId ? String(canonicalId) : (shareProductId || productId);
+
                   // Construir URL absoluta con productId, price y buy=1
                   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://encriptados.io';
-                  shareUrl = `${baseUrl}/${locale}${relativePath}?productId=${productId}&price=${unitPrice}&buy=1`;
-                  
-                  console.log("🔗 [PurchaseHeader] Generated SIM share URL:", { provider, typeProduct, relativePath, shareUrl });
+                  let simUrl = `${baseUrl}/${locale}${relativePath}?productId=${finalProductId}&price=${unitPrice}&buy=1`;
+
+                  // Agregar params adicionales si existen (gb, region, flagUrl)
+                  // Estos deben venir de las props o del estado actual
+                  if (gb) simUrl += `&gb=${encodeURIComponent(gb)}`;
+                  if (region) simUrl += `&region=${encodeURIComponent(region)}`;
+                  if (regionCode) simUrl += `&regionCode=${encodeURIComponent(regionCode)}`;
+                  if (flagUrl) simUrl += `&flagUrl=${encodeURIComponent(flagUrl)}`;
+
+                  shareUrl = simUrl;
+
+                  console.log("🔗 [PurchaseHeader] Generated SIM share URL:", {
+                    provider,
+                    typeProduct,
+                    relativePath,
+                    slug,
+                    canonicalId,
+                    finalProductId,
+                    shareUrl
+                  });
                 } else {
                   // Para Apps/Sistemas/Router: usar getProductLink con lógica dinámica de slugs
                   const categoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
                   const productName = String(product?.name || "");
-                  
+
                   // Generar el slug dinámicamente basado en el nombre (ej: "Silent Phone" -> "/apps/silent-phone")
                   const derivedLink = Number.isFinite(categoryId)
                     ? getProductLink(productName, categoryId, Number(productId), provider, typeProduct)
@@ -323,10 +368,10 @@ const PurchaseHeader: React.FC<Props> = ({
                     currentUrl.searchParams.set("buy", "1");
                     // Asegurar productId y price si faltan
                     if (!currentUrl.searchParams.has("productId") && productId) {
-                       currentUrl.searchParams.set("productId", String(productId));
+                      currentUrl.searchParams.set("productId", String(productId));
                     }
                     if (!currentUrl.searchParams.has("price") && unitPrice != null) {
-                       currentUrl.searchParams.set("price", String(unitPrice));
+                      currentUrl.searchParams.set("price", String(unitPrice));
                     }
                     shareUrl = currentUrl.toString();
                   } else {
@@ -336,17 +381,17 @@ const PurchaseHeader: React.FC<Props> = ({
                     shareUrl = currentUrl.toString();
                   }
                 }
-                
+
                 console.log("🔗 [PurchaseHeader] Final shareUrl:", shareUrl);
-                
+
                 const shareData = {
                   title: product?.name || "Producto",
                   text: `${product?.name ?? "Producto"} - ${unitPrice} ${currency}. ¡Compra aquí!`,
                   url: shareUrl,
                 };
-                
+
                 if (navigator.share) {
-                  navigator.share(shareData).catch(() => {});
+                  navigator.share(shareData).catch(() => { });
                 } else {
                   navigator.clipboard
                     .writeText(shareUrl)
@@ -387,58 +432,58 @@ const PurchaseHeader: React.FC<Props> = ({
               <div className="grid grid-cols-[1fr_auto] items-center gap-4">
                 <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
                 <div ref={rechargeRef} className="relative z-[1000]">
-                {(() => {
-                  const opts = RECHARGE_AMOUNTS.filter(
-                    (x: RechargeAmountOpt) => Number(x.value) > 0
-                  );
-                  const current =
-                    opts.find((p) => Number(p.value) === Number(selectedPlanId)) ??
-                    opts[0];
-                  const label = current ? `${current.value} ${currency}` : `${currency}`;
-                  return (
-                    <button
-                      type="button"
-                      aria-haspopup="listbox"
-                      aria-expanded={openRecharge}
-                      onClick={() => setOpenRecharge((v) => !v)}
-                      className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
-                    >
-                      <span className="truncate">{label}</span>
-                      <span className="ml-1 text-[#3D3D3D]">▾</span>
-                    </button>
-                  );
-                })()}
-
-                {openRecharge && (
-                  <div
-                    role="listbox"
-                    tabIndex={-1}
-                    className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                    onMouseDown={(e) => e.stopPropagation()}
-                  >
-                    {RECHARGE_AMOUNTS.filter(
+                  {(() => {
+                    const opts = RECHARGE_AMOUNTS.filter(
                       (x: RechargeAmountOpt) => Number(x.value) > 0
-                    ).map((opt: RechargeAmountOpt) => {
-                      const isActive = Number(selectedPlanId) === Number(opt.value);
-                      const label = `${opt.value} ${currency}`;
-                      return (
-                        <button
-                          key={String(opt.id)}
-                          role="option"
-                          aria-selected={isActive}
-                          onClick={() => {
-                            onChangePlan?.(Number(opt.value));
-                            setOpenRecharge(false);
-                          }}
-                          onMouseDown={(e) => e.stopPropagation()}
-                          className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                        >
-                          {label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                    );
+                    const current =
+                      opts.find((p) => Number(p.value) === Number(selectedPlanId)) ??
+                      opts[0];
+                    const label = current ? `${current.value} ${currency}` : `${currency}`;
+                    return (
+                      <button
+                        type="button"
+                        aria-haspopup="listbox"
+                        aria-expanded={openRecharge}
+                        onClick={() => setOpenRecharge((v) => !v)}
+                        className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                      >
+                        <span className="truncate">{label}</span>
+                        <span className="ml-1 text-[#3D3D3D]">▾</span>
+                      </button>
+                    );
+                  })()}
+
+                  {openRecharge && (
+                    <div
+                      role="listbox"
+                      tabIndex={-1}
+                      className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                      onMouseDown={(e) => e.stopPropagation()}
+                    >
+                      {RECHARGE_AMOUNTS.filter(
+                        (x: RechargeAmountOpt) => Number(x.value) > 0
+                      ).map((opt: RechargeAmountOpt) => {
+                        const isActive = Number(selectedPlanId) === Number(opt.value);
+                        const label = `${opt.value} ${currency}`;
+                        return (
+                          <button
+                            key={String(opt.id)}
+                            role="option"
+                            aria-selected={isActive}
+                            onClick={() => {
+                              onChangePlan?.(Number(opt.value));
+                              setOpenRecharge(false);
+                            }}
+                            onMouseDown={(e) => e.stopPropagation()}
+                            className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -447,53 +492,53 @@ const PurchaseHeader: React.FC<Props> = ({
               <div className="grid grid-cols-[1fr_auto] items-center gap-4">
                 <span className="text-base text-[#3D3D3D]">{t("chooseGigas")}</span>
                 <div ref={dataPlanRef} className="relative z-[1000]">
-                {(() => {
-                  const current =
-                    dataPlans.find((p) => String(p.id) === String(selectedPlanId ?? "__none__")) ??
-                    dataPlans[0];
-                  const label = current?.label ?? "Plan";
-                  return (
-                    <button
-                      type="button"
-                      aria-haspopup="listbox"
-                      aria-expanded={openDataPlan}
-                      onClick={() => setOpenDataPlan((v) => !v)}
-                      onMouseDown={(e) => e.stopPropagation()}
-                      className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
-                    >
-                      <span className="truncate">{label}</span>
-                      <span className="ml-1 text-[#3D3D3D]">▾</span>
-                    </button>
-                  );
-                })()}
+                  {(() => {
+                    const current =
+                      dataPlans.find((p) => String(p.id) === String(selectedPlanId ?? "__none__")) ??
+                      dataPlans[0];
+                    const label = current?.label ?? "Plan";
+                    return (
+                      <button
+                        type="button"
+                        aria-haspopup="listbox"
+                        aria-expanded={openDataPlan}
+                        onClick={() => setOpenDataPlan((v) => !v)}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                      >
+                        <span className="truncate">{label}</span>
+                        <span className="ml-1 text-[#3D3D3D]">▾</span>
+                      </button>
+                    );
+                  })()}
 
-                {openDataPlan && (
-                  <div
-                    role="listbox"
-                    tabIndex={-1}
-                    className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                    onMouseDown={(e) => e.stopPropagation()}
-                  >
-                    {dataPlans.map((p) => {
-                      const isActive = String(selectedPlanId ?? dataPlans[0]?.id) === String(p.id);
-                      return (
-                        <button
-                          key={String(p.id)}
-                          role="option"
-                          aria-selected={isActive}
-                          onClick={() => {
-                            onChangePlan?.(p.id);
-                            setOpenDataPlan(false);
-                          }}
-                          onMouseDown={(e) => e.stopPropagation()}
-                          className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                        >
-                          {p.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                  {openDataPlan && (
+                    <div
+                      role="listbox"
+                      tabIndex={-1}
+                      className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                      onMouseDown={(e) => e.stopPropagation()}
+                    >
+                      {dataPlans.map((p) => {
+                        const isActive = String(selectedPlanId ?? dataPlans[0]?.id) === String(p.id);
+                        return (
+                          <button
+                            key={String(p.id)}
+                            role="option"
+                            aria-selected={isActive}
+                            onClick={() => {
+                              onChangePlan?.(p.id);
+                              setOpenDataPlan(false);
+                            }}
+                            onMouseDown={(e) => e.stopPropagation()}
+                            className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                          >
+                            {p.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -503,59 +548,95 @@ const PurchaseHeader: React.FC<Props> = ({
               <div className="grid grid-cols-[1fr_auto] items-center gap-4">
                 <span className="text-base text-[#3D3D3D]">{t("minutes")}</span>
                 <div ref={planRef} className="relative z-[1000]">
-                {(() => {
-                  const current =
-                    minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
-                    minutesPlans[0];
-                  const label =
-                    typeof current?.minutes === "number" && current.minutes > 0
-                      ? `${current.minutes} ${t("minutes")}`
-                      : current?.label ?? "Plan";
-                  return (
-                <button
-                  type="button"
-                  aria-haspopup="listbox"
-                  aria-expanded={openPlan}
-                  onClick={() => setOpenPlan((v) => !v)}
-                  className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
-                >
-                  <span className="truncate">
-                    {label}
-                  </span>
-                  <span className="ml-1 text-[#3D3D3D]">▾</span>
-                </button>
-                  );
-                })()}
-
-                {openPlan && (
-                  <div
-                    role="listbox"
-                    tabIndex={-1}
-                    className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                  >
-                    {minutesPlans.map((p) => {
-                      const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
-                      const label =
-                        typeof p.minutes === "number" && p.minutes > 0
-                          ? `${p.minutes} ${t("minutes")}`
-                          : p.label;
-                      return (
-                        <button
-                          key={String(p.id)}
-                          role="option"
-                          aria-selected={isActive}
-                          onClick={() => {
-                            onChangePlan?.(p.id);
-                            setOpenPlan(false);
-                          }}
-                          className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                        >
+                  {(() => {
+                    const current =
+                      minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
+                      minutesPlans[0];
+                    const label =
+                      typeof current?.minutes === "number" && current.minutes > 0
+                        ? `${current.minutes} ${t("minutes")}`
+                        : current?.label ?? "Plan";
+                    return (
+                      <button
+                        type="button"
+                        aria-haspopup="listbox"
+                        aria-expanded={openPlan}
+                        onClick={() => setOpenPlan((v) => !v)}
+                        className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                      >
+                        <span className="truncate">
                           {label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                        </span>
+                        <span className="ml-1 text-[#3D3D3D]">▾</span>
+                      </button>
+                    );
+                  })()}
+
+                  {openPlan && (
+                    <div
+                      role="listbox"
+                      tabIndex={-1}
+                      className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    >
+                      {minutesPlans.map((p) => {
+                        const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
+                        const label =
+                          typeof p.minutes === "number" && p.minutes > 0
+                            ? `${p.minutes} ${t("minutes")}`
+                            : p.label;
+                        return (
+                          <button
+                            key={String(p.id)}
+                            role="option"
+                            aria-selected={isActive}
+                            onClick={() => {
+                              onChangePlan?.(p.id);
+                              setOpenPlan(false);
+                            }}
+                            className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+
+
+
+
+            {/* Fila: País o región (si existe) */}
+            {(region || regionCode) && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                {/* @ts-ignore */}
+                <span className="text-base text-[#3D3D3D]">{t("countryOrRegion", { defaultValue: "País o región" })}</span>
+                <div className="flex items-center gap-2">
+                  {flagUrl && !imgError ? (
+                    <Image
+                      src={flagUrl}
+                      alt={region || "Region"}
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 rounded-full object-cover shadow-sm"
+                      onError={() => setImgError(true)}
+                    />
+                  ) : regionCode && regionCode.length === 2 && regionCode.toUpperCase() !== 'GLOBAL' ? (
+                    // @ts-ignore
+                    <CircleFlag
+                      countryCode={regionCode.toLowerCase()}
+                      className="w-5 h-5 shadow-sm"
+                    />
+                  ) : (
+                    // Para regiones (europa, global, etc) o códigos largos
+                    <RegionIcon size={20} className="w-5 h-5 shadow-sm" />
+                  )}
+                  <span className="text-base text-[#141414] font-medium">
+                    {region}
+                  </span>
                 </div>
               </div>
             )}
@@ -564,103 +645,103 @@ const PurchaseHeader: React.FC<Props> = ({
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
               <div className="flex items-center bg-[#EBEBEB] rounded-md h-9 px-4 gap-2 select-none">
-              <button
-                onClick={dec}
-                className="text-base font-bold leading-none hover:opacity-70"
-                aria-label="Disminuir"
-                type="button"
-              >
-                –
-              </button>
-              <span className="min-w-[18px] text-center text-base">
-                {quantity}
-              </span>
-              <button
-                onClick={inc}
-                className="text-base font-bold leading-none hover:opacity-70"
-                aria-label="Aumentar"
-                type="button"
-              >
-                +
-              </button>
+                <button
+                  onClick={dec}
+                  className="text-base font-bold leading-none hover:opacity-70"
+                  aria-label="Disminuir"
+                  type="button"
+                >
+                  –
+                </button>
+                <span className="min-w-[18px] text-center text-base">
+                  {quantity}
+                </span>
+                <button
+                  onClick={inc}
+                  className="text-base font-bold leading-none hover:opacity-70"
+                  aria-label="Aumentar"
+                  type="button"
+                >
+                  +
+                </button>
               </div>
             </div>
 
-          {/* Fila: Licencia (ocultable) */}
-          {shouldShowLicense && (
-            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{t("license")}</span>
+            {/* Fila: Licencia (ocultable) */}
+            {shouldShowLicense && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                <span className="text-base text-[#3D3D3D]">{t("license")}</span>
 
-              {showSelect ? (
-                <div ref={licenseRef} className="relative z-[1000]">
-                  <button
-                    type="button"
-                    aria-haspopup="listbox"
-                    aria-expanded={openLicense}
-                    onClick={() => setOpenLicense((v) => !v)}
-                    className="relative w-32 h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
-                  >
-                    <span className="truncate">
-                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
-                    </span>
-                    <span className="ml-1 text-[#3D3D3D]">▾</span>
-                  </button>
-
-                  {openLicense && (
-                    <div
-                      role="listbox"
-                      tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 min-w-[120px] rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                {showSelect ? (
+                  <div ref={licenseRef} className="relative z-[1000]">
+                    <button
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded={openLicense}
+                      onClick={() => setOpenLicense((v) => !v)}
+                      className="relative w-32 h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
                     >
-                      {normVariants.map((v) => {
-                        const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
-                        return (
-                          <button
-                            key={v.id}
-                            role="option"
-                            aria-selected={isActive}
-                            onClick={() => {
-                              onChangeVariant?.(v.id);
-                              setOpenLicense(false);
-                            }}
-                            className={`w-full px-3 py-2 text-left text-sm whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                          >
-                            {v.months} Meses
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="w-36 h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none">
-                  {currentMonths} Meses
-                </div>
-              )}
-            </div>
-          )}
+                      <span className="truncate">
+                        {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
+                      </span>
+                      <span className="ml-1 text-[#3D3D3D]">▾</span>
+                    </button>
 
-          {/* Fila: Envío */}
-          {typeof shipping === "number" && (
-            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Envío</span>
-              <span className="text-base text-[#141414]">
-                {shipping} {currency}
-              </span>
-            </div>
-          )}
+                    {openLicense && (
+                      <div
+                        role="listbox"
+                        tabIndex={-1}
+                        className="absolute top-full right-0 mt-2 z-50 min-w-[120px] rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                      >
+                        {normVariants.map((v) => {
+                          const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
+                          return (
+                            <button
+                              key={v.id}
+                              role="option"
+                              aria-selected={isActive}
+                              onClick={() => {
+                                onChangeVariant?.(v.id);
+                                setOpenLicense(false);
+                              }}
+                              className={`w-full px-3 py-2 text-left text-sm whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                            >
+                              {v.months} Meses
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="w-36 h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none">
+                    {currentMonths} Meses
+                  </div>
+                )}
+              </div>
+            )}
 
-          {/* Fila: Descuento */}
-          {showCoupon && (
-            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Descuento</span>
-              <span className="text-base font-bold text-[#141414]">
-                {discountAmount.toFixed(2)} {currency}
-              </span>
-            </div>
-          )}
+            {/* Fila: Envío */}
+            {typeof shipping === "number" && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                <span className="text-base text-[#3D3D3D]">Envío</span>
+                <span className="text-base text-[#141414]">
+                  {shipping} {currency}
+                </span>
+              </div>
+            )}
 
-          {/* Fila: Total a pagar */}
+            {/* Fila: Descuento */}
+            {showCoupon && (
+              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                <span className="text-base text-[#3D3D3D]">Descuento</span>
+                <span className="text-base font-bold text-[#141414]">
+                  {discountAmount.toFixed(2)} {currency}
+                </span>
+              </div>
+            )}
+
+            {/* Fila: Total a pagar */}
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
               <span className="text-base font-bold text-[#141414]">
