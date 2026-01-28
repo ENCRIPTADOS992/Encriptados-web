@@ -812,7 +812,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       return {
         country: {
           label: "Global",
-          flagUrl: "/images/icons/global.svg",
         },
         tag,
       };

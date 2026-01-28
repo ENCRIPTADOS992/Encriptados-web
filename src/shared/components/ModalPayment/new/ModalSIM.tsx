@@ -582,7 +582,11 @@ export default function ModalSIM() {
         });
         return code;
       })()}
-      flagUrl={params.flagUrl}
+      flagUrl={
+        (params.flagUrl === "/images/icons/global.svg" || params.flagUrl === "/icons/alcance-global.svg")
+          ? undefined
+          : params.flagUrl
+      }
       shareProductId={productid}
     >
       <SimFormUnified
