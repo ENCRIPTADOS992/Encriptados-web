@@ -34,6 +34,7 @@ export type ConfigSim = {
 };
 
 export type ModalProduct = {
+  id?: number | string;
   variants?: Variant[];
   images?: { src: string }[];
   price?: number | string;
