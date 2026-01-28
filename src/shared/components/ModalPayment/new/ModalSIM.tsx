@@ -528,6 +528,18 @@ export default function ModalSIM() {
     };
   }, [product, effectiveProvider, effectiveTypeProduct, variants]);
 
+  // ...
+  if (showSuccess) {
+    return (
+      <PaymentSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        intent={successData?.intent ?? null}
+        orderId={successData?.orderId}
+      />
+    );
+  }
+
   return (
     <PurchaseScaffold
       mode="sim"
@@ -601,13 +613,6 @@ export default function ModalSIM() {
         selectedVariantId={selectedVariant?.id ?? null}
         sourceUrl={params.sourceUrl}
         onSuccess={handlePaymentSuccess}
-      />
-
-      <PaymentSuccessModal
-        open={showSuccess}
-        onClose={() => setShowSuccess(false)}
-        intent={successData?.intent ?? null}
-        orderId={successData?.orderId}
       />
     </PurchaseScaffold >
   );

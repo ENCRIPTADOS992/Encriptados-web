@@ -116,7 +116,7 @@ export default function SimFormUnified({
     .filter((x) => x.length > 0);
   const simOk = CFG.showSimNumber
     ? normalizedSimNumbers.length === (useMultiSimNumbers ? quantity : 1) &&
-      normalizedSimNumbers.every((n) => n.length >= 6)
+    normalizedSimNumbers.every((n) => n.length >= 6)
     : true;
   const postalOk = postalCode.trim().length > 0;
   const fullNameOk = fullName.trim() !== "";
@@ -129,17 +129,17 @@ export default function SimFormUnified({
     isPhysical
       ? fullNameOk && addressOk && countryOk && postalOk && phoneOk
       : formType === "encrypted_data"
-      ? !CFG.showSimNumber || simOk
-      : formType === "encrypted_minutes"
-      ? simOk
-      : true;
+        ? !CFG.showSimNumber || simOk
+        : formType === "encrypted_minutes"
+          ? simOk
+          : true;
 
   const methodSpecificOk =
     method === "crypto"
       ? true
       : stripeStatus === "ready" && cardName.trim().length > 1;
 
-  const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting;
+  const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting && !loading;
 
   React.useEffect(() => {
     if (!CFG.showSimNumber) return;
@@ -157,181 +157,147 @@ export default function SimFormUnified({
   const amountUsd = Math.max(baseAmount + shippingFee, 0);
 
   const buttonLabel = React.useMemo(() => {
-    if (isSubmitting) return "Procesando...";
-    if (method === "crypto") return "Pagar ahora";
-    if (phase === "form") return "Continuar";
-    return "Confirmar pago";
-  }, [method, phase, isSubmitting]);
+    if (isSubmitting || loading) return "Procesando...";
+    return "Pagar ahora";
+  }, [isSubmitting, loading]);
 
   // Paso 1: Crear orden y obtener client_secret (o redirigir a crypto)
-  const onSubmitForm = async (data: SimFormValues) => {
-    console.log("[SimFormUnified] submit 👉", { data, method, phase });
-    setFormData(data);
-    setStripeError(null);
-    setIsSubmitting(true);
+  // Handler unificado de pago directo
+  const handlePay = async () => {
+    await handleSubmit(async (data: SimFormValues) => {
+      console.log("[SimFormUnified] START PAY 👉", { data, method });
+      setFormData(data);
+      setStripeError(null);
+      setIsSubmitting(true);
 
-    try {
-      // Determinar producto para Tottoli
-      const productName = (() => {
-        switch (formType) {
-          case "encrypted_esim":
-          case "encrypted_esimData":
-          case "tim_esim":
-            return "esim";
-          case "encrypted_data":
-          case "tim_data":
-            return "data";
-          case "encrypted_minutes":
-          case "tim_minutes":
-            return "minutes";
-          default:
-            return "sim_physical";
-        }
-      })();
+      try {
+        // === 1. PREPARE TOTTOLI CHECKOUT PAYLOAD ===
+        const productName = (() => {
+          switch (formType) {
+            case "encrypted_esim":
+            case "encrypted_esimData":
+            case "tim_esim":
+              return "esim";
+            case "encrypted_data":
+            case "tim_data":
+              return "data";
+            case "encrypted_minutes":
+            case "tim_minutes":
+              return "minutes";
+            default:
+              return "sim_physical";
+          }
+        })();
 
-      const tottoliMethod = method === "card" ? "card" : "cryptomus";
+        const tottoliMethod = method === "card" ? "card" : "cryptomus";
 
-      const payload: any = {
-        email: data.email,
-        method: tottoliMethod,
-        amount: amountUsd,
-        currency: "USD",
-        product: productName,
-        meta: {
-          formType,
-          quantity,
-          unitPrice,
-          discount,
-          shippingFee,
-          selectedPlanId,
-          selectedVariantId,
-          sourceUrl,
-          simNumbers:
-            quantity > 1
-              ? (data.simNumbers ?? [])
+        const payload: any = {
+          email: data.email,
+          method: tottoliMethod,
+          amount: amountUsd,
+          currency: "USD",
+          product: productName,
+          meta: {
+            formType,
+            quantity,
+            unitPrice,
+            discount,
+            shippingFee,
+            selectedPlanId,
+            selectedVariantId,
+            sourceUrl,
+            simNumbers:
+              quantity > 1
+                ? (data.simNumbers ?? [])
                   .map((x) => String(x ?? "").trim())
                   .filter((x) => x.length > 0)
-              : [String(data.simNumber ?? "").trim()].filter((x) => x.length > 0),
-        },
-      };
-
-      // Agregar campos específicos según el tipo
-      if (productName === "esim") {
-        payload.qty = quantity;
-      } else if (productName === "data" || productName === "minutes") {
-        const nums = (quantity > 1 ? (data.simNumbers ?? []) : [data.simNumber])
-          .map((x) => String(x ?? "").trim())
-          .filter((x) => x.length > 0);
-        payload.sim_number = nums.join(",");
-      } else {
-        payload.shipping_payload = {
-          shipping_name: data.fullName,
-          country: data.country,
-          postal_code: data.postalCode,
-          phone: data.phone,
-          telegram_id: data.telegram,
-        };
-      }
-
-      console.log("[SimFormUnified] Tottoli checkout payload:", payload);
-      const res = await tottoliCheckout(payload);
-      console.log("[SimFormUnified] Tottoli response:", res);
-
-      if (tottoliMethod === "cryptomus") {
-        // Redirigir a página de pago crypto
-        if ((res as any).payment_url) {
-          window.location.href = (res as any).payment_url;
-        } else {
-          setStripeError("No se recibió URL de pago crypto.");
-        }
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Para tarjeta, guardar client_secret y pasar a fase de confirmación
-      const secret = (res as any).client_secret;
-      if (!secret) {
-        setStripeError("No se recibió client_secret para el pago.");
-        setIsSubmitting(false);
-        return;
-      }
-
-      setClientSecret(secret);
-      setPhase("card_confirm");
-      setIsSubmitting(false);
-    } catch (err: any) {
-      console.error("[SimFormUnified] Error en checkout:", err);
-      setStripeError(err?.message || "Error al procesar el pago.");
-      setIsSubmitting(false);
-    }
-  };
-
-  // Paso 2: Confirmar pago con tarjeta
-  const confirmPayment = async () => {
-    if (!clientSecret || !formData) return;
-    if (!stripeRef.current || !splitRef.current?.number) {
-      setStripeError("Stripe no está listo. Por favor, espera un momento.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    setStripeError(null);
-
-    try {
-      const billing = {
-        name: formData.cardName || formData.fullName || undefined,
-        email: formData.email,
-        postal_code: formData.cardPostal || formData.postalCode || undefined,
-      };
-
-      console.log("[SimFormUnified] Confirmando pago con Stripe:", {
-        clientSecret: clientSecret.slice(0, 20) + "...",
-        billing,
-      });
-
-      const res = await confirmCardPayment(
-        stripeRef.current,
-        clientSecret,
-        splitRef.current.number,
-        billing
-      );
-
-      console.log("[SimFormUnified] Resultado confirmación:", res);
-
-      if (res?.status === "succeeded") {
-        const intent = res.intent;
-        onSuccess?.({
-          intent: {
-            id: intent?.id || "unknown",
-            amount: amountUsd * 100,
-            currency: "usd",
-            created: Math.floor(Date.now() / 1000),
+                : [String(data.simNumber ?? "").trim()].filter((x) => x.length > 0),
           },
-          orderId: null,
-        });
-        return;
-      }
+        };
 
-      if (res?.error) {
-        setStripeError(res.error);
-      } else {
-        setStripeError("No se pudo completar el pago.");
-      }
-    } catch (err: any) {
-      console.error("[SimFormUnified] Error confirmando pago:", err);
-      setStripeError(err?.message || "Error confirmando el pago.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+        // Add type-specific fields
+        if (productName === "esim") {
+          payload.qty = quantity;
+        } else if (productName === "data" || productName === "minutes") {
+          const nums = (quantity > 1 ? (data.simNumbers ?? []) : [data.simNumber])
+            .map((x) => String(x ?? "").trim())
+            .filter((x) => x.length > 0);
+          payload.sim_number = nums.join(",");
+        } else {
+          payload.shipping_payload = {
+            shipping_name: data.fullName,
+            country: data.country,
+            postal_code: data.postalCode,
+            phone: data.phone,
+            telegram_id: data.telegram,
+          };
+        }
 
-  // Handler del botón principal
-  const handlePay = () => {
-    if (phase === "card_confirm") {
-      confirmPayment();
-    } else {
-      handleSubmit(onSubmitForm)();
-    }
+        console.log("[SimFormUnified] Payload:", payload);
+
+        // === 2. EXECUTE CHECKOUT (Create Order/Intent) ===
+        const res = await tottoliCheckout(payload);
+        console.log("[SimFormUnified] Response:", res);
+
+        // === 3. HANDLE CRYPTO ===
+        if (tottoliMethod === "cryptomus") {
+          if ((res as any).payment_url) {
+            window.location.href = (res as any).payment_url;
+          } else {
+            setStripeError("No se recibió URL de pago crypto.");
+          }
+          return; // Redirecting or error, stop here
+        }
+
+        // === 4. HANDLE CARD CONFIRMATION ===
+        const secret = (res as any).client_secret;
+        if (!secret) {
+          throw new Error("No se recibió client_secret para el pago.");
+        }
+        setClientSecret(secret); // Save state just in case, though we use `secret` var
+
+        if (!stripeRef.current || !splitRef.current?.number) {
+          throw new Error("Stripe no está listo.");
+        }
+
+        const billing = {
+          name: data.cardName || data.fullName || undefined,
+          email: data.email,
+          postal_code: data.cardPostal || data.postalCode || undefined,
+        };
+
+        console.log("[SimFormUnified] Confirming payment with Stripe...");
+        const confirmRes = await confirmCardPayment(
+          stripeRef.current,
+          secret,
+          splitRef.current.number,
+          billing
+        );
+
+        if (confirmRes?.status === "succeeded") {
+          const intent = confirmRes.intent;
+          onSuccess?.({
+            intent: {
+              id: intent?.id || "unknown",
+              amount: amountUsd * 100,
+              currency: "usd",
+              created: Math.floor(Date.now() / 1000),
+            },
+            orderId: null,
+          });
+        } else if (confirmRes?.error) {
+          setStripeError(confirmRes.error);
+        } else {
+          setStripeError("No se pudo completar el pago.");
+        }
+
+      } catch (err: any) {
+        console.error("[SimFormUnified] Error:", err);
+        setStripeError(err?.message || "Error al procesar el pago.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    })(); // Execute handleSubmit logic
   };
 
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
@@ -417,7 +383,7 @@ export default function SimFormUnified({
           {mountError && (
             <p className="text-red-600 text-sm">{mountError}</p>
           )}
-          
+
           {(stripeStatus === "idle" || stripeStatus === "loading") && !mountError && (
             <p className="text-[12px] text-gray-500">Inicializando formulario de pago...</p>
           )}
@@ -439,10 +405,9 @@ export default function SimFormUnified({
           rounded-lg px-4
           inline-flex items-center justify-center gap-2.5
           text-white text-sm font-semibold
-          ${
-            canPay && !loading
-              ? "bg-black hover:bg-black/90"
-              : "bg-black/40 cursor-not-allowed"
+          ${canPay && !loading
+            ? "bg-black hover:bg-black/90"
+            : "bg-black/40 cursor-not-allowed"
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >

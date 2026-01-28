@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
+import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import { useFormPolicy } from "./useFormPolicy";
@@ -33,6 +34,8 @@ export default function ModalNewUser() {
 
   // Estado para Silent Phone: modo de tabs
   const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
+  const [showSuccess, setShowSuccess] = React.useState(false);
+  const [successPI, setSuccessPI] = React.useState<any>(null);
 
   const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -117,6 +120,19 @@ export default function ModalNewUser() {
     isRoamingProduct || (isSilentPhone && silentPhoneMode === "roning_code")
       ? "roaming"
       : "userid";
+
+  if (showSuccess) {
+    return (
+      <PaymentSuccessModal
+        open={showSuccess}
+        onClose={() => {
+          setShowSuccess(false);
+          closeModal();
+        }}
+        intent={successPI}
+      />
+    );
+  }
 
   return (
     <PurchaseScaffold
@@ -208,6 +224,10 @@ export default function ModalNewUser() {
           closeModal();
         }}
         loading={loading}
+        onSuccess={(data) => {
+          setSuccessPI(data.intent);
+          setShowSuccess(true);
+        }}
       />
     </PurchaseScaffold>
   );

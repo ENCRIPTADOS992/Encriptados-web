@@ -43,7 +43,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId }: 
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center"
+      className="fixed inset-0 z-[99999] flex items-center justify-center"
       role="dialog"
       aria-modal="true"
       aria-labelledby="pay-success-title"
@@ -51,12 +51,12 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId }: 
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-black"
         aria-hidden="true"
       />
 
       {/* Modal card */}
-      <div 
+      <div
         className="relative z-10 w-[92vw] max-w-[520px] rounded-2xl bg-white shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
