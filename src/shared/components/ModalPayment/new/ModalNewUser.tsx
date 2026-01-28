@@ -32,7 +32,7 @@ export default function ModalNewUser() {
   const { formType, policy } = useFormPolicy();
 
   // Estado para Silent Phone: modo de tabs
-  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("new_user");
+  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
 
   const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
