@@ -44,7 +44,8 @@ export default function FooterEncrypted() {
     },
   ];
 
-  const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+  const TERMS_URL = "/pages/terminos-y-condiciones";
+
 
   const countries = [
     { name: "Colombia", flag: <ColombiaFooterFlag /> },
@@ -243,7 +244,7 @@ export default function FooterEncrypted() {
             <div className="w-full h-px bg-[#2C2C2C] scale-y-[0.5] origin-top"></div>
             <div className="py-8 flex flex-wrap items-center justify-center gap-4 text-[#787878] text-sm">
               <Link href={TERMS_URL} className="hover:text-white transition-colors">{t("termsAndConditions")}</Link>
-              <Link href="#" className="hover:text-white transition-colors">{t("dataProcesing")}</Link>
+              <Link href="/pages/politica-de-tratamiento-de-datos" className="hover:text-white transition-colors">{t("dataProcesing")}</Link>
             </div>
           </div>
 
