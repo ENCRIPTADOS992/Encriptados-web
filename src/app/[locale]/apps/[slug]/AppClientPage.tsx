@@ -19,6 +19,7 @@ import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById, getProductBySlug } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
+import { useProductDetail } from "@/features/products/queries/useProductDetail";
 
 // Configuración y utilidades locales
 import { getProductConfig } from "./productConfig";
@@ -55,12 +56,27 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const tSim = useTranslations("appsShared");
   const tOurProducts = useTranslations("OurProductsPage.simCards");
 
-  const [product, setProduct] = useState<ProductById | null>(initialProduct);
-  const [isLoading, setIsLoading] = useState(!initialProduct);
-  const [error, setError] = useState<string | null>(null);
+  // State for radio selection
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const config = useMemo(() => getProductConfig(slug), [slug]);
+
+  // Determine identifier and type for the hook
+  const identifier = config?.productId ? String(config.productId) : slug;
+  const identifierType = config?.productId ? "id" : "slug";
+
+  const {
+    data: productData,
+    isLoading: isQueryLoading,
+    error: queryError,
+  } = useProductDetail(identifier, identifierType, locale, {
+    initialData: initialProduct,
+    enabled: true,
+  });
+
+  const product = productData || null;
+  const isLoading = isQueryLoading && !product;
+  const error = queryError ? t("productLoadError") : (productData === null && !isQueryLoading ? t("productNotAvailable") : null);
 
   // Traducciones para licencias (memoizadas)
   const licenseTranslations: LicenseTranslations = useMemo(() => ({
@@ -77,50 +93,6 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     defaultSubtitle: "",
   }), [t]);
 
-  useEffect(() => {
-    async function loadProduct() {
-      // Si ya tenemos el producto (desde server) y coincide, no recargar
-      if (product) {
-        setIsLoading(false);
-        return;
-      }
-
-      // Si tenemos config estática, cargar por ID
-      if (config?.productId) {
-        try {
-          setIsLoading(true);
-          setError(null);
-          const productData = await getProductById(String(config.productId), locale);
-          setProduct(productData);
-        } catch (err) {
-          console.error("Error cargando producto por ID:", err);
-          setError(t("productLoadError"));
-        } finally {
-          setIsLoading(false);
-        }
-        return;
-      }
-
-      // Si no hay config estática, intentar cargar por Slug
-      try {
-        setIsLoading(true);
-        setError(null);
-        const productData = await getProductBySlug(slug, locale);
-        if (productData) {
-          setProduct(productData);
-        } else {
-          setError(t("productNotAvailable"));
-        }
-      } catch (err) {
-        console.error("Error cargando producto por Slug:", err);
-        setError(t("productLoadError"));
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    loadProduct();
-  }, [config, slug, locale, t]);
 
   const plans = useMemo(() => {
     if (!product) return [];
