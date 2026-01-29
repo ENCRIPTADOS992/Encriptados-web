@@ -39,8 +39,7 @@ export const useGetProducts = (
       return res;
     },
     enabled,
-    staleTime: 0, // Siempre refetch cuando cambian los filtros
-    refetchOnMount: true,
+    staleTime: 5 * 60 * 1000, // 5 minutes cache
     refetchOnWindowFocus: false,
   });
 };

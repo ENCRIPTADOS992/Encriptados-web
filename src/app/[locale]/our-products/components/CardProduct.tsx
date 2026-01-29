@@ -176,9 +176,9 @@ const CardProduct: React.FC<CardSimProps> = ({
   };
 
   return (
-    <div
-      onClick={handleCardClick}
-      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01]"
+    <Link
+      href={moreInfoUrl.startsWith("/") ? `/${locale}${moreInfoUrl}` : moreInfoUrl}
+      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01] block"
     >
       {/* Imagen de cabecera - imagen completa sin recorte */}
       <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-[#1a1a1a]">
@@ -304,23 +304,24 @@ const CardProduct: React.FC<CardSimProps> = ({
           <div className="text-[14px] sm:text-[16px] leading-[1.2] font-bold">{displayPrice}</div>
           <div className="flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-1.5 xl:gap-2">
             <button
-              onClick={handleBuy}
+              onClick={(e) => {
+                e.preventDefault();
+                handleBuy(e);
+              }}
               type="button"
               className="bg-black text-white text-[12px] xl:text-[14px] leading-[1.2] rounded-full px-3 xl:px-4 py-2 xl:py-2.5 flex items-center justify-center gap-1.5 xl:gap-2 hover:bg-gray-800 transition-colors z-10"
             >{t("buy")}
               <LocalMallSvgNew />
             </button>
-            <Link
-              href={moreInfoUrl.startsWith("/") ? `/${locale}${moreInfoUrl}` : moreInfoUrl}
-              onClick={(e) => e.stopPropagation()}
+            <span
               className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center z-10"
             >
               {t("moreInfo")}
-            </Link>
+            </span>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
