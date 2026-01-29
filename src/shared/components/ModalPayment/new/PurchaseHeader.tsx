@@ -446,7 +446,7 @@ const PurchaseHeader: React.FC<Props> = ({
                         aria-haspopup="listbox"
                         aria-expanded={openRecharge}
                         onClick={() => setOpenRecharge((v) => !v)}
-                        className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                        className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                       >
                         <span className="truncate">{label}</span>
                         <span className="ml-1 text-[#3D3D3D]">▾</span>
@@ -458,7 +458,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     <div
                       role="listbox"
                       tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                       onMouseDown={(e) => e.stopPropagation()}
                     >
                       {RECHARGE_AMOUNTS.filter(
@@ -476,7 +476,7 @@ const PurchaseHeader: React.FC<Props> = ({
                               setOpenRecharge(false);
                             }}
                             onMouseDown={(e) => e.stopPropagation()}
-                            className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                            className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                           >
                             {label}
                           </button>
@@ -504,7 +504,7 @@ const PurchaseHeader: React.FC<Props> = ({
                         aria-expanded={openDataPlan}
                         onClick={() => setOpenDataPlan((v) => !v)}
                         onMouseDown={(e) => e.stopPropagation()}
-                        className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                        className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                       >
                         <span className="truncate">{label}</span>
                         <span className="ml-1 text-[#3D3D3D]">▾</span>
@@ -516,7 +516,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     <div
                       role="listbox"
                       tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                       onMouseDown={(e) => e.stopPropagation()}
                     >
                       {dataPlans.map((p) => {
@@ -531,7 +531,7 @@ const PurchaseHeader: React.FC<Props> = ({
                               setOpenDataPlan(false);
                             }}
                             onMouseDown={(e) => e.stopPropagation()}
-                            className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                            className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                           >
                             {p.label}
                           </button>
@@ -562,7 +562,7 @@ const PurchaseHeader: React.FC<Props> = ({
                         aria-haspopup="listbox"
                         aria-expanded={openPlan}
                         onClick={() => setOpenPlan((v) => !v)}
-                        className="relative w-20 h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                        className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                       >
                         <span className="truncate">
                           {label}
@@ -576,7 +576,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     <div
                       role="listbox"
                       tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 w-40 rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                     >
                       {minutesPlans.map((p) => {
                         const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
@@ -593,7 +593,7 @@ const PurchaseHeader: React.FC<Props> = ({
                               onChangePlan?.(p.id);
                               setOpenPlan(false);
                             }}
-                            className={`w-full px-3 py-2 text-left text-xs ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                            className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                           >
                             {label}
                           </button>
@@ -679,7 +679,7 @@ const PurchaseHeader: React.FC<Props> = ({
                       aria-haspopup="listbox"
                       aria-expanded={openLicense}
                       onClick={() => setOpenLicense((v) => !v)}
-                      className="relative w-32 h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between"
+                      className="relative min-w-[8rem] w-auto h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                     >
                       <span className="truncate">
                         {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
@@ -691,7 +691,7 @@ const PurchaseHeader: React.FC<Props> = ({
                       <div
                         role="listbox"
                         tabIndex={-1}
-                        className="absolute top-full right-0 mt-2 z-50 min-w-[120px] rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                        className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                       >
                         {normVariants.map((v) => {
                           const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
@@ -714,7 +714,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     )}
                   </div>
                 ) : (
-                  <div className="w-36 h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none">
+                  <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
                     {currentMonths} Meses
                   </div>
                 )}
