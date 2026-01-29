@@ -351,6 +351,11 @@ export default function UnifiedPurchaseForm({
 
         let orderResult: { order_id: number; client_secret: string };
 
+        const isThreema = /threema/i.test(productName || "") || productId === 136;
+        console.log("🐛 [UnifiedPurchaseForm] Threema Debug:", { productName, isThreema, originalLicenseTime: purchaseMeta?.licensetime });
+        const resolvedLicenseTime = isThreema ? null : purchaseMeta?.licensetime;
+        console.log("🐛 [UnifiedPurchaseForm] resolvedLicenseTime:", resolvedLicenseTime);
+
         if (orderType === "roaming") {
           orderResult = await createOrderAndIntent({
             orderType: "roaming",
@@ -361,7 +366,7 @@ export default function UnifiedPurchaseForm({
             currency: "USD",
             variantId: purchaseMeta?.variantId,
             sku: purchaseMeta?.sku,
-            licensetime: purchaseMeta?.licensetime,
+            licensetime: resolvedLicenseTime,
             couponCode: purchaseMeta?.couponCode,
             discount: purchaseMeta?.discount,
             sourceUrl: purchaseMeta?.sourceUrl,
@@ -380,7 +385,7 @@ export default function UnifiedPurchaseForm({
             qty: quantity,
             variantId: purchaseMeta?.variantId,
             sku: purchaseMeta?.sku,
-            licensetime: purchaseMeta?.licensetime,
+            licensetime: resolvedLicenseTime,
             licenseType: form.licenseType,
             renewId: form.renewId,
             osType: form.osType,

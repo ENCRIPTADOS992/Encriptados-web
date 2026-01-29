@@ -65,7 +65,7 @@ export async function createOrderAndIntent({
   currency?: "USD";
   variantId?: number;
   sku?: string;
-  licensetime?: number | string;
+  licensetime?: number | string | null;
   couponCode?: string;
   discount?: number;
   sourceUrl?: string;
@@ -96,7 +96,7 @@ export async function createOrderAndIntent({
     ...minimal,
     variant_id: variantId,
     sku,
-    months: typeof licensetime === 'string' ? parseInt(licensetime) || 12 : licensetime || 12,
+    months: licensetime === null ? undefined : (typeof licensetime === 'string' ? parseInt(licensetime) || 12 : licensetime || 12),
     product_id: productId,
     coupon_code: couponCode,
     discount,
@@ -144,7 +144,7 @@ export async function createUserIdOrderAndIntent({
   qty?: number;
   variantId?: number;
   sku?: string;
-  licensetime?: number | string;
+  licensetime?: number | string | null;
   licenseType?: "new" | "renew";
   renewId?: string;
   osType?: "android" | "ios";
