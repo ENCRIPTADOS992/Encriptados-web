@@ -116,15 +116,13 @@ const CardProduct: React.FC<CardSimProps> = ({
     }
   }, [badges, id]);
 
+  const normalizedProvider = provider?.toLowerCase().trim() ?? "";
+  const isSimTim =
+    normalizedProvider === "tim" ||
+    normalizedProvider.includes("sim tim") ||
+    normalizedProvider.includes("tim");
+
   const displayPrice = (() => {
-    const normalizedProvider = provider?.toLowerCase().trim() ?? "";
-
-    // Soportar tanto "Sim TIM" como "tim" del backend
-    const isSimTim =
-      normalizedProvider === "tim" ||
-      normalizedProvider.includes("sim tim") ||
-      normalizedProvider.includes("tim");
-
     if (isSimTim && planDataAmount != null) {
       return `$ ${planDataAmount} USD`;
     }
@@ -144,14 +142,28 @@ const CardProduct: React.FC<CardSimProps> = ({
     );
     if (!url) return "#";
 
-    // Build query string with all relevant params
+    // Build query string with all relevant params - SECURE LOGIC
     const params = new URLSearchParams();
     params.set("productId", String(id));
-    if (numericPrice != null) params.set("price", String(numericPrice));
+    params.set("categoryId", "40"); // Categoría fija para SIMs
+
+    // Usar variantId si está disponible (prioridad para seguridad)
+    if (variantId) params.set("variantId", String(variantId));
+
+    // Contexto adicional (para selección visual, no para precios)
     if (badges?.tag) params.set("gb", badges.tag);
+
+    // Mapear badges de país a sim_region o regionCode
     if (badges?.country?.label) params.set("region", badges.country.label);
-    if (badges?.country?.code) params.set("regionCode", badges.country.code);
+    if (badges?.country?.code) {
+      params.set("regionCode", badges.country.code);
+      // Para compatibilidad con lógica de SimTimBanner
+      if (isSimTim) params.set("sim_region", badges.country.code);
+    }
     if (badges?.country?.flagUrl) params.set("flagUrl", badges.country.flagUrl);
+
+    // NOTA: Se ha eliminado explícitamente el parámetro 'price' por seguridad.
+    // El precio debe resolverse en destino usando productId + variantId.
 
     return `${url}?${params.toString()}`;
   })();
@@ -178,7 +190,8 @@ const CardProduct: React.FC<CardSimProps> = ({
           className="object-cover rounded-t-xl sm:rounded-t-2xl"
         />
 
-        {badges?.country?.label ? (
+        {/* Logic: Hide region badge ONLY if product is 'Sim Física' */}
+        {badges?.country?.label && !(headerTitle || "").toLowerCase().includes("sim física") && !(headerTitle || "").toLowerCase().includes("sim fisica") ? (
           <div className="absolute left-2 sm:left-3 bottom-2 sm:bottom-3 flex items-center bg-white/90 rounded-full px-1.5 sm:px-2.5 py-1 sm:py-1.5 shadow-md z-10">
             <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full overflow-hidden flex items-center justify-center">
               {filters.regionOrCountryType === "country" ? (

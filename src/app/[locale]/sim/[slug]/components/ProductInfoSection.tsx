@@ -140,7 +140,8 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               />
-              {regionBadge && (
+              {/* Logic: Hide region badge ONLY if product is 'Sim Física' */}
+              {regionBadge && !(productName || "").toLowerCase().includes("sim física") && !(productName || "").toLowerCase().includes("sim fisica") && (
                 <div className="absolute left-3 bottom-3 inline-flex items-center justify-center rounded-full bg-white text-[#010101] text-sm font-semibold px-2 py-1 shadow-md border border-gray-100 gap-1.5">
                   <div className="w-5 h-5 rounded-full overflow-hidden flex items-center justify-center relative">
                     {flagUrl ? (
