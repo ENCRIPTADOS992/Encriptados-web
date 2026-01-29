@@ -312,6 +312,10 @@ export default function ModalSIM() {
   React.useEffect(() => {
     if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
     if (selectedPlanId != null) return;
+
+    // Priority: If paramVariantId is present, let the other useEffect handle it
+    if (paramVariantId != null) return;
+
     if (!dataAmounts.length) return;
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const isEsimPlusDatos =
@@ -319,18 +323,49 @@ export default function ModalSIM() {
     const base = 12;
 
     if (formType === "encrypted_esimData" && isEsimPlusDatos && initialPrice != null && initialPrice > 0) {
-      const totals = dataAmounts;
-      const rechargeCandidates = totals.map((t) => Math.max(t - base, 0));
-      if (totals.includes(initialPrice)) {
-        setSelectedPlanId(Math.max(initialPrice - base, 0));
+      const possibleBases = [12, 7.5];
+
+      // 1. Direct Match
+      const matchingVariant = variants.find(v => {
+        const anyV = v as any;
+        const p = Number(anyV.price ?? anyV.cost ?? anyV.regular_price ?? anyV.sale_price ?? 0);
+        return Math.abs(p - initialPrice) < 0.1;
+      });
+
+      if (matchingVariant) {
+        console.log("[ModalSIM] Matched variant by initialPrice (Direct):", matchingVariant);
+        setSelectedPlanId(matchingVariant.id);
         return;
       }
-      if (rechargeCandidates.includes(initialPrice)) {
-        setSelectedPlanId(initialPrice);
-        return;
+
+      // 2. Loop through bases
+      for (const currentBase of possibleBases) {
+        // Fallback 1: Variant - Base == initialPrice
+        const matchByRecharge = variants.find(v => {
+          const anyV = v as any;
+          const p = Number(anyV.price ?? anyV.cost ?? anyV.regular_price ?? anyV.sale_price ?? 0);
+          const r = Math.max(p - currentBase, 0);
+          return Math.abs(r - initialPrice) < 0.1;
+        });
+        if (matchByRecharge) {
+          console.log(`[ModalSIM] Matched variant by recharge (Variant - ${currentBase}):`, matchByRecharge);
+          setSelectedPlanId(matchByRecharge.id);
+          return;
+        }
+
+        // Fallback 2: Variant + Base == initialPrice
+        const matchByTotal = variants.find(v => {
+          const anyV = v as any;
+          const p = Number(anyV.price ?? anyV.cost ?? anyV.regular_price ?? anyV.sale_price ?? 0);
+          const total = p + currentBase;
+          return Math.abs(total - initialPrice) < 0.1;
+        });
+        if (matchByTotal) {
+          console.log(`[ModalSIM] Matched variant by total (Variant + ${currentBase}):`, matchByTotal);
+          setSelectedPlanId(matchByTotal.id);
+          return;
+        }
       }
-      setSelectedPlanId(Math.max(initialPrice - base, 0));
-      return;
     }
 
     if (formType === "encrypted_esimData" && isEsimPlusDatos) {
@@ -391,8 +426,24 @@ export default function ModalSIM() {
 
     // Priority 3: Match by price
     if (initPlanId == null && initialPrice != null && initialPrice > 0) {
-      const matching = dataPlans.find((p) => Number(p.value) === Number(initialPrice));
-      if (matching) initPlanId = matching.id;
+      // Robust matching including bases
+      const bases = [0, 12, 7.5];
+      for (const base of bases) {
+        // Direct or Base adjusted match
+        const matching = dataPlans.find((p) => {
+          const val = Number(p.value);
+          // Check Exact, Val+Base, Val-Base
+          return Math.abs(val - initialPrice) < 0.1 ||
+            Math.abs((val + base) - initialPrice) < 0.1 ||
+            Math.abs((val - base) - initialPrice) < 0.1;
+        });
+
+        if (matching) {
+          console.log("[ModalSIM] Priority 3 matched by price:", { initialPrice, base, plan: matching });
+          initPlanId = matching.id;
+          break;
+        }
+      }
     }
 
     // If found a match, set it. Only if we don't have one or if we want to force initial from URL on simplified logic

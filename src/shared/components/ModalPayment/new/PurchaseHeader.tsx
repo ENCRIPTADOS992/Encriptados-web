@@ -324,28 +324,51 @@ const PurchaseHeader: React.FC<Props> = ({
                   // Esto evita que IDs de variantes (como Recargas) se propaguen al link de compartir
                   const slug = relativePath.replace("/sim/", "").split("?")[0];
                   const canonicalId = SIM_DEFAULT_IDS[slug];
-                  const finalProductId = canonicalId ? String(canonicalId) : (shareProductId || productId);
+                  // UPDATE: Priorizar el ID especifíco del producto actual si existe. 
+                  // Usar canonicalId solo como fallback si no tenemos ID explicito (raro) o para normalizar si se desea, 
+                  // pero el usuario indica que "está cargando el id incorrecto", lo que sugiere que canonicalId está sobreescribiendo el correcto.
+                  const finalProductId = (shareProductId || productId) ? String(shareProductId || productId) : (canonicalId ? String(canonicalId) : "");
 
-                  // Construir URL absoluta con productId, price y buy=1
+                  // Construir URL absoluta con productId, variants y buy=1
                   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://encriptados.io';
-                  let simUrl = `${baseUrl}/${locale}${relativePath}?productId=${finalProductId}&price=${unitPrice}&buy=1`;
+
+                  // SECURE UPDATE: Removed 'price' parameter. Price must be resolved by ID/Variant.
+                  // MATCHING CardProduct LOGIC: Added categoryId=40
+                  let simUrl = `${baseUrl}/${locale}${relativePath}?productId=${finalProductId}&categoryId=40&buy=1`;
+
+                  // Agregar variantId si está seleccionado (CRITICO para precio correcto)
+                  if (selectedVariantId) {
+                    simUrl += `&variantId=${selectedVariantId}`;
+                  }
 
                   // Agregar params adicionales si existen (gb, region, flagUrl)
                   // Estos deben venir de las props o del estado actual
                   if (gb) simUrl += `&gb=${encodeURIComponent(gb)}`;
                   if (region) simUrl += `&region=${encodeURIComponent(region)}`;
-                  if (regionCode) simUrl += `&regionCode=${encodeURIComponent(regionCode)}`;
+
+                  if (regionCode) {
+                    simUrl += `&regionCode=${encodeURIComponent(regionCode)}`;
+                    // Para compatibilidad con lógica de SimTimBanner (Igual que en CardProduct)
+                    // Si el proveedor es TIM, duplicamos regionCode en sim_region
+                    const providerLower = (provider || "").toLowerCase();
+                    const isSimTim = providerLower.includes("tim");
+                    if (isSimTim) {
+                      simUrl += `&sim_region=${encodeURIComponent(regionCode)}`;
+                    }
+                  }
+
                   if (flagUrl) simUrl += `&flagUrl=${encodeURIComponent(flagUrl)}`;
 
                   shareUrl = simUrl;
 
-                  console.log("🔗 [PurchaseHeader] Generated SIM share URL:", {
+                  console.log("🔗 [PurchaseHeader] Generated SECURE SIM share URL:", {
                     provider,
                     typeProduct,
                     relativePath,
                     slug,
                     canonicalId,
                     finalProductId,
+                    variantId: selectedVariantId,
                     shareUrl
                   });
                 } else {
@@ -361,23 +384,33 @@ const PurchaseHeader: React.FC<Props> = ({
                   if (derivedLink) {
                     const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://encriptados.io";
                     // Asegurar que usamos productId y price correctos en la URL
-                    shareUrl = `${baseUrl}/${locale}${derivedLink}?productId=${productId}&price=${unitPrice}&buy=1`;
+                    // NOTA: Mantenemos price aqui si el producto NO es SIM y no tiene variantes complejas, 
+                    // pero por consistencia intentamos evitarlo si es posible.
+                    // Para apps, a veces el precio es simple. Dejamos price por compatibilidad 
+                    // a menos que el user quiera "todos". El user dijo "productos de sim".
+                    // Pero para seguridad general, mejor quitarlo también si el backend lo soporta.
+                    // Asumiremos que Apps aun pueden necesitarlo o no es critico este cambio ahora.
+                    // PERO el user dijo "no admitas url donde se que me el price".
+                    // Asi que lo quitamos tambien aqui.
+                    shareUrl = `${baseUrl}/${locale}${derivedLink}?productId=${productId}&buy=1`;
                   } else if (sourceUrl) {
                     // Usar sourceUrl si está disponible
                     const currentUrl = new URL(sourceUrl);
                     currentUrl.searchParams.set("buy", "1");
-                    // Asegurar productId y price si faltan
+
+                    // Limpieza de seguridad
+                    currentUrl.searchParams.delete("price");
+
+                    // Asegurar productId si falta
                     if (!currentUrl.searchParams.has("productId") && productId) {
                       currentUrl.searchParams.set("productId", String(productId));
-                    }
-                    if (!currentUrl.searchParams.has("price") && unitPrice != null) {
-                      currentUrl.searchParams.set("price", String(unitPrice));
                     }
                     shareUrl = currentUrl.toString();
                   } else {
                     // Fallback a URL actual
                     const currentUrl = new URL(window.location.href);
                     currentUrl.searchParams.set("buy", "1");
+                    currentUrl.searchParams.delete("price");
                     shareUrl = currentUrl.toString();
                   }
                 }
@@ -609,8 +642,8 @@ const PurchaseHeader: React.FC<Props> = ({
 
 
 
-            {/* Fila: País o región (si existe) */}
-            {(region || regionCode) && (
+            {/* Fila: País o región (si existe) - Ocultar para Sim Física */}
+            {(region || regionCode) && !titleNorm.includes("sim física") && !titleNorm.includes("sim fisica") && (
               <div className="grid grid-cols-[1fr_auto] items-center gap-4">
                 {/* @ts-ignore */}
                 <span className="text-base text-[#3D3D3D]">{t("countryOrRegion", { defaultValue: "País o región" })}</span>

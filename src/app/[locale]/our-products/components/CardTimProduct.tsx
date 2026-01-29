@@ -168,8 +168,8 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
                     />
                 </div>
 
-                {/* Badge País (Bottom Left) */}
-                {badges?.country?.label && (
+                {/* Badge País (Bottom Left) - Ocultar en Sim Física */}
+                {badges?.country?.label && !(headerTitle || "").toLowerCase().includes("sim física") && !(headerTitle || "").toLowerCase().includes("sim fisica") && (
                     <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full pl-1 pr-3 py-1">
                         <div className="w-5 h-5 rounded-full overflow-hidden relative border border-white/20">
                             {filters.regionOrCountryType === "country" && badges?.country?.flagUrl ? (

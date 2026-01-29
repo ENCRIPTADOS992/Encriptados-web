@@ -67,13 +67,24 @@ export const getAllProducts = async (
 
 export const getProductById = async (
   productId: string,
-  lang: string = "es"
+  lang: string = "es",
+  options?: {
+    simRegion?: string | null;
+    simCountry?: string | null;
+    provider?: string | null;
+  }
 ): Promise<ProductById> => {
   try {
+    const params: Record<string, string | number> = { lang };
+
+    if (options?.simRegion) params.sim_region = options.simRegion;
+    if (options?.simCountry) params.sim_country = options.simCountry;
+    if (options?.provider) params.provider = options.provider;
+
     const response = await api.get<ProductById>(
       `/encriptados/v1/products/${encodeURIComponent(productId)}`,
       {
-      params: { lang },
+        params,
       }
     );
     return response.data;

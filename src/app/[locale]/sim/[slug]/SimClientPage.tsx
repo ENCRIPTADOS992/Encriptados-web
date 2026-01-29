@@ -108,7 +108,13 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       }
 
       // Si ya tenemos el producto cargado (desde el server) y coincide con el ID que necesitamos, no recargar
-      if (product && String(product.id) === String(productIdToLoad)) {
+      // EXCEPTO si es TIM y necesitamos variantes que podrían no estar cargadas si falta la región
+      // Por seguridad, si hay región en la URL, forzamos la recarga para asegurar variantes correctas
+      const regionParam = regionFromUrl || regionCodeFromUrl || searchParams.get("sim_region");
+
+      // Optimizacion: Si ya tenemos variantes y coinciden, podriamos evitar recarga, 
+      // pero dado el problema reportado, mejor asegurar.
+      if (product && String(product.id) === String(productIdToLoad) && !regionParam) {
         setIsLoading(false);
         return;
       }
@@ -116,7 +122,11 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       try {
         setIsLoading(true);
         setError(null);
-        const productData = await getProductById(productIdToLoad, locale);
+
+        // Pasar sim_region si existe para cargar variantes (CRITICO para TIM)
+        const productData = await getProductById(productIdToLoad, locale, {
+          simRegion: regionParam
+        });
         setProduct(productData);
       } catch (err) {
         console.error("Error cargando producto SIM:", err);
@@ -127,7 +137,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     }
 
     loadProduct();
-  }, [productIdFromUrl, staticConfig, locale]);
+  }, [productIdFromUrl, staticConfig, locale, regionFromUrl, regionCodeFromUrl, searchParams]);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // VALIDACIÓN: El backend es la fuente de verdad
@@ -148,6 +158,19 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         derivedFamily: deriveProductFamily(product.provider),
         derivedFormat: deriveProductFormat(product.type_product)
       });
+      // Allow redirection logic to proceed if needed (existing logic)
+    }
+
+    // STRICT SECURITY VALIDATION: Reject/Clean 'price' parameter
+    // User Requirement: "no admitas url donde se que me el price"
+    const currentPriceParam = searchParams.get("price");
+    if (currentPriceParam) {
+      console.warn("[SIM Page] Saneamiento de seguridad: Eliminando parámetro 'price' de la URL.");
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete("price");
+      const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+      router.replace(newUrl);
+      return;
     }
 
     setValidationChecked(true);
@@ -245,16 +268,71 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   };
 
   // Precio efectivo: priorizar precio de URL, luego precio del producto
-  const effectivePrice = useMemo(() => {
-    if (priceFromUrl) {
-      const urlPrice = parseFloat(priceFromUrl);
-      if (!isNaN(urlPrice)) return urlPrice;
+  // Precio efectivo: Calcular basado en produto y región (IGNORAR precio de URL por seguridad)
+  // 2. Obtener variantId de la URL (instrucción del usuario para manejo seguro)
+  const variantIdFromUrl = searchParams.get("variantId");
+
+  // Resolver la variante seleccionada basada en URL (Variant ID o Región)
+  const selectedVariant = useMemo(() => {
+    if (!product?.variants || product.variants.length === 0) return null;
+
+    // A. Prioridad 1: Variant ID
+    if (variantIdFromUrl) {
+      return product.variants.find((v: any) => String(v.id) === String(variantIdFromUrl)) || null;
     }
+
+    // B. Prioridad 2: Región
+    const targetRegion = (regionFromUrl || regionCodeFromUrl || "").toUpperCase();
+    if (targetRegion && targetRegion !== "GLOBAL" && targetRegion !== "ALL") {
+      return product.variants.find((v: any) => v.scope?.code?.toUpperCase() === targetRegion) || null;
+    }
+
+    // C. Prioridad 3: Global
+    if (targetRegion === "GLOBAL" || targetRegion === "WW") {
+      return product.variants.find((v: any) =>
+        v.scope?.code?.toUpperCase() === "GLOBAL" ||
+        v.scope?.code?.toUpperCase() === "WW" ||
+        v.scope?.type === "global"
+      ) || null;
+    }
+
+    // D. Prioridad 4: GB (Fallback simple)
+    if (gbFromUrl) {
+      return product.variants.find((v: any) => (v.gb || "").toUpperCase() === gbFromUrl) || null;
+    }
+
+    return null;
+  }, [product, variantIdFromUrl, regionFromUrl, regionCodeFromUrl, gbFromUrl]);
+
+  // Precio efectivo: Calcular basado en variante seleccionada o producto base
+  const effectivePrice = useMemo(() => {
+    if (selectedVariant) {
+      // Soportar tanto 'price' (Encrypted) como 'cost' (TIM)
+      const v = selectedVariant as any;
+      const vPrice = v.price ?? v.cost;
+      if (vPrice !== undefined && vPrice !== null) {
+        return Number(vPrice);
+      }
+    }
+
+    // Fallback al precio base del producto
     const productPrice = typeof product?.price === "string"
       ? parseFloat(product.price)
       : product?.price;
+
     return productPrice ?? 0;
-  }, [priceFromUrl, product?.price]);
+  }, [selectedVariant, product]);
+
+  // Imagen del producto: Puede variar según la variante seleccionada
+  const productImage = useMemo(() => {
+    if (selectedVariant && (selectedVariant as any).image) {
+      return (selectedVariant as any).image;
+    }
+    if (product?.images && product.images.length > 0) {
+      return product.images[0].src;
+    }
+    return config?.productImage || "/images/encrypted-sim/Encrypted_sim_card.webp";
+  }, [product, config, selectedVariant]);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // AUTO-POPUP: Detectar parámetro buy=1 y abrir modal automáticamente
@@ -269,15 +347,11 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // We keep this comment for documentation but remove the logic.
 
 
-  // Obtener imagen del producto de la API
-  const productImage = useMemo(() => {
-    if (product?.images && product.images.length > 0) {
-      return product.images[0].src;
-    }
-    return config?.productImage || "/images/encrypted-sim/Encrypted_sim_card.webp";
-  }, [product, config]);
+
 
   const handleBuy = (productId?: string, priceOverride?: number) => {
+    const variantId = selectedVariant ? (selectedVariant as any).id : undefined;
+
     openModal({
       productid: productId || String(product?.id || config?.productId),
       languageCode: locale,
@@ -287,6 +361,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       initialRegion: regionFromUrl || undefined,
       initialRegionCode: regionCodeFromUrl || undefined,
       flagUrl: flagUrlFromUrl || undefined,
+      variantId: variantId ? Number(variantId) : undefined, // Parametro nuevo (requerirá soporte en useModalPayment)
     });
   };
 
