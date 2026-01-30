@@ -242,7 +242,7 @@ const CardProduct: React.FC<CardSimProps> = ({
           <h2
             className="
               text-[13px] sm:text-[18px] leading-[1.2] sm:leading-[1.3] tracking-[0.01em] font-bold
-              line-clamp-2
+              line-clamp-2 min-h-[32px] sm:min-h-[47px]
             "
           >
             {headerTitle}
