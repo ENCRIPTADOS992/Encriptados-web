@@ -57,19 +57,10 @@ const BneSimPage = ({ locale }: BneSimPageProps) => {
         >
           <WhereUseSimSection locale={locale} />
         </BasicFormProvider>
-        <div className="py-12 md:py-16 lg:py-20 px-4 md:px-6">
+        <div className="w-full">
           <OurSim />
         </div>
-        <div
-          className="
-            bg-gradient-to-r
-            from-[#009DFF]
-            via-[#009DFF]
-            to-[#7ECDFD]
-            py-16 md:py-20 lg:py-24
-            px-4
-          "
-        >
+        <div className="w-full">
           <PromoBanner />
         </div>
         <div className="relative py-16 md:py-20 lg:py-24 z-10">
