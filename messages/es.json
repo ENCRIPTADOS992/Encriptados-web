@@ -960,11 +960,12 @@
       "titleEncrypted": "Encriptadas",
       "description": "Compra tus ESIMS, Apps y Sistemas encriptados con descuento"
     },
-    "exclusiveOffersTitle": "Ofertas Exclusivas",
+    "exclusiveOffersTitle": "Ofertas exclusivas",
+    "noOffers": "No hay ofertas disponibles por el momento",
     "menu": {
       "sims": "SIMS",
       "apps": "Aplicaciones",
-      "system": "Software"
+      "system": "Sistemas"
     },
     "discoverSimTitle": "Descubre las SIM cards de Encriptados.io",
     "discoverSimDescription": "Diseñadas para proteger tu privacidad en cada llamada. Sin necesidad de registro, nuestras SIMs garantizan una comunicación segura y anónima, ideal para quienes valoran la discreción y la seguridad",

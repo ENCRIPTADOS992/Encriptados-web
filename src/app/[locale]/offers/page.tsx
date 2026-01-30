@@ -11,8 +11,32 @@ const OffersPage = () => {
       <GlobalFloatingMenu />
       <BasicFormProvider defaultValue={{ currentoffer: "sims" }}>
         <OffersBanner />
-        <div className="w-full bg-black flex justify-center items-center py-12 md:py-16 lg:py-20 px-4">
-          <div>
+        <div className="w-full bg-black relative overflow-hidden py-12 md:py-16 lg:py-20 px-4">
+          <div
+            className="absolute pointer-events-none z-0 w-[450px] h-[450px] lg:h-[550px]"
+            style={{
+              left: "12%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "#01FFC2",
+              opacity: 0.5,
+              filter: "blur(140px)",
+              borderRadius: "50%",
+            }}
+          />
+          <div
+            className="absolute pointer-events-none z-0 w-[450px] h-[450px] lg:h-[550px]"
+            style={{
+              left: "88%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "#10B4E7",
+              opacity: 0.6,
+              filter: "blur(140px)",
+              borderRadius: "50%",
+            }}
+          />
+          <div className="relative z-10">
             <ListOfOffers />
           </div>
         </div>
