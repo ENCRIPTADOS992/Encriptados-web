@@ -29,7 +29,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
 
   const renderTitle = () => {
     if (!title) return null;
-    
+
     if (!highlightWord) {
       return <span>{title}</span>;
     }
@@ -53,7 +53,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
         className="bg-[#F9F9F9] rounded-xl px-6 py-5 flex flex-col"
       >
         <button
-          className="w-full flex justify-between items-center text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg p-2"
+          className="w-full flex justify-between items-center text-left focus:outline-none rounded-lg p-2"
           onClick={() => setOpenIndex(isOpen ? null : idx)}
           aria-expanded={isOpen}
           aria-controls={`faq-answer-${idx}`}
@@ -69,9 +69,8 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
               viewBox="0 0 18 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className={`transition-transform duration-200 ${
-                isOpen ? "rotate-180" : ""
-              }`}
+              className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+                }`}
               style={{ minWidth: 18, minHeight: 12 }}
             >
               <path
@@ -126,7 +125,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                 py-3 md:py-4
                 transition
                 hover:shadow-md
-                focus:outline-none focus:ring-2 focus:ring-[#19BBFF] focus:ring-offset-2
+                focus:outline-none
               "
             >
               <div className="flex items-center justify-between gap-4">
@@ -164,7 +163,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                   py-3 md:py-4
                   transition
                   hover:shadow-md
-                  focus:outline-none focus:ring-2 focus:ring-[#19BBFF] focus:ring-offset-2
+                  focus:outline-none
                 "
               >
                 <div className="flex items-center justify-between gap-4">

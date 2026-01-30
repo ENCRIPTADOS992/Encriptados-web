@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClientProviders } from "@/shared/components/Providers";
 
@@ -13,10 +14,16 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
         <ClientProviders>
           {children}
         </ClientProviders>
