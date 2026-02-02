@@ -153,6 +153,7 @@ export default function UnifiedPurchaseForm({
 
   // Loading state for direct payment
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [showErrors, setShowErrors] = React.useState(false);
 
   // Ajustar usernames cuando cambia la cantidad
   React.useEffect(() => {
@@ -299,7 +300,10 @@ export default function UnifiedPurchaseForm({
   });
 
   const handlePay = async () => {
-    if (!canPay) return;
+    if (!canPay) {
+      setShowErrors(true);
+      return;
+    }
 
     setIsSubmitting(true);
     setStripeError(null);
@@ -569,7 +573,7 @@ export default function UnifiedPurchaseForm({
             {renewIds.map((val, idx) => (
               <div
                 key={idx}
-                className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center"
+                className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && val.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}
               >
                 <input
                   value={val}
@@ -669,7 +673,7 @@ export default function UnifiedPurchaseForm({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {usernames.map((u, idx) => (
-              <div key={idx} className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+              <div key={idx} className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && !reUser.test(u) ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                 <input
                   value={u}
                   onChange={(e) => setUsernameAt(idx, e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20))}
@@ -694,7 +698,7 @@ export default function UnifiedPurchaseForm({
               {policy.showTelegramField ? (
                 // Email + Telegram side by side
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && !emailOk ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                     <input
                       value={emailVal}
                       onChange={(e) => setEmailVal(e.target.value)}
@@ -715,7 +719,7 @@ export default function UnifiedPurchaseForm({
               ) : (
                 // Solo email - ocupa media columna
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                  <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && !emailOk ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                     <input
                       value={emailVal}
                       onChange={(e) => setEmailVal(e.target.value)}
@@ -731,7 +735,7 @@ export default function UnifiedPurchaseForm({
 
           {isRouterCheckout && (
             <div className="space-y-3">
-              <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+              <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && shippingAddress.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                 <input
                   value={shippingAddress}
                   onChange={(e) => setShippingAddress(e.target.value)}
@@ -741,7 +745,7 @@ export default function UnifiedPurchaseForm({
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && shippingFullName.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                   <input
                     value={shippingFullName}
                     onChange={(e) => setShippingFullName(e.target.value)}
@@ -749,7 +753,7 @@ export default function UnifiedPurchaseForm({
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && shippingCountry.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                   <input
                     value={shippingCountry}
                     onChange={(e) => setShippingCountry(e.target.value)}
@@ -760,7 +764,7 @@ export default function UnifiedPurchaseForm({
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && shippingPostalCode.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                   <input
                     value={shippingPostalCode}
                     onChange={(e) => setShippingPostalCode(e.target.value)}
@@ -768,7 +772,7 @@ export default function UnifiedPurchaseForm({
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && shippingPhone.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                   <input
                     value={shippingPhone}
                     onChange={(e) => setShippingPhone(e.target.value)}
@@ -786,7 +790,7 @@ export default function UnifiedPurchaseForm({
               type="checkbox"
               checked={terms}
               onChange={(e) => setTerms(e.target.checked)}
-              className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+              className={`w-[18px] h-[18px] border-2 rounded-[2px] accent-black focus:outline-none focus:ring-0 ${showErrors && !terms ? "border-red-500" : "border-black"}`}
             />
             <span className="select-none">
               {t("acceptTerms")}{" "}
@@ -833,7 +837,7 @@ export default function UnifiedPurchaseForm({
             <div className="space-y-3 mt-2">
               {/* Cardholder name */}
               <div className="space-y-1.5">
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && cardName.trim().length <= 1 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                   <input
                     value={cardName}
                     onChange={(e) => setCardName(onlyLetters(e.target.value))}
@@ -845,22 +849,22 @@ export default function UnifiedPurchaseForm({
 
               {/* Card number */}
               <div className="space-y-1.5">
-                <div id="card-number-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                <div id="card-number-el" className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && !cardState.number ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`} />
               </div>
 
               {/* Expiry + CVC */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                  <div id="card-expiry-el" className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && !cardState.expiry ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`} />
                 </div>
                 <div className="space-y-1.5">
-                  <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+                  <div id="card-cvc-el" className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && !cardState.cvc ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`} />
                 </div>
               </div>
 
               {/* Postal code */}
               <div className="space-y-1.5">
-                <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+                <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && postal.trim().length === 0 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
                   <input
                     value={postal}
                     onChange={(e) => setPostal(e.target.value)}
@@ -888,7 +892,7 @@ export default function UnifiedPurchaseForm({
           <button
             type="button"
             onClick={handlePay}
-            disabled={!canPay}
+            disabled={isLoadingPayment}
             className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${canPay
               ? "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
