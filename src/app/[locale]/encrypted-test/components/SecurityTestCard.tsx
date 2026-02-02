@@ -22,7 +22,7 @@ export function SecurityTestCard({
 }: SecurityTestCardProps) {
     const t = useTranslations("EncryptedTestPage");
     return (
-        <div className="relative overflow-hidden bg-black group cursor-pointer transition-all hover:shadow-lg rounded-3xl min-h-[280px] w-full xl:w-[1272px] h-auto xl:h-[569px] md:rounded-[38px] md:border md:border-white/10 mx-auto" onClick={onStartTest}>
+        <div className="relative overflow-hidden bg-black group cursor-pointer transition-all hover:shadow-lg rounded-3xl min-h-[280px] w-full xl:w-[1272px] h-auto xl:h-[569px] md:rounded-[38px] mx-auto" onClick={onStartTest}>
             {/* Background Image */}
             <div className="absolute inset-0">
                 <Image
@@ -33,6 +33,9 @@ export function SecurityTestCard({
                     priority
                 />
             </div>
+
+            {/* Overlay Border */}
+            <div className="absolute inset-0 rounded-3xl md:rounded-[38px] border border-[#383838] pointer-events-none z-20" />
 
             {/* Content */}
             <div className="relative z-10 flex h-full flex-col justify-between xl:justify-center p-6 md:p-10">
