@@ -13,6 +13,9 @@ import FeaturedProducts from "../apps/component/templateProduct/FeaturedProducts
 import FAQSection from "../apps/component/templateProduct/FAQSection";
 import StickyPriceBanner from "../apps/component/templateProduct/StickyPriceBanner";
 
+// Refined Component
+import RouterCamaleon from "../apps/component/RouterCamaleon";
+
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -314,6 +317,7 @@ export default function RouterPage() {
 
   return (
     <main className="bg-white min-h-screen">
+      {/* Custom Key Visual for Router Camaleón */}
       {/* Hero Banner - Usar función con fallback inteligente (heroBanners > buyNowImage > images > config) */}
       <HeroBanner
         imageUrl={getProductBannerImages(product, {
@@ -350,6 +354,12 @@ export default function RouterPage() {
         productInfo={productInfo}
       />
 
+      {/* Sticky Price Banner */}
+      <StickyPriceBanner
+        visible={!isVisible}
+        productInfo={productInfo}
+      />
+
       {/* Features Grid */}
       {featuresGrid.length > 0 && (
         <ProductFeaturesGrid features={featuresGrid} />
@@ -364,6 +374,9 @@ export default function RouterPage() {
           productName={(product as any)?.name}
         />
       )}
+
+      {/* Custom Key Visual for Router Camaleón */}
+      <RouterCamaleon />
 
       {/* Video Section - Priorizar datos del backend */}
       {((product as any)?.videoUrl || ROUTER_CONFIG.videoUrl) && (

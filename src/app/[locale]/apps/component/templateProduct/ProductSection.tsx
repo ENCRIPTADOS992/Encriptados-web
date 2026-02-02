@@ -213,7 +213,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
 
   return (
     <section className="w-full bg-white py-8 sm:py-12 lg:py-16 overflow-hidden">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14">
         {/* Grid: 1 col mobile, 2 col desktop */}
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start"
@@ -343,33 +343,33 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
             )}
 
             {/* Radio options - Sin palabra "Licencia". Ocultar si es solo "Única" */}
-            {radioOptions.length > 0 && 
-             !(radioOptions.length === 1 && ["Única", "Unique", "Unica"].includes(formatRadioLabel(radioOptions[0], languageCode))) && (
-              <motion.fieldset
-                className="flex flex-wrap gap-3 sm:gap-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-              >
-                <legend className="sr-only">{t.selectPlan}</legend>
-                {radioOptions.map((option) => (
-                  <label
-                    key={option}
-                    className="flex items-center gap-2 cursor-pointer text-sm sm:text-base text-gray-700 hover:text-primary transition-colors"
-                  >
-                    <input
-                      type="radio"
-                      name={`plan-${title.replace(/\s/g, "")}`}
-                      value={option}
-                      checked={selectedRadio === option}
-                      onChange={() => onRadioChange(option)}
-                      className="w-4 h-4 text-primary focus:ring-primary focus:ring-2 accent-primary"
-                    />
-                    <span>{formatRadioLabel(option, languageCode)}</span>
-                  </label>
-                ))}
-              </motion.fieldset>
-            )}
+            {radioOptions.length > 0 &&
+              !(radioOptions.length === 1 && ["Única", "Unique", "Unica"].includes(formatRadioLabel(radioOptions[0], languageCode))) && (
+                <motion.fieldset
+                  className="flex flex-wrap gap-3 sm:gap-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.4 }}
+                >
+                  <legend className="sr-only">{t.selectPlan}</legend>
+                  {radioOptions.map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center gap-2 cursor-pointer text-sm sm:text-base text-gray-700 hover:text-primary transition-colors"
+                    >
+                      <input
+                        type="radio"
+                        name={`plan-${title.replace(/\s/g, "")}`}
+                        value={option}
+                        checked={selectedRadio === option}
+                        onChange={() => onRadioChange(option)}
+                        className="w-4 h-4 text-primary focus:ring-primary focus:ring-2 accent-primary"
+                      />
+                      <span>{formatRadioLabel(option, languageCode)}</span>
+                    </label>
+                  ))}
+                </motion.fieldset>
+              )}
 
             <motion.hr
               className="border-dashed border-gray-300"

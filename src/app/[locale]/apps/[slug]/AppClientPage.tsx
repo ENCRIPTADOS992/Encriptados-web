@@ -13,6 +13,7 @@ import HeroVideoSection from "../component/templateProduct/HeroVideoSection";
 import FeaturedProducts from "../component/templateProduct/FeaturedProducts";
 import FAQSection from "../component/templateProduct/FAQSection";
 import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
+import RouterCamaleon from "../component/RouterCamaleon";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -330,6 +331,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
               productName={product?.name}
             />
           )}
+
+          {slug === "router-camaleon" && <RouterCamaleon />}
 
           {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
 

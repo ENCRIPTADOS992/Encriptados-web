@@ -49,43 +49,43 @@ const RouterPage = () => {
 
   const selected = plan || plans[0].value;
   const { isVisible } = usePriceVisibility(priceBlockRef);
-  
+
   const productInfo = {
-  title: "Silent Phone",
-  price: "99$ USD",
-  subtitle: "Comunicación cifrada y segura",
-  iconUrl: "/images/apps/silent-circle/logo.png", 
-  ctaLabel: "Comprar ahora",
-  categoryId: 35,
-  productId: 142,
-  onBuy: () => {
+    title: "Silent Phone",
+    price: "99$ USD",
+    subtitle: "Comunicación cifrada y segura",
+    iconUrl: "/images/apps/silent-circle/logo.png",
+    ctaLabel: "Comprar ahora",
+    categoryId: 35,
+    productId: 142,
+    onBuy: () => {
       openModal({
-        productid: "142",          
+        productid: "142",
         languageCode: "es",
-        selectedOption: 35,        
+        selectedOption: 35,
       });
     },
-  onChat: () => {
-    console.log("chat telegram");
-  },
-};
+    onChat: () => {
+      console.log("chat telegram");
+    },
+  };
 
-const handleRadioChange = (val: string) => {
-        console.log("Cambio radio a:", val);
-        setSelectedRadio(val);
-      };
-      
-        const [selectedRadio, setSelectedRadio] = useState<string>("");
-        useEffect(() => {
-        if (
-          plans.length > 0 &&
-          (!selectedRadio || !plans.some((p) => p.label === selectedRadio))
-        ) {
-          console.log("Inicializa selectedRadio con:", plans[0].label);
-          setSelectedRadio(plans[0].label);
-        }
-      }, [plans]);
-const featuresGrid = [
+  const handleRadioChange = (val: string) => {
+    console.log("Cambio radio a:", val);
+    setSelectedRadio(val);
+  };
+
+  const [selectedRadio, setSelectedRadio] = useState<string>("");
+  useEffect(() => {
+    if (
+      plans.length > 0 &&
+      (!selectedRadio || !plans.some((p) => p.label === selectedRadio))
+    ) {
+      console.log("Inicializa selectedRadio con:", plans[0].label);
+      setSelectedRadio(plans[0].label);
+    }
+  }, [plans]);
+  const featuresGrid = [
     {
       image: "/images/router/red.png",
       title: "Selección de Antenas Aleatorias​",
@@ -176,16 +176,16 @@ const featuresGrid = [
   return (
     <main className="bg-white min-h-screen">
       <HeroBanner
-      imageUrl="/images/router/routerCamaleon.png"
+        imageUrl="/images/router/routerCamaleon.png"
         alt="Armadillo Hero Banner"
-         />
+      />
 
       <HeroBannerMobile
-      imageUrl="/images/router/routerCamaleon.png"
+        imageUrl="/images/router/routerCamaleon.png"
         alt="Armadillo Hero Banner" />
 
       <HeroBannerTablet
-      imageUrl="/images/router/routerCamaleon.png"
+        imageUrl="/images/router/routerCamaleon.png"
         alt="Armadillo Hero Banner" />
 
       <ProductSection

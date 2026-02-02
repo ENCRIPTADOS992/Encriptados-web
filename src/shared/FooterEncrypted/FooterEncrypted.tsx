@@ -130,7 +130,7 @@ export default function FooterEncrypted() {
     { name: "DEC Secure", href: getAppUrl("DEC Secure") },
     { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
   ];
-  const routersLinks = [{ name: "Router Camaleón", href: getAppUrl("Router Camaleón") }];
+  const routersLinks = [{ name: "Router Camaleón", href: `/apps/router-camaleon?productId=59747&categoryId=36` }];
 
   return (
     <footer className="bg-[#000000] text-white overflow-x-hidden">
