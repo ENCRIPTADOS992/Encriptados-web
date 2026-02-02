@@ -10,6 +10,8 @@ import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import { useFormPolicy } from "./useFormPolicy";
+import { validateCoupon } from "@/lib/payments/orderApi";
+import { useToast } from "@/shared/context/ToastContext";
 
 type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
@@ -31,6 +33,7 @@ export default function ModalNewUser() {
   const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
   const { payUserId, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
+  const toast = useToast();
 
   // Estado para Silent Phone: modo de tabs
   const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
@@ -78,7 +81,22 @@ export default function ModalNewUser() {
   const unitPrice =
     (variants.length ? selectedVariant?.price ?? variants[0]?.price : Number(product?.price)) || 0;
 
-  const onApplyCoupon = () => setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
+  const onApplyCoupon = async () => {
+    if (!coupon.trim()) return;
+    try {
+      const res = await validateCoupon(coupon.trim(), product?.name, productid);
+      if (res.ok && typeof res.discount_amount === "number") {
+        setDiscount(res.discount_amount);
+        toast.success(res.message || "Cupón aplicado");
+      } else {
+        setDiscount(0);
+        toast.error(res.message || "Cupón inválido");
+      }
+    } catch (e) {
+      setDiscount(0);
+      toast.error("Error validando el cupón");
+    }
+  };
 
   const selectedOption = Number((params as any)?.selectedOption ?? NaN);
   const isRouterCheckout =
@@ -151,6 +169,7 @@ export default function ModalNewUser() {
       coupon={coupon}
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
+      discount={discount}
       unitPrice={unitPrice}
       shipping={shipping}
       sourceUrl={params.sourceUrl}

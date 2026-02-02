@@ -7,6 +7,8 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById, getAllProducts } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
+import { validateCoupon } from "@/lib/payments/orderApi";
+import { useToast } from "@/shared/context/ToastContext";
 
 import SimFormUnified from "./sims/SimFormUnified";
 import type { FormType } from "./sims/types/simFormTypes";
@@ -35,6 +37,7 @@ export default function ModalSIM() {
     variantId?: number;
     variants?: any[];
   };
+  const toast = useToast();
   const [hideSimField, setHideSimField] = React.useState(false);
 
   // Estados para el modal de éxito de pago
@@ -538,8 +541,22 @@ export default function ModalSIM() {
     [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan]
   );
 
-  const onApplyCoupon = () =>
-    setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
+  const onApplyCoupon = async () => {
+    if (!coupon.trim()) return;
+    try {
+      const res = await validateCoupon(coupon.trim(), product?.name, productid);
+      if (res.ok && typeof res.discount_amount === "number") {
+        setDiscount(res.discount_amount);
+        toast.success(res.message || "Cupón aplicado");
+      } else {
+        setDiscount(0);
+        toast.error(res.message || "Cupón inválido");
+      }
+    } catch (e) {
+      setDiscount(0);
+      toast.error("Error validando el cupón");
+    }
+  };
 
   const handlePaymentSuccess = React.useCallback((data: SuccessPaymentData) => {
     setSuccessData(data);
@@ -606,6 +623,7 @@ export default function ModalSIM() {
       coupon={coupon}
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
+      discount={discount}
       unitPrice={unitPrice}
       showLicense={false}
       shipping={

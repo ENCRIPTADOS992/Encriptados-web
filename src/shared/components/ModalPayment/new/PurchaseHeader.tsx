@@ -72,6 +72,7 @@ type Props = {
   flagUrl?: string;
   /** Explicit Product ID to use for sharing (prioritized over product object) */
   shareProductId?: string;
+  discount?: number;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -102,6 +103,7 @@ const PurchaseHeader: React.FC<Props> = ({
   regionCode,
   flagUrl,
   shareProductId,
+  discount = 0,
 }) => {
   const locale = useLocale();
   const t = useTranslations("paymentModal");
@@ -122,7 +124,7 @@ const PurchaseHeader: React.FC<Props> = ({
     setImgError(false);
   }, [flagUrl]);
 
-  const discountAmount = 0;
+  const discountAmount = discount;
 
   // Normalizador seguro: convierte "3" -> 3, ignora basura
   const toMonths = (v: unknown): number | undefined => {
@@ -156,7 +158,8 @@ const PurchaseHeader: React.FC<Props> = ({
   const [includeEsimAddon, setIncludeEsimAddon] = React.useState(false);
   const total = Math.max(
     subtotal +
-    (shipping ?? 0) +
+    (shipping ?? 0) -
+    (discount ?? 0) +
     (showEsimAddon && includeEsimAddon ? esimAddonPrice : 0),
     0
   );
@@ -765,7 +768,7 @@ const PurchaseHeader: React.FC<Props> = ({
             )}
 
             {/* Fila: Descuento */}
-            {showCoupon && (
+            {(showCoupon || discountAmount > 0) && (
               <div className="grid grid-cols-[1fr_auto] items-center gap-4">
                 <span className="text-base text-[#3D3D3D]">Descuento</span>
                 <span className="text-base font-bold text-[#141414]">
@@ -804,23 +807,24 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Cupón de descuento */}
           {showCoupon ? (
-            <div className="flex items-center gap-1 h-11">
-              <div className="flex items-center h-full flex-1 rounded-lg border-2 border-[#3D3D3D] px-3">
+            <div className="flex items-center gap-2 h-9">
+              <div className="flex items-center h-full flex-1 rounded-lg bg-[#EBEBEB] px-3">
                 <input
                   placeholder="Ingresa el código"
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                   onKeyDown={(e) => {
+                    if (e.key === "Enter") onApplyCoupon();
                     if (e.key === "Escape") setShowCoupon(false);
                   }}
                   autoFocus
-                  className="flex-1 bg-transparent outline-none placeholder-black/50 text-sm"
+                  className="flex-1 bg-transparent outline-none placeholder-[#010C0F]/50 text-xs text-[#010C0F]"
                 />
               </div>
               <button
                 onClick={onApplyCoupon}
                 type="button"
-                className="shrink-0 h-full px-5 rounded-md bg-black text-white text-xs font-bold hover:bg-black/90"
+                className="shrink-0 h-full px-4 rounded-lg bg-black text-white text-xs font-bold hover:bg-black/90"
               >
                 {t("apply")}
               </button>
@@ -828,7 +832,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 type="button"
                 onClick={() => setShowCoupon(false)}
                 aria-label="Cerrar cupón"
-                className="shrink-0 text-2xl text-[#5D5D5D] hover:text-black"
+                className="shrink-0 text-xl text-[#5D5D5D] hover:text-black"
               >
                 ×
               </button>

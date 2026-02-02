@@ -211,3 +211,71 @@ export async function fetchPublicStatus(orderId: number): Promise<{
   if (!r.ok) throw new Error(`HTTP ${r.status} consultando estado público`);
   return r.json();
 }
+
+// =====================
+// COUPONS
+// =====================
+export async function validateCoupon(code: string, productName?: string, productId?: number | string): Promise<{
+  ok: boolean;
+  discount_type?: "fixed" | "percent";
+  discount_amount?: number;
+  message?: string;
+}> {
+  const normalizedCode = code.trim().toLowerCase();
+
+  // MOCK: Cupones de prueba solicitados
+  if (normalizedCode === "pruebac") {
+    return {
+      ok: true,
+      discount_type: "fixed",
+      discount_amount: 5, // Asumimos 5 USD por defecto para pruebas
+      message: "Cupón de prueba aplicado (General)"
+    };
+  }
+
+  if (normalizedCode === "pruebacsilent") {
+    const isSilent = productName && /silent/i.test(productName);
+    if (isSilent) {
+      return {
+        ok: true,
+        discount_type: "fixed",
+        discount_amount: 5,
+        message: "Cupón de prueba aplicado (Silent Circle)"
+      };
+    } else {
+      return {
+        ok: false,
+        message: "Este cupón es exclusivo para productos Silent Circle"
+      };
+    }
+  }
+
+  // Use local API proxy to avoid exposing credentials and handle CORS
+  let url = `/api/coupons/validate?code=${encodeURIComponent(code)}`;
+  if (productId) {
+    url += `&product_id=${encodeURIComponent(productId)}`;
+  }
+
+  try {
+    const r = await fetch(url);
+    if (!r.ok) {
+      // Fallback or just return invalid
+      return { ok: false, message: "Cupón inválido" };
+    }
+    const data = await r.json();
+
+    // Si la API devuelve error explícito
+    if (data.error) {
+      return { ok: false, message: data.message || "Cupón inválido" };
+    }
+
+    return {
+      ok: true,
+      discount_type: data.discount_type,
+      discount_amount: Number(data.discount_amount),
+      message: data.message || "Cupón aplicado",
+    };
+  } catch (e) {
+    return { ok: false, message: "Error validando cupón" };
+  }
+}

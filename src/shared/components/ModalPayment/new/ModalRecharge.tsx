@@ -6,6 +6,8 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import type { Mode } from "./PurchaseTabs";
+import { validateCoupon } from "@/lib/payments/orderApi";
+import { useToast } from "@/shared/context/ToastContext";
 
 type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
@@ -22,6 +24,7 @@ type ModalProduct = {
 
 export default function ModalRecharge() {
   const { params, openModal } = useModalPayment();
+  const toast = useToast();
   const { productid, mode = "recharge", initialPrice, variantId } = (params || {}) as {
     productid?: string;
     mode?: Mode;
@@ -71,16 +74,29 @@ export default function ModalRecharge() {
       ? selectedVariant?.price ?? variants[0]?.price
       : Number(product?.price)) || 0;
 
-  const onApplyCoupon = () => {
-    setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
+  const onApplyCoupon = async () => {
+    if (!coupon.trim()) return;
+    try {
+      const res = await validateCoupon(coupon.trim(), product?.name, productid);
+      if (res.ok && typeof res.discount_amount === "number") {
+        setDiscount(res.discount_amount);
+        toast.success(res.message || "Cupón aplicado");
+      } else {
+        setDiscount(0);
+        toast.error(res.message || "Cupón inválido");
+      }
+    } catch (e) {
+      setDiscount(0);
+      toast.error("Error validando el cupón");
+    }
   };
 
   return (
     <PurchaseScaffold
-      mode={mode} 
-      enableTabSwitch={true}                  
+      mode={mode}
+      enableTabSwitch={true}
       onSelectMode={(m) => openModal({ ...params, mode: m })}
-      showRechargeCTA={true}                   
+      showRechargeCTA={true}
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
       onChangeVariant={(id) => {
@@ -92,6 +108,7 @@ export default function ModalRecharge() {
       coupon={coupon}
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
+      discount={discount}
       unitPrice={unitPrice}
       sourceUrl={params.sourceUrl}
     >
