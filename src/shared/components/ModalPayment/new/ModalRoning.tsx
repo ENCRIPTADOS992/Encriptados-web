@@ -9,6 +9,8 @@ import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
+import { validateCoupon } from "@/lib/payments/orderApi";
+import { useToast } from "@/shared/context/ToastContext";
 
 type Variant = {
   id: number;
@@ -33,6 +35,7 @@ export default function ModalRoning() {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
   const { loading, payRoaming } = useCheckout();
+  const toast = useToast();
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -82,8 +85,22 @@ export default function ModalRoning() {
       ? selectedVariant?.price ?? variants[0]?.price
       : Number(product?.price)) || 0;
 
-  const onApplyCoupon = () =>
-    setDiscount(coupon.trim().toUpperCase() === "DESCUENTO5" ? 5 : 0);
+  const onApplyCoupon = async () => {
+    if (!coupon.trim()) return;
+    try {
+      const res = await validateCoupon(coupon.trim(), product?.name, productid);
+      if (res.ok && typeof res.discount_amount === "number") {
+        setDiscount(res.discount_amount);
+        toast.success(res.message || "Cupón aplicado");
+      } else {
+        setDiscount(0);
+        toast.error(res.message || "Cupón inválido");
+      }
+    } catch (e) {
+      setDiscount(0);
+      toast.error("Error validando el cupón");
+    }
+  };
 
   const amountUsd = Math.max(Number(unitPrice) * quantity - discount, 0);
 
@@ -152,6 +169,7 @@ export default function ModalRoning() {
       coupon={coupon}
       setCoupon={setCoupon}
       onApplyCoupon={onApplyCoupon}
+      discount={discount}
       unitPrice={unitPrice}
       sourceUrl={params.sourceUrl}
     >
