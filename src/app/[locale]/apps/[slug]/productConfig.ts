@@ -56,7 +56,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // ════════════════════════════════════════════════════════════════
   // APLICACIONES (Categoría 38)
   // ════════════════════════════════════════════════════════════════
-  
+
   // Name: "Silent Phone" -> slug: "silent-phone"
   "silent-phone": {
     slug: "silent-phone",
@@ -620,6 +620,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
+
+
 };
 
 export function getProductConfig(slug: string): ProductStaticConfig | null {

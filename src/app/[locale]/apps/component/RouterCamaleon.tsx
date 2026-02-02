@@ -66,9 +66,8 @@ export default function RouterCamaleon() {
         <section className="w-full bg-white">
             <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
                 <div
-                    className="relative w-full overflow-hidden rounded-[24px]"
+                    className="relative w-full overflow-hidden rounded-[24px] min-h-[420px]"
                     style={{
-                        height: "420px",
                         background: "linear-gradient(to right, #0a0f1a, #0d1829)",
                     }}
                 >
@@ -81,55 +80,76 @@ export default function RouterCamaleon() {
                             className="object-cover object-right"
                             priority
                         />
+                        {/* Blue Tint Overlay */}
+                        <div className="absolute inset-0 bg-[#35CDFB] opacity-80 mix-blend-color" />
+                        {/* Top Left Black Shadow */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(0,0,0,0.9)_0%,_rgba(0,0,0,0)_60%)] opacity-80" />
+                        {/* Mobile Left Shadow */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-transparent lg:hidden" />
                     </div>
 
                     {/* Cyan glow behind router */}
-                    <div
-                        className="absolute right-[15%] bottom-0 w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] rounded-full blur-[120px] opacity-40"
-                        style={{
-                            background: "#35CDFB",
-                        }}
-                    />
 
-                    <div className="relative z-10 h-full flex flex-col lg:flex-row items-center lg:items-center justify-between px-6 lg:px-12">
+
+                    <div className="relative z-10 h-full grid grid-cols-1 lg:grid-cols-2 px-6 lg:px-12 gap-2 lg:gap-0">
                         {/* Left Card */}
-                        <div
-                            className="w-full max-w-sm xl:max-w-[420px] rounded-[32px] p-5 lg:p-6 flex-shrink-0 my-10 lg:my-10"
-                            style={{
-                                background: "rgba(13, 24, 41, 0.7)",
-                                border: "1px solid rgba(54, 65, 83, 0.5)",
-                                backdropFilter: "blur(12px)",
-                            }}
-                        >
-                            <h2 className="text-white text-lg font-bold mb-1">Router Camaleón te da más</h2>
-                            <p className="text-[#9CA3AF] text-xs mb-2">Incluye todo para ti:</p>
-
-                            <div className="flex flex-col gap-0.5">
-                                <FeatureItem
-                                    icon={<SimCardIcon />}
-                                    title="SIM Encriptada"
-                                    subtitle="470 USD en datos"
-                                />
-                                <FeatureItem icon={<RouterIcon />} title="Router Camaleón" subtitle="470 USD en datos" />
-                                <FeatureItem icon={<GlobeIcon />} title="Cobertura Global" subtitle="Disponible en 200 países" />
-                                <FeatureItem icon={<SecurityIcon />} title="VPN Privado" subtitle="130 USD" />
+                        {/* Left Card */}
+                        <div className="h-full flex flex-col items-center justify-start pt-12 lg:justify-center lg:pt-0 lg:items-start">
+                            <div className="mb-4 text-center px-4 lg:hidden">
+                                <h2 className="text-white font-bold mb-1" style={{
+                                    fontFamily: 'Inter, sans-serif',
+                                    fontSize: '24px',
+                                    lineHeight: '100%',
+                                    letterSpacing: '0.07px'
+                                }}>Router Camaleón te da más</h2>
+                                <p className="text-[#9CA3AF] text-xs">Incluye todo para ti:</p>
                             </div>
 
                             <div
-                                className="mt-2 pt-3"
+                                className="w-full max-w-md xl:max-w-[500px] rounded-[32px] p-4 lg:p-5 flex-shrink-0"
                                 style={{
-                                    borderTop: "1px solid rgba(54, 65, 83, 0.5)",
+                                    background: "#1E293973",
+                                    border: "1px solid rgba(54, 65, 83, 0.5)",
+                                    backdropFilter: "blur(12px)",
                                 }}
                             >
-                                <p className="text-white font-bold text-base">
-                                    Total: <span className="text-white">750 USD</span>
-                                </p>
+                                <div className="hidden lg:block mb-6 text-left">
+                                    <h2 className="text-white font-bold mb-1" style={{
+                                        fontFamily: 'Inter, sans-serif',
+                                        fontSize: '24px',
+                                        lineHeight: '100%',
+                                        letterSpacing: '0.07px'
+                                    }}>Router Camaleón te da más</h2>
+                                    <p className="text-[#9CA3AF] text-xs">Incluye todo para ti:</p>
+                                </div>
+
+                                <div className="flex flex-col gap-0.5">
+                                    <FeatureItem
+                                        icon={<SimCardIcon />}
+                                        title="SIM Encriptada"
+                                        subtitle="470 USD en datos"
+                                    />
+                                    <FeatureItem icon={<RouterIcon />} title="Router Camaleón" subtitle="470 USD en datos" />
+                                    <FeatureItem icon={<GlobeIcon />} title="Cobertura Global" subtitle="Disponible en 200 países" />
+                                    <FeatureItem icon={<SecurityIcon />} title="VPN Privado" subtitle="130 USD" />
+                                </div>
+
+                                <div
+                                    className="mt-2 pt-3"
+                                    style={{
+                                        borderTop: "1px solid #36415380",
+                                    }}
+                                >
+                                    <p className="text-white font-bold text-base">
+                                        Total: <span className="text-white">750 USD</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         {/* Right Router Image - Stick to bottom */}
-                        <div className="relative w-full h-[300px] lg:h-full lg:flex-1 flex items-end justify-center lg:justify-end overflow-visible">
-                            <div className="relative w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] lg:w-[450px] lg:h-[520px] lg:absolute lg:right-[-40px] xl:right-0 lg:bottom-[-20px]">
+                        <div className="relative w-full h-[350px] lg:h-full flex items-start lg:items-center justify-center overflow-visible pointer-events-none -mt-16 lg:mt-0">
+                            <div className="relative w-full max-w-[340px] h-[380px] sm:w-[320px] sm:h-[400px] lg:w-[360px] lg:h-[420px]">
                                 <Image
                                     src="/images/router/router.webp"
                                     alt="Router Camaleón"

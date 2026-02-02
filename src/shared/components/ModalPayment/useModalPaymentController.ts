@@ -133,7 +133,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     if (buyAutoOpenedRef.current) return;
     if (isModalOpen) return;
 
-    const isRouterPath = pathname === "/router" || pathname.endsWith("/router");
+    const isRouterPath = pathname.includes("/router") || pathname.includes("router-camaleon");
     const isSimPath = pathname.includes("/sim/");
     const isEncryptedSimPath =
       pathname === "/encrypted-sim" || pathname.endsWith("/encrypted-sim");

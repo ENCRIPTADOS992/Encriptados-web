@@ -332,9 +332,9 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
             />
           )}
 
-          {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
-
           {slug === "router-camaleon" && <RouterCamaleon />}
+
+          {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
 
           <FeaturedProducts
             left={{

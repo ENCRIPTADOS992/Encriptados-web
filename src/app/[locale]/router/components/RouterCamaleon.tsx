@@ -81,13 +81,7 @@ export default function RouterCamaleon() {
                 />
             </div>
 
-            {/* Cyan glow behind router */}
-            <div
-                className="absolute right-[15%] bottom-0 w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] rounded-full blur-[120px] opacity-40"
-                style={{
-                    background: "#35CDFB",
-                }}
-            />
+
 
             <div className="relative z-10 h-full flex flex-col lg:flex-row items-start lg:items-center justify-between px-6 py-8 lg:px-12">
                 {/* Left Card */}
@@ -125,13 +119,21 @@ export default function RouterCamaleon() {
                 </div>
 
                 {/* Right Router Image */}
-                <div className="absolute right-4 lg:right-12 bottom-0 flex-shrink-0">
+                <div className="absolute bottom-0 lg:right-0 w-full lg:w-1/2 flex justify-center items-end pointer-events-none">
                     <div className="relative w-[200px] h-[280px] md:w-[280px] md:h-[380px] lg:w-[350px] lg:h-[420px]">
+                        <div
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] rounded-full opacity-60 blur-[90px]"
+                            style={{ background: "#35CDFB" }}
+                        />
+                        <div
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-full opacity-90 blur-[40px]"
+                            style={{ background: "#35CDFB" }}
+                        />
                         <Image
                             src="/images/router/router.webp"
                             alt="Router Camaleón"
                             fill
-                            className="object-contain object-bottom"
+                            className="object-contain object-bottom relative z-10"
                             priority
                         />
                     </div>

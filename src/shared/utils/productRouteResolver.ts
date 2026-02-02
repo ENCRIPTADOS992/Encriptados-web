@@ -73,9 +73,18 @@ export const getProductLink = (
   provider?: string,
   typeProduct?: string
 ): string | null => {
+  // 0. Excepción Global: Router Camaleón siempre va a /apps/router-camaleon
+  if (
+    productName.toLowerCase().includes("router") ||
+    productName.toLowerCase().includes("camaleon") ||
+    productName.toLowerCase().includes("camaleón")
+  ) {
+    return "/apps/router-camaleon";
+  }
+
   // 1. Routers
   if (categoryId === 36) {
-    return "/router";
+    return "/apps/router-camaleon";
   }
 
   // 2. SIMs (Categoría 40)
@@ -84,7 +93,7 @@ export const getProductLink = (
     if (provider || typeProduct) {
       return getSimProductUrl(provider, typeProduct);
     }
-    
+
     // FALLBACK: Si no hay campos del backend, buscar por productId (legacy)
     if (productId) {
       const simRoute = SIM_PRODUCT_ROUTES.find(
@@ -94,14 +103,14 @@ export const getProductLink = (
         return simRoute.link;
       }
     }
-    
+
     // ÚLTIMO FALLBACK: SIM encriptada por defecto
     return `/sim/sim-encriptada`;
   }
 
   // 3. Apps (38) y Software (35) - Generación dinámica por slug
   // Usamos generateSlug (mismo que slugify en la App)
-  
+
   const baseName = productName.split(" - ")[0].trim();
   const slug = generateSlug(baseName);
 

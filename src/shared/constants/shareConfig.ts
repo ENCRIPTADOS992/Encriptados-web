@@ -264,7 +264,7 @@ export const ROUTER_SHARE_CONFIG: ShareConfig[] = [
     metaImage: "/meta-image/router/router-camaleon.png",
     title: "Router Camaleón - WiFi Encriptado",
     description: "Compra aquí Router Camaleón.",
-    shareUrl: `${BASE_URL}/router?buy=1`,
+    shareUrl: `${BASE_URL}/apps/router-camaleon?productId=59747&categoryId=36&buy=1`,
     category: "router",
   },
 ];
@@ -330,7 +330,7 @@ export function getShareUrl(productId: number, price?: number, locale: string = 
   if (config?.shareUrl) {
     return getShareUrlWithLocale(config.shareUrl, locale);
   }
-  
+
   // Fallback: generar URL basada en el productId y price
   // Para SIMs usamos la estructura /sim/esim-encriptada?productId=X&price=Y&buy=1
   const priceParam = price ? `&price=${price}` : '';
@@ -343,8 +343,8 @@ export function getShareUrl(productId: number, price?: number, locale: string = 
  * @param locale - El idioma actual (es, en, fr, etc.) para incluir en la URL
  */
 export function generateSimShareUrl(
-  productId: number, 
-  price: number, 
+  productId: number,
+  price: number,
   simType: 'sim-encriptada' | 'esim-encriptada' | 'tim-sim' | 'esim-tim' = 'esim-encriptada',
   locale: string = 'es'
 ): string {

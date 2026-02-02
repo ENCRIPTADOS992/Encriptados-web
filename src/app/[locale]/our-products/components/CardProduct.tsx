@@ -145,7 +145,10 @@ const CardProduct: React.FC<CardSimProps> = ({
     // Build query string with all relevant params - SECURE LOGIC
     const params = new URLSearchParams();
     params.set("productId", String(id));
-    params.set("categoryId", "40"); // Categoría fija para SIMs
+
+    // Determinar categoría correcta
+    const isRouter = (headerTitle || "").toLowerCase().includes("router");
+    params.set("categoryId", isRouter ? "36" : "40"); // 36=Router, 40=SIMs
 
     // Usar variantId si está disponible (prioridad para seguridad)
     if (variantId) params.set("variantId", String(variantId));
