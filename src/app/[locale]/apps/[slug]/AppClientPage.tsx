@@ -294,10 +294,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
         alt={`${product?.name || slug} Hero Banner`}
       />
 
-      {!product ? (
+      {!product && slug !== "router-camaleon" ? (
         <div className="min-h-[45vh]" />
       ) : (
         <>
+          {slug === "router-camaleon" && <RouterCamaleon />}
           <ProductSection
             title={product?.name || ""}
             description={product?.description || ""}
