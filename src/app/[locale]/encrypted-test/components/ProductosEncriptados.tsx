@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function ProductosEncriptados() {
     const locale = useLocale();
+    const t = useTranslations("TestingProducts");
 
     return (
         <section className="relative min-h-screen bg-black overflow-hidden py-20 px-4">
@@ -28,7 +29,7 @@ export default function ProductosEncriptados() {
                                 className="text-sm font-bold bg-clip-text text-transparent"
                                 style={{ backgroundImage: "linear-gradient(270deg, #35CDFB 39%, #00FFB3 100%)" }}
                             >
-                                Nuestros productos
+                                {t("badge")}
                             </span>
                         </div>
                     </div>
@@ -36,9 +37,7 @@ export default function ProductosEncriptados() {
 
                 {/* Heading */}
                 <h2 className="text-white text-4xl md:text-5xl font-bold text-center mb-16 text-balance">
-                    Conoce nuestros
-                    <br />
-                    productos encriptados
+                    {t.rich("title", { br: () => <br /> })}
                 </h2>
 
                 {/* Products Grid */}
@@ -49,9 +48,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            SIM's
-                            <br />
-                            Encriptadas
+                            {t.rich("sims", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-center justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -69,11 +66,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            Aplicaciones de
-                            <br />
-                            mensajería
-                            <br />
-                            segura
+                            {t.rich("apps", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-center justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -91,9 +84,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            Sistemas de
-                            <br />
-                            seguridad
+                            {t.rich("systems", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-end justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -111,9 +102,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            Routers
-                            <br />
-                            encriptados
+                            {t.rich("routers", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-end justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -126,6 +115,6 @@ export default function ProductosEncriptados() {
                     </Link>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }

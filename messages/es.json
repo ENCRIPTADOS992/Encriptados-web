@@ -798,6 +798,14 @@
     "tryPassowordSecure": {
       "title": "Prueba qué tan segura es tu contraseña",
       "description": "Ingresa una contraseña y descubre su nivel de seguridad"
+    },
+    "products": {
+      "badge": "Nuestros productos",
+      "title": "Conoce nuestros {br} productos encriptados",
+      "sims": "SIM's {br} Encriptadas",
+      "apps": "Aplicaciones de {br} mensajería {br} segura",
+      "systems": "Sistemas de {br} seguridad",
+      "routers": "Routers {br} encriptados"
     }
   },
   "passwordTest": {
@@ -2659,5 +2667,13 @@
     "enterProductId": "Ingresa tu ID de {productName}",
     "enterIdPlaceholder": "Ingresa tu ID",
     "product": "producto"
+  },
+  "TestingProducts": {
+    "badge": "Nuestros productos",
+    "title": "Conoce nuestros {br} productos encriptados",
+    "sims": "SIM's {br} Encriptadas",
+    "apps": "Aplicaciones de {br} mensajería {br} segura",
+    "systems": "Sistemas de {br} seguridad",
+    "routers": "Routers {br} encriptados"
   }
 }

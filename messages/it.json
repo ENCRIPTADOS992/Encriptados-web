@@ -2549,5 +2549,13 @@
     "enterProductId": "Inserisci il tuo ID {productName}",
     "enterIdPlaceholder": "Inserisci il tuo ID",
     "product": "prodotto"
+  },
+  "TestingProducts": {
+    "badge": "Our products",
+    "title": "Meet our {br} encrypted products",
+    "sims": "Encrypted {br} SIMs",
+    "apps": "Secure {br} messaging apps",
+    "systems": "Security {br} systems",
+    "routers": "Encrypted {br} routers"
   }
 }
