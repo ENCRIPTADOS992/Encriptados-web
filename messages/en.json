@@ -3070,5 +3070,13 @@
     "enterProductId": "Enter your {productName} ID",
     "enterIdPlaceholder": "Enter your ID",
     "product": "product"
+  },
+  "TestingProducts": {
+    "badge": "Our products",
+    "title": "Meet our {br} encrypted products",
+    "sims": "Encrypted {br} SIMs",
+    "apps": "Secure {br} messaging apps",
+    "systems": "Security {br} systems",
+    "routers": "Encrypted {br} routers"
   }
 }

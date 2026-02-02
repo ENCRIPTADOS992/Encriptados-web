@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface SecurityTestCardProps {
     icon: string;
@@ -19,6 +20,7 @@ export function SecurityTestCard({
     backgroundImage,
     onStartTest,
 }: SecurityTestCardProps) {
+    const t = useTranslations("EncryptedTestPage");
     return (
         <div className="relative overflow-hidden bg-black group cursor-pointer transition-all hover:shadow-lg rounded-3xl min-h-[280px] w-full xl:w-[1272px] h-auto xl:h-[569px] md:rounded-[38px] md:border md:border-white/10 mx-auto" onClick={onStartTest}>
             {/* Background Image */}
@@ -61,7 +63,7 @@ export function SecurityTestCard({
                     <button
                         className="inline-flex items-center justify-center gap-[8px] rounded-full bg-[#E3F8FF] px-5 py-2.5 xl:w-[199px] xl:h-[58px] xl:rounded-[34px] xl:px-[24px] xl:py-[10px] text-sm md:text-base xl:text-[18px] font-bold xl:leading-none tracking-normal text-[#1F1F1F] transition-colors hover:bg-[#cbf4ff]"
                     >
-                        Iniciar test
+                        {t("initTest")}
                         <ChevronRight className="h-4 w-4" />
                     </button>
                 </div>
