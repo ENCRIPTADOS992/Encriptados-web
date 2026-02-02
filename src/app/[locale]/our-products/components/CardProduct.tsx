@@ -179,9 +179,9 @@ const CardProduct: React.FC<CardSimProps> = ({
   };
 
   return (
-    <Link
-      href={moreInfoUrl.startsWith("/") ? `/${locale}${moreInfoUrl}` : moreInfoUrl}
-      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01] block"
+    <div
+      onClick={handleCardClick}
+      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01] block relative"
     >
       {/* Imagen de cabecera - imagen completa sin recorte */}
       <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-[#1a1a1a]">
@@ -324,7 +324,7 @@ const CardProduct: React.FC<CardSimProps> = ({
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
