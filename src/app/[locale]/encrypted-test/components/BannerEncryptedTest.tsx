@@ -27,7 +27,7 @@ const BannerEncryptedTest = () => {
         <div aria-label="Icono de seguridad global">
           <WorldIconTest />
         </div>
-        <h1 className="text-white text-[30px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.3] w-full max-w-[350px] md:max-w-[450px] text-center">
+        <h1 className="text-white text-[30px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.3] w-full max-w-[90%] md:max-w-[800px] text-center text-balance">
           {t("banner.securityTestDescription")}
         </h1>
       </SectionWrapper>
