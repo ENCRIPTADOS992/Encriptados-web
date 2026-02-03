@@ -377,6 +377,7 @@ export default function UnifiedPurchaseForm({
             selectedOption: purchaseMeta?.selectedOption,
             silentPhoneMode: form.silentPhoneMode,
             usernames: form.usernames,
+            osType: form.osType,
             meta,
           });
         } else {

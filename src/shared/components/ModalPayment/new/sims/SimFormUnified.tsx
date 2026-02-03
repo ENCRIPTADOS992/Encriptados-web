@@ -39,9 +39,8 @@ type Phase = "form" | "card_confirm";
 
 export default function SimFormUnified({
   formType,
-  // productid y product se mantienen para posible uso futuro (ej: TIM)
-  productid: _productid = undefined,
-  product: _product = undefined,
+  productid = undefined,
+  product = undefined,
   unitPrice,
   quantity,
   discount = 0,
@@ -52,9 +51,6 @@ export default function SimFormUnified({
   onSuccess,
   loading = false,
 }: SimFormUnifiedProps) {
-  // Suprimir warnings de variables no usadas
-  void _productid;
-  void _product;
   const {
     register,
     handleSubmit,
@@ -191,12 +187,24 @@ export default function SimFormUnified({
 
         const tottoliMethod = method === "card" ? "card" : "cryptomus";
 
+        // Resolver product_id: prioridad productid prop, luego product.id
+        const resolvedProductId = productid 
+          ? Number(productid) 
+          : (product?.id ? Number(product.id) : null);
+        
+        console.log("[SimFormUnified] Product ID Resolution:", {
+          productid,
+          productDotId: product?.id,
+          resolvedProductId
+        });
+
         const payload: any = {
           email: data.email,
           method: tottoliMethod,
           amount: amountUsd,
           currency: "USD",
           product: productName,
+          product_id: resolvedProductId || undefined,
           meta: {
             formType,
             quantity,

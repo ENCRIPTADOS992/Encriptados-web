@@ -55,6 +55,7 @@ export async function createOrderAndIntent({
   selectedOption,
   silentPhoneMode,
   usernames,
+  osType,
   meta,
 }: {
   orderType: "roaming";
@@ -72,6 +73,7 @@ export async function createOrderAndIntent({
   selectedOption?: number;
   silentPhoneMode?: string;
   usernames?: string[];
+  osType?: "android" | "ios";
   meta?: Record<string, any>;
 }): Promise<{
   ok: boolean;
@@ -104,6 +106,7 @@ export async function createOrderAndIntent({
     selected_option: selectedOption,
     silent_phone_mode: silentPhoneMode,
     usernames,
+    system: osType,
     meta,
   });
 
@@ -182,7 +185,7 @@ export async function createUserIdOrderAndIntent({
     licensetime,
     license_type: licenseType,
     renew_id: renewId,
-    os_type: osType,
+    system: osType,
     silent_phone_mode: silentPhoneMode,
     usernames,
     coupon_code: couponCode,
@@ -210,6 +213,67 @@ export async function fetchPublicStatus(orderId: number): Promise<{
   const r = await fetch(`${API_BASE_URL}/orders/${orderId}/public-status`);
   if (!r.ok) throw new Error(`HTTP ${r.status} consultando estado público`);
   return r.json();
+}
+
+// =====================
+// RENEWAL (Renovación de licencia)
+// =====================
+export async function createRenewalOrder({
+  productId,
+  licenseId,
+  email,
+  quantity = 1,
+  months,
+  amountUsd,
+  currency = "USD",
+}: {
+  productId: number;
+  licenseId: string;
+  email: string;
+  quantity?: number;
+  months: number;
+  amountUsd: number;
+  currency?: "USD";
+}): Promise<{
+  ok: boolean;
+  order_id: number;
+  status: string;
+  provider: string;
+  provider_ref?: string | null;
+  client_secret: string;
+  payment_url?: string | null;
+}> {
+  const url = `${API_BASE_URL}/orders/renewal`;
+
+  const payload = omitUndefined({
+    product_id: productId,
+    license_id: licenseId,
+    email,
+    qty: quantity,
+    months,
+    payment_provider: "stripe",
+    amount: Number(amountUsd.toFixed(2)),
+    currency,
+  });
+
+  const r = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const text = await r.text();
+  const data = text ? JSON.parse(text) : {};
+
+  if (!r.ok) {
+    throw new Error(data?.message || data?.error || `HTTP ${r.status}`);
+  }
+
+  if (!data?.order_id || !data?.client_secret) {
+    throw new Error("Respuesta inválida: falta order_id o client_secret");
+  }
+
+  return data;
 }
 
 // =====================

@@ -23,7 +23,7 @@ export default function CategoryPreview({
   const isExternal = (href: string) => /^https?:\/\//i.test(href);
   
   return (
-    <div className="w-[180px] flex-shrink-0">
+    <div className="w-[150px] xl:w-[180px] flex-shrink-0">
       {/* Encabezado de la categoría */}
       <p className="text-[12px] font-normal text-[#757575] mb-4 leading-none whitespace-nowrap">{categoryTitle || "Categorías"}</p>
       

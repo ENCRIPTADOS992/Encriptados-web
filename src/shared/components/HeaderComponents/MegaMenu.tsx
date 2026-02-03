@@ -62,7 +62,7 @@ export default function MegaMenu({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
-        className="absolute right-80 z-20 mt-2"
+        className="absolute right-0 2xl:right-80 z-20 mt-2 max-w-[calc(100vw-2rem)]"
         style={{
           background: "#0E0E0EB2",
           backdropFilter: "blur(34px)",
@@ -70,10 +70,10 @@ export default function MegaMenu({
         }}
         onMouseLeave={closeMegaMenu}
       >
-        <div className="px-8 py-8">
-          <div className="flex gap-8">
+        <div className="px-6 py-6 xl:px-8 xl:py-8">
+          <div className="flex gap-6 xl:gap-8">
             {/* Columna izquierda: Imagen de preview */}
-            <div className="w-[380px] flex-shrink-0">
+            <div className="w-[280px] xl:w-[380px] flex-shrink-0">
               <div className="rounded-xl overflow-hidden">
                 <Image
                   src={
@@ -88,7 +88,7 @@ export default function MegaMenu({
                   }
                   width={380}
                   height={260}
-                  className="w-full h-[240px] object-cover rounded-xl"
+                  className="w-full h-[180px] xl:h-[240px] object-cover rounded-xl"
                 />
               </div>
               <div className="mt-4">
@@ -111,7 +111,7 @@ export default function MegaMenu({
             </div>
 
             {/* Columna central: Lista de categorías */}
-            <div className="w-[280px] flex-shrink-0 space-y-1">
+            <div className="w-[220px] xl:w-[280px] flex-shrink-0 space-y-1">
               {categories.map((category, index) => {
                 const isActive = activeCategory === index;
                 const CategoryContent = (
