@@ -46,7 +46,7 @@ export function useCheckout() {
         licensetime: args.licensetime,
         license_type: args.licenseType,
         renew_id: args.renewId,
-        os_type: args.osType,
+        system: args.osType,
         silent_phone_mode: args.silentPhoneMode,
         usernames: args.usernames,
         coupon_code: args.couponCode,
@@ -79,6 +79,7 @@ export function useCheckout() {
     selectedOption?: number;
     silentPhoneMode?: string;
     usernames?: string[];
+    osType?: "android" | "ios";
     meta?: Record<string, any>;
   }) => {
     setLoading(true);
@@ -99,6 +100,7 @@ export function useCheckout() {
         selected_option: args.selectedOption,
         silent_phone_mode: args.silentPhoneMode,
         usernames: args.usernames,
+        system: args.osType,
         meta: args.meta,
       });
       setLastOrderId(res.order_id);

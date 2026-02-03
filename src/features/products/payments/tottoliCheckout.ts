@@ -8,6 +8,7 @@ export interface TottoliCheckoutPayload {
   method: TottoliMethod;
   amount: number;
   currency?: string;
+  product_id?: number;
   qty?: number;
   sim_number?: string;
   iccid?: string;
