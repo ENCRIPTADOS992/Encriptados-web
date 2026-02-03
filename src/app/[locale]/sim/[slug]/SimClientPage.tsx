@@ -23,6 +23,11 @@ import WhyCallSim from "@/app/[locale]/encrypted-sim/components/WhyCallSim/WhyCa
 import BannerCoverage from "@/shared/BannerCoverage";
 import FAQSection from "@/app/[locale]/apps/component/templateProduct/FAQSection";
 import WhereUseSimSection from "@/app/[locale]/tim-sim/components/WhereUseSimSection";
+import OurSim from "@/app/[locale]/tim-sim/components/OurSim";
+import PromoBanner from "@/app/[locale]/tim-sim/components/PromoBanner";
+import BannerAnonymous from "@/app/[locale]/tim-sim/components/BannerAnonymous";
+import CustomShapeDivider from "@/app/[locale]/tim-sim/components/CustomShapeDivider";
+import OurBne from "@/app/[locale]/tim-sim/components/OurBne";
 
 // Hooks y servicios
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
@@ -517,81 +522,113 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        <FeaturesList variant={showTimSections ? "tim" : "encrypted"} />
+        {showTimSections ? (
+          <OurSim />
+        ) : (
+          <FeaturesList variant="encrypted" />
+        )}
       </motion.section>
 
       {/* Sección Nuestro Objetivo */}
       <motion.section
-        className="bg-[#f4f8fa] py-12 md:py-16 lg:py-20"
+        className={showTimSections ? "" : "bg-[#f4f8fa] py-12 md:py-16 lg:py-20"}
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <OurObjetive variant={showTimSections ? "tim" : "encrypted"} />
-        </div>
-      </motion.section>
-
-      {/* Sección Comunícate desde cualquier lugar */}
-      <motion.section
-        className="bg-[#F4F8FA] py-12 md:py-16 lg:py-20"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800">
-            {t("comunicationTitle")}
-          </h2>
-        </div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <BannerSecure />
-        </div>
-      </motion.section>
-
-      {/* Sección Paga solo por lo que usas */}
-      <motion.section
-        className="py-12 md:py-16 lg:py-20"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <PayForUse />
-        </div>
-      </motion.section>
-
-      {/* Sección Por qué llamar con la SIM Encriptada */}
-      <motion.section
-        className="py-16 md:py-20"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-12 md:mb-16">
-            {t("whyCallWithEncryptedSIM.title")}
-          </h2>
-          <div className="flex justify-center">
-            <WhyCallSim />
+        {showTimSections ? (
+          <PromoBanner />
+        ) : (
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <OurObjetive variant="encrypted" />
           </div>
-        </div>
+        )}
       </motion.section>
 
-      {/* Sección Cobertura en más de 200 países */}
+      {/* Sección Comunícate desde cualquier lugar / Tu compra es anónima */}
       <motion.section
-        className="pt-12 md:pt-16"
+        className={showTimSections ? "bg-[#f4f8fa] overflow-hidden" : "bg-[#F4F8FA] py-12 md:py-16 lg:py-20"}
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        <BannerCoverage />
+        {showTimSections ? (
+          <>
+            <div className="relative py-16 md:py-20 lg:py-24 z-30">
+              <BannerAnonymous />
+            </div>
+            <div className="relative -translate-y-[300px] -mb-[300px] md:-translate-y-[400px] md:-mb-[400px] lg:-translate-y-[500px] lg:-mb-[500px] z-20 pointer-events-none">
+              <CustomShapeDivider />
+            </div>
+            <div className="bg-gradient-to-b from-[#020202] via-[#020202] to-[#009DFF] py-20 md:py-24 lg:py-32 px-4 relative z-10">
+              <div className="w-full">
+                <OurBne />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-16">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800">
+                {t("comunicationTitle")}
+              </h2>
+            </div>
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <BannerSecure />
+            </div>
+          </>
+        )}
       </motion.section>
+
+      {/* Sección Paga solo por lo que usas - Solo Encriptados */}
+      {!showTimSections && (
+        <motion.section
+          className="py-12 md:py-16 lg:py-20"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <PayForUse />
+          </div>
+        </motion.section>
+      )}
+
+      {/* Sección Por qué llamar con la SIM Encriptada - Solo Encriptados */}
+      {!showTimSections && (
+        <motion.section
+          className="py-16 md:py-20"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-center text-gray-800 mb-12 md:mb-16">
+              {t("whyCallWithEncryptedSIM.title")}
+            </h2>
+            <div className="flex justify-center">
+              <WhyCallSim />
+            </div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* Sección Cobertura en más de 200 países - Solo Encriptados */}
+      {!showTimSections && (
+        <motion.section
+          className="pt-12 md:pt-16"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <BannerCoverage />
+        </motion.section>
+      )}
 
       {/* Sección Preguntas Frecuentes */}
       {faqs.length > 0 && (

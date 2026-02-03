@@ -63,14 +63,15 @@ const BneSimPage = ({ locale }: BneSimPageProps) => {
         <div className="w-full">
           <PromoBanner />
         </div>
-        <div className="relative py-16 md:py-20 lg:py-24 z-10">
+        <div className="relative py-16 md:py-20 lg:py-24 z-30">
           <BannerAnonymous />
         </div>
-        <div className="relative -translate-y-[400px] -mb-[400px] z-0">
+        <div className="relative -translate-y-[300px] -mb-[300px] md:-translate-y-[400px] md:-mb-[400px] lg:-translate-y-[500px] lg:-mb-[500px] z-20 pointer-events-none">
           <CustomShapeDivider />
         </div>
         <div
           className="
+            relative z-10
             bg-gradient-to-b
             from-[#020202]    
             via-[#020202]   
