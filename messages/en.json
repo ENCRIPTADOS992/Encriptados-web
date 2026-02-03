@@ -1143,7 +1143,7 @@
     },
     "router": {
       "title": "router",
-      "description": "router de encriptación",
+      "description": "Router de encriptación",
       "items": {
         "routerCamaleon": {
           "title": "Router Camaleon",

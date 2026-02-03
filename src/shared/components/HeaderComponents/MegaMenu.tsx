@@ -47,33 +47,80 @@ export default function MegaMenu({
   const activeCategoryLink = activeCategoryData.link;
   const activeCategoryImage = activeCategoryData.image || "/placeholder.svg";
 
+  // Determinar el título de la tercera columna según la categoría
+  const getSubcategoryTitle = (categoryTitle: string) => {
+    const title = categoryTitle?.toLowerCase() || "";
+    if (title.includes("sim")) return "Categorías";
+    if (title.includes("software") || title.includes("sistema")) return "Sistemas";
+    if (title.includes("router")) return "Productos";
+    return categoryTitle;
+  };
+
   return (
     <AnimatePresence>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
-        className="absolute left-0 right-0 border-b border-[#1A1A1A] shadow-xl z-10 px-5 pt-4 pb-6"
+        className="absolute right-80 z-20 mt-2"
         style={{
-          background: "rgba(12, 12, 12, 0.85)",
-          backdropFilter: "blur(42px)",
+          background: "#0E0E0EB2",
+          backdropFilter: "blur(34px)",
+          borderRadius: "1.25rem",
         }}
+        onMouseLeave={closeMegaMenu}
       >
-        <div className="max-w-[1400px] mx-auto px-4 py-8">
-          <div className="grid grid-cols-12 gap-20">
-            {/* Categorías */}
-            <div className="col-span-4 space-y-6">
-              {categories.map((category, index) => (
-                isExternal(category.link) ? (
-                  <a
-                    href={category.link}
-                    key={index}
-                    className={`block p-4 rounded-lg ${
-                      activeCategory === index
-                        ? "bg-[#1A1A1A]"
-                        : "hover:bg-[#1A1A1A]"
+        <div className="px-8 py-8">
+          <div className="flex gap-8">
+            {/* Columna izquierda: Imagen de preview */}
+            <div className="w-[380px] flex-shrink-0">
+              <div className="rounded-xl overflow-hidden">
+                <Image
+                  src={
+                    hoveredItem?.image ||
+                    activeCategoryImage ||
+                    "/placeholder.svg"
+                  }
+                  alt={
+                    hoveredItem?.title ||
+                    activeCategoryData.title ||
+                    t("preview")
+                  }
+                  width={380}
+                  height={260}
+                  className="w-full h-[240px] object-cover rounded-xl"
+                />
+              </div>
+              <div className="mt-4">
+                <h3 className="text-white text-[20px] font-normal leading-none">
+                  {hoveredItem?.description ||
+                    hoveredItem?.title ||
+                    activeCategoryData.description ||
+                    t("preview")}
+                </h3>
+                <Link
+                  prefetch={true}
+                  href={hoveredItem?.link || activeCategoryLink || "#"}
+                  className="inline-flex items-center text-[16px] font-normal text-[#757575] hover:text-white mt-3 transition-colors leading-none"
+                  onClick={closeMegaMenu}
+                >
+                  {t("seeMore")}
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Columna central: Lista de categorías */}
+            <div className="w-[280px] flex-shrink-0 space-y-1">
+              {categories.map((category, index) => {
+                const isActive = activeCategory === index;
+                const CategoryContent = (
+                  <div
+                    className={`block px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? "bg-[#171717]"
+                        : "hover:bg-[#171717]"
                     }`}
-                    onClick={closeMegaMenu}
                     onMouseEnter={() => {
                       setActiveCategory(index);
                       setHoveredItem({
@@ -84,128 +131,50 @@ export default function MegaMenu({
                       });
                     }}
                   >
-                    <h3 className="text-white font-medium flex items-center">
+                    <h3 className={`text-[18px] font-semibold leading-none flex items-center gap-2 ${
+                      isActive ? "text-white" : "text-[#757575]"
+                    }`}>
                       {category.title}
-                      {activeCategory === index && (
-                        <ArrowRight className="w-4 h-4 ml-1" />
-                      )}
+                      {isActive && <ArrowRight className="w-4 h-4" />}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className={`text-[12px] font-normal mt-2 leading-none ${
+                      isActive ? "text-[#757575]" : "text-[#757575]"
+                    }`}>
                       {category.description}
                     </p>
+                  </div>
+                );
+
+                return isExternal(category.link) ? (
+                  <a
+                    href={category.link}
+                    key={index}
+                    onClick={closeMegaMenu}
+                  >
+                    {CategoryContent}
                   </a>
                 ) : (
                   <Link
                     prefetch={true}
                     href={category.link}
                     key={index}
-                    className={`block p-4 rounded-lg ${
-                      activeCategory === index
-                        ? "bg-[#1A1A1A]"
-                        : "hover:bg-[#1A1A1A]"
-                    }`}
                     onClick={closeMegaMenu}
-                    onMouseEnter={() => {
-                      setActiveCategory(index);
-                      setHoveredItem({
-                        title: "",
-                        link: "",
-                        description: "",
-                        image: "",
-                      });
-                    }}
                   >
-                    <h3 className="text-white font-medium flex items-center">
-                      {category.title}
-                      {activeCategory === index && (
-                        <ArrowRight className="w-4 h-4 ml-1" />
-                      )}
-                    </h3>
-                    <p className="text-sm text-gray-400 mt-1">
-                      {category.description}
-                    </p>
+                    {CategoryContent}
                   </Link>
-                )
-              ))}
+                );
+              })}
             </div>
 
-            {/* Contenido de la categoría activa */}
-            {activeItems.length > 0 ? (
-              <>
-                <CategoryPreview
-                  items={activeItems}
-                  setHoveredItem={setHoveredItem}
-                  categoryLink={activeCategoryLink}
-                  closeMegaMenu={closeMegaMenu}
-                />
-
-                <div className="col-span-5">
-                  <div className="rounded-xl overflow-hidden">
-                    <Image
-                      src={
-                        hoveredItem?.image ||
-                        activeCategoryImage ||
-                        "/placeholder.svg"
-                      }
-                      alt={
-                        hoveredItem?.title ||
-                        activeCategoryData.title ||
-                        t("preview")
-                      }
-                      width={400}
-                      height={300}
-                      className="w-full object-cover rounded-xl"
-                    />
-                    <div className="p-4">
-                      <h3 className="text-white font-medium">
-                        {hoveredItem?.description ||
-                          hoveredItem?.title ||
-                          activeCategoryData.description ||
-                          t("preview")}
-                      </h3>
-                      {hoveredItem?.link && (
-                        <Link
-                          prefetch={true}
-                          href={hoveredItem.link}
-                          className="inline-flex items-center text-sm text-[#44D3FF] hover:text-white mt-2 transition-colors"
-                          onClick={closeMegaMenu}
-                        >
-                          {t("seeMore")}
-                          <ArrowRight className="w-4 h-4 ml-1" />
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="col-span-6">
-                <div className="rounded-xl overflow-hidden">
-                  <Image
-                    src={activeCategoryImage}
-                    alt={activeCategoryData.title || t("category")}
-                    width={400}
-                    height={300}
-                    className="w-[550px] object-cover rounded-xl"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-white font-medium">
-                      {activeCategoryData.description || t("category")}
-                    </h3>
-                    {activeCategoryLink && (
-                      <Link
-                        prefetch={true}
-                        href={activeCategoryLink}
-                        className="inline-flex items-center text-sm text-[#44D3FF] hover:text-white mt-2 transition-colors"
-                        onClick={closeMegaMenu}
-                      >
-                        {t("seeMore")}
-                        <ArrowRight className="w-4 h-4 ml-1" />
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
+            {/* Columna derecha: Subcategorías (solo si hay items) */}
+            {activeItems.length > 0 && (
+              <CategoryPreview
+                items={activeItems}
+                setHoveredItem={setHoveredItem}
+                categoryLink={activeCategoryLink}
+                closeMegaMenu={closeMegaMenu}
+                categoryTitle={getSubcategoryTitle(activeCategoryData.title)}
+              />
             )}
           </div>
         </div>

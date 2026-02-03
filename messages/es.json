@@ -1083,7 +1083,7 @@
       }
     },
     "systems": {
-      "title": "Software",
+      "title": "Sistemas",
       "description": "Sistemas de encriptación de datos",
       "items": {
         "secureMdmIphone": {

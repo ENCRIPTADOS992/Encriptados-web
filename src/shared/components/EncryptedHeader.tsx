@@ -93,7 +93,6 @@ export default function EncryptedHeader() {
     <header
       className="relative z-50"
       ref={headerRef}
-      onMouseLeave={closeMegaMenu}
     >
       <div className="bg-[#151515] border-b border-[#1A1A1A]">
         <SectionWrapper maxWidth="header" className="py-4">
