@@ -3,7 +3,6 @@ import MenuDropdownProductBar from "./MenuDropdownProductBar";
 import FilterRegionCountry from "./FilterRegionCountry";
 
 import { useFormContext } from "react-hook-form";
-import EncryptedSimIcon from "./simicons/EncryptedSimIcon";
 import IraSimIcon from "./simicons/IraSimIcon";
 import TimSimIcon from "./simicons/TimSimIcon";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
@@ -77,7 +76,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             {
               label: " ",
               value: "encriptados",
-              icon: <EncryptedSimIcon width={100} height={25}
+              icon: <EncryptedLogoSvg width={100} height={25}
               />
             },
             {

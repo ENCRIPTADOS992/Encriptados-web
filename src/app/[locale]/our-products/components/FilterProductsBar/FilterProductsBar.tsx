@@ -11,7 +11,7 @@ import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterRegionCountry from "./FilterRegionCountry";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
-import EncryptedSimIcon from "./simicons/EncryptedSimIcon";
+import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 import TimSimIcon from "./simicons/TimSimIcon";
 
 import { ProductFilters } from "@/features/products/types/ProductFilters";
@@ -148,7 +148,7 @@ export default function FilterProductsBar({
               {
                 label: " ",
                 value: "encriptados",
-                icon: <EncryptedSimIcon width={115} height={25} />
+                icon: <EncryptedLogoSvg width={115} height={25} />
               },
               {
                 label: " ",
