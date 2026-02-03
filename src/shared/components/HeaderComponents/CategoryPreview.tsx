@@ -2,61 +2,67 @@ import Link from "next/link";
 
 type MenuItem = {
   title: string;
-  link: string; // Enlace a la sección o página
+  link: string;
   description?: string;
 };
 
 type Props = {
-  items: MenuItem[]; // Lista de elementos de la categoría
-  setHoveredItem: (item: MenuItem) => void; // Actualiza el elemento seleccionado para la previsualización
-  categoryLink?: string; // Enlace a la categoría principal (opcional)
-  closeMegaMenu?: () => void; // Nueva función para cerrar el MegaMenu
+  items: MenuItem[];
+  setHoveredItem: (item: MenuItem) => void;
+  categoryLink?: string;
+  closeMegaMenu?: () => void;
+  categoryTitle?: string;
 };
 
 export default function CategoryPreview({
   items,
   setHoveredItem,
-  closeMegaMenu, // Recibe la función para cerrar el menú
+  closeMegaMenu,
+  categoryTitle,
 }: Props) {
   const isExternal = (href: string) => /^https?:\/\//i.test(href);
+  
   return (
-    <div className="col-span-3">
-      <div className="space-y-4">
-        {/* Renderiza todos los elementos de la categoría */}
-        {items.map((item, index) =>
-          item.link ? (
+    <div className="w-[180px] flex-shrink-0">
+      {/* Encabezado de la categoría */}
+      <p className="text-[12px] font-normal text-[#757575] mb-4 leading-none whitespace-nowrap">{categoryTitle || "Categorías"}</p>
+      
+      <div className="space-y-3">
+        {items.map((item, index) => {
+          const ItemContent = (
+            <p className="text-[#757575] text-[16px] font-bold hover:text-white transition-colors py-1 leading-none whitespace-nowrap">
+              {item.title}
+            </p>
+          );
+
+          return item.link ? (
             isExternal(item.link) ? (
               <a
                 key={index}
                 href={item.link}
-                className="block text-gray-300 hover:text-white transition-colors"
+                className="block"
                 onMouseEnter={() => setHoveredItem(item)}
                 onClick={() => closeMegaMenu && closeMegaMenu()}
               >
-                <div>
-                  <p className="font-medium">{item.title}</p>
-                </div>
+                {ItemContent}
               </a>
             ) : (
               <Link
-                passHref={true}
                 key={index}
-                href={item.link} // Usa el enlace definido en `item.link`
-                className="block text-gray-300 hover:text-white transition-colors"
-                onMouseEnter={() => setHoveredItem(item)} // Actualiza el estado del elemento seleccionado
-                onClick={() => closeMegaMenu && closeMegaMenu()} // Cierra el menú si `closeMegaMenu` está definido
+                href={item.link}
+                className="block"
+                onMouseEnter={() => setHoveredItem(item)}
+                onClick={() => closeMegaMenu && closeMegaMenu()}
               >
-                <div>
-                  <p className="font-medium">{item.title}</p>
-                </div>
+                {ItemContent}
               </Link>
             )
           ) : (
-            <div key={index} className="block text-gray-500">
-              {item.title} (Enlace no disponible)
+            <div key={index} className="block text-gray-600 text-sm py-1">
+              {item.title}
             </div>
-          )
-        )}
+          );
+        })}
       </div>
     </div>
   );
