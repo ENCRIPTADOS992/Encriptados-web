@@ -28,7 +28,7 @@ const config: Config = {
         xl: '1280px',
       },
       fontFamily: {
-        sans: ["Inter", "Roboto", "Helvetica", "Arial", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "Roboto", "Helvetica", "Arial", "sans-serif"],
       },
       fontSize: {
         'promo': ['54px', { lineHeight: '1.2', fontWeight: '700' }],
