@@ -94,6 +94,7 @@ export default function SimFormUnified({
   const [stripeError, setStripeError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [formData, setFormData] = React.useState<SimFormValues | null>(null);
+  const [showErrors, setShowErrors] = React.useState(false);
 
   // Stripe - solo se activa cuando método es "card"
   const { status: stripeStatus, error: mountError, stripeRef, splitRef } = useStripeSplit(method === "card");
@@ -160,6 +161,10 @@ export default function SimFormUnified({
   // Paso 1: Crear orden y obtener client_secret (o redirigir a crypto)
   // Handler unificado de pago directo
   const handlePay = async () => {
+    if (!canPay) {
+      setShowErrors(true);
+      return;
+    }
     await handleSubmit(async (data: SimFormValues) => {
       console.log("[SimFormUnified] START PAY 👉", { data, method });
       setFormData(data);
@@ -325,6 +330,16 @@ export default function SimFormUnified({
         errors={errors}
         countryValue={country}
         quantity={quantity}
+        showErrors={showErrors}
+        validations={{
+          emailOk,
+          simOk,
+          fullNameOk,
+          addressOk,
+          countryOk,
+          postalOk,
+          phoneOk,
+        }}
       />
 
       <label className="flex items-center gap-2 text-[12px] leading-[18px] text-[#010C0F] !mt-1.5">
@@ -332,7 +347,7 @@ export default function SimFormUnified({
           type="checkbox"
           checked={terms}
           onChange={(e) => setTerms(e.target.checked)}
-          className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
+          className={`w-[18px] h-[18px] border-2 rounded-[2px] accent-black focus:outline-none focus:ring-0 ${showErrors && !terms ? "border-red-500" : "border-black"}`}
         />
         <span className="select-none">
           Acepto{" "}
@@ -349,7 +364,7 @@ export default function SimFormUnified({
       {method === "card" && (
         <div className="space-y-1.5">
           {/* Titular */}
-          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+          <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && cardName.trim().length <= 1 ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
             <input
               {...register("cardName")}
               onChange={(e) => setValue("cardName", onlyLetters(e.target.value))}
@@ -363,7 +378,7 @@ export default function SimFormUnified({
           <div className="relative">
             <div
               id="card-number-el"
-              className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]"
+              className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && stripeStatus === "ready" ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}
             />
             {(stripeStatus === "idle" || stripeStatus === "loading") && (
               <div className="absolute inset-0 flex items-center justify-center bg-[#EBEBEB] rounded-[8px]">
@@ -407,15 +422,14 @@ export default function SimFormUnified({
       <button
         type="button"
         onClick={handlePay}
-        disabled={!canPay || loading}
-        aria-disabled={!canPay || loading}
+        disabled={isSubmitting || loading}
         className={`mt-4 w-full h-[54px]
           rounded-lg px-4
           inline-flex items-center justify-center gap-2.5
-          text-white text-sm font-semibold
-          ${canPay && !loading
-            ? "bg-black hover:bg-black/90"
-            : "bg-black/40 cursor-not-allowed"
+          text-sm font-semibold transition-all
+          ${canPay && !isSubmitting && !loading
+            ? "bg-black text-white hover:bg-black/90"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >

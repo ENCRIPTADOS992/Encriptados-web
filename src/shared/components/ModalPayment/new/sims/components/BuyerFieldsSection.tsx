@@ -12,6 +12,16 @@ import {
   TWO_COL_GRID_ALWAYS_2,
 } from "../layout/simFormLayout";
 
+type Validations = {
+  emailOk: boolean;
+  simOk: boolean;
+  fullNameOk: boolean;
+  addressOk: boolean;
+  countryOk: boolean;
+  postalOk: boolean;
+  phoneOk: boolean;
+};
+
 type Props = {
   formType: FormType;
   cfg: SimFormConfig;
@@ -19,6 +29,8 @@ type Props = {
   errors: FieldErrors<SimFormValues>;
   countryValue: string;
   quantity?: number;
+  showErrors?: boolean;
+  validations?: Validations;
 };
 
 export function BuyerFieldsSection({
@@ -28,7 +40,13 @@ export function BuyerFieldsSection({
   errors,
   countryValue,
   quantity = 1,
+  showErrors = false,
+  validations,
 }: Props) {
+  // Helper para determinar si un campo debe mostrarse con error
+  const shouldShowFieldError = (fieldError: boolean, isValid: boolean) => {
+    return fieldError || (showErrors && !isValid);
+  };
   const { emailFullWidth } = cfg;
   const simNextToEmail = formType === "tim_data" || formType === "tim_minutes";
 
@@ -46,7 +64,7 @@ export function BuyerFieldsSection({
             {simNextToEmail ? (
               quantity <= 1 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className={getFieldWrapperClassName(!!errors.email)}>
+                  <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                     <input
                       {...register("email", { required: true })}
                       placeholder="Ingresa tu Email"
@@ -54,7 +72,7 @@ export function BuyerFieldsSection({
                       className="w-full bg-transparent outline-none text-[14px] py-2"
                     />
                   </div>
-                  <div className={getFieldWrapperClassName(!!errors.simNumber)}>
+                  <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
                     <input
                       {...register("simNumber", { required: cfg.reqSimNumber })}
                       placeholder="Número de SIM"
@@ -64,7 +82,7 @@ export function BuyerFieldsSection({
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className={getFieldWrapperClassName(!!errors.email)}>
+                  <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                     <input
                       {...register("email", { required: true })}
                       placeholder="Ingresa tu Email"
@@ -76,7 +94,7 @@ export function BuyerFieldsSection({
                     <div
                       key={idx}
                       className={getFieldWrapperClassName(
-                        !!(errors as any).simNumbers?.[idx]
+                        shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
                       )}
                     >
                       <input
@@ -93,7 +111,7 @@ export function BuyerFieldsSection({
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className={getFieldWrapperClassName(!!errors.email)}>
+                  <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                     <input
                       {...register("email", { required: true })}
                       placeholder="Ingresa tu Email"
@@ -106,7 +124,7 @@ export function BuyerFieldsSection({
 
                 {quantity <= 1 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className={getFieldWrapperClassName(!!errors.simNumber)}>
+                    <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
                       <input
                         {...register("simNumber", { required: cfg.reqSimNumber })}
                         placeholder="Número de SIM"
@@ -121,7 +139,7 @@ export function BuyerFieldsSection({
                       <div
                         key={idx}
                         className={getFieldWrapperClassName(
-                          !!(errors as any).simNumbers?.[idx]
+                          shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
                         )}
                       >
                         <input
@@ -140,7 +158,7 @@ export function BuyerFieldsSection({
           </>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className={getFieldWrapperClassName(!!errors.email)}>
+            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
               <input
                 {...register("email", { required: true })}
                 placeholder="Ingresa tu Email"
@@ -152,7 +170,7 @@ export function BuyerFieldsSection({
         )
       ) : (
         <div className={gridForPairs}>
-          <div className={getFieldWrapperClassName(!!errors.email)}>
+          <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
             <input
               {...register("email", { required: true })}
               placeholder="Ingresa tu Email"
@@ -177,7 +195,7 @@ export function BuyerFieldsSection({
       {cfg.showSimNumber && !emailFullWidth && (
         quantity <= 1 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className={getFieldWrapperClassName(!!errors.simNumber)}>
+            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
               <input
                 {...register("simNumber", { required: cfg.reqSimNumber })}
                 placeholder="Número de SIM"
@@ -191,7 +209,7 @@ export function BuyerFieldsSection({
               <div
                 key={idx}
                 className={getFieldWrapperClassName(
-                  !!(errors as any).simNumbers?.[idx]
+                  shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
                 )}
               >
                 <input
@@ -209,7 +227,7 @@ export function BuyerFieldsSection({
 
 
       {cfg.showAddress && (
-        <div className={getFieldWrapperClassName(!!errors.address)}>
+        <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.address, validations?.addressOk ?? true))}>
           <input
             {...register("address", { required: cfg.reqAddress })}
             placeholder="Dirección de envío"
@@ -220,7 +238,7 @@ export function BuyerFieldsSection({
 
       <div className={gridForPairs}>
         {cfg.showFullName && (
-          <div className={getFieldWrapperClassName(!!errors.fullName)}>
+          <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.fullName, validations?.fullNameOk ?? true))}>
             <input
               {...register("fullName", { required: cfg.reqFullName })}
               placeholder="Nombre completo"
@@ -232,8 +250,10 @@ export function BuyerFieldsSection({
         {cfg.showCountry ? (
           <div
             className={getFieldWrapperClassName(
-              !!errors.country ||
-                (countryValue.length > 0 && countryValue.trim() === "")
+              shouldShowFieldError(
+                !!errors.country || (countryValue.length > 0 && countryValue.trim() === ""),
+                validations?.countryOk ?? true
+              )
             )}
           >
             <input
@@ -255,7 +275,7 @@ export function BuyerFieldsSection({
       {(cfg.showPostal || cfg.showPhone) && (
         <div className={gridForPairs}>
           {cfg.showPostal ? (
-            <div className={getFieldWrapperClassName(!!errors.postalCode)}>
+            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.postalCode, validations?.postalOk ?? true))}>
               <input
                 {...register("postalCode", { required: cfg.reqPostal })}
                 placeholder="Código postal"
@@ -266,7 +286,7 @@ export function BuyerFieldsSection({
             <div />
           )}
           {cfg.showPhone ? (
-            <div className={getFieldWrapperClassName(!!errors.phone)}>
+            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.phone, validations?.phoneOk ?? true))}>
               <input
                 {...register("phone", { required: cfg.reqPhone })}
                 placeholder="Teléfono"
