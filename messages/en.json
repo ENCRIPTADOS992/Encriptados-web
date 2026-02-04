@@ -3028,6 +3028,8 @@
     "months": "Months",
     "minutes": "Minutes",
     "rechargeAmount": "Recharge amount",
+    "esimPrice": "eSIM price",
+    "simPrice": "SIM price",
     "chooseGigas": "Choose your Gigas (GB)",
     "totalToPay": "Total to pay",
     "enterPromoCode": "Enter promo code",

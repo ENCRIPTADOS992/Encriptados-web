@@ -2497,6 +2497,8 @@
     "months": "Mois",
     "minutes": "Minutes",
     "rechargeAmount": "Montant de recharge",
+    "esimPrice": "Prix de l'eSIM",
+    "simPrice": "Prix de la SIM",
     "chooseGigas": "Choisissez vos Gigas (GB)",
     "totalToPay": "Total à payer",
     "enterPromoCode": "Entrez un code promo",

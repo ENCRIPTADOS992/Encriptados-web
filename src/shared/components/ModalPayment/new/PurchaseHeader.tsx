@@ -214,6 +214,10 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const isEsimRecargaDatosTitle = titleNorm.includes("esim + recarga datos");
   const isEsimDatosTitle = titleNorm.includes("esim + datos");
+  // eSIM solo (sin datos ni recarga)
+  const isEsimOnlyTitle = titleNorm === "esim" || (titleNorm.includes("esim") && !titleNorm.includes("datos") && !titleNorm.includes("data") && !titleNorm.includes("recarga"));
+  // SIM Física
+  const isSimFisicaTitle = titleNorm.includes("sim física") || titleNorm.includes("sim fisica");
   const ESIM_RECARGA_BASE_PRICE = 12;
 
   const showRechargeAmount =
@@ -451,30 +455,46 @@ const PurchaseHeader: React.FC<Props> = ({
         </div>
 
         {/* Columna 2: Información del producto */}
-        <div className="flex flex-col">
-          {/* Encabezado: nombre + precio */}
+        <div className="flex flex-col gap-2">
+          {/* Encabezado: solo nombre (precio se muestra en Total a pagar) */}
           <div className="flex items-center justify-between gap-4">
             <h3 className="text-base font-semibold text-black truncate">
               {product?.name ?? "Producto"}
             </h3>
-            <div className="text-base font-bold text-[#141414] shrink-0">
-              {unitPrice} <span className="font-bold">USD</span>
-            </div>
           </div>
 
-          <div className="mt-1 flex flex-col gap-2">
-            {/* Fila: Monto de recarga */}
-            {showRechargeAmount && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
-                <div ref={rechargeRef} className="relative z-[1000]">
-                  {(() => {
-                    const opts = RECHARGE_AMOUNTS.filter(
-                      (x: RechargeAmountOpt) => Number(x.value) > 0
-                    );
-                    const current =
-                      opts.find((p) => Number(p.value) === Number(selectedPlanId)) ??
-                      opts[0];
+          {/* Fila: Precio de eSIM (para eSIM solo, eSIM + Datos, eSIM + Recarga Datos) */}
+          {(isEsimRecargaDatosTitle || isEsimDatosTitle || isEsimOnlyTitle) && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("esimPrice", { defaultValue: "Precio de eSIM" })}</span>
+              <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
+                {ESIM_RECARGA_BASE_PRICE} {currency}
+              </span>
+            </div>
+          )}
+
+          {/* Fila: Precio de SIM (para SIM Física) */}
+          {isSimFisicaTitle && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("simPrice", { defaultValue: "Precio de SIM" })}</span>
+              <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
+                {unitPrice} {currency}
+              </span>
+            </div>
+          )}
+
+          {/* Fila: Monto de recarga */}
+          {showRechargeAmount && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("rechargeAmount")}</span>
+              <div ref={rechargeRef} className="relative z-[1000]">
+                {(() => {
+                  const opts = RECHARGE_AMOUNTS.filter(
+                    (x: RechargeAmountOpt) => Number(x.value) > 0
+                  );
+                  const current =
+                    opts.find((p) => Number(p.value) === Number(selectedPlanId)) ??
+                    opts[0];
                     const label = current ? `${current.value} ${currency}` : `${currency}`;
                     return (
                       <button
@@ -680,7 +700,7 @@ const PurchaseHeader: React.FC<Props> = ({
             {/* Fila: Cantidad */}
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
-              <div className="flex items-center bg-[#EBEBEB] rounded-md h-9 px-4 gap-2 select-none">
+              <div className="flex items-center bg-[#EBEBEB] rounded-lg h-9 min-w-[5rem] px-3 gap-2 select-none justify-between">
                 <button
                   onClick={dec}
                   className="text-base font-bold leading-none hover:opacity-70"
@@ -780,11 +800,10 @@ const PurchaseHeader: React.FC<Props> = ({
             {/* Fila: Total a pagar */}
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
-              <span className="text-base font-bold text-[#141414]">
+              <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
                 {total} {currency}
               </span>
             </div>
-          </div>
 
           {/* Upsell eSIM */}
           {showEsimAddon && (

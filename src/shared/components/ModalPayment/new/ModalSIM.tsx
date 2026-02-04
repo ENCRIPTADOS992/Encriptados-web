@@ -312,76 +312,111 @@ export default function ModalSIM() {
     setSelectedPlanId(minutesPlans[0]?.id ?? null);
   }, [formType, minutesPlans, initialPrice]);
 
+  // Track if we've already set the initial plan based on initialPrice
+  const [initialPlanSet, setInitialPlanSet] = React.useState(false);
+  
+  // Reset initialPlanSet when product or price changes (important when switching products)
+  React.useEffect(() => {
+    setInitialPlanSet(false);
+    console.log("[ModalSIM] Reset initialPlanSet due to productid/initialPrice change:", { productid, initialPrice });
+  }, [productid, initialPrice]);
+
   React.useEffect(() => {
     if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
-    if (selectedPlanId != null) return;
+    
+    // Si ya procesamos el initialPrice, no volver a hacerlo
+    if (initialPlanSet) return;
 
-    // Priority: If paramVariantId is present, let the other useEffect handle it
-    if (paramVariantId != null) return;
-
-    if (!dataAmounts.length) return;
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const isEsimPlusDatos =
       titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
-    const base = 12;
+    const isRecargaDatos = titleNorm.includes("recarga datos") && !isEsimPlusDatos;
+    
+    // Base: 12 para eSIM + Datos, 0 para Recarga Datos (sin eSIM)
+    const base = isEsimPlusDatos ? 12 : 0;
 
-    if (formType === "encrypted_esimData" && isEsimPlusDatos && initialPrice != null && initialPrice > 0) {
-      const possibleBases = [12, 7.5];
+    // Necesitamos variants para calcular
+    if (!variants.length) return;
 
-      // 1. Direct Match
-      const matchingVariant = variants.find(v => {
-        const anyV = v as any;
-        const p = Number(anyV.price ?? anyV.cost ?? anyV.regular_price ?? anyV.sale_price ?? 0);
-        return Math.abs(p - initialPrice) < 0.1;
-      });
+    console.log("[ModalSIM] Data Product Price Selection Debug:", {
+      initialPrice,
+      formType,
+      isEsimPlusDatos,
+      isRecargaDatos,
+      base,
+      paramVariantId,
+      variantsLength: variants.length,
+      variantPrices: variants.map((v: any) => ({ id: v.id, price: v.price ?? v.cost })),
+      productName: (product as any)?.name
+    });
 
-      if (matchingVariant) {
-        console.log("[ModalSIM] Matched variant by initialPrice (Direct):", matchingVariant);
-        setSelectedPlanId(matchingVariant.id);
-        return;
-      }
-
-      // 2. Loop through bases
-      for (const currentBase of possibleBases) {
-        // Fallback 1: Variant - Base == initialPrice
-        const matchByRecharge = variants.find(v => {
-          const anyV = v as any;
-          const p = Number(anyV.price ?? anyV.cost ?? anyV.regular_price ?? anyV.sale_price ?? 0);
-          const r = Math.max(p - currentBase, 0);
-          return Math.abs(r - initialPrice) < 0.1;
-        });
-        if (matchByRecharge) {
-          console.log(`[ModalSIM] Matched variant by recharge (Variant - ${currentBase}):`, matchByRecharge);
-          setSelectedPlanId(matchByRecharge.id);
-          return;
-        }
-
-        // Fallback 2: Variant + Base == initialPrice
-        const matchByTotal = variants.find(v => {
-          const anyV = v as any;
-          const p = Number(anyV.price ?? anyV.cost ?? anyV.regular_price ?? anyV.sale_price ?? 0);
-          const total = p + currentBase;
-          return Math.abs(total - initialPrice) < 0.1;
-        });
-        if (matchByTotal) {
-          console.log(`[ModalSIM] Matched variant by total (Variant + ${currentBase}):`, matchByTotal);
-          setSelectedPlanId(matchByTotal.id);
+    // Para eSIM + Recarga Datos o Recarga Datos: buscar el monto de recarga que coincida
+    if ((formType === "encrypted_esimData" && isEsimPlusDatos) || (formType === "encrypted_data" && isRecargaDatos)) {
+      // Si hay paramVariantId, buscar esa variante específica
+      if (paramVariantId != null) {
+        const matchingVariant = variants.find((v: any) => v.id === paramVariantId);
+        if (matchingVariant) {
+          const variantPrice = Number((matchingVariant as any).price ?? (matchingVariant as any).cost ?? 0);
+          const rechargeValue = variantPrice - base;
+          console.log("[ModalSIM] ✅ Setting recharge from paramVariantId:", { paramVariantId, variantPrice, base, rechargeValue });
+          setSelectedPlanId(rechargeValue);
+          setInitialPlanSet(true);
           return;
         }
       }
-    }
+      
+      // Si hay initialPrice, buscar la variante cuyo precio coincida
+      if (initialPrice != null && initialPrice > 0) {
+        const matchingVariant = variants.find((v: any) => {
+          const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
+          return Math.abs(variantPrice - initialPrice) < 0.1;
+        });
+        
+        console.log("[ModalSIM] Data Product Variant Matching:", {
+          initialPrice,
+          base,
+          matchingVariant: matchingVariant ? { id: (matchingVariant as any).id, price: (matchingVariant as any).price } : null,
+        });
 
-    if (formType === "encrypted_esimData" && isEsimPlusDatos) {
-      setSelectedPlanId(Math.max(dataAmounts[0] - base, 0));
+        if (matchingVariant) {
+          const variantPrice = Number((matchingVariant as any).price ?? (matchingVariant as any).cost ?? 0);
+          const rechargeValue = variantPrice - base;
+          console.log("[ModalSIM] ✅ Setting recharge amount:", { initialPrice, variantPrice, base, rechargeValue });
+          setSelectedPlanId(rechargeValue);
+          setInitialPlanSet(true);
+          return;
+        }
+      }
+      
+      // Fallback: usar el primer variante como monto de recarga
+      const firstVariantPrice = Number((variants[0] as any)?.price ?? (variants[0] as any)?.cost ?? 0);
+      const defaultRecharge = Math.max(firstVariantPrice - base, 0);
+      console.log("[ModalSIM] Using default recharge from first variant:", { firstVariantPrice, base, defaultRecharge });
+      setSelectedPlanId(defaultRecharge);
+      setInitialPlanSet(true);
       return;
     }
 
+    // Para otros tipos de productos de datos
+    if (!dataAmounts.length) return;
+
     setSelectedPlanId(dataAmounts[0]);
-  }, [formType, selectedPlanId, dataAmounts, product, initialPrice]);
+    setInitialPlanSet(true);
+  }, [formType, dataAmounts, variants, product, initialPrice, initialPlanSet, paramVariantId]);
 
 
   React.useEffect(() => {
     if (!dataPlans.length) return;
+
+    // Para eSIM + Recarga Datos, NO usar este useEffect - la lógica está en el useEffect anterior
+    const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    const isEsimPlusDatos =
+      titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
+    
+    if (formType === "encrypted_esimData" && isEsimPlusDatos) {
+      console.log("[ModalSIM] Skipping dataPlans useEffect for eSIM + Recarga Datos");
+      return;
+    }
 
     // If we already selected a plan and he haven't changed the type/product significantly, keep it.
     // But if initialGb is set and we haven't matched it yet, try to match.
@@ -461,7 +496,7 @@ export default function ModalSIM() {
       if (firstVariant) setSelectedVariant(firstVariant);
     }
 
-  }, [dataPlans, initialGb, initialPrice, paramVariantId, variants]); // Removed userChangedPlanRef dependency
+  }, [dataPlans, initialGb, initialPrice, paramVariantId, variants, product, formType]);
 
   // Track si el usuario ha cambiado manualmente el plan
   const [userChangedPlan, setUserChangedPlan] = React.useState(false);
