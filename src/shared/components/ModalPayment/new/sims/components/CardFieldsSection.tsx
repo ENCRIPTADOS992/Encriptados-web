@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import type { UseFormRegister } from "react-hook-form";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import type { SimFormValues } from "../types/simFormTypes";
 import { CARD_SPLIT_WRAPPER, getFieldWrapperClassName } from "../layout/simFormLayout";
@@ -12,9 +12,10 @@ type Props = {
   register: UseFormRegister<SimFormValues>;
   mountError?: string | null;
   stripeStatus?: "idle" | "loading" | "ready" | "error";
+  errors: FieldErrors<SimFormValues>;
 };
 
-export function CardFieldsSection({ method, register, mountError, stripeStatus }: Props) {
+export function CardFieldsSection({ method, register, mountError, stripeStatus, errors }: Props) {
   if (method !== "card") return null;
 
   const isLoading = stripeStatus === "loading" || stripeStatus === "idle";
@@ -22,9 +23,9 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus }
   return (
     <div className="space-y-1.5">
       {/* Titular */}
-      <div className={getFieldWrapperClassName(false)}>
+      <div className={getFieldWrapperClassName(!!errors.cardName)}>
         <input
-          {...register("cardName")}
+          {...register("cardName", { required: true })}
           placeholder="Titular de la tarjeta"
           className="w-full bg-transparent outline-none text-[14px]"
           autoComplete="cc-name"
@@ -52,9 +53,9 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus }
       </div>
 
       {/* Código postal */}
-      <div className={CARD_SPLIT_WRAPPER}>
+      <div className={getFieldWrapperClassName(!!errors.cardPostal)}>
         <input
-          {...register("cardPostal")}
+          {...register("cardPostal", { required: true })}
           placeholder="Código postal"
           className="w-full bg-transparent outline-none text-[14px]"
           autoComplete="postal-code"
@@ -64,7 +65,7 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus }
       {mountError && (
         <p className="text-red-600 text-sm">{mountError}</p>
       )}
-      
+
       {isLoading && !mountError && (
         <p className="text-[12px] text-gray-500">Inicializando formulario de pago...</p>
       )}

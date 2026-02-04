@@ -91,10 +91,10 @@ export default function SimForm({
     formType === "encrypted_physical" || formType === "encrypted_generic"
       ? fullNameOk && addressOk && countryOk && postalOk && phoneOk
       : formType === "encrypted_data"
-      ? !CFG.showSimNumber || simOk
-      : formType === "encrypted_minutes"
-      ? simOk
-      : true;
+        ? !CFG.showSimNumber || simOk
+        : formType === "encrypted_minutes"
+          ? simOk
+          : true;
 
   const methodSpecificOk =
     method === "crypto"
@@ -152,20 +152,20 @@ export default function SimForm({
         register={register}
         mountError={mountError ?? null}
         stripeStatus={stripeStatus}
+        errors={errors}
       />
 
       <button
         type="submit"
-        disabled={!canPay || loading}
-        aria-disabled={!canPay || loading}
+        disabled={loading}
+        aria-disabled={loading}
         className={`mt-4 w-full h-[54px]
           rounded-lg px-4
           inline-flex items-center justify-center gap-2.5
           text-white text-sm font-semibold
-          ${
-            canPay && !loading
-              ? "bg-black hover:bg-black/90"
-              : "bg-black/40 cursor-not-allowed"
+          ${!loading
+            ? "bg-black hover:bg-black/90"
+            : "bg-black/40 cursor-not-allowed"
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >
