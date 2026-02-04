@@ -3,18 +3,15 @@
 export const BASE_FIELD_WRAPPER = `
   h-[42px]
   rounded-[8px]
-  bg-[#EBEBEB]
   px-[14px]
   flex
   items-center
-  border-2
-  border-transparent
 `;
 
 export function getFieldWrapperClassName(invalid: boolean): string {
   return `
     ${BASE_FIELD_WRAPPER}
-    ${invalid ? "border-red-500" : "border-transparent"}
+    ${invalid ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}
   `
     .replace(/\s+/g, " ")
     .trim();

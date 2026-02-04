@@ -107,7 +107,7 @@ const ModalPayment: React.FC<Props> = ({
   return (
     <div
       className={[
-        "fixed inset-0 z-50",
+        "fixed inset-0 z-[200]",
         "flex items-start sm:items-center justify-center",
         "overflow-y-auto overflow-x-hidden",
         "p-0 sm:py-6 sm:px-4",
