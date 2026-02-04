@@ -59,10 +59,10 @@ export default function MegaMenu({
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10 }}
-        className="absolute right-0 2xl:right-80 z-20 mt-2 max-w-[calc(100vw-2rem)]"
+        initial={{ opacity: 0, y: 10, x: "-50%" }}
+        animate={{ opacity: 1, y: 0, x: "-50%" }}
+        exit={{ opacity: 0, y: 10, x: "-50%" }}
+        className="absolute left-1/2 z-20 mt-2 max-w-[calc(100vw-2rem)]"
         style={{
           background: "#0E0E0EB2",
           backdropFilter: "blur(34px)",
@@ -116,11 +116,10 @@ export default function MegaMenu({
                 const isActive = activeCategory === index;
                 const CategoryContent = (
                   <div
-                    className={`block px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "bg-[#171717]"
-                        : "hover:bg-[#171717]"
-                    }`}
+                    className={`block px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer ${isActive
+                      ? "bg-[#171717]"
+                      : "hover:bg-[#171717]"
+                      }`}
                     onMouseEnter={() => {
                       setActiveCategory(index);
                       setHoveredItem({
@@ -131,15 +130,13 @@ export default function MegaMenu({
                       });
                     }}
                   >
-                    <h3 className={`text-[18px] font-semibold leading-none flex items-center gap-2 ${
-                      isActive ? "text-white" : "text-[#757575]"
-                    }`}>
+                    <h3 className={`text-[18px] font-semibold leading-none flex items-center gap-2 ${isActive ? "text-white" : "text-[#757575]"
+                      }`}>
                       {category.title}
                       {isActive && <ArrowRight className="w-4 h-4" />}
                     </h3>
-                    <p className={`text-[12px] font-normal mt-2 leading-none ${
-                      isActive ? "text-[#757575]" : "text-[#757575]"
-                    }`}>
+                    <p className={`text-[12px] font-normal mt-2 leading-none ${isActive ? "text-[#757575]" : "text-[#757575]"
+                      }`}>
                       {category.description}
                     </p>
                   </div>
