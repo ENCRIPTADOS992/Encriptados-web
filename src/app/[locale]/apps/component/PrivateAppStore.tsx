@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function PrivateAppStore() {
     return (
-        <section className="w-full bg-white mb-12">
+        <section className="w-full bg-white my-0 sm:my-12">
             <div className="w-full max-w-screen-xl mx-auto px-0 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
                 <div
                     className="relative w-full overflow-hidden mx-auto aspect-[4/5] sm:aspect-square md:aspect-[1272/541] rounded-none sm:rounded-[44px]"
