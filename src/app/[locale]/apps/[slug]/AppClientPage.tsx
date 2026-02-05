@@ -14,6 +14,8 @@ import FeaturedProducts from "../component/templateProduct/FeaturedProducts";
 import FAQSection from "../component/templateProduct/FAQSection";
 import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
 import RouterCamaleon from "../component/RouterCamaleon";
+import PrivateAppStore from "../component/PrivateAppStore";
+import CustomizeAppCatalog from "../component/CustomizeAppCatalog";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -361,6 +363,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
               image: "/images/our-products/timpersona.png",
             }}
           />
+
+          {slug.includes("galaxia-mdm") && <PrivateAppStore />}
+
+          {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
+
 
           {faqs.length > 0 && <FAQSection faqs={faqs} title={t("faqTitle")} />}
         </>
