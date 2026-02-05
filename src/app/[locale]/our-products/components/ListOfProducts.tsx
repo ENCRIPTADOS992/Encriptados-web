@@ -1073,8 +1073,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                   tag = `${minutesValue} ${minuteUnit}`;
                 }
               } else if (isDataRecharge) {
-                // Para "Recarga Datos": mostrar GB
-                if (selectedVar.gb) {
+                // Para "Recarga Datos": mostrar Precio como tag (ej: "105 USD")
+                // El usuario solicitó específicamente mostrar el precio del tag para eSIM + Recarga Datos
+                const price = Number(selectedVar.price) || Number(selectedVar.cost) || 0;
+                if (price > 0) {
+                  tag = `${price} USD`;
+                } else if (selectedVar.gb) {
                   tag = selectedVar.gb;
                 } else if (selectedVar.name) {
                   // Buscar GB en el nombre de la variante (ej: "25 GB", "50 GB")
