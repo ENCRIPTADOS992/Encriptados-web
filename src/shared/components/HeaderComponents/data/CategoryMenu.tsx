@@ -259,6 +259,12 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
           }),
         },
+        {
+          title: "Galaxia MDM",
+          image: "/images/mega-menu/sistemas/galaxia.webp",
+          link: "/apps/galaxia-mdm?productId=61085",
+          description: "Galaxia MDM es una solución de gestión de dispositivos móviles.",
+        },
         // {
         //   title: t("systems.items.totalSec.title", {
         //     defaultValue: "Total Sec",

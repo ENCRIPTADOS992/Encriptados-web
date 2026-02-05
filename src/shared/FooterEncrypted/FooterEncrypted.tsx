@@ -93,6 +93,7 @@ export default function FooterEncrypted() {
     "Intact": getAppUrl("Intact Phone"),
     "DecSecure": getAppUrl("DEC Secure"),
     "Secure Crypt": getAppUrl("SecureCrypt"),
+    "Galaxia MDM": "/apps/galaxia-mdm?productId=61085",
   };
   const SYSTEMS_NAME_MAP: Record<string, string> = {
     "DEC Secure": "DecSecure",
@@ -129,6 +130,7 @@ export default function FooterEncrypted() {
     { name: "Intact Phone", href: getAppUrl("Intact Phone") },
     { name: "DEC Secure", href: getAppUrl("DEC Secure") },
     { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
+    { name: "Galaxia MDM", href: "/apps/galaxia-mdm?productId=61085" },
   ];
   const routersLinks = [{ name: "Router Camaleón", href: `/apps/router-camaleon?productId=59747&categoryId=36` }];
 
