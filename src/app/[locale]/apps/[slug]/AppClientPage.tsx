@@ -63,8 +63,17 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const config = useMemo(() => getProductConfig(slug), [slug]);
 
   // Determine identifier and type for the hook
-  const identifier = config?.productId ? String(config.productId) : slug;
-  const identifierType = config?.productId ? "id" : "slug";
+  const searchParamProductId = searchParams.get("productId");
+
+  // Priority: 
+  // 1. Query Param ID (allows overriding static config via URL)
+  // 2. Static Config ID (legacy/stable behavior for known apps)
+  // 3. Slug (fallback for dynamic apps without ID in URL)
+  const identifier = searchParamProductId
+    ? searchParamProductId
+    : (config?.productId ? String(config.productId) : slug);
+
+  const identifierType = (searchParamProductId || config?.productId) ? "id" : "slug";
 
   const {
     data: productData,

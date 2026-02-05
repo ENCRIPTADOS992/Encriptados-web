@@ -1,6 +1,7 @@
 "use client";
 import React, { ReactNode } from "react";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
+import { usePathname } from "next/navigation";
 
 interface AppMobileLayoutProps {
   children: ReactNode;
@@ -14,12 +15,16 @@ export default function AppMobileLayout({
   footer,
 }: AppMobileLayoutProps) {
   const { isFromAppMobile } = useAppMobile();
+  const pathname = usePathname();
+
+  // Ocultar header/footer si viene de la app O si estamos en la ruta de términos para app
+  const shouldHideLayout = isFromAppMobile || pathname?.includes("terms-app");
 
   return (
     <>
-      {!isFromAppMobile && header}
+      {!shouldHideLayout && header}
       {children}
-      {!isFromAppMobile && footer}
+      {!shouldHideLayout && footer}
     </>
   );
 }
