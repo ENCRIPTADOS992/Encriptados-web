@@ -54,6 +54,8 @@ interface FixedCard {
   headerIcon: StaticImageData;
   headerTitle: string;
   apiProduct?: EncryptedSimProduct; // Datos del producto desde la API
+  variantTag?: string;
+  originalPrice?: string;
 }
 
 const FixedSimProducts: React.FC = () => {
@@ -65,10 +67,13 @@ const FixedSimProducts: React.FC = () => {
   // Obtener productos desde la API
   const { data: apiProducts } = useEncryptedSimProducts();
 
-  const handleBuy = (id: number, variants?: { id: number; price: number; sku: string }[]) => {
-    console.log(`🛒 Comprar clicado para ID=${id}`, { variants });
-    // Si tiene variantes, pasar la primera como precio inicial
-    const initialPrice = variants && variants.length > 0 ? variants[0].price : undefined;
+  const handleBuy = (id: number, variants?: { id: number; price: number; sku: string }[], initialPriceOverride?: number) => {
+    console.log(`🛒 Comprar clicado para ID=${id}`, { variants, initialPriceOverride });
+    // Si se pasa un precio inicial específico (por variante), usarlo. Si no, usar el de la primera variante.
+    const initialPrice = initialPriceOverride !== undefined
+      ? initialPriceOverride
+      : (variants && variants.length > 0 ? variants[0].price : undefined);
+
     openModal({
       productid: id.toString(),
       languageCode: locale,
@@ -315,12 +320,56 @@ const FixedSimProducts: React.FC = () => {
     },
   ];
 
+  // LOGICA PARA EXPANDIR ESIM DATOS (Crear una card por cada variante)
+  const expandedCardData: FixedCard[] = [];
+
+  // Buscar la configuración base de ESIM DATA
+  const esimDataConfig = cardData.find(c => c.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA);
+  const esimDataApiProduct = apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA);
+
+  // Si existe config y producto con variantes, expandir
+  if (esimDataConfig && esimDataApiProduct && esimDataApiProduct.variants && esimDataApiProduct.variants.length > 0) {
+    // Si hay variantes, crear una card por cada una
+    esimDataApiProduct.variants.forEach(variant => {
+      expandedCardData.push({
+        ...esimDataConfig,
+        // Usar precio de la variante
+        priceLabel: `$${variant.price}`,
+        // Tag con el precio
+        variantTag: `${variant.price} USD`,
+        // ID único para key (aunque el ID de producto sigue siendo el mismo para handleBuy)
+        // Nota: no cambiamos el 'id' del producto para que el modal sepa qué abrir
+        // Pero necesitamos pasar el precio específico a handleBuy
+      });
+    });
+  } else if (esimDataConfig) {
+    // Fallback: si no hay variantes cargadas aún, mostrar la card genérica
+    expandedCardData.push(esimDataConfig);
+  }
+
+  // Agregar el resto de cards (excluyendo ESIM_DATA que ya procesamos)
+  cardData.forEach(card => {
+    if (card.id !== ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA) {
+      expandedCardData.push(card);
+    }
+  });
+
   return (
     <div className="flex flex-col gap-5">
-      {cardData.map((card, index) => (
-        <div
-          key={index}
-          className={`
+      {expandedCardData.map((card, index) => {
+        // Extraer precio numérico para handleBuy
+        // Si la card es de una variante expandida, su priceLabel es "$XX".
+        // Intentamos extraerlo para pasarlo como initialPrice
+        let specificPrice: number | undefined;
+        if (card.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA && card.variantTag) {
+          const match = card.variantTag.match(/([\d.]+)/);
+          if (match) specificPrice = parseFloat(match[1]);
+        }
+
+        return (
+          <div
+            key={`${card.id}-${index}`}
+            className={`
             bg-custom-linear
             sm:!bg-transparent
             shadow-lg
@@ -335,26 +384,29 @@ const FixedSimProducts: React.FC = () => {
             pt-10 pb-10
             sm:py-0 xs:py-0
           `}
-        >
-          {/* IZQUIERDA: CardDescription */}
-          <CardDescription
-            logoSrc={card.logoSrc}
-            title={card.title}
-            description={card.description}
-            features={card.features}
-          />
+          >
+            {/* IZQUIERDA: CardDescription */}
+            <CardDescription
+              logoSrc={card.logoSrc}
+              title={card.title}
+              description={card.description}
+              features={card.features}
+            />
 
-          {/* DERECHA: CardSim */}
-          <CardSim
-            productImage={card.productImage}
-            features={card.featuresCardSim}
-            priceRange={card.priceLabel}
-            headerIcon={card.headerIcon}
-            headerTitle={card.headerTitle}
-            onBuy={() => handleBuy(card.id, getProductVariants(card.id))}
-          />
-        </div>
-      ))}
+            {/* DERECHA: CardSim */}
+            <CardSim
+              productImage={card.productImage}
+              features={card.featuresCardSim}
+              priceRange={card.priceLabel}
+              headerIcon={card.headerIcon}
+              headerTitle={card.headerTitle}
+              variantTag={card.variantTag}
+              originalPrice={card.originalPrice}
+              onBuy={() => handleBuy(card.id, getProductVariants(card.id), specificPrice)}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -17,12 +17,14 @@ import type { StaticImageData } from "next/image";
 type ImageType = StaticImageData;
 
 interface CardSimProps {
-  productImage: string | ImageType;  
-  features: string[];     
+  productImage: string | ImageType;
+  features: string[];
   priceRange: string;
   headerIcon: string | ImageType;
   headerTitle: string;
   onBuy?: () => void;
+  variantTag?: string;
+  originalPrice?: string;
 }
 
 const CardSim: React.FC<CardSimProps> = ({
@@ -32,9 +34,11 @@ const CardSim: React.FC<CardSimProps> = ({
   headerIcon,
   headerTitle,
   onBuy,
+  variantTag,
+  originalPrice,
 }) => {
   const t = useTranslations("EncryptedSimPage.CardSim");
-  
+
   return (
     <div className="w-full max-w-[320px] sm:max-w-none sm:w-[45%] sm:shrink-0 md:shrink-0 md:w-[340px] lg:w-[380px] xl:w-[420px] mx-auto mb-4 sm:mb-0 bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col">
       {/* ------------------------------------------------------
@@ -49,7 +53,7 @@ const CardSim: React.FC<CardSimProps> = ({
           sizes="(max-width: 640px) 320px, (max-width: 768px) 340px, 420px"
           className="object-cover"
         />
-        
+
         {/* Badges superpuestos en la esquina inferior derecha */}
         <div className="absolute bottom-3 right-3 flex gap-2">
           <div className="bg-[#FFFFFF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1 items-center">
@@ -81,7 +85,25 @@ const CardSim: React.FC<CardSimProps> = ({
             className="w-6 h-6"
           />
           */}
-          <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
+          <div className="flex justify-between items-center w-full">
+            <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
+            {variantTag && (
+              <div className="
+                inline-flex items-center justify-center flex-shrink-0
+                rounded-full
+                text-[11px]
+                font-semibold
+                h-[20px]
+                px-3
+                shadow-md
+                whitespace-nowrap
+                bg-[#1CB9EC] text-[#010101]
+                ml-2
+              ">
+                {variantTag}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Aquí iteramos sobre “features” y pintamos cada viñeta */}
@@ -101,7 +123,14 @@ const CardSim: React.FC<CardSimProps> = ({
         -------------------------------------------------- */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <span className="text-lg font-bold">{priceRange}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold">{priceRange}</span>
+              {originalPrice && (
+                <span className="text-xs text-gray-500 line-through decoration-red-500 decoration-2 font-bold bg-gray-100 px-1.5 py-0.5 rounded">
+                  {originalPrice}
+                </span>
+              )}
+            </div>
             <div className="flex items-center bg-[#EDF4F6] px-2 rounded-full">
               <Image
                 src={StarSvg}
