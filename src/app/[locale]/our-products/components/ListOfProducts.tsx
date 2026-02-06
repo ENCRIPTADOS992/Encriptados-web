@@ -1029,6 +1029,14 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               }
             }
 
+            // Lógica de oferta: si on_sale es true, mostrar sale_price como precio principal
+            const isOnSale = product.on_sale === true;
+            let regularPrice: number | undefined;
+            if (isOnSale && product.sale_price) {
+              regularPrice = priceToShow; // guardar precio original antes de reemplazar
+              priceToShow = Number(product.sale_price);
+            }
+
             // 🔑 NUEVA KEY: siempre única en cada render (incluye variantId para expansión TIM)
             const variantIdForKey = product._selectedVariant?.id || "";
             const key = `prod-${product.id ?? "noid"}-${variantIdForKey || index}`;
@@ -1186,6 +1194,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 planDataAmount={effectivePlanDataAmount}
                 variantId={variantId}
                 variants={selectedOption === 40 ? (product.variants ?? []) : undefined}
+                onSale={isOnSale}
+                regularPrice={regularPrice}
               />
             );
           })}

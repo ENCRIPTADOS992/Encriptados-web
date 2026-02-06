@@ -4,6 +4,7 @@ import React from "react";
 import Button from "@/shared/components/Button";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import TelegramButton from "@/shared/components/TelegramButton";
+import { Tag } from "lucide-react";
 
 interface ProductCardGridProps {
   id?: number;
@@ -12,6 +13,8 @@ interface ProductCardGridProps {
   price: string;
   image: string;
   checks?: { name: string }[];
+  onSale?: boolean;
+  regularPrice?: string;
 }
 
 const ProductCardGrid: React.FC<ProductCardGridProps> = ({
@@ -21,6 +24,8 @@ const ProductCardGrid: React.FC<ProductCardGridProps> = ({
   price,
   image,
   checks = [],
+  onSale,
+  regularPrice,
 }) => {
   return (
     <div className="w-full rounded-lg overflow-hidden flex flex-col border p-3">
@@ -45,7 +50,17 @@ const ProductCardGrid: React.FC<ProductCardGridProps> = ({
 
       <div className="mt-3 flex flex-col">
         <span className="text-xs text-gray-500">Desde</span>
-        <span className="text-lg font-bold text-gray-800">{price} USD</span>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-lg font-bold text-gray-800">{price} USD</span>
+          {onSale && regularPrice && (
+            <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
+              <Tag className="w-3.5 h-3.5 text-black" />
+              <span className="text-sm text-black">
+                Antes <span className="line-through">${regularPrice} USD</span>
+              </span>
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="mt-3 flex flex-col gap-2">

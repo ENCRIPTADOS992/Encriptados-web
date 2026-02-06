@@ -10,6 +10,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
 import { useLocale, useTranslations } from "next-intl";
+import { Tag } from "lucide-react";
 
 
 const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
@@ -58,6 +59,8 @@ interface CardSimProps {
   planDataAmount?: number;
   variantId?: number;  // ID de la variante seleccionada (para TIM)
   variants?: any[];
+  onSale?: boolean;       // true si el producto está en oferta
+  regularPrice?: number;  // precio original (price) cuando está en oferta
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -74,6 +77,8 @@ const CardProduct: React.FC<CardSimProps> = ({
   planDataAmount,
   variantId,
   variants,
+  onSale,
+  regularPrice,
 }) => {
   const { openModal } = useModalPayment();
   const locale = useLocale();
@@ -304,7 +309,17 @@ const CardProduct: React.FC<CardSimProps> = ({
         <hr className="my-2 sm:my-3 border-gray-200" />
 
         <div className="mt-auto flex flex-col gap-1.5 sm:gap-2.5">
-          <div className="text-[14px] sm:text-[16px] leading-[1.2] font-bold">{displayPrice}</div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[14px] sm:text-[16px] leading-[1.2] font-bold">{displayPrice}</span>
+            {onSale && regularPrice != null && (
+              <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
+                <Tag className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-black" />
+                <span className="text-[11px] sm:text-[13px] text-black">
+                  Antes <span className="line-through">${regularPrice} USD</span>
+                </span>
+              </span>
+            )}
+          </div>
           <div className="flex flex-col xl:flex-row justify-between items-stretch xl:items-center gap-1.5 xl:gap-2">
             <button
               onClick={(e) => {

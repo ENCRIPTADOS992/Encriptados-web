@@ -6,6 +6,7 @@ import SupportContact from "@/shared/svgs/SupportContact";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useProductById } from "../context/ProductByIdContext";
 import TelegramButton from "@/shared/components/TelegramButton";
+import { Tag } from "lucide-react";
 
 export default function CardProduct() {
   const { currentProduct } = useProductById();
@@ -73,9 +74,19 @@ export default function CardProduct() {
         <div className="space-y-2 flex-col flex">
           <hr className="border-t border-1 border-[#D9D9D9]" />
           <p className="text-sm text-gray-500">Desde</p>
-         <p className="text-xl md:text-2xl font-bold text-gray-800 pb-2">
-          {precioAMostrar} $ USD
-        </p>
+          <div className="flex items-center gap-2 flex-wrap pb-2">
+            <p className="text-xl md:text-2xl font-bold text-gray-800">
+              {precioAMostrar} $ USD
+            </p>
+            {currentProduct.on_sale && currentProduct.price && (
+              <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2.5 py-1">
+                <Tag className="w-4 h-4 text-black" />
+                <span className="text-sm text-black">
+                  Antes <span className="line-through">${currentProduct.price} USD</span>
+                </span>
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
