@@ -1053,7 +1053,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
               // Determinar si es un producto de minutos o de datos
               const isMinutesRecharge = isMinutosProduct; // "Recarga Minutos"
-              const isDataRecharge = simName.includes("recarga datos") || simName.includes("data");
+              // Detectar productos de datos: "Recarga Datos", "eSIM + Datos", "eSIM + Recarga Datos"
+              const isDataRecharge = 
+                simName.includes("recarga datos") || 
+                simName.includes("data") ||
+                simName.includes("esim + datos") ||
+                simName.includes("esim + recarga datos") ||
+                simName.includes("esim+datos");
 
               let tag: string | undefined;
 
@@ -1073,24 +1079,27 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                   tag = `${minutesValue} ${minuteUnit}`;
                 }
               } else if (isDataRecharge) {
-                // Para "Recarga Datos": mostrar Precio como tag (ej: "105 USD")
-                // El usuario solicitó específicamente mostrar el precio del tag para eSIM + Recarga Datos
+                // Para "Recarga Datos" y "eSIM + Datos": mostrar precio como tag (ej: "25 USD", "105 USD")
                 const price = Number(selectedVar.price) || Number(selectedVar.cost) || 0;
                 if (price > 0) {
                   tag = `${price} USD`;
                 } else if (selectedVar.gb) {
+                  // Fallback a GB si existe
                   tag = selectedVar.gb;
                 } else if (selectedVar.name) {
-                  // Buscar GB en el nombre de la variante (ej: "25 GB", "50 GB")
+                  // Buscar GB o precio en el nombre de la variante
                   const gbMatch = selectedVar.name.match(/(\d+)\s*GB/i);
-                  if (gbMatch) {
+                  const priceMatch = selectedVar.name.match(/(\d+(?:\.\d+)?)\s*(?:USD|\$)/i);
+                  if (priceMatch) {
+                    tag = `${priceMatch[1]} USD`;
+                  } else if (gbMatch) {
                     tag = `${gbMatch[1]} GB`;
                   } else {
                     tag = selectedVar.name;
                   }
                 }
               } else {
-                // Para otros productos: usar gb o name
+                // Para otros productos (eSIM simple, SIM Física): usar gb o name
                 tag = selectedVar.gb || selectedVar.name || undefined;
               }
 
@@ -1181,7 +1190,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 typeProduct={product.type_product}
                 planDataAmount={effectivePlanDataAmount}
                 variantId={variantId}
-                variants={isTimProvider ? (product.variants ?? []) : undefined}
+                variants={selectedOption === 40 ? (product.variants ?? []) : undefined}
               />
             );
           })}

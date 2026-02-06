@@ -65,7 +65,14 @@ const FixedSimProducts: React.FC = () => {
   const { openModal } = useModalPayment();
 
   // Obtener productos desde la API
-  const { data: apiProducts } = useEncryptedSimProducts();
+  const { data: apiProducts, isLoading, isError } = useEncryptedSimProducts();
+
+  console.log("🔍 [FixedSimProducts] Hook State:", {
+    isLoading,
+    isError,
+    productsCount: apiProducts?.length,
+    products: apiProducts
+  });
 
   const handleBuy = (id: number, variants?: { id: number; price: number; sku: string }[], initialPriceOverride?: number) => {
     console.log(`🛒 Comprar clicado para ID=${id}`, { variants, initialPriceOverride });
@@ -78,8 +85,8 @@ const FixedSimProducts: React.FC = () => {
       productid: id.toString(),
       languageCode: locale,
       initialPrice,
-      // Pasar variantes para que el modal pueda mostrar selector
-      variants: variants?.map(v => ({ id: v.id, price: v.price, sku: v.sku }))
+      // Pasar variantes completas (incluyendo scope, image, etc) para que el modal funcione correctamente
+      variants: variants
     });
   };
 
@@ -106,6 +113,12 @@ const FixedSimProducts: React.FC = () => {
   const getProductVariants = (productId: number) => {
     const apiProduct = apiProducts?.find(p => p.id === productId);
     return apiProduct?.variants || [];
+  };
+
+  // Función helper para obtener la descripción del producto desde API
+  const getProductTitle = (productId: number, fallbackTitle: string): string => {
+    const apiProduct = apiProducts?.find(p => p.id === productId);
+    return apiProduct?.name || fallbackTitle;
   };
 
   // Define aquí las 4 cards EXACTAS (datos, minutos, imsi, esim)
@@ -230,7 +243,7 @@ const FixedSimProducts: React.FC = () => {
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA,
       logoSrc: LogoSvg1,
-      title: t("products.esimData.title"),
+      title: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.title")),
       description: t("products.esimData.description"),
       features: commonFeaturesEsimData,
       productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, "esim_data"),
@@ -242,13 +255,14 @@ const FixedSimProducts: React.FC = () => {
       ],
       priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.priceRange")),
       headerIcon: IcomSimSvg,
-      headerTitle: t("products.esimData.headerTitle"),
+      headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.headerTitle")),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA),
+      variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA)?.minPrice || 32.5} USD`,
     },
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.DATA,
       logoSrc: LogoSvg1,
-      title: t("products.data.title"),
+      title: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.DATA, t("products.data.title")),
       description: t("products.data.description"),
       features: commonFeaturesData,
       productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.DATA, "data"),
@@ -260,13 +274,14 @@ const FixedSimProducts: React.FC = () => {
       ],
       priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.DATA, t("products.data.priceRange")),
       headerIcon: IconDataSvg,
-      headerTitle: t("products.data.headerTitle"),
+      headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.DATA, t("products.data.headerTitle")),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.DATA),
+      variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.DATA)?.minPrice || 25} USD`,
     },
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.MINUTES,
       logoSrc: LogoSvg1,
-      title: t("products.minutes.title"),
+      title: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.MINUTES, t("products.minutes.title")),
       description: t("products.minutes.description"),
       features: commonFeaturesMinutes,
       productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.MINUTES, "minutes"),
@@ -279,13 +294,14 @@ const FixedSimProducts: React.FC = () => {
       ],
       priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.MINUTES, t("products.minutes.priceRange")),
       headerIcon: IcomMinutesSvg,
-      headerTitle: t("products.minutes.headerTitle"),
+      headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.MINUTES, t("products.minutes.headerTitle")),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.MINUTES),
+      variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.MINUTES)?.minPrice || 200} USD`,
     },
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM,
       logoSrc: LogoSvg1,
-      title: t("products.esim.title"),
+      title: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM, t("products.esim.title")),
       description: t("products.esim.description"),
       features: commonFeaturesEsim,
       productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.ESIM, "esim"),
@@ -297,13 +313,14 @@ const FixedSimProducts: React.FC = () => {
       ],
       priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.ESIM, t("products.esim.priceRange")),
       headerIcon: IcomSimSvg,
-      headerTitle: t("products.esim.headerTitle"),
+      headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM, t("products.esim.headerTitle")),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM),
+      variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM)?.minPrice || 12} USD`,
     },
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED,
       logoSrc: LogoSvg1,
-      title: t("products.sim.title"),
+      title: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED, t("products.sim.title")),
       description: t("products.sim.description"),
       features: commonFeaturesSim,
       productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED, "sim_fisica"),
@@ -315,13 +332,18 @@ const FixedSimProducts: React.FC = () => {
       ],
       priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED, t("products.sim.priceRange")),
       headerIcon: IcomSimSvg,
-      headerTitle: t("products.sim.headerTitle"),
+      headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED, t("products.sim.headerTitle")),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED),
+      variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED)?.minPrice || 15} USD`,
     },
   ];
 
+  // DEBUG OVERLAY
+  console.log("🔍 [FixedSimProducts] Card Data:", cardData.map(c => ({ id: c.id, title: c.title, variantTag: c.variantTag })));
+
   return (
     <div className="flex flex-col gap-5">
+
       {cardData.map((card, index) => {
         return (
           <div

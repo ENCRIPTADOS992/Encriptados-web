@@ -285,7 +285,7 @@ const PurchaseHeader: React.FC<Props> = ({
         <div className="relative min-h-[200px]">
           <div className="relative w-full">
             <Image
-              src={product?.images?.[0]?.src ?? "/your-image-placeholder.png"}
+              src={variants.find(v => v.id === selectedVariantId)?.image || product?.images?.[0]?.src || "/your-image-placeholder.png"}
               alt={product?.name ?? "Producto"}
               width={500}
               height={375}
@@ -495,315 +495,315 @@ const PurchaseHeader: React.FC<Props> = ({
                   const current =
                     opts.find((p) => Number(p.value) === Number(selectedPlanId)) ??
                     opts[0];
-                    const label = current ? `${current.value} ${currency}` : `${currency}`;
-                    return (
-                      <button
-                        type="button"
-                        aria-haspopup="listbox"
-                        aria-expanded={openRecharge}
-                        onClick={() => setOpenRecharge((v) => !v)}
-                        className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
-                      >
-                        <span className="truncate">{label}</span>
-                        <span className="ml-1 text-[#3D3D3D]">▾</span>
-                      </button>
-                    );
-                  })()}
-
-                  {openRecharge && (
-                    <div
-                      role="listbox"
-                      tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                      onMouseDown={(e) => e.stopPropagation()}
-                    >
-                      {RECHARGE_AMOUNTS.filter(
-                        (x: RechargeAmountOpt) => Number(x.value) > 0
-                      ).map((opt: RechargeAmountOpt) => {
-                        const isActive = Number(selectedPlanId) === Number(opt.value);
-                        const label = `${opt.value} ${currency}`;
-                        return (
-                          <button
-                            key={String(opt.id)}
-                            role="option"
-                            aria-selected={isActive}
-                            onClick={() => {
-                              onChangePlan?.(Number(opt.value));
-                              setOpenRecharge(false);
-                            }}
-                            onMouseDown={(e) => e.stopPropagation()}
-                            className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                          >
-                            {label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {!!dataPlans?.length && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                <span className="text-base text-[#3D3D3D]">{t("chooseGigas")}</span>
-                <div ref={dataPlanRef} className="relative z-[1000]">
-                  {(() => {
-                    const current =
-                      dataPlans.find((p) => String(p.id) === String(selectedPlanId ?? "__none__")) ??
-                      dataPlans[0];
-                    const label = current?.label ?? "Plan";
-                    return (
-                      <button
-                        type="button"
-                        aria-haspopup="listbox"
-                        aria-expanded={openDataPlan}
-                        onClick={() => setOpenDataPlan((v) => !v)}
-                        onMouseDown={(e) => e.stopPropagation()}
-                        className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
-                      >
-                        <span className="truncate">{label}</span>
-                        <span className="ml-1 text-[#3D3D3D]">▾</span>
-                      </button>
-                    );
-                  })()}
-
-                  {openDataPlan && (
-                    <div
-                      role="listbox"
-                      tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                      onMouseDown={(e) => e.stopPropagation()}
-                    >
-                      {dataPlans.map((p) => {
-                        const isActive = String(selectedPlanId ?? dataPlans[0]?.id) === String(p.id);
-                        return (
-                          <button
-                            key={String(p.id)}
-                            role="option"
-                            aria-selected={isActive}
-                            onClick={() => {
-                              onChangePlan?.(p.id);
-                              setOpenDataPlan(false);
-                            }}
-                            onMouseDown={(e) => e.stopPropagation()}
-                            className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                          >
-                            {p.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Fila: Plan (solo si hay minutesPlans) */}
-            {!!minutesPlans?.length && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                <span className="text-base text-[#3D3D3D]">{t("minutes")}</span>
-                <div ref={planRef} className="relative z-[1000]">
-                  {(() => {
-                    const current =
-                      minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
-                      minutesPlans[0];
-                    const label =
-                      typeof current?.minutes === "number" && current.minutes > 0
-                        ? `${current.minutes} ${t("minutes")}`
-                        : current?.label ?? "Plan";
-                    return (
-                      <button
-                        type="button"
-                        aria-haspopup="listbox"
-                        aria-expanded={openPlan}
-                        onClick={() => setOpenPlan((v) => !v)}
-                        className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
-                      >
-                        <span className="truncate">
-                          {label}
-                        </span>
-                        <span className="ml-1 text-[#3D3D3D]">▾</span>
-                      </button>
-                    );
-                  })()}
-
-                  {openPlan && (
-                    <div
-                      role="listbox"
-                      tabIndex={-1}
-                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                    >
-                      {minutesPlans.map((p) => {
-                        const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
-                        const label =
-                          typeof p.minutes === "number" && p.minutes > 0
-                            ? `${p.minutes} ${t("minutes")}`
-                            : p.label;
-                        return (
-                          <button
-                            key={String(p.id)}
-                            role="option"
-                            aria-selected={isActive}
-                            onClick={() => {
-                              onChangePlan?.(p.id);
-                              setOpenPlan(false);
-                            }}
-                            className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                          >
-                            {label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-
-
-
-
-            {/* Fila: País o región (si existe) - Ocultar para Sim Física */}
-            {(region || regionCode) && !titleNorm.includes("sim física") && !titleNorm.includes("sim fisica") && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                {/* @ts-ignore */}
-                <span className="text-base text-[#3D3D3D]">{t("countryOrRegion", { defaultValue: "País o región" })}</span>
-                <div className="flex items-center gap-2">
-                  {flagUrl && !imgError ? (
-                    <Image
-                      src={flagUrl}
-                      alt={region || "Region"}
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 rounded-full object-cover shadow-sm"
-                      onError={() => setImgError(true)}
-                    />
-                  ) : regionCode && regionCode.length === 2 && regionCode.toUpperCase() !== 'GLOBAL' ? (
-                    // @ts-ignore
-                    <CircleFlag
-                      countryCode={regionCode.toLowerCase()}
-                      className="w-5 h-5 shadow-sm"
-                    />
-                  ) : (
-                    // Para regiones (europa, global, etc) o códigos largos
-                    <RegionIcon size={20} className="w-5 h-5 shadow-sm" />
-                  )}
-                  <span className="text-base text-[#141414] font-medium">
-                    {region}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Fila: Cantidad */}
-            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
-              <div className="flex items-center bg-[#EBEBEB] rounded-lg h-9 min-w-[5rem] px-3 gap-2 select-none justify-between">
-                <button
-                  onClick={dec}
-                  className="text-base font-bold leading-none hover:opacity-70"
-                  aria-label="Disminuir"
-                  type="button"
-                >
-                  –
-                </button>
-                <span className="min-w-[18px] text-center text-base">
-                  {quantity}
-                </span>
-                <button
-                  onClick={inc}
-                  className="text-base font-bold leading-none hover:opacity-70"
-                  aria-label="Aumentar"
-                  type="button"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            {/* Fila: Licencia (ocultable) */}
-            {shouldShowLicense && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                <span className="text-base text-[#3D3D3D]">{t("license")}</span>
-
-                {showSelect ? (
-                  <div ref={licenseRef} className="relative z-[1000]">
+                  const label = current ? `${current.value} ${currency}` : `${currency}`;
+                  return (
                     <button
                       type="button"
                       aria-haspopup="listbox"
-                      aria-expanded={openLicense}
-                      onClick={() => setOpenLicense((v) => !v)}
-                      className="relative min-w-[8rem] w-auto h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
+                      aria-expanded={openRecharge}
+                      onClick={() => setOpenRecharge((v) => !v)}
+                      className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                     >
-                      <span className="truncate">
-                        {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
-                      </span>
+                      <span className="truncate">{label}</span>
                       <span className="ml-1 text-[#3D3D3D]">▾</span>
                     </button>
+                  );
+                })()}
 
-                    {openLicense && (
-                      <div
-                        role="listbox"
-                        tabIndex={-1}
-                        className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
-                      >
-                        {normVariants.map((v) => {
-                          const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
-                          return (
-                            <button
-                              key={v.id}
-                              role="option"
-                              aria-selected={isActive}
-                              onClick={() => {
-                                onChangeVariant?.(v.id);
-                                setOpenLicense(false);
-                              }}
-                              className={`w-full px-3 py-2 text-left text-sm whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
-                            >
-                              {v.months} Meses
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
-                    {currentMonths} Meses
+                {openRecharge && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
+                    {RECHARGE_AMOUNTS.filter(
+                      (x: RechargeAmountOpt) => Number(x.value) > 0
+                    ).map((opt: RechargeAmountOpt) => {
+                      const isActive = Number(selectedPlanId) === Number(opt.value);
+                      const label = `${opt.value} ${currency}`;
+                      return (
+                        <button
+                          key={String(opt.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangePlan?.(Number(opt.value));
+                            setOpenRecharge(false);
+                          }}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Fila: Envío */}
-            {typeof shipping === "number" && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                <span className="text-base text-[#3D3D3D]">Envío</span>
-                <span className="text-base text-[#141414]">
-                  {shipping} {currency}
-                </span>
-              </div>
-            )}
-
-            {/* Fila: Descuento */}
-            {(showCoupon || discountAmount > 0) && (
-              <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                <span className="text-base text-[#3D3D3D]">Descuento</span>
-                <span className="text-base font-bold text-[#141414]">
-                  {discountAmount.toFixed(2)} {currency}
-                </span>
-              </div>
-            )}
-
-            {/* Fila: Total a pagar */}
+          {!!dataPlans?.length && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
-              <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
-                {total} {currency}
+              <span className="text-base text-[#3D3D3D]">{t("chooseGigas")}</span>
+              <div ref={dataPlanRef} className="relative z-[1000]">
+                {(() => {
+                  const current =
+                    dataPlans.find((p) => String(p.id) === String(selectedPlanId ?? "__none__")) ??
+                    dataPlans[0];
+                  const label = current?.label ?? "Plan";
+                  return (
+                    <button
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded={openDataPlan}
+                      onClick={() => setOpenDataPlan((v) => !v)}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
+                    >
+                      <span className="truncate">{label}</span>
+                      <span className="ml-1 text-[#3D3D3D]">▾</span>
+                    </button>
+                  );
+                })()}
+
+                {openDataPlan && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
+                    {dataPlans.map((p) => {
+                      const isActive = String(selectedPlanId ?? dataPlans[0]?.id) === String(p.id);
+                      return (
+                        <button
+                          key={String(p.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangePlan?.(p.id);
+                            setOpenDataPlan(false);
+                          }}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                        >
+                          {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Fila: Plan (solo si hay minutesPlans) */}
+          {!!minutesPlans?.length && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("minutes")}</span>
+              <div ref={planRef} className="relative z-[1000]">
+                {(() => {
+                  const current =
+                    minutesPlans.find((p) => p.id === (selectedPlanId ?? "__none__")) ??
+                    minutesPlans[0];
+                  const label =
+                    typeof current?.minutes === "number" && current.minutes > 0
+                      ? `${current.minutes} ${t("minutes")}`
+                      : current?.label ?? "Plan";
+                  return (
+                    <button
+                      type="button"
+                      aria-haspopup="listbox"
+                      aria-expanded={openPlan}
+                      onClick={() => setOpenPlan((v) => !v)}
+                      className="relative min-w-[5rem] w-auto h-9 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
+                    >
+                      <span className="truncate">
+                        {label}
+                      </span>
+                      <span className="ml-1 text-[#3D3D3D]">▾</span>
+                    </button>
+                  );
+                })()}
+
+                {openPlan && (
+                  <div
+                    role="listbox"
+                    tabIndex={-1}
+                    className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                  >
+                    {minutesPlans.map((p) => {
+                      const isActive = (selectedPlanId ?? minutesPlans[0]?.id) === p.id;
+                      const label =
+                        typeof p.minutes === "number" && p.minutes > 0
+                          ? `${p.minutes} ${t("minutes")}`
+                          : p.label;
+                      return (
+                        <button
+                          key={String(p.id)}
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => {
+                            onChangePlan?.(p.id);
+                            setOpenPlan(false);
+                          }}
+                          className={`w-full px-3 py-2 text-left text-xs whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+
+
+
+
+          {/* Fila: País o región (si existe) - Ocultar para Sim Física */}
+          {(region || regionCode) && !titleNorm.includes("sim física") && !titleNorm.includes("sim fisica") && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              {/* @ts-ignore */}
+              <span className="text-base text-[#3D3D3D]">{t("countryOrRegion", { defaultValue: "País o región" })}</span>
+              <div className="flex items-center gap-2">
+                {flagUrl && !imgError ? (
+                  <Image
+                    src={flagUrl}
+                    alt={region || "Region"}
+                    width={20}
+                    height={20}
+                    className="w-5 h-5 rounded-full object-cover shadow-sm"
+                    onError={() => setImgError(true)}
+                  />
+                ) : regionCode && regionCode.length === 2 && regionCode.toUpperCase() !== 'GLOBAL' ? (
+                  // @ts-ignore
+                  <CircleFlag
+                    countryCode={regionCode.toLowerCase()}
+                    className="w-5 h-5 shadow-sm"
+                  />
+                ) : (
+                  // Para regiones (europa, global, etc) o códigos largos
+                  <RegionIcon size={20} className="w-5 h-5 shadow-sm" />
+                )}
+                <span className="text-base text-[#141414] font-medium">
+                  {region}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Fila: Cantidad */}
+          <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+            <span className="text-base text-[#3D3D3D]">{t("quantity")}</span>
+            <div className="flex items-center bg-[#EBEBEB] rounded-lg h-9 min-w-[5rem] px-3 gap-2 select-none justify-between">
+              <button
+                onClick={dec}
+                className="text-base font-bold leading-none hover:opacity-70"
+                aria-label="Disminuir"
+                type="button"
+              >
+                –
+              </button>
+              <span className="min-w-[18px] text-center text-base">
+                {quantity}
+              </span>
+              <button
+                onClick={inc}
+                className="text-base font-bold leading-none hover:opacity-70"
+                aria-label="Aumentar"
+                type="button"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Fila: Licencia (ocultable) */}
+          {shouldShowLicense && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{t("license")}</span>
+
+              {showSelect ? (
+                <div ref={licenseRef} className="relative z-[1000]">
+                  <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={openLicense}
+                    onClick={() => setOpenLicense((v) => !v)}
+                    className="relative min-w-[8rem] w-auto h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
+                  >
+                    <span className="truncate">
+                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
+                    </span>
+                    <span className="ml-1 text-[#3D3D3D]">▾</span>
+                  </button>
+
+                  {openLicense && (
+                    <div
+                      role="listbox"
+                      tabIndex={-1}
+                      className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
+                    >
+                      {normVariants.map((v) => {
+                        const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
+                        return (
+                          <button
+                            key={v.id}
+                            role="option"
+                            aria-selected={isActive}
+                            onClick={() => {
+                              onChangeVariant?.(v.id);
+                              setOpenLicense(false);
+                            }}
+                            className={`w-full px-3 py-2 text-left text-sm whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
+                          >
+                            {v.months} Meses
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
+                  {currentMonths} Meses
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Fila: Envío */}
+          {typeof shipping === "number" && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">Envío</span>
+              <span className="text-base text-[#141414]">
+                {shipping} {currency}
               </span>
             </div>
+          )}
+
+          {/* Fila: Descuento */}
+          {(showCoupon || discountAmount > 0) && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">Descuento</span>
+              <span className="text-base font-bold text-[#141414]">
+                {discountAmount.toFixed(2)} {currency}
+              </span>
+            </div>
+          )}
+
+          {/* Fila: Total a pagar */}
+          <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+            <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
+            <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
+              {total} {currency}
+            </span>
+          </div>
 
           {/* Upsell eSIM */}
           {showEsimAddon && (
