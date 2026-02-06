@@ -871,30 +871,22 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             const skuLower = (product.sku ?? "").toLowerCase().trim();
             const minuteUnit = t("minuteAbbr");
 
-            // Debug para productos de minutos
+            // Debug para productos de minutos (multi-idioma)
             const isMinutesSku =
               skuLower.includes("minutes") ||
               skuLower.includes("minute") ||
               skuLower === "minutes-sim-encriptados";
             const isMinutosProduct =
               isMinutesSku ||
-              simName.includes("minutos") ||
-              simName.includes("minutes") ||
-              simName.includes("minuti") ||
-              simName.includes("recarga minutos");
+              /minut(os?|es?|i)/i.test(simName) ||
+              /(recarga|recharge|ricarica)\s*minut/i.test(simName);
 
-            // Lista de nombres de productos SIM que deben mostrar badges TIM
+            // Lista de nombres de productos SIM que deben mostrar badges TIM (multi-idioma)
             const isSim =
-              simName === "recarga datos" ||
-              simName === "recarga minutos" ||
-              isMinutosProduct ||  // Agregar variantes de nombre
-              simName === "esim" ||
-              simName === "esim + datos" ||
-              simName === "esim + recarga datos" ||
-              simName === "sim física" ||
-              simName === "sim" ||
-              simName.startsWith("esim") ||
-              simName.includes("sim");
+              /recarga|recharge|ricarica/i.test(simName) ||
+              isMinutosProduct ||
+              /esim/i.test(simName) ||
+              /sim/i.test(simName);
             const showTimBadges = isCategory40 && isTim && isSim;
 
             // Detectar si es "Recarga Minutos" de Encriptados para mostrar badge
@@ -1051,15 +1043,18 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               // SIM Encriptadas expandidas: usar el tag de la variante
               const selectedVar = product._selectedVariant as any;
 
-              // Determinar si es un producto de minutos o de datos
-              const isMinutesRecharge = isMinutosProduct; // "Recarga Minutos"
-              // Detectar productos de datos: "Recarga Datos", "eSIM + Datos", "eSIM + Recarga Datos"
+              // Determinar si es un producto de minutos o de datos (multi-idioma)
+              const isMinutesRecharge = isMinutosProduct; // "Recarga Minutos" / "Recharge Minutes" / "Ricarica Minuti"
+              // Detectar productos de datos en todos los idiomas:
+              // ES: "Recarga Datos", "eSIM + Datos", "eSIM + Recarga Datos"
+              // EN: "Data Recharge", "eSIM + Data"
+              // FR: "Recharge Données", "eSIM + Données"
+              // IT: "Ricarica Dati", "eSIM + Dati"
+              // PT: "Recarga Dados", "eSIM + Dados"
               const isDataRecharge = 
-                simName.includes("recarga datos") || 
-                simName.includes("data") ||
-                simName.includes("esim + datos") ||
-                simName.includes("esim + recarga datos") ||
-                simName.includes("esim+datos");
+                /(datos?|data|dati|donn[ée]es|dados)/i.test(simName) ||
+                /esim\s*\+\s*(recarga|recharge|ricarica)?\s*(datos?|data|dati|donn[ée]es|dados)/i.test(simName) ||
+                /(recarga|recharge|ricarica)\s+(datos?|data|dati|donn[ée]es|dados)/i.test(simName);
 
               let tag: string | undefined;
 
