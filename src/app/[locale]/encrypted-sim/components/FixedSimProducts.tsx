@@ -320,52 +320,9 @@ const FixedSimProducts: React.FC = () => {
     },
   ];
 
-  // LOGICA PARA EXPANDIR ESIM DATOS (Crear una card por cada variante)
-  const expandedCardData: FixedCard[] = [];
-
-  // Buscar la configuración base de ESIM DATA
-  const esimDataConfig = cardData.find(c => c.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA);
-  const esimDataApiProduct = apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA);
-
-  // Si existe config y producto con variantes, expandir
-  if (esimDataConfig && esimDataApiProduct && esimDataApiProduct.variants && esimDataApiProduct.variants.length > 0) {
-    // Si hay variantes, crear una card por cada una
-    esimDataApiProduct.variants.forEach(variant => {
-      expandedCardData.push({
-        ...esimDataConfig,
-        // Usar precio de la variante
-        priceLabel: `$${variant.price}`,
-        // Tag con el precio
-        variantTag: `${variant.price} USD`,
-        // ID único para key (aunque el ID de producto sigue siendo el mismo para handleBuy)
-        // Nota: no cambiamos el 'id' del producto para que el modal sepa qué abrir
-        // Pero necesitamos pasar el precio específico a handleBuy
-      });
-    });
-  } else if (esimDataConfig) {
-    // Fallback: si no hay variantes cargadas aún, mostrar la card genérica
-    expandedCardData.push(esimDataConfig);
-  }
-
-  // Agregar el resto de cards (excluyendo ESIM_DATA que ya procesamos)
-  cardData.forEach(card => {
-    if (card.id !== ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA) {
-      expandedCardData.push(card);
-    }
-  });
-
   return (
     <div className="flex flex-col gap-5">
-      {expandedCardData.map((card, index) => {
-        // Extraer precio numérico para handleBuy
-        // Si la card es de una variante expandida, su priceLabel es "$XX".
-        // Intentamos extraerlo para pasarlo como initialPrice
-        let specificPrice: number | undefined;
-        if (card.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA && card.variantTag) {
-          const match = card.variantTag.match(/([\d.]+)/);
-          if (match) specificPrice = parseFloat(match[1]);
-        }
-
+      {cardData.map((card, index) => {
         return (
           <div
             key={`${card.id}-${index}`}
@@ -402,7 +359,7 @@ const FixedSimProducts: React.FC = () => {
               headerTitle={card.headerTitle}
               variantTag={card.variantTag}
               originalPrice={card.originalPrice}
-              onBuy={() => handleBuy(card.id, getProductVariants(card.id), specificPrice)}
+              onBuy={() => handleBuy(card.id, getProductVariants(card.id))}
             />
           </div>
         );
