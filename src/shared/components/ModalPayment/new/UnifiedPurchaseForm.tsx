@@ -154,6 +154,7 @@ export default function UnifiedPurchaseForm({
   // Loading state for direct payment
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [showErrors, setShowErrors] = React.useState(false);
+  const [hasInteracted, setHasInteracted] = React.useState(false);
 
   // Ajustar usernames cuando cambia la cantidad
   React.useEffect(() => {
@@ -244,6 +245,13 @@ export default function UnifiedPurchaseForm({
       cardState.cvc &&
       cardName.trim().length > 1 &&
       postal.trim().length > 0);
+
+  // Auto-show red fields after 4s once the user starts filling any input
+  React.useEffect(() => {
+    if (!hasInteracted || canPay || showErrors) return;
+    const timer = setTimeout(() => setShowErrors(true), 4000);
+    return () => clearTimeout(timer);
+  }, [hasInteracted, canPay, showErrors]);
 
   const isLoadingPayment = isSubmitting || polling || loading;
   const buttonLabel = isLoadingPayment ? (
@@ -507,7 +515,7 @@ export default function UnifiedPurchaseForm({
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3" onFocusCapture={() => { if (!hasInteracted) setHasInteracted(true); }}>
       {/* === OS SELECTOR (solo SecureCrypt) === */}
       {policy.showOsSelector && (
         <div className="space-y-1.5">
@@ -893,10 +901,11 @@ export default function UnifiedPurchaseForm({
           <button
             type="button"
             onClick={handlePay}
-            disabled={isLoadingPayment}
-            className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${canPay
+            disabled={!canPay || isLoadingPayment}
+            aria-disabled={!canPay || isLoadingPayment}
+            className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${canPay && !isLoadingPayment
               ? "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none"
               }`}
           >
             {buttonLabel}

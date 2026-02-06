@@ -88,6 +88,8 @@ export default function SimFormUnified({
   const cardName = watch("cardName");
   const method = watch("method") as Method;
 
+  const cardPostal = watch("cardPostal");
+
   const [terms, setTerms] = React.useState(true);
   const [phase, setPhase] = React.useState<Phase>("form");
   const [clientSecret, setClientSecret] = React.useState<string | null>(null);
@@ -95,9 +97,29 @@ export default function SimFormUnified({
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [formData, setFormData] = React.useState<SimFormValues | null>(null);
   const [showErrors, setShowErrors] = React.useState(false);
+  const [hasInteracted, setHasInteracted] = React.useState(false);
+
+  // Track individual Stripe element completion (same as apps form)
+  const [cardState, setCardState] = React.useState({
+    number: false,
+    expiry: false,
+    cvc: false,
+  });
 
   // Stripe - solo se activa cuando método es "card"
   const { status: stripeStatus, error: mountError, stripeRef, splitRef } = useStripeSplit(method === "card");
+
+  // Listen to Stripe element changes to track completion
+  React.useEffect(() => {
+    if (stripeStatus !== "ready" || !splitRef.current) return;
+    const { number, expiry, cvc } = splitRef.current;
+    const onChange = (field: keyof typeof cardState) => (e: any) => {
+      setCardState((prev) => ({ ...prev, [field]: e.complete }));
+    };
+    number.on("change", onChange("number"));
+    expiry.on("change", onChange("expiry"));
+    cvc.on("change", onChange("cvc"));
+  }, [stripeStatus, splitRef]);
 
   const CFG = React.useMemo(
     () => buildSimFormConfig(formType, hideSimField),
@@ -131,12 +153,26 @@ export default function SimFormUnified({
           ? simOk
           : true;
 
+  const cardPostalOk = (cardPostal ?? "").trim().length > 0;
+
   const methodSpecificOk =
     method === "crypto"
       ? true
-      : stripeStatus === "ready" && cardName.trim().length > 1;
+      : stripeStatus === "ready" &&
+        cardState.number &&
+        cardState.expiry &&
+        cardState.cvc &&
+        cardName.trim().length > 1 &&
+        cardPostalOk;
 
   const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting && !loading;
+
+  // Auto-show red fields after 4s once the user starts filling any input
+  React.useEffect(() => {
+    if (!hasInteracted || canPay || showErrors) return;
+    const timer = setTimeout(() => setShowErrors(true), 4000);
+    return () => clearTimeout(timer);
+  }, [hasInteracted, canPay, showErrors]);
 
   React.useEffect(() => {
     if (!CFG.showSimNumber) return;
@@ -252,6 +288,8 @@ export default function SimFormUnified({
         const res = await tottoliCheckout(payload);
         console.log("[SimFormUnified] Response:", res);
 
+        const resOrderId = (res as any).order_id ?? null;
+
         // === 3. HANDLE CRYPTO ===
         if (tottoliMethod === "cryptomus") {
           if ((res as any).payment_url) {
@@ -296,7 +334,7 @@ export default function SimFormUnified({
               currency: "usd",
               created: Math.floor(Date.now() / 1000),
             },
-            orderId: null,
+            orderId: resOrderId,
           });
         } else if (confirmRes?.error) {
           setStripeError(confirmRes.error);
@@ -316,7 +354,7 @@ export default function SimFormUnified({
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" onFocusCapture={() => { if (!hasInteracted) setHasInteracted(true); }}>
       <SimTypeAlertSection formType={formType} />
 
       <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 !mt-1.5">
@@ -378,7 +416,7 @@ export default function SimFormUnified({
           <div className="relative">
             <div
               id="card-number-el"
-              className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && stripeStatus === "ready" ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}
+              className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && !cardState.number ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}
             />
             {(stripeStatus === "idle" || stripeStatus === "loading") && (
               <div className="absolute inset-0 flex items-center justify-center bg-[#EBEBEB] rounded-[8px]">
@@ -389,12 +427,12 @@ export default function SimFormUnified({
 
           {/* Exp / CVC */}
           <div className="grid grid-cols-2 gap-[8px]">
-            <div id="card-expiry-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
-            <div id="card-cvc-el" className="w-full min-h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] py-[10px]" />
+            <div id="card-expiry-el" className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && !cardState.expiry ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`} />
+            <div id="card-cvc-el" className={`w-full min-h-[42px] rounded-[8px] px-[14px] py-[10px] ${showErrors && !cardState.cvc ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`} />
           </div>
 
           {/* Postal code */}
-          <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
+          <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && !cardPostalOk ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
             <input
               {...register("cardPostal")}
               placeholder="Código postal"
@@ -422,14 +460,15 @@ export default function SimFormUnified({
       <button
         type="button"
         onClick={handlePay}
-        disabled={isSubmitting || loading}
+        disabled={!canPay}
+        aria-disabled={!canPay}
         className={`mt-4 w-full h-[54px]
           rounded-lg px-4
           inline-flex items-center justify-center gap-2.5
           text-sm font-semibold transition-all
-          ${canPay && !isSubmitting && !loading
+          ${canPay
             ? "bg-black text-white hover:bg-black/90"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none"
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >

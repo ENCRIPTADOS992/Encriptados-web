@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
+import type { SuccessDisplayData } from "../ModalPaymentController";
 import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import { useFormPolicy } from "./useFormPolicy";
@@ -28,7 +28,7 @@ type ModalProduct = {
 
 type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 
-export default function ModalNewUser() {
+export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
   const { payUserId, loading } = useCheckout();
@@ -37,8 +37,6 @@ export default function ModalNewUser() {
 
   // Estado para Silent Phone: modo de tabs
   const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
-  const [showSuccess, setShowSuccess] = React.useState(false);
-  const [successPI, setSuccessPI] = React.useState<any>(null);
 
   const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -139,19 +137,6 @@ export default function ModalNewUser() {
       ? "roaming"
       : "userid";
 
-  if (showSuccess) {
-    return (
-      <PaymentSuccessModal
-        open={showSuccess}
-        onClose={() => {
-          setShowSuccess(false);
-          closeModal();
-        }}
-        intent={successPI}
-      />
-    );
-  }
-
   return (
     <PurchaseScaffold
       mode="new_user"
@@ -244,8 +229,9 @@ export default function ModalNewUser() {
         }}
         loading={loading}
         onSuccess={(data) => {
-          setSuccessPI(data.intent);
-          setShowSuccess(true);
+          if (onPaymentSuccess) {
+            onPaymentSuccess({ intent: data.intent, orderId: data.orderId });
+          }
         }}
       />
     </PurchaseScaffold>

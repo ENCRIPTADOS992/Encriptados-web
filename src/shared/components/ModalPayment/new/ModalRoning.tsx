@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
+import type { SuccessDisplayData } from "../ModalPaymentController";
 import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
@@ -31,7 +31,7 @@ type ModalProduct = {
   category?: { id: number; name: string };
 };
 
-export default function ModalRoning() {
+export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
   const { loading, payRoaming } = useCheckout();
@@ -49,10 +49,6 @@ export default function ModalRoning() {
   const [quantity, setQuantity] = React.useState(1);
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
-
-  // Success state
-  const [showSuccess, setShowSuccess] = React.useState(false);
-  const [successPI, setSuccessPI] = React.useState<any>(null);
 
   const variants = product?.variants ?? [];
 
@@ -139,19 +135,6 @@ export default function ModalRoning() {
     });
   };
 
-  if (showSuccess) {
-    return (
-      <PaymentSuccessModal
-        open={showSuccess}
-        onClose={() => {
-          setShowSuccess(false);
-          closeModal();
-        }}
-        intent={successPI}
-      />
-    );
-  }
-
   return (
     <PurchaseScaffold
       mode="roning_code"
@@ -192,8 +175,7 @@ export default function ModalRoning() {
         onPaid={() => closeModal?.()}
         loading={loading}
         onSuccess={(data) => {
-          setSuccessPI(data.intent);
-          setShowSuccess(true);
+          onPaymentSuccess?.({ intent: data.intent, orderId: data.orderId });
         }}
       />
     </PurchaseScaffold>
