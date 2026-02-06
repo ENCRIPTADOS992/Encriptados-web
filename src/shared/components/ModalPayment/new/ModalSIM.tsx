@@ -6,8 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById, getAllProducts } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
-import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { validateCoupon } from "@/lib/payments/orderApi";
+import type { SuccessDisplayData } from "../ModalPaymentController";
 import { useToast } from "@/shared/context/ToastContext";
 
 import SimFormUnified from "./sims/SimFormUnified";
@@ -23,7 +23,7 @@ import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
 import { buildDataPlans } from "./sims/utils/buildDataPlans";
 import { CODE_BY_COUNTRY_LABEL } from "@/shared/constants/countries";
 
-export default function ModalSIM() {
+export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params } = useModalPayment();
   console.log("🐛 [ModalSIM] Entry Params:", params);
   const { productid, initialPrice, initialGb, initialRegion, initialRegionCode, provider: paramProvider, typeProduct: paramTypeProduct, variantId: paramVariantId } = (params || {}) as {
@@ -39,10 +39,6 @@ export default function ModalSIM() {
   };
   const toast = useToast();
   const [hideSimField, setHideSimField] = React.useState(false);
-
-  // Estados para el modal de éxito de pago
-  const [showSuccess, setShowSuccess] = React.useState(false);
-  const [successData, setSuccessData] = React.useState<SuccessPaymentData | null>(null);
 
   const { data: product } = useQuery<ModalProduct>({
     queryKey: ["productById", productid],
@@ -144,6 +140,25 @@ export default function ModalSIM() {
   );
 
   const isEsimDataCombo = formType === "encrypted_esimData";
+
+  // Fetch standalone eSIM product (id 449) to get its real price for breakdown
+  const ESIM_STANDALONE_ID = "449";
+  const { data: esimProduct } = useQuery<any>({
+    queryKey: ["productById", ESIM_STANDALONE_ID],
+    queryFn: () => getProductById(ESIM_STANDALONE_ID),
+    enabled: isEsimDataCombo,
+  });
+
+  // eSIM price: use sale_price when on_sale, otherwise regular price
+  const esimStandalonePrice = React.useMemo(() => {
+    if (!esimProduct) return undefined;
+    const onSale = esimProduct.on_sale === true || esimProduct.on_sale === "true";
+    const salePrice = parseFloat(esimProduct.sale_price);
+    const regularPrice = parseFloat(esimProduct.price);
+    if (onSale && !isNaN(salePrice) && salePrice > 0) return salePrice;
+    if (!isNaN(regularPrice) && regularPrice > 0) return regularPrice;
+    return undefined;
+  }, [esimProduct]);
 
   React.useEffect(() => {
     if (isEsimDataCombo) {
@@ -602,26 +617,14 @@ export default function ModalSIM() {
     }
   };
 
-  const handlePaymentSuccess = React.useCallback((data: SuccessPaymentData) => {
-    setSuccessData(data);
-    setShowSuccess(true);
-  }, []);
-
   // Crear producto enriquecido con valores efectivos de provider/typeProduct
   // Esto asegura que PurchaseHeader use los mismos valores que CardProduct "Más información"
-  // Crear producto enriquecido con valores efectivos de provider/typeProduct
   // Y corregir nombre si viene "Recarga" pero estamos en modo SIM/eSIM
   const enrichedProduct = React.useMemo(() => {
     if (!product) return product;
 
-    // Detectar si necesitamos corregir el nombre (ej: "Recarga Datos" -> "eSIM + Datos")
-    // Si el usuario está comprando una SIM/eSIM nueva (no recarga), el título debe reflejarlo
     let fixedName = product.name;
     const isRecargaName = /(recarga|recharge|ricarica)/i.test((product.name || ""));
-
-    // Si es un producto TIM y estamos en modo eSIM/SIM (no recarga explicita por URL?)
-    // formType nos dice si es esimData o similar.
-    // Pero formType depende de product, circulo vicioso? No, resolveSimFormType usa provider/config.
 
     if (effectiveProvider?.toLowerCase().includes("tim") || effectiveProvider?.toLowerCase().includes("bne")) {
       if (effectiveTypeProduct === "Digital" && isRecargaName) {
@@ -636,21 +639,49 @@ export default function ModalSIM() {
       name: fixedName,
       provider: effectiveProvider,
       type_product: effectiveTypeProduct,
-      variants: variants, // Pass the resolved variants (regional or param-based)
+      variants: variants,
     };
   }, [product, effectiveProvider, effectiveTypeProduct, variants]);
 
-  // ...
-  if (showSuccess) {
-    return (
-      <PaymentSuccessModal
-        open={showSuccess}
-        onClose={() => setShowSuccess(false)}
-        intent={successData?.intent ?? null}
-        orderId={successData?.orderId}
-      />
-    );
-  }
+  const handlePaymentSuccess = React.useCallback((data: SuccessPaymentData) => {
+    if (!onPaymentSuccess) return;
+
+    const isDigital =
+      formType === "encrypted_data" ||
+      formType === "encrypted_minutes" ||
+      formType === "encrypted_esim" ||
+      formType === "encrypted_esimData" ||
+      formType === "tim_esim" ||
+      formType === "tim_data" ||
+      formType === "tim_minutes";
+
+    const titleNorm = String(enrichedProduct?.name ?? "").toLowerCase();
+    const isEsimPlusDatos =
+      (formType === "encrypted_esimData" || formType === "tim_esim") &&
+      /esim/i.test(titleNorm) &&
+      /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
+
+    // Use the real eSIM price from the API endpoint (product 449)
+    const esimBase = isEsimPlusDatos ? (esimStandalonePrice ?? undefined) : undefined;
+    const rechargeAmt = isEsimPlusDatos && esimBase != null
+      ? Math.max(unitPrice - esimBase, 0)
+      : undefined;
+
+    onPaymentSuccess({
+      intent: data.intent,
+      orderId: data.orderId,
+      product: {
+        name: enrichedProduct?.name ?? "SIM",
+        image: enrichedProduct?.images?.[0]?.src,
+        brand: enrichedProduct?.brand ?? "Encriptados",
+        quantity,
+        unitPrice,
+        shippingCost: isDigital ? 0 : 75,
+        esimPrice: esimBase,
+        rechargeAmount: rechargeAmt,
+      },
+    });
+  }, [onPaymentSuccess, formType, enrichedProduct, unitPrice, quantity, esimStandalonePrice]);
 
   return (
     <PurchaseScaffold
