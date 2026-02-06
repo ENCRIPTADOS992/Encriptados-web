@@ -4,6 +4,7 @@ import * as React from "react";
 import { CircleCheck, Star, X } from "lucide-react";
 import Image from "next/image";
 import TelegramIcon from "@/shared/svgs/TelegramIcon";
+import { useTranslations } from "next-intl";
 
 type PaymentIntentLike = {
   id: string;
@@ -19,6 +20,8 @@ export type ProductSuccessInfo = {
   name: string;
   image?: string;
   brand?: string;
+  /** Key for i18n brand label: 'app' | 'system' | 'router' */
+  brandKey?: "app" | "system" | "router";
   quantity?: number;
   unitPrice?: number;
   shippingCost?: number;
@@ -26,6 +29,10 @@ export type ProductSuccessInfo = {
   esimPrice?: number;
   /** Monto del plan de recarga (datos/minutos) */
   rechargeAmount?: number;
+  /** Número de meses de la licencia (ej: 6) */
+  licenseMonths?: number;
+  /** Periodo formateado (ej: "6 Meses") */
+  licensePeriod?: string;
 };
 
 type Props = {
@@ -52,6 +59,8 @@ function formatUsd(amount: number) {
 }
 
 export default function PaymentSuccessModal({ open, onClose, intent, orderId, product }: Props) {
+  const t = useTranslations("paymentModal");
+
   if (!open || !intent) return null;
 
   const createdDate =
@@ -97,7 +106,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
             </div>
 
             <h3 className="text-center text-lg font-bold text-[#101010]">
-              ¡Gracias por tu compra!
+              {t("successTitle")}
             </h3>
 
             {/* Product card */}
@@ -115,7 +124,11 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               ) : null}
               <div>
                 <p className="text-sm font-semibold text-[#101010]">{product.name}</p>
-                {product.brand ? (
+                {product.brandKey ? (
+                  <p className="text-xs text-[#666]">
+                    {product.brandKey === "app" ? t("brandApp") : product.brandKey === "system" ? t("brandSystem") : t("brandRouter")}
+                  </p>
+                ) : product.brand ? (
                   <p className="text-xs text-[#666]">{product.brand}</p>
                 ) : null}
               </div>
@@ -130,20 +143,24 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
 
             {/* Details */}
             <div className="mt-4 rounded-xl border border-[#EEE] bg-white text-sm divide-y divide-[#EEE]">
-              {/* Row 1: Product name + qty */}
+              {/* Row 1: Product name + qty/period */}
               <div className="flex items-center justify-between px-4 py-3">
                 <span className="text-[#333]">
                   {product.name} ({qty})
                 </span>
                 <span className="font-semibold text-[#101010]">
-                  {hasEsimBreakdown ? "-" : formatUsd(subtotal)}
+                  {product.licensePeriod
+                    ? product.licensePeriod
+                    : hasEsimBreakdown
+                      ? "-"
+                      : formatUsd(subtotal)}
                 </span>
               </div>
 
               {/* Row 2: Order number */}
               {orderId ? (
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-[#333]">N° de orden:</span>
+                  <span className="text-[#333]">{t("orderNumber")}:</span>
                   <span className="font-semibold text-[#101010]">#{orderId}</span>
                 </div>
               ) : null}
@@ -152,13 +169,13 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               {hasEsimBreakdown ? (
                 <>
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-[#333]">Precio de eSIM</span>
+                    <span className="text-[#333]">{t("esimPrice")}</span>
                     <span className="font-semibold text-[#101010]">
                       {formatUsd(product.esimPrice! * qty)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-[#333]">Monto de recarga</span>
+                    <span className="text-[#333]">{t("rechargeAmount")}</span>
                     <span className="font-semibold text-[#101010]">
                       {formatUsd(product.rechargeAmount! * qty)}
                     </span>
@@ -169,24 +186,34 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               {/* Shipping (physical SIMs) */}
               {!hasEsimBreakdown && shipping > 0 ? (
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-[#333]">Envío:</span>
+                  <span className="text-[#333]">{t("shipping")}:</span>
                   <span className="font-semibold text-[#101010]">{formatUsd(shipping)}</span>
                 </div>
               ) : null}
 
               {/* Total */}
               <div className="flex items-center justify-between px-4 py-3">
-                <span className="font-semibold text-[#333]">Total:</span>
+                <span className="font-semibold text-[#333]">{t("total")}:</span>
                 <span className="font-bold text-[#101010]">{formatUsd(total)}</span>
               </div>
             </div>
 
             {/* Message */}
-            <p className="mt-5 text-center text-xs text-[#555] leading-relaxed">
-              ¡Tu pedido será despachado de forma inmediata!
-              <br />
-              Si tienes cualquier duda contáctanos
-            </p>
+            {product.brandKey === "app" || product.brandKey === "system" ? (
+              <div className="mt-4 rounded-xl bg-[#FFF8E7] px-4 py-3">
+                <p className="text-center text-sm text-[#333] leading-relaxed">
+                  {t("telegramLicenseMsg1")}
+                  <br />
+                  {t("telegramLicenseMsg2")}
+                </p>
+              </div>
+            ) : (
+              <p className="mt-5 text-center text-xs text-[#555] leading-relaxed">
+                {t("orderDispatchMsg1")}
+                <br />
+                {t("orderDispatchMsg2")}
+              </p>
+            )}
 
             {/* Telegram button */}
             <div className="mt-4 flex justify-center">
@@ -197,7 +224,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 className="inline-flex items-center gap-2 rounded-full bg-[#12b4e7] px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#0da8d8]"
               >
                 <TelegramIcon className="h-5 w-5 flex-shrink-0 text-white" />
-                <span>Chatear ahora</span>
+                <span>{t("chatNow")}</span>
               </a>
             </div>
           </div>
@@ -233,17 +260,17 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
           </div>
 
           <h3 id="pay-success-title" className="text-center text-xl font-semibold text-[#101010]">
-            Pago confirmado
+            {t("paymentConfirmed")}
           </h3>
 
           <p className="mt-1 text-center text-sm text-[#555]">
-            Tu transacción se realizó correctamente
+            {t("transactionSuccess")}
           </p>
 
           {/* Details */}
           <div className="mt-5 rounded-xl border border-[#EEE] bg-white p-4 text-sm">
             <div className="flex items-center justify-between py-2">
-              <span className="text-[#666]">Importe</span>
+              <span className="text-[#666]">{t("amount")}</span>
               <strong className="text-[#101010]">
                 {formatMoney(intent.amount, intent.currency)}
               </strong>
@@ -251,13 +278,13 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
 
             {orderId ? (
               <div className="flex items-center justify-between py-2">
-                <span className="text-[#666]">N° de pedido</span>
+                <span className="text-[#666]">{t("orderNumber")}</span>
                 <span className="font-semibold text-[#101010]">#{orderId}</span>
               </div>
             ) : null}
 
             <div className="flex items-center justify-between py-2">
-              <span className="text-[#666]">ID de pago</span>
+              <span className="text-[#666]">{t("paymentId")}</span>
               <code className="rounded-lg border border-[#E5E5E5] bg-[#FAFAFA] px-3 py-1 text-[13px] text-[#333]">
                 {intent.id}
               </code>
@@ -265,7 +292,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
 
             {createdDate ? (
               <div className="flex items-center justify-between py-2">
-                <span className="text-[#666]">Fecha</span>
+                <span className="text-[#666]">{t("date")}</span>
                 <span className="font-semibold text-[#101010]">
                   {createdDate.toLocaleString()}
                 </span>
@@ -274,7 +301,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
 
             {intent.description ? (
               <div className="mt-2">
-                <span className="text-[#666]">Descripción</span>
+                <span className="text-[#666]">{t("descriptionLabel")}</span>
                 <p className="mt-1 rounded bg-white px-2 py-2 text-[#101010]">
                   {intent.description}
                 </p>
@@ -291,12 +318,12 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               className="inline-flex items-center gap-2 rounded-full bg-[#12b4e7] px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#0da8d8]"
             >
               <TelegramIcon className="h-5 w-5 flex-shrink-0 text-white" />
-              <span>Chatear ahora</span>
+              <span>{t("chatNow")}</span>
             </a>
           </div>
 
           <p className="mt-4 text-center text-xs text-[#777]">
-            Te enviaremos tu licencia por correo si aplica a tu compra
+            {t("licenseByEmail")}
           </p>
         </div>
       </div>

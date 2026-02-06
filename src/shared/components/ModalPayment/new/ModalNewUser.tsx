@@ -12,6 +12,7 @@ import { useCheckout } from "@/shared/hooks/useCheckout";
 import { useFormPolicy } from "./useFormPolicy";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import { useToast } from "@/shared/context/ToastContext";
+import { useTranslations } from "next-intl";
 
 type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
@@ -34,6 +35,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
   const { payUserId, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
   const toast = useToast();
+  const t = useTranslations("paymentModal");
 
   // Estado para Silent Phone: modo de tabs
   const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
@@ -230,7 +232,34 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
         loading={loading}
         onSuccess={(data) => {
           if (onPaymentSuccess) {
-            onPaymentSuccess({ intent: data.intent, orderId: data.orderId });
+            const brandKey =
+              product?.category?.id === 38
+                ? "app" as const
+                : product?.category?.id === 35
+                  ? "system" as const
+                  : product?.category?.id === 36
+                    ? "router" as const
+                    : undefined;
+            const lt = Number(selectedVariant?.licensetime ?? product?.licensetime);
+            const licensePeriod =
+              !isNaN(lt) && lt > 0
+                ? `${lt} ${lt === 1 ? t("month") : t("months")}`
+                : undefined;
+
+            onPaymentSuccess({
+              intent: data.intent,
+              orderId: data.orderId,
+              product: {
+                name: product?.name ?? "Producto",
+                image: selectedVariant?.image || product?.images?.[0]?.src,
+                brandKey,
+                quantity,
+                unitPrice,
+                shippingCost: shipping,
+                licenseMonths: !isNaN(lt) && lt > 0 ? lt : undefined,
+                licensePeriod,
+              },
+            });
           }
         }}
       />
