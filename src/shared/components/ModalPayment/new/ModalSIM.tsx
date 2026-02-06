@@ -328,9 +328,12 @@ export default function ModalSIM() {
     if (initialPlanSet) return;
 
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    // Multi-idioma: ES datos, EN data, FR données, IT dati, PT dados
+    const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
     const isEsimPlusDatos =
-      titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
-    const isRecargaDatos = titleNorm.includes("recarga datos") && !isEsimPlusDatos;
+      /esim/i.test(titleNorm) && hasDataWord;
+    const isRecargaDatos =
+      /(recarga|recharge|ricarica)/i.test(titleNorm) && hasDataWord && !isEsimPlusDatos;
 
     // Base: 12 para eSIM + Datos, 0 para Recarga Datos (sin eSIM)
     const base = isEsimPlusDatos ? 12 : 0;
@@ -416,7 +419,7 @@ export default function ModalSIM() {
     // Para eSIM + Recarga Datos, NO usar este useEffect - la lógica está en el useEffect anterior
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const isEsimPlusDatos =
-      titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
+      /esim/i.test(titleNorm) && /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
 
     if (formType === "encrypted_esimData" && isEsimPlusDatos) {
       console.log("[ModalSIM] Skipping dataPlans useEffect for eSIM + Recarga Datos");
@@ -517,14 +520,15 @@ export default function ModalSIM() {
   const unitPrice = React.useMemo(
     () => {
       const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+      const hasDataWordU = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
       const isTimEsimData =
         formType === "tim_esim" &&
-        titleNorm.includes("esim") &&
-        (titleNorm.includes("dato") || titleNorm.includes("data"));
+        /esim/i.test(titleNorm) &&
+        hasDataWordU;
 
       const isEncryptedEsimPlusData =
         (formType === "encrypted_esimData" || formType === "encrypted_data") &&
-        (titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos"));
+        /esim/i.test(titleNorm) && hasDataWordU;
 
       // Para productos de minutos, siempre usar el precio del plan seleccionado
       if (formType === "encrypted_minutes" && minutesPlans.length > 0) {
@@ -613,7 +617,7 @@ export default function ModalSIM() {
     // Detectar si necesitamos corregir el nombre (ej: "Recarga Datos" -> "eSIM + Datos")
     // Si el usuario está comprando una SIM/eSIM nueva (no recarga), el título debe reflejarlo
     let fixedName = product.name;
-    const isRecargaName = (product.name || "").toLowerCase().includes("recarga");
+    const isRecargaName = /(recarga|recharge|ricarica)/i.test((product.name || ""));
 
     // Si es un producto TIM y estamos en modo eSIM/SIM (no recarga explicita por URL?)
     // formType nos dice si es esimData o similar.

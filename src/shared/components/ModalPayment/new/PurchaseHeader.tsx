@@ -204,20 +204,21 @@ const PurchaseHeader: React.FC<Props> = ({
   const isEncryptedProvider =
     providerNorm.includes("encript") || providerNorm.includes("encrypted");
 
-  const isRecargaDatos =
-    titleNorm.includes("recarga") &&
-    (titleNorm.includes("datos") || titleNorm.includes("data"));
+  // Multi-idioma: ES datos, EN data, FR données, IT dati, PT dados
+  const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
+  const hasRechargeWord = /(recarga|recharge|ricarica)/i.test(titleNorm);
+
+  const isRecargaDatos = hasRechargeWord && hasDataWord;
 
   const isEsimDataComboTitle =
-    titleNorm.includes("esim") &&
-    (titleNorm.includes("datos") || titleNorm.includes("data"));
+    /esim/i.test(titleNorm) && hasDataWord;
 
-  const isEsimRecargaDatosTitle = titleNorm.includes("esim + recarga datos");
-  const isEsimDatosTitle = titleNorm.includes("esim + datos");
+  const isEsimRecargaDatosTitle = /esim/i.test(titleNorm) && hasRechargeWord && hasDataWord;
+  const isEsimDatosTitle = /esim/i.test(titleNorm) && hasDataWord;
   // eSIM solo (sin datos ni recarga)
-  const isEsimOnlyTitle = titleNorm === "esim" || (titleNorm.includes("esim") && !titleNorm.includes("datos") && !titleNorm.includes("data") && !titleNorm.includes("recarga"));
-  // SIM Física
-  const isSimFisicaTitle = titleNorm.includes("sim física") || titleNorm.includes("sim fisica");
+  const isEsimOnlyTitle = titleNorm === "esim" || (/esim/i.test(titleNorm) && !hasDataWord && !hasRechargeWord);
+  // SIM Física (multi-idioma: ES física, EN physical, FR physique, IT fisica, PT física)
+  const isSimFisicaTitle = /sim\s*(f[ií]sica?|physics?|physique)/i.test(titleNorm);
   const ESIM_RECARGA_BASE_PRICE = 12;
 
   const showRechargeAmount =
@@ -235,10 +236,10 @@ const PurchaseHeader: React.FC<Props> = ({
     const isDataSim = cfgType === "data";
 
     const isDataRechargeByName =
-      name.includes("recarga") || name.includes("recharge");
+      /(recarga|recharge|ricarica)/i.test(name);
 
     const isDataRechargeByCategory =
-      categoryName.includes("recarga") || categoryName.includes("datos");
+      /(recarga|recharge|ricarica|datos?|data|dati|donn[ée]es|dados)/i.test(categoryName);
 
     return (
       isEncrypted &&
