@@ -35,6 +35,12 @@ export const getAllProducts = async (
       params.provider = options.provider;
     }
 
+    console.log("➡️ [getAllProducts] Requesting:", {
+      baseURL: api.defaults.baseURL,
+      url: "/encriptados/v1/products/by-category-language",
+      params
+    });
+
     const response = await api.get<{
       message: string;
       products: Record<string, Product>;

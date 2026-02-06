@@ -238,7 +238,7 @@ export default function ModalSIM() {
 
     // Si hay un variantId en params, intentar seleccionarlo (si está dentro de los filtrados)
     if (paramVariantId != null) {
-      const match = filteredVariants.find((v) => v.id === paramVariantId);
+      const match = filteredVariants.find((v) => String(v.id) === String(paramVariantId));
       if (match) {
         setSelectedVariant(match);
         return;
@@ -314,7 +314,7 @@ export default function ModalSIM() {
 
   // Track if we've already set the initial plan based on initialPrice
   const [initialPlanSet, setInitialPlanSet] = React.useState(false);
-  
+
   // Reset initialPlanSet when product or price changes (important when switching products)
   React.useEffect(() => {
     setInitialPlanSet(false);
@@ -323,7 +323,7 @@ export default function ModalSIM() {
 
   React.useEffect(() => {
     if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
-    
+
     // Si ya procesamos el initialPrice, no volver a hacerlo
     if (initialPlanSet) return;
 
@@ -331,7 +331,7 @@ export default function ModalSIM() {
     const isEsimPlusDatos =
       titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
     const isRecargaDatos = titleNorm.includes("recarga datos") && !isEsimPlusDatos;
-    
+
     // Base: 12 para eSIM + Datos, 0 para Recarga Datos (sin eSIM)
     const base = isEsimPlusDatos ? 12 : 0;
 
@@ -350,28 +350,32 @@ export default function ModalSIM() {
       productName: (product as any)?.name
     });
 
-    // Para eSIM + Recarga Datos o Recarga Datos: buscar el monto de recarga que coincida
-    if ((formType === "encrypted_esimData" && isEsimPlusDatos) || (formType === "encrypted_data" && isRecargaDatos)) {
+    // Para eSIM + Recarga Datos, eSIM + Datos, o Recarga Datos: buscar el monto de recarga que coincida
+    if (
+      ((formType === "encrypted_esimData" || formType === "encrypted_data") && isEsimPlusDatos) ||
+      (formType === "encrypted_data" && isRecargaDatos)
+    ) {
       // Si hay paramVariantId, buscar esa variante específica
       if (paramVariantId != null) {
-        const matchingVariant = variants.find((v: any) => v.id === paramVariantId);
+        const matchingVariant = variants.find((v: any) => String(v.id) === String(paramVariantId));
         if (matchingVariant) {
           const variantPrice = Number((matchingVariant as any).price ?? (matchingVariant as any).cost ?? 0);
           const rechargeValue = variantPrice - base;
           console.log("[ModalSIM] ✅ Setting recharge from paramVariantId:", { paramVariantId, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
+          setSelectedVariant(matchingVariant as Variant);
           setInitialPlanSet(true);
           return;
         }
       }
-      
+
       // Si hay initialPrice, buscar la variante cuyo precio coincida
       if (initialPrice != null && initialPrice > 0) {
         const matchingVariant = variants.find((v: any) => {
           const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
           return Math.abs(variantPrice - initialPrice) < 0.1;
         });
-        
+
         console.log("[ModalSIM] Data Product Variant Matching:", {
           initialPrice,
           base,
@@ -383,11 +387,12 @@ export default function ModalSIM() {
           const rechargeValue = variantPrice - base;
           console.log("[ModalSIM] ✅ Setting recharge amount:", { initialPrice, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
+          setSelectedVariant(matchingVariant as Variant); // <-- FIX: Sync variant
           setInitialPlanSet(true);
           return;
         }
       }
-      
+
       // Fallback: usar el primer variante como monto de recarga
       const firstVariantPrice = Number((variants[0] as any)?.price ?? (variants[0] as any)?.cost ?? 0);
       const defaultRecharge = Math.max(firstVariantPrice - base, 0);
@@ -412,7 +417,7 @@ export default function ModalSIM() {
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const isEsimPlusDatos =
       titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
-    
+
     if (formType === "encrypted_esimData" && isEsimPlusDatos) {
       console.log("[ModalSIM] Skipping dataPlans useEffect for eSIM + Recarga Datos");
       return;

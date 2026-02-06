@@ -145,6 +145,9 @@ export const useEncryptedSimProducts = () => {
           };
         });
 
+      console.log("✅ [useEncryptedSimProducts] FINAL MAPPED PRODUCTS:", mappedProducts);
+      return mappedProducts;
+
       console.log("🔐 [useEncryptedSimProducts] Mapped products with variants:",
         mappedProducts.map(p => ({
           id: p.id,

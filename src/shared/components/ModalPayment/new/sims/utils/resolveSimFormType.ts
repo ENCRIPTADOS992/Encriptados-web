@@ -55,9 +55,13 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
   const cfgType = product.config_sim?.[0]?.type?.toLowerCase() ?? "";
   const nameRaw = (product.name ?? "").toLowerCase();
 
-  // Override: eSIM + Recarga Datos
-  if (family === "encrypted" && nameRaw.includes("esim + recarga datos")) {
-    console.log("[resolveSimFormType] override => encrypted_esimData por nombre");
+  // Override: eSIM + Datos / eSIM + Recarga Datos (multi-idioma)
+  const isEsimDataName = nameRaw.includes("esim") && (
+    nameRaw.includes("datos") || nameRaw.includes("data") ||
+    nameRaw.includes("données") || nameRaw.includes("dati") || nameRaw.includes("dados")
+  );
+  if (family === "encrypted" && isEsimDataName) {
+    console.log("[resolveSimFormType] override => encrypted_esimData por nombre:", nameRaw);
     return "encrypted_esimData";
   }
 
