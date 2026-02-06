@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
 import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import { Tag } from "lucide-react";
 
 const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
     return (
@@ -57,6 +58,8 @@ interface CardTimProductProps {
     planDataAmount?: number;
     variantId?: number;
     variants?: any[];
+    onSale?: boolean;       // true si el producto está en oferta
+    regularPrice?: number;  // precio original (price) cuando está en oferta
 }
 
 const CardTimProduct: React.FC<CardTimProductProps> = ({
@@ -73,6 +76,8 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
     planDataAmount,
     variantId,
     variants,
+    onSale,
+    regularPrice,
 }) => {
     const { openModal } = useModalPayment();
     const locale = useLocale();
@@ -226,8 +231,18 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
                 <div className="flex-grow"></div>
 
                 {/* Precio */}
-                <div className="text-xl font-bold text-gray-900">
-                    {displayPrice}
+                <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xl font-bold text-gray-900">
+                        {displayPrice}
+                    </span>
+                    {onSale && regularPrice != null && (
+                        <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
+                            <Tag className="w-3.5 h-3.5 text-black" />
+                            <span className="text-sm text-black">
+                                Antes <span className="line-through">${regularPrice} USD</span>
+                            </span>
+                        </span>
+                    )}
                 </div>
 
                 {/* Botones */}

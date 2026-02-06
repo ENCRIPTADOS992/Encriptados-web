@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
+import { Tag } from "lucide-react";
 
 interface StickyPriceBannerProps {
   visible: boolean;
@@ -13,6 +14,8 @@ interface StickyPriceBannerProps {
     ctaLabel?: string;
     onBuy?: () => void;
     onChat?: () => void;
+    onSale?: boolean;
+    regularPrice?: string;
   };
 }
 
@@ -137,8 +140,18 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
               <div className="text-white/75 text-xs sm:text-sm leading-none">
                 Desde
               </div>
-              <div className="text-white font-bold text-2xl sm:text-3xl leading-tight">
-                {productInfo.price}
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="text-white font-bold text-2xl sm:text-3xl leading-tight">
+                  {productInfo.price}
+                </div>
+                {productInfo.onSale && productInfo.regularPrice && (
+                  <span className="inline-flex items-center gap-1 bg-white/15 rounded-full px-2 py-0.5">
+                    <Tag className="w-3.5 h-3.5 text-white" />
+                    <span className="text-sm text-white">
+                      Antes <span className="line-through">{productInfo.regularPrice}</span>
+                    </span>
+                  </span>
+                )}
               </div>
             </div>
 

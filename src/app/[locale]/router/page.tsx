@@ -177,8 +177,23 @@ export default function RouterPage() {
 
   // Precio actual
   const currentPrice = useMemo(() => {
-    return selectedPlan?.price || (product as any)?.price || 0;
+    if (selectedPlan?.price) return selectedPlan.price;
+    // Si está en oferta, mostrar sale_price
+    if ((product as any)?.on_sale && (product as any)?.sale_price) {
+      return (product as any).sale_price;
+    }
+    return (product as any)?.price || 0;
   }, [selectedPlan, product]);
+
+  // Precio original cuando hay oferta (para mostrar tachado)
+  const originalPrice = useMemo(() => {
+    if (!selectedPlan && (product as any)?.on_sale && (product as any)?.sale_price && (product as any)?.price) {
+      return formatPrice((product as any).price);
+    }
+    return undefined;
+  }, [selectedPlan, product]);
+
+  const isOnSale = !selectedPlan && (product as any)?.on_sale === true;
 
   // Handlers
   const handleRadioChange = (value: string) => {
@@ -188,11 +203,15 @@ export default function RouterPage() {
   const handleBuy = () => {
     const selectedPlan = plans.find((p) => p.label === selectedRadio);
     const selectedVariantId = selectedPlan ? Number(selectedPlan.value) : undefined;
+    // Usar sale_price si está en oferta
+    const priceForCheckout = selectedPlan?.price
+      || ((product as any)?.on_sale && (product as any)?.sale_price ? (product as any).sale_price : (product as any)?.price)
+      || 0;
     openModal({
       productid: String(ROUTER_CONFIG.productId),
       languageCode: locale,
       selectedOption: ROUTER_CONFIG.categoryId,
-      initialPrice: selectedPlan?.price || (product as any)?.price || 0,
+      initialPrice: priceForCheckout,
       variantId: Number.isFinite(selectedVariantId) ? selectedVariantId : undefined,
     });
   };
@@ -218,7 +237,9 @@ export default function RouterPage() {
     productId: ROUTER_CONFIG.productId,
     onBuy: handleBuy,
     onChat: handleChat,
-  }), [product, currentPrice, handleBuy]);
+    onSale: isOnSale,
+    regularPrice: originalPrice,
+  }), [product, currentPrice, handleBuy, isOnSale, originalPrice]);
 
   // Loading state
   if (isLoading) {
@@ -346,6 +367,8 @@ export default function RouterPage() {
         onBuy={handleBuy}
         productImage={productImage}
         priceBlockRef={priceBlockRef}
+        onSale={isOnSale}
+        regularPrice={originalPrice}
       />
 
       {/* Sticky Price Banner */}

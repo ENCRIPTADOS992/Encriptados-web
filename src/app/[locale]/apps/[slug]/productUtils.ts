@@ -200,6 +200,8 @@ export interface ProductInfoForBanner {
   productId: number;
   onBuy: () => void;
   onChat: () => void;
+  onSale?: boolean;
+  regularPrice?: string;
 }
 
 export interface BuildProductInfoTranslations {
@@ -227,9 +229,25 @@ export function buildProductInfo(
   // Priorizar datos del backend sobre la configuración estática
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "/images/apps/default-logo.png";
 
+  // Lógica de oferta: si on_sale, mostrar sale_price y guardar price original
+  const isOnSale = product?.on_sale === true;
+  let displayPrice: string;
+  let originalPrice: string | undefined;
+
+  if (isOnSale && product?.sale_price) {
+    displayPrice = selectedPlan
+      ? formatPrice(selectedPlan.price, "USD", t.priceConsult)
+      : formatPrice(product.sale_price, "USD", t.priceConsult);
+    originalPrice = formatPrice(product.price || 0, "USD", t.priceConsult);
+  } else {
+    displayPrice = selectedPlan
+      ? formatPrice(selectedPlan.price, "USD", t.priceConsult)
+      : formatPrice(product?.price || 0, "USD", t.priceConsult);
+  }
+
   return {
     title: product?.name || "Producto",
-    price: selectedPlan ? formatPrice(selectedPlan.price, "USD", t.priceConsult) : formatPrice(product?.price || 0, "USD", t.priceConsult),
+    price: displayPrice,
     subtitle: product?.description?.substring(0, 100) + "..." || t.defaultSubtitle,
     iconUrl,
     ctaLabel: t.buyNow,
@@ -237,6 +255,8 @@ export function buildProductInfo(
     productId: product?.id || config?.productId || 0,
     onBuy,
     onChat,
+    onSale: isOnSale,
+    regularPrice: originalPrice,
   };
 }
 

@@ -9,6 +9,7 @@ import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
 import Button from "@/shared/components/Button";
 import { useTranslations } from "next-intl";
+import { Tag } from "lucide-react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -48,7 +49,8 @@ const BannerSecureMdmNew = () => {
     const variantCost = toNumber(v0?.cost ?? null);
     const salePrice = toNumber(p.sale_price);
     const regularPrice = toNumber(p.price);
-    const displayPrice = variantCost ?? salePrice ?? regularPrice ?? null;
+    const isOnSale = p.on_sale === true;
+    const displayPrice = isOnSale && salePrice != null ? salePrice : (variantCost ?? salePrice ?? regularPrice ?? null);
 
     return {
       id: p.id,
@@ -56,6 +58,8 @@ const BannerSecureMdmNew = () => {
       image: img,
       currency,
       price: displayPrice,
+      onSale: isOnSale,
+      regularPrice: isOnSale ? regularPrice : null,
       buyUrl: "#",
       infoUrl: "#",
     };
@@ -128,6 +132,14 @@ const BannerSecureMdmNew = () => {
                           ? `${t("fromPrice")} ${card.price} ${card.currency}`
                           : t("consultPrice")}
                       </Paragraph>
+                      {card.onSale && card.regularPrice != null && (
+                        <span className="inline-flex items-center gap-1 bg-white/15 rounded-full px-2 py-0.5 mt-1">
+                          <Tag className="w-3 h-3 text-white" />
+                          <span className="text-xs text-white">
+                            Antes <span className="line-through">{card.regularPrice} {card.currency}</span>
+                          </span>
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-3">

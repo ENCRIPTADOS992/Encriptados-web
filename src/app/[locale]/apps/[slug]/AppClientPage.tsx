@@ -132,8 +132,22 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   const currentPrice = useMemo(() => {
     if (selectedPlan) return formatPrice(selectedPlan.price);
+    // Si está en oferta, mostrar sale_price como precio principal
+    if (product?.on_sale && product?.sale_price) {
+      return formatPrice(product.sale_price);
+    }
     return formatPrice(product?.price || 0);
   }, [selectedPlan, product]);
+
+  // Precio original cuando hay oferta (para mostrar tachado)
+  const originalPrice = useMemo(() => {
+    if (!selectedPlan && product?.on_sale && product?.sale_price && product?.price) {
+      return formatPrice(product.price);
+    }
+    return undefined;
+  }, [selectedPlan, product]);
+
+  const isOnSale = !selectedPlan && product?.on_sale === true;
 
   const handleRadioChange = (val: string) => setSelectedRadio(val);
 
@@ -143,8 +157,10 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   // ═══════════════════════════════════════════════════════════════════════════
 
   const handleBuy = () => {
-    // Extraer precio numérico
-    const priceStr = selectedPlan?.price ?? product?.price ?? 0;
+    // Extraer precio numérico - usar sale_price si está en oferta
+    const priceStr = selectedPlan?.price
+      ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
+      ?? 0;
     const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
 
     openModal({
@@ -326,6 +342,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
             priceBlockRef={priceBlockRef}
             languageCode={locale}
             translations={productSectionTranslations}
+            onSale={isOnSale}
+            regularPrice={originalPrice}
           />
 
           <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
