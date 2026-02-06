@@ -35,6 +35,7 @@ type ProductLike = {
   variants?: Variant[];
   id?: number | string;
   productId?: number | string;
+  buyNowImage_variants?: { license_duration: string; lang: string; image: string }[];
 };
 
 type RechargeAmountOpt = {
@@ -286,7 +287,35 @@ const PurchaseHeader: React.FC<Props> = ({
         <div className="relative min-h-[200px]">
           <div className="relative w-full">
             <Image
-              src={variants.find(v => v.id === selectedVariantId)?.image || product?.images?.[0]?.src || "/your-image-placeholder.png"}
+              src={(() => {
+                const buyNowVars = product?.buyNowImage_variants;
+                if (buyNowVars && buyNowVars.length > 0 && selectedVariantId) {
+                  // Buscar licensetime de la variante seleccionada
+                  const selectedVar = variants.find(v => v.id === selectedVariantId);
+                  const duration = String(selectedVar?.licensetime || "0").toLowerCase().trim();
+                  const durationNum = duration.replace(/\D/g, "");
+
+                  // Buscar coincidencia exacta por license_duration + locale
+                  const match = buyNowVars.find(bv => {
+                    const bvDur = String(bv.license_duration).toLowerCase().trim();
+                    const bvNum = bvDur.replace(/\D/g, "");
+                    return (bvDur === duration || (bvNum && durationNum && bvNum === durationNum))
+                      && bv.lang === locale;
+                  });
+                  if (match) return match.image;
+
+                  // Fallback: misma duración en español
+                  const fallback = buyNowVars.find(bv => {
+                    const bvDur = String(bv.license_duration).toLowerCase().trim();
+                    const bvNum = bvDur.replace(/\D/g, "");
+                    return (bvDur === duration || (bvNum && durationNum && bvNum === durationNum))
+                      && bv.lang === "es";
+                  });
+                  if (fallback) return fallback.image;
+                }
+                // Sin buyNowImage_variants → siempre images[0].src (igual que tarjetas)
+                return product?.images?.[0]?.src || "/your-image-placeholder.png";
+              })()}
               alt={product?.name ?? "Producto"}
               width={500}
               height={375}

@@ -11,6 +11,7 @@ import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import { useToast } from "@/shared/context/ToastContext";
+import { useTranslations } from "next-intl";
 
 type Variant = {
   id: number;
@@ -36,6 +37,7 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
   const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
   const { loading, payRoaming } = useCheckout();
   const toast = useToast();
+  const t = useTranslations("paymentModal");
 
   const { data: product } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -175,7 +177,33 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
         onPaid={() => closeModal?.()}
         loading={loading}
         onSuccess={(data) => {
-          onPaymentSuccess?.({ intent: data.intent, orderId: data.orderId });
+          const brandKey =
+            product?.category?.id === 38
+              ? "app" as const
+              : product?.category?.id === 35
+                ? "system" as const
+                : product?.category?.id === 36
+                  ? "router" as const
+                  : undefined;
+          const lt = Number(selectedVariant?.licensetime ?? product?.licensetime);
+          const licensePeriod =
+            !isNaN(lt) && lt > 0
+              ? `${lt} ${lt === 1 ? t("month") : t("months")}`
+              : undefined;
+
+          onPaymentSuccess?.({
+            intent: data.intent,
+            orderId: data.orderId,
+            product: {
+              name: product?.name ?? "Producto",
+              image: selectedVariant?.image || product?.images?.[0]?.src,
+              brandKey,
+              quantity,
+              unitPrice,
+              licenseMonths: !isNaN(lt) && lt > 0 ? lt : undefined,
+              licensePeriod,
+            },
+          });
         }}
       />
     </PurchaseScaffold>
