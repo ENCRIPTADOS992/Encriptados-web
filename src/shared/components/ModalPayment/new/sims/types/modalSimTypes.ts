@@ -46,6 +46,8 @@ export type ModalProduct = {
   shipping?: string;
   type_product?: string;
   category?: { id?: number | string; name?: string };
+  on_sale?: boolean | string;
+  sale_price?: string;
 };
 
 export type Shipping = {

@@ -12,6 +12,8 @@ type Params = {
   variants: Variant[];
   selectedVariant: Variant | null;
   product: ModalProduct | undefined;
+  /** Cuando hay cupón activo, ignorar sale_price y usar price regular */
+  skipSale?: boolean;
 };
 
 export function calcSimUnitPrice({
@@ -21,6 +23,7 @@ export function calcSimUnitPrice({
   variants,
   selectedVariant,
   product,
+  skipSale = false,
 }: Params): number {
   const toNumber = (v: unknown): number => {
     const n = typeof v === "string" ? parseFloat(v) : Number(v);
@@ -144,11 +147,16 @@ export function calcSimUnitPrice({
     return valueNumber;
   }
 
-  const valueNumber = Number(product?.price ?? 0);
+  // Si está en oferta y no hay cupón, usar sale_price en lugar de price
+  const onSale = !skipSale && (product?.on_sale === true || (product as any)?.on_sale === "true");
+  const sp = onSale ? parseFloat(String((product as any)?.sale_price ?? "0")) : NaN;
+  const valueNumber = (!isNaN(sp) && sp > 0) ? sp : Number(product?.price ?? 0);
 
   console.log("[calcSimUnitPrice] PRODUCT PRICE", {
     formType,
     productPrice: product?.price,
+    salePrice: (product as any)?.sale_price,
+    onSale,
     unitPrice: valueNumber,
   });
 

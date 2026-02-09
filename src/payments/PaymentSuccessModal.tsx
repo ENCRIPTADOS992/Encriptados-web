@@ -90,7 +90,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
           className="relative z-10 w-[94vw] max-w-[540px] rounded-2xl bg-white shadow-xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close button */}
+          {/* Close butto */}
           <button
             onClick={onClose}
             className="absolute top-3 right-3 w-8 h-8 grid place-items-center rounded-full hover:bg-black/5 transition-colors z-10"

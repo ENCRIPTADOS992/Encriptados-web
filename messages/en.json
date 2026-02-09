@@ -3226,7 +3226,8 @@
     "licenseByEmail": "We will send your license by email if applicable to your purchase",
     "brandApp": "Application",
     "brandSystem": "System",
-    "brandRouter": "Router"
+    "brandRouter": "Router",
+    "couponReplacesOffer": "This product already has a sale applied. Your coupon will be applied to the regular product price without the sale."
   },
   "TestingProducts": {
     "badge": "Our products",
