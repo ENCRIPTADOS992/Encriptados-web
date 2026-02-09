@@ -285,35 +285,6 @@ export async function validateCoupon(code: string, productName?: string, product
   discount_amount?: number;
   message?: string;
 }> {
-  const normalizedCode = code.trim().toLowerCase();
-
-  // MOCK: Cupones de prueba solicitados
-  if (normalizedCode === "pruebac") {
-    return {
-      ok: true,
-      discount_type: "fixed",
-      discount_amount: 5, // Asumimos 5 USD por defecto para pruebas
-      message: "Cupón de prueba aplicado (General)"
-    };
-  }
-
-  if (normalizedCode === "pruebacsilent") {
-    const isSilent = productName && /silent/i.test(productName);
-    if (isSilent) {
-      return {
-        ok: true,
-        discount_type: "fixed",
-        discount_amount: 5,
-        message: "Cupón de prueba aplicado (Silent Circle)"
-      };
-    } else {
-      return {
-        ok: false,
-        message: "Este cupón es exclusivo para productos Silent Circle"
-      };
-    }
-  }
-
   // Use local API proxy to avoid exposing credentials and handle CORS
   let url = `/api/coupons/validate?code=${encodeURIComponent(code)}`;
   if (productId) {
@@ -322,14 +293,10 @@ export async function validateCoupon(code: string, productName?: string, product
 
   try {
     const r = await fetch(url);
-    if (!r.ok) {
-      // Fallback or just return invalid
-      return { ok: false, message: "Cupón inválido" };
-    }
     const data = await r.json();
 
-    // Si la API devuelve error explícito
-    if (data.error) {
+    // Si la API devuelve error explícito o status no ok
+    if (!r.ok || data.error) {
       return { ok: false, message: data.message || "Cupón inválido" };
     }
 

@@ -107,7 +107,12 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
     try {
       const res = await validateCoupon(coupon.trim(), product?.name, productid);
       if (res.ok && typeof res.discount_amount === "number") {
-        setDiscount(res.discount_amount);
+        const rawAmount = res.discount_amount;
+        const effectiveDiscount =
+          res.discount_type === "percent"
+            ? (unitPrice * quantity * rawAmount) / 100
+            : rawAmount;
+        setDiscount(Math.round(effectiveDiscount * 100) / 100);
         if (productOnSale) {
           toast.info(t("couponReplacesOffer"));
         } else {

@@ -109,8 +109,13 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
     try {
       const res = await validateCoupon(coupon.trim(), product?.name, productid);
       if (res.ok && typeof res.discount_amount === "number") {
-        setDiscount(res.discount_amount);
-        // Si el producto tenía oferta, avisar que el cupón aplica sobre precio regular
+        // Calcular descuento real: si es porcentaje, convertir a USD
+        const rawAmount = res.discount_amount;
+        const effectiveDiscount =
+          res.discount_type === "percent"
+            ? (unitPrice * quantity * rawAmount) / 100
+            : rawAmount;
+        setDiscount(Math.round(effectiveDiscount * 100) / 100);
         if (productOnSale) {
           toast.info(t("couponReplacesOffer"));
         } else {

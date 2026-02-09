@@ -10,9 +10,12 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: true, message: "Código requerido" }, { status: 400 });
     }
 
-    // Credentials provided by user (Should be in .env in production)
-    const USER = "Dannaback";
-    const PASS = "qlfC 1Rgp h8qZ JxED vNrw YOme";
+    // Credentials from environment variables
+    const USER = process.env.WP_COUPON_USERNAME;
+    const PASS = process.env.WP_COUPON_PASSWORD;
+    if (!USER || !PASS) {
+        return NextResponse.json({ error: true, message: "Configuración del servidor incompleta" }, { status: 500 });
+    }
     const CREDENTIALS = Buffer.from(`${USER}:${PASS}`).toString("base64");
 
     const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
@@ -35,22 +38,39 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: true, message: "Error validando cupón con el servidor" }, { status: res.status });
         }
 
-        const coupons = await res.json();
+        const data = await res.json();
 
-        // The API returns a list of coupons matching the query. We need to find the exact match.
-        // Adjust logic based on actual API response structure (assuming array of coupon objects).
-        const match = Array.isArray(coupons)
-            ? coupons.find((c: any) => c.code.toLowerCase() === code.toLowerCase())
-            : null;
+        // The API returns { items: [...] } or a flat array. Normalize to array.
+        const coupons: any[] = Array.isArray(data)
+            ? data
+            : Array.isArray(data?.items)
+              ? data.items
+              : [];
+
+        // Find exact code match
+        const match = coupons.find((c: any) => c.code?.toLowerCase() === code.toLowerCase()) ?? null;
 
         if (!match) {
             return NextResponse.json({ error: true, message: "Cupón no encontrado" }, { status: 404 });
         }
 
-        // Map WP coupon data to our format
-        // Assuming structure based on standard WP usage, but trusting the "admin/coupons" return.
-        // We map match.amount and match.discount_type (fixed_cart, percent, etc.)
+        // Validar expiración
+        if (match.date_expires) {
+            const expires = new Date(match.date_expires);
+            if (!isNaN(expires.getTime()) && expires < new Date()) {
+                return NextResponse.json({ error: true, message: "Este cupón ha expirado" }, { status: 400 });
+            }
+        }
 
+        // Validar restricción de producto
+        const restrictedIds: string[] = Array.isArray(match.product_ids) ? match.product_ids.map(String) : [];
+        if (restrictedIds.length > 0 && productId) {
+            if (!restrictedIds.includes(String(productId))) {
+                return NextResponse.json({ error: true, message: "Este cupón no aplica para este producto" }, { status: 400 });
+            }
+        }
+
+        // Map WP coupon data to our format
         return NextResponse.json({
             ok: true,
             code: match.code,
