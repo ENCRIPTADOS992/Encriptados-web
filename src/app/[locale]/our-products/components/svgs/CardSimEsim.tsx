@@ -40,7 +40,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
 }) => {
   return (
     <div className={`${background} min-w-0 h-full rounded-none sm:rounded-3xl overflow-hidden relative`}>
-      <div className="p-6 sm:p-9 flex flex-col sm:flex-row gap-6 items-start justify-start h-full">
+      <div className="p-6 pb-0 sm:p-9 flex flex-col sm:flex-row gap-4 sm:gap-6 items-start justify-start h-full">
         <div className="w-full sm:w-[55%] text-center sm:text-left flex flex-col h-full">
           <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>{title}</h2>
           {description && <p className={`text-sm mb-6 ${descriptionColor}`}>{description}</p>}
@@ -73,12 +73,12 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
             )
           )}
         </div>
-        <div className="w-full sm:w-[50%] h-full">
-          <div className="flex justify-center sm:absolute sm:bottom-0 sm:right-0 sm:h-full sm:w-[50%]">
+        <div className="w-full sm:w-[50%] h-auto sm:h-full mt-auto">
+          <div className="flex justify-center items-end sm:absolute sm:bottom-0 sm:right-0 sm:h-full sm:w-[50%]">
             <img
               src={imageSrc}
               alt={altText}
-              className="object-contain object-bottom w-auto h-auto max-h-full select-none pointer-events-none"
+              className="object-contain object-bottom w-auto h-auto max-h-[230px] sm:max-h-full select-none pointer-events-none"
               draggable={false}
             />
           </div>
