@@ -9,6 +9,7 @@ import PurchaseScaffold from "./PurchaseScaffold";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import type { SuccessDisplayData } from "../ModalPaymentController";
 import { useToast } from "@/shared/context/ToastContext";
+import { useTranslations } from "next-intl";
 
 import SimFormUnified from "./sims/SimFormUnified";
 import type { FormType } from "./sims/types/simFormTypes";
@@ -25,6 +26,7 @@ import { CODE_BY_COUNTRY_LABEL } from "@/shared/constants/countries";
 
 export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params } = useModalPayment();
+  const t = useTranslations("paymentModal");
   console.log("🐛 [ModalSIM] Entry Params:", params);
   const { productid, initialPrice, initialGb, initialRegion, initialRegionCode, provider: paramProvider, typeProduct: paramTypeProduct, variantId: paramVariantId } = (params || {}) as {
     productid?: string;
