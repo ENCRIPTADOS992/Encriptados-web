@@ -7,9 +7,11 @@ import toast, { Toaster } from "react-hot-toast";
 const ToastContext = createContext<{
   success: (message: string) => void;
   error: (message: string) => void;
+  info: (message: string) => void;
 }>({
   success: () => {},
   error: () => {},
+  info: () => {},
 });
 
 // Creamos un provider que envuelve a la app
@@ -19,9 +21,11 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
   // Funciones que muestran los toasts
   const success = (message: string) => toast.success(message);
   const error = (message: string) => toast.error(message);
+  const info = (message: string) =>
+    toast.success(message, { icon: "📌", duration: 5000 });
 
   return (
-    <ToastContext.Provider value={{ success, error }}>
+    <ToastContext.Provider value={{ success, error, info }}>
       {children}
       <Toaster />
     </ToastContext.Provider>

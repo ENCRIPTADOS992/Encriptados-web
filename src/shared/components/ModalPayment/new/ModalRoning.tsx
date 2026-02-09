@@ -30,6 +30,8 @@ type ModalProduct = {
   id?: number;
   description?: string;
   category?: { id: number; name: string };
+  on_sale?: boolean | string;
+  sale_price?: string;
 };
 
 export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
@@ -78,10 +80,27 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
     setSelectedVariant(variants.length ? variants[0] : null);
   }, [product, initialPrice, variantId]);
 
-  const unitPrice =
-    (variants.length
-      ? selectedVariant?.price ?? variants[0]?.price
-      : Number(product?.price)) || 0;
+  // Detectar oferta — se desactiva si hay cupón aplicado (no dos descuentos a la vez)
+  const productOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+  const hasCoupon = discount > 0;
+  const effectiveOnSale = productOnSale && !hasCoupon;
+
+  const unitPrice = (() => {
+    if (variants.length) {
+      const v = selectedVariant ?? variants[0];
+      if (!v) return 0;
+      if (effectiveOnSale) {
+        const vSale = parseFloat(String((v as any)?.sale_price ?? "0"));
+        if (vSale > 0) return vSale;
+      }
+      return v.price ?? 0;
+    }
+    if (effectiveOnSale && product?.sale_price) {
+      const sp = parseFloat(String(product.sale_price));
+      if (sp > 0) return sp;
+    }
+    return Number(product?.price) || 0;
+  })();
 
   const onApplyCoupon = async () => {
     if (!coupon.trim()) return;
@@ -89,7 +108,11 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
       const res = await validateCoupon(coupon.trim(), product?.name, productid);
       if (res.ok && typeof res.discount_amount === "number") {
         setDiscount(res.discount_amount);
-        toast.success(res.message || "Cupón aplicado");
+        if (productOnSale) {
+          toast.info(t("couponReplacesOffer"));
+        } else {
+          toast.success(res.message || "Cupón aplicado");
+        }
       } else {
         setDiscount(0);
         toast.error(res.message || "Cupón inválido");
@@ -137,6 +160,23 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
     });
   };
 
+  // Lógica de oferta: calcular total original para mostrar "Antes" en el tag
+  // No mostrar tag de oferta si hay cupón activo
+  const isOnSale = effectiveOnSale;
+  const originalTotal = React.useMemo(() => {
+    if (!isOnSale) return undefined;
+    let regularPrice: number;
+    if (variants.length) {
+      const v = selectedVariant ?? variants[0];
+      const vRegular = parseFloat(String((v as any)?.regular_price ?? "0"));
+      regularPrice = vRegular > 0 ? vRegular : (v?.price ?? 0);
+    } else {
+      regularPrice = parseFloat(String(product?.price ?? "0"));
+    }
+    if (!regularPrice || regularPrice <= unitPrice) return undefined;
+    return regularPrice * quantity;
+  }, [isOnSale, product, variants, selectedVariant, unitPrice, quantity]);
+
   return (
     <PurchaseScaffold
       mode="roning_code"
@@ -157,6 +197,9 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
       discount={discount}
       unitPrice={unitPrice}
       sourceUrl={params.sourceUrl}
+      onSale={isOnSale}
+      originalTotal={originalTotal}
+      onRemoveCoupon={() => { setDiscount(0); setCoupon(""); }}
     >
       <UnifiedPurchaseForm
         quantity={quantity}

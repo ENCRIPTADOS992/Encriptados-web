@@ -2570,7 +2570,8 @@
     "licenseByEmail": "Ti invieremo la licenza via email se applicabile al tuo acquisto",
     "brandApp": "Applicazione",
     "brandSystem": "Sistema",
-    "brandRouter": "Router"
+    "brandRouter": "Router",
+    "couponReplacesOffer": "Questo prodotto ha già un'offerta applicata. Il tuo coupon verrà applicato al prezzo regolare del prodotto senza l'offerta."
   },
   "TestingProducts": {
     "badge": "Our products",

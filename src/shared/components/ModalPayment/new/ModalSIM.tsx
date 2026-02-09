@@ -534,6 +534,11 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
   const unitPrice = React.useMemo(
     () => {
+      const hasCoupon = discount > 0;
+      const productIsOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+      // Si hay cupón, no aplicar oferta: usar precio regular
+      const skipSale = hasCoupon && productIsOnSale;
+
       const titleNorm = String((product as any)?.name ?? "").toLowerCase();
       const hasDataWordU = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
       const isTimEsimData =
@@ -559,7 +564,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
         // If user hasn't changed the plan and the selected plan matches the initial GB,
         // use initialPrice (which includes regional pricing from the card)
-        if (!userChangedPlan && initialPrice != null && initialPrice > 0 && initialGb) {
+        // Si hay cupón y el producto estaba en oferta, NO usar initialPrice (contiene sale_price)
+        if (!skipSale && !userChangedPlan && initialPrice != null && initialPrice > 0 && initialGb) {
           if (selected?.label === initialGb) {
             console.log("[ModalSIM] Using initialPrice for TIM data (matches initialGb):", { initialPrice, initialGb });
             return initialPrice;
@@ -579,11 +585,13 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
           variants,
           selectedVariant,
           product,
+          skipSale,
         });
       }
 
       // Si se pasó un precio inicial desde la card y el usuario no ha cambiado nada, usarlo
-      if (initialPrice != null && initialPrice > 0 && !userChangedPlan) {
+      // Pero NO si hay cupón y el producto estaba en oferta (initialPrice contiene sale_price)
+      if (!skipSale && initialPrice != null && initialPrice > 0 && !userChangedPlan) {
         console.log("[ModalSIM] Usando initialPrice del params:", initialPrice);
         return initialPrice;
       }
@@ -595,9 +603,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         variants,
         selectedVariant,
         product,
+        skipSale,
       });
     },
-    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan]
+    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan, discount]
   );
 
   const onApplyCoupon = async () => {
@@ -606,7 +615,13 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       const res = await validateCoupon(coupon.trim(), product?.name, productid);
       if (res.ok && typeof res.discount_amount === "number") {
         setDiscount(res.discount_amount);
-        toast.success(res.message || "Cupón aplicado");
+        // Si el producto tenía oferta, avisar que el cupón aplica sobre precio regular
+        const productIsOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+        if (productIsOnSale) {
+          toast.info(t("couponReplacesOffer"));
+        } else {
+          toast.success(res.message || "Cupón aplicado");
+        }
       } else {
         setDiscount(0);
         toast.error(res.message || "Cupón inválido");
@@ -683,6 +698,30 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     });
   }, [onPaymentSuccess, formType, enrichedProduct, unitPrice, quantity, esimStandalonePrice]);
 
+  // Lógica de oferta: calcular total original para mostrar "Antes" en el tag
+  // No mostrar tag de oferta si hay cupón activo (no dos descuentos a la vez)
+  const isOnSale = React.useMemo(() => {
+    if (discount > 0) return false;
+    return product?.on_sale === true || (product as any)?.on_sale === "true";
+  }, [product, discount]);
+
+  const originalTotal = React.useMemo(() => {
+    if (!isOnSale) return undefined;
+    const regularPrice = parseFloat(String(product?.price ?? "0"));
+    if (!regularPrice || regularPrice <= unitPrice) return undefined;
+    const shipping_ =
+      formType === "encrypted_data" ||
+      formType === "encrypted_minutes" ||
+      formType === "encrypted_esim" ||
+      formType === "encrypted_esimData" ||
+      formType === "tim_esim" ||
+      formType === "tim_data" ||
+      formType === "tim_minutes"
+        ? 0
+        : 75;
+    return regularPrice * quantity + shipping_;
+  }, [isOnSale, product, unitPrice, quantity, formType]);
+
   return (
     <PurchaseScaffold
       mode="sim"
@@ -744,6 +783,9 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
           : params.flagUrl
       }
       shareProductId={productid}
+      onSale={isOnSale}
+      originalTotal={originalTotal}
+      onRemoveCoupon={() => { setDiscount(0); setCoupon(""); }}
     >
       <SimFormUnified
         formType={formType}

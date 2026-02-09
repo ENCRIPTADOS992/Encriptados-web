@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 import { getProductLink, getSimProductUrl } from "@/shared/utils/productRouteResolver";
+import { Tag } from "lucide-react";
 import { useToast } from "@/shared/context/ToastContext";
 import { CircleFlag } from "react-circle-flags";
 import { SIM_DEFAULT_IDS } from "@/shared/constants/simDefaultIds";
@@ -74,6 +75,12 @@ type Props = {
   /** Explicit Product ID to use for sharing (prioritized over product object) */
   shareProductId?: string;
   discount?: number;
+  /** Whether the product is on sale (on_sale from API) */
+  onSale?: boolean;
+  /** The original total before sale discount (to show strikethrough) */
+  originalTotal?: number;
+  /** Called when user removes/closes the coupon — should reset discount to 0 */
+  onRemoveCoupon?: () => void;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -105,6 +112,9 @@ const PurchaseHeader: React.FC<Props> = ({
   flagUrl,
   shareProductId,
   discount = 0,
+  onSale,
+  originalTotal,
+  onRemoveCoupon,
 }) => {
   const locale = useLocale();
   const t = useTranslations("paymentModal");
@@ -829,7 +839,17 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Fila: Total a pagar */}
           <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-            <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-base text-[#3D3D3D]">{t("totalToPay")}</span>
+              {onSale && originalTotal != null && originalTotal > total && (
+                <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
+                  <Tag className="w-3.5 h-3.5 text-black" />
+                  <span className="text-xs text-black">
+                    Antes <span className="line-through">{originalTotal} {currency}</span>
+                  </span>
+                </span>
+              )}
+            </div>
             <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
               {total} {currency}
             </span>
@@ -879,7 +899,11 @@ const PurchaseHeader: React.FC<Props> = ({
               </button>
               <button
                 type="button"
-                onClick={() => setShowCoupon(false)}
+                onClick={() => {
+                  setShowCoupon(false);
+                  setCoupon("");
+                  onRemoveCoupon?.();
+                }}
                 aria-label="Cerrar cupón"
                 className="shrink-0 text-xl text-[#5D5D5D] hover:text-black"
               >
