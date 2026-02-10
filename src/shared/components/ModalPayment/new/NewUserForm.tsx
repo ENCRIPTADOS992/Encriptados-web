@@ -134,12 +134,14 @@ export default function NewUserForm({
     if (!clientSecret) {
       try {
         setStripeError(null);
-        const primaryUsername = usernames[0]?.trim() || undefined;
+        // Pasar todos los usernames y validar que qty coincida
+        const trimmedUsernames = usernames.map(u => u.trim()).filter(u => u.length > 0);
 
         const { order_id, client_secret } = await createUserIdOrderAndIntent({
           productId,
           email: emailVal.trim(),
-          username: primaryUsername,
+          usernames: trimmedUsernames,
+          qty: quantity,
           amountUsd,
           currency: "USD",
         });

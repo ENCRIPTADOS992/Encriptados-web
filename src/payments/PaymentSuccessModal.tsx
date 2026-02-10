@@ -94,7 +94,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
           <button
             onClick={onClose}
             className="absolute top-3 right-3 w-8 h-8 grid place-items-center rounded-full hover:bg-black/5 transition-colors z-10"
-            aria-label="Cerrar"
+            aria-label={t("closeModal")}
           >
             <X className="h-5 w-5 text-[#999]" />
           </button>
@@ -129,7 +129,9 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                     {product.brandKey === "app" ? t("brandApp") : product.brandKey === "system" ? t("brandSystem") : t("brandRouter")}
                   </p>
                 ) : product.brand ? (
-                  <p className="text-xs text-[#666]">{product.brand}</p>
+                  <p className="text-xs text-[#666]">
+                    {product.brand === "encrypted" ? t("brandEncrypted") : product.brand === "tim" ? t("brandTim") : product.brand}
+                  </p>
                 ) : null}
               </div>
             </div>

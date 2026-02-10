@@ -3227,7 +3227,10 @@
     "brandApp": "Application",
     "brandSystem": "System",
     "brandRouter": "Router",
-    "couponReplacesOffer": "This product already has a sale applied. Your coupon will be applied to the regular product price without the sale."
+    "brandEncrypted": "encrypted",
+    "brandTim": "tim",
+    "couponReplacesOffer": "This product already has a sale applied. Your coupon will be applied to the regular product price without the sale.",
+    "closeModal": "Close"
   },
   "TestingProducts": {
     "badge": "Our products",

@@ -2571,7 +2571,10 @@
     "brandApp": "Applicazione",
     "brandSystem": "Sistema",
     "brandRouter": "Router",
-    "couponReplacesOffer": "Questo prodotto ha già un'offerta applicata. Il tuo coupon verrà applicato al prezzo regolare del prodotto senza l'offerta."
+    "brandEncrypted": "crittografato",
+    "brandTim": "tim",
+    "couponReplacesOffer": "Questo prodotto ha già un'offerta applicata. Il tuo coupon verrà applicato al prezzo regolare del prodotto senza l'offerta.",
+    "closeModal": "Chiudi"
   },
   "TestingProducts": {
     "badge": "Our products",
