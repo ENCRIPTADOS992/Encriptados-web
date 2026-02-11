@@ -128,7 +128,7 @@ const BannerSecureMdmNew = () => {
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="max-w-[80%] max-h-[85%] object-contain"
+                      className="max-w-[80%] max-h-[85%] object-contain rounded-xl"
                     />
                   </div>
 
