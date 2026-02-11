@@ -9,12 +9,10 @@ import type { Product } from "@/features/products/types/AllProductsResponse";
 import { getProductLink } from "@/utils/productRouteResolver";
 import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
-import Button from "@/shared/components/Button";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
 
 /* ── helpers ─────────────────────────────────── */
 
@@ -87,7 +85,7 @@ const BannerSecureMdmNew = () => {
           <Typography
             variant="h2"
             as="h2"
-            className="text-2xl md:text-3xl lg:text-[38px] leading-tight md:leading-snug text-left"
+            className="text-xl md:text-2xl lg:text-[28px] leading-tight md:leading-snug text-left"
           >
             {t("title")}
           </Typography>
@@ -95,7 +93,7 @@ const BannerSecureMdmNew = () => {
           <Paragraph
             variant="body"
             color="secondary"
-            className="text-sm md:text-base text-white/60"
+            className="text-xs md:text-sm text-white/60"
           >
             {t("description")}
           </Paragraph>
@@ -107,24 +105,20 @@ const BannerSecureMdmNew = () => {
             spaceBetween={16}
             slidesPerView={1.15}
             centeredSlides={false}
-            pagination={{
-              clickable: true,
-              renderBullet: (_index: number, className: string) =>
-                `<span class="${className}" style="width:20px;height:4px;border-radius:2px;"></span>`,
-            }}
+            pagination={false}
             autoplay={{
               delay: 4000,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }}
-            modules={[Pagination, Autoplay]}
+            modules={[Autoplay]}
             breakpoints={{
               480: { slidesPerView: 1.3, spaceBetween: 16 },
               640: { slidesPerView: 1.8, spaceBetween: 20 },
               768: { slidesPerView: 2, spaceBetween: 20 },
               1024: { slidesPerView: 2, spaceBetween: 24 },
             }}
-            className="w-full !pb-10 [&_.swiper-pagination-bullet]:bg-white/40 [&_.swiper-pagination-bullet]:opacity-100 [&_.swiper-pagination-bullet-active]:!bg-white"
+            className="w-full"
           >
             {systemCards.map((card) => (
               <SwiperSlide key={card.id}>
@@ -139,7 +133,7 @@ const BannerSecureMdmNew = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="mt-4 flex flex-col flex-1 justify-between">
+                  <div className="mt-4 flex flex-col flex-1 gap-3">
                     <div className="space-y-1.5">
                       <Typography
                         variant="body-lg"
@@ -169,27 +163,26 @@ const BannerSecureMdmNew = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-3 mt-4">
-                      <Button
-                        intent="primary"
-                        size="md"
+                    <div className="flex items-center gap-4 mt-2">
+                      <button
+                        type="button"
                         onClick={() =>
                           openModal({
                             productid: card.id.toString(),
                             languageCode: locale,
                           })
                         }
-                        className="flex-1 max-w-[140px]"
+                        className="flex items-center justify-center w-[124px] h-[44px] rounded-lg bg-[#10B4E7] text-[#101010] text-sm font-semibold transition-colors hover:bg-[#7EE0FF] cursor-pointer"
+                        style={{ padding: "10px", gap: "4px" }}
                       >
                         {t("buy")}
-                      </Button>
+                      </button>
 
                       {card.infoLink && (
                         <button
                           type="button"
                           onClick={() => router.push(card.infoLink!)}
-                          className="flex items-center justify-center w-[124px] h-[44px] rounded-lg text-[#10B4E7] border border-[#10B4E7] text-sm font-medium transition-colors hover:bg-[#10B4E7]/10 cursor-pointer"
-                          style={{ padding: "10px", gap: "4px" }}
+                          className="text-sm text-[#10B4E7] font-medium transition-colors hover:text-[#7EE0FF] cursor-pointer whitespace-nowrap bg-transparent border-none outline-none shadow-none"
                         >
                           {t("moreInfo")}
                         </button>

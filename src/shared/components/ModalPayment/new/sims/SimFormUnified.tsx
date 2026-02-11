@@ -13,6 +13,7 @@ import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import { tottoliCheckout } from "@/features/products/payments/tottoliCheckout";
 
+import JellyLoader from "@/shared/components/JellyLoader";
 import { SimTypeAlertSection } from "./components/SimTypeAlertSection";
 import { BuyerFieldsSection } from "./components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./components/PaymentMethodSection";
@@ -97,7 +98,6 @@ export default function SimFormUnified({
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [formData, setFormData] = React.useState<SimFormValues | null>(null);
   const [showErrors, setShowErrors] = React.useState(false);
-  const [hasInteracted, setHasInteracted] = React.useState(false);
 
   // Track individual Stripe element completion (same as apps form)
   const [cardState, setCardState] = React.useState({
@@ -167,13 +167,6 @@ export default function SimFormUnified({
 
   const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting && !loading;
 
-  // Auto-show red fields after 4s once the user starts filling any input
-  React.useEffect(() => {
-    if (!hasInteracted || canPay || showErrors) return;
-    const timer = setTimeout(() => setShowErrors(true), 4000);
-    return () => clearTimeout(timer);
-  }, [hasInteracted, canPay, showErrors]);
-
   React.useEffect(() => {
     if (!CFG.showSimNumber) return;
     if (quantity <= 1) return;
@@ -189,10 +182,15 @@ export default function SimFormUnified({
   const baseAmount = Number(unitPrice) * quantity - discount;
   const amountUsd = Math.max(baseAmount + shippingFee, 0);
 
+  const isLoadingPayment = isSubmitting || loading;
   const buttonLabel = React.useMemo(() => {
-    if (isSubmitting || loading) return "Procesando...";
+    if (isLoadingPayment) return (
+      <div className="flex items-center justify-center">
+        <JellyLoader size={34} color="#ffffff" speed={0.8} />
+      </div>
+    );
     return "Pagar ahora";
-  }, [isSubmitting, loading]);
+  }, [isLoadingPayment]);
 
   // Paso 1: Crear orden y obtener client_secret (o redirigir a crypto)
   // Handler unificado de pago directo
@@ -354,7 +352,7 @@ export default function SimFormUnified({
   const onlyLetters = (s: string) => s.replace(/[^A-Za-zÀ-ÿ\u00f1\u00d1\s'.-]/g, "");
 
   return (
-    <div className="space-y-2" onFocusCapture={() => { if (!hasInteracted) setHasInteracted(true); }}>
+    <div className="space-y-2">
       <SimTypeAlertSection formType={formType} />
 
       <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 !mt-1.5">
@@ -460,15 +458,15 @@ export default function SimFormUnified({
       <button
         type="button"
         onClick={handlePay}
-        disabled={!canPay}
-        aria-disabled={!canPay}
+        disabled={isLoadingPayment}
+        aria-disabled={isLoadingPayment}
         className={`mt-4 w-full h-[54px]
           rounded-lg px-4
           inline-flex items-center justify-center gap-2.5
           text-sm font-semibold transition-all
-          ${canPay
-            ? "bg-black text-white hover:bg-black/90"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none"
+          ${isLoadingPayment
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-black text-white hover:bg-black/90"
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >
