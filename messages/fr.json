@@ -702,10 +702,12 @@
     "secureMdm": {
       "badge": "Sécurité de bout en bout",
       "title": "Systèmes cryptés avec sécurité chiffrée",
+      "description": "Logiciels et systèmes d'exploitation conçus pour protéger chaque aspect de votre appareil mobile",
       "fromPrice": "À partir de",
+      "save": "Économisez",
       "consultPrice": "Consultez nos prix",
       "buy": "Acheter",
-      "moreInfo": "Info"
+      "moreInfo": "Plus d'infos"
     },
     "secureCommunication": {
       "title": "Nous sommes spécialistes en solutions de communication sécurisée :",

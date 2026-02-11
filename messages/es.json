@@ -704,7 +704,9 @@
     "secureMdm": {
       "badge": "Seguridad de inicio a fin",
       "title": "Sistemas encriptados con seguridad cifrada",
+      "description": "Software y sistemas operativos diseñados para proteger cada aspecto de tu dispositivo móvil",
       "fromPrice": "Desde",
+      "save": "Ahorra",
       "consultPrice": "Consulta nuestros precios",
       "buy": "Comprar",
       "moreInfo": "Más información"

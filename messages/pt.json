@@ -702,7 +702,9 @@
     "secureMdm": {
       "badge": "Segurança de ponta a ponta",
       "title": "Sistemas criptografados com segurança cifrada",
+      "description": "Software e sistemas operacionais projetados para proteger cada aspecto do seu dispositivo móvel",
       "fromPrice": "A partir de",
+      "save": "Economize",
       "consultPrice": "Consulte nossos preços",
       "buy": "Comprar",
       "moreInfo": "Mais informações"

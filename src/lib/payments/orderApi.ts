@@ -220,20 +220,22 @@ export async function fetchPublicStatus(orderId: number): Promise<{
 // =====================
 export async function createRenewalOrder({
   productId,
-  licenseId,
+  licenseIds,
   email,
   quantity = 1,
   months,
   amountUsd,
   currency = "USD",
+  paymentProvider = "stripe",
 }: {
   productId: number;
-  licenseId: string;
+  licenseIds: string[];
   email: string;
   quantity?: number;
   months: number;
   amountUsd: number;
   currency?: "USD";
+  paymentProvider?: "stripe" | "kriptomus";
 }): Promise<{
   ok: boolean;
   order_id: number;
@@ -247,11 +249,11 @@ export async function createRenewalOrder({
 
   const payload = omitUndefined({
     product_id: productId,
-    license_id: licenseId,
+    license_ids: licenseIds,
     email,
     qty: quantity,
     months,
-    payment_provider: "stripe",
+    payment_provider: paymentProvider,
     amount: Number(amountUsd.toFixed(2)),
     currency,
   });

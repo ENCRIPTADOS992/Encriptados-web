@@ -702,10 +702,12 @@
     "secureMdm": {
       "badge": "Sicurezza end-to-end",
       "title": "Sistemi crittografati con sicurezza cifrata",
+      "description": "Software e sistemi operativi progettati per proteggere ogni aspetto del tuo dispositivo mobile",
       "fromPrice": "Da",
+      "save": "Risparmia",
       "consultPrice": "Consulta i nostri prezzi",
       "buy": "Acquista",
-      "moreInfo": "Info"
+      "moreInfo": "Più info"
     },
     "secureCommunication": {
       "title": "Siamo specialisti in soluzioni di comunicazione sicura:",

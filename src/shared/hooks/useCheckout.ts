@@ -111,5 +111,35 @@ export function useCheckout() {
     }
   }, []);
 
-  return { loading, lastOrderId, payUserId, payRoaming };
+  const payRenewal = useCallback(async (args: {
+    productId: number;
+    licenseIds: string[];
+    email: string;
+    provider: Provider;
+    amount: number;
+    currency: string;
+    qty?: number;
+    months: number;
+  }) => {
+    setLoading(true);
+    try {
+      const res = await CheckoutService.renewal({
+        product_id: args.productId,
+        license_ids: args.licenseIds,
+        email: args.email,
+        qty: args.qty,
+        months: args.months,
+        payment_provider: args.provider,
+        amount: args.amount,
+        currency: args.currency,
+      });
+      setLastOrderId(res.order_id);
+      window.location.href = res.payment_url;
+      return res;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { loading, lastOrderId, payUserId, payRoaming, payRenewal };
 }

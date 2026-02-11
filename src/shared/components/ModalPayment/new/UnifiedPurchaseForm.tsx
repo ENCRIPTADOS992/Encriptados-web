@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
-import { createUserIdOrderAndIntent, createOrderAndIntent, fetchPublicStatus, type OrderType } from "@/lib/payments/orderApi";
+import { createUserIdOrderAndIntent, createOrderAndIntent, createRenewalOrder, fetchPublicStatus, type OrderType } from "@/lib/payments/orderApi";
 import { useFormPolicy } from "./useFormPolicy";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
 
@@ -368,7 +368,39 @@ export default function UnifiedPurchaseForm({
         const resolvedLicenseTime = isThreema ? null : purchaseMeta?.licensetime;
         console.log("🐛 [UnifiedPurchaseForm] resolvedLicenseTime:", resolvedLicenseTime);
 
-        if (orderType === "roaming") {
+        // DEBUG: Log routing decision
+        console.log("🔀 [UnifiedPurchaseForm] Routing decision:", {
+          orderType,
+          licenseType: form.licenseType,
+          renewIds: form.renewIds,
+          renewIdsLength: form.renewIds?.length,
+          willUseRenewal: form.licenseType === "renew" && form.renewIds && form.renewIds.length > 0,
+        });
+
+        if (form.licenseType === "renew" && form.renewIds && form.renewIds.length > 0) {
+          // === RENEWAL: use dedicated /orders/renewal endpoint ===
+          // Must be checked FIRST — renewal always goes to /orders/renewal regardless of orderType
+          const lt = purchaseMeta?.licensetime;
+          const months = typeof lt === 'string' ? parseInt(lt) || 12 : (typeof lt === 'number' ? lt : 12);
+          console.log("🔄 [RENEWAL] Using /orders/renewal endpoint", {
+            productId,
+            licenseIds: form.renewIds,
+            email: emailVal.trim(),
+            months,
+            amountUsd,
+            licenseType: form.licenseType,
+          });
+          orderResult = await createRenewalOrder({
+            productId,
+            licenseIds: form.renewIds,
+            email: emailVal.trim(),
+            quantity,
+            months,
+            amountUsd,
+            currency: "USD",
+            paymentProvider: "stripe",
+          });
+        } else if (orderType === "roaming") {
           orderResult = await createOrderAndIntent({
             orderType: "roaming",
             productId,

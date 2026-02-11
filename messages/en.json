@@ -709,10 +709,12 @@
     "secureMdm": {
       "badge": "End-to-end security",
       "title": "Encrypted systems with cipher security",
+      "description": "Software and operating systems designed to protect every aspect of your mobile device",
       "fromPrice": "From",
+      "save": "Save",
       "consultPrice": "Check our prices",
       "buy": "Buy",
-      "moreInfo": "Info"
+      "moreInfo": "More info"
     },
     "secureCommunication": {
       "title": "We are specialists in secure communication solutions:",
