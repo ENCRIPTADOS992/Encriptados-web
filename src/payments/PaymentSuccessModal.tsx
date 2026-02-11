@@ -200,16 +200,8 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               </div>
             </div>
 
-            {/* Message */}
-            {product.brandKey === "app" || product.brandKey === "system" ? (
-              <div className="mt-4 rounded-xl bg-[#FFF8E7] px-4 py-3">
-                <p className="text-center text-sm text-[#333] leading-relaxed">
-                  {t("telegramLicenseMsg1")}
-                  <br />
-                  {t("telegramLicenseMsg2")}
-                </p>
-              </div>
-            ) : (
+            {/* Message — only for physical products (routers, SIMs, etc.) */}
+            {product.brandKey !== "app" && product.brandKey !== "system" && (
               <p className="mt-5 text-center text-xs text-[#555] leading-relaxed">
                 {t("orderDispatchMsg1")}
                 <br />
@@ -218,7 +210,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
             )}
 
             {/* Telegram button */}
-            <div className="mt-4 flex justify-center">
+            <div className="mt-10 flex justify-center">
               <a
                 href={telegramUrl}
                 target="_blank"
