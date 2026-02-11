@@ -371,7 +371,7 @@ method=stripe
 | | |
 |---|---|
 | **URL** | `{API_BASE}/orders/renewal` |
-| **Archivo** | `src/lib/payments/orderApi.ts` → `createRenewalOrder()` |
+| **Archivo** | `src/lib/payments/orderApi.ts` → `createRenewalOrder()`, `src/services/checkout.ts` → `CheckoutService.renewal()`, `src/shared/hooks/useCheckout.ts` → `payRenewal()` |
 | **Auth** | No |
 | **Content-Type** | `application/json` |
 
@@ -379,15 +379,17 @@ method=stripe
 ```jsonc
 {
   "product_id": 123,                    // requerido
-  "license_id": "LIC-00123",           // requerido
+  "license_ids": ["LIC-001", "LIC-002"], // requerido — ARRAY de IDs de licencia
   "email": "user@example.com",         // requerido
   "qty": 1,
   "months": 12,                         // requerido
-  "payment_provider": "stripe",
+  "payment_provider": "stripe",         // "stripe" | "kriptomus"
   "amount": 220.00,                     // requerido
   "currency": "USD"
 }
 ```
+
+> **⚠️ Cambio (2026-02-11):** El campo `license_id` (singular string) fue reemplazado por `license_ids` (array de strings) para soportar renovación de múltiples licencias en una sola orden.
 
 **Respuesta:** Misma estructura que checkout (ver 2.1).
 

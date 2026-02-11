@@ -34,7 +34,7 @@ type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
-  const { payUserId, loading } = useCheckout();
+  const { payUserId, payRenewal, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
   const toast = useToast();
   const t = useTranslations("paymentModal");
@@ -234,43 +234,34 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
           selectedOption: (params as any)?.selectedOption,
         }}
         onPayCrypto={async (formData: FormData) => {
-          await payUserId({
-            productId: productIdNum,
-            email: formData.email,
-            username: formData.telegramId || formData.usernames?.[0],
-            provider: "kriptomus",
-            amount,
-            currency: "USD",
-            qty: quantity,
-            variantId: selectedVariant?.id ?? undefined,
-            sku: selectedVariant?.sku,
-            licensetime: selectedVariant?.licensetime ?? product?.licensetime,
-            licenseType: formData.licenseType,
-            renewId: formData.renewId,
-            osType: formData.osType,
-            silentPhoneMode: formData.silentPhoneMode,
-            usernames: formData.usernames,
-            couponCode: coupon.trim() || undefined,
-            discount,
-            sourceUrl: params.sourceUrl,
-            selectedOption: (params as any)?.selectedOption,
-            meta: {
-              formType,
+          // === RENEWAL via crypto: use dedicated /orders/renewal endpoint ===
+          if (formData.licenseType === "renew" && formData.renewIds && formData.renewIds.length > 0) {
+            const lt = selectedVariant?.licensetime ?? product?.licensetime;
+            const months = typeof lt === 'string' ? parseInt(lt as string) || 12 : (typeof lt === 'number' ? lt : 12);
+            await payRenewal({
               productId: productIdNum,
-              quantity,
-              unitPrice,
-              shipping,
+              licenseIds: formData.renewIds,
+              email: formData.email,
+              provider: "kriptomus",
+              amount,
+              currency: "USD",
+              qty: quantity,
+              months,
+            });
+          } else {
+            await payUserId({
+              productId: productIdNum,
+              email: formData.email,
+              username: formData.telegramId || formData.usernames?.[0],
+              provider: "kriptomus",
+              amount,
+              currency: "USD",
+              qty: quantity,
               variantId: selectedVariant?.id ?? undefined,
               sku: selectedVariant?.sku,
               licensetime: selectedVariant?.licensetime ?? product?.licensetime,
               licenseType: formData.licenseType,
               renewId: formData.renewId,
-              renewIds: formData.renewIds,
-              shippingAddress: formData.shippingAddress,
-              shippingFullName: formData.shippingFullName,
-              shippingCountry: formData.shippingCountry,
-              shippingPostalCode: formData.shippingPostalCode,
-              shippingPhone: formData.shippingPhone,
               osType: formData.osType,
               silentPhoneMode: formData.silentPhoneMode,
               usernames: formData.usernames,
@@ -278,8 +269,33 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
               discount,
               sourceUrl: params.sourceUrl,
               selectedOption: (params as any)?.selectedOption,
-            },
-          });
+              meta: {
+                formType,
+                productId: productIdNum,
+                quantity,
+                unitPrice,
+                shipping,
+                variantId: selectedVariant?.id ?? undefined,
+                sku: selectedVariant?.sku,
+                licensetime: selectedVariant?.licensetime ?? product?.licensetime,
+                licenseType: formData.licenseType,
+                renewId: formData.renewId,
+                renewIds: formData.renewIds,
+                shippingAddress: formData.shippingAddress,
+                shippingFullName: formData.shippingFullName,
+                shippingCountry: formData.shippingCountry,
+                shippingPostalCode: formData.shippingPostalCode,
+                shippingPhone: formData.shippingPhone,
+                osType: formData.osType,
+                silentPhoneMode: formData.silentPhoneMode,
+                usernames: formData.usernames,
+                couponCode: coupon.trim() || undefined,
+                discount,
+                sourceUrl: params.sourceUrl,
+                selectedOption: (params as any)?.selectedOption,
+              },
+            });
+          }
         }}
         onPaid={() => {
           closeModal();

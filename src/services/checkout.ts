@@ -54,6 +54,17 @@ export interface CheckoutRoamingInput {
   meta?: Record<string, any>;
 }
 
+export interface CheckoutRenewalInput {
+  product_id: number;
+  license_ids: string[];
+  email: string;
+  qty?: number;
+  months: number;
+  payment_provider: Provider;
+  amount: number;
+  currency: string;
+}
+
 // Base público de WP (ej: https://encriptados.es/wp-json)
 const WP_BASE =
   (process.env.NEXT_PUBLIC_WP_API || 'https://encriptados.es/wp-json').replace(/\/$/, '');
@@ -107,5 +118,19 @@ export const CheckoutService = {
       }
       throw e;
     }
+  },
+
+  renewal: async (input: CheckoutRenewalInput) => {
+    const payload = omitUndefined({
+      product_id: input.product_id,
+      license_ids: input.license_ids,
+      email: input.email,
+      qty: input.qty,
+      months: input.months,
+      payment_provider: input.payment_provider,
+      amount: input.amount,
+      currency: input.currency,
+    });
+    return await api.post<CheckoutResponse>(`${BASE}/orders/renewal`, payload);
   },
 };

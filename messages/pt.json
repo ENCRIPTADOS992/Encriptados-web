@@ -702,7 +702,9 @@
     "secureMdm": {
       "badge": "Segurança de ponta a ponta",
       "title": "Sistemas criptografados com segurança cifrada",
+      "description": "Software e sistemas operacionais projetados para proteger cada aspecto do seu dispositivo móvel",
       "fromPrice": "A partir de",
+      "save": "Economize",
       "consultPrice": "Consulte nossos preços",
       "buy": "Comprar",
       "moreInfo": "Mais informações"
@@ -2571,7 +2573,10 @@
     "brandApp": "Aplicativo",
     "brandSystem": "Sistema",
     "brandRouter": "Roteador",
-    "couponReplacesOffer": "Este produto já tem uma oferta aplicada. Seu cupom será aplicado sobre o preço regular do produto sem a oferta."
+    "brandEncrypted": "criptografado",
+    "brandTim": "tim",
+    "couponReplacesOffer": "Este produto já tem uma oferta aplicada. Seu cupom será aplicado sobre o preço regular do produto sem a oferta.",
+    "closeModal": "Fechar"
   },
   "TestingProducts": {
     "badge": "Our products",

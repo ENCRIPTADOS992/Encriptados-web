@@ -143,10 +143,11 @@
 |---|---|
 | **Method** | `POST` |
 | **URL** | `{WP_API}/encriptados/v1/orders/renewal` |
-| **Function** | `createRenewalOrder()` |
+| **Function** | `createRenewalOrder()` in `src/lib/payments/orderApi.ts`, `CheckoutService.renewal()` in `src/services/checkout.ts`, `payRenewal()` in `src/shared/hooks/useCheckout.ts` |
 | **File** | `src/lib/payments/orderApi.ts` |
-| **Request Body** | `{ product_id, license_id, email, qty, months, payment_provider: "stripe", amount, currency }` |
+| **Request Body** | `{ product_id, license_ids: string[], email, qty, months, payment_provider: "stripe" \| "kriptomus", amount, currency }` |
 | **Response** | `{ ok, order_id, status, provider, provider_ref?, client_secret, payment_url? }` |
+| **Nota** | `license_ids` es un ARRAY de strings (antes era `license_id` singular). Se usa para renovaciones desde `UnifiedPurchaseForm` (card) y `ModalNewUser` (crypto). |
 
 ### 3.6 Get Public Order Status (Polling)
 

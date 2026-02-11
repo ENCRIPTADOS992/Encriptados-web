@@ -704,7 +704,9 @@
     "secureMdm": {
       "badge": "Seguridad de inicio a fin",
       "title": "Sistemas encriptados con seguridad cifrada",
+      "description": "Software y sistemas operativos diseñados para proteger cada aspecto de tu dispositivo móvil",
       "fromPrice": "Desde",
+      "save": "Ahorra",
       "consultPrice": "Consulta nuestros precios",
       "buy": "Comprar",
       "moreInfo": "Más información"
@@ -2687,7 +2689,10 @@
     "brandApp": "Aplicación",
     "brandSystem": "Sistema",
     "brandRouter": "Router",
-    "couponReplacesOffer": "Este producto ya tiene una oferta aplicada. Tu cupón se aplicará sobre el precio regular del producto sin la oferta."
+    "brandEncrypted": "encriptado",
+    "brandTim": "tim",
+    "couponReplacesOffer": "Este producto ya tiene una oferta aplicada. Tu cupón se aplicará sobre el precio regular del producto sin la oferta.",
+    "closeModal": "Cerrar"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",

@@ -702,10 +702,12 @@
     "secureMdm": {
       "badge": "Sécurité de bout en bout",
       "title": "Systèmes cryptés avec sécurité chiffrée",
+      "description": "Logiciels et systèmes d'exploitation conçus pour protéger chaque aspect de votre appareil mobile",
       "fromPrice": "À partir de",
+      "save": "Économisez",
       "consultPrice": "Consultez nos prix",
       "buy": "Acheter",
-      "moreInfo": "Info"
+      "moreInfo": "Plus d'infos"
     },
     "secureCommunication": {
       "title": "Nous sommes spécialistes en solutions de communication sécurisée :",
@@ -2561,7 +2563,10 @@
     "brandApp": "Application",
     "brandSystem": "Système",
     "brandRouter": "Routeur",
-    "couponReplacesOffer": "Ce produit a déjà une offre appliquée. Votre coupon sera appliqué sur le prix régulier du produit sans l'offre."
+    "brandEncrypted": "chiffré",
+    "brandTim": "tim",
+    "couponReplacesOffer": "Ce produit a déjà une offre appliquée. Votre coupon sera appliqué sur le prix régulier du produit sans l'offre.",
+    "closeModal": "Fermer"
   },
   "TestingProducts": {
     "badge": "Our products",
