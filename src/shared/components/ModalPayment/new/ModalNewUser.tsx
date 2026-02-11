@@ -19,6 +19,7 @@ type Variant = { id: number; licensetime: number | string; price: number; sku?: 
 type ModalProduct = {
   variants?: Variant[];
   images?: { src: string }[];
+  iconUrl?: string;
   price?: number | string;
   name?: string;
   licensetime?: number | string;
@@ -322,7 +323,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
               orderId: data.orderId,
               product: {
                 name: product?.name ?? "Producto",
-                image: selectedVariant?.image || product?.images?.[0]?.src,
+                image: selectedVariant?.image || product?.iconUrl || product?.images?.[0]?.src,
                 brandKey,
                 quantity,
                 unitPrice,

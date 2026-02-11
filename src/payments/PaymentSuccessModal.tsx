@@ -112,7 +112,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
             {/* Product card */}
             <div className="mt-4 mx-auto flex items-center gap-3 rounded-xl bg-[#F7F7F7] px-4 py-3 w-fit">
               {product.image ? (
-                <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-black">
+                <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-[#F7F7F7]">
                   <Image
                     src={product.image}
                     alt={product.name}

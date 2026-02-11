@@ -37,6 +37,7 @@ export type ModalProduct = {
   id?: number | string;
   variants?: Variant[];
   images?: { src: string }[];
+  iconUrl?: string;
   price?: number | string;
   name?: string;
   licensetime?: number | string;
