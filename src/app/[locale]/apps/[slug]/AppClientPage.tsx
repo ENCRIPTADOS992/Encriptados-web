@@ -168,6 +168,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       languageCode: locale,
       selectedOption: product?.category?.id || 38,
       initialPrice: numericPrice,
+      iconUrl: config?.iconUrl,
     });
   };
 

@@ -28,7 +28,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   const { params } = useModalPayment();
   const t = useTranslations("paymentModal");
   console.log("🐛 [ModalSIM] Entry Params:", params);
-  const { productid, initialPrice, initialGb, initialRegion, initialRegionCode, provider: paramProvider, typeProduct: paramTypeProduct, variantId: paramVariantId } = (params || {}) as {
+  const { productid, initialPrice, initialGb, initialRegion, initialRegionCode, provider: paramProvider, typeProduct: paramTypeProduct, variantId: paramVariantId, iconUrl: paramIconUrl } = (params || {}) as {
     productid?: string;
     initialPrice?: number;
     initialGb?: string;
@@ -38,6 +38,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     typeProduct?: string;
     variantId?: number;
     variants?: any[];
+    iconUrl?: string;
   };
   const toast = useToast();
   const [hideSimField, setHideSimField] = React.useState(false);
@@ -694,7 +695,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       orderId: data.orderId,
       product: {
         name: enrichedProduct?.name ?? "SIM",
-        image: enrichedProduct?.iconUrl || enrichedProduct?.images?.[0]?.src,
+        image: enrichedProduct?.iconUrl || paramIconUrl || enrichedProduct?.images?.[0]?.src,
         brand: enrichedProduct?.brand ?? "Encriptados",
         quantity,
         unitPrice,

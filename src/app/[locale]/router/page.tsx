@@ -213,6 +213,7 @@ export default function RouterPage() {
       selectedOption: ROUTER_CONFIG.categoryId,
       initialPrice: priceForCheckout,
       variantId: Number.isFinite(selectedVariantId) ? selectedVariantId : undefined,
+      iconUrl: ROUTER_CONFIG.iconUrl,
     });
   };
 

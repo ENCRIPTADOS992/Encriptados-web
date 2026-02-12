@@ -366,7 +366,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       initialRegion: regionFromUrl || undefined,
       initialRegionCode: regionCodeFromUrl || undefined,
       flagUrl: flagUrlFromUrl || undefined,
-      variantId: variantId ? Number(variantId) : undefined, // Parametro nuevo (requerirá soporte en useModalPayment)
+      variantId: variantId ? Number(variantId) : undefined,
+      iconUrl: config?.iconUrl,
     });
   };
 

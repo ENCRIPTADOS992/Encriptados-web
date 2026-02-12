@@ -63,6 +63,7 @@ const RouterPage = () => {
         productid: "142",
         languageCode: "es",
         selectedOption: 35,
+        iconUrl: "/images/apps/silent-circle/logo.png",
       });
     },
     onChat: () => {
