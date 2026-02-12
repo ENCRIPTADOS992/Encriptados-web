@@ -210,7 +210,8 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
             )}
 
             {/* Telegram button */}
-            <div className="mt-10 flex justify-center">
+            <div className="mt-10 flex flex-col items-center gap-2">
+              <p className="text-sm font-semibold text-[#333]">{t("needHelpQuestion")}</p>
               <a
                 href={telegramUrl}
                 target="_blank"
@@ -304,7 +305,8 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
           </div>
 
           {/* Botón Chatear ahora estilo Telegram */}
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex flex-col items-center gap-2">
+            <p className="text-sm font-semibold text-[#333]">{t("needHelpQuestion")}</p>
             <a
               href={telegramUrl}
               target="_blank"
