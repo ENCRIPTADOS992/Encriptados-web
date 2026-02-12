@@ -325,7 +325,7 @@ export function useTranslatedOthersCategories(): any[] {
       description: t2("distributors.description", {
         defaultValue: "Conviértete en distribuidor de nuestros productos",
       }),
-      image: "/images/mega-menu/distribuidores.jpeg",
+      image: "/images/mega-menu/distribuidores.webp",
       link: "/distributors",
       items: [],
     },
@@ -335,7 +335,7 @@ export function useTranslatedOthersCategories(): any[] {
         defaultValue: "Últimas noticias y actualizaciones",
       }),
       link: "/blog",
-      image: "/images/mega-menu/blog.jpeg",
+      image: "/images/mega-menu/blog.webp",
       items: [],
     },
     {
@@ -344,7 +344,7 @@ export function useTranslatedOthersCategories(): any[] {
         defaultValue: "¿Qué tan seguro son tus dispositivos?",
       }),
       link: "/encrypted-test",
-      image: "/images/mega-menu/seguridad.jpeg",
+      image: "/images/mega-menu/seguridad.webp",
       items: [],
     },
     {
