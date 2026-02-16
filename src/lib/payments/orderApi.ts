@@ -227,6 +227,8 @@ export async function createRenewalOrder({
   amountUsd,
   currency = "USD",
   paymentProvider = "stripe",
+  couponCode,
+  discount,
 }: {
   productId: number;
   licenseIds: string[];
@@ -236,6 +238,8 @@ export async function createRenewalOrder({
   amountUsd: number;
   currency?: "USD";
   paymentProvider?: "stripe" | "kriptomus";
+  couponCode?: string;
+  discount?: number;
 }): Promise<{
   ok: boolean;
   order_id: number;
@@ -256,6 +260,8 @@ export async function createRenewalOrder({
     payment_provider: paymentProvider,
     amount: Number(amountUsd.toFixed(2)),
     currency,
+    coupon_code: couponCode,
+    discount,
   });
 
   const r = await fetch(url, {
@@ -281,16 +287,32 @@ export async function createRenewalOrder({
 // =====================
 // COUPONS
 // =====================
-export async function validateCoupon(code: string, productName?: string, productId?: number | string): Promise<{
+export interface CouponValidationResult {
   ok: boolean;
+  code?: string;
+  coupon_id?: number;
   discount_type?: "fixed" | "percent";
-  discount_amount?: number;
+  discount_value?: number;       // raw coupon value (e.g. 20 for 20%)
+  discount_applied?: number;     // calculated discount in currency
+  original_amount?: number;
+  final_amount?: number;
+  applies_to_products?: number[];
   message?: string;
-}> {
+}
+
+export async function validateCoupon(
+  code: string,
+  productName?: string,
+  productId?: number | string,
+  amount?: number
+): Promise<CouponValidationResult> {
   // Use local API proxy to avoid exposing credentials and handle CORS
   let url = `/api/coupons/validate?code=${encodeURIComponent(code)}`;
   if (productId) {
     url += `&product_id=${encodeURIComponent(productId)}`;
+  }
+  if (amount != null && Number.isFinite(amount)) {
+    url += `&amount=${encodeURIComponent(amount)}`;
   }
 
   try {
@@ -304,8 +326,14 @@ export async function validateCoupon(code: string, productName?: string, product
 
     return {
       ok: true,
+      code: data.code,
+      coupon_id: data.coupon_id,
       discount_type: data.discount_type,
-      discount_amount: Number(data.discount_amount),
+      discount_value: data.discount_value,
+      discount_applied: data.discount_applied,
+      original_amount: data.original_amount,
+      final_amount: data.final_amount,
+      applies_to_products: data.applies_to_products,
       message: data.message || "Cupón aplicado",
     };
   } catch (e) {

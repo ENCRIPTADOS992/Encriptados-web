@@ -120,6 +120,8 @@ export function useCheckout() {
     currency: string;
     qty?: number;
     months: number;
+    couponCode?: string;
+    discount?: number;
   }) => {
     setLoading(true);
     try {
@@ -132,6 +134,8 @@ export function useCheckout() {
         payment_provider: args.provider,
         amount: args.amount,
         currency: args.currency,
+        coupon_code: args.couponCode,
+        discount: args.discount,
       });
       setLastOrderId(res.order_id);
       window.location.href = res.payment_url;

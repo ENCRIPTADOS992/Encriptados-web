@@ -63,6 +63,8 @@ export interface CheckoutRenewalInput {
   payment_provider: Provider;
   amount: number;
   currency: string;
+  coupon_code?: string;
+  discount?: number;
 }
 
 // Base público de WP (ej: https://encriptados.es/wp-json)
@@ -130,6 +132,8 @@ export const CheckoutService = {
       payment_provider: input.payment_provider,
       amount: input.amount,
       currency: input.currency,
+      coupon_code: input.coupon_code,
+      discount: input.discount,
     });
     return await api.post<CheckoutResponse>(`${BASE}/orders/renewal`, payload);
   },

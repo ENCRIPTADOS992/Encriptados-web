@@ -388,6 +388,8 @@ export default function UnifiedPurchaseForm({
             amountUsd,
             currency: "USD",
             paymentProvider: "stripe",
+            couponCode: purchaseMeta?.couponCode,
+            discount: purchaseMeta?.discount,
           });
         } else if (orderType === "roaming") {
           orderResult = await createOrderAndIntent({
