@@ -139,6 +139,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       pathname === "/encrypted-sim" || pathname.endsWith("/encrypted-sim");
     const isTimSimPath = pathname === "/tim-sim" || pathname.endsWith("/tim-sim");
 
+    // Apps handle buy=1 auto-open internally in AppClientPage (with variant support)
     if (!isRouterPath && !isSimPath && !isEncryptedSimPath && !isTimSimPath) {
       return;
     }
