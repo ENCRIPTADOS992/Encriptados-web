@@ -138,5 +138,18 @@ export async function confirmCardPayment(
     return { status: "requires_action", error: "Sin PaymentIntent" };
   }
 
+  // DEV: simular webhook de Stripe en entorno local
+  // (los webhooks reales apuntan a producción, no a localhost)
+  if (process.env.NODE_ENV === "development" && paymentIntent.status === "succeeded" && paymentIntent.id) {
+    try {
+      const wpApi = process.env.NEXT_PUBLIC_WP_API ?? "";
+      await fetch(`${wpApi}/encriptados/v1/payments/stripe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ provider_ref: paymentIntent.id, status: "paid" }),
+      });
+    } catch { /* ignorar errores del webhook dev */ }
+  }
+
   return { status: paymentIntent.status as any, intent: paymentIntent };
 }

@@ -34,7 +34,7 @@ type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 
 export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params, openModal, closeModal } = useModalPayment();
-  const { productid, initialPrice, variantId } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number };
+  const { productid, initialPrice, variantId, iconUrl: paramIconUrl } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number; iconUrl?: string };
   const { payUserId, payRenewal, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
   const toast = useToast();
@@ -323,7 +323,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
               orderId: data.orderId,
               product: {
                 name: product?.name ?? "Producto",
-                image: selectedVariant?.image || product?.iconUrl || product?.images?.[0]?.src,
+                image: product?.iconUrl || paramIconUrl || product?.images?.[0]?.src,
                 brandKey,
                 quantity,
                 unitPrice,

@@ -46,6 +46,8 @@ interface ModalPaymentParams {
   typeProduct?: string;
   flagUrl?: string;
   initialRegionCode?: string;
+  /** URL del icono/logo del producto para mostrar en el modal de éxito */
+  iconUrl?: string;
 }
 
 interface ModalPaymentContextProps {
