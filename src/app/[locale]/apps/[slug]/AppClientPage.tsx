@@ -66,6 +66,9 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   // Determine identifier and type for the hook
   const searchParamProductId = searchParams.get("productId");
+  const searchParamVariantId = searchParams.get("variantId");
+  const searchParamCategoryId = searchParams.get("categoryId");
+  const searchParamBuy = searchParams.get("buy");
 
   // Priority: 
   // 1. Query Param ID (allows overriding static config via URL)
@@ -122,9 +125,17 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   useEffect(() => {
     if (plans.length > 0 && !selectedRadio) {
+      // Si hay variantId en la URL, pre-seleccionar esa variante
+      if (searchParamVariantId) {
+        const matchingPlan = plans.find(p => String(p.variantId) === searchParamVariantId);
+        if (matchingPlan) {
+          setSelectedRadio(matchingPlan.label);
+          return;
+        }
+      }
       setSelectedRadio(plans[0].label);
     }
-  }, [plans, selectedRadio]);
+  }, [plans, selectedRadio, searchParamVariantId]);
 
   const selectedPlan = useMemo(() => {
     return plans.find(p => p.label === selectedRadio) || plans[0] || null;
@@ -152,9 +163,57 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const handleRadioChange = (val: string) => setSelectedRadio(val);
 
   // === AUTO-ABRIR POPUP si viene con ?buy=1 ===
-  // ═══════════════════════════════════════════════════════════════════════════
-  // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
-  // ═══════════════════════════════════════════════════════════════════════════
+  const buyAutoOpenedRef = useRef(false);
+  useEffect(() => {
+    if (searchParamBuy !== "1") return;
+    if (buyAutoOpenedRef.current) return;
+    if (!product) return;
+
+    // Esperar a que se resuelva la variante si viene en la URL
+    if (searchParamVariantId && plans.length > 0) {
+      const matchingPlan = plans.find(p => String(p.variantId) === searchParamVariantId);
+      const planToUse = matchingPlan || selectedPlan;
+      const priceStr = planToUse?.price
+        ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
+        ?? 0;
+      const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+
+      buyAutoOpenedRef.current = true;
+      openModal({
+        productid: String(product?.id || config?.productId),
+        languageCode: locale,
+        selectedOption: Number(searchParamCategoryId) || product?.category?.id || config?.categoryId || 38,
+        initialPrice: numericPrice,
+        iconUrl: config?.iconUrl,
+        variantId: planToUse?.variantId,
+      });
+
+      // Limpiar ?buy de la URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete("buy");
+      window.history.replaceState({}, "", url.toString());
+    } else if (!searchParamVariantId) {
+      // Sin variantId, abrir con el plan seleccionado por defecto
+      const priceStr = selectedPlan?.price
+        ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
+        ?? 0;
+      const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
+
+      buyAutoOpenedRef.current = true;
+      openModal({
+        productid: String(product?.id || config?.productId),
+        languageCode: locale,
+        selectedOption: Number(searchParamCategoryId) || product?.category?.id || config?.categoryId || 38,
+        initialPrice: numericPrice,
+        iconUrl: config?.iconUrl,
+        variantId: selectedPlan?.variantId,
+      });
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("buy");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [searchParamBuy, searchParamVariantId, searchParamCategoryId, product, plans, selectedPlan, openModal, locale, config]);
 
   const handleBuy = () => {
     // Extraer precio numérico - usar sale_price si está en oferta
@@ -166,9 +225,10 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     openModal({
       productid: String(product?.id || config?.productId),
       languageCode: locale,
-      selectedOption: product?.category?.id || 38,
+      selectedOption: product?.category?.id || config?.categoryId || 38,
       initialPrice: numericPrice,
       iconUrl: config?.iconUrl,
+      variantId: selectedPlan?.variantId,
     });
   };
 

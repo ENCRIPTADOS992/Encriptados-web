@@ -430,16 +430,21 @@ const PurchaseHeader: React.FC<Props> = ({
 
                   if (derivedLink) {
                     const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://encriptados.io";
-                    // Asegurar que usamos productId y price correctos en la URL
-                    // NOTA: Mantenemos price aqui si el producto NO es SIM y no tiene variantes complejas, 
-                    // pero por consistencia intentamos evitarlo si es posible.
-                    // Para apps, a veces el precio es simple. Dejamos price por compatibilidad 
-                    // a menos que el user quiera "todos". El user dijo "productos de sim".
-                    // Pero para seguridad general, mejor quitarlo también si el backend lo soporta.
-                    // Asumiremos que Apps aun pueden necesitarlo o no es critico este cambio ahora.
-                    // PERO el user dijo "no admitas url donde se que me el price".
-                    // Asi que lo quitamos tambien aqui.
-                    shareUrl = `${baseUrl}/${locale}${derivedLink}?productId=${productId}&buy=1`;
+                    // Construir URL con productId, categoryId, variantId y buy=1
+                    let appShareUrl = `${baseUrl}/${locale}${derivedLink}?productId=${productId}`;
+
+                    // Agregar categoryId si está disponible
+                    if (Number.isFinite(categoryId)) {
+                      appShareUrl += `&categoryId=${categoryId}`;
+                    }
+
+                    // Agregar variantId si hay una variante seleccionada
+                    if (selectedVariantId) {
+                      appShareUrl += `&variantId=${selectedVariantId}`;
+                    }
+
+                    appShareUrl += `&buy=1`;
+                    shareUrl = appShareUrl;
                   } else if (sourceUrl) {
                     // Usar sourceUrl si está disponible
                     const currentUrl = new URL(sourceUrl);
