@@ -18,7 +18,7 @@ import { SimTypeAlertSection } from "./components/SimTypeAlertSection";
 import { BuyerFieldsSection } from "./components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./components/PaymentMethodSection";
 
-const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
 type SimFormUnifiedProps = {
   formType: FormType;
@@ -159,11 +159,11 @@ export default function SimFormUnified({
     method === "crypto"
       ? true
       : stripeStatus === "ready" &&
-        cardState.number &&
-        cardState.expiry &&
-        cardState.cvc &&
-        cardName.trim().length > 1 &&
-        cardPostalOk;
+      cardState.number &&
+      cardState.expiry &&
+      cardState.cvc &&
+      cardName.trim().length > 1 &&
+      cardPostalOk;
 
   const canPay = terms && emailOk && typeSpecificOk && methodSpecificOk && !isSubmitting && !loading;
 
@@ -227,10 +227,10 @@ export default function SimFormUnified({
         const tottoliMethod = method === "card" ? "card" : "cryptomus";
 
         // Resolver product_id: prioridad productid prop, luego product.id
-        const resolvedProductId = productid 
-          ? Number(productid) 
+        const resolvedProductId = productid
+          ? Number(productid)
           : (product?.id ? Number(product.id) : null);
-        
+
         console.log("[SimFormUnified] Product ID Resolution:", {
           productid,
           productDotId: product?.id,
