@@ -9,7 +9,7 @@ import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import { createUserIdOrderAndIntent, fetchPublicStatus } from "@/lib/payments/orderApi";
 
-const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
 type Method = "card" | "crypto";
 

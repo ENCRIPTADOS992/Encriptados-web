@@ -14,7 +14,7 @@ import { BuyerFieldsSection } from "./sims/components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./sims/components/PaymentMethodSection";
 import { CardFieldsSection } from "./sims/components/CardFieldsSection";
 
-const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
 type SimFormProps = {
   onSubmit: (data: SimFormValues) => void | Promise<void>;

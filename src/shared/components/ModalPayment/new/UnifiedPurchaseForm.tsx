@@ -18,7 +18,7 @@ const TelegramButton = TelegramButtonOriginal as unknown as React.ComponentType<
   children?: React.ReactNode;
 }>;
 
-const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
 type LicenseType = "new" | "renew";
 type OsType = "android" | "ios";

@@ -13,7 +13,7 @@ import {
   type OrderType,
 } from "@/payments/orderApi";
 
-const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const TERMS_URL = "/es/pages/terminos-y-condiciones";
 const MANUAL_PRODUCT_IDS = new Set<number>([134, 133, 127, 137]);
 const DEFAULT_SUCCESS_URL = "https://t.me/encriptados";
 
@@ -89,10 +89,10 @@ export default function RoningForm({
     phase === "crypto"
       ? "Pagar ahora"
       : phase === "card_init"
-      ? "Continuar"
-      : polling
-      ? "Procesando…"
-      : "Confirmar pago";
+        ? "Continuar"
+        : polling
+          ? "Procesando…"
+          : "Confirmar pago";
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -110,7 +110,7 @@ export default function RoningForm({
           clearInterval(pollRef.current!);
           setPolling(false);
         }
-      } catch {}
+      } catch { }
     };
 
     pollRef.current = setInterval(tick, 1500);
@@ -130,21 +130,21 @@ export default function RoningForm({
         setStripeError(null);
         const isManual = MANUAL_PRODUCT_IDS.has(productId);
         const { order_id, client_secret } = isManual
-      ? await createManualOrderAndIntent({
-          productId,
-          email: emailVal,
-          quantity,
-          amountUsd,
-          currency: "USD",
-          successUrl: DEFAULT_SUCCESS_URL, 
-        })
-      : await createOrderAndIntent({
-          orderType,      
-          productId,
-          email: emailVal,
-          quantity,
-          amountUsd,
-        });
+          ? await createManualOrderAndIntent({
+            productId,
+            email: emailVal,
+            quantity,
+            amountUsd,
+            currency: "USD",
+            successUrl: DEFAULT_SUCCESS_URL,
+          })
+          : await createOrderAndIntent({
+            orderType,
+            productId,
+            email: emailVal,
+            quantity,
+            amountUsd,
+          });
 
         setOrderId(order_id);
         setClientSecret(client_secret);
@@ -341,9 +341,8 @@ export default function RoningForm({
           onClick={handlePay}
           aria-disabled={!canPay}
           className={`mt-4 w-full h-[54px] rounded-lg px-4 inline-flex items-center justify-center gap-2.5
-          text-white text-[14px] font-semibold ${
-            canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
-          } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
+          text-white text-[14px] font-semibold ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
+            } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
         >
           {buttonLabel}
         </button>
@@ -360,7 +359,7 @@ export default function RoningForm({
         open={showSuccess}
         onClose={() => {
           setShowSuccess(false);
-          onPaid?.(); 
+          onPaid?.();
         }}
         intent={successPI}
         orderId={orderId ?? undefined}

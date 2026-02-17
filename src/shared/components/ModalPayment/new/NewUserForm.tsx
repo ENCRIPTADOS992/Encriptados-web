@@ -8,7 +8,7 @@ import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import { createUserIdOrderAndIntent, fetchPublicStatus, type OrderType } from "@/lib/payments/orderApi";
 
-const TERMS_URL = "https://encriptados.io/pages/terminos-y-condiciones/";
+const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
 type Method = "card" | "crypto";
 
@@ -97,10 +97,10 @@ export default function NewUserForm({
     method === "crypto"
       ? "Pagar ahora"
       : phase === "card_init"
-      ? "Continuar"
-      : polling
-      ? "Procesando…"
-      : "Confirmar pago";
+        ? "Continuar"
+        : polling
+          ? "Procesando…"
+          : "Confirmar pago";
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -117,7 +117,7 @@ export default function NewUserForm({
           clearInterval(pollRef.current!);
           setPolling(false);
         }
-      } catch {}
+      } catch { }
     };
 
     pollRef.current = setInterval(tick, 2000);
@@ -206,9 +206,8 @@ export default function NewUserForm({
               return (
                 <div
                   key={idx}
-                  className={`w-full h-[42px] rounded-[8px] border-2 ${
-                    invalid ? "border-red-500" : "border-[#3D3D3D]"
-                  } px-[14px] py-[8px] flex items-center gap-[10px]`}
+                  className={`w-full h-[42px] rounded-[8px] border-2 ${invalid ? "border-red-500" : "border-[#3D3D3D]"
+                    } px-[14px] py-[8px] flex items-center gap-[10px]`}
                 >
                   <input
                     value={val}
@@ -342,9 +341,8 @@ export default function NewUserForm({
           onClick={handlePay}
           aria-disabled={!canPay}
           className={`mt-4 w-full h-[54px] rounded-lg px-4 inline-flex items-center justify-center gap-2.5
-          text-white text-[14px] font-semibold ${
-            canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
-          } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
+          text-white text-[14px] font-semibold ${canPay ? "bg-black hover:bg-black/90" : "bg-black/40 cursor-not-allowed"
+            } focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
         >
           {buttonLabel}
         </button>
@@ -357,8 +355,8 @@ export default function NewUserForm({
       <PaymentSuccessModal
         open={showSuccess}
         onClose={() => {
-          setShowSuccess(false);   
-          onPaid?.();              
+          setShowSuccess(false);
+          onPaid?.();
         }}
         intent={successPI}
         orderId={orderId}
