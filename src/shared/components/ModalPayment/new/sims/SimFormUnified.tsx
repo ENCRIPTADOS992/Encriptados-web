@@ -180,7 +180,11 @@ export default function SimFormUnified({
   // Calcular montos
   const shippingFee = isPhysical ? 75 : 0;
   const baseAmount = Number(unitPrice) * quantity - discount;
-  const amountUsd = Math.max(baseAmount + shippingFee, 0);
+  const hasEsimAddonForAmount =
+    hideSimField &&
+    (formType === "encrypted_data" || formType === "encrypted_minutes");
+  const esimAddonFee = hasEsimAddonForAmount ? 7.5 : 0;
+  const amountUsd = Math.max(baseAmount + shippingFee + esimAddonFee, 0);
 
   const isLoadingPayment = isSubmitting || loading;
   const buttonLabel = React.useMemo(() => {
@@ -225,6 +229,43 @@ export default function SimFormUnified({
         })();
 
         const tottoliMethod = method === "card" ? "card" : "cryptomus";
+        const hasEsimAddon =
+          hideSimField &&
+          (formType === "encrypted_data" || formType === "encrypted_minutes");
+
+        const resolveSelectedVariantId = (): number | null => {
+          const productVariants = ((product as any)?.variants ?? []) as any[];
+          if (!productVariants.length) {
+            return selectedVariantId != null ? Number(selectedVariantId) : null;
+          }
+
+          if (selectedPlanId == null) {
+            return selectedVariantId != null ? Number(selectedVariantId) : null;
+          }
+
+          const byId = productVariants.find((v) => String(v?.id) === String(selectedPlanId));
+          if (byId?.id != null) return Number(byId.id);
+
+          const selectedPlanNum = Number(selectedPlanId);
+          if (!Number.isFinite(selectedPlanNum)) return null;
+
+          const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+          const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
+          const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
+          const rechargeBase = isEsimPlusDatos ? 12 : 0;
+
+          const byAmount = productVariants.find((v) => {
+            const variantPrice = Number(v?.price ?? v?.cost ?? v?.regular_price ?? v?.sale_price ?? 0);
+            const rechargeValue = Math.max(variantPrice - rechargeBase, 0);
+            return Math.abs(rechargeValue - selectedPlanNum) < 0.01;
+          });
+
+          if (byAmount?.id != null) return Number(byAmount.id);
+
+          return selectedVariantId != null ? Number(selectedVariantId) : null;
+        };
+
+        const effectiveSelectedVariantId = resolveSelectedVariantId();
 
         // Resolver product_id: prioridad productid prop, luego product.id
         const resolvedProductId = productid
@@ -244,6 +285,7 @@ export default function SimFormUnified({
           currency: "USD",
           product: productName,
           product_id: resolvedProductId || undefined,
+          has_esim: hasEsimAddon,
           meta: {
             formType,
             quantity,
@@ -251,7 +293,9 @@ export default function SimFormUnified({
             discount,
             shippingFee,
             selectedPlanId,
-            selectedVariantId,
+            selectedVariantId: effectiveSelectedVariantId,
+            has_esim: hasEsimAddon,
+            esimAddonFee,
             sourceUrl,
             simNumbers:
               quantity > 1

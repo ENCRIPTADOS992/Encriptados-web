@@ -535,6 +535,36 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     setUserChangedPlan(true);
   }, [variants]);
 
+  React.useEffect(() => {
+    if (selectedPlanId == null || !variants.length) return;
+
+    const byId = variants.find((v) => String(v.id) === String(selectedPlanId));
+    if (byId) {
+      if (selectedVariant?.id !== byId.id) setSelectedVariant(byId);
+      return;
+    }
+
+    if (formType !== "encrypted_data" && formType !== "encrypted_esimData") return;
+
+    const selectedRecharge = Number(selectedPlanId);
+    if (!Number.isFinite(selectedRecharge)) return;
+
+    const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+    const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
+    const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
+    const rechargeBase = isEsimPlusDatos ? 12 : 0;
+
+    const mappedByAmount = variants.find((v: any) => {
+      const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
+      const rechargeValue = Math.max(variantPrice - rechargeBase, 0);
+      return Math.abs(rechargeValue - selectedRecharge) < 0.01;
+    });
+
+    if (mappedByAmount && selectedVariant?.id !== mappedByAmount.id) {
+      setSelectedVariant(mappedByAmount);
+    }
+  }, [selectedPlanId, variants, product, formType, selectedVariant]);
+
   const unitPrice = React.useMemo(
     () => {
       const hasCoupon = discount > 0;
