@@ -530,10 +530,27 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   // Handler para cuando el usuario cambia el plan manualmente
   const handlePlanChange = React.useCallback((planId: string | number) => {
     setSelectedPlanId(planId);
-    const nextVariant = variants.find((v) => String(v.id) === String(planId));
+    let nextVariant = variants.find((v) => String(v.id) === String(planId));
+
+    if (!nextVariant) {
+      const selectedRecharge = Number(planId);
+      const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+      const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
+      const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
+      const rechargeBase = isEsimPlusDatos ? 12 : 0;
+
+      if (Number.isFinite(selectedRecharge)) {
+        nextVariant = variants.find((v: any) => {
+          const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
+          const rechargeValue = Math.max(variantPrice - rechargeBase, 0);
+          return Math.abs(rechargeValue - selectedRecharge) < 0.01;
+        });
+      }
+    }
+
     if (nextVariant) setSelectedVariant(nextVariant);
     setUserChangedPlan(true);
-  }, [variants]);
+  }, [variants, product]);
 
   const unitPrice = React.useMemo(
     () => {

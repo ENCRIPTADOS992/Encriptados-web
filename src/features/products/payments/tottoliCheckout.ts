@@ -9,6 +9,7 @@ export interface TottoliCheckoutPayload {
   amount: number;
   currency?: string;
   product_id?: number;
+  has_esim?: boolean;
   qty?: number;
   sim_number?: string;
   iccid?: string;
@@ -52,31 +53,6 @@ export async function tottoliCheckout(
   console.log("⬅️ [tottoliCheckout] raw body:", raw);
 
   if (!res.ok) {
-    if ((res.status === 400 || res.status === 422) && payload.meta) {
-      const retryPayload = { ...payload };
-      delete (retryPayload as any).meta;
-      res = await doPost(retryPayload);
-      const retryRaw = await res.text();
-      console.log("⬅️ [tottoliCheckout] retry status:", res.status);
-      console.log("⬅️ [tottoliCheckout] retry raw body:", retryRaw);
-      if (!res.ok) {
-        console.error("❌ [tottoliCheckout] error HTTP", res.status, retryRaw);
-        let msg = "Error iniciando checkout";
-        try {
-          const data = JSON.parse(retryRaw);
-          if (data?.error) msg = data.error;
-        } catch {}
-        throw new Error(msg);
-      }
-      try {
-        const data = JSON.parse(retryRaw);
-        if (!data.ok) throw new Error(data.error || "Respuesta inválida del checkout");
-        console.log("✅ [tottoliCheckout] respuesta OK (retry)", data);
-        return data as TottoliOkResponse;
-      } catch {
-        throw new Error("Respuesta inválida del checkout");
-      }
-    }
     console.error("❌ [tottoliCheckout] error HTTP", res.status, raw);
 
     let msg = "Error iniciando checkout";

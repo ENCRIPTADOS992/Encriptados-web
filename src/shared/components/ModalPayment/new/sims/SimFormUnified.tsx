@@ -225,6 +225,9 @@ export default function SimFormUnified({
         })();
 
         const tottoliMethod = method === "card" ? "card" : "cryptomus";
+        const hasEsimAddon =
+          hideSimField &&
+          (formType === "encrypted_data" || formType === "encrypted_minutes");
 
         // Resolver product_id: prioridad productid prop, luego product.id
         const resolvedProductId = productid
@@ -244,6 +247,7 @@ export default function SimFormUnified({
           currency: "USD",
           product: productName,
           product_id: resolvedProductId || undefined,
+          has_esim: hasEsimAddon,
           meta: {
             formType,
             quantity,
@@ -252,6 +256,7 @@ export default function SimFormUnified({
             shippingFee,
             selectedPlanId,
             selectedVariantId,
+            has_esim: hasEsimAddon,
             sourceUrl,
             simNumbers:
               quantity > 1
