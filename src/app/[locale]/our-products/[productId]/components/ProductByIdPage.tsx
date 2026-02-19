@@ -40,28 +40,29 @@ const ProductByIdPage = () => {
     if (buyParam === "1" && currentProduct) {
       const timer = setTimeout(() => {
         const productId = params.productId as string;
-        const numericPrice = typeof currentProduct.price === 'string' 
-          ? parseFloat(currentProduct.price) 
+        const numericPrice = typeof currentProduct.price === 'string'
+          ? parseFloat(currentProduct.price)
           : (currentProduct.price || 0);
-        
+
         openModal({
           productid: productId,
           languageCode: (params.locale as string) || "es",
           selectedOption: (currentProduct as any)?.category?.id || 40,
           initialPrice: numericPrice,
+          iconUrl: (currentProduct as any)?.iconUrl,
         });
-        
+
         // Limpiar el parámetro de la URL sin recargar
         const url = new URL(window.location.href);
         url.searchParams.delete("buy");
         window.history.replaceState({}, "", url.toString());
       }, 500);
-      
+
       return () => clearTimeout(timer);
     }
   }, [searchParams, currentProduct, params, openModal]);
 
-if (currentProduct === null) {
+  if (currentProduct === null) {
     return (
       <div className="flex items-center justify-center w-screen h-screen bg-gray-100">
         <Loader />
@@ -81,7 +82,7 @@ if (currentProduct === null) {
 
   return (
     <>
-       {isSimProduct ? (
+      {isSimProduct ? (
         <>
           <div className="bg-black h-[300px]">
             <CustomShapeProduct />
@@ -122,7 +123,7 @@ if (currentProduct === null) {
         <BannerProduct />
       )}
       {/* Condicion  solo para sims, compara los titulos de las sims al renderizar los componentes */}
-       {isSimProduct ? (
+      {isSimProduct ? (
         <>
           <div className="flex flex-col-reverse md:flex-row justify-center w-10/12 mx-auto gap-8 md:gap-12 mt-8 md:mt-16">
             <div className="w-full md:w-5/12">

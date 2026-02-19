@@ -17,6 +17,7 @@ type CardDescriptionSimInfoProps = {
   headerTitle: string;
   id: number;
   languageCode: string;
+  iconUrl?: string;
 };
 
 const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
@@ -25,6 +26,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
   headerTitle,
   id,
   languageCode,
+  iconUrl,
 }) => {
   const t = useTranslations("EncryptedSimPage.CardSim");
   const { openModal } = useModalPayment();
@@ -64,7 +66,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
             // Extraer precio numérico del priceRange
             const match = priceRange.match(/[\d.]+/);
             const numericPrice = match ? parseFloat(match[0]) : undefined;
-            openModal({ productid: id.toString(), languageCode, initialPrice: numericPrice });
+            openModal({ productid: id.toString(), languageCode, initialPrice: numericPrice, iconUrl });
           }}
         >
           {t("buyNow")}

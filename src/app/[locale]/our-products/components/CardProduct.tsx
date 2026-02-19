@@ -61,6 +61,7 @@ interface CardSimProps {
   variants?: any[];
   onSale?: boolean;       // true si el producto está en oferta
   regularPrice?: number;  // precio original (price) cuando está en oferta
+  iconUrl?: string;       // URL del icono del producto para el modal de éxito
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -79,6 +80,7 @@ const CardProduct: React.FC<CardSimProps> = ({
   variants,
   onSale,
   regularPrice,
+  iconUrl,
 }) => {
   const { openModal } = useModalPayment();
   const locale = useLocale();
@@ -110,6 +112,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       initialRegion: badges?.country?.label,
       initialRegionCode: badges?.country?.code,
       flagUrl: badges?.country?.flagUrl,
+      iconUrl: iconUrl,
     });
   };
 

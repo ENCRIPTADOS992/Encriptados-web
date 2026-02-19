@@ -68,6 +68,7 @@ const BannerSecureMdmNew = () => {
       onSale: isOnSale,
       savings,
       infoLink,
+      iconUrl: p.iconUrl,
     };
   });
 
@@ -170,6 +171,7 @@ const BannerSecureMdmNew = () => {
                           openModal({
                             productid: card.id.toString(),
                             languageCode: locale,
+                            iconUrl: card.iconUrl,
                           })
                         }
                         className="flex items-center justify-center w-[124px] h-[44px] rounded-lg bg-[#10B4E7] text-[#101010] text-sm font-semibold transition-colors hover:bg-[#7EE0FF] cursor-pointer"
