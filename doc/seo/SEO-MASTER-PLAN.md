@@ -3,7 +3,7 @@
 > **Fecha de auditoría:** 10 de febrero de 2026  
 > **Proyecto:** Encriptados Web — Migración WordPress → Next.js  
 > **Stack:** Next.js 14.2.29 | React 18 | next-intl | TypeScript | Tailwind CSS  
-> **Dominio objetivo:** https://www.encriptados.io (WordPress actual) → https://www.encriptados.net (Next.js)  
+> **Dominio objetivo (actualizado):** https://www.encriptados.net (sitio actual) → https://www.encriptados.io (destino de migración)  
 > **Idiomas:** es (default), en, fr, it, pt
 
 ---
@@ -36,6 +36,60 @@ El sitio Next.js actual tiene **deficiencias SEO críticas** que, si se pone en 
 - ✅ `/tim-sim` — generateMetadata con datos de producto
 - ✅ `/router` — generateMetadata hardcoded
 - ✅ `/sim/[slug]` — generateMetadata por slug
+
+---
+
+## 1.1 ADDENDUM OPERATIVO — MIGRACIÓN `.net` → `.io` (19 Feb 2026)
+
+### Objetivo temporal
+Mientras se ejecuta la migración de dominio, el sitio en `.net` debe quedar completamente fuera de indexación en Google.
+
+### Implementación aplicada en código
+- **Archivo modificado:** `src/middleware.ts`
+- **Regla activa:** cuando el `Host` sea `encriptados.net` o cualquier subdominio (`*.encriptados.net`), se inyecta cabecera:
+
+```http
+X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+```
+
+- **Comportamiento esperado:**
+  - En `.net`: todo el contenido queda marcado como no indexable.
+  - En `.io`: no se aplica esta cabecera (no afecta indexación del nuevo dominio).
+  - En `localhost`: no se aplica (no afecta desarrollo local).
+
+### Verificación recomendada en producción
+
+1. Comprobar una URL pública en `.net`:
+
+```bash
+curl -I https://www.encriptados.net/es
+```
+
+Debe devolver el header `X-Robots-Tag` con `noindex`.
+
+2. Comprobar una URL pública en `.io`:
+
+```bash
+curl -I https://www.encriptados.io/es
+```
+
+No debe devolver ese `X-Robots-Tag` temporal.
+
+3. En Google Search Console (propiedad `.net`):
+   - Usar **Inspección de URL** y confirmar que Google detecta `noindex`.
+   - Usar **Retiradas** para ocultación temporal de URLs críticas mientras se desindexa.
+
+### Checklist de transición SEO (orden sugerido)
+- [ ] Deploy del cambio a producción de `.net`.
+- [ ] Validación del header `X-Robots-Tag` en URLs principales (`/`, categorías, productos, blog).
+- [ ] Envío de sitemap solo de `.io` (no enviar sitemap de `.net`).
+- [ ] Solicitud de indexación de URLs estratégicas de `.io`.
+- [ ] Monitoreo de cobertura/indexación durante 2-4 semanas.
+
+### Retiro del modo migración
+Cuando `.net` deje de ser canónico:
+- mantener 301 hacia `.io` donde aplique,
+- y eliminar esta regla temporal `noindex` por host desde `middleware.ts` para evitar confusión futura.
 
 ---
 

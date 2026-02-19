@@ -6,6 +6,18 @@ import { protectedRoutesArray } from "./app/constants/protectedRoutes";
 
 const intlMiddleware = createMiddleware(routing);
 
+function shouldNoIndexHost(request: NextRequest): boolean {
+  const host = (request.headers.get("host") || "").split(":")[0].toLowerCase();
+  return host === "encriptados.net" || host.endsWith(".encriptados.net");
+}
+
+function withNoIndexHeader(request: NextRequest, response: NextResponse): NextResponse {
+  if (shouldNoIndexHost(request)) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+  }
+  return response;
+}
+
 export async function middleware(
   request: NextRequest
 ): Promise<NextResponse | undefined> {
@@ -14,7 +26,7 @@ export async function middleware(
   if (pathname.endsWith("/null") || pathname.endsWith("/undefined") || 
       pathname.includes("/null/") || pathname.includes("/undefined/")) {
     console.warn(`[Middleware] ⚠️ Ruta inválida detectada: ${pathname}, redirigiendo a home`);
-    return NextResponse.redirect(new URL("/", request.url));
+    return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url)));
   }
 
   // Manejo de internacionalización
@@ -31,9 +43,9 @@ export async function middleware(
   // Si no hay token y la ruta es protegida, redirige al login
   if (!jwtToken?.value) {
     if (isProtectedRoute) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return withNoIndexHeader(request, NextResponse.redirect(new URL("/login", request.url)));
     }
-    return intlResponse || NextResponse.next();
+    return withNoIndexHeader(request, intlResponse || NextResponse.next());
   }
 
   // Verifica la clave pública
@@ -55,21 +67,21 @@ export async function middleware(
     // Redirige al dashboard si ya está autenticado y visita la página de login
     const loginPaths = ["/en/login", "/es/login", "/it/login", "/pt/login", "/fr/login"];
     if (loginPaths.includes(request.nextUrl.pathname)) {
-      return NextResponse.redirect(new URL("/dashboard/data-usage", request.url));
+      return withNoIndexHeader(request, NextResponse.redirect(new URL("/dashboard/data-usage", request.url)));
     }
 
     // Retorna la respuesta de internacionalización o continua
-    return intlResponse || NextResponse.next();
+    return withNoIndexHeader(request, intlResponse || NextResponse.next());
   } catch (error) {
     console.error("Error de verificación JWT:", error);
 
     // Si el token es inválido y la ruta es protegida, redirige al login
     if (isProtectedRoute) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return withNoIndexHeader(request, NextResponse.redirect(new URL("/login", request.url)));
     }
 
     // Si no, continúa con la respuesta internacionalizada
-    return intlResponse || NextResponse.next();
+    return withNoIndexHeader(request, intlResponse || NextResponse.next());
   }
 }
 
