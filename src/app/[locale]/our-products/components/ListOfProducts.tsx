@@ -1059,7 +1059,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               // FR: "Recharge Données", "eSIM + Données"
               // IT: "Ricarica Dati", "eSIM + Dati"
               // PT: "Recarga Dados", "eSIM + Dados"
-              const isDataRecharge = 
+              const isDataRecharge =
                 /(datos?|data|dati|donn[ée]es|dados)/i.test(simName) ||
                 /esim\s*\+\s*(recarga|recharge|ricarica)?\s*(datos?|data|dati|donn[ée]es|dados)/i.test(simName) ||
                 /(recarga|recharge|ricarica)\s+(datos?|data|dati|donn[ée]es|dados)/i.test(simName);
@@ -1196,6 +1196,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 variants={selectedOption === 40 ? (product.variants ?? []) : undefined}
                 onSale={isOnSale}
                 regularPrice={regularPrice}
+                iconUrl={product.iconUrl}
               />
             );
           })}

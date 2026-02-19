@@ -46,6 +46,7 @@ interface ProductSectionProps {
   translations?: ProductSectionTranslations;
   onSale?: boolean;       // true si el producto está en oferta
   regularPrice?: string;  // precio original formateado cuando está en oferta
+  iconUrl?: string;
 }
 
 /**
@@ -143,6 +144,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   translations,
   onSale,
   regularPrice,
+  iconUrl,
 }) => {
   const { openModal } = useModalPayment();
   const { isFromAppMobile } = useAppMobile();
@@ -177,6 +179,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
       languageCode,
       selectedOption: Number(selectedOption ?? 0),
       initialPrice: numericPrice,
+      iconUrl,
     });
   };
 

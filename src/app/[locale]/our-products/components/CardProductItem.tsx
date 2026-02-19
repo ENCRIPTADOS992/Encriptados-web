@@ -65,11 +65,10 @@ const CardProductItem: FC<CardProductItemProps> = ({
               <button
                 key={option}
                 onClick={() => setPeriod(option)}
-                className={`px-4 py-1 rounded-full border text-sm font-medium transition-all duration-200 ${
-                  selected
+                className={`px-4 py-1 rounded-full border text-sm font-medium transition-all duration-200 ${selected
                     ? "bg-[#10B4E7] text-white border-[#10B4E7]"
                     : "border-gray-400 text-gray-600"
-                }`}
+                  }`}
               >
                 {option}
               </button>
@@ -84,6 +83,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
             openModal({
               productid: product.id.toString(),
               languageCode: "es",
+              iconUrl: product.iconUrl,
             })
           }
           type="button"

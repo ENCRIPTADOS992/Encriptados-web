@@ -63,6 +63,7 @@ const FixedSimProductDetail: React.FC = () => {
             headerTitle={product.name}
             id={product.id}
             languageCode={locale}
+            iconUrl={(product as any)?.iconUrl}
           />
 
           <CardSimInfo productImage={product.images[0]?.src ?? ""} />
