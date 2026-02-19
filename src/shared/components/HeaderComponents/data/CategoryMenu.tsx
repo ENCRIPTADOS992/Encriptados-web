@@ -368,7 +368,7 @@ export function useTranslatedUsCategories(): any[] {
       description: t2("aboutUs.description", {
         defaultValue: "Conoce más sobre nuestra misión y valores.",
       }),
-      image: "/images/mega-menu/nosotros.png",
+      image: "/images/mega-menu/nosotros.webp",
       link: "/nosotros",
       items: [],
     },
@@ -377,7 +377,7 @@ export function useTranslatedUsCategories(): any[] {
       description: t2("ambassadors.description", {
         defaultValue: "Únete a nuestro programa de embajadores.",
       }),
-      image: "/images/mega-menu/embajador.png",
+      image: "/images/mega-menu/embajador.webp",
       link: "/ambassadors",
       items: [],
     },
@@ -386,7 +386,7 @@ export function useTranslatedUsCategories(): any[] {
       description: t2("locations.description", {
         defaultValue: "Descubre nuestras ubicaciones en todo el mundo.",
       }),
-      image: "/images/mega-menu/dondeEstamos.png",
+      image: "/images/mega-menu/dondeEstamos.webp",
       link: "/where-to-find-us",
       items: [],
     },
