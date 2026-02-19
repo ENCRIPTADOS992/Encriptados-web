@@ -91,7 +91,10 @@ export const CheckoutService = {
       amount: input.amount,
       currency: input.currency,
     });
-    const extended = omitUndefined({ ...minimal, ...input });
+    // Asegurar que months siempre se envíe (derivado de licensetime)
+    const lt = input.licensetime;
+    const months = lt == null ? undefined : (typeof lt === 'string' ? parseInt(lt) || undefined : lt || undefined);
+    const extended = omitUndefined({ ...minimal, ...input, months });
     try {
       return await api.post<CheckoutResponse>(`${BASE}/orders/userid`, extended);
     } catch (e: any) {
@@ -111,7 +114,10 @@ export const CheckoutService = {
       amount: input.amount,
       currency: input.currency,
     });
-    const extended = omitUndefined({ ...minimal, ...input });
+    // Asegurar que months siempre se envíe (derivado de licensetime)
+    const lt = input.licensetime;
+    const months = lt == null ? undefined : (typeof lt === 'string' ? parseInt(lt) || undefined : lt || undefined);
+    const extended = omitUndefined({ ...minimal, ...input, months });
     try {
       return await api.post<CheckoutResponse>(`${BASE}/orders/roaming`, extended);
     } catch (e: any) {

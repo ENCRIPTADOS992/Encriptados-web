@@ -115,7 +115,8 @@ export function buildSimFormConfig(
       };
     }
 
-    case "encrypted_minutes":
+    case "encrypted_minutes": {
+      const showSimNumber = !hideSimField;
       return {
         emailFullWidth: true,
         showTelegram: false,
@@ -129,9 +130,10 @@ export function buildSimFormConfig(
         reqPostal: false,
         showPhone: false,
         reqPhone: false,
-        showSimNumber: true,
-        reqSimNumber: true,
+        showSimNumber,
+        reqSimNumber: showSimNumber,
       };
+    }
 
     case "encrypted_esimData":
       return {

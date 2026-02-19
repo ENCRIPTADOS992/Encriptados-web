@@ -183,6 +183,7 @@ export async function createUserIdOrderAndIntent({
     variant_id: variantId,
     sku,
     licensetime,
+    months: licensetime === null ? undefined : (typeof licensetime === 'string' ? parseInt(licensetime) || undefined : licensetime || undefined),
     license_type: licenseType,
     renew_id: renewId,
     system: osType,
