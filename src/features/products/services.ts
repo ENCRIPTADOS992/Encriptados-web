@@ -54,6 +54,7 @@ export const getAllProducts = async (
           id: v.id,
           licensetime: String(v.licensetime),
           price: Number(v.price),
+          sale_price: v.sale_price != null && v.sale_price !== '' ? Number(v.sale_price) : null,
           sku: v.sku,
           image: v.image,
         })) ?? [];

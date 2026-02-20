@@ -9,6 +9,7 @@ export interface LicensePlan {
   label: string;
   value: string;
   price: number;
+  salePrice?: number;
   variantId: number;
   sku: string;
 }
@@ -89,6 +90,7 @@ export function transformVariantsToPlans(
           label: `6 ${t.months} - ${deviceLabel}`,
           value: String(variant.licensetime),
           price: Number(variant.price),
+          salePrice: variant.sale_price ? Number(variant.sale_price) : undefined,
           variantId: variant.id,
           sku: variant.sku || "",
         };
@@ -99,6 +101,7 @@ export function transformVariantsToPlans(
         label: `${t.license} ${variant.licensetime} ${monthLabel}`,
         value: String(variant.licensetime),
         price: Number(variant.price),
+        salePrice: variant.sale_price ? Number(variant.sale_price) : undefined,
         variantId: variant.id,
         sku: variant.sku || "",
       };
@@ -234,11 +237,21 @@ export function buildProductInfo(
   let displayPrice: string;
   let originalPrice: string | undefined;
 
-  if (isOnSale && product?.sale_price) {
-    displayPrice = selectedPlan
-      ? formatPrice(selectedPlan.price, "USD", t.priceConsult)
-      : formatPrice(product.sale_price, "USD", t.priceConsult);
-    originalPrice = formatPrice(product.price || 0, "USD", t.priceConsult);
+  if (isOnSale) {
+    if (selectedPlan) {
+      // Usar sale_price de la variante si existe, sino el precio regular de la variante
+      const effectivePrice = selectedPlan.salePrice ?? selectedPlan.price;
+      displayPrice = formatPrice(effectivePrice, "USD", t.priceConsult);
+      // Mostrar precio original de la variante (sin descuento) solo si hay sale_price
+      if (selectedPlan.salePrice) {
+        originalPrice = formatPrice(selectedPlan.price, "USD", t.priceConsult);
+      }
+    } else if (product?.sale_price) {
+      displayPrice = formatPrice(product.sale_price, "USD", t.priceConsult);
+      originalPrice = formatPrice(product.price || 0, "USD", t.priceConsult);
+    } else {
+      displayPrice = formatPrice(product?.price || 0, "USD", t.priceConsult);
+    }
   } else {
     displayPrice = selectedPlan
       ? formatPrice(selectedPlan.price, "USD", t.priceConsult)
