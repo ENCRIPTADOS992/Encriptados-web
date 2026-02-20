@@ -142,7 +142,13 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   }, [plans, selectedRadio]);
 
   const currentPrice = useMemo(() => {
-    if (selectedPlan) return formatPrice(selectedPlan.price);
+    if (selectedPlan) {
+      // Si está en oferta, usar sale_price de la variante
+      if (product?.on_sale && selectedPlan.salePrice) {
+        return formatPrice(selectedPlan.salePrice);
+      }
+      return formatPrice(selectedPlan.price);
+    }
     // Si está en oferta, mostrar sale_price como precio principal
     if (product?.on_sale && product?.sale_price) {
       return formatPrice(product.sale_price);
@@ -152,13 +158,18 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   // Precio original cuando hay oferta (para mostrar tachado)
   const originalPrice = useMemo(() => {
-    if (!selectedPlan && product?.on_sale && product?.sale_price && product?.price) {
-      return formatPrice(product.price);
+    if (product?.on_sale) {
+      if (selectedPlan?.salePrice) {
+        return formatPrice(selectedPlan.price);
+      }
+      if (!selectedPlan && product?.sale_price && product?.price) {
+        return formatPrice(product.price);
+      }
     }
     return undefined;
   }, [selectedPlan, product]);
 
-  const isOnSale = !selectedPlan && product?.on_sale === true;
+  const isOnSale = product?.on_sale === true;
 
   const handleRadioChange = (val: string) => setSelectedRadio(val);
 
@@ -173,7 +184,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     if (searchParamVariantId && plans.length > 0) {
       const matchingPlan = plans.find(p => String(p.variantId) === searchParamVariantId);
       const planToUse = matchingPlan || selectedPlan;
-      const priceStr = planToUse?.price
+      const priceStr = (product?.on_sale && planToUse?.salePrice) ? planToUse.salePrice
+        : planToUse?.price
         ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
         ?? 0;
       const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
@@ -194,7 +206,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       window.history.replaceState({}, "", url.toString());
     } else if (!searchParamVariantId) {
       // Sin variantId, abrir con el plan seleccionado por defecto
-      const priceStr = selectedPlan?.price
+      const priceStr = (product?.on_sale && selectedPlan?.salePrice) ? selectedPlan.salePrice
+        : selectedPlan?.price
         ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
         ?? 0;
       const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;

@@ -1030,11 +1030,16 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             }
 
             // Lógica de oferta: si on_sale es true, mostrar sale_price como precio principal
+            // Para productos con variantes, usar el sale_price de cada variante individual
             const isOnSale = product.on_sale === true;
             let regularPrice: number | undefined;
-            if (isOnSale && product.sale_price) {
-              regularPrice = priceToShow; // guardar precio original antes de reemplazar
-              priceToShow = Number(product.sale_price);
+            if (isOnSale) {
+              const variantSalePrice = (product._selectedVariant as any)?.sale_price;
+              const effectiveSalePrice = variantSalePrice ?? product.sale_price;
+              if (effectiveSalePrice) {
+                regularPrice = priceToShow; // guardar precio original (variant price) antes de reemplazar
+                priceToShow = Number(effectiveSalePrice);
+              }
             }
 
             // 🔑 NUEVA KEY: siempre única en cada render (incluye variantId para expansión TIM)
@@ -1180,7 +1185,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               <CardProduct
                 key={key}
                 id={product.id}
-                priceDiscount={product.sale_price}
+                priceDiscount={(product._selectedVariant as any)?.sale_price ?? product.sale_price}
                 productImage={product.images[0]?.src ?? ""}
                 features={[]}
                 priceRange={`${priceToShow}$`}

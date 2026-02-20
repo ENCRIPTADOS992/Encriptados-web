@@ -232,6 +232,7 @@ export interface ProductLicenseVariant {
   id: number;
   licensetime: string;
   price: number;
+  sale_price: number | string | null;
   sku: string;
   image: string;
 }
