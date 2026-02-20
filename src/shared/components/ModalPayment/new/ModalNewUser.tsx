@@ -197,10 +197,9 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
 
   const isSilentPhone = /silent/i.test(product?.name ?? "");
 
-  const resolvedOrderType =
-    isRoamingProduct || (isSilentPhone && silentPhoneMode === "roning_code")
-      ? "roaming"
-      : "userid";
+  const resolvedOrderType = isSilentPhone
+    ? (silentPhoneMode === "new_user" ? "userid" : "roaming")
+    : (isRoamingProduct ? "roaming" : "userid");
 
   return (
     <PurchaseScaffold
