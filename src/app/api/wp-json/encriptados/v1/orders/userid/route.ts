@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
       license_type,
       renew_id,
       os_type,
-      silent_phone_mode,
       usernames,
       coupon_code,
       discount,
@@ -43,7 +42,6 @@ export async function POST(req: NextRequest) {
       license_type != null ||
       renew_id != null ||
       os_type != null ||
-      silent_phone_mode != null ||
       usernames != null ||
       coupon_code != null ||
       discount != null ||
@@ -61,7 +59,6 @@ export async function POST(req: NextRequest) {
         license_type,
         renew_id,
         os_type,
-        silent_phone_mode,
         usernames,
         coupon_code,
         discount,

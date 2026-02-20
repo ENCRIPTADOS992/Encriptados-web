@@ -14,8 +14,6 @@ export const roamingCheckoutSchema = z.object({
   discount: z.number().nonnegative().optional(),
   source_url: z.string().min(1).optional(),
   selected_option: z.number().int().positive().optional(),
-  silent_phone_mode: z.string().min(1).optional(),
-  usernames: z.array(z.string().min(1)).optional(),
   meta: z.record(z.string(), z.any()).optional(),
 });
 
@@ -33,7 +31,6 @@ export const userIdCheckoutSchema = z.object({
   license_type: z.enum(['new', 'renew']).optional(),
   renew_id: z.string().min(1).optional(),
   os_type: z.enum(['android', 'ios']).optional(),
-  silent_phone_mode: z.string().min(1).optional(),
   usernames: z.array(z.string().min(1)).optional(),
   coupon_code: z.string().min(1).optional(),
   discount: z.number().nonnegative().optional(),

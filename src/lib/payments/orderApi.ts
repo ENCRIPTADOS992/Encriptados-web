@@ -53,8 +53,6 @@ export async function createOrderAndIntent({
   discount,
   sourceUrl,
   selectedOption,
-  silentPhoneMode,
-  usernames,
   osType,
   meta,
 }: {
@@ -71,8 +69,6 @@ export async function createOrderAndIntent({
   discount?: number;
   sourceUrl?: string;
   selectedOption?: number;
-  silentPhoneMode?: string;
-  usernames?: string[];
   osType?: "android" | "ios";
   meta?: Record<string, any>;
 }): Promise<{
@@ -104,8 +100,6 @@ export async function createOrderAndIntent({
     discount,
     source_url: sourceUrl,
     selected_option: selectedOption,
-    silent_phone_mode: silentPhoneMode,
-    usernames,
     system: osType,
     meta,
   });
@@ -131,7 +125,6 @@ export async function createUserIdOrderAndIntent({
   licenseType,
   renewId,
   osType,
-  silentPhoneMode,
   usernames,
   couponCode,
   discount,
@@ -151,7 +144,6 @@ export async function createUserIdOrderAndIntent({
   licenseType?: "new" | "renew";
   renewId?: string;
   osType?: "android" | "ios";
-  silentPhoneMode?: string;
   usernames?: string[];
   couponCode?: string;
   discount?: number;
@@ -187,7 +179,6 @@ export async function createUserIdOrderAndIntent({
     license_type: licenseType,
     renew_id: renewId,
     system: osType,
-    silent_phone_mode: silentPhoneMode,
     usernames,
     coupon_code: couponCode,
     discount,

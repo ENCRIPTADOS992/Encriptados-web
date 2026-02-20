@@ -23,7 +23,6 @@ export function useCheckout() {
     licenseType?: "new" | "renew";
     renewId?: string;
     osType?: "android" | "ios";
-    silentPhoneMode?: string;
     usernames?: string[];
     couponCode?: string;
     discount?: number;
@@ -47,7 +46,6 @@ export function useCheckout() {
         license_type: args.licenseType,
         renew_id: args.renewId,
         system: args.osType,
-        silent_phone_mode: args.silentPhoneMode,
         usernames: args.usernames,
         coupon_code: args.couponCode,
         discount: args.discount,
@@ -77,8 +75,6 @@ export function useCheckout() {
     discount?: number;
     sourceUrl?: string;
     selectedOption?: number;
-    silentPhoneMode?: string;
-    usernames?: string[];
     osType?: "android" | "ios";
     meta?: Record<string, any>;
   }) => {
@@ -98,8 +94,6 @@ export function useCheckout() {
         discount: args.discount,
         source_url: args.sourceUrl,
         selected_option: args.selectedOption,
-        silent_phone_mode: args.silentPhoneMode,
-        usernames: args.usernames,
         system: args.osType,
         meta: args.meta,
       });

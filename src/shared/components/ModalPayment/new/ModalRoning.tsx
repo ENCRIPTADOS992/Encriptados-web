@@ -156,8 +156,6 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
       discount,
       sourceUrl: params.sourceUrl,
       selectedOption: (params as any)?.selectedOption,
-      silentPhoneMode: formData.silentPhoneMode,
-      usernames: formData.usernames,
       meta: {
         productId: Number(productid),
         quantity,
@@ -169,8 +167,6 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
         discount,
         sourceUrl: params.sourceUrl,
         selectedOption: (params as any)?.selectedOption,
-        silentPhoneMode: formData.silentPhoneMode,
-        usernames: formData.usernames,
       },
     });
   };
