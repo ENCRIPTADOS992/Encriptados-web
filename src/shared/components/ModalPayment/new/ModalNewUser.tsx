@@ -35,7 +35,7 @@ type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params, openModal, closeModal } = useModalPayment();
   const { productid, initialPrice, variantId, iconUrl: paramIconUrl } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number; iconUrl?: string };
-  const { payUserId, payRenewal, loading } = useCheckout();
+  const { payUserId, payRoaming, payRenewal, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
   const toast = useToast();
   const t = useTranslations("paymentModal");
@@ -258,7 +258,40 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
               qty: quantity,
               months,
             });
+          } else if (resolvedOrderType === "roaming") {
+            // Código RONING: va a /orders/roaming sin usernames
+            await payRoaming({
+              productId: productIdNum,
+              qty: quantity,
+              email: formData.email,
+              provider: "kriptomus",
+              amount,
+              currency: "USD",
+              variantId: selectedVariant?.id ?? undefined,
+              sku: selectedVariant?.sku,
+              licensetime: selectedVariant?.licensetime ?? product?.licensetime,
+              couponCode: coupon.trim() || undefined,
+              discount,
+              sourceUrl: params.sourceUrl,
+              selectedOption: (params as any)?.selectedOption,
+              osType: formData.osType,
+              meta: {
+                formType,
+                productId: productIdNum,
+                quantity,
+                unitPrice,
+                shipping,
+                variantId: selectedVariant?.id ?? undefined,
+                sku: selectedVariant?.sku,
+                licensetime: selectedVariant?.licensetime ?? product?.licensetime,
+                couponCode: coupon.trim() || undefined,
+                discount,
+                sourceUrl: params.sourceUrl,
+                selectedOption: (params as any)?.selectedOption,
+              },
+            });
           } else {
+            // Quiero mi Usuario: va a /orders/userid con usernames
             await payUserId({
               productId: productIdNum,
               email: formData.email,
@@ -273,7 +306,6 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
               licenseType: formData.licenseType,
               renewId: formData.renewId,
               osType: formData.osType,
-              silentPhoneMode: formData.silentPhoneMode,
               usernames: formData.usernames,
               couponCode: coupon.trim() || undefined,
               discount,
@@ -297,7 +329,6 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
                 shippingPostalCode: formData.shippingPostalCode,
                 shippingPhone: formData.shippingPhone,
                 osType: formData.osType,
-                silentPhoneMode: formData.silentPhoneMode,
                 usernames: formData.usernames,
                 couponCode: coupon.trim() || undefined,
                 discount,

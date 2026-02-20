@@ -25,7 +25,6 @@ export interface CheckoutUserIdInput {
   license_type?: 'new' | 'renew';
   renew_id?: string;
   system?: 'android' | 'ios';
-  silent_phone_mode?: string;
   usernames?: string[];
   coupon_code?: string;
   discount?: number;
@@ -48,8 +47,6 @@ export interface CheckoutRoamingInput {
   discount?: number;
   source_url?: string;
   selected_option?: number;
-  silent_phone_mode?: string;
-  usernames?: string[];
   system?: 'android' | 'ios';
   meta?: Record<string, any>;
 }

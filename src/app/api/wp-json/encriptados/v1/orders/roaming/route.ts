@@ -24,8 +24,6 @@ export async function POST(req: NextRequest) {
       discount,
       source_url,
       selected_option,
-      silent_phone_mode,
-      usernames,
       meta,
     } = parsed.data;
     const { order, paymentUrl } = await checkoutRoaming({
@@ -40,8 +38,6 @@ export async function POST(req: NextRequest) {
       discount != null ||
       source_url != null ||
       selected_option != null ||
-      silent_phone_mode != null ||
-      usernames != null ||
       meta != null
     ) {
       const cur = (order.meta ?? {}) as Record<string, any>;
@@ -54,8 +50,6 @@ export async function POST(req: NextRequest) {
         discount,
         source_url,
         selected_option,
-        silent_phone_mode,
-        usernames,
         meta,
       };
     }

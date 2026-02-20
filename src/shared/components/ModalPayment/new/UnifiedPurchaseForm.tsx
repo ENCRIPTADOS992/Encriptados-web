@@ -64,7 +64,6 @@ export interface FormData {
   shippingPostalCode?: string;
   shippingPhone?: string;
   osType?: OsType;
-  silentPhoneMode?: SilentPhoneMode;
 }
 
 export default function UnifiedPurchaseForm({
@@ -279,7 +278,7 @@ export default function UnifiedPurchaseForm({
   const getFormData = (): FormData => ({
     email: emailVal.trim(),
     telegramId: telegramId.trim() || undefined,
-    usernames: policy.showUsernameFields ? usernames : undefined,
+    usernames: (policy.showUsernameFields && silentPhoneMode === "new_user") ? usernames : undefined,
     licenseType: policy.showLicenseTabs && policy.licenseTabType === "new_renew" ? licenseType : undefined,
     renewId:
       licenseType === "renew" ? renewIds.find((x) => x.trim().length > 0)?.trim() || undefined : undefined,
@@ -293,7 +292,8 @@ export default function UnifiedPurchaseForm({
     shippingPostalCode: isRouterCheckout ? shippingPostalCode.trim() || undefined : undefined,
     shippingPhone: isRouterCheckout ? shippingPhone.trim() || undefined : undefined,
     osType: policy.showOsSelector ? osType : undefined,
-    silentPhoneMode: formType === "SILENT_PHONE" ? silentPhoneMode : undefined,
+    // silentPhoneMode ya no se envía al backend — la decisión roaming/userid
+    // se toma en el frontend con resolvedOrderType y cada endpoint es independiente
   });
 
   const handlePay = async () => {
@@ -346,7 +346,6 @@ export default function UnifiedPurchaseForm({
           shippingPostalCode: form.shippingPostalCode,
           shippingPhone: form.shippingPhone,
           osType: form.osType,
-          silentPhoneMode: form.silentPhoneMode,
           quantity,
         };
 
@@ -406,8 +405,6 @@ export default function UnifiedPurchaseForm({
             discount: purchaseMeta?.discount,
             sourceUrl: purchaseMeta?.sourceUrl,
             selectedOption: purchaseMeta?.selectedOption,
-            silentPhoneMode: form.silentPhoneMode,
-            usernames: form.usernames,
             osType: form.osType,
             meta,
           });
@@ -425,7 +422,6 @@ export default function UnifiedPurchaseForm({
             licenseType: form.licenseType,
             renewId: form.renewId,
             osType: form.osType,
-            silentPhoneMode: form.silentPhoneMode,
             usernames: form.usernames,
             couponCode: purchaseMeta?.couponCode,
             discount: purchaseMeta?.discount,
