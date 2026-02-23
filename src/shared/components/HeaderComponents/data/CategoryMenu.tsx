@@ -22,14 +22,14 @@ export function useTranslatedProductsCategories(): any {
         defaultValue: "Conoce nuestras eSIM/SIM",
       }),
       link: "/sim-encriptada",
-      image: "/images/mega-menu/virtual-sim.jpeg",
+      image: "/images/mega-menu/sim-encriptada-sim-tim.webp",
       items: [
         {
           title: t("sims.items.encryptedSim.title", {
             defaultValue: "SIM Encriptada",
           }),
           link: "/sim-encriptada",
-          image: "/images/mega-menu/virtual-sim.jpeg",
+          image: "/images/mega-menu/sims/sim-encriptados.webp",
           description: t("sims.items.encryptedSim.description", {
             defaultValue: "Conoce cómo funciona la SIM Encriptada",
           }),
@@ -47,7 +47,7 @@ export function useTranslatedProductsCategories(): any {
           title: t("sims.items.timSim.title", { defaultValue: "SIM TIM" }),
           link: "/tim-sim",
           image:
-            "/images/mega-menu/sims/tim_sim_encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sims/sim-tim.webp",
           description: t("sims.items.timSim.description", {
             defaultValue: "Conoce cómo funciona la SIM TIM",
           }),
