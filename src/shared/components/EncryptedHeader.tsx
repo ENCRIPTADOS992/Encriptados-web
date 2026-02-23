@@ -30,14 +30,7 @@ export default function EncryptedHeader() {
     "products"
   );
   const [activeCategory, setActiveCategory] = useState(0);
-  const [hoveredItem, setHoveredItem] = useState(
-    productsCategories[0]?.items[0] || {
-      title: t("menu.notAvailable"),
-      link: "#",
-      description: t("menu.noItemsAvailable"),
-      image: "/placeholder.svg",
-    }
-  );
+  const [hoveredItem, setHoveredItem] = useState<any>(null);
 
   const headerRef = useRef<HTMLDivElement>(null);
 
@@ -68,13 +61,7 @@ export default function EncryptedHeader() {
   const handleMenuChange = (menu: "products" | "others" | "us") => {
     setCurrentMenu(menu);
     setActiveCategory(0);
-    setHoveredItem(
-      menu === "products"
-        ? productsCategories[0]?.items[0]
-        : menu === "others"
-          ? othersCategories[0]?.items[0]
-          : usCategories[0]?.items[0]
-    );
+    setHoveredItem(null);
     setIsDesktopMenuOpen(true);
   };
 
