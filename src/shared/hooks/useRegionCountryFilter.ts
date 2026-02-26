@@ -95,6 +95,9 @@ export function useRegionCountryFilter({
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 300);
 
+  // Estado para controlar si ya se realizó la detección automática por IP
+  const [autoDetectDone, setAutoDetectDone] = useState(false);
+
   const safeRegionOrCountry = filters.regionOrCountry ?? "global";
 
   useEffect(() => {
@@ -133,6 +136,61 @@ export function useRegionCountryFilter({
       cancelled = true;
     };
   }, [service]);
+
+  // Detección automática de país por IP
+  useEffect(() => {
+    // Si ya detectamos, o aún cargando países, no hacer nada
+    if (autoDetectDone || loadingCountries || countries.length === 0) return;
+
+    // Si ya hay un país seleccionado explícitamente (incluso global), no sobrescribir
+    if (filters.regionOrCountry && filters.regionOrCountry !== "global") {
+      console.log("📍 [Geo] Ya hay selección:", filters.regionOrCountry);
+      setAutoDetectDone(true);
+      return;
+    }
+
+    const detectCountry = async () => {
+      console.log("📍 [Geo] Iniciando detección...");
+      try {
+        // Usar ipapi.co para obtener el código de país (ISO Alpha-2)
+        const response = await fetch("https://ipapi.co/json/");
+        if (!response.ok) throw new Error("IP API response not ok");
+        
+        const data = await response.json();
+        const countryCode = data.country_code; // Ej: "CO", "US", "MX"
+        console.log("📍 [Geo] Código detectado:", countryCode);
+
+        if (countryCode) {
+          // Buscar si el país detectado está soportado en nuestra lista de países
+          const supportedCountry = countries.find(
+            (c) => 
+              normalizeAlpha2(c.code)?.toUpperCase() === countryCode.toUpperCase() ||
+              c.code.toUpperCase() === countryCode.toUpperCase()
+          );
+
+          if (supportedCountry) {
+            console.log("📍 [Geo] País soportado encontrado:", supportedCountry.name);
+            const iso2 = normalizeAlpha2(supportedCountry.code) ?? supportedCountry.code;
+            
+            updateFilters({
+              regionOrCountryType: "country",
+              regionOrCountry: supportedCountry.code,
+              simCountry: iso2.toUpperCase(),
+              simCountryLabel: supportedCountry.name,
+            });
+          } else {
+            console.log("📍 [Geo] País no soportado en la lista:", countryCode);
+          }
+        }
+      } catch (error) {
+        console.error("📍 [Geo] Error:", error);
+      } finally {
+        setAutoDetectDone(true);
+      }
+    };
+
+    detectCountry();
+  }, [autoDetectDone, loadingCountries, countries, filters.regionOrCountry, updateFilters]);
 
   // Helper para normalizar texto (quitar acentos, lowercase)
   const normalizeText = (text: string) => {
