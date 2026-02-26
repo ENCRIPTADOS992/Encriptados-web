@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import FilterProductsBar from "./components/FilterProductsBar/FilterProductsBar";
-import CardOurProducts from "./components/CardOurProducts";
+import { PromoSection } from "../apps/component/templateProduct/PromoSection";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import Typography from "@/shared/components/Typography";
 
@@ -183,7 +183,7 @@ const OurProductsPage = () => {
 
           <SectionWrapper className="py-1">
             <div ref={cardSectionRef}>
-              <CardOurProducts filters={filters} />
+              <PromoSection />
             </div>
           </SectionWrapper>
 

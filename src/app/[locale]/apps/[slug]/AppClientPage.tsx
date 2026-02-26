@@ -10,7 +10,7 @@ import ProductSection from "../component/templateProduct/ProductSection";
 import ProductFeaturesGrid from "../component/templateProduct/ProductFeaturesGrid";
 import ProductBenefitsGrid from "../component/templateProduct/ProductBenefitsGrid";
 import HeroVideoSection from "../component/templateProduct/HeroVideoSection";
-import FeaturedProducts from "../component/templateProduct/FeaturedProducts";
+import { PromoSection } from "../component/templateProduct/PromoSection";
 import FAQSection from "../component/templateProduct/FAQSection";
 import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
 import RouterCamaleon from "../component/RouterCamaleon";
@@ -438,23 +438,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           {slug === "router-camaleon" && <RouterCamaleon />}
 
           {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
-
-          <FeaturedProducts
-            left={{
-              title: tOurProducts("encrypted.title"),
-              description: tOurProducts("encrypted.description"),
-              buttonLabel: tOurProducts("moreInfo"),
-              onButtonClick: () => handleFeaturedSimInfo("/sim-encriptada"),
-              image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
-            }}
-            right={{
-              title: tOurProducts("tim.title"),
-              subtitle: tOurProducts("tim.description"),
-              buttonLabel: tOurProducts("moreInfo"),
-              onButtonClick: () => handleFeaturedSimInfo("/tim-sim"),
-              image: "/images/our-products/timpersona.png",
-            }}
-          />
+          
+          <PromoSection />
 
           {slug.includes("galaxia-mdm") && <PrivateAppStore />}
 

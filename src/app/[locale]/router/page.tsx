@@ -9,7 +9,7 @@ import ProductSection from "../apps/component/templateProduct/ProductSection";
 import ProductFeaturesGrid from "../apps/component/templateProduct/ProductFeaturesGrid";
 import ProductBenefitsGrid from "../apps/component/templateProduct/ProductBenefitsGrid";
 import HeroVideoSection from "../apps/component/templateProduct/HeroVideoSection";
-import FeaturedProducts from "../apps/component/templateProduct/FeaturedProducts";
+import { PromoSection } from "../apps/component/templateProduct/PromoSection";
 import FAQSection from "../apps/component/templateProduct/FAQSection";
 import StickyPriceBanner from "../apps/component/templateProduct/StickyPriceBanner";
 
@@ -424,22 +424,7 @@ export default function RouterPage() {
       )}
 
       {/* Featured Products (SIM/eSIM) */}
-      <FeaturedProducts
-        left={{
-          title: "SIM Card encriptada",
-          description: "Protégete de los ciberdelincuentes y mantén tu información personal segura",
-          buttonLabel: "Más información",
-          onButtonClick: () => window.location.href = `/${locale}/sim/sim-encriptada`,
-          image: "/images/our-products/1b097c330ad6a7135bc1084b2ca6886438cde653.png",
-        }}
-        right={{
-          title: "SIM TIM Conéctate con total anonimato",
-          subtitle: "Tus datos no expiran sin importar el tiempo que tardes en consumirlos",
-          buttonLabel: "Más información",
-          onButtonClick: () => window.location.href = `/${locale}/tim-sim`,
-          image: "/images/our-products/timpersona.png",
-        }}
-      />
+      <PromoSection />
 
       {/* FAQ Section */}
       {faqs.length > 0 && (

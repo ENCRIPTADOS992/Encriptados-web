@@ -7,7 +7,7 @@ import RouterBenefits from "./RouterBenefits";
 import RouterFeatures from "./RouterFeatures";
 import RouterSystemFeatures from "./RouterSystemFeatures";
 import RouterVideo from "./RouterVideo";
-import RouterSims from "./RouterSims";
+import { PromoSection } from "../../apps/component/templateProduct/PromoSection";
 import RouterFaq from "./RouterFaq";
 import HeroBanner from "./HeroBanner";
 import HeroBannerMobile from "./HeroBannerMobile";
@@ -24,9 +24,6 @@ import ProductFeaturesGridTablet from "./ProductFeaturesGridTablet";
 import ProductBenefitsGrid from "./ProductBenefitsGrid";
 import ProductBenefitsGridMobile from "./ProductBenefitsGridMobile";
 import ProductBenefitsGridTablet from "./ProductBenefitsGridTablet";
-import FeaturedProducts from "./FeaturedProducts";
-import FeaturedProductsMobile from "./FeaturedProductsMobile";
-import FeaturedProductsTablet from "./FeaturedProductsTablet";
 import RouterBundleDesktop from "./RouterBundle";
 import RouterBundleTablet from "./RouterBundleTablet";
 import RouterBundleMobile from "./RouterBundleMobile";
@@ -295,7 +292,7 @@ const RouterPage = () => {
         imageUrl="/images/router/router.png"
         alt="Router Camaleón"
       />
-      <RouterSims />
+      <PromoSection />
       <FAQSection faqs={Faqs} />
       <FAQSectionMobile faqs={Faqs} />
       <FAQSectionTablet faqs={Faqs} />
