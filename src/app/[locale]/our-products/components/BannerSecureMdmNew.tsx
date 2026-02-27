@@ -43,18 +43,30 @@ const BannerSecureMdmNew = () => {
     const v0 = p.variants?.[0];
     const currency = v0?.currency ?? "USD";
     const variantCost = toNumber(v0?.cost ?? null);
-    const salePrice = toNumber(p.sale_price);
-    const regularPrice = toNumber(p.price);
-    const isOnSale = p.on_sale === true;
-    const displayPrice =
-      isOnSale && salePrice != null
-        ? salePrice
-        : (variantCost ?? salePrice ?? regularPrice ?? null);
 
-    const savings =
-      isOnSale && regularPrice != null && displayPrice != null
-        ? Math.round(regularPrice - displayPrice)
-        : null;
+    // Evaluate if the variant is specifically on sale
+    const variantSalePrice = toNumber((v0 as any)?.sale_price);
+    const baseSalePrice = toNumber(p.sale_price);
+    const regularPrice = toNumber(p.price);
+
+    let isOnSale = false;
+    let displayPrice: number | null = null;
+    let savings: number | null = null;
+
+    if (variantSalePrice !== null) {
+      isOnSale = true;
+      displayPrice = variantSalePrice;
+      savings = variantCost ? Math.round(variantCost - displayPrice) : (regularPrice ? Math.round(regularPrice - displayPrice) : null);
+    } else {
+      const baseIsOnSale = p.on_sale === true || (p as any)?.on_sale === "true";
+      if (baseIsOnSale && baseSalePrice !== null) {
+        isOnSale = true;
+        displayPrice = baseSalePrice;
+        savings = regularPrice ? Math.round(regularPrice - displayPrice) : null;
+      } else {
+        displayPrice = variantCost ?? baseSalePrice ?? regularPrice ?? null;
+      }
+    }
 
     const baseName = p.name.split(" - ")[0].trim();
     const infoLink = getProductLink(baseName, 35);

@@ -176,17 +176,18 @@ export default function RouterPage() {
     return plans.find((p) => p.label === selectedRadio);
   }, [plans, selectedRadio]);
 
+  const isOnSale = (product as any)?.on_sale === true || (product as any)?.on_sale === "true";
+
   // Precio actual
   const currentPrice = useMemo(() => {
     if (selectedPlan) {
-      // Si está en oferta, usar sale_price de la variante
-      if ((product as any)?.on_sale && selectedPlan.salePrice) {
+      if (selectedPlan.salePrice) {
         return selectedPlan.salePrice;
       }
       return selectedPlan.price;
     }
-    // Si está en oferta, mostrar sale_price
-    if ((product as any)?.on_sale && (product as any)?.sale_price) {
+    const isOnSale = (product as any)?.on_sale === true || (product as any)?.on_sale === "true";
+    if (isOnSale && (product as any)?.sale_price) {
       return (product as any).sale_price;
     }
     return (product as any)?.price || 0;
@@ -194,18 +195,18 @@ export default function RouterPage() {
 
   // Precio original cuando hay oferta (para mostrar tachado)
   const originalPrice = useMemo(() => {
-    if ((product as any)?.on_sale) {
-      if (selectedPlan?.salePrice) {
+    if (selectedPlan) {
+      if (selectedPlan.salePrice) {
         return formatPrice(selectedPlan.price);
       }
-      if (!selectedPlan && (product as any)?.sale_price && (product as any)?.price) {
-        return formatPrice((product as any).price);
-      }
+      return undefined;
+    }
+    const isOnSale = (product as any)?.on_sale === true || (product as any)?.on_sale === "true";
+    if (isOnSale && (product as any)?.sale_price && (product as any)?.price) {
+      return formatPrice((product as any).price);
     }
     return undefined;
   }, [selectedPlan, product]);
-
-  const isOnSale = (product as any)?.on_sale === true;
 
   // Handlers
   const handleRadioChange = (value: string) => {
@@ -215,10 +216,9 @@ export default function RouterPage() {
   const handleBuy = () => {
     const selectedPlan = plans.find((p) => p.label === selectedRadio);
     const selectedVariantId = selectedPlan ? Number(selectedPlan.value) : undefined;
-    // Usar sale_price de la variante si está en oferta
-    const priceForCheckout = ((product as any)?.on_sale && selectedPlan?.salePrice) ? selectedPlan.salePrice
+    const priceForCheckout = selectedPlan?.salePrice ? selectedPlan.salePrice
       : selectedPlan?.price
-      || ((product as any)?.on_sale && (product as any)?.sale_price ? (product as any).sale_price : (product as any)?.price)
+      || (isOnSale && (product as any)?.sale_price ? (product as any).sale_price : (product as any)?.price)
       || 0;
     openModal({
       productid: String(ROUTER_CONFIG.productId),
@@ -251,9 +251,9 @@ export default function RouterPage() {
     productId: ROUTER_CONFIG.productId,
     onBuy: handleBuy,
     onChat: handleChat,
-    onSale: isOnSale,
+    onSale: selectedPlan ? !!selectedPlan.salePrice : isOnSale,
     regularPrice: originalPrice,
-  }), [product, currentPrice, handleBuy, isOnSale, originalPrice]);
+  }), [product, currentPrice, handleBuy, isOnSale, originalPrice, selectedPlan]);
 
   // Loading state
   if (isLoading) {
@@ -381,7 +381,7 @@ export default function RouterPage() {
         onBuy={handleBuy}
         productImage={productImage}
         priceBlockRef={priceBlockRef}
-        onSale={isOnSale}
+        onSale={selectedPlan ? !!selectedPlan.salePrice : isOnSale}
         regularPrice={originalPrice}
       />
 

@@ -11,11 +11,13 @@ import { Tag } from "lucide-react";
 export default function CardProduct() {
   const { currentProduct } = useProductById();
 
-    if (!currentProduct) {
+  if (!currentProduct) {
     return <p className="text-center py-4">Producto no encontrado.</p>;
   }
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
-  const precioAMostrar = currentProduct.on_sale
+
+  const isOnSale = currentProduct.on_sale === true || (currentProduct as any).on_sale === "true";
+  const precioAMostrar = isOnSale && currentProduct.sale_price
     ? currentProduct.sale_price
     : currentProduct.price;
 
@@ -33,7 +35,7 @@ export default function CardProduct() {
                 <CheckProductIcon />
                 <span className="text-sm text-gray-700">{feature.name}</span>
               </div>
-          ))}
+            ))}
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
@@ -78,7 +80,7 @@ export default function CardProduct() {
             <p className="text-xl md:text-2xl font-bold text-gray-800">
               {precioAMostrar} $ USD
             </p>
-            {currentProduct.on_sale && currentProduct.price && (
+            {isOnSale && currentProduct.price && (
               <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2.5 py-1">
                 <Tag className="w-4 h-4 text-black" />
                 <span className="text-sm text-black">
@@ -99,7 +101,7 @@ export default function CardProduct() {
         >
           Comprar Ahora
         </Button>
-        
+
         <TelegramButton />
 
         {/* <Button

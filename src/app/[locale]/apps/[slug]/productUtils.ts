@@ -68,6 +68,7 @@ export function transformVariantsToPlans(
   translations?: LicenseTranslations
 ): LicensePlan[] {
   const t = translations || defaultLicenseTranslations;
+  const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
 
   // Si hay variantes, usarlas
   if (variants && variants.length > 0) {
@@ -90,7 +91,7 @@ export function transformVariantsToPlans(
           label: `6 ${t.months} - ${deviceLabel}`,
           value: String(variant.licensetime),
           price: Number(variant.price),
-          salePrice: variant.sale_price ? Number(variant.sale_price) : undefined,
+          salePrice: (isOnSale && variant.sale_price) ? Number(variant.sale_price) : undefined,
           variantId: variant.id,
           sku: variant.sku || "",
         };
@@ -101,7 +102,7 @@ export function transformVariantsToPlans(
         label: `${t.license} ${variant.licensetime} ${monthLabel}`,
         value: String(variant.licensetime),
         price: Number(variant.price),
-        salePrice: variant.sale_price ? Number(variant.sale_price) : undefined,
+        salePrice: (isOnSale && variant.sale_price) ? Number(variant.sale_price) : undefined,
         variantId: variant.id,
         sku: variant.sku || "",
       };
@@ -233,7 +234,7 @@ export function buildProductInfo(
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "/images/apps/default-logo.png";
 
   // Lógica de oferta: si on_sale, mostrar sale_price y guardar price original
-  const isOnSale = product?.on_sale === true;
+  const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
   let displayPrice: string;
   let originalPrice: string | undefined;
 

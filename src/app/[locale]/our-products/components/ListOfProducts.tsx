@@ -1029,18 +1029,26 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               }
             }
 
-            // Lógica de oferta: si on_sale es true, mostrar sale_price como precio principal
-            // Para productos con variantes, usar el sale_price de cada variante individual
-            const isOnSale = product.on_sale === true;
+            // Lógica de oferta: evaluar variantes individualmente para no aplicar descuentos base a variantes sin descuento
+            let currentIsOnSale = false;
             let regularPrice: number | undefined;
-            if (isOnSale) {
+
+            if (product._selectedVariant) {
               const variantSalePrice = (product._selectedVariant as any)?.sale_price;
-              const effectiveSalePrice = variantSalePrice ?? product.sale_price;
-              if (effectiveSalePrice) {
-                regularPrice = priceToShow; // guardar precio original (variant price) antes de reemplazar
-                priceToShow = Number(effectiveSalePrice);
+              if (variantSalePrice) {
+                currentIsOnSale = true;
+                regularPrice = priceToShow; // guardar precio original antes de reemplazar
+                priceToShow = Number(variantSalePrice);
+              }
+            } else {
+              const baseIsOnSale = product.on_sale === true || (product as any)?.on_sale === "true";
+              if (baseIsOnSale && product.sale_price) {
+                currentIsOnSale = true;
+                regularPrice = priceToShow; // guardar precio original
+                priceToShow = Number(product.sale_price);
               }
             }
+
 
             // 🔑 NUEVA KEY: siempre única en cada render (incluye variantId para expansión TIM)
             const variantIdForKey = product._selectedVariant?.id || "";
@@ -1199,7 +1207,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 planDataAmount={effectivePlanDataAmount}
                 variantId={variantId}
                 variants={selectedOption === 40 ? (product.variants ?? []) : undefined}
-                onSale={isOnSale}
+                onSale={currentIsOnSale}
                 regularPrice={regularPrice}
                 iconUrl={product.iconUrl}
               />

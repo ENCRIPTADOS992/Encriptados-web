@@ -30,6 +30,8 @@ export function calcSimUnitPrice({
     return Number.isFinite(n) ? n : 0;
   };
 
+  const onSale = !skipSale && (product?.on_sale === true || (product as any)?.on_sale === "true");
+
   if (formType === "encrypted_minutes" && minutesPlans.length) {
     const selected =
       minutesPlans.find((p) => p.id === selectedPlanId) ??
@@ -62,7 +64,10 @@ export function calcSimUnitPrice({
 
   if (formType === "encrypted_esimData") {
     const amounts = (variants ?? [])
-      .map((v) => toNumber((v as any).price ?? (v as any).cost ?? (v as any).regular_price ?? (v as any).sale_price))
+      .map((v) => {
+        const saleValue = onSale ? (v as any).sale_price : undefined;
+        return toNumber(saleValue ?? (v as any).price ?? (v as any).cost ?? (v as any).regular_price);
+      })
       .filter((n) => n > 0);
 
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
@@ -92,7 +97,9 @@ export function calcSimUnitPrice({
 
     const defaultAmount = amounts[0] ?? 0;
     const selectedAmount = selectedPlanId != null ? toNumber(selectedPlanId) : defaultAmount;
-    const productPrice = toNumber(product?.price);
+
+    const productSalePrice = onSale ? toNumber((product as any)?.sale_price) : undefined;
+    const productPrice = productSalePrice ?? toNumber(product?.price);
 
     let base = productPrice > 0 && defaultAmount > 0 ? productPrice - defaultAmount : 0;
     if (!Number.isFinite(base) || base < 0 || base > 100) base = 7.5;
@@ -124,15 +131,15 @@ export function calcSimUnitPrice({
       titleNorm.includes("esim") &&
       (titleNorm.includes("datos") || titleNorm.includes("data"));
 
-    const raw =
-      isTimEsimData
-        ? (v as any).regular_price ??
-          (v as any).price ??
-          (v as any).cost ??
-          (v as any).sale_price ??
-          product?.price ??
-          0
-        : v.price ?? v.cost ?? product?.price ?? 0;
+    // If onSale is true, we consider sale_price first.
+    let raw = 0;
+    if (isTimEsimData) {
+      const saleVal = onSale ? (v as any).sale_price : undefined;
+      raw = saleVal ?? (v as any).regular_price ?? (v as any).price ?? (v as any).cost ?? product?.price ?? 0;
+    } else {
+      const saleVal = onSale ? (v as any).sale_price : undefined;
+      raw = saleVal ?? v.price ?? v.cost ?? product?.price ?? 0;
+    }
 
     const valueNumber = toNumber(raw);
 
@@ -142,13 +149,12 @@ export function calcSimUnitPrice({
       fallbackVariant: variants[0],
       productPrice: product?.price,
       unitPrice: valueNumber,
+      onSale
     });
 
     return valueNumber;
   }
 
-  // Si está en oferta y no hay cupón, usar sale_price en lugar de price
-  const onSale = !skipSale && (product?.on_sale === true || (product as any)?.on_sale === "true");
   const sp = onSale ? parseFloat(String((product as any)?.sale_price ?? "0")) : NaN;
   const valueNumber = (!isNaN(sp) && sp > 0) ? sp : Number(product?.price ?? 0);
 

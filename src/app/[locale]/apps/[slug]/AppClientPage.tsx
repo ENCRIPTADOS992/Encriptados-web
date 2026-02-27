@@ -141,52 +141,50 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     return plans.find(p => p.label === selectedRadio) || plans[0] || null;
   }, [plans, selectedRadio]);
 
+  const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+
   const currentPrice = useMemo(() => {
     if (selectedPlan) {
-      // Si está en oferta, usar sale_price de la variante
-      if (product?.on_sale && selectedPlan.salePrice) {
+      if (selectedPlan.salePrice) {
         return formatPrice(selectedPlan.salePrice);
       }
       return formatPrice(selectedPlan.price);
     }
-    // Si está en oferta, mostrar sale_price como precio principal
-    if (product?.on_sale && product?.sale_price) {
+    const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+    if (isOnSale && product?.sale_price) {
       return formatPrice(product.sale_price);
     }
     return formatPrice(product?.price || 0);
   }, [selectedPlan, product]);
 
-  // Precio original cuando hay oferta (para mostrar tachado)
   const originalPrice = useMemo(() => {
-    if (product?.on_sale) {
-      if (selectedPlan?.salePrice) {
+    if (selectedPlan) {
+      if (selectedPlan.salePrice) {
         return formatPrice(selectedPlan.price);
       }
-      if (!selectedPlan && product?.sale_price && product?.price) {
-        return formatPrice(product.price);
-      }
+      return undefined;
+    }
+    const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+    if (isOnSale && product?.sale_price && product?.price) {
+      return formatPrice(product.price);
     }
     return undefined;
   }, [selectedPlan, product]);
 
-  const isOnSale = product?.on_sale === true;
-
   const handleRadioChange = (val: string) => setSelectedRadio(val);
 
-  // === AUTO-ABRIR POPUP si viene con ?buy=1 ===
   const buyAutoOpenedRef = useRef(false);
   useEffect(() => {
     if (searchParamBuy !== "1") return;
     if (buyAutoOpenedRef.current) return;
     if (!product) return;
 
-    // Esperar a que se resuelva la variante si viene en la URL
     if (searchParamVariantId && plans.length > 0) {
       const matchingPlan = plans.find(p => String(p.variantId) === searchParamVariantId);
       const planToUse = matchingPlan || selectedPlan;
-      const priceStr = (product?.on_sale && planToUse?.salePrice) ? planToUse.salePrice
+      const priceStr = planToUse?.salePrice ? planToUse.salePrice
         : planToUse?.price
-        ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
+        ?? (isOnSale && product?.sale_price ? product.sale_price : product?.price)
         ?? 0;
       const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
 
@@ -200,15 +198,13 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
         variantId: planToUse?.variantId,
       });
 
-      // Limpiar ?buy de la URL
       const url = new URL(window.location.href);
       url.searchParams.delete("buy");
       window.history.replaceState({}, "", url.toString());
     } else if (!searchParamVariantId) {
-      // Sin variantId, abrir con el plan seleccionado por defecto
-      const priceStr = (product?.on_sale && selectedPlan?.salePrice) ? selectedPlan.salePrice
+      const priceStr = selectedPlan?.salePrice ? selectedPlan.salePrice
         : selectedPlan?.price
-        ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
+        ?? (isOnSale && product?.sale_price ? product.sale_price : product?.price)
         ?? 0;
       const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
 
@@ -226,12 +222,12 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       url.searchParams.delete("buy");
       window.history.replaceState({}, "", url.toString());
     }
-  }, [searchParamBuy, searchParamVariantId, searchParamCategoryId, product, plans, selectedPlan, openModal, locale, config]);
+  }, [searchParamBuy, searchParamVariantId, searchParamCategoryId, product, plans, selectedPlan, openModal, locale, config, isOnSale]);
 
   const handleBuy = () => {
-    // Extraer precio numérico - usar sale_price si está en oferta
-    const priceStr = selectedPlan?.price
-      ?? (product?.on_sale && product?.sale_price ? product.sale_price : product?.price)
+    const priceStr = selectedPlan?.salePrice ? selectedPlan.salePrice
+      : selectedPlan?.price
+      ?? (isOnSale && product?.sale_price ? product.sale_price : product?.price)
       ?? 0;
     const numericPrice = typeof priceStr === 'string' ? parseFloat(priceStr) : priceStr;
 
@@ -416,7 +412,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
             priceBlockRef={priceBlockRef}
             languageCode={locale}
             translations={productSectionTranslations}
-            onSale={isOnSale}
+            onSale={selectedPlan ? !!selectedPlan.salePrice : isOnSale}
             regularPrice={originalPrice}
           />
 
@@ -438,7 +434,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           {slug === "router-camaleon" && <RouterCamaleon />}
 
           {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
-          
+
           <PromoSection />
 
           {slug.includes("galaxia-mdm") && <PrivateAppStore />}
