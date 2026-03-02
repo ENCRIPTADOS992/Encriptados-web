@@ -321,6 +321,7 @@ export function useRegionCountryFilter({
       regionOrCountryType: "region",
       regionOrCountry: r.code,
       simCountry: undefined,
+      simCountryLabel: undefined,
       simRegion,
     });
     setOpen(false);

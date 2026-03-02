@@ -817,6 +817,29 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       };
     }
 
+    // Handle broad regions (Africa, Europa, Asia, etc.) — not a 2-char country code
+    const isRegionFilter = filters.regionOrCountryType === "region";
+    if (isRegionFilter && selectedCountryCode && selectedCountryCode.length > 2) {
+      const REGION_DISPLAY: Record<string, string> = {
+        africa: "África",
+        europa: "Europa",
+        asia: "Asia",
+        oceania: "Oceanía",
+        norteamerica: "Norte América",
+        "centro-sur-america": "Centro/Sur América",
+        "north-america": "Norte América",
+        "central-south-america": "Centro/Sur América",
+        europe: "Europa",
+      };
+      const regionKey = selectedCountryCode.toLowerCase();
+      const regionLabel = REGION_DISPLAY[regionKey] || selectedCountryCode.charAt(0).toUpperCase() + selectedCountryCode.slice(1).toLowerCase();
+      const tag = v?.gb || v?.name || undefined;
+      return {
+        country: { label: regionLabel },
+        tag,
+      };
+    }
+
     let flagCode: string | undefined;
     let countryLabel: string | undefined;
 

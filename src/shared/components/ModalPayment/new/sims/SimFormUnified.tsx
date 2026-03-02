@@ -142,7 +142,7 @@ export default function SimFormUnified({
   const addressOk = address.trim() !== "";
   const countryOk = country.trim() !== "";
 
-  const isPhysical = formType === "encrypted_physical" || formType === "encrypted_generic";
+  const isPhysical = formType === "encrypted_physical" || formType === "encrypted_generic" || formType === "tim_physical";
 
   const typeSpecificOk =
     isPhysical
