@@ -9,16 +9,16 @@ export function PromoSection() {
 
   const promoCards = [
     {
-      title: "SIM Card encriptada",
+      title: "eSIM Encriptada",
       description:
         "Protégete de los ciberdelincuentes y mantén tu información personal segura.",
       buttonText: "Más información",
       buttonHref: `/${locale}/sim-encriptada`,
       backgroundImage: "/images/home/fondo-encriptados.webp",
-      backgroundAlt: "Fondo SIM Card Encriptados con tarjetas eSIM y SIM física",
+      backgroundAlt: "Fondo eSIM Encriptada con tarjetas eSIM y SIM física",
     },
     {
-      title: "SIM TIM Conéctate con total anonimato",
+      title: "eSIM TIM Conéctate con total anonimato",
       description:
         "Tus datos no expiran sin importar el tiempo que tardes en consumirlos.",
       buttonText: "Más información",

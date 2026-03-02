@@ -678,11 +678,11 @@
     },
     "simCards": {
       "encrypted": {
-        "title": "SIM Card encriptada",
+        "title": "eSIM Encriptada",
         "description": "Protegete de los ciberdelincuentes y mantén tu información personal segura"
       },
       "tim": {
-        "title": "SIM TIM Conéctate con total anonimato",
+        "title": "eSIM TIM Conéctate con total anonimato",
         "description": "Tus datos no expiran sin importar el tiempo que tardes en consumirlos"
       },
       "buyButton": "Comprar aquí",
@@ -1244,7 +1244,7 @@
   },
   "appsShared": {
     "encryptedSim": {
-      "title": "SIM Card encriptada",
+      "title": "eSIM Encriptada",
       "description": "Protégete de los ciberdelincuentes y mantén tu información personal segura",
       "button": "Comprar",
       "link": "Más información"
