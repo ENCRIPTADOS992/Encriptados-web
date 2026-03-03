@@ -3230,8 +3230,8 @@
     "brandApp": "Application",
     "brandSystem": "System",
     "brandRouter": "Router",
-    "brandEncrypted": "encrypted",
-    "brandTim": "tim",
+    "brandEncrypted": "SIM Encriptados",
+    "brandTim": "SIM TIM",
     "couponReplacesOffer": "This product already has a sale applied. Your coupon will be applied to the regular product price without the sale.",
     "closeModal": "Close"
   },

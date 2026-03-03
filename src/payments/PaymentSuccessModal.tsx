@@ -123,16 +123,20 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 </div>
               ) : null}
               <div>
-                <p className="text-sm font-semibold text-[#101010]">{product.name}</p>
                 {product.brandKey ? (
-                  <p className="text-xs text-[#666]">
+                  <p className="text-sm font-semibold text-[#101010]">
                     {product.brandKey === "app" ? t("brandApp") : product.brandKey === "system" ? t("brandSystem") : t("brandRouter")}
                   </p>
                 ) : product.brand ? (
-                  <p className="text-xs text-[#666]">
+                  <p className="text-sm font-semibold text-[#101010]">
                     {product.brand === "encrypted" ? t("brandEncrypted") : product.brand === "tim" ? t("brandTim") : product.brand}
                   </p>
-                ) : null}
+                ) : (
+                  <p className="text-sm font-semibold text-[#101010]">{product.name}</p>
+                )}
+                {(product.brandKey || product.brand) && (
+                  <p className="text-xs text-[#666]">{product.name}</p>
+                )}
               </div>
             </div>
 

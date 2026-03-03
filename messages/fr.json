@@ -2564,8 +2564,8 @@
     "brandApp": "Application",
     "brandSystem": "Système",
     "brandRouter": "Routeur",
-    "brandEncrypted": "chiffré",
-    "brandTim": "tim",
+    "brandEncrypted": "SIM Encriptados",
+    "brandTim": "SIM TIM",
     "couponReplacesOffer": "Ce produit a déjà une offre appliquée. Votre coupon sera appliqué sur le prix régulier du produit sans l'offre.",
     "closeModal": "Fermer"
   },
