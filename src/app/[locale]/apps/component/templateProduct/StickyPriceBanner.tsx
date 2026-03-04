@@ -136,18 +136,18 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
           </div>
 
           <div className="flex items-center justify-between gap-4 lg:justify-end lg:gap-10">
-            <div className="text-left lg:text-right">
-              <div className="text-white/75 text-xs sm:text-sm leading-none">
-                Desde
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <div className="text-white font-bold text-2xl sm:text-3xl leading-tight">
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col text-left lg:text-right items-end justify-center">
+                <span className="text-white/75 text-xs sm:text-sm leading-none">
+                  Desde
+                </span>
+                <span className="text-white font-bold text-2xl sm:text-3xl leading-none mt-0.5">
                   {productInfo.price}
-                </div>
+                </span>
                 {productInfo.onSale && productInfo.regularPrice && (
-                  <span className="inline-flex items-center gap-1 bg-white/15 rounded-full px-2 py-0.5">
-                    <Tag className="w-3.5 h-3.5 text-white" />
-                    <span className="text-sm text-white">
+                  <span className="inline-flex items-center gap-1 bg-white/10 rounded-full px-1.5 py-0.5 whitespace-nowrap mt-1">
+                    <Tag className="w-2.5 h-2.5 text-white/80" />
+                    <span className="text-[10px] sm:text-xs text-white/80">
                       Antes <span className="line-through">{productInfo.regularPrice}</span>
                     </span>
                   </span>
