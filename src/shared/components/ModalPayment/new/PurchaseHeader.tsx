@@ -215,6 +215,8 @@ const PurchaseHeader: React.FC<Props> = ({
   const isEncryptedProvider =
     providerNorm.includes("encript") || providerNorm.includes("encrypted");
 
+  const isSimTim = providerNorm.includes("tim");
+
   // Multi-idioma: ES datos, EN data, FR données, IT dati, PT dados
   const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
   const hasRechargeWord = /(recarga|recharge|ricarica)/i.test(titleNorm);
@@ -509,7 +511,7 @@ const PurchaseHeader: React.FC<Props> = ({
           </div>
 
           {/* Fila: Precio de eSIM (para eSIM solo, eSIM + Datos, eSIM + Recarga Datos) */}
-          {(isEsimRecargaDatosTitle || isEsimDatosTitle || isEsimOnlyTitle) && (
+          {(isEsimRecargaDatosTitle || isEsimDatosTitle || isEsimOnlyTitle) && !isSimTim && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("esimPrice", { defaultValue: "Precio de eSIM" })}</span>
               <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
