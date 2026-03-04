@@ -862,24 +862,7 @@ const PurchaseHeader: React.FC<Props> = ({
             </span>
           </div>
 
-          {/* Upsell eSIM */}
-          {showEsimAddon && (
-            <label className="flex items-center gap-2 text-xs text-[#010C0F] cursor-pointer">
-              <input
-                type="checkbox"
-                checked={includeEsimAddon}
-                onChange={(e) => {
-                  const checked = e.target.checked;
-                  setIncludeEsimAddon(checked);
-                  onChangeEsimAddon?.(checked);
-                }}
-                className="w-4 h-4 border-2 border-black rounded accent-black focus:outline-none focus:ring-0"
-              />
-              <span className="select-none">
-                {esimAddonLabel.replace("7.50", (esimAddonPrice ?? 0).toFixed(2))}
-              </span>
-            </label>
-          )}
+          {/* Upsell eSIM removed */}
 
           {/* Cupón de descuento */}
           {showCoupon ? (
