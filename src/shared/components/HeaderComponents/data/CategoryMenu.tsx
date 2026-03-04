@@ -61,11 +61,11 @@ export function useTranslatedProductsCategories(): any {
           "Productos increíbles, aplicaciones y sistemas con encriptación de inicio a fin",
       }),
       link: "",
-      image: "/images/mega-menu/aplicaciones.jpeg",
+      image: "/images/mega-menu/aplicaciones .webp",
       items: [
         {
           title: t("apps.items.silentPhone.title", { defaultValue: "Silent phone" }),
-          image: "/images/mega-menu/apps/Silent-Circle_Apps_Encriptados_preview_menu_web.jpg",
+          image: "/images/mega-menu/apps/Silent-Circle_Apps_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Silent Phone"),
           description: t("apps.items.silentPhone.description", {
             defaultValue: "Silent phone es una aplicación de mensajería segura.",
