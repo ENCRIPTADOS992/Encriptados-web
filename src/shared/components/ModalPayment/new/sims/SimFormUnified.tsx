@@ -98,6 +98,11 @@ export default function SimFormUnified({
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [formData, setFormData] = React.useState<SimFormValues | null>(null);
   const [showErrors, setShowErrors] = React.useState(false);
+  const [rechargeType, setRechargeType] = React.useState<"normal" | "anonymous">("normal");
+
+  const titleNorm = String((product as any)?.name ?? "").toLowerCase();
+  const isRecargaName = /(recarga|recharge|ricarica)/i.test(titleNorm);
+  const isEligibleRecharge = (formType === "encrypted_data" || formType === "tim_data" || formType === "encrypted_minutes") && isRecargaName;
 
   // Track individual Stripe element completion (same as apps form)
   const [cardState, setCardState] = React.useState({
@@ -134,8 +139,8 @@ export default function SimFormUnified({
     .map((x) => String(x ?? "").trim())
     .filter((x) => x.length > 0);
   const simOk = CFG.showSimNumber
-    ? normalizedSimNumbers.length === (useMultiSimNumbers ? quantity : 1) &&
-    normalizedSimNumbers.every((n) => n.length >= 6)
+    ? rechargeType === "anonymous" || (normalizedSimNumbers.length === (useMultiSimNumbers ? quantity : 1) &&
+      normalizedSimNumbers.every((n) => n.length >= 6))
     : true;
   const postalOk = postalCode.trim().length > 0;
   const fullNameOk = fullName.trim() !== "";
@@ -295,6 +300,8 @@ export default function SimFormUnified({
             selectedPlanId,
             selectedVariantId: effectiveSelectedVariantId,
             has_esim: hasEsimAddon,
+            recharge_type: rechargeType,
+            is_anonymous_recharge: rechargeType === "anonymous",
             esimAddonFee,
             sourceUrl,
             simNumbers:
@@ -399,6 +406,36 @@ export default function SimFormUnified({
     <div className="space-y-2">
       <SimTypeAlertSection formType={formType} />
 
+      {isEligibleRecharge && (
+        <div className="mt-4 mb-2 space-y-2">
+          <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 mb-2">
+            Elegir tipo de recarga
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setRechargeType("normal")}
+              className={`flex-1 text-[13px] font-bold h-[42px] rounded-[8px] transition-colors border-[1.5px] ${rechargeType === "normal"
+                  ? "bg-white text-black border-black"
+                  : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black"
+                }`}
+            >
+              Normal
+            </button>
+            <button
+              type="button"
+              onClick={() => setRechargeType("anonymous")}
+              className={`flex-1 text-[13px] h-[42px] rounded-[8px] transition-colors border-[1.5px] ${rechargeType === "anonymous"
+                  ? "bg-white text-black border-black font-bold"
+                  : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black font-normal"
+                }`}
+            >
+              Anónima
+            </button>
+          </div>
+        </div>
+      )}
+
       <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 !mt-1.5">
         Datos de compra
       </p>
@@ -411,6 +448,7 @@ export default function SimFormUnified({
         countryValue={country}
         quantity={quantity}
         showErrors={showErrors}
+        isAnonymous={rechargeType === "anonymous"}
         validations={{
           emailOk,
           simOk,

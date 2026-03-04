@@ -31,6 +31,7 @@ type Props = {
   quantity?: number;
   showErrors?: boolean;
   validations?: Validations;
+  isAnonymous?: boolean;
 };
 
 export function BuyerFieldsSection({
@@ -42,6 +43,7 @@ export function BuyerFieldsSection({
   quantity = 1,
   showErrors = false,
   validations,
+  isAnonymous = false,
 }: Props) {
   // Helper para determinar si un campo debe mostrarse con error
   const shouldShowFieldError = (fieldError: boolean, isValid: boolean) => {
@@ -52,8 +54,8 @@ export function BuyerFieldsSection({
 
   const gridForPairs =
     cfg.showAddress
-      ? TWO_COL_GRID_ALWAYS_2   
-      : TWO_COL_GRID; 
+      ? TWO_COL_GRID_ALWAYS_2
+      : TWO_COL_GRID;
 
 
   return (
@@ -72,11 +74,12 @@ export function BuyerFieldsSection({
                       className="w-full bg-transparent outline-none text-[14px] py-2"
                     />
                   </div>
-                  <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
+                  <div className={`${getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}>
                     <input
-                      {...register("simNumber", { required: cfg.reqSimNumber })}
+                      {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
                       placeholder="Número de SIM"
                       className="w-full bg-transparent outline-none text-[14px] py-2"
+                      disabled={isAnonymous}
                     />
                   </div>
                 </div>
@@ -93,16 +96,17 @@ export function BuyerFieldsSection({
                   {Array.from({ length: quantity }).map((_, idx) => (
                     <div
                       key={idx}
-                      className={getFieldWrapperClassName(
+                      className={`${getFieldWrapperClassName(
                         shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
-                      )}
+                      )} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}
                     >
                       <input
                         {...register(`simNumbers.${idx}` as const, {
-                          required: cfg.reqSimNumber,
+                          required: !isAnonymous && cfg.reqSimNumber,
                         })}
                         placeholder={`Número de SIM ${idx + 1}`}
                         className="w-full bg-transparent outline-none text-[14px] py-2"
+                        disabled={isAnonymous}
                       />
                     </div>
                   ))}
@@ -110,48 +114,58 @@ export function BuyerFieldsSection({
               )
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
-                    <input
-                      {...register("email", { required: true })}
-                      placeholder="Ingresa tu Email"
-                      type="email"
-                      className="w-full bg-transparent outline-none text-[14px] py-2"
-                    />
-                  </div>
-                  <div />
-                </div>
-
                 {quantity <= 1 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
+                    <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                       <input
-                        {...register("simNumber", { required: cfg.reqSimNumber })}
-                        placeholder="Número de SIM"
+                        {...register("email", { required: true })}
+                        placeholder="Ingresa tu Email"
+                        type="email"
                         className="w-full bg-transparent outline-none text-[14px] py-2"
                       />
                     </div>
-                    <div />
+                    <div className={`${getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}>
+                      <input
+                        {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
+                        placeholder="Número de SIM"
+                        className="w-full bg-transparent outline-none text-[14px] py-2"
+                        disabled={isAnonymous}
+                      />
+                    </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {Array.from({ length: quantity }).map((_, idx) => (
-                      <div
-                        key={idx}
-                        className={getFieldWrapperClassName(
-                          shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
-                        )}
-                      >
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                         <input
-                          {...register(`simNumbers.${idx}` as const, {
-                            required: cfg.reqSimNumber,
-                          })}
-                          placeholder={`Número de SIM ${idx + 1}`}
+                          {...register("email", { required: true })}
+                          placeholder="Ingresa tu Email"
+                          type="email"
                           className="w-full bg-transparent outline-none text-[14px] py-2"
                         />
                       </div>
-                    ))}
-                  </div>
+                      <div />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {Array.from({ length: quantity }).map((_, idx) => (
+                        <div
+                          key={idx}
+                          className={`${getFieldWrapperClassName(
+                            shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
+                          )} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}
+                        >
+                          <input
+                            {...register(`simNumbers.${idx}` as const, {
+                              required: !isAnonymous && cfg.reqSimNumber,
+                            })}
+                            placeholder={`Número de SIM ${idx + 1}`}
+                            className="w-full bg-transparent outline-none text-[14px] py-2"
+                            disabled={isAnonymous}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </>
                 )}
               </>
             )}
@@ -190,51 +204,58 @@ export function BuyerFieldsSection({
             <div />
           )}
         </div>
-      )}
+      )
+      }
 
-      {cfg.showSimNumber && !emailFullWidth && (
-        quantity <= 1 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
-              <input
-                {...register("simNumber", { required: cfg.reqSimNumber })}
-                placeholder="Número de SIM"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {Array.from({ length: quantity }).map((_, idx) => (
-              <div
-                key={idx}
-                className={getFieldWrapperClassName(
-                  shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
-                )}
-              >
+      {
+        cfg.showSimNumber && !emailFullWidth && (
+          quantity <= 1 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className={`${getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}>
                 <input
-                  {...register(`simNumbers.${idx}` as const, {
-                    required: cfg.reqSimNumber,
-                  })}
-                  placeholder={`Número de SIM ${idx + 1}`}
+                  {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
+                  placeholder="Número de SIM"
                   className="w-full bg-transparent outline-none text-[14px]"
+                  disabled={isAnonymous}
                 />
               </div>
-            ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {Array.from({ length: quantity }).map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`${getFieldWrapperClassName(
+                    shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
+                  )} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}
+                >
+                  <input
+                    {...register(`simNumbers.${idx}` as const, {
+                      required: !isAnonymous && cfg.reqSimNumber,
+                    })}
+                    placeholder={`Número de SIM ${idx + 1}`}
+                    className="w-full bg-transparent outline-none text-[14px]"
+                    disabled={isAnonymous}
+                  />
+                </div>
+              ))}
+            </div>
+          )
+        )
+      }
+
+
+      {
+        cfg.showAddress && (
+          <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.address, validations?.addressOk ?? true))}>
+            <input
+              {...register("address", { required: cfg.reqAddress })}
+              placeholder="Dirección de envío"
+              className="w-full bg-transparent outline-none text-[14px]"
+            />
           </div>
         )
-      )}
-
-
-      {cfg.showAddress && (
-        <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.address, validations?.addressOk ?? true))}>
-          <input
-            {...register("address", { required: cfg.reqAddress })}
-            placeholder="Dirección de envío"
-            className="w-full bg-transparent outline-none text-[14px]"
-          />
-        </div>
-      )}
+      }
 
       <div className={gridForPairs}>
         {cfg.showFullName && (
@@ -272,32 +293,34 @@ export function BuyerFieldsSection({
         )}
       </div>
 
-      {(cfg.showPostal || cfg.showPhone) && (
-        <div className={gridForPairs}>
-          {cfg.showPostal ? (
-            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.postalCode, validations?.postalOk ?? true))}>
-              <input
-                {...register("postalCode", { required: cfg.reqPostal })}
-                placeholder="Código postal"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          ) : (
-            <div />
-          )}
-          {cfg.showPhone ? (
-            <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.phone, validations?.phoneOk ?? true))}>
-              <input
-                {...register("phone", { required: cfg.reqPhone })}
-                placeholder="Teléfono"
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          ) : (
-            <div />
-          )}
-        </div>
-      )}
+      {
+        (cfg.showPostal || cfg.showPhone) && (
+          <div className={gridForPairs}>
+            {cfg.showPostal ? (
+              <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.postalCode, validations?.postalOk ?? true))}>
+                <input
+                  {...register("postalCode", { required: cfg.reqPostal })}
+                  placeholder="Código postal"
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+            {cfg.showPhone ? (
+              <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.phone, validations?.phoneOk ?? true))}>
+                <input
+                  {...register("phone", { required: cfg.reqPhone })}
+                  placeholder="Teléfono"
+                  className="w-full bg-transparent outline-none text-[14px]"
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+          </div>
+        )
+      }
     </>
   );
 }
