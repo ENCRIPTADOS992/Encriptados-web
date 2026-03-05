@@ -323,6 +323,7 @@ export default function SimFormUnified({
           payload.sim_number = nums.join(",");
         } else {
           payload.shipping_payload = {
+            address_1: data.address,
             shipping_name: data.fullName,
             country: data.country,
             postal_code: data.postalCode,
@@ -416,8 +417,8 @@ export default function SimFormUnified({
               type="button"
               onClick={() => setRechargeType("normal")}
               className={`flex-1 text-[13px] font-bold h-[42px] rounded-[8px] transition-colors border-[1.5px] ${rechargeType === "normal"
-                  ? "bg-white text-black border-black"
-                  : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black"
+                ? "bg-white text-black border-black"
+                : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black"
                 }`}
             >
               Normal
@@ -426,8 +427,8 @@ export default function SimFormUnified({
               type="button"
               onClick={() => setRechargeType("anonymous")}
               className={`flex-1 text-[13px] h-[42px] rounded-[8px] transition-colors border-[1.5px] ${rechargeType === "anonymous"
-                  ? "bg-white text-black border-black font-bold"
-                  : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black font-normal"
+                ? "bg-white text-black border-black font-bold"
+                : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black font-normal"
                 }`}
             >
               Anónima
