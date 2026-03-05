@@ -74,14 +74,15 @@ export function BuyerFieldsSection({
                       className="w-full bg-transparent outline-none text-[14px] py-2"
                     />
                   </div>
-                  <div className={`${getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}>
-                    <input
-                      {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
-                      placeholder="Número de SIM"
-                      className="w-full bg-transparent outline-none text-[14px] py-2"
-                      disabled={isAnonymous}
-                    />
-                  </div>
+                  {!isAnonymous && (
+                    <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
+                      <input
+                        {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
+                        placeholder="Número de SIM"
+                        className="w-full bg-transparent outline-none text-[14px] py-2"
+                      />
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -93,12 +94,12 @@ export function BuyerFieldsSection({
                       className="w-full bg-transparent outline-none text-[14px] py-2"
                     />
                   </div>
-                  {Array.from({ length: quantity }).map((_, idx) => (
+                  {!isAnonymous && Array.from({ length: quantity }).map((_, idx) => (
                     <div
                       key={idx}
-                      className={`${getFieldWrapperClassName(
+                      className={getFieldWrapperClassName(
                         shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
-                      )} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}
+                      )}
                     >
                       <input
                         {...register(`simNumbers.${idx}` as const, {
@@ -106,7 +107,6 @@ export function BuyerFieldsSection({
                         })}
                         placeholder={`Número de SIM ${idx + 1}`}
                         className="w-full bg-transparent outline-none text-[14px] py-2"
-                        disabled={isAnonymous}
                       />
                     </div>
                   ))}
@@ -124,14 +124,15 @@ export function BuyerFieldsSection({
                         className="w-full bg-transparent outline-none text-[14px] py-2"
                       />
                     </div>
-                    <div className={`${getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}>
-                      <input
-                        {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
-                        placeholder="Número de SIM"
-                        className="w-full bg-transparent outline-none text-[14px] py-2"
-                        disabled={isAnonymous}
-                      />
-                    </div>
+                    {!isAnonymous && (
+                      <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
+                        <input
+                          {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
+                          placeholder="Número de SIM"
+                          className="w-full bg-transparent outline-none text-[14px] py-2"
+                        />
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <>
@@ -147,12 +148,12 @@ export function BuyerFieldsSection({
                       <div />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {Array.from({ length: quantity }).map((_, idx) => (
+                      {!isAnonymous && Array.from({ length: quantity }).map((_, idx) => (
                         <div
                           key={idx}
-                          className={`${getFieldWrapperClassName(
+                          className={getFieldWrapperClassName(
                             shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
-                          )} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}
+                          )}
                         >
                           <input
                             {...register(`simNumbers.${idx}` as const, {
@@ -160,7 +161,6 @@ export function BuyerFieldsSection({
                             })}
                             placeholder={`Número de SIM ${idx + 1}`}
                             className="w-full bg-transparent outline-none text-[14px] py-2"
-                            disabled={isAnonymous}
                           />
                         </div>
                       ))}
@@ -210,36 +210,38 @@ export function BuyerFieldsSection({
       {
         cfg.showSimNumber && !emailFullWidth && (
           quantity <= 1 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className={`${getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}>
-                <input
-                  {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
-                  placeholder="Número de SIM"
-                  className="w-full bg-transparent outline-none text-[14px]"
-                  disabled={isAnonymous}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {Array.from({ length: quantity }).map((_, idx) => (
-                <div
-                  key={idx}
-                  className={`${getFieldWrapperClassName(
-                    shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
-                  )} ${isAnonymous ? "opacity-50 pointer-events-none" : ""}`}
-                >
+            !isAnonymous ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
                   <input
-                    {...register(`simNumbers.${idx}` as const, {
-                      required: !isAnonymous && cfg.reqSimNumber,
-                    })}
-                    placeholder={`Número de SIM ${idx + 1}`}
+                    {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
+                    placeholder="Número de SIM"
                     className="w-full bg-transparent outline-none text-[14px]"
-                    disabled={isAnonymous}
                   />
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : null
+          ) : (
+            !isAnonymous ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {Array.from({ length: quantity }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={getFieldWrapperClassName(
+                      shouldShowFieldError(!!(errors as any).simNumbers?.[idx], validations?.simOk ?? true)
+                    )}
+                  >
+                    <input
+                      {...register(`simNumbers.${idx}` as const, {
+                        required: !isAnonymous && cfg.reqSimNumber,
+                      })}
+                      placeholder={`Número de SIM ${idx + 1}`}
+                      className="w-full bg-transparent outline-none text-[14px]"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null
           )
         )
       }

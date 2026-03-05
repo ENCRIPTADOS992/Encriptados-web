@@ -4,6 +4,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { CircleAlert } from "lucide-react";
 
 import { buildSimFormConfig } from "./config/simFormConfig";
 import type { FormType, SimFormValues } from "./types/simFormTypes";
@@ -406,6 +407,15 @@ export default function SimFormUnified({
   return (
     <div className="space-y-2">
       <SimTypeAlertSection formType={formType} />
+
+      {isEligibleRecharge && rechargeType === "anonymous" && (
+        <div className="flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
+          <CircleAlert className="shrink-0 text-[#C98A00]" size={18} />
+          <span className="text-[14px] leading-[20px] text-[#C98A00]">
+            Recibe un código RONING para recargar saldo desde la app Encriptados.
+          </span>
+        </div>
+      )}
 
       {isEligibleRecharge && (
         <div className="mt-4 mb-2 space-y-2">
