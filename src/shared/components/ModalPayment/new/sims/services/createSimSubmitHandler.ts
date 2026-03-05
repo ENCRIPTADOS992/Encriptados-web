@@ -146,6 +146,7 @@ export function createSimSubmitHandler({
           ...common,
           product: "sim_physical",
           shipping_payload: {
+            address_1: data.address,
             shipping_name: data.fullName,
             country: data.country,
             postal_code: data.postalCode,
