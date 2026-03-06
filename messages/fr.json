@@ -2567,7 +2567,8 @@
     "brandEncrypted": "SIM Encriptados",
     "brandTim": "SIM TIM",
     "couponReplacesOffer": "Ce produit a déjà une offre appliquée. Votre coupon sera appliqué sur le prix régulier du produit sans l'offre.",
-    "closeModal": "Fermer"
+    "closeModal": "Fermer",
+    "operatingSystem": "Système"
   },
   "TestingProducts": {
     "badge": "Our products",

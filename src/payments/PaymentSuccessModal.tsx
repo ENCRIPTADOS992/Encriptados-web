@@ -33,6 +33,8 @@ export type ProductSuccessInfo = {
   licenseMonths?: number;
   /** Periodo formateado (ej: "6 Meses") */
   licensePeriod?: string;
+  /** Sistema operativo seleccionado (Android/iOS) — solo SecureCrypt */
+  osType?: "android" | "ios";
 };
 
 type Props = {
@@ -123,16 +125,20 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 </div>
               ) : null}
               <div>
-                <p className="text-sm font-semibold text-[#101010]">{product.name}</p>
                 {product.brandKey ? (
-                  <p className="text-xs text-[#666]">
+                  <p className="text-sm font-semibold text-[#101010]">
                     {product.brandKey === "app" ? t("brandApp") : product.brandKey === "system" ? t("brandSystem") : t("brandRouter")}
                   </p>
                 ) : product.brand ? (
-                  <p className="text-xs text-[#666]">
+                  <p className="text-sm font-semibold text-[#101010]">
                     {product.brand === "encrypted" ? t("brandEncrypted") : product.brand === "tim" ? t("brandTim") : product.brand}
                   </p>
-                ) : null}
+                ) : (
+                  <p className="text-sm font-semibold text-[#101010]">{product.name}</p>
+                )}
+                {(product.brandKey || product.brand) && (
+                  <p className="text-xs text-[#666]">{product.name}</p>
+                )}
               </div>
             </div>
 
@@ -159,7 +165,17 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 </span>
               </div>
 
-              {/* Row 2: Order number */}
+              {/* Row 2: OS type (SecureCrypt) */}
+              {product.osType ? (
+                <div className="flex items-center justify-between px-4 py-3">
+                  <span className="text-[#333]">{t("operatingSystem")}:</span>
+                  <span className="font-semibold text-[#101010]">
+                    {product.osType === "ios" ? "iOS" : "Android"}
+                  </span>
+                </div>
+              ) : null}
+
+              {/* Row 3: Order number */}
               {orderId ? (
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-[#333]">{t("orderNumber")}:</span>

@@ -3233,7 +3233,8 @@
     "brandEncrypted": "SIM Encriptados",
     "brandTim": "SIM TIM",
     "couponReplacesOffer": "This product already has a sale applied. Your coupon will be applied to the regular product price without the sale.",
-    "closeModal": "Close"
+    "closeModal": "Close",
+    "operatingSystem": "System"
   },
   "TestingProducts": {
     "badge": "Our products",

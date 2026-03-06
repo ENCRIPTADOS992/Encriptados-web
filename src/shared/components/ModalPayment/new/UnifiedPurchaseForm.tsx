@@ -48,7 +48,7 @@ type Props = {
     sourceUrl?: string;
     selectedOption?: number;
   };
-  onSuccess?: (data: { intent: any; orderId: number | null }) => void;
+  onSuccess?: (data: { intent: any; orderId: number | null; osType?: "android" | "ios" }) => void;
 };
 
 export interface FormData {
@@ -457,7 +457,7 @@ export default function UnifiedPurchaseForm({
 
       if (res?.status === "succeeded") {
         if (onSuccess) {
-          onSuccess({ intent: res.intent ?? null, orderId: currentOrderId });
+          onSuccess({ intent: res.intent ?? null, orderId: currentOrderId, osType: policy.showOsSelector ? osType : undefined });
         } else {
           setSuccessPI(res.intent ?? null);
           setShowSuccess(true);

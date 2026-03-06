@@ -370,6 +370,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
                 shippingCost: shipping,
                 licenseMonths: !isNaN(lt) && lt > 0 ? lt : undefined,
                 licensePeriod,
+                osType: data.osType,
               },
             });
           }
