@@ -11,17 +11,9 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: true, message: "Código requerido" }, { status: 400 });
     }
 
-    // Credentials from environment variables
-    const USER = process.env.WP_COUPON_USERNAME;
-    const PASS = process.env.WP_COUPON_PASSWORD;
-    if (!USER || !PASS) {
-        return NextResponse.json({ error: true, message: "Configuración del servidor incompleta" }, { status: 500 });
-    }
-    const CREDENTIALS = Buffer.from(`${USER}:${PASS}`).toString("base64");
-
     const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
 
-    // New endpoint: GET /wp-json/encriptados/v1/coupon/validate
+    // Public endpoint: GET /wp-json/encriptados/v1/coupon/validate
     let endpoint = `${WP_API}/encriptados/v1/coupon/validate?code=${encodeURIComponent(code)}`;
     if (productId) {
         endpoint += `&product_id=${encodeURIComponent(productId)}`;
@@ -33,7 +25,6 @@ export async function GET(request: Request) {
     try {
         const res = await fetch(endpoint, {
             headers: {
-                Authorization: `Basic ${CREDENTIALS}`,
                 "Content-Type": "application/json",
             },
         });
