@@ -918,21 +918,29 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               !isTimProvider &&
               isMinutosProduct;
 
-            // Obtener el tag de minutos basado en el PRECIO del producto
+            // Obtener el tag de minutos desde las variantes del producto
             const getMinutesTag = (): string | undefined => {
-              // Para "Recarga Minutos", usar directamente el mapeo de precio a minutos
-              const productPrice = Number(product.price) || Number(product.sale_price) || 0;
-
-              // Mapeo de precios a minutos basado en los datos conocidos
-              const priceToMinutesMap: Record<number, number> = {
-                200: 100,
-                500: 250,
-                1000: 500,
-              };
-
-              const minutes = priceToMinutesMap[productPrice];
-              if (minutes) {
-                return `${minutes} ${minuteUnit}`;
+              // Buscar minutos en las variantes del producto
+              const variants = product.variants ?? [];
+              if (variants.length > 0) {
+                const firstVar = variants[0] as any;
+                if (firstVar.minutes) {
+                  return `${firstVar.minutes} ${minuteUnit}`;
+                }
+                // Buscar en attributes de la variante
+                if (firstVar.attributes) {
+                  const minutesAttr = (firstVar.attributes as { name: string; option: string }[])
+                    ?.find((a: { name: string }) => /minuto/i.test(a.name));
+                  if (minutesAttr) {
+                    const val = parseInt(minutesAttr.option, 10);
+                    if (val) return `${val} ${minuteUnit}`;
+                  }
+                }
+                // Fallback: precio / 2 (misma lógica que checkout)
+                const price = Number(firstVar.price) || Number(firstVar.cost) || 0;
+                if (price > 0) {
+                  return `${Math.floor(price / 2)} ${minuteUnit}`;
+                }
               }
 
               // Fallback: buscar en el nombre del producto
@@ -1103,16 +1111,22 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               let tag: string | undefined;
 
               if (isMinutesRecharge) {
-                // Para "Recarga Minutos": mostrar minutos basados en precio
+                // Para "Recarga Minutos": mostrar minutos desde la variante
                 let minutesValue = selectedVar.minutes;
-                if (!minutesValue && selectedVar.price) {
-                  // Mapeo de precios a minutos basado en los datos conocidos
-                  const priceToMinutesMap: Record<number, number> = {
-                    200: 100,
-                    500: 250,
-                    1000: 500,
-                  };
-                  minutesValue = priceToMinutesMap[Number(selectedVar.price)];
+                // Fallback: buscar en attributes de la variante
+                if (!minutesValue && selectedVar.attributes) {
+                  const minutesAttr = (selectedVar.attributes as { name: string; option: string }[])
+                    ?.find((a: { name: string }) => /minuto/i.test(a.name));
+                  if (minutesAttr) {
+                    minutesValue = parseInt(minutesAttr.option, 10) || undefined;
+                  }
+                }
+                // Fallback: calcular como precio / 2 (misma lógica que checkout)
+                if (!minutesValue) {
+                  const price = Number(selectedVar.price) || Number(selectedVar.cost) || 0;
+                  if (price > 0) {
+                    minutesValue = Math.floor(price / 2);
+                  }
                 }
                 if (minutesValue) {
                   tag = `${minutesValue} ${minuteUnit}`;
