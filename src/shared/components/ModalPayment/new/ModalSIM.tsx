@@ -755,6 +755,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         quantity,
         unitPrice,
         shippingCost: isDigital ? 0 : 75,
+        discount,
         esimPrice: esimBase,
         rechargeAmount: rechargeAmt,
       },

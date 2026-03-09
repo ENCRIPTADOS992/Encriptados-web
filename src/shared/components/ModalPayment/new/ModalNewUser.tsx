@@ -368,6 +368,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
                 quantity,
                 unitPrice,
                 shippingCost: shipping,
+                discount,
                 licenseMonths: !isNaN(lt) && lt > 0 ? lt : undefined,
                 licensePeriod,
                 osType: data.osType,

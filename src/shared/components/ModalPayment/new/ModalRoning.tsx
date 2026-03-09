@@ -254,6 +254,7 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
               brandKey,
               quantity,
               unitPrice,
+              discount,
               licenseMonths: !isNaN(lt) && lt > 0 ? lt : undefined,
               licensePeriod,
             },

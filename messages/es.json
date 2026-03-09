@@ -2694,7 +2694,8 @@
     "brandTim": "SIM TIM",
     "couponReplacesOffer": "Este producto ya tiene una oferta aplicada. Tu cupón se aplicará sobre el precio regular del producto sin la oferta.",
     "closeModal": "Cerrar",
-    "operatingSystem": "Sistema"
+    "operatingSystem": "Sistema",
+    "discount": "Descuento"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",

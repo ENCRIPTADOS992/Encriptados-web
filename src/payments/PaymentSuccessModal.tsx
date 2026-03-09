@@ -25,6 +25,8 @@ export type ProductSuccessInfo = {
   quantity?: number;
   unitPrice?: number;
   shippingCost?: number;
+  /** Descuento aplicado por cupón */
+  discount?: number;
   /** Precio fijo de la eSIM sola (ej: 12 USD) — si se pasa, se muestra desglose */
   esimPrice?: number;
   /** Monto del plan de recarga (datos/minutos) */
@@ -75,9 +77,10 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
     const qty = product.quantity ?? 1;
     const unitPrice = product.unitPrice ?? intent.amount / 100;
     const shipping = product.shippingCost ?? 0;
+    const couponDiscount = product.discount ?? 0;
     const hasEsimBreakdown = product.esimPrice != null && product.rechargeAmount != null;
     const subtotal = unitPrice * qty;
-    const total = subtotal + shipping;
+    const total = subtotal + shipping - couponDiscount;
 
     return (
       <div
@@ -206,6 +209,14 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-[#333]">{t("shipping")}:</span>
                   <span className="font-semibold text-[#101010]">{formatUsd(shipping)}</span>
+                </div>
+              ) : null}
+
+              {/* Discount row */}
+              {couponDiscount > 0 ? (
+                <div className="flex items-center justify-between px-4 py-3">
+                  <span className="text-[#333]">{t("discount")}:</span>
+                  <span className="font-semibold text-green-600">-{formatUsd(couponDiscount)}</span>
                 </div>
               ) : null}
 
