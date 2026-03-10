@@ -6,8 +6,8 @@ Este documento detalla el esquema de comunicación entre la Web y la App Móvil 
 Para que la Web se adapte al contexto de la App, la App debe enviar un parámetro `from` en la URL al cargar la WebView. Dependiendo de este parámetro, la Web activará distintos comportamientos.
 
 ### Valores de `from`:
-*   `?from=user`: Indica que es un usuario registrado navegando desde la app. La Web interceptará botones clave para enviar eventos nativos a la App.
-*   `?from=guest`: Indica que es un usuario invitado navegando desde la app. La Web funcionará normalmente (abrirá el modal nativo de la web para compras y abrirá enlaces externos para soporte).
+*   `?from=user`: Indica que es un usuario registrado navegando desde la app. La Web interceptará botones clave para enviar eventos nativos a la App, bloqueando acciones web (ej: no se abre el checkout web).
+*   `?from=guest`: Indica que es un usuario invitado navegando desde la app. Se comporta similar a `user` en el uso de la interfaz de compras (bloqueando el checkout web y notificando a la app para manejar el pago), pero permite la navegación estándar en enlaces de soporte.
 *   `?from=app_mobile`: Valor legacy soportado que delega el comportamiento al estándar web pero con adaptaciones de UI móvil.
 
 > **Nota:** La web persistirá este estado internamente durante la sesión de navegación del usuario, por lo que no es necesario pasar `?from=` en cada cambio interno de ruta, pero sí en la carga inicial que haga la App en su WebView.
@@ -20,9 +20,9 @@ La App (React Native) debe escuchar estos eventos implementando la propiedad `on
 ### Evento A: `OPEN_CHECKOUT`
 Se dispara cuando el usuario (con `from=user`) presiona el botón de **"¡Compra ahora!"** en cualquier producto (SIMs, Apps y Routers).
 
-**Condición para dispararse:**
-*   `window.ReactNativeWebView` está presente.
-*   El contexto/URL cargada fue registrada con `from=user` o `from=app_mobile` (no `guest`).
+**Condición para bloquear modal web y dispararse (postMessage):**
+*   **Bloqueo de Modal:** El modal de compra web se bloquea automáticamente si la sesión se registró con `from=user` o `from=guest`.
+*   **Disparo del Evento:** El evento hacia React Native se lanza sí y solo sí está inyectado `window.ReactNativeWebView`.
 
 **Payload enviado:**
 ```json
@@ -61,8 +61,7 @@ Se dispara cuando el usuario (con `from=user`) presiona el botón de soporte, qu
 
 | Escenario | Acción en la Web | Resultado esperado |
 | :--- | :--- | :--- |
-| **Boton "¡Compra ahora!"** con `from=user` | Click | Se bloquea el modal web. Envía `{ action: "OPEN_CHECKOUT", data: {...} }` a la App. |
-| **Botón "¡Compra ahora!"** con `from=guest` | Click | **Nativo Web:** Abre el modal de producto directamente en la web. No notifica a la app. |
+| **Boton "¡Compra ahora!"** con `from=user` o `from=guest` | Click | Se bloquea el modal web. Envía `{ action: "OPEN_CHECKOUT", data: {...} }` a la App (si está presente `ReactNativeWebView`). |
 | **Botón de Soporte** con `from=user` | Presentación UI | Dice "Chatear ahora" (sin icono de Telegram). |
 | **Botón de Soporte** con `from=user` | Click | Se bloquea redirección al enlace. Envía `{ action: "OPEN_CHAT" }` a la App. |
 | **Botón de Soporte** con `from=guest` | Presentación UI | Dice "Chatear Telegram" (con icono). |
