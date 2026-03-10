@@ -1,36 +1,15 @@
 "use client";
 
 import SectionWrapper from "@/shared/components/SectionWrapper";
-import Button from "@/shared/components/Button";
-import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 export default function TerminosYCondicionesAppPage() {
-    const router = useRouter();
     const t = useTranslations("AppTerms");
-
-    const handleBack = () => {
-        router.back();
-    };
 
     return (
         <main className="bg-black text-text-secondary min-h-screen pt-10 pb-20">
             <SectionWrapper>
                 <div className="max-w-4xl mx-auto">
-                    {/* Botón Volver a la App */}
-                    <div className="mb-6 sticky top-4 z-50">
-                        <Button
-                            intent="primary"
-                            size="sm"
-                            className="shadow-lg backdrop-blur-md bg-primary/90 hover:bg-primary text-black font-bold"
-                            onClick={handleBack}
-                        >
-                            <ArrowLeft className="w-4 h-4 mr-2" />
-                            {t("backButton")}
-                        </Button>
-                    </div>
-
                     <div className="space-y-8 bg-bg-secondary/30 p-8 md:p-12 rounded-2xl border border-stroke-border/30 backdrop-blur-sm">
 
                         <header className="border-b border-stroke-border/50 pb-8">
@@ -251,14 +230,6 @@ export default function TerminosYCondicionesAppPage() {
                             </section>
 
                         </div>
-
-                        <div className="flex justify-center pt-8 border-t border-stroke-border/50">
-                            <Button intent="primary" onClick={handleBack}>
-                                <ArrowLeft className="w-4 h-4 mr-2" />
-                                {t("backButton")}
-                            </Button>
-                        </div>
-
                     </div>
                 </div>
             </SectionWrapper>
