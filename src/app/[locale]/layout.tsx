@@ -20,19 +20,19 @@ export default async function LocaleLayout({
     <>
       <InitAuthClient />
       <NextIntlClientProvider messages={messages}>
-        <ModalPaymentProvider>
-          <StripeProvider>
-            <AppMobileProvider>
+        <AppMobileProvider>
+          <ModalPaymentProvider>
+            <StripeProvider>
               <AppMobileLayout
                 header={<CurrentHeader />}
                 footer={<FooterEncrypted />}
               >
                 {children}
               </AppMobileLayout>
-            </AppMobileProvider>
-          </StripeProvider>
-          <ModalPaymentController />
-        </ModalPaymentProvider>
+            </StripeProvider>
+            <ModalPaymentController />
+          </ModalPaymentProvider>
+        </AppMobileProvider>
       </NextIntlClientProvider>
     </>
   );

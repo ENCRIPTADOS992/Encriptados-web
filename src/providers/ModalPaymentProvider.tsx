@@ -78,6 +78,16 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
 
   const openModal = (newParams?: ModalPaymentParams) => {
     console.log(`💠 [Provider ${providerId}] openModal called with:`, newParams);
+
+    // Interceptar la apertura del checkout si estamos dentro de la App (WebView de React Native)
+    if (typeof window !== "undefined" && (window as any).ReactNativeWebView) {
+      const payload = {
+        action: "OPEN_CHECKOUT",
+        data: newParams
+      };
+      (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
+      return; // Evitar abrir el modal de la web
+    }
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
     setParams(prev => ({ ...prev, ...(newParams ?? {}), sourceUrl }));
     setIsModalOpen(true);
