@@ -15,10 +15,12 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "" }) => {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Si estamos en la app y somos "user", enviamos el evento al ReactNativeWebView
-    if (isUserMode && typeof window !== "undefined" && (window as any).ReactNativeWebView) {
+    if (isUserMode) {
       e.preventDefault();
-      const payload = { action: "OPEN_CHAT" };
-      (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
+      if (typeof window !== "undefined" && (window as any).ReactNativeWebView) {
+        const payload = { action: "OPEN_CHAT" };
+        (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
+      }
     }
   };
 

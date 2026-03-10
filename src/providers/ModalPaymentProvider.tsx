@@ -2,6 +2,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
@@ -62,6 +63,7 @@ const ModalPaymentContext = createContext<ModalPaymentContextProps | undefined>(
 export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [params, setParams] = useState<ModalPaymentParams>({});
+  const { appMode } = useAppMobile();
 
   // Debug: Generate a random ID to check for duplicate providers
   const [providerId] = useState(() => Math.random().toString(36).substring(7));
@@ -80,12 +82,14 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
     console.log(`💠 [Provider ${providerId}] openModal called with:`, newParams);
 
     // Interceptar la apertura del checkout si estamos dentro de la App (WebView de React Native)
-    if (typeof window !== "undefined" && (window as any).ReactNativeWebView) {
+    if (appMode === "user" || appMode === "guest" || (typeof window !== "undefined" && (window as any).ReactNativeWebView)) {
       const payload = {
         action: "OPEN_CHECKOUT",
         data: newParams
       };
-      (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
+      if (typeof window !== "undefined" && (window as any).ReactNativeWebView) {
+        (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
+      }
       return; // Evitar abrir el modal de la web
     }
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
