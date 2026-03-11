@@ -238,7 +238,7 @@ const PurchaseHeader: React.FC<Props> = ({
   const isEsimMinutosTitle = /esim/i.test(titleNorm) && hasMinutesWord;
   // SIM Física (multi-idioma: ES física, EN physical, FR physique, IT fisica, PT física)
   const isSimFisicaTitle = /sim\s*(f[ií]sica?|physics?|physique)/i.test(titleNorm);
-  const ESIM_RECARGA_BASE_PRICE = esimBasePrice ?? 12;
+  const ESIM_RECARGA_BASE_PRICE = esimBasePrice ?? 5;
 
   const showRechargeAmount =
     isEncryptedProvider && (isRecargaDatos || isEsimDataComboTitle);

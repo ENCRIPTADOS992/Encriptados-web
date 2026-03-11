@@ -139,8 +139,8 @@ export const getProductBySlug = async (
 };
 
 export type EsimConfig = {
-  sims_esim_price: number;
-  simtim_esim_price: number;
+  sims_esim_cost: number;
+  simtim_esim_cost: number;
 };
 
 export const getEsimConfig = async (): Promise<EsimConfig> => {
@@ -149,6 +149,6 @@ export const getEsimConfig = async (): Promise<EsimConfig> => {
     return response.data;
   } catch (error) {
     console.error("Error en getEsimConfig:", error);
-    return { sims_esim_price: 12, simtim_esim_price: 12 };
+    return { sims_esim_cost: 5, simtim_esim_cost: 5 };
   }
 };

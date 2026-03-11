@@ -159,8 +159,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
   // eSIM base price: from costs admin panel (replaces hardcoded 12 and product 449 fetch)
   const esimBasePrice = React.useMemo(() => {
-    if (!esimConfig) return 12; // default while loading
-    return esimConfig.sims_esim_price;
+    if (!esimConfig) return 5; // default while loading
+    return esimConfig.sims_esim_cost;
   }, [esimConfig]);
 
   React.useEffect(() => {

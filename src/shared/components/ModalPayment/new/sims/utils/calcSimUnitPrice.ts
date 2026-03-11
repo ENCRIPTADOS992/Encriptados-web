@@ -76,7 +76,7 @@ export function calcSimUnitPrice({
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const isEsimRecargaDatos =
       titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
-    const fixedBase = esimBasePrice ?? 12;
+    const fixedBase = esimBasePrice ?? 5;
 
     if (isEsimRecargaDatos) {
       const defaultTotal = amounts[0] ?? 0;

@@ -261,7 +261,7 @@ export default function SimFormUnified({
           const titleNorm = String((product as any)?.name ?? "").toLowerCase();
           const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
           const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
-          const rechargeBase = isEsimPlusDatos ? (esimBasePrice ?? 12) : 0;
+          const rechargeBase = isEsimPlusDatos ? (esimBasePrice ?? 5) : 0;
 
           const byAmount = productVariants.find((v) => {
             const variantPrice = Number(v?.price ?? v?.cost ?? v?.regular_price ?? v?.sale_price ?? 0);
