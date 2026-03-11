@@ -12,6 +12,7 @@ import { useToast } from "@/shared/context/ToastContext";
 import { CircleFlag } from "react-circle-flags";
 import { SIM_DEFAULT_IDS } from "@/shared/constants/simDefaultIds";
 import { RegionIcon } from "@/shared/components/RegionIcon";
+import { resolveVariantPrice } from "./sims/utils/resolveVariantPrice";
 
 type Variant = {
   id: number;
@@ -274,7 +275,7 @@ const PurchaseHeader: React.FC<Props> = ({
       return productVariants.map((v: any) => ({
         id: v.id ?? v.price ?? v.cost,
         value: Math.max(
-          Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0) -
+          resolveVariantPrice(v, !!onSale) -
           (isEsimRecargaDatosTitle || isEsimDatosTitle ? ESIM_RECARGA_BASE_PRICE : 0),
           0
         ),

@@ -2,6 +2,7 @@
 
 import type { FormType } from "../types/simFormTypes";
 import type { ModalProduct, Variant } from "../types/modalSimTypes";
+import { resolveVariantPrice, isProductOnSale } from "./resolveVariantPrice";
 
 export type DataPlan = {
   id: string | number;
@@ -62,15 +63,11 @@ export function buildDataPlans({ formType, variants, product }: Params): DataPla
     return Number.isFinite(n) ? n : 0;
   };
 
+  const onSale = isProductOnSale(product);
+
   const fromVariants = (variants ?? [])
     .map((v, i) => {
-      const rawPrice =
-        (v as any).cost ??
-        (v as any).price ??
-        (v as any).regular_price ??
-        (v as any).sale_price ??
-        0;
-      const value = toNumber(rawPrice);
+      const value = resolveVariantPrice(v, onSale);
       const gb = deriveGb(v);
 
       // Relaxed Logic: If GB could not be parsed but we have a label/name, still include it.

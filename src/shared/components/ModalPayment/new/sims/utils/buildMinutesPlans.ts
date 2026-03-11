@@ -3,6 +3,7 @@
 
 import type { FormType } from "../types/simFormTypes";
 import type { ModalProduct, Variant } from "../types/modalSimTypes";
+import { resolveVariantPrice, isProductOnSale } from "./resolveVariantPrice";
 
 export type MinutesPlan = {
   id: string | number;
@@ -15,12 +16,15 @@ type Params = {
   formType: FormType;
   variants: Variant[];
   product: ModalProduct | undefined;
+  /** Si true, ignorar sale_price y usar precio regular */
+  skipSale?: boolean;
 };
 
 export function buildMinutesPlans({
   formType,
   variants,
   product,
+  skipSale = false,
 }: Params): MinutesPlan[] {
   console.log("[buildMinutesPlans] start", {
     formType,
@@ -81,9 +85,8 @@ export function buildMinutesPlans({
   const fromVariants =
     (variants ?? [])
       .map((v, i) => {
-        // Intentar obtener el precio de múltiples fuentes
-        const rawPrice = v.cost ?? v.price ?? (v as any).regular_price ?? (v as any).sale_price ?? 0;
-        const cost = typeof rawPrice === "string" ? parseFloat(rawPrice) : Number(rawPrice);
+        const onSale = !skipSale && isProductOnSale(product);
+        const cost = resolveVariantPrice(v, onSale);
         const minutes = deriveMinutes(v, cost);
 
         // Crear label: priorizar minutes > label > name > precio formateado

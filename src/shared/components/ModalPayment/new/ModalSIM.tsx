@@ -22,6 +22,7 @@ import {
 import { buildMinutesPlans } from "./sims/utils/buildMinutesPlans";
 import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
 import { buildDataPlans } from "./sims/utils/buildDataPlans";
+import { resolveVariantPrice, isProductOnSale } from "./sims/utils/resolveVariantPrice";
 import { CODE_BY_COUNTRY_LABEL } from "@/shared/constants/countries";
 
 export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
@@ -267,13 +268,17 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   }, [filteredVariants, paramVariantId]);
 
   const minutesPlans = React.useMemo(
-    () =>
-      buildMinutesPlans({
+    () => {
+      const productIsOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+      const hasCoupon = discount > 0;
+      return buildMinutesPlans({
         formType,
         variants,
         product,
-      }),
-    [formType, variants, product]
+        skipSale: hasCoupon && productIsOnSale,
+      });
+    },
+    [formType, variants, product, discount]
   );
 
   const dataPlans = React.useMemo(
@@ -297,15 +302,12 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   });
 
   const dataAmounts = React.useMemo(() => {
-    const toNumber = (v: unknown): number => {
-      const n = typeof v === "string" ? parseFloat(v) : Number(v);
-      return Number.isFinite(n) ? n : 0;
-    };
+    const onSale = isProductOnSale(product);
     const amounts = (variants ?? [])
-      .map((v: any) => toNumber(v.price ?? v.cost ?? v.regular_price ?? v.sale_price))
+      .map((v: any) => resolveVariantPrice(v, onSale))
       .filter((n) => n > 0);
     return Array.from(new Set(amounts)).sort((a, b) => a - b);
-  }, [variants]);
+  }, [variants, product]);
 
   React.useEffect(() => {
     if (formType !== "encrypted_minutes") return;
@@ -392,8 +394,9 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
       // Si hay initialPrice, buscar la variante cuyo precio coincida
       if (initialPrice != null && initialPrice > 0) {
+        const onSale = isProductOnSale(product);
         const matchingVariant = variants.find((v: any) => {
-          const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
+          const variantPrice = resolveVariantPrice(v, onSale);
           return Math.abs(variantPrice - initialPrice) < 0.1;
         });
 
@@ -404,7 +407,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         });
 
         if (matchingVariant) {
-          const variantPrice = Number((matchingVariant as any).price ?? (matchingVariant as any).cost ?? 0);
+          const variantPrice = resolveVariantPrice(matchingVariant, onSale);
           const rechargeValue = variantPrice - base;
           console.log("[ModalSIM] ✅ Setting recharge amount:", { initialPrice, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
@@ -540,8 +543,9 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       const rechargeBase = isEsimPlusDatos ? esimBasePrice : 0;
 
       if (Number.isFinite(selectedRecharge)) {
+        const onSale = isProductOnSale(product);
         nextVariant = variants.find((v: any) => {
-          const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
+          const variantPrice = resolveVariantPrice(v, onSale);
           const rechargeValue = Math.max(variantPrice - rechargeBase, 0);
           return Math.abs(rechargeValue - selectedRecharge) < 0.01;
         });
@@ -572,7 +576,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     const rechargeBase = isEsimPlusDatos ? esimBasePrice : 0;
 
     const mappedByAmount = variants.find((v: any) => {
-      const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
+      const variantPrice = resolveVariantPrice(v, isProductOnSale(product));
       const rechargeValue = Math.max(variantPrice - rechargeBase, 0);
       return Math.abs(rechargeValue - selectedRecharge) < 0.01;
     });

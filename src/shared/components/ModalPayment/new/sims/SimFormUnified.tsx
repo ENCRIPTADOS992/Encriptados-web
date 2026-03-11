@@ -18,6 +18,7 @@ import JellyLoader from "@/shared/components/JellyLoader";
 import { SimTypeAlertSection } from "./components/SimTypeAlertSection";
 import { BuyerFieldsSection } from "./components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./components/PaymentMethodSection";
+import { resolveVariantPrice, isProductOnSale } from "./utils/resolveVariantPrice";
 
 const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
@@ -264,7 +265,7 @@ export default function SimFormUnified({
           const rechargeBase = isEsimPlusDatos ? (esimBasePrice ?? 5) : 0;
 
           const byAmount = productVariants.find((v) => {
-            const variantPrice = Number(v?.price ?? v?.cost ?? v?.regular_price ?? v?.sale_price ?? 0);
+            const variantPrice = resolveVariantPrice(v, isProductOnSale(product));
             const rechargeValue = Math.max(variantPrice - rechargeBase, 0);
             return Math.abs(rechargeValue - selectedPlanNum) < 0.01;
           });
