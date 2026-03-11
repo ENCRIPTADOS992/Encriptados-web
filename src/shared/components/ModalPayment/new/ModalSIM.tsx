@@ -789,12 +789,13 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     const sv = (selectedVariant ?? variants[0]) as any;
     if (!sv) return undefined;
 
-    // regular_price = precio original, sale_price/price = precio con descuento
-    const regularPrice = parseFloat(String(sv?.regular_price ?? "0"));
-    const salePrice = parseFloat(String(sv?.sale_price ?? sv?.price ?? "0"));
+    // API: variant.price = get_regular_price() (precio original)
+    //      variant.sale_price = get_sale_price() (precio oferta)
+    const regularPrice = parseFloat(String(sv?.price ?? "0"));
+    const salePrice = parseFloat(String(sv?.sale_price ?? "0"));
 
-    // Solo mostrar "Antes" si hay diferencia real entre regular y sale
-    if (!regularPrice || !salePrice || regularPrice <= salePrice) return undefined;
+    // Solo mostrar "Antes" si hay sale_price válido y menor que el regular
+    if (!regularPrice || !salePrice || salePrice <= 0 || regularPrice <= salePrice) return undefined;
 
     const shipping_ =
       formType === "encrypted_data" ||
