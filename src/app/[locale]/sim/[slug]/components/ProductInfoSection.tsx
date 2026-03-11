@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, Tag } from "lucide-react";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
 import DownloadApkSvg from "@/shared/svgs/DownloadApkSvg";
@@ -36,6 +36,8 @@ interface ProductInfoSectionProps {
   productImage: string;
   features: string[];
   price: string;
+  onSale?: boolean;
+  regularPrice?: string;
   onBuy: () => void;
   appStoreUrl?: string;
   googlePlayUrl?: string;
@@ -98,6 +100,8 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
   productImage,
   features,
   price,
+  onSale,
+  regularPrice,
   onBuy,
   appStoreUrl,
   googlePlayUrl,
@@ -283,7 +287,16 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
               transition={{ delay: 0.4, duration: 0.4 }}
             >
               <p className="text-sm text-gray-500 mb-1">{t.priceFrom}</p>
-              <p className="text-4xl font-bold text-gray-900 mb-6">{price}</p>
+              <p className="text-4xl font-bold text-gray-900 mb-2">{price}</p>
+              {onSale && regularPrice && (
+                <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5 mb-4">
+                  <Tag className="w-3.5 h-3.5 text-black" />
+                  <span className="text-xs text-black">
+                    Antes <span className="line-through">{regularPrice}</span>
+                  </span>
+                </span>
+              )}
+              {!onSale && <div className="mb-6" />}
 
               {/* Botones - Ocultos cuando viene de app_mobile */}
               <div className="flex flex-col sm:flex-row gap-3">

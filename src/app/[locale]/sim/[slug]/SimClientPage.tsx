@@ -309,11 +309,19 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     return null;
   }, [product, variantIdFromUrl, regionFromUrl, regionCodeFromUrl, gbFromUrl]);
 
-  // Precio efectivo: Calcular basado en variante seleccionada o producto base
+  // ¿Producto en oferta?
+  const isOnSale = useMemo(() => {
+    return product?.on_sale === true || (product as any)?.on_sale === "true";
+  }, [product]);
+
+  // Precio efectivo: usar sale_price cuando hay oferta
+  // API: variant.price = get_regular_price(), variant.sale_price = get_sale_price()
   const effectivePrice = useMemo(() => {
     if (selectedVariant) {
-      // Soportar tanto 'price' (Encrypted) como 'cost' (TIM)
       const v = selectedVariant as any;
+      if (isOnSale && v.sale_price != null && v.sale_price !== '' && Number(v.sale_price) > 0) {
+        return Number(v.sale_price);
+      }
       const vPrice = v.price ?? v.cost;
       if (vPrice !== undefined && vPrice !== null) {
         return Number(vPrice);
@@ -321,12 +329,32 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     }
 
     // Fallback al precio base del producto
+    if (isOnSale && product?.sale_price) {
+      const sp = parseFloat(String(product.sale_price));
+      if (sp > 0) return sp;
+    }
     const productPrice = typeof product?.price === "string"
       ? parseFloat(product.price)
       : product?.price;
 
     return productPrice ?? 0;
-  }, [selectedVariant, product]);
+  }, [selectedVariant, product, isOnSale]);
+
+  // Precio regular (sin oferta) para mostrar tachado
+  const regularPrice = useMemo(() => {
+    if (!isOnSale) return undefined;
+    if (selectedVariant) {
+      const v = selectedVariant as any;
+      const rp = v.price ?? v.cost;
+      if (rp != null) {
+        const n = Number(rp);
+        if (n > effectivePrice) return n;
+      }
+    }
+    const pp = typeof product?.price === "string" ? parseFloat(product.price) : Number(product?.price);
+    if (pp > effectivePrice) return pp;
+    return undefined;
+  }, [isOnSale, selectedVariant, product, effectivePrice]);
 
   // Imagen del producto: Puede variar según la variante seleccionada
   const productImage = useMemo(() => {
@@ -387,7 +415,9 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     ctaLabel: t("CardSim.buyNow") || "Comprar ahora",
     onBuy: () => handleBuy(),
     onChat: () => window.open("https://t.me/Encriptados", "_blank"),
-  }), [product, config, effectivePrice, t, handleBuy]);
+    onSale: isOnSale,
+    regularPrice: regularPrice != null ? formatPrice(regularPrice) : undefined,
+  }), [product, config, effectivePrice, t, handleBuy, isOnSale, regularPrice]);
 
   // Loading state
   if (isLoading) {
@@ -446,6 +476,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             productImage={productImage}
             features={features}
             price={formatPrice(effectivePrice)}
+            onSale={isOnSale}
+            regularPrice={regularPrice != null ? formatPrice(regularPrice) : undefined}
             onBuy={() => handleBuy()}
             appStoreUrl="https://apps.apple.com/app/encriptados"
             googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
@@ -466,6 +498,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           heroImage={(product as any)?.heroBanners?.desktop || config?.heroBanners?.desktop}
           features={features}
           price={formatPrice(effectivePrice)}
+          onSale={isOnSale}
+          regularPrice={regularPrice != null ? formatPrice(regularPrice) : undefined}
           onBuy={() => handleBuy()}
           appStoreUrl="https://apps.apple.com/app/encriptados"
           googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
