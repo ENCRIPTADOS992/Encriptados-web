@@ -109,7 +109,6 @@ export function buildMinutesPlans({
 
         console.log("[buildMinutesPlans] fromVariants item", {
           rawVariant: v,
-          rawPrice,
           cost,
           plan,
         });
