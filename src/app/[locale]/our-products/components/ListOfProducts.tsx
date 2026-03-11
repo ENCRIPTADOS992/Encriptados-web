@@ -30,6 +30,7 @@ const serviceMap: Record<string, string> = {
   datarecharge: "Recarga Datos",
   minuterecharge: "Recarga Minutos",
   eSimData: "eSIM + Recarga Datos",
+  eSimMinutes: "eSIM + Minutos",
   imsi: "IMSI",
   physicsimtim: "SIM Física",
   esimplusdatatim: "eSIM + Datos",
@@ -253,6 +254,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         /^(minutos?\s+)?(recarga|recharge|ricarica)/i,
         /^(recharge|ricarica)\s+minutes?/i,
         /^recarga\s+minut/i
+      ],
+      eSimMinutes: [
+        /^esim\s*\+?\s*(recarga\s+)?minut(os|es|i|s)?/i,
+        /^esim.*\+.*recarga.*minut/i,
+        /^esim.*recarga.*minut/i,
+        /^esim.*\+.*minut/i
       ],
     };
 

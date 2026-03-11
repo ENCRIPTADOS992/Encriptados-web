@@ -113,6 +113,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       initialRegionCode: badges?.country?.code,
       flagUrl: badges?.country?.flagUrl,
       iconUrl: iconUrl,
+      mode: Number(filters.selectedOption) === 40 ? "sim" : undefined,
     });
   };
 

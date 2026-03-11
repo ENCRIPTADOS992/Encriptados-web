@@ -150,19 +150,19 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   })();
   const isEsimCombo = isEsimDataCombo || isEsimMinutesCombo;
 
-  // Fetch eSIM price from costs admin panel
-  const { data: esimConfig } = useQuery({
+  // Fetch eSIM price from costs admin panel (fetch eagerly, small cached call)
+  const { data: esimConfig, isLoading: esimConfigLoading } = useQuery({
     queryKey: ["esimConfig"],
     queryFn: () => getEsimConfig(),
     staleTime: 5 * 60 * 1000,
-    enabled: isEsimCombo,
   });
 
   // eSIM base price: from costs admin panel (replaces hardcoded 12 and product 449 fetch)
   const esimBasePrice = React.useMemo(() => {
-    if (!esimConfig) return 5; // default while loading
+    if (!esimConfig) return 5;
+    if (isEsimMinutesCombo) return esimConfig.sims_esim_cost_minutos ?? esimConfig.sims_esim_cost;
     return esimConfig.sims_esim_cost;
-  }, [esimConfig]);
+  }, [esimConfig, isEsimMinutesCombo]);
 
   React.useEffect(() => {
     if (isEsimCombo) {
@@ -276,9 +276,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         variants,
         product,
         skipSale: hasCoupon && productIsOnSale,
+        esimBasePrice,
       });
     },
-    [formType, variants, product, discount]
+    [formType, variants, product, discount, esimBasePrice]
   );
 
   const dataPlans = React.useMemo(

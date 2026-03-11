@@ -28,8 +28,8 @@ export const QueryClientProvider: React.FC<React.PropsWithChildren> = ({
   const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
-        gcTime: 0,
-        staleTime: 0,
+        gcTime: 5 * 60 * 1000,
+        staleTime: 30 * 1000,
         refetchOnWindowFocus: false,
         refetchOnMount: true,
       },

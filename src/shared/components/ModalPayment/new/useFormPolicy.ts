@@ -30,10 +30,9 @@ export function useFormPolicy(): UseFormPolicyResult {
   const productid = (params as any)?.productid as string | undefined;
 
   const { data: product, isLoading } = useQuery({
-    queryKey: ["productForFormPolicy", productid],
+    queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
-    staleTime: 1000 * 60 * 5,
   });
 
   const result = useMemo(() => {

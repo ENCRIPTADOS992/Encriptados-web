@@ -108,6 +108,7 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
             variants,
             provider: provider,
             typeProduct: typeProduct,
+            mode: "sim",
         });
     };
 

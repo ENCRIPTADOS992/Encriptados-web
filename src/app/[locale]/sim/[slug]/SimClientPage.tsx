@@ -389,6 +389,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       productid: productId || String(product?.id || config?.productId),
       languageCode: locale,
       selectedOption: 40,
+      mode: "sim",
       initialPrice: priceOverride ?? effectivePrice,
       initialGb: gbFromUrl || undefined,
       initialRegion: regionFromUrl || undefined,

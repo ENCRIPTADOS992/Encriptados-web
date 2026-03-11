@@ -30,7 +30,7 @@ type UseModalPaymentControllerResult = {
 };
 
 export function useModalPaymentController(): UseModalPaymentControllerResult {
-  const { isModalOpen, closeModal, params, openModal } = useModalPayment();
+  const { isModalOpen, closeModal, params, openModal, setMode } = useModalPayment();
   const search = useSearchParams();
   const pathname = usePathname();
 
@@ -45,7 +45,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   const productid = (params as any)?.productid as string | undefined;
 
   const { data: product } = useQuery({
-    queryKey: ["productById-for-mode", productid],
+    queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
   });
@@ -201,7 +201,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     if (!product || hasSetInitialMode.current) return;
 
     if (supportOnly) {
-      if (mode !== "new_user") openModal({ ...(params || {}), mode: "new_user" });
+      if (mode !== "new_user") setMode("new_user");
       hasSetInitialMode.current = true;
       return;
     }
@@ -210,15 +210,15 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
 
     // Only auto-switch mode on initial load, not on user interaction
     if (wantSimMode && mode !== "sim") {
-      openModal({ ...(params || {}), mode: "sim" });
+      setMode("sim");
       hasSetInitialMode.current = true;
     } else if (!wantSimMode && mode === "sim") {
-      openModal({ ...(params || {}), mode: "roning_code" });
+      setMode("roning_code");
       hasSetInitialMode.current = true;
     } else {
       hasSetInitialMode.current = true;
     }
-  }, [isModalOpen, product, kind, mode, openModal, params, supportOnly]);
+  }, [isModalOpen, product, kind, mode, setMode, supportOnly]);
 
   const panelClassName = getModalPanelClassName({ mode, kind });
   const contentClassName = getModalContentClassName({ mode, kind });

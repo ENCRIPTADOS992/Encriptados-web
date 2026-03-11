@@ -66,7 +66,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
             // Extraer precio numérico del priceRange
             const match = priceRange.match(/[\d.]+/);
             const numericPrice = match ? parseFloat(match[0]) : undefined;
-            openModal({ productid: id.toString(), languageCode, initialPrice: numericPrice, iconUrl });
+            openModal({ productid: id.toString(), languageCode, initialPrice: numericPrice, iconUrl, mode: "sim" });
           }}
         >
           {t("buyNow")}

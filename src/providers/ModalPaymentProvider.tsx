@@ -55,6 +55,7 @@ interface ModalPaymentContextProps {
   isModalOpen: boolean;
   openModal: (params?: Partial<ModalPaymentParams>) => void;
   closeModal: () => void;
+  setMode: (mode: Mode) => void;
   params: ModalPaymentParams;
 }
 
@@ -103,8 +104,15 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
     setParams({});
   };
 
+  const setMode = (mode: Mode) => {
+    setParams(prev => {
+      if (prev.mode === mode) return prev;
+      return { ...prev, mode };
+    });
+  };
+
   return (
-    <ModalPaymentContext.Provider value={{ isModalOpen, openModal, closeModal, params, providerId } as any}>
+    <ModalPaymentContext.Provider value={{ isModalOpen, openModal, closeModal, setMode, params, providerId } as any}>
       {children}
     </ModalPaymentContext.Provider>
   );

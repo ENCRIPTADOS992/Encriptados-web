@@ -102,6 +102,7 @@ export default function FilterProductsBar({
             { label: "Recarga Datos", value: "datarecharge" },
             { label: "Recarga Minutos", value: "minuterecharge" },
             { label: "eSIM + Datos", value: "eSimData" },
+            { label: "eSIM + Minutos", value: "eSimMinutes" },
           ]}
           onChangeExternal={(value) => {
             const normalized = Array.isArray(value)

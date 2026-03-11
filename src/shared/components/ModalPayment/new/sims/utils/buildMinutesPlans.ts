@@ -18,6 +18,8 @@ type Params = {
   product: ModalProduct | undefined;
   /** Si true, ignorar sale_price y usar precio regular */
   skipSale?: boolean;
+  /** Costo base de la eSIM (para derivar monto de recarga de minutos) */
+  esimBasePrice?: number;
 };
 
 export function buildMinutesPlans({
@@ -25,6 +27,7 @@ export function buildMinutesPlans({
   variants,
   product,
   skipSale = false,
+  esimBasePrice = 0,
 }: Params): MinutesPlan[] {
   console.log("[buildMinutesPlans] start", {
     formType,
@@ -59,6 +62,18 @@ export function buildMinutesPlans({
     const fromField = parseNum((v as any).minutes);
     if (fromField && fromField > 0) return fromField;
 
+    // Buscar en atributos de la variante (ej: {name: "minutos", option: "25"})
+    const attrs = (v as any).attributes;
+    if (Array.isArray(attrs)) {
+      const minuteAttr = attrs.find((a: any) =>
+        /^minutos?$/i.test(a.name || "")
+      );
+      if (minuteAttr) {
+        const fromAttr = parseNum(minuteAttr.option);
+        if (fromAttr && fromAttr > 0) return fromAttr;
+      }
+    }
+
     const fromLabel = parseMinutesFromText((v as any).label) ?? parseMinutesFromText((v as any).name);
     if (fromLabel && fromLabel > 0) return fromLabel;
 
@@ -67,17 +82,6 @@ export function buildMinutesPlans({
       parseMinutesFromText((v as any).tag) ??
       parseMinutesFromText((v as any).tag_name);
     if (fromTags && fromTags > 0) return fromTags;
-
-    const minutePrice = parseNum((v as any).minute_price);
-    if (minutePrice && minutePrice > 0 && cost > 0) {
-      const calc = Math.round(cost / minutePrice);
-      if (calc > 0) return calc;
-    }
-
-    if (cost > 0 && Number.isFinite(cost) && cost % 2 === 0) {
-      const calc = cost / 2;
-      if (calc > 0) return calc;
-    }
 
     return undefined;
   };
@@ -89,15 +93,22 @@ export function buildMinutesPlans({
         const cost = resolveVariantPrice(v, onSale);
         const minutes = deriveMinutes(v, cost);
 
-        // Crear label: priorizar minutes > label > name > precio formateado
+        // Crear label: priorizar minutes derivados > monto recarga (precio - eSIM) > label > name > precio
         let label = "Plan";
-        if (v.label && String(v.label).trim()) {
-          label = String(v.label);
-        } else if (v.name && String(v.name).trim()) {
-          label = String(v.name);
-        } else if (!Number.isNaN(cost) && cost > 0) {
-          // Si no hay label, usar el precio como label
-          label = `${cost} USD`;
+        if (typeof minutes === "number" && minutes > 0) {
+          label = `${minutes} Minutos`;
+        } else {
+          // Mostrar monto de recarga de minutos (precio total - costo eSIM)
+          const rechargeAmount = Math.max(cost - esimBasePrice, 0);
+          if (rechargeAmount > 0) {
+            label = `${rechargeAmount} USD`;
+          } else if (v.label && String(v.label).trim()) {
+            label = String(v.label);
+          } else if (v.name && String(v.name).trim()) {
+            label = String(v.name);
+          } else if (!Number.isNaN(cost) && cost > 0) {
+            label = `${cost} USD`;
+          }
         }
 
         const plan: MinutesPlan = {

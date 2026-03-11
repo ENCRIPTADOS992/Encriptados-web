@@ -85,6 +85,7 @@ const FixedSimProducts: React.FC = () => {
       productid: id.toString(),
       languageCode: locale,
       initialPrice,
+      mode: "sim",
       // Pasar variantes completas (incluyendo scope, image, etc) para que el modal funcione correctamente
       variants: variants
     });
