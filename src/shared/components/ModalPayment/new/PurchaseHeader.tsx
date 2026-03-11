@@ -81,6 +81,8 @@ type Props = {
   originalTotal?: number;
   /** Called when user removes/closes the coupon — should reset discount to 0 */
   onRemoveCoupon?: () => void;
+  /** Precio base eSIM cargado desde la API de costos */
+  esimBasePrice?: number;
 };
 
 const PurchaseHeader: React.FC<Props> = ({
@@ -115,6 +117,7 @@ const PurchaseHeader: React.FC<Props> = ({
   onSale,
   originalTotal,
   onRemoveCoupon,
+  esimBasePrice,
 }) => {
   const locale = useLocale();
   const t = useTranslations("paymentModal");
@@ -220,6 +223,7 @@ const PurchaseHeader: React.FC<Props> = ({
   // Multi-idioma: ES datos, EN data, FR données, IT dati, PT dados
   const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
   const hasRechargeWord = /(recarga|recharge|ricarica)/i.test(titleNorm);
+  const hasMinutesWord = /(minutos?|minutes?|minuti)/i.test(titleNorm);
 
   const isRecargaDatos = hasRechargeWord && hasDataWord;
 
@@ -228,11 +232,13 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const isEsimRecargaDatosTitle = /esim/i.test(titleNorm) && hasRechargeWord && hasDataWord;
   const isEsimDatosTitle = /esim/i.test(titleNorm) && hasDataWord;
-  // eSIM solo (sin datos ni recarga)
-  const isEsimOnlyTitle = titleNorm === "esim" || (/esim/i.test(titleNorm) && !hasDataWord && !hasRechargeWord);
+  // eSIM solo (sin datos, recarga ni minutos)
+  const isEsimOnlyTitle = titleNorm === "esim" || (/esim/i.test(titleNorm) && !hasDataWord && !hasRechargeWord && !hasMinutesWord);
+  // eSIM + Minutos
+  const isEsimMinutosTitle = /esim/i.test(titleNorm) && hasMinutesWord;
   // SIM Física (multi-idioma: ES física, EN physical, FR physique, IT fisica, PT física)
   const isSimFisicaTitle = /sim\s*(f[ií]sica?|physics?|physique)/i.test(titleNorm);
-  const ESIM_RECARGA_BASE_PRICE = 12;
+  const ESIM_RECARGA_BASE_PRICE = esimBasePrice ?? 12;
 
   const showRechargeAmount =
     isEncryptedProvider && (isRecargaDatos || isEsimDataComboTitle);
@@ -510,8 +516,8 @@ const PurchaseHeader: React.FC<Props> = ({
             </h3>
           </div>
 
-          {/* Fila: Precio de eSIM (para eSIM solo, eSIM + Datos, eSIM + Recarga Datos) */}
-          {(isEsimRecargaDatosTitle || isEsimDatosTitle || isEsimOnlyTitle) && !isSimTim && (
+          {/* Fila: Precio de eSIM (para eSIM solo, eSIM + Datos, eSIM + Recarga Datos, eSIM + Minutos) */}
+          {(isEsimRecargaDatosTitle || isEsimDatosTitle || isEsimOnlyTitle || isEsimMinutosTitle) && !isSimTim && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("esimPrice", { defaultValue: "Precio de eSIM" })}</span>
               <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">

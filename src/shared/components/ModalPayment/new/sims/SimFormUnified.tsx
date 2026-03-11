@@ -34,6 +34,8 @@ type SimFormUnifiedProps = {
   sourceUrl?: string;
   onSuccess?: (data: SuccessPaymentData) => void;
   loading?: boolean;
+  /** Precio base eSIM cargado desde la API de costos */
+  esimBasePrice?: number;
 };
 
 type Method = "card" | "crypto";
@@ -52,6 +54,7 @@ export default function SimFormUnified({
   sourceUrl = undefined,
   onSuccess,
   loading = false,
+  esimBasePrice,
 }: SimFormUnifiedProps) {
   const {
     register,
@@ -258,7 +261,7 @@ export default function SimFormUnified({
           const titleNorm = String((product as any)?.name ?? "").toLowerCase();
           const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
           const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
-          const rechargeBase = isEsimPlusDatos ? 12 : 0;
+          const rechargeBase = isEsimPlusDatos ? (esimBasePrice ?? 12) : 0;
 
           const byAmount = productVariants.find((v) => {
             const variantPrice = Number(v?.price ?? v?.cost ?? v?.regular_price ?? v?.sale_price ?? 0);

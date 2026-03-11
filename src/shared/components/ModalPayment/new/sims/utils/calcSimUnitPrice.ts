@@ -14,6 +14,8 @@ type Params = {
   product: ModalProduct | undefined;
   /** Cuando hay cupón activo, ignorar sale_price y usar price regular */
   skipSale?: boolean;
+  /** Precio base eSIM cargado desde la API de costos */
+  esimBasePrice?: number;
 };
 
 export function calcSimUnitPrice({
@@ -24,6 +26,7 @@ export function calcSimUnitPrice({
   selectedVariant,
   product,
   skipSale = false,
+  esimBasePrice,
 }: Params): number {
   const toNumber = (v: unknown): number => {
     const n = typeof v === "string" ? parseFloat(v) : Number(v);
@@ -73,7 +76,7 @@ export function calcSimUnitPrice({
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const isEsimRecargaDatos =
       titleNorm.includes("esim + datos") || titleNorm.includes("esim + recarga datos");
-    const fixedBase = 12;
+    const fixedBase = esimBasePrice ?? 12;
 
     if (isEsimRecargaDatos) {
       const defaultTotal = amounts[0] ?? 0;

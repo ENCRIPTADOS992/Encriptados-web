@@ -137,3 +137,18 @@ export const getProductBySlug = async (
     return null;
   }
 };
+
+export type EsimConfig = {
+  sims_esim_price: number;
+  simtim_esim_price: number;
+};
+
+export const getEsimConfig = async (): Promise<EsimConfig> => {
+  try {
+    const response = await api.get<EsimConfig>("/encriptados/v1/costs/esim-config");
+    return response.data;
+  } catch (error) {
+    console.error("Error en getEsimConfig:", error);
+    return { sims_esim_price: 12, simtim_esim_price: 12 };
+  }
+};

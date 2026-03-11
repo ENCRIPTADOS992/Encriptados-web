@@ -4,7 +4,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { getProductById, getAllProducts } from "@/features/products/services";
+import { getProductById, getAllProducts, getEsimConfig } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import type { SuccessDisplayData } from "../ModalPaymentController";
@@ -143,31 +143,31 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   );
 
   const isEsimDataCombo = formType === "encrypted_esimData";
+  const isEsimMinutesCombo = formType === "encrypted_minutes" && (() => {
+    const nameNorm = String((product as any)?.name ?? "").toLowerCase();
+    return /esim/i.test(nameNorm) && /(minutos?|minutes?|minuti)/i.test(nameNorm);
+  })();
+  const isEsimCombo = isEsimDataCombo || isEsimMinutesCombo;
 
-  // Fetch standalone eSIM product (id 449) to get its real price for breakdown
-  const ESIM_STANDALONE_ID = "449";
-  const { data: esimProduct } = useQuery<any>({
-    queryKey: ["productById", ESIM_STANDALONE_ID],
-    queryFn: () => getProductById(ESIM_STANDALONE_ID),
-    enabled: isEsimDataCombo,
+  // Fetch eSIM price from costs admin panel
+  const { data: esimConfig } = useQuery({
+    queryKey: ["esimConfig"],
+    queryFn: () => getEsimConfig(),
+    staleTime: 5 * 60 * 1000,
+    enabled: isEsimCombo,
   });
 
-  // eSIM price: use sale_price when on_sale, otherwise regular price
-  const esimStandalonePrice = React.useMemo(() => {
-    if (!esimProduct) return undefined;
-    const onSale = esimProduct.on_sale === true || esimProduct.on_sale === "true";
-    const salePrice = parseFloat(esimProduct.sale_price);
-    const regularPrice = parseFloat(esimProduct.price);
-    if (onSale && !isNaN(salePrice) && salePrice > 0) return salePrice;
-    if (!isNaN(regularPrice) && regularPrice > 0) return regularPrice;
-    return undefined;
-  }, [esimProduct]);
+  // eSIM base price: from costs admin panel (replaces hardcoded 12 and product 449 fetch)
+  const esimBasePrice = React.useMemo(() => {
+    if (!esimConfig) return 12; // default while loading
+    return esimConfig.sims_esim_price;
+  }, [esimConfig]);
 
   React.useEffect(() => {
-    if (isEsimDataCombo) {
+    if (isEsimCombo) {
       setHideSimField(true);
     }
-  }, [isEsimDataCombo]);
+  }, [isEsimCombo]);
 
   const [selectedPlanId, setSelectedPlanId] = React.useState<
     string | number | null
@@ -353,8 +353,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     const isRecargaDatos =
       /(recarga|recharge|ricarica)/i.test(titleNorm) && hasDataWord && !isEsimPlusDatos;
 
-    // Base: 12 para eSIM + Datos, 0 para Recarga Datos (sin eSIM)
-    const base = isEsimPlusDatos ? 12 : 0;
+    // Base: precio eSIM desde costos para eSIM + Datos, 0 para Recarga Datos (sin eSIM)
+    const base = isEsimPlusDatos ? esimBasePrice : 0;
 
     // Necesitamos variants para calcular
     if (!variants.length) return;
@@ -537,7 +537,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       const titleNorm = String((product as any)?.name ?? "").toLowerCase();
       const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
       const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
-      const rechargeBase = isEsimPlusDatos ? 12 : 0;
+      const rechargeBase = isEsimPlusDatos ? esimBasePrice : 0;
 
       if (Number.isFinite(selectedRecharge)) {
         nextVariant = variants.find((v: any) => {
@@ -569,7 +569,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     const hasDataWord = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
     const isEsimPlusDatos = /esim/i.test(titleNorm) && hasDataWord;
-    const rechargeBase = isEsimPlusDatos ? 12 : 0;
+    const rechargeBase = isEsimPlusDatos ? esimBasePrice : 0;
 
     const mappedByAmount = variants.find((v: any) => {
       const variantPrice = Number(v.price ?? v.cost ?? v.regular_price ?? v.sale_price ?? 0);
@@ -580,7 +580,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     if (mappedByAmount && selectedVariant?.id !== mappedByAmount.id) {
       setSelectedVariant(mappedByAmount);
     }
-  }, [selectedPlanId, variants, product, formType, selectedVariant]);
+  }, [selectedPlanId, variants, product, formType, selectedVariant, esimBasePrice]);
 
   const unitPrice = React.useMemo(
     () => {
@@ -636,6 +636,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
           selectedVariant,
           product,
           skipSale,
+          esimBasePrice,
         });
       }
 
@@ -654,9 +655,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         selectedVariant,
         product,
         skipSale,
+        esimBasePrice,
       });
     },
-    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan, discount]
+    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan, discount, esimBasePrice]
   );
 
   const onApplyCoupon = async () => {
@@ -739,9 +741,16 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       /esim/i.test(titleNorm) &&
       /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
 
-    // Use the real eSIM price from the API endpoint (product 449)
-    const esimBase = isEsimPlusDatos ? (esimStandalonePrice ?? undefined) : undefined;
-    const rechargeAmt = isEsimPlusDatos && esimBase != null
+    const isEsimPlusMinutos =
+      formType === "encrypted_minutes" &&
+      /esim/i.test(titleNorm) &&
+      /(minutos?|minutes?|minuti)/i.test(titleNorm);
+
+    const isEsimComboSuccess = isEsimPlusDatos || isEsimPlusMinutos;
+
+    // Use the dynamic eSIM price from the costs API
+    const esimBase = isEsimComboSuccess ? esimBasePrice : undefined;
+    const rechargeAmt = isEsimComboSuccess && esimBase != null
       ? Math.max(unitPrice - esimBase, 0)
       : undefined;
 
@@ -760,7 +769,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         rechargeAmount: rechargeAmt,
       },
     });
-  }, [onPaymentSuccess, formType, enrichedProduct, unitPrice, quantity, esimStandalonePrice]);
+  }, [onPaymentSuccess, formType, enrichedProduct, unitPrice, quantity, esimBasePrice]);
 
   // Lógica de oferta: calcular total original para mostrar "Antes" en el tag
   // No mostrar tag de oferta si hay cupón activo (no dos descuentos a la vez)
@@ -821,11 +830,12 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       onChangePlan={handlePlanChange}
       showEsimAddon={
         formType === "encrypted_data" ||
-        (formType === "encrypted_minutes" && !isEsimDataCombo)
+        (formType === "encrypted_minutes" && !isEsimDataCombo && !isEsimMinutesCombo)
       }
       esimAddonPrice={7.5}
       esimAddonLabel="Lleva E-SIM por 7.50 USD"
       onChangeEsimAddon={(checked) => setHideSimField(checked)}
+      esimBasePrice={esimBasePrice}
       sourceUrl={params.sourceUrl}
       gb={dataPlans.find((p) => String(p.id) === String(selectedPlanId))?.label || initialGb}
       region={initialRegion}
@@ -858,11 +868,12 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         unitPrice={unitPrice}
         quantity={quantity}
         discount={discount}
-        hideSimField={hideSimField || isEsimDataCombo}
+        hideSimField={hideSimField || isEsimCombo}
         selectedPlanId={selectedPlanId}
         selectedVariantId={selectedVariant?.id ?? null}
         sourceUrl={params.sourceUrl}
         onSuccess={handlePaymentSuccess}
+        esimBasePrice={esimBasePrice}
       />
     </PurchaseScaffold >
   );

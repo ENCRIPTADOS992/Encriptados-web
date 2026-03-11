@@ -65,6 +65,16 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
     return "encrypted_esimData";
   }
 
+  // Override: eSIM + Minutos (multi-idioma)
+  const isEsimMinutosName = nameRaw.includes("esim") && (
+    nameRaw.includes("minutos") || nameRaw.includes("minutes") ||
+    nameRaw.includes("minuti")
+  );
+  if (family === "encrypted" && isEsimMinutosName) {
+    console.log("[resolveSimFormType] override => encrypted_minutes por nombre:", nameRaw);
+    return "encrypted_minutes";
+  }
+
   // Casos especiales de config_sim para encrypted
   if (family === "encrypted" && cfgType) {
     if (cfgType === "data") return "encrypted_data";
