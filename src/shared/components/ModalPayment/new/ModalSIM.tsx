@@ -785,14 +785,16 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   const originalTotal = React.useMemo(() => {
     if (!isOnSale) return undefined;
 
-    // Para productos con variantes, usar regular_price de la variante seleccionada
-    // En WooCommerce: variant.price = precio activo (sale), variant.regular_price = precio original
-    const sv = selectedVariant as any;
-    const regularPrice = sv?.regular_price
-      ? parseFloat(String(sv.regular_price))
-      : parseFloat(String((product as any)?.regular_price ?? product?.price ?? "0"));
+    // Usar la variante seleccionada o la primera disponible
+    const sv = (selectedVariant ?? variants[0]) as any;
+    if (!sv) return undefined;
 
-    if (!regularPrice || regularPrice <= unitPrice) return undefined;
+    // regular_price = precio original, sale_price/price = precio con descuento
+    const regularPrice = parseFloat(String(sv?.regular_price ?? "0"));
+    const salePrice = parseFloat(String(sv?.sale_price ?? sv?.price ?? "0"));
+
+    // Solo mostrar "Antes" si hay diferencia real entre regular y sale
+    if (!regularPrice || !salePrice || regularPrice <= salePrice) return undefined;
 
     const shipping_ =
       formType === "encrypted_data" ||
@@ -805,7 +807,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         ? 0
         : 75;
     return regularPrice * quantity + shipping_;
-  }, [isOnSale, product, selectedVariant, unitPrice, quantity, formType]);
+  }, [isOnSale, selectedVariant, variants, quantity, formType]);
 
   return (
     <PurchaseScaffold
