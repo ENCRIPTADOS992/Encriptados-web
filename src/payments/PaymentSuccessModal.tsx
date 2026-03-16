@@ -175,28 +175,44 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               </div>
             )}
 
-            {/* Details label */}
-            <p className="mt-4 mb-2 text-center text-xs font-medium text-[#6B7280]">
-              {t("purchaseDetails")}
-            </p>
-
-            {/* Details */}
-            <div className="rounded-xl border border-[#EEE] bg-white text-sm divide-y divide-[#EEE]">
-              {/* Row 1: Product name + qty/period (non-physical) */}
-              {!isPhysicalSim && (
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-[#333]">
-                    {product.name} ({qty})
-                  </span>
-                  <span className="font-semibold text-[#101010]">
-                    {product.licensePeriod
-                      ? product.licensePeriod
-                      : hasEsimBreakdown
-                        ? "-"
-                        : formatUsd(subtotal)}
-                  </span>
+            {/* Shipping detail — Physical SIM */}
+            {isPhysicalSim && (
+              <>
+                <p className="mt-4 mb-2 text-center text-xs font-medium text-[#6B7280]">
+                  {t("shippingDetail")}
+                </p>
+                <div className="rounded-xl bg-[#EDEDED] px-4 py-3 text-sm">
+                  <div className="flex items-center justify-between py-1">
+                    <span className="font-medium text-[#333]">{t("shippedBy")}:</span>
+                    <span className="font-bold text-[#101010]">DHL</span>
+                  </div>
                 </div>
-              )}
+              </>
+            )}
+
+            {/* Details label — non-physical */}
+            {!isPhysicalSim && (
+              <p className="mt-4 mb-2 text-center text-xs font-medium text-[#6B7280]">
+                {t("purchaseDetails")}
+              </p>
+            )}
+
+            {/* Details — non-physical */}
+            {!isPhysicalSim && (
+            <div className="rounded-xl border border-[#EEE] bg-white text-sm divide-y divide-[#EEE]">
+              {/* Row 1: Product name + qty/period */}
+              <div className="flex items-center justify-between px-4 py-3">
+                <span className="text-[#333]">
+                  {product.name} ({qty})
+                </span>
+                <span className="font-semibold text-[#101010]">
+                  {product.licensePeriod
+                    ? product.licensePeriod
+                    : hasEsimBreakdown
+                      ? "-"
+                      : formatUsd(subtotal)}
+                </span>
+              </div>
 
               {/* Row 2: OS type (SecureCrypt) */}
               {product.osType ? (
@@ -256,9 +272,10 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 <span className="font-bold text-[#101010]">{formatUsd(total)}</span>
               </div>
             </div>
+            )}
 
-            {/* Message — only for physical products (routers, SIMs, etc.) */}
-            {product.brandKey !== "app" && product.brandKey !== "system" && (
+            {/* Message — only for non-physical products (apps, systems) */}
+            {product.brandKey !== "app" && product.brandKey !== "system" && !isPhysicalSim && (
               <p className="mt-5 text-center text-xs text-[#555] leading-relaxed">
                 {t("orderDispatchMsg1")}
                 <br />

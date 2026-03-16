@@ -2697,7 +2697,9 @@
     "operatingSystem": "Sistema",
     "discount": "Descuento",
     "productLabel": "Producto",
-    "estimatedDelivery": "Fecha de entrega estimada"
+    "estimatedDelivery": "Fecha de entrega estimada",
+    "shippingDetail": "Detalle de envío",
+    "shippedBy": "Enviado por"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",

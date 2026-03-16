@@ -3237,7 +3237,9 @@
     "operatingSystem": "System",
     "discount": "Discount",
     "productLabel": "Product",
-    "estimatedDelivery": "Estimated delivery date"
+    "estimatedDelivery": "Estimated delivery date",
+    "shippingDetail": "Shipping details",
+    "shippedBy": "Shipped by"
   },
   "TestingProducts": {
     "badge": "Our products",
