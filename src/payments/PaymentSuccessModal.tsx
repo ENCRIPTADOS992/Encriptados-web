@@ -37,6 +37,8 @@ export type ProductSuccessInfo = {
   licensePeriod?: string;
   /** Sistema operativo seleccionado (Android/iOS) — solo SecureCrypt */
   osType?: "android" | "ios";
+  /** Fecha de entrega estimada (solo SIM Física) */
+  estimatedDelivery?: string;
 };
 
 type Props = {
