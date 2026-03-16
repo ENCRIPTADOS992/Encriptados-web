@@ -177,26 +177,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               </div>
             )}
 
-            {/* Shipping detail — Physical SIM */}
-            {isPhysicalSim && (
-              <>
-                <p className="mt-4 mb-2 text-center text-xs font-medium text-[#6B7280]">
-                  {t("shippingDetail")}
-                </p>
-                <div className="rounded-xl bg-[#EDEDED] px-4 py-3 text-sm">
-                  <div className="flex items-center justify-between py-1">
-                    <span className="font-medium text-[#333]">{t("shippedBy")}:</span>
-                    <span className="font-bold text-[#101010]">DHL</span>
-                  </div>
-                  {product.trackingNumber && (
-                    <div className="flex items-center justify-between py-1">
-                      <span className="font-medium text-[#333]">{t("trackingNumber")}:</span>
-                      <span className="font-bold text-[#101010]">{product.trackingNumber}</span>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
+
 
             {/* Details label — non-physical */}
             {!isPhysicalSim && (
