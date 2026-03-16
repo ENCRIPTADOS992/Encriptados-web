@@ -3239,7 +3239,8 @@
     "productLabel": "Product",
     "estimatedDelivery": "Estimated delivery date",
     "shippingDetail": "Shipping details",
-    "shippedBy": "Shipped by"
+    "shippedBy": "Shipped by",
+    "trackingNumber": "Tracking number"
   },
   "TestingProducts": {
     "badge": "Our products",

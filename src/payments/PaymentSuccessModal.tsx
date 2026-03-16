@@ -39,6 +39,8 @@ export type ProductSuccessInfo = {
   osType?: "android" | "ios";
   /** Fecha de entrega estimada (solo SIM Física) */
   estimatedDelivery?: string;
+  /** Número de guía / tracking number */
+  trackingNumber?: string;
 };
 
 type Props = {
@@ -186,6 +188,12 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                     <span className="font-medium text-[#333]">{t("shippedBy")}:</span>
                     <span className="font-bold text-[#101010]">DHL</span>
                   </div>
+                  {product.trackingNumber && (
+                    <div className="flex items-center justify-between py-1">
+                      <span className="font-medium text-[#333]">{t("trackingNumber")}:</span>
+                      <span className="font-bold text-[#101010]">{product.trackingNumber}</span>
+                    </div>
+                  )}
                 </div>
               </>
             )}

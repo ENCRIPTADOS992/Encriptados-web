@@ -2583,7 +2583,8 @@
     "productLabel": "Produto",
     "estimatedDelivery": "Data de entrega estimada",
     "shippingDetail": "Detalhe do envio",
-    "shippedBy": "Enviado por"
+    "shippedBy": "Enviado por",
+    "trackingNumber": "Número de rastreio"
   },
   "TestingProducts": {
     "badge": "Our products",

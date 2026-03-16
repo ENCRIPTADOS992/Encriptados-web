@@ -2699,7 +2699,8 @@
     "productLabel": "Producto",
     "estimatedDelivery": "Fecha de entrega estimada",
     "shippingDetail": "Detalle de envío",
-    "shippedBy": "Enviado por"
+    "shippedBy": "Enviado por",
+    "trackingNumber": "Número de guía"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",
