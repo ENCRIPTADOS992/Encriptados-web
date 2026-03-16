@@ -772,6 +772,13 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         discount,
         esimPrice: esimBase,
         rechargeAmount: rechargeAmt,
+        estimatedDelivery: isDigital
+          ? undefined
+          : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "2-digit",
+            }),
       },
     });
   }, [onPaymentSuccess, formType, enrichedProduct, unitPrice, quantity, esimBasePrice]);

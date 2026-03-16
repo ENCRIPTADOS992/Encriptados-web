@@ -37,6 +37,8 @@ export type ProductSuccessInfo = {
   licensePeriod?: string;
   /** Sistema operativo seleccionado (Android/iOS) — solo SecureCrypt */
   osType?: "android" | "ios";
+  /** Fecha de entrega estimada (solo SIM Física) */
+  estimatedDelivery?: string;
 };
 
 type Props = {
@@ -79,6 +81,7 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
     const shipping = product.shippingCost ?? 0;
     const couponDiscount = product.discount ?? 0;
     const hasEsimBreakdown = product.esimPrice != null && product.rechargeAmount != null;
+    const isPhysicalSim = !hasEsimBreakdown && shipping > 0;
     const subtotal = unitPrice * qty;
     const total = subtotal + shipping - couponDiscount;
 
@@ -152,21 +155,48 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
               ))}
             </div>
 
-            {/* Details */}
-            <div className="mt-4 rounded-xl border border-[#EEE] bg-white text-sm divide-y divide-[#EEE]">
-              {/* Row 1: Product name + qty/period */}
-              <div className="flex items-center justify-between px-4 py-3">
-                <span className="text-[#333]">
-                  {product.name} ({qty})
-                </span>
-                <span className="font-semibold text-[#101010]">
-                  {product.licensePeriod
-                    ? product.licensePeriod
-                    : hasEsimBreakdown
-                      ? "-"
-                      : formatUsd(subtotal)}
-                </span>
+            {/* Gray info box — Physical SIM */}
+            {isPhysicalSim && (
+              <div className="mt-4 rounded-xl bg-[#F2F2F2] px-4 py-3 text-sm">
+                <div className="flex items-center justify-between py-1">
+                  <span className="text-[#333]">{t("productLabel")}:</span>
+                  <span className="font-semibold text-[#101010]">
+                    {product.name}{qty > 1 ? ` (${qty})` : ""}
+                  </span>
+                </div>
+                {product.estimatedDelivery && (
+                  <div className="flex items-center justify-between py-1">
+                    <span className="text-[#333]">{t("estimatedDelivery")}:</span>
+                    <span className="font-semibold text-[#101010]">
+                      {product.estimatedDelivery}
+                    </span>
+                  </div>
+                )}
               </div>
+            )}
+
+            {/* Details label */}
+            <p className="mt-4 mb-2 text-center text-xs font-medium text-[#6B7280]">
+              {t("purchaseDetails")}
+            </p>
+
+            {/* Details */}
+            <div className="rounded-xl border border-[#EEE] bg-white text-sm divide-y divide-[#EEE]">
+              {/* Row 1: Product name + qty/period (non-physical) */}
+              {!isPhysicalSim && (
+                <div className="flex items-center justify-between px-4 py-3">
+                  <span className="text-[#333]">
+                    {product.name} ({qty})
+                  </span>
+                  <span className="font-semibold text-[#101010]">
+                    {product.licensePeriod
+                      ? product.licensePeriod
+                      : hasEsimBreakdown
+                        ? "-"
+                        : formatUsd(subtotal)}
+                  </span>
+                </div>
+              )}
 
               {/* Row 2: OS type (SecureCrypt) */}
               {product.osType ? (

@@ -2695,7 +2695,9 @@
     "couponReplacesOffer": "Este producto ya tiene una oferta aplicada. Tu cupón se aplicará sobre el precio regular del producto sin la oferta.",
     "closeModal": "Cerrar",
     "operatingSystem": "Sistema",
-    "discount": "Descuento"
+    "discount": "Descuento",
+    "productLabel": "Producto",
+    "estimatedDelivery": "Fecha de entrega estimada"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",

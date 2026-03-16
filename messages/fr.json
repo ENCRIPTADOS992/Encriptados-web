@@ -2569,7 +2569,9 @@
     "couponReplacesOffer": "Ce produit a déjà une offre appliquée. Votre coupon sera appliqué sur le prix régulier du produit sans l'offre.",
     "closeModal": "Fermer",
     "operatingSystem": "Système",
-    "discount": "Remise"
+    "discount": "Remise",
+    "productLabel": "Produit",
+    "estimatedDelivery": "Date de livraison estimée"
   },
   "TestingProducts": {
     "badge": "Our products",

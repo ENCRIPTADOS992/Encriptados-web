@@ -3235,7 +3235,9 @@
     "couponReplacesOffer": "This product already has a sale applied. Your coupon will be applied to the regular product price without the sale.",
     "closeModal": "Close",
     "operatingSystem": "System",
-    "discount": "Discount"
+    "discount": "Discount",
+    "productLabel": "Product",
+    "estimatedDelivery": "Estimated delivery date"
   },
   "TestingProducts": {
     "badge": "Our products",
