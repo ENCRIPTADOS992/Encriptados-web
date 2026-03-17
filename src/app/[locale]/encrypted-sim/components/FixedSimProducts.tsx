@@ -96,7 +96,7 @@ const FixedSimProducts: React.FC = () => {
     if (apiProduct?.image) {
       return apiProduct.image;
     }
-    return FALLBACK_IMAGES[type] || EncryptedSimDataFallback;
+    return FALLBACK_IMAGES[type] || SimFallback;
   };
 
   // Función helper para obtener el rango de precios desde API
