@@ -2,10 +2,10 @@ import React from "react";
 import Image from "next/image";
 import CircleTitle from "@/shared/components/CircleTitle";
 import { useTranslations } from "next-intl";
+import SimImage from "/public/images/encrypted-sim/sim-encriptada.webp";
 
 const Women = "/images/encrypted-sim/Encrypted_Women.webp";
 const Man = "/images/encrypted-sim/Encrypted_Man.webp";
-const Sim = "/images/encrypted-sim/sim-encriptada.webp";
 
 const EncryptedSimBanner = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -28,11 +28,12 @@ const EncryptedSimBanner = () => {
         <CircleTitle size="large" rounded="full" intent="secondary">
           {t("encryptedTitleButon")}
         </CircleTitle>
-        <div className="relative w-full max-w-[250px] md:max-w-[220px] lg:max-w-[320px] xl:max-w-[450px]">
+        <div className="relative w-full max-w-[180px] md:max-w-[160px] lg:max-w-[240px] xl:max-w-[300px] my-4 md:my-6">
           <Image
-            src={Sim}
+            src={SimImage}
             width={740}
             height={740}
+            quality={90}
             alt="Tarjeta SIM encriptada"
             className="w-full object-contain rounded-xl -rotate-6 drop-shadow-[0_20px_30px_rgba(0,0,0,0.3)]"
           />
