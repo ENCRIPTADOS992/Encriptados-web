@@ -54,8 +54,8 @@ const CardSim: React.FC<CardSimProps> = ({
           className="object-cover"
         />
 
-        {/* Badges superpuestos en la esquina inferior derecha */}
-        <div className="absolute bottom-3 right-3 flex gap-2">
+        {/* Badges superpuestos en la esquina inferior izquierda */}
+        <div className="absolute bottom-3 left-3 flex gap-2">
           <div className="bg-[#FFFFFF] text-black px-2 py-1 rounded-full text-xs font-semibold flex gap-1 items-center">
             <Image src={TravelSvg} alt="Icon" className="w-4 h-4" />
             <span>{t("availableCountries")}</span>
@@ -87,22 +87,6 @@ const CardSim: React.FC<CardSimProps> = ({
           */}
           <div className="flex justify-between items-center w-full">
             <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
-            {variantTag && (
-              <div className="
-                inline-flex items-center justify-center flex-shrink-0
-                rounded-full
-                text-[11px]
-                font-semibold
-                h-[20px]
-                px-3
-                shadow-md
-                whitespace-nowrap
-                bg-[#1CB9EC] text-[#010101]
-                ml-2
-              ">
-                {variantTag}
-              </div>
-            )}
           </div>
         </div>
 
