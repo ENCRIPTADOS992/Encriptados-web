@@ -15,10 +15,8 @@ import CharacteristicVoiceSvg from "/public/images/encrypted-sim/icons/character
 import CharacteristicComunicationsSvg from "/public/images/encrypted-sim/icons/characteristic-communications.svg";
 import CharacteristicTopUpSvg from "/public/images/encrypted-sim/icons/characteristic-top-up.svg";
 
-// Fallback images (se usan si la API no devuelve imagen)
-import EncryptedSimDataFallback from "/public/images/encrypted-sim/Encrypted_sim_card.webp";
-import EncryptedSimMinutesFallback from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.webp";
-import EncriptedEsimFallback from "/public/images/encrypted-sim/Encrypted_sim_card_eSIM.webp";
+// Fallback image (se usa si la API no devuelve imagen)
+import SimFallback from "/public/images/encrypted-sim/sim-encriptada.webp";
 
 import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
 import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";
@@ -31,12 +29,12 @@ import type { StaticImageData } from "next/image";
 
 // Mapeo de imágenes fallback por tipo de producto
 const FALLBACK_IMAGES: Record<string, StaticImageData> = {
-  data: EncryptedSimDataFallback,
-  minutes: EncryptedSimMinutesFallback,
-  esim: EncriptedEsimFallback,
-  esim_data: EncriptedEsimFallback,
-  esim_minutes: EncriptedEsimFallback,
-  sim_fisica: EncryptedSimDataFallback,
+  data: SimFallback,
+  minutes: SimFallback,
+  esim: SimFallback,
+  esim_data: SimFallback,
+  esim_minutes: SimFallback,
+  sim_fisica: SimFallback,
 };
 
 interface FixedCard {

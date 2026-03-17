@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 const Women = "/images/encrypted-sim/Encrypted_Women.webp";
 const Man = "/images/encrypted-sim/Encrypted_Man.webp";
-const Sim = "/images/encrypted-sim/Encrypted_sim_card.webp";
+const Sim = "/images/encrypted-sim/sim-encriptada.webp";
 
 const EncryptedSimBanner = () => {
   const t = useTranslations("EncryptedSimPage");
@@ -28,13 +28,15 @@ const EncryptedSimBanner = () => {
         <CircleTitle size="large" rounded="full" intent="secondary">
           {t("encryptedTitleButon")}
         </CircleTitle>
-        <Image
-          src={Sim}
-          width={740}
-          height={740}
-          alt="Tarjeta SIM encriptada"
-          className="w-full object-contain max-w-[250px] max-h-[200px] md:max-w-[220px] md:max-h-[180px] lg:max-w-[320px] lg:max-h-[260px] xl:max-w-[450px] xl:max-h-[360px]"
-        />
+        <div className="relative w-full max-w-[250px] md:max-w-[220px] lg:max-w-[320px] xl:max-w-[450px]">
+          <Image
+            src={Sim}
+            width={740}
+            height={740}
+            alt="Tarjeta SIM encriptada"
+            className="w-full object-contain rounded-xl -rotate-6 drop-shadow-[0_20px_30px_rgba(0,0,0,0.3)]"
+          />
+        </div>
         <h1 className="text-[24px] sm:text-[30px] lg:text-[38px] font-bold leading-[1.3] text-[#333333] w-11/12">
           {t("encryptedTitle")}
         </h1>
