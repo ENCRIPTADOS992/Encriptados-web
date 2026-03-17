@@ -84,14 +84,12 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
 
     // Interceptar la apertura del checkout si estamos dentro de la App (WebView de React Native)
     // Solo para "user" — "guest" usa el checkout web normal
-    if (appMode === "user" || (typeof window !== "undefined" && (window as any).ReactNativeWebView)) {
+    if (appMode === "user" && typeof window !== "undefined" && (window as any).ReactNativeWebView) {
       const payload = {
         action: "OPEN_CHECKOUT",
         data: newParams
       };
-      if (typeof window !== "undefined" && (window as any).ReactNativeWebView) {
-        (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
-      }
+      (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
       return; // Evitar abrir el modal de la web
     }
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
