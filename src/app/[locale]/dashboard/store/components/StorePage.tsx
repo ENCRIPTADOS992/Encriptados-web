@@ -7,9 +7,10 @@ import LogoSvg1 from "/public/images/encrypted-sim/icons/encriptados_logo.svg";
 import CharacteristicAnonimitySvg from "/public/images/encrypted-sim/icons/characteristic-anonymity.svg";
 import CharacteristicReplaceSvg from "/public/images/encrypted-sim/icons/characteristic-replace.svg";
 import CharacteristicVoiceSvg from "/public/images/encrypted-sim/icons/characteristic-voice.svg";
-import EncryptedSimData from "/public/images/encrypted-sim/Encrypted_sim_card.webp";
-import EncryptedSimMinutes from "/public/images/encrypted-sim/Encrypted_sim_card_minutes.webp";
 import IcomMinutesSvg from "/public/images/encrypted-sim/icons/icon-minutes.svg";
+
+const EncryptedSimData = "/images/encrypted-sim/sim-encriptada.webp";
+const EncryptedSimMinutes = "/images/encrypted-sim/sim-encriptada.webp";
 import IconDataSvg from "/public/images/encrypted-sim/icons/icon-data.svg";
 import { useTranslations } from "next-intl";
 import CardSim from "@/app/[locale]/encrypted-sim/components/CardSim";
