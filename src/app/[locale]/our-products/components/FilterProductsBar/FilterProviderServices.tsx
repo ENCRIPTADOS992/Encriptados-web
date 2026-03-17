@@ -26,12 +26,12 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
           name="encriptadosprovider"
           options={[
             { label: "Todo", value: "all" },
-            { label: "Sim Física", value: "physicsim" },
-            { label: "eSim", value: "esim" },
             { label: "Recarga Datos", value: "datarecharge" },
-            { label: "Recarga Minutos", value: "minuterecharge" },
             { label: "eSIM + Datos", value: "eSimData" },
+            { label: "Recarga Minutos", value: "minuterecharge" },
             { label: "eSIM + Minutos", value: "eSimMinutes" },
+            { label: "eSim", value: "esim" },
+            { label: "Sim Física", value: "physicsim" },
           ]}
           onChangeExternal={(value) => {
             const normalized = Array.isArray(value)
@@ -54,9 +54,10 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
         <MenuDropdownProductBar
           name="timprovider"
           options={[
-            { label: "Sim Física", value: "physicsimtim" },
-            { label: "eSIM + Datos", value: "esimplusdatatim" },
+            { label: "Todo", value: "all" },
             { label: "Recarga Datos", value: "datarechargetim" },
+            { label: "eSIM + Datos", value: "esimplusdatatim" },
+            { label: "SIM Física", value: "physicsimtim" },
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de timprovider:", value);

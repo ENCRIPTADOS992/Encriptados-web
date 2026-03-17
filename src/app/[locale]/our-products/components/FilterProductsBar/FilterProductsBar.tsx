@@ -97,12 +97,12 @@ export default function FilterProductsBar({
           externalValue={filters.encriptadosprovider}
           options={[
             { label: "Todos", value: "all" },
-            { label: "Sim Física", value: "physicsim" },
-            { label: "eSim", value: "esim" },
             { label: "Recarga Datos", value: "datarecharge" },
-            { label: "Recarga Minutos", value: "minuterecharge" },
             { label: "eSIM + Datos", value: "eSimData" },
+            { label: "Recarga Minutos", value: "minuterecharge" },
             { label: "eSIM + Minutos", value: "eSimMinutes" },
+            { label: "eSim", value: "esim" },
+            { label: "SIM Física", value: "physicsim" },
           ]}
           onChangeExternal={(value) => {
             const normalized = Array.isArray(value)
@@ -121,9 +121,9 @@ export default function FilterProductsBar({
           externalValue={filters.timprovider}
           options={[
             { label: "Todos", value: "all" },
-            { label: "Sim Física", value: "physicsimtim" },
-            { label: "eSIM + Datos", value: "esimplusdatatim" },
             { label: "Recarga Datos", value: "datarechargetim" },
+            { label: "eSIM + Datos", value: "esimplusdatatim" },
+            { label: "SIM Física", value: "physicsimtim" },
           ]}
           onChangeExternal={(value) => {
             updateFilters({ timprovider: value });
