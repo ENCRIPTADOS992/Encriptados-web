@@ -192,9 +192,11 @@ const OurProductsPage = () => {
             <SilentCircleBanner />
           </SectionWrapper>
 
+          {/* BannerSmsActivation oculto temporalmente
           <SectionWrapper className="py-0 md:py-2">
             <BannerSmsActivation />
           </SectionWrapper>
+          */}
 
           <SectionWrapper className="py-0 md:py-1">
             <BannerSecureMdmNew />

@@ -714,10 +714,10 @@
     "secureCommunication": {
       "title": "Somos especialistas en soluciones de comunicación segura:",
       "checks": {
-        "item1": "Celulares Seguros",
-        "item2": "SIM Cards Encriptadas",
-        "item3": "Protección de Nivel Empresarial",
-        "item4": "Sistemas de Seguridad Probados"
+        "item1": "SIM's Encriptadas",
+        "item2": "Apps Encriptadas",
+        "item3": "Sistemas Seguros",
+        "item4": "Routers Seguros"
       }
     },
     "productCard": {
