@@ -402,8 +402,8 @@
         "description": "As informações de faturamento e envio não estão vinculadas ao chip, portanto, são totalmente anônimas"
       },
       "changeMSI": {
-        "title": "Mudança de IMSI",
-        "description": "A mudança de IMSI substitui a identidade do seu SIM por uma nova. É o equivalente a trocar o SIM por um novo"
+        "title": "Recarga Anônima",
+        "description": "Agora você pode recarregar seus Dados ou Minutos no seu SIM via roaming sem precisar fornecer sua identidade"
       },
       "subtituteNumber": {
         "title": "Número substituto",
@@ -415,7 +415,7 @@
       },
       "callback": {
         "title": "Retorno de chamada",
-        "description": "Gere um número aleatório para cada chamada que aparecerá no identificador do receptor"
+        "description": "Um operador intermediário retorna a chamada para conectá-la ao destinatário e torná-la irrastreável"
       },
       "callbackTim": {
         "title": "Callback",

@@ -407,8 +407,8 @@
         "description": "Billing and shipping information is not linked to the chip, so it is completely anonymous"
       },
       "changeMSI": {
-        "title": "IMSI Change",
-        "description": "The IMSI change replaces the identity of your SIM with a new one. It is equivalent to changing the SIM for a new one"
+        "title": "Anonymous Top-Up",
+        "description": "Now you can top up your Data or Minutes to your SIM via roaming without providing your ID"
       },
       "subtituteNumber": {
         "title": "Substitute Number",
@@ -420,7 +420,7 @@
       },
       "callback": {
         "title": "Callback",
-        "description": "Generate a random number for each call that will appear in the recipient's identifier"
+        "description": "An intermediary operator returns the call to connect it with the recipient and make it untraceable"
       },
       "callbackTim": {
         "title": "Callback",

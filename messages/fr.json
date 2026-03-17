@@ -402,8 +402,8 @@
         "description": "Les informations de facturation et d'expédition ne sont pas liées à la puce, donc elles sont totalement anonymes"
       },
       "changeMSI": {
-        "title": "Changement d'IMSI",
-        "description": "Le changement d'IMSI remplace l'identité de votre SIM par une nouvelle. C'est l'équivalent de changer la SIM pour une nouvelle"
+        "title": "Recharge Anonyme",
+        "description": "Vous pouvez désormais recharger vos Données ou Minutes sur votre SIM en roaming sans fournir votre pièce d'identité"
       },
       "subtituteNumber": {
         "title": "Numéro de remplacement",
@@ -415,7 +415,7 @@
       },
       "callback": {
         "title": "Rappel",
-        "description": "Générez un numéro aléatoire pour chaque appel qui apparaîtra dans l'identifiant du destinataire"
+        "description": "Un opérateur intermédiaire rappelle pour relier l'appel au destinataire et le rendre intraçable"
       },
       "callbackTim": {
         "title": "Callback",
