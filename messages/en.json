@@ -380,6 +380,19 @@
         ],
         "priceRange": "$32.5 - $507.5",
         "headerTitle": "eSIM + Data Recharge"
+      },
+      "esimMinutes": {
+        "title": "Buy your eSIM with MINUTES for anonymous and untraceable calls",
+        "description": "Available in over 200 countries",
+        "featuresCardSim": [
+          "Instantly added call balance",
+          "Anonymous and untraceable calls",
+          "Filters to alter voice tone",
+          "Substitute number",
+          "Callback"
+        ],
+        "priceRange": "$55 - $505",
+        "headerTitle": "eSIM + Minutes Top-Up"
       }
     },
     "improveYourSecurity": {

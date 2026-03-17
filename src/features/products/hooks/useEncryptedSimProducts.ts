@@ -10,7 +10,8 @@ const ENCRYPTED_SIM_PRODUCT_IDS = {
   ESIM: 449,                    // eSIM (precio único: 12)
   ESIM_DATA: 59835,             // eSIM + Recarga Datos (variantes: 32.5, 57.5, 107.5, 162.5, 207.5, 262.5, 507.5)
   SIM_FISICA_TIM: 448,          // SIM Física TIM (precio único: 10)
-  SIM_FISICA_ENCRYPTED: 508     // SIM Física Encrypted (precio único: 15)
+  SIM_FISICA_ENCRYPTED: 508,    // SIM Física Encrypted (precio único: 15)
+  ESIM_MINUTES: 61262            // eSIM + Minutos (variantes: 55, 105, 155, 205, 255, 505)
 };
 
 // Tipo para una variante de producto
@@ -31,7 +32,7 @@ export interface EncryptedSimProduct {
   image: string;
   checks: string[];
   provider: string;
-  type: "data" | "minutes" | "esim" | "esim_data" | "sim_fisica";
+  type: "data" | "minutes" | "esim" | "esim_data" | "sim_fisica" | "esim_minutes";
   // Nuevos campos para variantes y rangos
   variants: ProductVariant[];
   hasVariants: boolean;
@@ -86,6 +87,8 @@ export const useEncryptedSimProducts = () => {
             productType = "esim";
           } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA) {
             productType = "esim_data";
+          } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES) {
+            productType = "esim_minutes";
           } else if (product.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_TIM ||
             product.id === ENCRYPTED_SIM_PRODUCT_IDS.SIM_FISICA_ENCRYPTED) {
             productType = "sim_fisica";

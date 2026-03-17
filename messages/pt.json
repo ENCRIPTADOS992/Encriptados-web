@@ -375,6 +375,19 @@
         ],
         "priceRange": "$32.5 - $507.5",
         "headerTitle": "eSIM + Recarga de Dados"
+      },
+      "esimMinutes": {
+        "title": "Compre sua eSIM com MINUTOS para chamadas anônimas e irreconhecíveis",
+        "description": "Disponível em mais de 200 países",
+        "featuresCardSim": [
+          "Saldo de chamadas adicionado instantaneamente",
+          "Chamadas anônimas e irreconhecíveis",
+          "Filtros para alterar o tom de voz",
+          "Número substituto",
+          "Ligação de retorno"
+        ],
+        "priceRange": "$55 - $505",
+        "headerTitle": "eSIM + Recarga de Minutos"
       }
     },
     "improveYourSecurity": {

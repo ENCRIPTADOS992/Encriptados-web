@@ -35,6 +35,7 @@ const FALLBACK_IMAGES: Record<string, StaticImageData> = {
   minutes: EncryptedSimMinutesFallback,
   esim: EncriptedEsimFallback,
   esim_data: EncriptedEsimFallback,
+  esim_minutes: EncriptedEsimFallback,
   sim_fisica: EncryptedSimDataFallback,
 };
 
@@ -240,6 +241,35 @@ const FixedSimProducts: React.FC = () => {
     },
   ];
 
+  // Características para eSIM + Minutos
+  const commonFeaturesEsimMinutes = [
+    {
+      icon: CharacteristicAnonimitySvg,
+      alt: t("commonFeatures.privacyAnonymity"),
+      description: t("commonFeatures.privacyAnonymity"),
+    },
+    {
+      icon: CharacteristicReplaceSvg,
+      alt: t("commonFeatures.substituteNumber"),
+      description: t("commonFeatures.substituteNumber"),
+    },
+    {
+      icon: CharacteristicVoiceSvg,
+      alt: t("commonFeatures.callback"),
+      description: t("commonFeatures.callback"),
+    },
+    {
+      icon: CharacteristicVoiceSvg,
+      alt: t("commonFeatures.voiceFilters"),
+      description: t("commonFeatures.voiceFilters"),
+    },
+    {
+      icon: CharacteristicAppSvg,
+      alt: t("commonFeatures.appAvailable"),
+      description: t("commonFeatures.appAvailable"),
+    },
+  ];
+
   const cardData: FixedCard[] = [
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA,
@@ -259,6 +289,26 @@ const FixedSimProducts: React.FC = () => {
       headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA, t("products.esimData.headerTitle")),
       apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA),
       variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_DATA)?.minPrice || 32.5} USD`,
+    },
+    {
+      id: ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES,
+      logoSrc: LogoSvg1,
+      title: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES, t("products.esimMinutes.title")),
+      description: t("products.esimMinutes.description"),
+      features: commonFeaturesEsimMinutes,
+      productImage: getProductImage(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES, "esim_minutes"),
+      featuresCardSim: [
+        t("products.esimMinutes.featuresCardSim.0"),
+        t("products.esimMinutes.featuresCardSim.1"),
+        t("products.esimMinutes.featuresCardSim.2"),
+        t("products.esimMinutes.featuresCardSim.3"),
+        t("products.esimMinutes.featuresCardSim.4"),
+      ],
+      priceLabel: getPriceLabel(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES, t("products.esimMinutes.priceRange")),
+      headerIcon: IcomMinutesSvg,
+      headerTitle: getProductTitle(ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES, t("products.esimMinutes.headerTitle")),
+      apiProduct: apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES),
+      variantTag: `${apiProducts?.find(p => p.id === ENCRYPTED_SIM_PRODUCT_IDS.ESIM_MINUTES)?.minPrice || 55} USD`,
     },
     {
       id: ENCRYPTED_SIM_PRODUCT_IDS.DATA,
