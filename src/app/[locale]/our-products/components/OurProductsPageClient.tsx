@@ -55,9 +55,11 @@ const OurProductsPageClient = () => {
         </div>
       </BasicFormProvider>
 
+      {/* BannerActivate oculto temporalmente
       <div className="w-full m-0 p-0">
         <BannerActivate />
       </div>
+      */}
 
       <div className="rounded-xl w-full mx-auto py-11">
         <BannerCards />
