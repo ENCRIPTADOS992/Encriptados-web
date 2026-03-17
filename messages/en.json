@@ -1084,7 +1084,7 @@
       "apps": "Applications",
       "system": "Systems"
     },
-    "discoverSimTitle": "Discover Encriptados.io SIM Cards",
+    "discoverSimTitle": "Discover the eSIM/SIM from Encriptados.io",
     "discoverSimDescription": "Designed to protect your privacy on every call. No registration required, our SIMs ensure secure and anonymous communication, ideal for those who value discretion and security.",
     "cards": {
       "card1": {
@@ -1109,7 +1109,7 @@
       },
       "card6": {
         "title": "Multiple Devices",
-        "description": "Our international chip works on any device: IOS, Android, Windows, or BlackBerry."
+        "description": "Our international chip works on any device: IOS, Android."
       }
     }
   },

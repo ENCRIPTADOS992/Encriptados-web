@@ -11,7 +11,7 @@ import MultipleDeviceOffer from "../icons/MultipleDeviceOffer";
 import FeaturesGrid from "./FeaturesGrid";
 
 const CardSection = () => {
-  const offersImage = "/images/offers/sim.png";
+  const offersImage = "/images/offers/sim-fisica.webp";
 
   const t = useTranslations("OffersPage");
 

@@ -967,7 +967,7 @@
       "apps": "Applications",
       "system": "Systèmes"
     },
-    "discoverSimTitle": "Découvrez les Cartes SIM d'Encriptados.io",
+    "discoverSimTitle": "Découvrez la eSIM/SIM d'Encriptados.io",
     "discoverSimDescription": "Conçues pour protéger votre vie privée à chaque appel. Aucune inscription requise, nos cartes SIM garantissent une communication sécurisée et anonyme, idéale pour ceux qui valorisent la discrétion et la sécurité.",
     "cards": {
       "card1": {
@@ -992,7 +992,7 @@
       },
       "card6": {
         "title": "Appareils multiples",
-        "description": "Notre puce internationale fonctionne sur n'importe quel appareil IOS, Android, Windows ou BlackBerry."
+        "description": "Notre puce internationale fonctionne sur n'importe quel appareil IOS, Android."
       }
     }
   },

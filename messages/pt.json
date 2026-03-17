@@ -967,7 +967,7 @@
       "apps": "Aplicações",
       "system": "Sistemas"
     },
-    "discoverSimTitle": "Descubra os Cartões SIM da Encriptados.io",
+    "discoverSimTitle": "Descubra a eSIM/SIM da Encriptados.io",
     "discoverSimDescription": "Projetados para proteger sua privacidade em cada ligação. Sem necessidade de registro, nossos SIMs garantem uma comunicação segura e anônima, ideal para quem valoriza discrição e segurança.",
     "cards": {
       "card1": {
@@ -992,7 +992,7 @@
       },
       "card6": {
         "title": "Múltiplos Dispositivos",
-        "description": "Nosso chip internacional funciona em qualquer dispositivo IOS, Android, Windows ou BlackBerry."
+        "description": "Nosso chip internacional funciona em qualquer dispositivo IOS, Android."
       }
     }
   },
