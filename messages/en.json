@@ -268,7 +268,7 @@
     },
     "connectAllWorldTitle": "Connect worldwide",
     "totalSecurityTitle": "with complete security in your communications",
-    "addYourSimSubtitle": "Get your SIM/eSIM with mobile data and enjoy total anonymity in calls, filters, IMSI changes, and more",
+    "addYourSimSubtitle": "Get your SIM/eSIM with mobile data and enjoy total anonymity in calls, filters, and more",
     "coverageTitle": "Coverage in over 200 countries",
     "coverageDescription": "Check the cost of a gigabyte by country and the recommended profile, so you can optimize your data usage at the best price",
     "searchPlaceholder": "Colombia",
@@ -301,7 +301,7 @@
       "callback": "Callback",
       "voiceFilters": "Voice filters",
       "encryptedCommunications": "Encrypted communications",
-      "replaceIMSI": "Replace your IMSI",
+      "replaceIMSI": "Anonymous top-up",
       "globalHighSpeed": "Global High-Speed Connection",
       "unlimitedDataPlans": "Unlimited data plans",
       "ultraFastConnection": "Ultra-fast 5G connection",
@@ -364,7 +364,7 @@
           "Receive it anywhere in the world",
           "Privacy and Anonymity",
           "Encrypted communications",
-          "Untraceable SIM with IMSI changes"
+          "Protected against IMSI CATCHERS"
         ],
         "priceRange": "10 USD",
         "headerTitle": "Physical SIM"
