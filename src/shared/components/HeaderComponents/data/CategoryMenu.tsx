@@ -72,27 +72,11 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
-          title: t("apps.items.vaultChat.title", { defaultValue: "VaultChat" }),
-          image: "/images/mega-menu/apps/VaultChat_Apps_Encriptados_preview_menu_web.webp",
-          link: getAppUrl("VaultChat"),
-          description: t("apps.items.vaultChat.description", {
-            defaultValue: "VaultChat es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("apps.items.armadillo.title", { defaultValue: "Armadillo" }),
+          title: t("apps.items.armadillo.title", { defaultValue: "Armadillo Chat" }),
           image: "/images/mega-menu/apps/Armadillo_Apps_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Armadillo Chat"),
           description: t("apps.items.armadillo.description", {
             defaultValue: "Armadillo es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("apps.items.threema.title", { defaultValue: "Threema" }),
-          image: "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.webp",
-          link: getAppUrl("Threema"),
-          description: t("apps.items.threema.description", {
-            defaultValue: "Threema es una aplicación de mensajería segura.",
           }),
         },
         {
@@ -106,11 +90,27 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
-          title: t("apps.items.vnclagoon.title", { defaultValue: "VNClagoon" }),
-          image: "/images/mega-menu/apps/VNC-lagoon_Apps_Encriptados_preview_menu_web.webp",
-          link: getAppUrl("VNC Lagoon"),
-          description: t("apps.items.vnclagoon.description", {
-            defaultValue: "VNClagoon es una aplicación de mensajería segura.",
+          title: t("apps.items.threema.title", { defaultValue: "Threema" }),
+          image: "/images/mega-menu/apps/Threema_Apps_Encriptados_preview_menu_web.webp",
+          link: getAppUrl("Threema"),
+          description: t("apps.items.threema.description", {
+            defaultValue: "Threema es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("apps.items.nordVpn.title", { defaultValue: "Nord VPN" }),
+          image: "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.webp",
+          link: getAppUrl("Nord VPN"),
+          description: t("apps.items.nordVpn.description", {
+            defaultValue: "Nord VPN es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("apps.items.vaultChat.title", { defaultValue: "VaultChat" }),
+          image: "/images/mega-menu/apps/VaultChat_Apps_Encriptados_preview_menu_web.webp",
+          link: getAppUrl("VaultChat"),
+          description: t("apps.items.vaultChat.description", {
+            defaultValue: "VaultChat es una aplicación de mensajería segura.",
           }),
         },
         {
@@ -122,11 +122,11 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
-          title: t("apps.items.nordVpn.title", { defaultValue: "Nord VPN" }),
-          image: "/images/mega-menu/apps/NordVPN_Apps_Encriptados_preview_menu_web.webp",
-          link: getAppUrl("Nord VPN"),
-          description: t("apps.items.nordVpn.description", {
-            defaultValue: "Nord VPN es una aplicación de mensajería segura.",
+          title: t("apps.items.vnclagoon.title", { defaultValue: "VNClagoon" }),
+          image: "/images/mega-menu/apps/VNC-lagoon_Apps_Encriptados_preview_menu_web.webp",
+          link: getAppUrl("VNC Lagoon"),
+          description: t("apps.items.vnclagoon.description", {
+            defaultValue: "VNClagoon es una aplicación de mensajería segura.",
           }),
         },
       ],
@@ -139,6 +139,12 @@ export function useTranslatedProductsCategories(): any {
       link: "",
       image: "/images/mega-menu/sistemas.webp",
       items: [
+        {
+          title: "Galaxia MDM Iphone",
+          image: "/images/mega-menu/sistemas/galaxia.webp",
+          link: "/apps/galaxia-mdm?productId=61085",
+          description: "Galaxia MDM Iphone es una solución de gestión de dispositivos móviles.",
+        },
         {
           title: t("systems.items.secureMdmIphone.title", {
             defaultValue: "Secure MDM iPhone",
@@ -195,6 +201,17 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
+          title: t("systems.items.secureCrypt.title", {
+            defaultValue: "SecureCrypt",
+          }),
+          image:
+            "/images/mega-menu/sistemas/SecureCrypt.jpg",
+          link: getAppUrl("SecureCrypt"),
+          description: t("systems.items.secureCrypt.description", {
+            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
+          }),
+        },
+        {
           title: t("systems.items.armadillo.title", {
             defaultValue: "Armadillo",
           }),
@@ -247,23 +264,6 @@ export function useTranslatedProductsCategories(): any {
           description: t("systems.items.decSecure.description", {
             defaultValue: "DEC Secure es una aplicación de mensajería segura.",
           }),
-        },
-        {
-          title: t("systems.items.secureCrypt.title", {
-            defaultValue: "SecureCrypt",
-          }),
-          image:
-            "/images/mega-menu/sistemas/SecureCrypt.jpg",
-          link: getAppUrl("SecureCrypt"),
-          description: t("systems.items.secureCrypt.description", {
-            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: "Galaxia MDM",
-          image: "/images/mega-menu/sistemas/galaxia.webp",
-          link: "/apps/galaxia-mdm?productId=61085",
-          description: "Galaxia MDM es una solución de gestión de dispositivos móviles.",
         },
         // {
         //   title: t("systems.items.totalSec.title", {

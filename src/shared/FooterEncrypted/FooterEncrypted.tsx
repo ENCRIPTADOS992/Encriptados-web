@@ -72,28 +72,28 @@ export default function FooterEncrypted() {
 
   const APPS_LINKS: Record<string, string> = {
     "Silent phone": getAppUrl("Silent Phone"),
-    "VaultChat": getAppUrl("VaultChat"),
     "Armadillo": getAppUrl("Armadillo Chat"),
-    "Threema": getAppUrl("Threema"),
     "Threema Works": getAppUrl("Threema Work"),
-    "VncLagon": getAppUrl("VNC Lagoon"),
-    "Salt": getAppUrl("Salt App"),
+    "Threema": getAppUrl("Threema"),
     "Nord VPN": getAppUrl("Nord VPN"),
+    "VaultChat": getAppUrl("VaultChat"),
+    "Salt": getAppUrl("Salt App"),
+    "VncLagon": getAppUrl("VNC Lagoon"),
   };
 
   const SYSTEMS_LINKS: Record<string, string> = {
+    "Galaxia MDM Iphone": "/apps/galaxia-mdm?productId=61085",
     "Secure MDM iphone": getAppUrl("Secure MDM iPhone"),
     "Secure MDM Android": getAppUrl("Secure MDM Android"),
     "Cryptcom": getAppUrl("Cryptcom"),
     "Renati": getAppUrl("Renati"),
     "Chatmail": getAppUrl("ChatMail"),
+    "Secure Crypt": getAppUrl("SecureCrypt"),
     "Armadillo": getAppUrl("Armadillo"),
     "VaultChat": "/apps/vault-chat-v2",
     "UltraX": getAppUrl("Ultra X"),
     "Intact": getAppUrl("Intact Phone"),
     "DecSecure": getAppUrl("DEC Secure"),
-    "Secure Crypt": getAppUrl("SecureCrypt"),
-    "Galaxia MDM": "/apps/galaxia-mdm?productId=61085",
   };
   const SYSTEMS_NAME_MAP: Record<string, string> = {
     "DEC Secure": "DecSecure",
@@ -110,27 +110,27 @@ export default function FooterEncrypted() {
   ];
   const aplicacionesLinks = [
     { name: "Silent phone", href: getAppUrl("Silent Phone") },
-    { name: "VaultChat", href: getAppUrl("VaultChat") },
-    { name: "Armadillo", href: getAppUrl("Armadillo Chat") },
-    { name: "Threema", href: getAppUrl("Threema") },
+    { name: "Armadillo Chat", href: getAppUrl("Armadillo Chat") },
     { name: "ThreemaWork", href: getAppUrl("Threema Work") },
-    { name: "VNClagoon", href: getAppUrl("VNC Lagoon") },
-    { name: "Salt", href: getAppUrl("Salt App") },
+    { name: "Threema", href: getAppUrl("Threema") },
     { name: "Nord VPN", href: getAppUrl("Nord VPN") },
+    { name: "VaultChat", href: getAppUrl("VaultChat") },
+    { name: "Salt", href: getAppUrl("Salt App") },
+    { name: "VNClagoon", href: getAppUrl("VNC Lagoon") },
   ];
   const sistemasLinks = [
+    { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=61085" },
     { name: "Secure MDM iPhone", href: getAppUrl("Secure MDM iPhone") },
     { name: "Secure MDM Android", href: getAppUrl("Secure MDM Android") },
     { name: "Cryptcom", href: getAppUrl("Cryptcom") },
     { name: "Renati", href: getAppUrl("Renati") },
     { name: "ChatMail", href: getAppUrl("ChatMail") },
+    { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
     { name: "Armadillo", href: getAppUrl("Armadillo") },
     { name: "VaultChat", href: "/apps/vault-chat-v2" },
     { name: "Ultra X", href: getAppUrl("Ultra X") },
     { name: "Intact Phone", href: getAppUrl("Intact Phone") },
     { name: "DEC Secure", href: getAppUrl("DEC Secure") },
-    { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
-    { name: "Galaxia MDM", href: "/apps/galaxia-mdm?productId=61085" },
   ];
   const routersLinks = [{ name: "Router Camaleón", href: `/apps/router-camaleon?productId=59747&categoryId=36` }];
 

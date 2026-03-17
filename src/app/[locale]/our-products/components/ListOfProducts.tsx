@@ -497,6 +497,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         .replace(/[^a-z0-9]/g, "");
 
     const SYSTEMS_ORDER = [
+      "galaxiamdm",
       "securemdmiphone",
       "securemdmandroid",
       "cryptcom",
@@ -537,9 +538,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
     const APPS_ORDER = [
       "silentphone",
+      "armadillochat",
       "threemawork",
       "threema",
-      "armadillochat",
       "nordvpn",
       "vaultchat",
       "salt",
