@@ -347,15 +347,6 @@ export function useTranslatedOthersCategories(): any[] {
       image: "/images/mega-menu/seguridad.webp",
       items: [],
     },
-    {
-      title: t2("deliveries.title", { defaultValue: "Entregas" }),
-      description: t2("deliveries.description", {
-        defaultValue: "Conoce nuestros métodos de envío",
-      }),
-      link: "/deliveries",
-      image: "/images/mega-menu/entregas.webp",
-      items: [],
-    },
   ];
 }
 
@@ -379,15 +370,6 @@ export function useTranslatedUsCategories(): any[] {
       }),
       image: "/images/mega-menu/embajador.webp",
       link: "/ambassadors",
-      items: [],
-    },
-    {
-      title: t2("locations.title", { defaultValue: "Donde Estamos" }),
-      description: t2("locations.description", {
-        defaultValue: "Descubre nuestras ubicaciones en todo el mundo.",
-      }),
-      image: "/images/mega-menu/dondeEstamos.webp",
-      link: "/where-to-find-us",
       items: [],
     },
   ];
