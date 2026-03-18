@@ -1,71 +1,51 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
-
-const BLOGS_API_URL = "https://encriptados.es/wp-json/encriptados/v1/blogs?lang=es";
-
-type PostContent = {
-  imagen: string;
-  titulo: string;
-  cuerpo: string;
-};
-
-type PostCard = {
-  imagen: string;
-  imagen_full?: string;
-  titulo: string;
-  descripcion: string;
-};
-
-type BlogPost = {
-  id: number;
-  card: PostCard;
-  contenido: PostContent;
-};
+import { fetchBlogPost } from "@/features/blog/blogService";
+import type { BlogPost } from "@/features/blog/types";
 
 const ContentBlogById = () => {
   const params = useParams();
-  const postId = params?.postId;
+  const locale = useLocale();
+  const postId = params?.postId as string | undefined;
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!postId) {
-      console.log("No hay postId en params:", params);
-      return;
-    }
+    if (!postId) return;
 
     setLoading(true);
-    console.log("Buscando postId:", postId, typeof postId);
-
-    fetch(BLOGS_API_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error("No se pudo cargar el post");
-        return res.json();
-      })
-      .then((data: BlogPost[]) => {
-        console.log("Ids de posts del endpoint:", data.map((item) => item.id));
-        const found = data.find((item) => String(item.id) === String(postId));
-        console.log("Resultado del find:", found);
+    fetchBlogPost(postId, locale)
+      .then((found) => {
         if (!found) throw new Error("Artículo no encontrado");
         setPost(found);
         setFetchError(null);
       })
       .catch((err) => {
-        console.error("Error en fetch/postId:", err);
         setFetchError(err.message || "Error inesperado");
         setPost(null);
       })
       .finally(() => setLoading(false));
-  }, [postId]);
+  }, [postId, locale]);
 
   if (loading) {
     return (
-      <div className="w-full flex justify-center items-center py-24">
-        <span className="text-gray-400 animate-pulse">Cargando artículo...</span>
+      <div className="w-full max-w-5xl mx-auto bg-[#191919] rounded-2xl shadow-lg mt-8 p-6 md:p-8 lg:p-12 animate-pulse">
+        <div className="w-full aspect-[1199/629] rounded-2xl bg-gray-700 mb-8" />
+        <div className="h-8 bg-gray-700 rounded w-3/4 mb-6" />
+        <div className="space-y-3">
+          <div className="h-4 bg-gray-700 rounded w-full" />
+          <div className="h-4 bg-gray-700 rounded w-full" />
+          <div className="h-4 bg-gray-700 rounded w-5/6" />
+          <div className="h-4 bg-gray-700 rounded w-full" />
+          <div className="h-4 bg-gray-700 rounded w-2/3" />
+          <div className="h-4 bg-gray-700 rounded w-full" />
+          <div className="h-4 bg-gray-700 rounded w-4/5" />
+        </div>
       </div>
     );
   }
@@ -87,8 +67,8 @@ const ContentBlogById = () => {
     <SectionWrapper className="w-full max-w-5xl mx-auto bg-[#191919] rounded-2xl shadow-lg mt-8 p-6 md:p-8 lg:p-12">
   <div className="relative w-full aspect-[1199/629] rounded-2xl overflow-hidden mb-8">
     <Image
-      src={post.card.imagen_full || post.card.imagen}
-      alt={post.card.titulo}
+      src={post.imageFull || post.image}
+      alt={post.title}
       fill
       className="object-cover"
       sizes="(max-width: 768px) 100vw, 800px"
@@ -97,14 +77,14 @@ const ContentBlogById = () => {
   </div>
 
   <h2 className="text-[30px] md:text-[38px] leading-[1.3] font-bold text-white mb-6">
-    {post.card.titulo}
+    {post.title}
   </h2>
 
   <div className="flex items-center text-gray-400 text-sm mb-8 gap-3" />
 
   <article
     className="prose prose-invert max-w-none text-gray-200 prose-headings:font-bold prose-h2:text-[30px] prose-h2:leading-[1.4] prose-h3:text-[24px] prose-h3:leading-[1.5] prose-p:text-base prose-p:leading-relaxed"
-    dangerouslySetInnerHTML={{ __html: post.contenido.cuerpo }}
+    dangerouslySetInnerHTML={{ __html: post.content }}
   />
 </SectionWrapper>
 

@@ -3,24 +3,16 @@ import BannerPostById from "./BannerPostById";
 import TalkNowBanner from "./TalkNowBanner";
 import ContentBlogById from "./ContentBlogById";
 import PreviousPosts from "./PreviousPosts";
-
-type Post = {
-  id: number | string;
-  image: string;
-  title: string;
-  description: string;
-  author: string;
-  date: string;
-};
+import type { BlogPostCard } from "@/features/blog/types";
 
 type PostIdPageProps = {
-  allPosts: Post[];
-  currentPostId: number | string;
+  allPosts: BlogPostCard[];
+  currentPostSlug: string;
 };
 
 const MAX_WIDTH = "max-w-[1239px]";
 
-const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostId }) => {
+const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostSlug }) => {
   return (
     <>
       <BannerPostById />
@@ -37,7 +29,7 @@ const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostId }) => {
 
           {/* Columna derecha: artículos anteriores */}
           <aside className="w-full md:w-[340px] lg:w-[380px]">
-            <PreviousPosts posts={allPosts} currentPostId={currentPostId} />
+            <PreviousPosts posts={allPosts} currentPostSlug={currentPostSlug} />
           </aside>
         </div>
 

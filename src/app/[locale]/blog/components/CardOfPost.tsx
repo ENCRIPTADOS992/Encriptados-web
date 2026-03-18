@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type CardOfPostProps = {
-  id: number | string;
+  id: string;
+  slug: string;
   image: string;
   title: string;
   description: string;
@@ -10,12 +12,13 @@ type CardOfPostProps = {
 };
 
 export default function CardOfPost({
-  id,
+  slug,
   image,
   title,
   description,
   author,
 }: CardOfPostProps) {
+  const t = useTranslations("BlogPage");
   return (
     <div className="flex flex-col w-full rounded-2xl shadow-lg overflow-hidden">
       <div className="relative w-full h-40 sm:h-48 md:h-52 lg:h-56">
@@ -47,9 +50,9 @@ export default function CardOfPost({
           </div>
           <Link
             className="text-sm font-medium text-black hover:underline"
-            href={`/blog/${id}`}
+            href={`/blog/${slug}`}
           >
-            Leer más →
+            {t("readMore")} →
           </Link>
         </div>
       </div>

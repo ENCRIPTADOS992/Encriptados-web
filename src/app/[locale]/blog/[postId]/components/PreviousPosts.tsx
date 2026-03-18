@@ -1,38 +1,28 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import CardOfPost from "../../components/CardOfPost";
-
-type Post = {
-  id: number | string;
-  image: string;
-  title: string;
-  description: string;
-  author: string;
-  date: string;
-};
+import type { BlogPostCard } from "@/features/blog/types";
 
 type PreviousPostsProps = {
-  posts: Post[];
-  currentPostId: number | string;
+  posts: BlogPostCard[];
+  currentPostSlug: string;
 };
 
-const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostId }) => {
+const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostSlug }) => {
+  const t = useTranslations("BlogPage");
+
   const currentPost = posts.find(
-    (post) => String(post.id) === String(currentPostId)
+    (post) => post.slug === currentPostSlug,
   );
 
   if (!currentPost) {
-    console.warn(
-      "No se encontró el post actual en la lista de posts",
-      currentPostId,
-      posts
-    );
     return null;
   }
 
   const previousPosts = posts
     .filter(
       (post) =>
-        String(post.id) !== String(currentPostId) &&
+        post.slug !== currentPostSlug &&
         new Date(post.date) < new Date(currentPost.date)
     )
     .sort(
@@ -41,18 +31,13 @@ const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostId }) =
     .slice(0, 3);
 
   if (previousPosts.length === 0) {
-    console.warn(
-      "No se encontraron posts anteriores para el post actual",
-      currentPostId,
-      posts
-    );
     return null;
   }
 
   return (
     <div className="w-full py-12 md:py-16">
       <h3 className="text-[24px] leading-[1.5] font-bold text-white mb-8">
-        Artículos anteriores
+        {t("previousArticles")}
       </h3>
 
       {/* Lista vertical */}
@@ -61,6 +46,7 @@ const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostId }) =
           <CardOfPost
             key={post.id}
             id={post.id}
+            slug={post.slug}
             image={post.image}
             title={post.title}
             description={post.description}

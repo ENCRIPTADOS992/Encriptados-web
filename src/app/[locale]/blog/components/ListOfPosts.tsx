@@ -1,22 +1,36 @@
 import React, { useState } from "react";
 import CardOfPost from "./CardOfPost";
 import SectionWrapper from "@/shared/components/SectionWrapper";
-
-type Post = {
-  id: number | string;
-  image: string;
-  title: string;
-  description: string;
-  author: string;
-};
+import type { BlogPostCard } from "@/features/blog/types";
 
 type ListOfPostsProps = {
-  posts: Post[];
+  posts: BlogPostCard[];
+  loading?: boolean;
 };
 
 const POSTS_PER_PAGE = 6;
 
-const ListOfPosts = ({ posts }: ListOfPostsProps) => {
+function CardSkeleton() {
+  return (
+    <div className="flex flex-col w-full rounded-2xl shadow-lg overflow-hidden animate-pulse">
+      <div className="w-full h-40 sm:h-48 md:h-52 lg:h-56 bg-gray-700" />
+      <div className="flex flex-col flex-grow p-6 bg-white gap-3">
+        <div className="h-6 bg-gray-200 rounded w-3/4" />
+        <div className="h-4 bg-gray-200 rounded w-full" />
+        <div className="h-4 bg-gray-200 rounded w-2/3" />
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded-full bg-gray-300" />
+            <div className="h-3 bg-gray-200 rounded w-20" />
+          </div>
+          <div className="h-4 bg-gray-200 rounded w-16" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const ListOfPosts = ({ posts, loading }: ListOfPostsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
@@ -68,11 +82,19 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
   return (
     <div className="bg-black py-12 md:py-16 lg:py-20">
       <SectionWrapper>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: POSTS_PER_PAGE }).map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
+          </div>
+        ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentPosts.map((post, index) => (
             <CardOfPost
               key={post.id || index}
               id={post.id}
+              slug={post.slug}
               image={post.image}
               title={post.title}
               description={post.description}
@@ -80,6 +102,7 @@ const ListOfPosts = ({ posts }: ListOfPostsProps) => {
             />
           ))}
         </div>
+        )}
 
         {totalPages > 1 && (
           <nav 

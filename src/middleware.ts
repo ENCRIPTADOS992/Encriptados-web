@@ -88,7 +88,7 @@ export async function middleware(
 export const config = {
   matcher: [
     "/", // Raíz del sitio
-    "/(en|es|fr|it|pt|)/:path*", // Soporte para idiomas
+    "/(en|es|fr|it|pt)/:path*", // Soporte para idiomas (solo rutas con prefijo de locale)
     "/((?!api|_next|_vercel|.*\\..*).*)", // Excluye API, rutas internas y archivos estáticos
   ],
 };
