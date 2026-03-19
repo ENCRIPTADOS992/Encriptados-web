@@ -41,6 +41,7 @@ function ModalPaymentControllerInner() {
     kind,
     panelClassName,
     contentClassName,
+    isReady,
   } = useModalPaymentController();
 
   // ── Success state lives here, OUTSIDE ModalPayment ──
@@ -85,7 +86,13 @@ function ModalPaymentControllerInner() {
         <PurchaseKindProvider value={kind}>
           <div className={getModalContentClassName({ mode, kind })}>
             <ModalStack className="ipad:w-full lg:w-full md:mx-0">
-              {renderByMode()}
+              {isReady ? (
+                renderByMode()
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-4 py-16">
+                  <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-emerald-500" />
+                </div>
+              )}
             </ModalStack>
           </div>
         </PurchaseKindProvider>

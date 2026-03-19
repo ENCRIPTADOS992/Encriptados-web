@@ -27,6 +27,8 @@ type UseModalPaymentControllerResult = {
   kind: CategoryKind;
   panelClassName: string;
   contentClassName: string;
+  /** true once the product has loaded and the correct mode has been determined */
+  isReady: boolean;
 };
 
 export function useModalPaymentController(): UseModalPaymentControllerResult {
@@ -44,7 +46,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
 
   const productid = (params as any)?.productid as string | undefined;
 
-  const { data: product } = useQuery({
+  const { data: product, isLoading: isLoadingProduct } = useQuery({
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
@@ -189,20 +191,21 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   }, [search, pathname, isModalOpen, openModal]);
 
   // Track if we've already set the initial mode for this modal session
-  const hasSetInitialMode = React.useRef(false);
+  // Uses state (not ref) so that isReady re-renders when mode is resolved
+  const [modeResolved, setModeResolved] = React.useState(false);
 
   React.useEffect(() => {
-    // Reset the ref when modal closes
+    // Reset when modal closes
     if (!isModalOpen) {
-      hasSetInitialMode.current = false;
+      setModeResolved(false);
       return;
     }
 
-    if (!product || hasSetInitialMode.current) return;
+    if (!product || modeResolved) return;
 
     if (supportOnly) {
       if (mode !== "new_user") setMode("new_user");
-      hasSetInitialMode.current = true;
+      setModeResolved(true);
       return;
     }
 
@@ -211,14 +214,15 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     // Only auto-switch mode on initial load, not on user interaction
     if (wantSimMode && mode !== "sim") {
       setMode("sim");
-      hasSetInitialMode.current = true;
     } else if (!wantSimMode && mode === "sim") {
       setMode("roning_code");
-      hasSetInitialMode.current = true;
-    } else {
-      hasSetInitialMode.current = true;
     }
-  }, [isModalOpen, product, kind, mode, setMode, supportOnly]);
+    setModeResolved(true);
+  }, [isModalOpen, product, kind, mode, setMode, supportOnly, modeResolved]);
+
+  // The modal is "ready" once we've loaded the product and determined the correct mode,
+  // or if there's no productid to fetch at all.
+  const isReady = !productid || (!isLoadingProduct && modeResolved);
 
   const panelClassName = getModalPanelClassName({ mode, kind });
   const contentClassName = getModalContentClassName({ mode, kind });
@@ -231,5 +235,6 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     kind,
     panelClassName,
     contentClassName,
+    isReady,
   };
 }
