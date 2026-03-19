@@ -19,13 +19,11 @@ export default function MobileMenu() {
   const menuItems = [
     { title: t("store.label"), link: "/", badge: t("store.new") },
     { title: t("offers"), link: "/offers" },
-    { title: t("deliveries.label"), link: "/deliveries" },
     { title: t("distributors"), link: "/distributors" },
     { title: t("blogs"), link: "/blog" },
     { title: t("securityTest"), link: "/encrypted-test" },
     { title: t("aboutUs"), link: "/about-us" },
     { title: t("ambassadors"), link: "/ambassadors" },
-    { title: t("locations"), link: "/where-to-find-us" },
   ];
 
   const toggleMenu = () => {
