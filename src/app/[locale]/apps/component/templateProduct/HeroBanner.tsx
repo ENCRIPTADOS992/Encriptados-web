@@ -22,6 +22,14 @@ const HeroBannerUnified: React.FC<HeroBannerProps> = ({ imageUrl, alt = "Banner"
   // Si tablet está vacío, usar mobile como fallback
   const tabletSrc = imageUrl.tablet || mobileSrc;
 
+  const hasImage = desktopSrc || mobileSrc;
+
+  if (!hasImage) {
+    return (
+      <div className="w-full aspect-[16/5] sm:aspect-[16/4] lg:aspect-[16/3] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" />
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

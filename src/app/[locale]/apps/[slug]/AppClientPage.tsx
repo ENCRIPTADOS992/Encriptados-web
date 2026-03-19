@@ -392,7 +392,16 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       />
 
       {!product ? (
-        <div className="min-h-[45vh]" />
+        <div className="min-h-[45vh] max-w-6xl mx-auto px-4 py-12 space-y-6">
+          <div className="h-8 w-2/3 bg-gray-200 rounded-lg animate-pulse" />
+          <div className="h-4 w-full bg-gray-100 rounded animate-pulse" />
+          <div className="h-4 w-5/6 bg-gray-100 rounded animate-pulse" />
+          <div className="h-4 w-4/6 bg-gray-100 rounded animate-pulse" />
+          <div className="flex gap-4 mt-8">
+            <div className="h-48 w-1/2 bg-gray-200 rounded-xl animate-pulse" />
+            <div className="h-48 w-1/2 bg-gray-200 rounded-xl animate-pulse" />
+          </div>
+        </div>
       ) : (
         <>
           <ProductSection
