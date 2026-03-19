@@ -284,13 +284,12 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     );
   }
 
-  // Hero banner images - Priorizar heroBanners del API, solo usar config si API no tiene el campo
-  // Si API devuelve string vacío "", respetarlo (no usar fallback del config)
+  // Hero banner images - Solo desde el API endpoint
   const apiHeroBanners = (product as any)?.heroBanners;
   const heroBannerImages = {
-    desktop: apiHeroBanners?.desktop !== undefined ? apiHeroBanners.desktop : (config?.heroBanners?.desktop || ""),
-    tablet: apiHeroBanners?.tablet !== undefined ? apiHeroBanners.tablet : (config?.heroBanners?.tablet || ""),
-    mobile: apiHeroBanners?.mobile !== undefined ? apiHeroBanners.mobile : (config?.heroBanners?.mobile || ""),
+    desktop: apiHeroBanners?.desktop || "",
+    tablet: apiHeroBanners?.tablet || "",
+    mobile: apiHeroBanners?.mobile || "",
   };
 
   // URLs de video y tiendas de apps - Priorizar datos del backend
@@ -385,11 +384,15 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
   return (
     <main className="bg-white text-black">
-      {/* Hero Banner */}
-      <HeroBanner
-        imageUrl={heroBannerImages}
-        alt={`${product?.name || slug} Hero Banner`}
-      />
+      {/* Hero Banner - solo se muestra cuando hay datos del producto */}
+      {product ? (
+        <HeroBanner
+          imageUrl={heroBannerImages}
+          alt={`${product.name || slug} Hero Banner`}
+        />
+      ) : (
+        <div className="w-full aspect-[16/5] sm:aspect-[16/4] lg:aspect-[16/3] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" />
+      )}
 
       {!product ? (
         <div className="min-h-[45vh] max-w-6xl mx-auto px-4 py-12 space-y-6">
