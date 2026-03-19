@@ -433,11 +433,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {slug === "router-camaleon" && <RouterCamaleon />}
 
-          {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
-
           {slug.includes("galaxia-mdm") && <PrivateAppStore />}
 
           {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
+
+          {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
 
           <PromoSection />
 
