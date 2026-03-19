@@ -435,12 +435,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
 
-          <PromoSection />
-
           {slug.includes("galaxia-mdm") && <PrivateAppStore />}
 
           {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
 
+          <PromoSection />
 
           {faqs.length > 0 && <FAQSection faqs={faqs} title={t("faqTitle")} />}
         </>
