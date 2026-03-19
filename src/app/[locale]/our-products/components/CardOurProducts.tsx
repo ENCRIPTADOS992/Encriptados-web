@@ -45,7 +45,7 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
   const gapClass = isOurProductsPage ? "gap-6" : "gap-4";
 
   return (
-    <div className={`relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 grid grid-cols-1 xl:grid-cols-2 ${gapClass} xl:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1`}>
+    <div className={`px-4 sm:px-0 grid grid-cols-1 xl:grid-cols-2 ${gapClass} xl:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1`}>
       {/* SIM Encriptada → productId = 508 */}
       <CardSimEsim
         title={t("encrypted.title")}
