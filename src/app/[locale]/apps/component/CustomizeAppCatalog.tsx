@@ -5,8 +5,8 @@ import TelegramButton from "@/shared/components/TelegramButton";
 export default function CustomizeAppCatalog() {
     return (
         <section className="w-full bg-white my-0 sm:my-12">
-            <div className="w-full max-w-screen-xl mx-auto px-0 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
-                <div className="relative w-full overflow-hidden mx-auto aspect-[4/5] sm:aspect-square lg:aspect-[1272/541] rounded-none sm:rounded-[44px] bg-black text-white flex flex-col lg:flex-row">
+            <div className="w-full max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
+                <div className="relative w-full overflow-hidden mx-auto aspect-[4/5] sm:aspect-square lg:aspect-[1272/541] rounded-2xl sm:rounded-[44px] bg-black text-white flex flex-col lg:flex-row">
 
                     {/* Image Container - Background on Mobile/Tablet, Right side on Desktop */}
                     <div className="absolute inset-0 z-0 lg:relative lg:order-2 lg:w-1/2 lg:inset-auto">
