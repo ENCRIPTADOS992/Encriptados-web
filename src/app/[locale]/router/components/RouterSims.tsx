@@ -30,7 +30,7 @@ const RouterSims = () => {
   return (
     <section className="bg-[#F7FAFC] py-10 px-4 lg:px-20 lg:min-h-[500px] flex items-center">
       <div className="max-w-7xl mx-auto w-full">
-        <div className="relative w-screen left-1/2 -translate-x-1/2 sm:static sm:w-auto sm:left-0 sm:translate-x-0 grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-2 mt-0 sm:mt-1 mb-0 sm:mb-1">
           {/* SIM Encriptada → productId = 508 */}
           <CardSimEsim
             title={t("encrypted.title")}
