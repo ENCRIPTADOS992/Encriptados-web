@@ -42,22 +42,22 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
           menuClassName="bg-[#222222] border-none p-2 rounded-xl max-h-[60vh] overflow-y-auto"
           menuButton={
             <MenuButton
-              className={`flex items-center justify-between border rounded-2xl shadow-md p-4 w-full transition duration-150 ease-in-out ${selectedItem
+              className={`flex items-center justify-between border rounded-2xl shadow-md p-4 h-[56px] w-full transition duration-150 ease-in-out ${selectedItem
                 ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
                 : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
                 }`}
             >
-              <span className="flex items-center gap-x-2">
+              <span className="flex items-center gap-x-2 min-w-0 overflow-hidden">
                 {selectedItem &&
                   options.find((option) => option.value === selectedItem)?.icon}
-                <span>
+                <span className="truncate">
                   {selectedItem
                     ? options.find((option) => option.value === selectedItem)
                       ?.label || t("filterProducts.selectPlacerholder")
                     : t("filterProducts.selectPlacerholder")}
                 </span>
               </span>
-              <ChevronDown className="w-4 h-4 ml-2 opacity-60" />
+              <ChevronDown className="w-4 h-4 ml-2 flex-shrink-0 opacity-60" />
             </MenuButton>
           }
         >

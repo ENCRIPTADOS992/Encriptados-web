@@ -251,9 +251,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         /cambio\s+imsi/i
       ],
       minuterecharge: [
-        /^(minutos?\s+)?(recarga|recharge|ricarica)/i,
-        /^(recharge|ricarica)\s+minutes?/i,
-        /^recarga\s+minut/i
+        /^minutos?\s+(recarga|recharge|ricarica)/i,
+        /^(recarga|recharge|ricarica)\s+minut/i,
+        /^(recharge|ricarica)\s+minutes?$/i,
       ],
       eSimMinutes: [
         /^esim\s*\+?\s*(recarga\s+)?minut(os|es|i|s)?/i,
