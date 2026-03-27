@@ -48,7 +48,7 @@ const BannerOurProductsMobile = () => {
         <Typography
           variant="h1"
           as="h1"
-          className="text-2xl leading-snug"
+          className="text-xl leading-snug"
         >
           <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}
           <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>{" "}
