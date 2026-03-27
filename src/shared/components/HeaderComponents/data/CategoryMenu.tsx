@@ -150,7 +150,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Secure MDM iPhone",
           }),
           image:
-            "/images/mega-menu/sistemas/SecureMDM-IOS_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/SecureMDM-IOS_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Secure MDM iPhone"),
           description: t("systems.items.secureMdmIphone.description", {
             defaultValue:
@@ -162,7 +162,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Secure MDM Android",
           }),
           image:
-            "/images/mega-menu/sistemas/SecureMDM-android_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/SecureMDM-android_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Secure MDM Android"),
           description: t("systems.items.secureMdmAndroid.description", {
             defaultValue:
@@ -174,7 +174,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Cryptcom",
           }),
           image:
-            "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Cryptcom"),
           description: t("systems.items.cryptcom.description", {
             defaultValue: "Cryptcom es una aplicación de mensajería segura.",
@@ -183,7 +183,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("systems.items.renati.title", { defaultValue: "Renati" }),
           image:
-            "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Renati"),
           description: t("systems.items.renati.description", {
             defaultValue: "Renati es una aplicación de mensajería segura.",
@@ -194,7 +194,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "ChatMail",
           }),
           image:
-            "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("ChatMail"),
           description: t("systems.items.chatMail.description", {
             defaultValue: "ChatMail es una aplicación de mensajería segura.",
@@ -205,7 +205,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "SecureCrypt",
           }),
           image:
-            "/images/mega-menu/sistemas/SecureCrypt.jpg",
+            "/images/mega-menu/sistemas/SecureCrypt.webp",
           link: getAppUrl("SecureCrypt"),
           description: t("systems.items.secureCrypt.description", {
             defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
@@ -216,7 +216,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Armadillo",
           }),
           image:
-            "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Armadillo"),
           description: t("systems.items.armadillo.description", {
             defaultValue: "Armadillo es una aplicación de mensajería segura.",
@@ -227,7 +227,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "VaultChat",
           }),
           image:
-            "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.webp",
           link: "/apps/vault-chat-v2",
           description: t("systems.items.vaultChat.description", {
             defaultValue: "VaultChat es una aplicación de mensajería segura.",
@@ -236,7 +236,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("systems.items.ultraX.title", { defaultValue: "Ultra X" }),
           image:
-            "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Ultra X"),
           description: t("systems.items.ultraX.description", {
             defaultValue: "Ultra X es una aplicación de mensajería segura.",
@@ -259,7 +259,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "DEC Secure",
           }),
           image:
-            "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("DEC Secure"),
           description: t("systems.items.decSecure.description", {
             defaultValue: "DEC Secure es una aplicación de mensajería segura.",
