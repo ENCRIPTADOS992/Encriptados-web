@@ -19,7 +19,13 @@ const BannerOurProductsMobile = () => {
   };
 
   return (
-    <section className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden bg-black text-white">
+    <section
+      className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden text-white"
+      style={{
+        background:
+          "radial-gradient(circle at 75% -40%, #7EE0FF 0%, rgb(37, 191, 238) 15%, #000 55%)",
+      }}
+    >
       {/* Fondo de puntos */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -31,50 +37,37 @@ const BannerOurProductsMobile = () => {
         />
       </div>
 
-      {/* Imagen de la persona */}
-      <div className="relative z-10 w-full h-64 xs:h-72 sm:h-80 mb-[-40px] xs:mb-[-50px]">
-        <Image
-          src="/images/our-products/070e8ce9e05a772be2fda80c02b3733778db1afd.png"
-          alt="Persona hablando"
-          fill
-          objectFit="contain"
-          objectPosition="top"
-          priority
-          style={{ filter: "saturate(1.2)" }}
-        />
-      </div>
-
-      {/* Texto + Botón */}
-      <div className="relative z-20 flex flex-col items-center px-4 xs:px-6 pt-4 xs:pt-6 pb-6 xs:pb-8 space-y-3 xs:space-y-4">
+      {/* Contenido */}
+      <div className="relative z-10 flex flex-col items-start px-6 pt-10 pb-10 space-y-4">
         {/* Badge */}
-        <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-3 xs:px-4 py-1 rounded-full text-xs xs:text-sm font-semibold">
+        <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 py-1 rounded-full text-xs font-semibold">
           {t("banner.securityFromStartToEnd")}
         </div>
-        
+
         {/* Título */}
-        <Typography 
-          variant="h2" 
-          as="h1" 
-          className="text-2xl xs:text-3xl text-center leading-tight xs:leading-snug"
+        <Typography
+          variant="h1"
+          as="h1"
+          className="text-3xl leading-tight"
         >
           <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}
           <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>{" "}
           <span className="text-[#0AB4E9]">{t("banner.titleNewInComunication")}</span>
         </Typography>
-        
+
         {/* Descripción */}
-        <Paragraph 
-          variant="body" 
-          color="secondary" 
-          className="text-sm xs:text-base text-center max-w-xs xs:max-w-sm"
+        <Paragraph
+          variant="body"
+          color="secondary"
+          className="text-sm leading-relaxed"
         >
           {t("banner.descriptionNew")}
         </Paragraph>
-        
+
         {/* Botón CTA */}
-        <div className="pt-2">
+        <div className="pt-1">
           <Button
-            intent="light"
+            intent="ghost"
             size="md"
             icon={<MdShoppingBag size={20} />}
             iconPosition="left"
@@ -82,7 +75,7 @@ const BannerOurProductsMobile = () => {
               scrollToSection("buysimappsection");
               setValue("selectedOption", "sim");
             }}
-            className="text-[#00485E] hover:bg-[#00b0dd] hover:text-white"
+            className="text-white hover:bg-white/10"
           >
             {t("banner.goToStore")}
           </Button>
