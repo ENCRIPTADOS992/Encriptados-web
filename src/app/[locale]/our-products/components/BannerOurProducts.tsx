@@ -34,7 +34,7 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Contenido de texto */}
-        <div className="flex-1 text-white space-y-3 sm:space-y-4 px-2 sm:px-0 text-center lg:text-left z-10 w-full lg:max-w-xl flex flex-col items-center lg:items-start">
+        <div className="flex-1 text-white space-y-3 sm:space-y-4 px-2 sm:px-0 text-left z-10 w-full lg:max-w-xl">
           {/* Badge */}
           <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 sm:px-6 py-1 rounded-full text-xs sm:text-sm font-medium w-fit">
             {t("banner.securityFromStartToEnd")}
@@ -55,7 +55,7 @@ const BannerOurProducts = () => {
           <Paragraph 
             variant="body" 
             color="secondary" 
-            className="text-sm sm:text-base lg:max-w-xl text-center lg:text-left"
+            className="text-sm sm:text-base lg:max-w-xl text-left"
           >
             {t("banner.descriptionNew")}
           </Paragraph>

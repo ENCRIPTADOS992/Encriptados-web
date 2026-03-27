@@ -38,7 +38,7 @@ const BannerOurProductsMobile = () => {
       </div>
 
       {/* Contenido */}
-      <div className="relative z-10 flex flex-col items-center px-6 py-16 space-y-4 text-center">
+      <div className="relative z-10 flex flex-col items-start px-6 py-16 space-y-4">
         {/* Badge */}
         <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 py-1 rounded-full text-xs font-semibold">
           {t("banner.securityFromStartToEnd")}
@@ -48,7 +48,7 @@ const BannerOurProductsMobile = () => {
         <Typography
           variant="h1"
           as="h1"
-          className="text-xl leading-snug text-center"
+          className="text-xl leading-snug"
         >
           <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}
           <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>{" "}
@@ -59,7 +59,7 @@ const BannerOurProductsMobile = () => {
         <Paragraph
           variant="body"
           color="secondary"
-          className="text-sm leading-relaxed text-center"
+          className="text-sm leading-relaxed"
         >
           {t("banner.descriptionNew")}
         </Paragraph>
