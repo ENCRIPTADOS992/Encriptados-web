@@ -140,10 +140,38 @@ export function useTranslatedProductsCategories(): any {
       image: "/images/mega-menu/sistemas.webp",
       items: [
         {
+          title: "Zi0n",
+          image: "/images/mega-menu/sistemas/galaxia.webp",
+          link: getAppUrl("Zi0n"),
+          description: "Zi0n es un sistema de seguridad encriptado.",
+        },
+        {
           title: "Galaxia MDM Iphone",
           image: "/images/mega-menu/sistemas/galaxia.webp",
           link: "/apps/galaxia-mdm?productId=61085",
           description: "Galaxia MDM Iphone es una solución de gestión de dispositivos móviles.",
+        },
+        {
+          title: t("systems.items.cryptcom.title", {
+            defaultValue: "Cryptcom",
+          }),
+          image:
+            "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.webp",
+          link: getAppUrl("Cryptcom"),
+          description: t("systems.items.cryptcom.description", {
+            defaultValue: "Cryptcom es una aplicación de mensajería segura.",
+          }),
+        },
+        {
+          title: t("systems.items.secureCrypt.title", {
+            defaultValue: "SecureCrypt",
+          }),
+          image:
+            "/images/mega-menu/sistemas/SecureCrypt.webp",
+          link: getAppUrl("SecureCrypt"),
+          description: t("systems.items.secureCrypt.description", {
+            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
+          }),
         },
         {
           title: t("systems.items.secureMdmIphone.title", {
@@ -170,17 +198,6 @@ export function useTranslatedProductsCategories(): any {
           }),
         },
         {
-          title: t("systems.items.cryptcom.title", {
-            defaultValue: "Cryptcom",
-          }),
-          image:
-            "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.webp",
-          link: getAppUrl("Cryptcom"),
-          description: t("systems.items.cryptcom.description", {
-            defaultValue: "Cryptcom es una aplicación de mensajería segura.",
-          }),
-        },
-        {
           title: t("systems.items.renati.title", { defaultValue: "Renati" }),
           image:
             "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.webp",
@@ -198,17 +215,6 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("ChatMail"),
           description: t("systems.items.chatMail.description", {
             defaultValue: "ChatMail es una aplicación de mensajería segura.",
-          }),
-        },
-        {
-          title: t("systems.items.secureCrypt.title", {
-            defaultValue: "SecureCrypt",
-          }),
-          image:
-            "/images/mega-menu/sistemas/SecureCrypt.webp",
-          link: getAppUrl("SecureCrypt"),
-          description: t("systems.items.secureCrypt.description", {
-            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
           }),
         },
         {

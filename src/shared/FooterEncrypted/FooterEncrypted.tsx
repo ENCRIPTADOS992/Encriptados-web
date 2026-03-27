@@ -119,13 +119,14 @@ export default function FooterEncrypted() {
     { name: "VNClagoon", href: getAppUrl("VNC Lagoon") },
   ];
   const sistemasLinks = [
+    { name: "Zi0n", href: getAppUrl("Zi0n") },
     { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=61085" },
+    { name: "Cryptcom", href: getAppUrl("Cryptcom") },
+    { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
     { name: "Secure MDM iPhone", href: getAppUrl("Secure MDM iPhone") },
     { name: "Secure MDM Android", href: getAppUrl("Secure MDM Android") },
-    { name: "Cryptcom", href: getAppUrl("Cryptcom") },
     { name: "Renati", href: getAppUrl("Renati") },
     { name: "ChatMail", href: getAppUrl("ChatMail") },
-    { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
     { name: "Armadillo", href: getAppUrl("Armadillo") },
     { name: "VaultChat", href: "/apps/vault-chat-v2" },
     { name: "Ultra X", href: getAppUrl("Ultra X") },
