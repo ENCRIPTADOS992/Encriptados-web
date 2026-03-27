@@ -19,9 +19,9 @@ const BannerOurProducts = () => {
   };
 
   return (
-    <div className="relative w-full py-4 sm:py-6 md:py-8 flex justify-center items-center">
+    <div className="relative w-full py-8 sm:py-12 md:py-14 flex justify-center items-center">
       {/* Contenedor tipo tarjeta */}
-      <div className="relative w-full max-w-screen-xl mx-auto bg-[#090909] rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col lg:flex-row justify-between items-center gap-6 sm:gap-8 overflow-hidden">
+      <div className="relative w-full max-w-screen-xl mx-auto bg-[#090909] rounded-2xl sm:rounded-3xl p-6 sm:p-10 md:p-12 lg:p-10 flex flex-col lg:flex-row justify-between items-center gap-6 sm:gap-8 overflow-hidden">
         {/* Fondo de puntos detrás del texto */}
         <div className="absolute top-0 left-0 h-full w-full z-0">
           <Image
@@ -34,7 +34,7 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Contenido de texto */}
-        <div className="flex-1 text-white space-y-3 sm:space-y-4 px-2 sm:px-0 text-left z-10 w-full lg:max-w-xl">
+        <div className="flex-1 text-white space-y-3 sm:space-y-4 px-2 sm:px-0 text-center lg:text-left z-10 w-full lg:max-w-xl flex flex-col items-center lg:items-start">
           {/* Badge */}
           <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 sm:px-6 py-1 rounded-full text-xs sm:text-sm font-medium w-fit">
             {t("banner.securityFromStartToEnd")}
@@ -55,7 +55,7 @@ const BannerOurProducts = () => {
           <Paragraph 
             variant="body" 
             color="secondary" 
-            className="text-sm sm:text-base lg:max-w-xl text-left sm:text-justify"
+            className="text-sm sm:text-base lg:max-w-xl text-center lg:text-left"
           >
             {t("banner.descriptionNew")}
           </Paragraph>
@@ -79,7 +79,7 @@ const BannerOurProducts = () => {
         </div>
 
         {/* Imagen de persona */}
-        <div className="flex-1 w-full max-w-xs sm:max-w-sm md:max-w-md z-10 relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[450px] translate-y-6 sm:translate-y-8 lg:translate-y-10">
+        <div className="hidden lg:flex flex-1 w-full max-w-xs sm:max-w-sm md:max-w-md z-10 relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[450px] translate-y-6 sm:translate-y-8 lg:translate-y-10">
           <Image
             src="/images/our-products/070e8ce9e05a772be2fda80c02b3733778db1afd.png"
             alt="Persona hablando"
