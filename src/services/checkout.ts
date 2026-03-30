@@ -68,7 +68,7 @@ export interface CheckoutRenewalInput {
 const WP_BASE =
   (process.env.NEXT_PUBLIC_WP_API || 'https://encriptados.es/wp-json').replace(/\/$/, '');
 
-const BASE = `${WP_BASE}/encriptados/v3`;
+const BASE = `${WP_BASE}/encriptados/v1`;
 
 const omitUndefined = (obj: Record<string, any>) => {
   const out: Record<string, any> = {};
@@ -93,10 +93,10 @@ export const CheckoutService = {
     const months = lt == null ? undefined : (typeof lt === 'string' ? parseInt(lt) || undefined : lt || undefined);
     const extended = omitUndefined({ ...minimal, ...input, months });
     try {
-      return await api.post<CheckoutResponse>(`${BASE}/orders`, { type: 'userid', ...extended });
+      return await api.post<CheckoutResponse>(`${BASE}/orders/userid`, extended);
     } catch (e: any) {
       if (e?.status === 400 || e?.status === 422) {
-        return await api.post<CheckoutResponse>(`${BASE}/orders`, { type: 'userid', ...minimal });
+        return await api.post<CheckoutResponse>(`${BASE}/orders/userid`, minimal);
       }
       throw e;
     }
@@ -116,10 +116,10 @@ export const CheckoutService = {
     const months = lt == null ? undefined : (typeof lt === 'string' ? parseInt(lt) || undefined : lt || undefined);
     const extended = omitUndefined({ ...minimal, ...input, months });
     try {
-      return await api.post<CheckoutResponse>(`${BASE}/orders`, { type: 'roaming', ...extended });
+      return await api.post<CheckoutResponse>(`${BASE}/orders/roaming`, extended);
     } catch (e: any) {
       if (e?.status === 400 || e?.status === 422) {
-        return await api.post<CheckoutResponse>(`${BASE}/orders`, { type: 'roaming', ...minimal });
+        return await api.post<CheckoutResponse>(`${BASE}/orders/roaming`, minimal);
       }
       throw e;
     }
@@ -138,6 +138,6 @@ export const CheckoutService = {
       coupon_code: input.coupon_code,
       discount: input.discount,
     });
-    return await api.post<CheckoutResponse>(`${BASE}/orders`, { type: 'renewal', ...payload });
+    return await api.post<CheckoutResponse>(`${BASE}/orders/renewal`, payload);
   },
 };

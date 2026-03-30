@@ -38,17 +38,7 @@ export async function tottoliCheckout(
 ): Promise<TottoliOkResponse> {
   console.log("➡️ [tottoliCheckout] payload enviado:", payload);
 
-  const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-  const url = `${WP_API}/encriptados/v3/orders`;
-
-  // Map tottoli-specific method to v3 payment_provider
-  const paymentProvider = payload.method === "card" ? "stripe" : "cryptomus";
-  const v3Payload = {
-    type: "tottoli",
-    payment_provider: paymentProvider,
-    ...payload,
-  };
-
+  const url = "https://encriptados.es/wp-json/encriptados/v1/tottoli/checkout";
   const doPost = async (body: any) =>
     fetch(url, {
       method: "POST",
@@ -56,7 +46,7 @@ export async function tottoliCheckout(
       body: JSON.stringify(body),
     });
 
-  let res = await doPost(v3Payload);
+  let res = await doPost(payload);
 
   const raw = await res.text();
   console.log("⬅️ [tottoliCheckout] status:", res.status);

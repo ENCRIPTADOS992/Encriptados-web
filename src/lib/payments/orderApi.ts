@@ -1,6 +1,6 @@
 // src/payments/orderApi.ts
 const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-const API_BASE_URL = `${WP_API}/encriptados/v3`;
+const API_BASE_URL = `${WP_API}/encriptados/v1`;
 
 export type OrderType = "roaming" | "userid";
 
@@ -80,7 +80,7 @@ export async function createOrderAndIntent({
   client_secret: string;
   payment_url?: string | null;
 }> {
-  const url = `${API_BASE_URL}/orders`;
+  const url = `${API_BASE_URL}/orders/roaming`;
 
   const minimal = omitUndefined({
     product_id: productId,
@@ -104,7 +104,7 @@ export async function createOrderAndIntent({
     meta,
   });
 
-  const data: any = await postJsonWithFallback(url, { type: 'roaming', ...extended }, { type: 'roaming', ...minimal });
+  const data: any = await postJsonWithFallback(url, extended, minimal);
   if (!data?.order_id || !data?.client_secret) throw new Error("Respuesta inválida: falta order_id o client_secret");
   return data;
 }
@@ -159,7 +159,7 @@ export async function createUserIdOrderAndIntent({
   client_secret: string;
   payment_url?: string | null;
 }> {
-  const url = `${API_BASE_URL}/orders`;
+  const url = `${API_BASE_URL}/orders/userid`;
 
   const minimal = omitUndefined({
     product_id: productId,
@@ -187,7 +187,7 @@ export async function createUserIdOrderAndIntent({
     meta,
   });
 
-  const data: any = await postJsonWithFallback(url, { type: 'userid', ...extended }, { type: 'userid', ...minimal });
+  const data: any = await postJsonWithFallback(url, extended, minimal);
   if (!data?.order_id || !data?.client_secret) throw new Error("Respuesta inválida: falta order_id o client_secret");
   return data;
 }
@@ -241,10 +241,9 @@ export async function createRenewalOrder({
   client_secret: string;
   payment_url?: string | null;
 }> {
-  const url = `${API_BASE_URL}/orders`;
+  const url = `${API_BASE_URL}/orders/renewal`;
 
   const payload = omitUndefined({
-    type: 'renewal',
     product_id: productId,
     license_ids: licenseIds,
     email,

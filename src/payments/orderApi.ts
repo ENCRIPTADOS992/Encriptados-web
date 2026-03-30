@@ -1,6 +1,6 @@
 // src/payments/orderApi.ts
 const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-export const API_BASE_URL = `${WP_API}/encriptados/v3`;
+export const API_BASE_URL = `${WP_API}/encriptados/v1`;
 
 const USE_CREDENTIALS = false;
 
@@ -14,28 +14,25 @@ export async function createOrderAndIntent(params: {
   amountUsd: number;
 }) {
   const { orderType, productId, email, quantity, amountUsd } = params;
-  const url = `${API_BASE_URL}/orders`;
+  const url = `${API_BASE_URL}/orders/${orderType}`;
   const safeAmount = Math.max(Number(amountUsd || 0), 0.5);
 
-  const body = JSON.stringify({
-    type: orderType,
-    product_id: productId,
-    email: email.trim(),
-    payment_provider: "stripe",
-    quantity: quantity,
-    qty: quantity,
-    amount: safeAmount,
-    currency: "USD",
-  });
+  const form = new URLSearchParams();
+  form.set("product_id", String(productId));
+  form.set("email", email.trim());
+  form.set("payment_provider", "stripe");
+  form.set("order_type", orderType);
+  form.set("quantity", String(quantity));
+  form.set("qty", String(quantity));
+  form.set("amount", String(safeAmount));
+  form.set("amount_cents", String(Math.round(safeAmount * 100)));
+  form.set("currency", "USD");
+  form.set("provider", "stripe");
+  form.set("method", "stripe");
 
   let respText = ""; let status = 0;
   try {
-    const r = await fetch(url, {
-      method: "POST",
-      credentials: USE_CREDENTIALS ? "include" : "omit",
-      headers: { "Content-Type": "application/json" },
-      body,
-    });
+    const r = await fetch(url, { method: "POST", credentials: USE_CREDENTIALS ? "include" : "omit", body: form });
     status = r.status; respText = await r.text();
     const data = respText ? JSON.parse(respText) : {};
     if (!r.ok) throw new Error(data?.message || data?.error || "Error creando la orden");
