@@ -141,7 +141,7 @@ export function useTranslatedProductsCategories(): any {
       items: [
         {
           title: "Zi0n",
-          image: "/images/mega-menu/sistemas/galaxia.webp",
+          image: "/images/mega-menu/sistemas/zi0n.webp",
           link: getAppUrl("Zi0n"),
           description: "Zi0n es un sistema de seguridad encriptado.",
         },
@@ -253,7 +253,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Intact Phone",
           }),
           image:
-            "/images/mega-menu/sistemas/IntacPhone_Sistemas_Encriptados_preview_menu_web.jpg",
+            "/images/mega-menu/sistemas/IntacPhone_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Intact Phone"),
           description: t("systems.items.intactPhone.description", {
             defaultValue:
