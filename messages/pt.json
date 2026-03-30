@@ -1274,6 +1274,12 @@
   "RechargeSim": {
     "errorInput": "Deve ser um número de telefone válido com pelo menos 6 dígitos."
   },
+  "AppsPage": {
+    "manageYourApps": {
+      "title": "Gerencie seus aplicativos",
+      "description": "Oferece um catálogo de aplicativos focados na comunicação segura e ferramentas projetadas para reforçar a proteção e a privacidade do usuário."
+    }
+  },
   "appsShared": {
     "encryptedSim": {
       "title": "Cartão SIM criptografado",

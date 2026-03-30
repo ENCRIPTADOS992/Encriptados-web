@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function ManageYourApps() {
+  const t = useTranslations("AppsPage.manageYourApps");
   return (
     <section className="w-full bg-white my-0 sm:my-12">
       <div className="w-full max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
@@ -18,12 +20,10 @@ export default function ManageYourApps() {
             {/* Left text */}
             <div className="mb-6 md:mb-0 flex flex-block shrink-0 flex-col justify-center items-center md:items-start text-center md:text-left gap-3 px-8 pt-10 pb-2 md:flex-1 md:gap-4 md:py-10 md:px-12 lg:px-16">
               <h2 className="text-balance text-xl font-bold tracking-tight text-white sm:text-2xl md:text-3xl">
-                Gestiona tus apps
+                {t("title")}
               </h2>
               <p className="max-w-md text-sm leading-relaxed text-white/70 sm:text-base md:text-lg lg:text-xl">
-                Ofrece un catálogo de aplicaciones enfocadas en la comunicación
-                segura y en herramientas diseñadas para reforzar la protección y
-                privacidad del usuario.
+                {t("description")}
               </p>
             </div>
 
