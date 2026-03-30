@@ -3,11 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/features/products/types/AllProductsResponse";
 
+const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
+
 const MINUTES_PACKS_URL =
-  "https://encriptados.es/wp-json/encriptados/v1/tottoli/rest/packs?perPage=50&page=1";
+  `${WP_API}/encriptados/v3/tottoli/packs?perPage=50&page=1`;
 
 const DATA_PACKS_URL =
-  "https://encriptados.es/wp-json/encriptados/v1/tottoli/rest/dataPacks?perPage=50&page=1";
+  `${WP_API}/encriptados/v3/tottoli/data-packs?perPage=50&page=1`;
 
 type MinutePackApi = {
   id: number;

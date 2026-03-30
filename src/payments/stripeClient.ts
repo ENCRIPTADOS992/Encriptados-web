@@ -143,7 +143,7 @@ export async function confirmCardPayment(
   if (process.env.NODE_ENV === "development" && paymentIntent.status === "succeeded" && paymentIntent.id) {
     try {
       const wpApi = process.env.NEXT_PUBLIC_WP_API ?? "";
-      await fetch(`${wpApi}/encriptados/v1/payments/stripe`, {
+      await fetch(`${wpApi}/encriptados/v3/stripe/webhook`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ provider_ref: paymentIntent.id, status: "paid" }),

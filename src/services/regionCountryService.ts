@@ -21,14 +21,14 @@ export interface RegionResponse {
 }
 
 export async function fetchRegions(): Promise<Region[]> {
-  const res = await fetch(`${BASE_URL}/encriptados/v1/regions`);
+  const res = await fetch(`${BASE_URL}/encriptados/v3/regions`);
   if (!res.ok) throw new Error("Error fetching regions");
   return res.json();
 }
 
 
 export async function fetchCountries(regionId: number): Promise<{ id: string; name: string }[]> {
-  const res = await fetch(`${BASE_URL}/encriptados/v1/regions/${regionId}`);
+  const res = await fetch(`${BASE_URL}/encriptados/v3/regions/${regionId}`);
   if (!res.ok) throw new Error(`Error fetching countries for region ${regionId}`);
   const data: RegionResponse = await res.json();
   return data.countries;

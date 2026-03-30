@@ -13,7 +13,7 @@ const FeaturedProductCard = () => {
     const fetchPrice = async () => {
       try {
         const response = await fetch(
-          "https://encriptados.es/wp-json/encriptados/v1/products/by-category-language?category_id=35&lang=es&sim_region=global"
+          (process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json") + "/encriptados/v3/store/products?category_id=35&lang=es&sim_region=global"
         );
         const data = await response.json();
         const renatiProduct = data.products.find(

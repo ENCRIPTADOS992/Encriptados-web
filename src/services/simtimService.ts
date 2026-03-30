@@ -17,7 +17,7 @@ export type Country = {
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SIMTIM_BASEURL ??
-  "https://encriptados.es/wp-json/encriptados/v1/simtim";
+  "https://encriptados.es/wp-json/encriptados/v3/simtim";
 
 async function safeGet<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {

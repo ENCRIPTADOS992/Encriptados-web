@@ -29,8 +29,9 @@ const fetchProductsByCategory = async (
   lang: string
 ): Promise<Product[]> => {
   try {
+    const wpApi = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
     const response = await fetch(
-      `https://encriptados.es/wp-json/encriptados/v1/products/by-category-language?category_id=${categoryId}&lang=${lang}`
+      `${wpApi}/encriptados/v3/store/products?category_id=${categoryId}&lang=${lang}`
     );
     if (!response.ok) return [];
     const data = await response.json();

@@ -14,8 +14,8 @@ export async function GET(request: Request) {
 
     const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
 
-    // Public endpoint: GET /wp-json/encriptados/v1/coupon/validate
-    let endpoint = `${WP_API}/encriptados/v1/coupon/validate?code=${encodeURIComponent(code)}`;
+    // Public endpoint: GET /wp-json/encriptados/v3/coupon/validate
+    let endpoint = `${WP_API}/encriptados/v3/coupon/validate?code=${encodeURIComponent(code)}`;
     if (productId) {
         endpoint += `&product_id=${encodeURIComponent(productId)}`;
     }

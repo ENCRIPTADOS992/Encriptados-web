@@ -37,14 +37,14 @@ export const getAllProducts = async (
 
     console.log("➡️ [getAllProducts] Requesting:", {
       baseURL: api.defaults.baseURL,
-      url: "/encriptados/v1/products/by-category-language",
+      url: "/encriptados/v3/store/products",
       params
     });
 
     const response = await api.get<{
       message: string;
       products: Record<string, Product>;
-    }>("/encriptados/v1/products/by-category-language", {
+    }>("/encriptados/v3/store/products", {
       params,
     });
     const rawProducts = response.data.products;
@@ -89,7 +89,7 @@ export const getProductById = async (
     if (options?.provider) params.provider = options.provider;
 
     const response = await api.get<ProductById>(
-      `/encriptados/v1/products/${encodeURIComponent(productId)}`,
+      `/encriptados/v3/store/product/${encodeURIComponent(productId)}`,
       {
         params,
       }
@@ -146,7 +146,7 @@ export type EsimConfig = {
 
 export const getEsimConfig = async (): Promise<EsimConfig> => {
   try {
-    const response = await api.get<EsimConfig>("/encriptados/v1/costs/esim-config");
+    const response = await api.get<EsimConfig>("/encriptados/v3/store/esim-config");
     return response.data;
   } catch (error) {
     console.error("Error en getEsimConfig:", error);

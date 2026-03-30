@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form";
 import Loader from "@/shared/components/Loader";
 import CardProduct from "@/app/[locale]/our-products/components/CardProduct";
 
-const API_BASE = "https://encriptados.es/wp-json/encriptados/v1/products/by-category-language";
+const API_BASE = (process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json") + "/encriptados/v3/store/products";
 
 const ListOfOffers = () => {
   const o = useTranslations("OffersPage");
