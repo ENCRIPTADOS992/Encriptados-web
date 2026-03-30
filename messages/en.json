@@ -1394,6 +1394,12 @@
   "RechargeSim": {
     "errorInput": "Must be a valid phone number with at least 6 digits."
   },
+  "AppsPage": {
+    "manageYourApps": {
+      "title": "Manage your apps",
+      "description": "Offers a catalog of applications focused on secure communication and tools designed to strengthen the user's protection and privacy."
+    }
+  },
   "appsShared": {
     "encryptedSim": {
       "title": "Encrypted SIM Card",
