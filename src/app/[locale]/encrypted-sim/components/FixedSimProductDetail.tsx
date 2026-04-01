@@ -58,7 +58,7 @@ const FixedSimProductDetail: React.FC = () => {
             gap-6
           ">
           <CardDescriptionSimInfo
-            features={product.checks?.map((adv) => adv.name) || []}
+            features={product.checks?.map((adv: { name: string }) => adv.name) || []}
             priceRange={`${product.price}$`}
             headerTitle={product.name}
             id={product.id}
