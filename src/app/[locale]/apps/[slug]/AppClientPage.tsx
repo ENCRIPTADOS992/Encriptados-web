@@ -15,6 +15,7 @@ import FAQSection from "../component/templateProduct/FAQSection";
 import StickyPriceBanner from "../component/templateProduct/StickyPriceBanner";
 import RouterCamaleon from "../component/RouterCamaleon";
 import PrivateAppStore from "../component/PrivateAppStore";
+import ManageYourApps from "../component/ManageYourApps";
 import CustomizeAppCatalog from "../component/CustomizeAppCatalog";
 
 // Hooks y servicios
@@ -446,6 +447,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           {slug === "router-camaleon" && <RouterCamaleon />}
 
           {slug.includes("galaxia-mdm") && <PrivateAppStore />}
+
+          {slug.includes("zi0n") && <ManageYourApps />}
 
           {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
 

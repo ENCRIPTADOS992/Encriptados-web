@@ -1257,6 +1257,12 @@
   "RechargeSim": {
     "errorInput": "Debe ser un número de teléfono válido con al menos 6 dígitos."
   },
+  "AppsPage": {
+    "manageYourApps": {
+      "title": "Gestisci le tue app",
+      "description": "Offre un catalogo di applicazioni incentrate sulla comunicazione sicura e strumenti progettati per rafforzare la protezione e la privacy dell'utente."
+    }
+  },
   "appsShared": {
     "encryptedSim": {
       "title": "eSIM Encriptada",
