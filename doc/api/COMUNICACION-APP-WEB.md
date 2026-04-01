@@ -84,6 +84,64 @@ Se dispara cuando el usuario (con `from=user`) presiona **cualquier botón de so
 ```
 **Acción esperada en la App:** La app intercepta la acción y puede diferenciarlo del soporte genérico para mostrar un flujo específico de onboarding de distribuidores, chat dedicado, o el flujo que considere adecuado.
 
+### Evento D: `OPEN_SIMS`
+Se dispara cuando el usuario (con `from=user`) presiona el botón **"SIM's"** en el menú flotante (`GlobalFloatingMenu`), visible al hacer scroll en cualquier página donde esté integrado (distribuidores, blog, noticias, embajadores, etc.).
+
+**Condición para dispararse:**
+*   `window.ReactNativeWebView` está presente.
+*   El contexto fue registrado con `from=user`.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_SIMS"
+}
+```
+**Acción esperada en la App:** La app navega o filtra a la sección de SIMs dentro de su vista de productos.
+
+---
+
+### Evento E: `OPEN_APPS`
+Se dispara cuando el usuario (con `from=user`) presiona el botón **"Apps"** en el menú flotante.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_APPS"
+}
+```
+**Acción esperada en la App:** La app navega o filtra a la sección de Aplicaciones.
+
+---
+
+### Evento F: `OPEN_SISTEMAS`
+Se dispara cuando el usuario (con `from=user`) presiona el botón **"Sistemas"** en el menú flotante.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_SISTEMAS"
+}
+```
+**Acción esperada en la App:** La app navega o filtra a la sección de Sistemas/Teléfonos.
+
+---
+
+### Evento G: `OPEN_ROUTERS`
+Se dispara cuando el usuario (con `from=user`) presiona el botón **"Routers"** en el menú flotante.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_ROUTERS"
+}
+```
+**Acción esperada en la App:** La app navega o filtra a la sección de Routers.
+
+> **Nota:** El botón **"Ofertas"** del menú flotante **no genera ningún evento**; en todos los modos (incluyendo `from=user`) navega normalmente a la página `/offers`.
+
+---
+
 ## 3. Resumen de Casos de Uso
 
 | Escenario | Acción en la Web | Resultado esperado |
@@ -98,6 +156,11 @@ Se dispara cuando el usuario (con `from=user`) presiona **cualquier botón de so
 | **Botón de Soporte** en `/distribuidores` con `from=user` | Click | Se bloquea redirección. Envía `{ action: "OPEN_CHAT_DISTRIBUIDORES" }` a la App. |
 | **Botón de Soporte** en `/distribuidores` con `from=guest` | Presentación UI | Dice "Chatear Telegram" (con icono). |
 | **Botón de Soporte** en `/distribuidores` con `from=guest` | Click | **Nativo Web:** Abre la URL oficial del soporte directamente. |
+| **Menú flotante – "SIM's"** con `from=user` | Click | Envía `{ action: "OPEN_SIMS" }` a la App. No navega en la web. |
+| **Menú flotante – "Apps"** con `from=user` | Click | Envía `{ action: "OPEN_APPS" }` a la App. No navega en la web. |
+| **Menú flotante – "Sistemas"** con `from=user` | Click | Envía `{ action: "OPEN_SISTEMAS" }` a la App. No navega en la web. |
+| **Menú flotante – "Routers"** con `from=user` | Click | Envía `{ action: "OPEN_ROUTERS" }` a la App. No navega en la web. |
+| **Menú flotante – "Ofertas"** (cualquier modo) | Click | Navega normalmente a `/offers`. No envía evento. |
 
 ## 4. Ejemplo de Código para Implementación en React Native
 
@@ -125,6 +188,22 @@ const MyStoreWebPreview = ({ urlWithFromParam }) => {
         // Soporte específico para el flujo de distribuidores
         // Puede abrir un chat dedicado, pantalla de onboarding de distribuidor, etc.
         // navigation.navigate('DistributorSupport')
+
+      } else if (payload.action === 'OPEN_SIMS') {
+        // Navegar a la sección de SIMs en la app
+        // navigation.navigate('Products', { category: 'sims' })
+
+      } else if (payload.action === 'OPEN_APPS') {
+        // Navegar a la sección de Aplicaciones en la app
+        // navigation.navigate('Products', { category: 'apps' })
+
+      } else if (payload.action === 'OPEN_SISTEMAS') {
+        // Navegar a la sección de Sistemas/Teléfonos en la app
+        // navigation.navigate('Products', { category: 'sistemas' })
+
+      } else if (payload.action === 'OPEN_ROUTERS') {
+        // Navegar a la sección de Routers en la app
+        // navigation.navigate('Products', { category: 'routers' })
       }
     } catch (e) {
       console.error("Error procesando mensaje de WebView:", e);

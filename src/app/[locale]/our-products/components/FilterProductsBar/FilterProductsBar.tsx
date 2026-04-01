@@ -18,6 +18,7 @@ import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 import MobileMenuSvg from "@/shared/svgs/EncryptedLogoSvg";
 
@@ -48,6 +49,7 @@ export default function FilterProductsBar({
 }: FilterProductsBarProps) {
   const t = useTranslations("OurProductsPage");
   const router = useRouter();
+  const { appMode } = useAppMobile();
 
   const selectedCat = parseInt(filters.selectedOption, 10);
 
@@ -209,6 +211,21 @@ export default function FilterProductsBar({
       if (item.key === "offers") {
         router.push("/offers");
         return;
+      }
+
+      // In user mode (from=user), send native navigation events
+      if (appMode === "user") {
+        const eventMap: Record<string, string> = {
+          sims: "OPEN_SIMS",
+          apps: "OPEN_APPS",
+          systems: "OPEN_SISTEMAS",
+          routers: "OPEN_ROUTERS",
+        };
+        const action = eventMap[item.key];
+        if (action && typeof window !== "undefined" && (window as any).ReactNativeWebView) {
+          (window as any).ReactNativeWebView.postMessage(JSON.stringify({ action }));
+          return;
+        }
       }
 
       if (item.catId) {
