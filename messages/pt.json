@@ -2609,10 +2609,10 @@
   },
   "TestingProducts": {
     "badge": "Our products",
-    "title": "Meet our {br} encrypted products",
-    "sims": "Encrypted {br} SIMs",
-    "apps": "Secure {br} messaging apps",
-    "systems": "Security {br} systems",
-    "routers": "Encrypted {br} routers"
+    "title": "Meet our <br/> encrypted products",
+    "sims": "Encrypted <br/> SIMs",
+    "apps": "Secure <br/> messaging apps",
+    "systems": "Security <br/> systems",
+    "routers": "Encrypted <br/> routers"
   }
 }

@@ -2725,11 +2725,11 @@
   },
   "TestingProducts": {
     "badge": "Nuestros productos",
-    "title": "Conoce nuestros {br} productos encriptados",
-    "sims": "SIM's {br} Encriptadas",
-    "apps": "Aplicaciones de {br} mensajería {br} segura",
-    "systems": "Sistemas de {br} seguridad",
-    "routers": "Routers {br} encriptados"
+    "title": "Conoce nuestros <br/> productos encriptados",
+    "sims": "SIM's <br/> Encriptadas",
+    "apps": "Aplicaciones de <br/> mensajería <br/> segura",
+    "systems": "Sistemas de <br/> seguridad",
+    "routers": "Routers <br/> encriptados"
   },
   "AppTerms": {
     "backButton": "Volver a la App",
