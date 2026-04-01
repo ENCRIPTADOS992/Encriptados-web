@@ -37,7 +37,7 @@ export default function ProductosEncriptados() {
 
                 {/* Heading */}
                 <h2 className="text-white text-4xl md:text-5xl font-bold text-center mb-16 text-balance">
-                    {t("title", { br: <br /> })}
+                    {t.rich("title", { br: () => <br /> })}
                 </h2>
 
                 {/* Products Grid */}
@@ -48,7 +48,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            {t("sims", { br: <br /> })}
+                            {t.rich("sims", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-center justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -66,7 +66,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            {t("apps", { br: <br /> })}
+                            {t.rich("apps", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-center justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -84,7 +84,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            {t("systems", { br: <br /> })}
+                            {t.rich("systems", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-end justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
@@ -102,7 +102,7 @@ export default function ProductosEncriptados() {
                         className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
-                            {t("routers", { br: <br /> })}
+                            {t.rich("routers", { br: () => <br /> })}
                         </h3>
                         <div className="relative flex items-end justify-center flex-shrink-0 w-[130px] md:w-[150px] xl:w-[226px] aspect-[226/187] bg-[#161616] rounded-[20px]">
                             <Image
