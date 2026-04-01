@@ -5,11 +5,11 @@ import { notFound } from "next/navigation";
 
 
 interface PageProps {
-  params: { slug: string; locale: string };
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   const t = await getTranslations({ locale, namespace: "appsShared.productTemplate" });
   const config = getProductConfig(slug);
 
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   // We don't check for config existence here anymore to allow dynamic products
   // via API even if they are not in productConfig.ts
 

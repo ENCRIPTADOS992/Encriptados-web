@@ -1,9 +1,10 @@
 import BneSimPage from "./components/BneSimPage";
 
-const Page = ({ params }: { params: { locale: string } }) => {
+const Page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params;
   return (
     <>
-      <BneSimPage locale={params.locale} />
+      <BneSimPage locale={locale} />
     </>
   );
 };

@@ -3,11 +3,11 @@ import { getSimProductConfig } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
 
 interface PageProps {
-  params: { slug: string; locale: string };
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 export default async function SimProductPage({ params }: PageProps) {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   const staticConfig = getSimProductConfig(slug);
   let initialProduct = null;
 

@@ -15,11 +15,11 @@ import { getProductById } from "@/features/products/services";
 import ProductByIdPage from "./components/ProductByIdPage";
 
 type Props = {
-  params: { productId: string; locale: string };
+  params: Promise<{ productId: string; locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { productId, locale } = params;
+  const { productId, locale } = await params;
 
   try {
     const product = await getProductById(productId, locale || "es");

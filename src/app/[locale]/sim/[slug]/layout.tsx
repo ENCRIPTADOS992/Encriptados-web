@@ -2,12 +2,12 @@ import { Metadata } from "next";
 import { isValidSimProductSlug } from "./simProductConfig";
 
 interface Props {
-  params: { slug: string; locale: string };
+  params: Promise<{ slug: string; locale: string }>;
   children: React.ReactNode;
 }
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
-  const { slug, locale } = params;
+  const { slug, locale } = await params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
 
   try {

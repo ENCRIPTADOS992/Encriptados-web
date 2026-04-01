@@ -1,12 +1,12 @@
 import { Metadata } from "next";
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
   children: React.ReactNode;
 }
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
 
   try {
