@@ -133,8 +133,8 @@ const BannerSecureMdmNew = () => {
             }}
             className="w-full"
           >
-            {systemCards.map((card) => (
-              <SwiperSlide key={card.id}>
+            {systemCards.map((card, idx) => (
+              <SwiperSlide key={`${card.id}-${idx}`}>
                 <div className="w-full h-[370px] md:h-[390px] rounded-2xl bg-[#161616] border border-[#222] overflow-hidden p-4 md:p-5 flex flex-col">
                   {/* Image */}
                   <div className="relative w-full h-[170px] md:h-[185px] rounded-xl bg-[#0D0D0D] flex items-center justify-center overflow-hidden">
