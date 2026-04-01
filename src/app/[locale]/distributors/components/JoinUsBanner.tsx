@@ -31,7 +31,7 @@ const JoinUsBanner = () => {
             {title("bannerJoinUs")}
           </h2>
           <div className="flex items-center justify-center w-full mt-6">
-            <TelegramButton />
+            <TelegramButton chatAction="OPEN_CHAT_DISTRIBUIDORES" />
           </div>
         </div>
       </SectionWrapper>

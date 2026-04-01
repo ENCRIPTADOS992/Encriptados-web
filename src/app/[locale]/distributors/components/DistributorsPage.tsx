@@ -4,7 +4,7 @@ import BannerDistributors from "./BannerDistributors";
 import BeDistributor from "./BeDistributor";
 import EncryptedCommunication from "./EncryptedCommunication";
 import BeDistributorEncrypted from "./BeDistributorEncrypted";
-import OurProductsDistributors from "./OurProductsDistributors";
+import ProductosEncriptados from "../../encrypted-test/components/ProductosEncriptados";
 import JoinUsBanner from "./JoinUsBanner";
 import ModalJoinUs from "./ModalJoinUs";
 import { JoinUsModalProvider } from "../context/JoinUsModalContext";
@@ -26,7 +26,7 @@ const DistributorsPage = () => {
           <div className="hidden md:block">
             <BeDistributorEncrypted />
           </div>
-          <OurProductsDistributors />
+          <ProductosEncriptados />
           <JoinUsBanner />
         </JoinUsModalProvider>
       </BasicFormProvider>

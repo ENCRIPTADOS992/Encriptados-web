@@ -28,7 +28,7 @@ export default function BeDistributorEncrypted() {
           </div>
 
           {/* Columna derecha: texto + botón */}
-          <div className="relative w-1/2 flex items-center">
+          <div className="relative w-1/2 h-[320px] md:h-[380px] lg:h-[500px] flex items-center">
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${Build})` }}
@@ -43,7 +43,7 @@ export default function BeDistributorEncrypted() {
                 {t("beEncryptedDistributor.description")}
               </p>
               <div className="mt-4 max-w-xs">
-                <TelegramButton />
+                <TelegramButton chatAction="OPEN_CHAT_DISTRIBUIDORES" />
               </div>
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function BeDistributorEncryptedMobile() {
                         </p>
 
                         <div className="w-full flex justify-center mt-2">
-                            <TelegramButton />
+                            <TelegramButton chatAction="OPEN_CHAT_DISTRIBUIDORES" />
                         </div>
                     </div>
 

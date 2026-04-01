@@ -5,9 +5,10 @@ import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 interface TelegramButtonProps {
   className?: string;
+  chatAction?: string;
 }
 
-const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "" }) => {
+const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "", chatAction = "OPEN_CHAT" }) => {
   const { appMode } = useAppMobile();
   const telegramUrl = "https://t.me/encriptados";
 
@@ -18,7 +19,7 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "" }) => {
     if (isUserMode) {
       e.preventDefault();
       if (typeof window !== "undefined" && (window as any).ReactNativeWebView) {
-        const payload = { action: "OPEN_CHAT" };
+        const payload = { action: chatAction };
         (window as any).ReactNativeWebView.postMessage(JSON.stringify(payload));
       }
     }

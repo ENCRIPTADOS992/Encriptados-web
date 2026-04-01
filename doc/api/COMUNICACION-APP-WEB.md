@@ -57,16 +57,47 @@ Se dispara cuando el usuario (con `from=user`) presiona el botón de soporte, qu
 ```
 **Acción esperada en la App:** La app intercepta la acción y abre la sección de soporte/chat 100% nativa o maneja la lógica que requiera para su canal de soporte, sin abandonar la vista actual de la WebView.
 
+### Evento C: `OPEN_CHAT_DISTRIBUIDORES`
+Se dispara cuando el usuario (con `from=user`) presiona **cualquier botón de soporte dentro de la página `/distribuidores`**.
+
+**Páginas afectadas:** Solo aplica a la página de distribuidores (`/es/distribuidores`). El resto de páginas sigue usando `OPEN_CHAT`.
+
+**Componentes con este botón en distribuidores:**
+*   `BannerDistributors` — banner principal
+*   `BeDistributorEncrypted` — sección "¿Qué implica ser un distribuidor?" (desktop)
+*   `BeDistributorEncryptedMobile` — la misma sección en mobile
+*   `JoinUsBanner` — banner inferior de cierre
+
+**Condiciones y Cambios en el Botón (UI):**
+*   Cuando es `from=user`, el nombre del botón cambia de "Chatear Telegram" a **"Chatear ahora"**.
+*   El icono circular azul de Telegram ya **no se muestra** para `from=user`.
+
+**Condición para dispararse:**
+*   `window.ReactNativeWebView` está presente.
+*   El contexto/URL fue registrada con `from=user`.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_CHAT_DISTRIBUIDORES"
+}
+```
+**Acción esperada en la App:** La app intercepta la acción y puede diferenciarlo del soporte genérico para mostrar un flujo específico de onboarding de distribuidores, chat dedicado, o el flujo que considere adecuado.
+
 ## 3. Resumen de Casos de Uso
 
 | Escenario | Acción en la Web | Resultado esperado |
 | :--- | :--- | :--- |
 | **Boton "¡Compra ahora!"** con `from=user` | Click | Se bloquea el modal web. Envía `{ action: "OPEN_CHECKOUT", data: {...} }` a la App (si está presente `ReactNativeWebView`). |
 | **Boton "¡Compra ahora!"** con `from=guest` | Click | Abre el checkout web normal. No envía eventos a la App. |
-| **Botón de Soporte** con `from=user` | Presentación UI | Dice "Chatear ahora" (sin icono de Telegram). |
-| **Botón de Soporte** con `from=user` | Click | Se bloquea redirección al enlace. Envía `{ action: "OPEN_CHAT" }` a la App. |
-| **Botón de Soporte** con `from=guest` | Presentación UI | Dice "Chatear Telegram" (con icono). |
-| **Botón de Soporte** con `from=guest` | Click | **Nativo Web:** Abre la URL oficial del soporte directamente. |
+| **Botón de Soporte** (otras páginas) con `from=user` | Presentación UI | Dice "Chatear ahora" (sin icono de Telegram). |
+| **Botón de Soporte** (otras páginas) con `from=user` | Click | Se bloquea redirección al enlace. Envía `{ action: "OPEN_CHAT" }` a la App. |
+| **Botón de Soporte** (otras páginas) con `from=guest` | Presentación UI | Dice "Chatear Telegram" (con icono). |
+| **Botón de Soporte** (otras páginas) con `from=guest` | Click | **Nativo Web:** Abre la URL oficial del soporte directamente. |
+| **Botón de Soporte** en `/distribuidores` con `from=user` | Presentación UI | Dice "Chatear ahora" (sin icono de Telegram). |
+| **Botón de Soporte** en `/distribuidores` con `from=user` | Click | Se bloquea redirección. Envía `{ action: "OPEN_CHAT_DISTRIBUIDORES" }` a la App. |
+| **Botón de Soporte** en `/distribuidores` con `from=guest` | Presentación UI | Dice "Chatear Telegram" (con icono). |
+| **Botón de Soporte** en `/distribuidores` con `from=guest` | Click | **Nativo Web:** Abre la URL oficial del soporte directamente. |
 
 ## 4. Ejemplo de Código para Implementación en React Native
 
@@ -87,8 +118,13 @@ const MyStoreWebPreview = ({ urlWithFromParam }) => {
         // openNativeCheckoutModal(productid, initialPrice);
         
       } else if (payload.action === 'OPEN_CHAT') {
-        // Redirigir a tu vista de chat interna
+        // Redirigir a tu vista de chat interna (soporte genérico)
         // navigation.navigate('SupportChat')
+
+      } else if (payload.action === 'OPEN_CHAT_DISTRIBUIDORES') {
+        // Soporte específico para el flujo de distribuidores
+        // Puede abrir un chat dedicado, pantalla de onboarding de distribuidor, etc.
+        // navigation.navigate('DistributorSupport')
       }
     } catch (e) {
       console.error("Error procesando mensaje de WebView:", e);

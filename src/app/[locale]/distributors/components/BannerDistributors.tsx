@@ -78,7 +78,7 @@ const BannerDistributors = () => {
         </p>
 
         <div className="flex items-center justify-center w-full">
-          <TelegramButton />
+          <TelegramButton chatAction="OPEN_CHAT_DISTRIBUIDORES" />
           {/* <Button onClick={openModal} rounded="full" intent="primary">
             {t("sendRequest")}
           </Button> */}
