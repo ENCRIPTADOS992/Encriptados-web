@@ -142,6 +142,52 @@ Se dispara cuando el usuario (con `from=user`) presiona el botón **"Routers"** 
 
 ---
 
+### Evento H: `OPEN_CHAT_PROMOTOR`
+Se dispara cuando el usuario (con `from=user`) presiona el botón de soporte dentro de la **card "Promotor"** en la página `/embajadores`.
+
+**Páginas afectadas:** Solo aplica a la página de embajadores (`/es/embajadores`), componente `AmbassadorCardPromotor`.
+
+**Condiciones y Cambios en el Botón (UI):**
+*   Cuando es `from=user`, el nombre del botón cambia de "Chatear Telegram" a **"Chatear ahora"**.
+*   El icono circular azul de Telegram ya **no se muestra** para `from=user`.
+
+**Condición para dispararse:**
+*   `window.ReactNativeWebView` está presente.
+*   El contexto/URL fue registrado con `from=user`.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_CHAT_PROMOTOR"
+}
+```
+**Acción esperada en la App:** La app puede iniciar el flujo de registro/onboarding de promotor o abrir un canal de chat dedicado para promotores.
+
+---
+
+### Evento I: `OPEN_CHAT_DISTRIBUIDOR`
+Se dispara cuando el usuario (con `from=user`) presiona el botón de soporte dentro de la **card "Distribuidor"** en la página `/embajadores`.
+
+**Páginas afectadas:** Solo aplica a la página de embajadores (`/es/embajadores`), componente `AmbassadorCardDistributor`.
+
+**Condiciones y Cambios en el Botón (UI):**
+*   Cuando es `from=user`, el nombre del botón cambia de "Chatear Telegram" a **"Chatear ahora"**.
+*   El icono circular azul de Telegram ya **no se muestra** para `from=user`.
+
+**Condición para dispararse:**
+*   `window.ReactNativeWebView` está presente.
+*   El contexto/URL fue registrado con `from=user`.
+
+**Payload enviado:**
+```json
+{
+  "action": "OPEN_CHAT_DISTRIBUIDOR"
+}
+```
+**Acción esperada en la App:** La app puede iniciar el flujo de onboarding de distribuidor o abrir un canal de chat dedicado para distribuidores (diferente del soporte estándar de distribuidores en `/distribuidores`).
+
+---
+
 ## 3. Resumen de Casos de Uso
 
 | Escenario | Acción en la Web | Resultado esperado |
@@ -161,6 +207,12 @@ Se dispara cuando el usuario (con `from=user`) presiona el botón **"Routers"** 
 | **Menú flotante – "Sistemas"** con `from=user` | Click | Envía `{ action: "OPEN_SISTEMAS" }` a la App. No navega en la web. |
 | **Menú flotante – "Routers"** con `from=user` | Click | Envía `{ action: "OPEN_ROUTERS" }` a la App. No navega en la web. |
 | **Menú flotante – "Ofertas"** (cualquier modo) | Click | Navega normalmente a `/offers`. No envía evento. |
+| **Card "Promotor"** en `/embajadores` con `from=user` | Presentación UI | Dice "Chatear ahora" (sin icono de Telegram). |
+| **Card "Promotor"** en `/embajadores` con `from=user` | Click | Se bloquea redirección. Envía `{ action: "OPEN_CHAT_PROMOTOR" }` a la App. |
+| **Card "Promotor"** en `/embajadores` con `from=guest` | Click | **Nativo Web:** Abre la URL oficial del soporte directamente. |
+| **Card "Distribuidor"** en `/embajadores` con `from=user` | Presentación UI | Dice "Chatear ahora" (sin icono de Telegram). |
+| **Card "Distribuidor"** en `/embajadores` con `from=user` | Click | Se bloquea redirección. Envía `{ action: "OPEN_CHAT_DISTRIBUIDOR" }` a la App. |
+| **Card "Distribuidor"** en `/embajadores` con `from=guest` | Click | **Nativo Web:** Abre la URL oficial del soporte directamente. |
 
 ## 4. Ejemplo de Código para Implementación en React Native
 
@@ -204,6 +256,14 @@ const MyStoreWebPreview = ({ urlWithFromParam }) => {
       } else if (payload.action === 'OPEN_ROUTERS') {
         // Navegar a la sección de Routers en la app
         // navigation.navigate('Products', { category: 'routers' })
+
+      } else if (payload.action === 'OPEN_CHAT_PROMOTOR') {
+        // Flujo de onboarding / chat dedicado para promotores (desde /embajadores)
+        // navigation.navigate('AmbassadorOnboarding', { type: 'promotor' })
+
+      } else if (payload.action === 'OPEN_CHAT_DISTRIBUIDOR') {
+        // Flujo de onboarding / chat dedicado para distribuidores (desde /embajadores)
+        // navigation.navigate('AmbassadorOnboarding', { type: 'distribuidor' })
       }
     } catch (e) {
       console.error("Error procesando mensaje de WebView:", e);

@@ -63,7 +63,7 @@ export default function AmbassadorCardPromotor({
           </ul>
         </div>
         <div className="p-6 pt-0 flex justify-center telegram-w80">
-          <TelegramButton />
+          <TelegramButton chatAction="OPEN_CHAT_PROMOTOR" />
         </div>
       </div>
     </div>
