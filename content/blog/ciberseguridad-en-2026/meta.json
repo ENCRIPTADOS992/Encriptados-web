@@ -1,0 +1,44 @@
+{
+  "slug": "ciberseguridad-en-2026",
+  "author": "Encriptados",
+  "date": "2026-04-01T12:00:00-05:00",
+  "image": "/images/blog/ciberseguridad-en-2026.webp",
+  "imageFull": "/images/blog/ciberseguridad-en-2026.webp",
+  "tags": ["cybersecurity", "mobile-security", "privacy", "digital-security"],
+  "title": {
+    "es": "Ciberseguridad en 2026: tendencias que toda persona debe conocer",
+    "en": "Cybersecurity in 2026: Trends Everyone Should Know",
+    "fr": "Cybersécurité en 2026 : tendances que tout le monde doit connaître",
+    "pt": "Cibersegurança em 2026: tendências que todos devem conhecer",
+    "it": "Cybersecurity nel 2026: tendenze che tutti devono conoscere"
+  },
+  "description": {
+    "es": "Descubre las tendencias de ciberseguridad en 2026. Aprende cómo proteger tu información con seguridad móvil, privacidad digital y soluciones avanzadas como Encriptados.io.",
+    "en": "Discover the top cybersecurity trends in 2026. Learn how to protect your data with mobile security, digital privacy, and advanced solutions like Encriptados.io.",
+    "fr": "Découvrez les principales tendances de la cybersécurité en 2026. Apprenez à protéger vos données grâce à la sécurité mobile, la confidentialité numérique et des solutions avancées comme Encriptados.io.",
+    "pt": "Descubra as principais tendências de cibersegurança em 2026. Aprenda como proteger seus dados com segurança móvel, privacidade digital e soluções avançadas como a Encriptados.io.",
+    "it": "Scopri le principali tendenze della cybersecurity nel 2026. Impara a proteggere i tuoi dati con sicurezza mobile, privacy digitale e soluzioni avanzate come Encriptados.io."
+  },
+  "seo": {
+    "es": {
+      "title": "Ciberseguridad en 2026: tendencias clave en seguridad digital y privacidad",
+      "keywords": ["ciberseguridad 2026", "seguridad digital", "privacidad digital", "seguridad móvil", "protección de datos", "tendencias ciberseguridad", "seguridad empresarial"]
+    },
+    "en": {
+      "title": "Cybersecurity in 2026: Key Trends in Digital Security and Privacy",
+      "keywords": ["cybersecurity 2026", "digital security", "digital privacy", "mobile security", "data protection", "cybersecurity trends", "enterprise security"]
+    },
+    "fr": {
+      "title": "Cybersécurité en 2026 : tendances clés en sécurité numérique et confidentialité",
+      "keywords": ["cybersécurité 2026", "sécurité numérique", "confidentialité numérique", "sécurité mobile", "protection des données", "tendances cybersécurité", "sécurité entreprise"]
+    },
+    "pt": {
+      "title": "Cibersegurança em 2026: tendências em segurança digital e privacidade",
+      "keywords": ["cibersegurança 2026", "segurança digital", "privacidade digital", "segurança móvel", "proteção de dados", "tendências cibersegurança", "segurança corporativa"]
+    },
+    "it": {
+      "title": "Cybersecurity nel 2026: tendenze chiave in sicurezza digitale e privacy",
+      "keywords": ["cybersecurity 2026", "sicurezza digitale", "privacy digitale", "sicurezza mobile", "protezione dei dati", "tendenze cybersecurity", "sicurezza aziendale"]
+    }
+  }
+}
