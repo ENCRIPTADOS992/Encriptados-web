@@ -2,66 +2,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type FaqItem = {
   id: string;
   question: string;
   answer: string;
 };
-
-const leftColumn: FaqItem[] = [
-  {
-    id: "devices",
-    question: "¿Con qué dispositivos es compatible la eSIM?",
-    answer:
-      "La SIM Encriptados funciona con todos los teléfonos y tablets desbloqueados que soporten eSIM. Es compatible con las principales marcas del mercado como Android y iOS.",
-  },
-  {
-    id: "places",
-    question: "¿En qué lugares puedo usar la eSIM?",
-    answer:
-      "Puedes usarla en nuestros destinos disponibles. Solo debes elegir el país o región antes de la compra y tu eSIM funcionará en esa zona de cobertura.",
-  },
-  {
-    id: "topup",
-    question: "¿Cada cuánto debo recargar mi eSIM?",
-    answer:
-      "Puedes recargar cuando lo necesites. Mientras tengas datos disponibles y el plan esté activo, no es obligatorio recargar en una fecha fija.",
-  },
-  {
-    id: "compatible",
-    question: "¿Cómo saber si tu móvil es compatible con la eSIM?",
-    answer:
-      "Revisa en los ajustes de tu teléfono si aparece la opción de añadir eSIM o plan móvil digital. También puedes consultar el modelo en la web del fabricante.",
-  },
-];
-
-const rightColumn: FaqItem[] = [
-  {
-    id: "how-works",
-    question: "¿Cómo funciona ENCRYPTADOS eSIM?",
-    answer:
-      "Compras tu plan, recibes un código QR, lo activas desde los ajustes de tu teléfono y empiezas a usar tus datos móviles de forma segura y encriptada.",
-  },
-  {
-    id: "multi-country",
-    question: "¿Puedo usar ENCRYPTADOS eSIM en varios países?",
-    answer:
-      "Sí, según el plan contratado podrás usar la eSIM en uno o varios países. Verifica siempre la lista de destinos incluidos antes de comprar.",
-  },
-  {
-    id: "secure",
-    question: "¿Es seguro usar ENCRYPTADOS eSIM?",
-    answer:
-      "Sí. Nuestra eSIM encripta tu tráfico y protege tu identidad, ofreciendo conexiones privadas y anónimas en redes móviles.",
-  },
-  {
-    id: "help",
-    question: "¿Qué debo hacer si necesito ayuda con mi eSIM?",
-    answer:
-      "Puedes contactar a nuestro equipo de soporte desde la app o el chat del sitio web. Te ayudaremos con la activación, configuración y uso de tu eSIM.",
-  },
-];
 
 type AccordionProps = {
   item: FaqItem;
@@ -118,11 +65,26 @@ const AccordionItem: React.FC<AccordionProps> = ({
 };
 
 const FaqSims: React.FC = () => {
+  const t = useTranslations("EncryptedSimPage.FaqSims");
   const [openId, setOpenId] = useState<string | null>("devices");
 
   const handleToggle = (id: string) => {
     setOpenId((current) => (current === id ? null : id));
   };
+
+  const leftColumn: FaqItem[] = [
+    { id: "devices", question: t("leftColumn.devices.question"), answer: t("leftColumn.devices.answer") },
+    { id: "places", question: t("leftColumn.places.question"), answer: t("leftColumn.places.answer") },
+    { id: "topup", question: t("leftColumn.topup.question"), answer: t("leftColumn.topup.answer") },
+    { id: "compatible", question: t("leftColumn.compatible.question"), answer: t("leftColumn.compatible.answer") },
+  ];
+
+  const rightColumn: FaqItem[] = [
+    { id: "how-works", question: t("rightColumn.howWorks.question"), answer: t("rightColumn.howWorks.answer") },
+    { id: "multi-country", question: t("rightColumn.multiCountry.question"), answer: t("rightColumn.multiCountry.answer") },
+    { id: "secure", question: t("rightColumn.secure.question"), answer: t("rightColumn.secure.answer") },
+    { id: "help", question: t("rightColumn.help.question"), answer: t("rightColumn.help.answer") },
+  ];
 
   return (
     <section className="w-full py-16 md:py-20">
@@ -138,7 +100,7 @@ const FaqSims: React.FC = () => {
             bg-clip-text text-transparent
           "
         >
-          Preguntas frecuentes
+          {t("title")}
         </h2>
 
         {/* Grid FAQ */}

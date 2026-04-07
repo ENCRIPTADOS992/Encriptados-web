@@ -4,12 +4,13 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import { createUserIdOrderAndIntent, fetchPublicStatus, type OrderType } from "@/lib/payments/orderApi";
 
-const TERMS_URL = "/es/pages/terminos-y-condiciones";
+
 
 type LicenseType = "new" | "renew";
 type Method = "card" | "crypto";
@@ -34,6 +35,9 @@ export default function AppLicenseForm({
   loading = false,
 }: Props) {
   // License type selection
+  const t = useTranslations("paymentModal");
+  const locale = useLocale();
+  const TERMS_URL = `/${locale}/pages/terminos-y-condiciones`;
   const [licenseType, setLicenseType] = React.useState<LicenseType>("new");
 
   const [emailVal, setEmailVal] = React.useState(email);
@@ -76,12 +80,12 @@ export default function AppLicenseForm({
 
   const buttonLabel =
     method === "crypto"
-      ? "Pagar ahora"
+      ? t("payNow")
       : phase === "card_init"
-      ? "Continuar"
+      ? t("continue")
       : polling
-      ? "Procesando…"
-      : "Confirmar pago";
+      ? t("processingOrder")
+      : t("confirmPayment");
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -127,13 +131,13 @@ export default function AppLicenseForm({
         setOrderId(order_id);
         setClientSecret(client_secret);
       } catch (e: any) {
-        setStripeError(e?.message || "No se pudo iniciar el pago.");
+        setStripeError(e?.message || t("couldNotInitiatePayment"));
       }
       return;
     }
 
     try {
-      if (!stripeRef.current || !splitRef.current?.number) throw new Error("Stripe no está listo.");
+      if (!stripeRef.current || !splitRef.current?.number) throw new Error(t("stripeNotReady"));
       setStripeError(null);
       if (orderId && !polling) startPolling(orderId);
 
@@ -158,7 +162,7 @@ export default function AppLicenseForm({
 
       if (res.error) setStripeError(res.error);
     } catch (e: any) {
-      setStripeError(e?.message || "Error confirmando el pago.");
+      setStripeError(e?.message || t("errorConfirmingPayment"));
     }
   };
 
@@ -179,7 +183,7 @@ export default function AppLicenseForm({
         {/* License Type Buttons */}
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-            Tipo de licencia
+            {t("licenseType")}
           </p>
           <div className="flex gap-2">
             <button
@@ -188,7 +192,7 @@ export default function AppLicenseForm({
               onClick={() => setLicenseType("new")}
               className={[baseBtnClass, licenseType === "new" ? activeClass : inactiveClass].join(" ")}
             >
-              Nueva licencia
+              {t("newLicenseBtn")}
             </button>
             <button
               type="button"
@@ -196,7 +200,7 @@ export default function AppLicenseForm({
               onClick={() => setLicenseType("renew")}
               className={[baseBtnClass, licenseType === "renew" ? activeClass : inactiveClass].join(" ")}
             >
-              Renovar licencia
+              {t("renewLicenseBtn")}
             </button>
           </div>
         </div>
@@ -210,7 +214,7 @@ export default function AppLicenseForm({
               <input
                 value={emailVal}
                 onChange={(e) => setEmailVal(e.target.value)}
-                placeholder="correo@ejemplo.com"
+                placeholder={t("emailExamplePlaceholder")}
                 type="email"
                 className="w-full bg-transparent outline-none text-[14px]"
               />
@@ -220,13 +224,13 @@ export default function AppLicenseForm({
           {/* Telegram ID */}
           <div className="space-y-1.5">
             <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              ID Telegram <span className="font-normal text-[#010C0F]/50">(opcional)</span>
+              ID Telegram <span className="font-normal text-[#010C0F]/50">({t("telegramIdOptionalHint")})</span>
             </p>
             <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
               <input
                 value={telegramId}
                 onChange={(e) => setTelegramId(e.target.value)}
-                placeholder="@usuario o ID numérico"
+                placeholder={t("telegramPlaceholder")}
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
@@ -242,17 +246,17 @@ export default function AppLicenseForm({
             className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
           />
           <span className="select-none">
-            Acepto{" "}
+            {t("acceptTerms")}{" "}
             <Link href={TERMS_URL} target="_blank" className="underline font-medium">
-              términos y condiciones
+              {t("termsAndConditions")}
             </Link>{" "}
-            de la compra
+            {t("ofPurchase")}
           </span>
         </label>
 
         {/* Método de pago */}
         <div className="space-y-1.5">
-          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Método de pago</p>
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">{t("paymentMethod")}</p>
 
           <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
             <button
@@ -266,7 +270,7 @@ export default function AppLicenseForm({
               ].join(" ")}
             >
               <Image src="/images/home/add_card.webp" alt="" width={20} height={20} />
-              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Tarjeta de crédito</span>
+              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">{t("creditCard")}</span>
             </button>
 
             <button
@@ -280,7 +284,7 @@ export default function AppLicenseForm({
               ].join(" ")}
             >
               <Image src="/images/home/send_money.webp" alt="" width={20} height={20} />
-              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Criptomonedas</span>
+              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">{t("cryptocurrency")}</span>
             </button>
           </div>
         </div>
@@ -293,7 +297,7 @@ export default function AppLicenseForm({
               <input
                 value={cardName}
                 onChange={(e) => setCardName(onlyLetters(e.target.value))}
-                placeholder="Titular de la tarjeta"
+                placeholder={t("cardholderName")}
                 className="w-full bg-transparent outline-none text-[14px]"
                 autoComplete="cc-name"
               />
@@ -318,7 +322,7 @@ export default function AppLicenseForm({
               <input
                 value={postal}
                 onChange={(e) => setPostal(e.target.value)}
-                placeholder="Código postal"
+                placeholder={t("postalCode")}
                 className="w-full bg-transparent outline-none text-[14px]"
                 autoComplete="postal-code"
               />
@@ -343,7 +347,7 @@ export default function AppLicenseForm({
         </button>
 
         {method === "card" && polling && (
-          <p className="text-xs text-[#3D3D3D]">Procesando la orden… puede tardar unos segundos.</p>
+          <p className="text-xs text-[#3D3D3D]">{t("processingOrder")}</p>
         )}
       </div>
 

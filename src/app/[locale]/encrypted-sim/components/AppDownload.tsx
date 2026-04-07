@@ -5,8 +5,10 @@ import React from "react";
 import Image from "next/image";
 import AppStoreFooter from "@/shared/FooterEncrypted/icon/AppStoreFooter";
 import PlayStoreSvg from "@/shared/svgs/PlayStoreSvg";
+import { useTranslations } from "next-intl";
 
 const AppDownload = () => {
+  const t = useTranslations("EncryptedSimPage.AppDownload");
   return (
     <section className="w-full py-10 md:py-6">
       <div className="mx-auto w-[1276px] max-w-full px-4 md:px-8">
@@ -33,8 +35,8 @@ const AppDownload = () => {
             gap-[24px]             
           ">
             <h2 className="text-[22px] md:text-[28px] font-semibold leading-snug">
-              Descarga la App <br />
-              para iOS &amp; Android
+              {t("title")} <br />
+              {t("titleLine2")}
             </h2>
             <div className="flex items-center gap-4">
               <AppStoreFooter />
@@ -42,7 +44,7 @@ const AppDownload = () => {
             </div>
 
             <p className="text-[13px] md:text-[14px] text-[#4B5563]">
-              O Escanea el código QR con tu cámara
+              {t("scanQR")}
             </p>
           </div>
 
@@ -57,7 +59,7 @@ const AppDownload = () => {
             >
               <Image
                 src="/images/encrypted-sim/iphone_app_download.webp"
-                alt="Vista de la app para descarga"
+                alt={t("imageAlt")}
                 fill
                 className="object-contain"
               />

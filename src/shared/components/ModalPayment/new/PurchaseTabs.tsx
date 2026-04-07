@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 
 import { useUiPolicy } from "./useUiPolicy";
 
@@ -17,6 +18,7 @@ export default function PurchaseTabs({
   enableSwitching?: boolean;
 }) {
   const { showTabs, allowedModes } = useUiPolicy();
+  const t = useTranslations("paymentModal");
 
   const visibleModes: Mode[] = (allowedModes ?? []).filter((m): m is Mode =>
     ["new_user", "roning_code", "recharge"].includes(m as string)
@@ -52,15 +54,15 @@ export default function PurchaseTabs({
 
   // Mapeo nombre → label
   const labels: Record<Mode, string> = {
-    new_user: "Quiero mi usuario",
-    roning_code: "Código RONING",
-    recharge: "Recargar",
+    new_user: t("wantMyUserBtn"),
+    roning_code: t("roningCodeBtn"),
+    recharge: t("rechargeBtn"),
   };
 
   return (
     <div className="w-full">
       <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80 mb-2">
-        ¿Cómo quieres recibir tu licencia?
+        {t("licenseQuestionLabel")}
       </p>
       <div className="w-full h-11 grid grid-cols-3 gap-2">
         {visibleModes.map((m) => (

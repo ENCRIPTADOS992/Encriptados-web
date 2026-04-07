@@ -39,7 +39,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
         <h2 className="text-2xl font-bold text-black">{headerTitle}</h2>
       </div>
 
-      <p className="text-md text-gray-600 mb-4">Beneficios para ti:</p>
+      <p className="text-md text-gray-600 mb-4">{t("benefitsLabel")}</p>
 
       {/* Lista de características */}
       <ul className="space-y-2 mb-4">
@@ -52,7 +52,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
       </ul>
 
       {/* Precio */}
-      <div className="text-md text-gray-600 mb-1">Desde</div>
+      <div className="text-md text-gray-600 mb-1">{t("fromLabel")}</div>
       <div className="text-2xl font-bold mb-4">{priceRange}</div>
 
       {/* Botones */}

@@ -8,6 +8,7 @@ import { CircleFlag } from "react-circle-flags";
 import { DataCostsByCountry } from "./DataCostsByCountry";
 
 const CardInfo = () => {
+  const t = useTranslations("EncryptedSimPage.CardInfo");
   return (
     <div
       className="
@@ -35,14 +36,14 @@ const CardInfo = () => {
           <span className="relative w-6 h-6">
             <Image
               src="/images/encrypted-sim/icons/sim.png"
-              alt="Icono eSIM"
+              alt={t("simIconAlt")}
               fill
               className="object-contain"
             />
           </span>
 
           <span className="text-[14px] font-medium">
-            eSIM Encriptada con datos móviles
+            {t("simLabel")}
           </span>
         </div>
 
@@ -55,24 +56,17 @@ const CardInfo = () => {
               style={{ width: "100%", height: "100%" }}
             />
           </div>
-          <span className="text-[24px] font-semibold">Colombia</span>
+          <span className="text-[24px] font-semibold">{t("country")}</span>
         </div>
 
         {/* Beneficios */}
         <div className="mb-6">
-          <p className="text-[14px] font-semibold mb-2">Beneficios para ti:</p>
+          <p className="text-[14px] font-semibold mb-2">{t("benefitsTitle")}</p>
           <ul className="space-y-1 text-[13px] leading-[18px]">
-            {[
-              "Conexiones seguras y privadas",
-              "Llamadas anónimas",
-              "Datos de geolocalización cifrados",
-              "Sin límite de tiempo para usar recursos del plan",
-              "Número sustituto para cada llamada",
-              "Cambios de IMSI para mayor anonimato",
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
+            {[0, 1, 2, 3, 4, 5].map((i) => (
+              <li key={i} className="flex items-start gap-2">
                 <span className="mt-[2px] text-[12px]">✔️</span>
-                <span>{item}</span>
+                <span>{t(`benefits.${i}`)}</span>
               </li>
             ))}
           </ul>
@@ -82,7 +76,7 @@ const CardInfo = () => {
         {/* Sin fecha límite */}
         <div className="flex items-center gap-1 text-[12px] mb-2">
           <span className="font-semibold">*</span>
-          <span>No existe fecha límite de uso</span>
+          <span>{t("noUsageDeadline")}</span>
           <span className="text-[#74A3D8] cursor-pointer">ⓘ</span>
         </div>
 
@@ -113,7 +107,7 @@ const CardInfo = () => {
           </button>
 
           {/* Inactivas */}
-          {["10GB", "15GB", "25GB", "50GB", "GB ilimitado"].map((label) => (
+          {["10GB", "15GB", "25GB", "50GB", t("gbUnlimited")].map((label) => (
             <button
               key={label}
               type="button"
@@ -170,7 +164,7 @@ const CardInfo = () => {
       sm:px-4
     "
   >
-    Comprar ahora
+    {t("buyNow")}
   </button>
 
   <button
@@ -190,7 +184,7 @@ const CardInfo = () => {
       sm:px-4
     "
   >
-    Chat soporte
+    {t("chatSupport")}
   </button>
 </div>
 
@@ -214,7 +208,7 @@ const CardInfo = () => {
           <div className="relative w-[482px] h-[398px] max-w-full">
             <Image
               src="/images/encrypted-sim/principal.webp"
-              alt="Tarjeta Encriptados"
+              alt={t("cardAlt")}
               fill
               className="object-contain"
             />

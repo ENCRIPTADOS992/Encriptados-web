@@ -3,6 +3,7 @@
 
 import React from "react";
 import type { UseFormSetValue } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 import type { SimFormValues } from "../types/simFormTypes";
 import { PAYMENT_METHOD_GRID } from "../layout/simFormLayout";
@@ -13,10 +14,11 @@ type Props = {
 };
 
 export function PaymentMethodSection({ method, setValue }: Props) {
+  const t = useTranslations("paymentModal");
   return (
     <div className="space-y-1.5">  
       <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-        Método de pago
+        {t("paymentMethod")}
       </p>
 
       <div className={PAYMENT_METHOD_GRID}>
@@ -43,7 +45,7 @@ export function PaymentMethodSection({ method, setValue }: Props) {
             className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
           />
           <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
-            Tarjeta de crédito
+            {t("creditCard")}
           </span>
         </button>
 
@@ -70,7 +72,7 @@ export function PaymentMethodSection({ method, setValue }: Props) {
             className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
           />
           <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
-            Criptomonedas
+            {t("cryptocurrency")}
           </span>
         </button>
       </div>

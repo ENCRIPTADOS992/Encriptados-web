@@ -3,6 +3,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
@@ -13,7 +14,7 @@ import {
   type OrderType,
 } from "@/payments/orderApi";
 
-const TERMS_URL = "/es/pages/terminos-y-condiciones";
+
 const MANUAL_PRODUCT_IDS = new Set<number>([134, 133, 127, 137]);
 const DEFAULT_SUCCESS_URL = "https://t.me/encriptados";
 
@@ -40,6 +41,9 @@ export default function RoningForm({
   onPaid,
 }: Props) {
   const [emailVal, setEmailVal] = React.useState(email);
+  const t = useTranslations("paymentModal");
+  const locale = useLocale();
+  const TERMS_URL = `/${locale}/pages/terminos-y-condiciones`;
   const [terms, setTerms] = React.useState(true);
   const [method, setMethod] = React.useState<"card" | "crypto">("crypto");
 
@@ -87,12 +91,12 @@ export default function RoningForm({
 
   const buttonLabel =
     phase === "crypto"
-      ? "Pagar ahora"
+      ? t("payNow")
       : phase === "card_init"
-        ? "Continuar"
+        ? t("continue")
         : polling
-          ? "Procesando…"
-          : "Confirmar pago";
+          ? t("processingOrder")
+          : t("confirmPayment");
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -149,7 +153,7 @@ export default function RoningForm({
         setOrderId(order_id);
         setClientSecret(client_secret);
       } catch (e: any) {
-        setStripeError(e?.message || "No se pudo iniciar el pago.");
+        setStripeError(e?.message || t("couldNotInitiatePayment"));
       }
       return;
     }
@@ -157,7 +161,7 @@ export default function RoningForm({
     // FASE 2: confirmar con el Split Number Element
     try {
       if (!stripeRef.current || !splitRef.current?.number)
-        throw new Error("Stripe no está listo.");
+        throw new Error(t("stripeNotReady"));
 
       setStripeError(null);
       if (orderId && !polling) startPolling(orderId);
@@ -185,7 +189,7 @@ export default function RoningForm({
         setStripeError(res.error);
       }
     } catch (e: any) {
-      setStripeError(e?.message || "Error confirmando el pago.");
+      setStripeError(e?.message || t("errorConfirmingPayment"));
     }
   };
 
@@ -199,7 +203,7 @@ export default function RoningForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
             <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              Correo electrónico para recibir licencia
+              {t("emailForLicense")}
             </p>
             <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
               <input
@@ -224,22 +228,22 @@ export default function RoningForm({
             className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
           />
           <span className="select-none">
-            Acepto{" "}
+            {t("acceptTerms")}{" "}
             <Link
               href={TERMS_URL}
               target="_blank"
               className="underline font-medium"
             >
-              términos y condiciones
+              {t("termsAndConditions")}
             </Link>{" "}
-            de la compra
+            {t("ofPurchase")}
           </span>
         </label>
 
         {/* Método de pago */}
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-            Método de pago
+            {t("paymentMethod")}
           </p>
           <div className="grid grid-cols-2 gap-2 ipad:gap-3">
             <button
@@ -261,7 +265,7 @@ export default function RoningForm({
                 className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
               />
               <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
-                Tarjeta de crédito
+                {t("creditCard")}
               </span>
             </button>
 
@@ -284,7 +288,7 @@ export default function RoningForm({
                 className="w-5 h-5 sm:w-5 sm:h-5 ipad:w-6 ipad:h-6"
               />
               <span className="text-[12px] sm:text-[13px] ipad:text-[14px] font-bold text-[#3D3D3D] leading-tight text-center sm:text-left">
-                Criptomonedas
+                {t("cryptocurrency")}
               </span>
             </button>
           </div>
@@ -298,7 +302,7 @@ export default function RoningForm({
               <input
                 value={cardName}
                 onChange={(e) => setCardName(onlyLetters(e.target.value))}
-                placeholder="Titular de la tarjeta"
+                placeholder={t("cardholderName")}
                 className="w-full bg-transparent outline-none text-[14px]"
                 autoComplete="cc-name"
               />
@@ -323,7 +327,7 @@ export default function RoningForm({
               <input
                 value={postal}
                 onChange={(e) => setPostal(e.target.value)}
-                placeholder="Código postal"
+                placeholder={t("postalCode")}
                 className="w-full bg-transparent outline-none text-[14px]"
                 autoComplete="postal-code"
               />
@@ -349,7 +353,7 @@ export default function RoningForm({
 
         {method === "card" && polling && (
           <p className="text-xs text-[#3D3D3D]">
-            Procesando la orden… puede tardar unos segundos.
+            {t("processingOrder")}
           </p>
         )}
       </div>

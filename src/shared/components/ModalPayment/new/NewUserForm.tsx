@@ -3,12 +3,13 @@
 
 import React from "react";
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import { createUserIdOrderAndIntent, fetchPublicStatus, type OrderType } from "@/lib/payments/orderApi";
 
-const TERMS_URL = "/es/pages/terminos-y-condiciones";
+
 
 type Method = "card" | "crypto";
 
@@ -34,6 +35,9 @@ export default function NewUserForm({
   loading = false,
 }: Props) {
   const [usernames, setUsernames] = React.useState<string[]>([]);
+  const t = useTranslations("paymentModal");
+  const locale = useLocale();
+  const TERMS_URL = `/${locale}/pages/terminos-y-condiciones`;
 
   const [emailVal, setEmailVal] = React.useState(email);
   const [terms, setTerms] = React.useState(true);
@@ -95,12 +99,12 @@ export default function NewUserForm({
 
   const buttonLabel =
     method === "crypto"
-      ? "Pagar ahora"
+      ? t("payNow")
       : phase === "card_init"
-        ? "Continuar"
+        ? t("continue")
         : polling
-          ? "Procesando…"
-          : "Confirmar pago";
+          ? t("processingOrder")
+          : t("confirmPayment");
 
   function startPolling(id: number) {
     if (pollRef.current) clearInterval(pollRef.current);
@@ -149,13 +153,13 @@ export default function NewUserForm({
         setOrderId(order_id);
         setClientSecret(client_secret);
       } catch (e: any) {
-        setStripeError(e?.message || "No se pudo iniciar el pago.");
+        setStripeError(e?.message || t("couldNotInitiatePayment"));
       }
       return;
     }
 
     try {
-      if (!stripeRef.current || !splitRef.current?.number) throw new Error("Stripe no está listo.");
+      if (!stripeRef.current || !splitRef.current?.number) throw new Error(t("stripeNotReady"));
       setStripeError(null);
       if (orderId && !polling) startPolling(orderId);
 
@@ -180,7 +184,7 @@ export default function NewUserForm({
 
       if (res.error) setStripeError(res.error);
     } catch (e: any) {
-      setStripeError(e?.message || "Error confirmando el pago.");
+      setStripeError(e?.message || t("errorConfirmingPayment"));
     }
   };
 
@@ -195,9 +199,9 @@ export default function NewUserForm({
       <div className="flex flex-col gap-2">
         {/* Usernames */}
         <div className="space-y-1.5">
-          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Ingresa los nombres sugeridos</p>
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">{t("suggestedUsernamesLabel")}</p>
           <p className="w-full h-[42px] rounded-[8px] px-[14px] text-[14px] leading-[42px] bg-amber-50 border border-amber-200 flex items-center">
-            Mínimo 4 y máximo 20 caracteres alfanuméricos.
+            {t("usernameMinMax")}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -212,7 +216,7 @@ export default function NewUserForm({
                   <input
                     value={val}
                     onChange={(e) => setUsernameAt(idx, e.target.value)}
-                    placeholder="Ingresa nombre de usuario"
+                    placeholder={t("enterUsername")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
@@ -224,7 +228,7 @@ export default function NewUserForm({
         {/* Email */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Correo electrónico para recibir licencia</p>
+            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">{t("emailForLicense")}</p>
             <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
               <input
                 value={emailVal}
@@ -248,17 +252,17 @@ export default function NewUserForm({
             className="w-[18px] h-[18px] border-2 border-black rounded-[2px] accent-black focus:outline-none focus:ring-0"
           />
           <span className="select-none">
-            Acepto{" "}
+            {t("acceptTerms")}{" "}
             <Link href={TERMS_URL} target="_blank" className="underline font-medium">
-              términos y condiciones
+              {t("termsAndConditions")}
             </Link>{" "}
-            de la compra
+            {t("ofPurchase")}
           </span>
         </label>
 
         {/* Método de pago */}
         <div className="space-y-1.5">
-          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Método de pago</p>
+          <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">{t("paymentMethod")}</p>
 
           <div className="grid grid-cols-2 gap-2 ipad:gap-[10px]">
             <button
@@ -272,7 +276,7 @@ export default function NewUserForm({
               ].join(" ")}
             >
               <img src="/images/home/add_card.webp" alt="" className="w-5 h-5" />
-              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Tarjeta de crédito</span>
+              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">{t("creditCard")}</span>
             </button>
 
             <button
@@ -286,7 +290,7 @@ export default function NewUserForm({
               ].join(" ")}
             >
               <img src="/images/home/send_money.webp" alt="" className="w-5 h-5" />
-              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">Criptomonedas</span>
+              <span className="text-[12px] font-bold text-[#3D3D3D] leading-tight text-center">{t("cryptocurrency")}</span>
             </button>
           </div>
         </div>
@@ -299,7 +303,7 @@ export default function NewUserForm({
               <input
                 value={cardName}
                 onChange={(e) => setCardName(onlyLetters(e.target.value))}
-                placeholder="Titular de la tarjeta"
+                placeholder={t("cardholderName")}
                 className="w-full bg-transparent outline-none text-[14px]"
                 autoComplete="cc-name"
               />
@@ -324,7 +328,7 @@ export default function NewUserForm({
               <input
                 value={postal}
                 onChange={(e) => setPostal(e.target.value)}
-                placeholder="Código postal"
+                placeholder={t("postalCode")}
                 className="w-full bg-transparent outline-none text-[14px]"
                 autoComplete="postal-code"
               />
@@ -348,7 +352,7 @@ export default function NewUserForm({
         </button>
 
         {method === "card" && polling && (
-          <p className="text-xs text-[#3D3D3D]">Procesando la orden… puede tardar unos segundos.</p>
+          <p className="text-xs text-[#3D3D3D]">{t("processingOrder")}</p>
         )}
       </div>
 

@@ -3,6 +3,7 @@
 
 import React from "react";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 import type { SimFormValues } from "../types/simFormTypes";
 import { CARD_SPLIT_WRAPPER, getFieldWrapperClassName } from "../layout/simFormLayout";
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export function CardFieldsSection({ method, register, mountError, stripeStatus, errors }: Props) {
+  const t = useTranslations("paymentModal");
   if (method !== "card") return null;
 
   const isLoading = stripeStatus === "loading" || stripeStatus === "idle";
@@ -26,7 +28,7 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus, 
       <div className={getFieldWrapperClassName(!!errors.cardName)}>
         <input
           {...register("cardName", { required: true })}
-          placeholder="Titular de la tarjeta"
+          placeholder={t("cardholderName")}
           className="w-full bg-transparent outline-none text-[14px]"
           autoComplete="cc-name"
         />
@@ -37,7 +39,7 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus, 
         <div id="card-number-el" className="w-full min-h-[20px]" />
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#EBEBEB] rounded-[8px]">
-            <span className="text-[12px] text-gray-500 animate-pulse">Cargando...</span>
+            <span className="text-[12px] text-gray-500 animate-pulse">{t("loading")}</span>
           </div>
         )}
       </div>
@@ -56,7 +58,7 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus, 
       <div className={getFieldWrapperClassName(!!errors.cardPostal)}>
         <input
           {...register("cardPostal", { required: true })}
-          placeholder="Código postal"
+          placeholder={t("postalCode")}
           className="w-full bg-transparent outline-none text-[14px]"
           autoComplete="postal-code"
         />
@@ -67,7 +69,7 @@ export function CardFieldsSection({ method, register, mountError, stripeStatus, 
       )}
 
       {isLoading && !mountError && (
-        <p className="text-[12px] text-gray-500">Inicializando formulario de pago...</p>
+        <p className="text-[12px] text-gray-500">{t("initializingPaymentForm")}</p>
       )}
     </div>
   );

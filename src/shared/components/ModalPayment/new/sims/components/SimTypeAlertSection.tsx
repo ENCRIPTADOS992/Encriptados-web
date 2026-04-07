@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import type { FormType } from "../types/simFormTypes";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function SimTypeAlertSection({ formType }: Props) {
+  const t = useTranslations("paymentModal");
   const isEsim = formType === "encrypted_esim";
   const isPhysical = formType === "encrypted_physical";
 
@@ -20,7 +22,7 @@ export function SimTypeAlertSection({ formType }: Props) {
         !
       </span>
       <span className="text-[14px] leading-[20px] text-[#C98A00]">
-        Este producto no contiene un número de teléfono por seguridad.
+        {t("noPhoneNumberSecurity")}
       </span>
     </div>
   );

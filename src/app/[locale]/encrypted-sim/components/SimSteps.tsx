@@ -3,15 +3,18 @@
 
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const SimSteps = () => {
+  const t = useTranslations("EncryptedSimPage.SimSteps");
+
   return (
     <section className="w-full pt-16 pb-10 md:pt-10 md:pb-2">
 
       <div className="mx-auto w-[1276px] max-w-full px-4 md:px-8">
         {/* Título */}
         <h2 className="text-center text-[26px] md:text-[32px] font-semibold mb-14">
-          Así funciona
+          {t("title")}
         </h2>
 
         {/* Paso 1 */}
@@ -25,20 +28,19 @@ const SimSteps = () => {
             </div>
 
             <h3 className="text-[32px] md:text-[32px] font-semibold leading-snug mb-3">
-              Elige el destino donde quieres usar internet en tu{" "}
-              <span className="text-[#19BBFF]">eSIM</span>
+              {t("step1.title")}{" "}
+              <span className="text-[#19BBFF]">{t("step1.titleHighlight")}</span>
             </h3>
 
             <p className="text-[18px] md:text-[18px] text-[#4B5563] mb-4 max-w-md">
-              Elige uno de nuestros 65 destinos o regiones donde puedes usar
-              nuestra sim virtual.
+              {t("step1.description")}
             </p>
 
             <button
               type="button"
               className="inline-flex items-center gap-2 text-[16px] font-medium text-[#111827] underline underline-offset-4"
             >
-              Cómo funciona la cobertura 
+              {t("step1.link")}
               <span className="text-[16px]">›</span>
             </button>
           </div>
@@ -48,7 +50,7 @@ const SimSteps = () => {
             <div className="relative w-full max-w-[520px] aspect-[16/10] rounded-[32px] overflow-hidden">
               <Image
                 src="/images/encrypted-sim/step1.webp"
-                alt="Selecciona el destino para tu eSIM"
+                alt={t("step1.alt")}
                 fill
                 className="object-cover"
               />
@@ -63,7 +65,7 @@ const SimSteps = () => {
             <div className="relative w-full max-w-[520px] aspect-[16/10] rounded-[32px] overflow-hidden">
               <Image
                 src="/images/encrypted-sim/step2.webp"
-                alt="Selecciona tu plan de datos"
+                alt={t("step2.alt")}
                 fill
                 className="object-cover"
               />
@@ -79,21 +81,19 @@ const SimSteps = () => {
             </div>
 
             <h3 className="text-[22px] md:text-[32px] font-semibold leading-snug mb-3">
-              Selecciona tu{" "}
-              <span className="text-[#19BBFF]">plan de datos</span> y realiza la
-              compra
+              {t("step2.title")}{" "}
+              <span className="text-[#19BBFF]">{t("step2.titleHighlight")}</span> {t("step2.titleEnd")}
             </h3>
 
             <p className="text-[16px] md:text-[16px] text-[#4B5563] mb-4 max-w-md">
-              Elige uno de nuestros 65 destinos o regiones donde puedes usar
-              nuestra sim virtual.
+              {t("step2.description")}
             </p>
 
             <button
               type="button"
               className="inline-flex items-center gap-2 text-[16px] font-medium text-[#111827] underline underline-offset-4"
             >
-              Cómo funciona
+              {t("step2.link")}
               <span className="text-[16px]">›</span>
             </button>
           </div>
@@ -111,20 +111,19 @@ const SimSteps = () => {
             </div>
 
             <h3 className="text-[22px] md:text-[26px] font-semibold leading-snug mb-3">
-              Activa tu eSIM y disfruta de tus{" "}
-              <span className="text-[#19BBFF]">datos móviles</span>
+              {t("step3.title")}{" "}
+              <span className="text-[#19BBFF]">{t("step3.titleHighlight")}</span>
             </h3>
 
             <p className="text-[14px] md:text-[15px] text-[#4B5563] mb-4 max-w-md">
-              Elige uno de nuestros 65 destinos o regiones donde puedes usar
-              nuestra sim virtual.
+              {t("step3.description")}
             </p>
 
             <button
               type="button"
               className="inline-flex items-center gap-2 text-[14px] font-medium text-[#111827] underline underline-offset-4"
             >
-              Cómo funciona
+              {t("step3.link")}
               <span className="text-[16px]">›</span>
             </button>
           </div>
@@ -134,7 +133,7 @@ const SimSteps = () => {
             <div className="relative w-full max-w-[521px] aspect-[16/12] rounded-[32px] overflow-hidden ">
               <Image
                 src="/images/encrypted-sim/step3.webp"
-                alt="Activa y usa tu eSIM"
+                alt={t("step3.alt")}
                 fill
                 className="object-contain"
               />

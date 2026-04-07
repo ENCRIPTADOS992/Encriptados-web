@@ -149,58 +149,56 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
           <button className="back-button flex items-center mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 hover:text-gray-900" onClick={() => setSelectedOption('')}>
             <span className="mr-2">⬅</span> {t('back')}
           </button>
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Compra tu SIM y recíbela en cualquier parte del mundo</h2>
-          <p className="text-xs sm:text-sm text-gray-500 mb-4">Disponible en más de 200 países</p>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('physicalSimSection.title')}</h2>
+          <p className="text-xs sm:text-sm text-gray-500 mb-4">{t('physicalSimSection.subtitle')}</p>
           <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div className="flex flex-col items-center">
               <span className="icon text-2xl sm:text-3xl mb-2">🔒</span>
-              <span className="text-xs sm:text-sm text-center">Anónimato</span>
+              <span className="text-xs sm:text-sm text-center">{t('physicalSimSection.features.anonymity')}</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="icon text-2xl sm:text-3xl mb-2">🌍</span>
-              <span className="text-xs sm:text-sm text-center">Roaming Global</span>
+              <span className="text-xs sm:text-sm text-center">{t('physicalSimSection.features.globalRoaming')}</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="icon text-2xl sm:text-3xl mb-2">🛡️</span>
-              <span className="text-xs sm:text-sm text-center">Seguridad</span>
+              <span className="text-xs sm:text-sm text-center">{t('physicalSimSection.features.security')}</span>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-100 p-4 rounded-lg gap-4">
             <div className="flex-1">
-              <h3 className="font-semibold mb-2 text-base sm:text-lg">SIM Física</h3>
+              <h3 className="font-semibold mb-2 text-base sm:text-lg">{t('physicalSimSection.simPhysicalTitle')}</h3>
               <ul className="text-xs sm:text-sm space-y-1">
-                <li>• Recíbela en cualquier parte del mundo</li>
-                <li>• Privacidad y anonimato</li>
-                <li>• Sin vencimiento de datos ni fechas de corte</li>
-                <li>• Cobertura global en más de 200 países</li>
+                {[0, 1, 2, 3].map((i) => (
+                  <li key={i}>• {t(`physicalSimSection.simPhysicalFeatures.${i}`)}</li>
+                ))}
               </ul>
             </div>
             <img src="/placeholder.svg" alt="Phone" width={200} height={200} className="rounded-lg w-32 h-32 sm:w-40 sm:h-40 object-cover mx-auto sm:mx-0" />
           </div>
           <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="font-semibold text-lg sm:text-xl">$10 USD</span>
-            <button className="w-full sm:w-auto sm:px-8 bg-blue-500 hover:bg-blue-600 text-white py-2 sm:py-3 rounded-lg transition-colors">Comprar Ahora</button>
+            <span className="font-semibold text-lg sm:text-xl">{t('physicalSimSection.price')}</span>
+            <button className="w-full sm:w-auto sm:px-8 bg-blue-500 hover:bg-blue-600 text-white py-2 sm:py-3 rounded-lg transition-colors">{t('physicalSimSection.buyNow')}</button>
           </div>
         </div>
       )}
 
       {selectedOption === 'recharge' && (
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Ingresa tu número de SIM para recargar</h2>
-          <input type="text" placeholder="1928-423-33" className="w-full p-3 border-2 border-gray-300 focus:border-blue-500 focus:outline-none rounded-lg mb-4 text-sm sm:text-base" />
-          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors text-sm sm:text-base font-medium">Pagar ahora</button>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('rechargeSection.title')}</h2>
+          <input type="text" placeholder={t('rechargeSection.placeholder')} className="w-full p-3 border-2 border-gray-300 focus:border-blue-500 focus:outline-none rounded-lg mb-4 text-sm sm:text-base" />
+          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors text-sm sm:text-base font-medium">{t('rechargeSection.payNow')}</button>
           <ul className="text-xs sm:text-sm mt-4 sm:mt-6 space-y-2">
-            <li className="flex items-start"><span className="mr-2">✅</span> Tu recarga se hará inmediatamente</li>
-            <li className="flex items-start"><span className="mr-2">✅</span> Pago seguro garantizado</li>
-            <li className="flex items-start"><span className="mr-2">✅</span> No recopilamos tu información de compra</li>
-            <li className="flex items-start"><span className="mr-2">✅</span> Conexión segura y anónima</li>
+            {[0, 1, 2, 3].map((i) => (
+              <li key={i} className="flex items-start"><span className="mr-2">✅</span> {t(`rechargeSection.features.${i}`)}</li>
+            ))}
           </ul>
         </div>
       )}
 
       {selectedOption === 'esim' && !selectedRegion && (
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Selecciona una región</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('esimSection.selectRegion')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {regions.map((region) => (
               <button
@@ -221,13 +219,12 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
             <span className="mr-2">⬅</span> {t('back')}
           </div>
           <div className="bg-blue-50 p-4 sm:p-6 rounded-lg mb-4 sm:mb-6">
-            <h3 className="font-semibold text-blue-700 mb-2 text-sm sm:text-base">SIM eSIM con datos móviles</h3>
+            <h3 className="font-semibold text-blue-700 mb-2 text-sm sm:text-base">{t('esimSection.esimLabel')}</h3>
             <h4 className="font-bold text-base sm:text-lg mb-3">{selectedRegion.toUpperCase()}</h4>
             <ul className="text-xs sm:text-sm space-y-2">
-              <li className="flex items-start"><span className="mr-2 mt-0.5">✅</span> Total anonimato</li>
-              <li className="flex items-start"><span className="mr-2 mt-0.5">✅</span> Sin vencimiento de datos ni fechas de corte</li>
-              <li className="flex items-start"><span className="mr-2 mt-0.5">✅</span> Sin límites de tiempo para usar recursos del plan</li>
-              <li className="flex items-start"><span className="mr-2 mt-0.5">✅</span> Cobertura en más de 200 países</li>
+              {[0, 1, 2, 3].map((i) => (
+                <li key={i} className="flex items-start"><span className="mr-2 mt-0.5">✅</span> {t(`esimSection.features.${i}`)}</li>
+              ))}
             </ul>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
@@ -240,7 +237,7 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
           </div>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <span className="font-bold text-lg sm:text-xl">$10 USD</span>
-            <button className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition-colors text-sm sm:text-base font-medium">Comprar ahora</button>
+            <button className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition-colors text-sm sm:text-base font-medium">{t('esimSection.buyNow')}</button>
           </div>
 
           <TelegramButton />

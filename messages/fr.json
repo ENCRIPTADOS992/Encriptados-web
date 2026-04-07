@@ -282,7 +282,9 @@
       ],
       "priceRange": "25 - 500 USD",
       "rating": "5/5",
-      "buyNow": "Acheter"
+      "buyNow": "Acheter",
+      "benefitsLabel": "Avantages pour vous :",
+      "fromLabel": "À partir de"
     },
     "characteristics": {
       "title": "Caractéristiques principales"
@@ -463,7 +465,148 @@
     "coverageMoreThan200CountriesTitle": "Couverture dans plus de 200 pays",
     "coverageMoreThan200CountriesDescription": "Communication sécurisée sans frontières",
     "downloadAppTitle": "Téléchargez l'application pour iOS et Android",
-    "downloadAppDescription": "Téléchargez l'application pour iOS et Android"
+    "downloadAppDescription": "Téléchargez l'application pour iOS et Android",
+    "FaqSims": {
+      "title": "Questions fréquentes",
+      "leftColumn": {
+        "devices": {
+          "question": "Quels appareils sont compatibles avec l'eSIM ?",
+          "answer": "La SIM Encriptados fonctionne avec tous les téléphones et tablettes déverrouillés prenant en charge l'eSIM. Elle est compatible avec les principales marques du marché comme Android et iOS."
+        },
+        "places": {
+          "question": "Où puis-je utiliser l'eSIM ?",
+          "answer": "Vous pouvez l'utiliser dans nos destinations disponibles. Il suffit de choisir le pays ou la région avant l'achat et votre eSIM fonctionnera dans cette zone de couverture."
+        },
+        "topup": {
+          "question": "À quelle fréquence dois-je recharger mon eSIM ?",
+          "answer": "Vous pouvez recharger quand vous en avez besoin. Tant que vous avez des données disponibles et que le plan est actif, il n'est pas obligatoire de recharger à une date fixe."
+        },
+        "compatible": {
+          "question": "Comment savoir si votre téléphone est compatible avec l'eSIM ?",
+          "answer": "Vérifiez dans les paramètres de votre téléphone si l'option d'ajouter une eSIM ou un plan mobile numérique apparaît. Vous pouvez également vérifier le modèle sur le site du fabricant."
+        }
+      },
+      "rightColumn": {
+        "howWorks": {
+          "question": "Comment fonctionne ENCRYPTADOS eSIM ?",
+          "answer": "Vous achetez votre plan, recevez un code QR, l'activez depuis les paramètres de votre téléphone et commencez à utiliser vos données mobiles de manière sécurisée et cryptée."
+        },
+        "multiCountry": {
+          "question": "Puis-je utiliser ENCRYPTADOS eSIM dans plusieurs pays ?",
+          "answer": "Oui, selon le plan acheté, vous pouvez utiliser l'eSIM dans un ou plusieurs pays. Vérifiez toujours la liste des destinations incluses avant d'acheter."
+        },
+        "secure": {
+          "question": "Est-il sûr d'utiliser ENCRYPTADOS eSIM ?",
+          "answer": "Oui. Notre eSIM crypte votre trafic et protège votre identité, offrant des connexions privées et anonymes sur les réseaux mobiles."
+        },
+        "help": {
+          "question": "Que faire si j'ai besoin d'aide avec mon eSIM ?",
+          "answer": "Vous pouvez contacter notre équipe d'assistance depuis l'application ou le chat du site web. Nous vous aiderons avec l'activation, la configuration et l'utilisation de votre eSIM."
+        }
+      }
+    },
+    "SimBenefits": {
+      "title": "Avantages de l'utilisation de l'eSIM Encriptados en Colombie",
+      "items": {
+        "privacy": {
+          "title": "Confidentialité et Anonymat",
+          "description": "Nous ne demandons aucune donnée personnelle, pas même votre adresse e-mail, et nous recommandons d'effectuer des paiements anonymes avec des cartes prépayées."
+        },
+        "encrypted": {
+          "title": "Communications cryptées",
+          "description": "Les communications cryptées garantissent des appels et des messages sécurisés, protégeant la confidentialité et empêchant les interceptions non autorisées."
+        },
+        "substituteNumber": {
+          "title": "Numéro de substitution",
+          "description": "Les SIM cryptées génèrent un numéro aléatoire pour chaque appel, augmentant la confidentialité et empêchant le suivi."
+        },
+        "imsiChanges": {
+          "title": "SIM intraçable avec changements d'IMSI",
+          "description": "Les changements d'IMSI permettent de modifier l'identité de la SIM pour éviter le suivi et améliorer la sécurité."
+        },
+        "voiceFilters": {
+          "title": "Filtres vocaux",
+          "description": "Les filtres vocaux modifient le son des appels pour protéger l'identité de l'utilisateur, ajoutant une couche supplémentaire de sécurité."
+        },
+        "lifetimePlans": {
+          "title": "Plans à vie",
+          "description": "Les utilisateurs disposent d'un plan de données actif pendant des périodes prolongées, s'adaptant aux besoins d'utilisation continue."
+        }
+      }
+    },
+    "SimSteps": {
+      "title": "Comment ça fonctionne",
+      "step1": {
+        "title": "Choisissez la destination où vous souhaitez utiliser internet sur votre",
+        "titleHighlight": "eSIM",
+        "description": "Choisissez l'une de nos 65 destinations ou régions où vous pouvez utiliser notre SIM virtuelle.",
+        "link": "Comment fonctionne la couverture",
+        "alt": "Sélectionnez la destination pour votre eSIM"
+      },
+      "step2": {
+        "title": "Sélectionnez votre",
+        "titleHighlight": "plan de données",
+        "titleEnd": "et effectuez votre achat",
+        "description": "Choisissez l'une de nos 65 destinations ou régions où vous pouvez utiliser notre SIM virtuelle.",
+        "link": "Comment ça fonctionne",
+        "alt": "Sélectionnez votre plan de données"
+      },
+      "step3": {
+        "title": "Activez votre eSIM et profitez de vos",
+        "titleHighlight": "données mobiles",
+        "description": "Choisissez l'une de nos 65 destinations ou régions où vous pouvez utiliser notre SIM virtuelle.",
+        "link": "Comment ça fonctionne",
+        "alt": "Activez et utilisez votre eSIM"
+      }
+    },
+    "AppDownload": {
+      "title": "Téléchargez l'App",
+      "titleLine2": "pour iOS et Android",
+      "scanQR": "Ou scannez le code QR avec votre caméra",
+      "imageAlt": "Aperçu du téléchargement de l'app"
+    },
+    "CardInfo": {
+      "simLabel": "eSIM cryptée avec données mobiles",
+      "simIconAlt": "Icône eSIM",
+      "country": "Colombie",
+      "benefitsTitle": "Avantages pour vous :",
+      "benefits": [
+        "Connexions sécurisées et privées",
+        "Appels anonymes",
+        "Données de géolocalisation cryptées",
+        "Pas de limite de temps pour utiliser les ressources du plan",
+        "Numéro de substitution pour chaque appel",
+        "Changements d'IMSI pour plus d'anonymat"
+      ],
+      "noExpiry": "Pas de date d'expiration",
+      "gbUnlimited": "Go illimités",
+      "buyNow": "Acheter maintenant",
+      "chatSupport": "Chat support",
+      "cardAlt": "Carte Encriptados",
+      "noUsageDeadline": "Il n'y a pas de date limite d'utilisation"
+    },
+    "DataCostsByCountry": {
+      "button": "Voir les coûts par Go par pays",
+      "buttonAlt": "Explorer les pays",
+      "modalTitle": "Tarifs et",
+      "modalTitleHighlight": "coûts des données",
+      "modalDescription": "Recherchez le lieu où vous consommerez vos données, le coût varie selon le pays / la région.",
+      "searchPlaceholder": "Rechercher un pays...",
+      "closeLabel": "Fermer",
+      "tableHeaders": {
+        "country": "Pays",
+        "countryAlt": "Pays",
+        "profile": "Profil",
+        "profileAlt": "Profil",
+        "pricePerGb": "Prix 1 Go en EUROS"
+      },
+      "noResults": "Aucun pays trouvé avec ce nom."
+    },
+    "ListOfPlans": {
+      "country": "Pays",
+      "profile": "Profil",
+      "pricePerGb": "Prix 1 Go en EUROS"
+    }
   },
   "MayaData": {
     "anonymSim": "eSIM anonyme",
@@ -568,7 +711,47 @@
       "product": "produit",
       "products": "produits",
       "found": "trouvé",
-      "founds": "trouvés"
+      "founds": "trouvés",
+      "physicalSimSection": {
+        "title": "Achetez votre SIM et recevez-la partout dans le monde",
+        "subtitle": "Disponible dans plus de 200 pays",
+        "features": {
+          "anonymity": "Anonymat",
+          "globalRoaming": "Roaming mondial",
+          "security": "Sécurité"
+        },
+        "simPhysicalTitle": "SIM Physique",
+        "simPhysicalFeatures": [
+          "Recevez-la partout dans le monde",
+          "Confidentialité et anonymat",
+          "Pas d'expiration de données ni de dates limites",
+          "Couverture mondiale dans plus de 200 pays"
+        ],
+        "price": "$10 USD",
+        "buyNow": "Acheter maintenant"
+      },
+      "rechargeSection": {
+        "title": "Entrez votre numéro de SIM pour recharger",
+        "placeholder": "1928-423-33",
+        "payNow": "Payer maintenant",
+        "features": [
+          "Votre recharge sera effectuée immédiatement",
+          "Paiement sécurisé garanti",
+          "Nous ne collectons pas vos informations d'achat",
+          "Connexion sécurisée et anonyme"
+        ]
+      },
+      "esimSection": {
+        "selectRegion": "Sélectionnez une région",
+        "esimLabel": "eSIM avec données mobiles",
+        "features": [
+          "Anonymat total",
+          "Pas d'expiration de données ni de dates limites",
+          "Pas de limite de temps pour utiliser les ressources du plan",
+          "Couverture dans plus de 200 pays"
+        ],
+        "buyNow": "Acheter maintenant"
+      }
     },
     "faqs": {
       "title": "Questions fréquentes",
@@ -736,29 +919,29 @@
       "moreInfo": "Info"
     },
     "faqs": {
-      "title": "Questions fr\u00e9quentes",
+      "title": "Questions fréquentes",
       "q1": {
         "question": "Quels appareils sont compatibles avec la carte SIM?",
-        "answer": "La carte SIM fonctionne avec la plupart des t\u00e9l\u00e9phones et tablettes d\u00e9verrouill\u00e9s. Vous avez seulement besoin que votre appareil prenne en charge la bande de votre op\u00e9rateur local."
+        "answer": "La carte SIM fonctionne avec la plupart des téléphones et tablettes déverrouillés. Vous avez seulement besoin que votre appareil prenne en charge la bande de votre opérateur local."
       },
       "q2": {
-        "question": "Comment activer ma carte SIM apr\u00e8s l'achat?",
-        "answer": "Vous recevrez des instructions \u00e9tape par \u00e9tape par e-mail et dans l'application. G\u00e9n\u00e9ralement, il vous suffit de scanner un code ou de suivre un guide rapide."
+        "question": "Comment activer ma carte SIM après l'achat?",
+        "answer": "Vous recevrez des instructions étape par étape par e-mail et dans l'application. Généralement, il vous suffit de scanner un code ou de suivre un guide rapide."
       },
       "q3": {
         "question": "Puis-je l'utiliser dans plusieurs pays?",
-        "answer": "Oui. Selon le forfait contract\u00e9, vous pourrez utiliser la carte SIM dans diff\u00e9rents pays sans changer de num\u00e9ro ni perdre votre solde de donn\u00e9es."
+        "answer": "Oui. Selon le forfait contracté, vous pourrez utiliser la carte SIM dans différents pays sans changer de numéro ni perdre votre solde de données."
       },
       "q4": {
-        "question": "Mes informations personnelles sont-elles enregistr\u00e9es?",
-        "answer": "Nous ne demandons pas d'informations sensibles inutiles. Notre objectif est de garder votre navigation aussi priv\u00e9e que possible."
+        "question": "Mes informations personnelles sont-elles enregistrées?",
+        "answer": "Nous ne demandons pas d'informations sensibles inutiles. Notre objectif est de garder votre navigation aussi privée que possible."
       },
       "q5": {
-        "question": "Que se passe-t-il si j'\u00e9puise mes donn\u00e9es?",
-        "answer": "Vous pouvez recharger votre forfait depuis l'application ou le site Web \u00e0 tout moment, sans perdre votre carte SIM ni avoir besoin de la r\u00e9activer."
+        "question": "Que se passe-t-il si j'épuise mes données?",
+        "answer": "Vous pouvez recharger votre forfait depuis l'application ou le site Web à tout moment, sans perdre votre carte SIM ni avoir besoin de la réactiver."
       },
       "q6": {
-        "question": "Y a-t-il un support si j'ai des probl\u00e8mes d'activation?",
+        "question": "Y a-t-il un support si j'ai des problèmes d'activation?",
         "answer": "Oui. Nous avons un support par chat et e-mail pour vous aider avec l'installation, l'activation et l'utilisation de votre carte SIM."
       }
     }
@@ -1170,6 +1353,10 @@
         "intactPhone": {
           "title": "Intact Phone",
           "description": "Intact Phone est une application de messagerie sécurisée."
+        },
+        "secureCrypt": {
+          "title": "SecureCrypt",
+          "description": "SecureCrypt est une application de messagerie sécurisée."
         }
       }
     },
@@ -2595,7 +2782,43 @@
     "estimatedDelivery": "Date de livraison estimée",
     "shippingDetail": "Détail de l'envoi",
     "shippedBy": "Envoyé par",
-    "trackingNumber": "Numéro de suivi"
+    "trackingNumber": "Numéro de suivi",
+    "purchaseData": "Données d'achat",
+    "enterEmail": "Entrez votre Email",
+    "simNumber": "Numéro de SIM",
+    "simNumberN": "Numéro de SIM {n}",
+    "telegramIdOptional": "ID Telegram",
+    "telegramIdOptionalHint": "(optionnel)",
+    "telegramPlaceholder": "@utilisateur ou ID numérique",
+    "emailExamplePlaceholder": "email@exemple.com",
+    "licenseType": "Type de licence",
+    "newLicenseBtn": "Nouvelle licence",
+    "renewLicenseBtn": "Renouveler licence",
+    "suggestedUsernamesLabel": "Entrez les noms suggérés",
+    "usernameMinMax": "Minimum 4 et maximum 20 caractères alphanumériques.",
+    "enterUsername": "Entrez un nom d'utilisateur",
+    "emailForLicense": "Email pour recevoir la licence",
+    "stripeNotReady": "Stripe n'est pas prêt.",
+    "couldNotInitiatePayment": "Impossible d'initier le paiement.",
+    "errorConfirmingPayment": "Erreur lors de la confirmation du paiement.",
+    "couldNotCompletePayment": "Impossible de terminer le paiement.",
+    "errorProcessingPayment": "Erreur lors du traitement du paiement.",
+    "processingOrder": "Traitement de la commande… cela peut prendre quelques secondes.",
+    "roningCodeDescription": "Recevez un code RONING pour recharger le solde depuis l'application Encriptados.",
+    "chooseRechargeType": "Choisir le type de recharge",
+    "normalRecharge": "Normale",
+    "anonymousRecharge": "Anonyme",
+    "shippingAddress": "Adresse de livraison",
+    "fullName": "Nom complet",
+    "countryField": "Pays",
+    "phoneField": "Téléphone",
+    "loading": "Chargement...",
+    "initializingPaymentForm": "Initialisation du formulaire de paiement...",
+    "noPhoneNumberSecurity": "Ce produit ne contient pas de numéro de téléphone pour des raisons de sécurité.",
+    "licenseQuestionLabel": "Comment souhaitez-vous recevoir votre licence ?",
+    "wantMyUserBtn": "Je veux mon utilisateur",
+    "roningCodeBtn": "Code RONING",
+    "rechargeBtn": "Recharger"
   },
   "TestingProducts": {
     "badge": "Our products",

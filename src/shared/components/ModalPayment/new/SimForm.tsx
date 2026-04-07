@@ -4,6 +4,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 
 import { buildSimFormConfig } from "./sims/config/simFormConfig";
 import type { FormType, SimFormValues } from "./sims/types/simFormTypes";
@@ -14,7 +15,7 @@ import { BuyerFieldsSection } from "./sims/components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./sims/components/PaymentMethodSection";
 import { CardFieldsSection } from "./sims/components/CardFieldsSection";
 
-const TERMS_URL = "/es/pages/terminos-y-condiciones";
+
 
 type SimFormProps = {
   onSubmit: (data: SimFormValues) => void | Promise<void>;
@@ -31,6 +32,10 @@ export default function SimForm({
   hideSimField = false,
   onStripeConfirmReady,
 }: SimFormProps) {
+  const t = useTranslations("paymentModal");
+  const locale = useLocale();
+  const TERMS_URL = `/${locale}/pages/terminos-y-condiciones`;
+
   const {
     register,
     handleSubmit,
@@ -108,7 +113,7 @@ export default function SimForm({
       <SimTypeAlertSection formType={formType} />
 
       <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 !mt-1.5">
-        Datos de compra
+        {t("purchaseData")}
       </p>
 
       <BuyerFieldsSection
@@ -133,15 +138,15 @@ export default function SimForm({
           "
         />
         <span className="select-none">
-          Acepto{" "}
+          {t("acceptTerms")}{" "}
           <Link
             href={TERMS_URL}
             target="_blank"
             className="underline font-medium"
           >
-            términos y condiciones
+            {t("termsAndConditions")}
           </Link>{" "}
-          de la compra
+          {t("ofPurchase")}
         </span>
       </label>
 
@@ -169,7 +174,7 @@ export default function SimForm({
           }
           focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30`}
       >
-        {loading ? "Procesando..." : "Pagar ahora"}
+        {loading ? t("processing") : t("payNow")}
       </button>
     </form>
   );

@@ -5,6 +5,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { CircleAlert } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
 
 import { buildSimFormConfig } from "./config/simFormConfig";
 import type { FormType, SimFormValues } from "./types/simFormTypes";
@@ -20,7 +21,7 @@ import { BuyerFieldsSection } from "./components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./components/PaymentMethodSection";
 import { resolveVariantPrice, isProductOnSale } from "./utils/resolveVariantPrice";
 
-const TERMS_URL = "/es/pages/terminos-y-condiciones";
+
 
 type SimFormUnifiedProps = {
   formType: FormType;
@@ -57,6 +58,10 @@ export default function SimFormUnified({
   loading = false,
   esimBasePrice,
 }: SimFormUnifiedProps) {
+  const t = useTranslations("paymentModal");
+  const locale = useLocale();
+  const TERMS_URL = `/${locale}/pages/terminos-y-condiciones`;
+
   const {
     register,
     handleSubmit,
@@ -203,7 +208,7 @@ export default function SimFormUnified({
         <JellyLoader size={34} color="#ffffff" speed={0.8} />
       </div>
     );
-    return "Pagar ahora";
+    return t("payNow");
   }, [isLoadingPayment]);
 
   // Paso 1: Crear orden y obtener client_secret (o redirigir a crypto)
@@ -363,7 +368,7 @@ export default function SimFormUnified({
         setClientSecret(secret); // Save state just in case, though we use `secret` var
 
         if (!stripeRef.current || !splitRef.current?.number) {
-          throw new Error("Stripe no está listo.");
+          throw new Error(t("stripeNotReady"));
         }
 
         const billing = {
@@ -394,12 +399,12 @@ export default function SimFormUnified({
         } else if (confirmRes?.error) {
           setStripeError(confirmRes.error);
         } else {
-          setStripeError("No se pudo completar el pago.");
+          setStripeError(t("couldNotCompletePayment"));
         }
 
       } catch (err: any) {
         console.error("[SimFormUnified] Error:", err);
-        setStripeError(err?.message || "Error al procesar el pago.");
+        setStripeError(err?.message || t("errorProcessingPayment"));
       } finally {
         setIsSubmitting(false);
       }
@@ -416,7 +421,7 @@ export default function SimFormUnified({
         <div className="flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
           <CircleAlert className="shrink-0 text-[#C98A00]" size={18} />
           <span className="text-[14px] leading-[20px] text-[#C98A00]">
-            Recibe un código RONING para recargar saldo desde la app Encriptados.
+            {t("roningCodeDescription")}
           </span>
         </div>
       )}
@@ -424,7 +429,7 @@ export default function SimFormUnified({
       {isEligibleRecharge && (
         <div className="mt-4 mb-2 space-y-2">
           <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 mb-2">
-            Elegir tipo de recarga
+            {t("chooseRechargeType")}
           </p>
           <div className="flex items-center gap-2">
             <button
@@ -435,7 +440,7 @@ export default function SimFormUnified({
                 : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black"
                 }`}
             >
-              Normal
+              {t("normalRecharge")}
             </button>
             <button
               type="button"
@@ -445,14 +450,14 @@ export default function SimFormUnified({
                 : "bg-[#EBEBEB] text-[#5D5D5D] border-transparent hover:text-black font-normal"
                 }`}
             >
-              Anónima
+              {t("anonymousRecharge")}
             </button>
           </div>
         </div>
       )}
 
       <p className="text-[14px] font-bold leading-[14px] text-[#010C0F]/80 !mt-1.5">
-        Datos de compra
+        {t("purchaseData")}
       </p>
 
       <BuyerFieldsSection
@@ -483,11 +488,11 @@ export default function SimFormUnified({
           className={`w-[18px] h-[18px] border-2 rounded-[2px] accent-black focus:outline-none focus:ring-0 ${showErrors && !terms ? "border-red-500" : "border-black"}`}
         />
         <span className="select-none">
-          Acepto{" "}
+          {t("acceptTerms")}{" "}
           <Link href={TERMS_URL} target="_blank" className="underline font-medium">
-            términos y condiciones
+            {t("termsAndConditions")}
           </Link>{" "}
-          de la compra
+          {t("ofPurchase")}
         </span>
       </label>
 
@@ -501,7 +506,7 @@ export default function SimFormUnified({
             <input
               {...register("cardName")}
               onChange={(e) => setValue("cardName", onlyLetters(e.target.value))}
-              placeholder="Titular de la tarjeta"
+              placeholder={t("cardholderName")}
               className="w-full bg-transparent outline-none text-[14px]"
               autoComplete="cc-name"
             />
@@ -515,7 +520,7 @@ export default function SimFormUnified({
             />
             {(stripeStatus === "idle" || stripeStatus === "loading") && (
               <div className="absolute inset-0 flex items-center justify-center bg-[#EBEBEB] rounded-[8px]">
-                <span className="text-[12px] text-gray-500 animate-pulse">Cargando...</span>
+                <span className="text-[12px] text-gray-500 animate-pulse">{t("loading")}</span>
               </div>
             )}
           </div>
@@ -530,7 +535,7 @@ export default function SimFormUnified({
           <div className={`w-full h-[42px] rounded-[8px] px-[14px] flex items-center ${showErrors && !cardPostalOk ? "bg-red-50 ring-1 ring-red-500" : "bg-[#EBEBEB]"}`}>
             <input
               {...register("cardPostal")}
-              placeholder="Código postal"
+              placeholder={t("postalCode")}
               className="w-full bg-transparent outline-none text-[14px]"
               autoComplete="postal-code"
             />
@@ -541,7 +546,7 @@ export default function SimFormUnified({
           )}
 
           {(stripeStatus === "idle" || stripeStatus === "loading") && !mountError && (
-            <p className="text-[12px] text-gray-500">Inicializando formulario de pago...</p>
+            <p className="text-[12px] text-gray-500">{t("initializingPaymentForm")}</p>
           )}
         </div>
       )}

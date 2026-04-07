@@ -2,6 +2,7 @@ import PointConect from "@/shared/svgs/PointConect";
 import WorldSvg from "@/shared/svgs/WorldSvg";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 type ListOfPlansData = {
   pais: string;
@@ -11,6 +12,7 @@ type ListOfPlansData = {
 
 const ListOfPlans = ({ data }: { data: ListOfPlansData[] }) => {
   const { watch } = useFormContext();
+  const t = useTranslations("EncryptedSimPage.ListOfPlans");
 
   const searchValue = watch("searchinputcountry")?.toLowerCase() || "";
 
@@ -47,7 +49,7 @@ const ListOfPlans = ({ data }: { data: ListOfPlansData[] }) => {
                   >
                     <div className="flex items-center gap-x-2">
                       <WorldSvg color="#79D8FF" height={20} width={20} />
-                      <p>País</p>
+                      <p>{t("country")}</p>
                     </div>
                   </th>
                   <th
@@ -56,14 +58,14 @@ const ListOfPlans = ({ data }: { data: ListOfPlansData[] }) => {
                   >
                     <div className="flex items-center gap-x-2">
                       <PointConect color="#79D8FF" height={20} width={20} />
-                      <p>Perfil</p>
+                      <p>{t("profile")}</p>
                     </div>
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-bold text-[#79D8FF] tracking-wider border border-teal-900"
                   >
-                    Valor 1 GB en EUROS
+                    {t("pricePerGb")}
                   </th>
                 </tr>
               </thead>

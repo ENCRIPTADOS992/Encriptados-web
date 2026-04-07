@@ -228,242 +228,385 @@
   },
   "EncryptedSimPage": {
     "SimTimBanner": {
-      "title": "Conéctate en cualquier",
-      "titleHighlight": "lugar del mundo con total anonimato",
-      "subtitle": "Tus datos no expiran sin importar el tiempo que tardes en consumirlos",
-      "personAlt": "Persona feliz",
+      "title": "Connettiti da qualsiasi",
+      "titleHighlight": "parte del mondo con totale anonimato",
+      "subtitle": "I tuoi dati non scadono, indipendentemente dal tempo che impieghi per consumarli",
+      "personAlt": "Persona felice",
       "features": {
-        "anonymity": "Total",
+        "anonymity": "Totale",
         "anonymityHighlight": "anonimato",
         "payForUse": "Paga",
-        "payForUseHighlight": "por lo que gastas",
-        "compatible": "Compatible:",
-        "compatibleHighlight": "iOS y Android",
-        "coverage": "Cobertura en",
-        "coverageHighlight": "175 países",
-        "noExpiry": "Tus datos",
-        "noExpiryHighlight": "no expiran",
-        "instantActivation": "Activación",
-        "instantActivationHighlight": "instantánea"
+        "payForUseHighlight": "per quello che usi",
+        "compatible": "Compatibile:",
+        "compatibleHighlight": "iOS e Android",
+        "coverage": "Copertura in",
+        "coverageHighlight": "175 paesi",
+        "noExpiry": "I tuoi dati",
+        "noExpiryHighlight": "non scadono",
+        "instantActivation": "Attivazione",
+        "instantActivationHighlight": "istantanea"
       }
     },
     "HeroSimSection": {
-      "titleAccent": "Seguridad",
-      "titleLine1Rest": "encriptada",
-      "titleLine2": "en tus comunicaciones",
-      "subtitle": "Conecta con seguridad y confianza ahora",
-      "balanceLabel": "Saldo disponible",
-      "topUpCta": "Recargar saldo",
-      "exampleProductTitle": "SIM Encriptados (Físico)",
-      "exampleProductDuration": "25 días",
-      "exampleBuyCta": "+ Comprar",
-      "priceFrom": "Desde",
-      "buyNow": "¡Compra ahora!",
-      "benefitsTitle": "Características principales"
+      "titleAccent": "Sicurezza",
+      "titleLine1Rest": "crittografata",
+      "titleLine2": "nelle tue comunicazioni",
+      "subtitle": "Connettiti in sicurezza e con fiducia adesso",
+      "balanceLabel": "Saldo disponibile",
+      "topUpCta": "Ricarica saldo",
+      "exampleProductTitle": "SIM Encriptados (Fisica)",
+      "exampleProductDuration": "25 giorni",
+      "exampleBuyCta": "+ Acquista",
+      "priceFrom": "Da",
+      "buyNow": "Acquista ora!",
+      "benefitsTitle": "Caratteristiche principali"
     },
-    "connectAllWorldTitle": "Conéctate en todo el mundo",
-    "totalSecurityTitle": "con total seguridad en tus comunicaciones",
-    "addYourSimSubtitle": "Adquiere tu SIM/eSIM con datos móviles y disfruta de total anonimato en llamadas, filtros y más",
-    "coverageTitle": "Cobertura en más de 200 países",
-    "coverageDescription": "Consulta el costo del gigabyte según el país y el perfil recomendado, así optimizas el consumo de tus datos al mejor precio",
+    "connectAllWorldTitle": "Connettiti in tutto il mondo",
+    "totalSecurityTitle": "con totale sicurezza nelle tue comunicazioni",
+    "addYourSimSubtitle": "Acquista la tua SIM/eSIM con dati mobili e goditi il totale anonimato nelle chiamate, filtri e altro",
+    "coverageTitle": "Copertura in oltre 200 paesi",
+    "coverageDescription": "Consulta il costo del gigabyte per paese e il profilo consigliato, così ottimizzi il consumo dei tuoi dati al miglior prezzo",
     "searchPlaceholder": "Colombia",
-    "encryptedTitleButon": "eSIM/SIM Encriptada",
-    "encryptedTitle": "La eSIM/SIM Encriptada te brinda la mayor seguridad y anonimato en cualquier parte del mundo",
-    "encryptedDescription": "Seguridad y privacidad en tus comunicaciones, realiza llamadas anónimas e irrastreables y protégete contra IMSI Catcher",
+    "encryptedTitleButon": "eSIM/SIM Crittografata",
+    "encryptedTitle": "La eSIM/SIM Crittografata ti offre la massima sicurezza e anonimato in qualsiasi parte del mondo",
+    "encryptedDescription": "Sicurezza e privacy nelle tue comunicazioni, effettua chiamate anonime e irrintracciabili e proteggiti contro gli IMSI Catcher",
     "CardSim": {
-      "headerTitle": "Recarga de Datos",
-      "availableCountries": "+200 países disponibles",
+      "headerTitle": "Ricarica Dati",
+      "availableCountries": "+200 paesi disponibili",
       "lteSpeed": "5G LTE",
       "featuresList": [
-        "Datos añadidos al instante",
-        "Irrastreable y anónimo",
-        "Protegido contra IMSI CATCHER'S",
-        "Sin fechas de corte"
+        "Dati aggiunti istantaneamente",
+        "Irrintracciabile e anonimo",
+        "Protetto contro IMSI CATCHER'S",
+        "Senza date di scadenza"
       ],
       "priceRange": "25 - 500 USD",
       "rating": "5/5",
-      "buyNow": "¡Compra ahora!"
+      "buyNow": "Acquista ora!",
+      "benefitsLabel": "Vantaggi per te:",
+      "fromLabel": "Da"
     },
     "characteristics": {
-      "title": "Características principales"
+      "title": "Caratteristiche principali"
     },
     "commonFeatures": {
-      "dataMobile": "Datos móviles",
-      "speed": "Velocidad de 4/5G LTE",
-      "appAvailable": "App disponible iOS y Android",
-      "privacyAnonymity": "Privacidad y anonimato",
-      "substituteNumber": "Número sustituto",
+      "dataMobile": "Dati mobili",
+      "speed": "Velocità 4/5G LTE",
+      "appAvailable": "App disponibile per iOS e Android",
+      "privacyAnonymity": "Privacy e anonimato",
+      "substituteNumber": "Numero sostitutivo",
       "callback": "Callback",
-      "voiceFilters": "Filtros de voz",
-      "encryptedCommunications": "Comunicaciones encriptadas",
-      "replaceIMSI": "Recarga anónima",
-      "globalHighSpeed": "Conexión Global de Alta Velocidad",
-      "unlimitedDataPlans": "Planes de datos ilimitados",
-      "ultraFastConnection": "Conexión 5G ultra rápida",
-      "easyToUseApp": "Aplicación fácil de usar"
+      "voiceFilters": "Filtri vocali",
+      "encryptedCommunications": "Comunicazioni crittografate",
+      "replaceIMSI": "Ricarica anonima",
+      "globalHighSpeed": "Connessione globale ad alta velocità",
+      "unlimitedDataPlans": "Piani dati illimitati",
+      "ultraFastConnection": "Connessione 5G ultra veloce",
+      "easyToUseApp": "Applicazione facile da usare"
     },
     "products": {
       "data": {
-        "title": "Compra tu plan de DATOS móviles y comunícate con total privacidad",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista il tuo piano DATI mobili e comunica con totale privacy",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "Datos añadidos al instante",
-          "Irrastreable y anónimo",
-          "Protegido contra IMSI CATCHER'S",
-          "Sin fechas de corte"
+          "Dati aggiunti istantaneamente",
+          "Irrintracciabile e anonimo",
+          "Protetto contro IMSI CATCHER'S",
+          "Senza date di scadenza"
         ],
         "priceRange": "25 - 500 USD",
-        "headerTitle": "Recarga de Datos"
+        "headerTitle": "Ricarica Dati"
       },
       "minutes": {
-        "title": "Compra MINUTOS para hacer llamadas anónimas e imposibles de rastrear",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista MINUTI per effettuare chiamate anonime e impossibili da tracciare",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "Saldo de llamadas añadido al instante",
-          "Llamadas anónimas e irrastreables",
-          "Filtros para alterar tono de voz",
-          "Número sustituto",
+          "Saldo chiamate aggiunto istantaneamente",
+          "Chiamate anonime e irrintracciabili",
+          "Filtri per alterare il tono della voce",
+          "Numero sostitutivo",
           "Callback"
         ],
         "priceRange": "110 - 360 USD",
-        "headerTitle": "Recarga de minutos"
+        "headerTitle": "Ricarica Minuti"
       },
       "imsi": {
-        "title": "Compra cambios de IMSI el equivalente a reemplazar tu SIM por una nueva",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista cambi di IMSI equivalenti a sostituire la tua SIM con una nuova",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "*Solo aplica en SIM CARD FÍSICA",
-          "Privacidad y Anonimato",
-          "Evita rastreos o intentos de localización",
-          "Elimina todo rastro"
+          "*Si applica solo alla SIM CARD FISICA",
+          "Privacy e Anonimato",
+          "Evita tentativi di tracciamento o localizzazione",
+          "Cancella tutte le tracce"
         ],
         "priceRange": "5 - 50 USD",
-        "headerTitle": "Recarga de cambio de IMSI"
+        "headerTitle": "Ricarica cambio IMSI"
       },
       "esim": {
-        "title": "Compra tu eSIM y mejora tu seguridad al instante",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista la tua eSIM e migliora la tua sicurezza istantaneamente",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "Recibela al instante",
-          "Privacidad y Anonimato",
-          "Comunicaciones encriptadas",
-          "eSIM irrastreable"
+          "Ricevila istantaneamente",
+          "Privacy e Anonimato",
+          "Comunicazioni crittografate",
+          "eSIM irrintracciabile"
         ],
         "priceRange": "10 USD",
-        "headerTitle": "eSIM Virtual"
+        "headerTitle": "eSIM Virtuale"
       },
       "sim": {
-        "title": "Compra tu SIM y recíbela en cualquier parte del mundo",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista la tua SIM e ricevila ovunque nel mondo",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "Recibela en cualquier lugar del mundo",
-          "Privacidad y Anonimato",
-          "Comunicaciones encriptadas",
-          "Protegido contra IMSI CATCHER'S"
+          "Ricevila ovunque nel mondo",
+          "Privacy e Anonimato",
+          "Comunicazioni crittografate",
+          "Protetta contro IMSI CATCHER'S"
         ],
         "priceRange": "10 USD",
-        "headerTitle": "SIM Física"
+        "headerTitle": "SIM Fisica"
       },
       "esimData": {
-        "title": "Compra tu eSIM y comunícate con total privacidad con datos móviles",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista la tua eSIM e comunica con totale privacy con dati mobili",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "Recíbela al instante",
-          "Datos añadidos al instante",
-          "eSIM irrastreable",
-          "Protegido contra IMSI CATCHER'S"
+          "Ricevila istantaneamente",
+          "Dati aggiunti istantaneamente",
+          "eSIM irrintracciabile",
+          "Protetta contro IMSI CATCHER'S"
         ],
         "priceRange": "$32.5 - $507.5",
-        "headerTitle": "eSIM + Recarga de Datos"
+        "headerTitle": "eSIM + Ricarica Dati"
       },
       "esimMinutes": {
-        "title": "Compra tu eSIM con MINUTOS para hacer llamadas anónimas e imposibles de rastrear",
-        "description": "Disponible en más de 200 países",
+        "title": "Acquista la tua eSIM con MINUTI per effettuare chiamate anonime e impossibili da tracciare",
+        "description": "Disponibile in oltre 200 paesi",
         "featuresCardSim": [
-          "Saldo de llamadas añadido al instante",
-          "Llamadas anónimas e irrastreables",
-          "Filtros para alterar tono de voz",
-          "Número sustituto",
+          "Saldo chiamate aggiunto istantaneamente",
+          "Chiamate anonime e irrintracciabili",
+          "Filtri per alterare il tono della voce",
+          "Numero sostitutivo",
           "Callback"
         ],
         "priceRange": "$55 - $505",
-        "headerTitle": "eSIM + Recarga de Minutos"
+        "headerTitle": "eSIM + Ricarica Minuti"
       }
     },
     "improveYourSecurity": {
-      "titleImproveYourSecurity": "Mejora tu seguridad con estas características",
-      "titleKnowBenefits": "Conoce los beneficios",
+      "titleImproveYourSecurity": "Migliora la tua sicurezza con queste caratteristiche",
+      "titleKnowBenefits": "Scopri i vantaggi",
       "untraceable": {
-        "title": "Irrastreable",
-        "description": "Comunícate desde cualquier lugar siendo totalmente anónimo e irrastreable"
+        "title": "Irrintracciabile",
+        "description": "Comunica da qualsiasi luogo essendo completamente anonimo e irrintracciabile"
       },
       "anonymity": {
         "title": "Anonimato",
-        "description": "La información de facturación y envío no está ligada al chip, por lo que es totalmente anónimo"
+        "description": "Le informazioni di fatturazione e spedizione non sono collegate al chip, quindi è completamente anonimo"
       },
       "changeMSI": {
-        "title": "Recarga Anónima",
-        "description": "Ahora puedes recargar con un roning tus Datos o Minutos a tu SIM evitando entregar tu ID"
+        "title": "Ricarica Anonima",
+        "description": "Ora puoi ricaricare i tuoi Dati o Minuti sulla tua SIM tramite RONING senza fornire il tuo documento d'identità"
       },
       "subtituteNumber": {
-        "title": "Número sustituto",
-        "description": "Genera un número aleatorio para cada llamada que aparecerá en el identificador del receptor"
+        "title": "Numero sostitutivo",
+        "description": "Genera un numero casuale per ogni chiamata che apparirà nell'identificatore del destinatario"
       },
       "voiceFilter": {
-        "title": "Filtros de voz",
-        "description": "Utiliza 7 filtros de voz diferentes para mayor anonimato en tus llamadas"
+        "title": "Filtri vocali",
+        "description": "Utilizza 7 filtri vocali diversi per un maggiore anonimato nelle tue chiamate"
       },
       "callback": {
-        "title": "Devolución de llamada",
-        "description": "Un operador intermedio devuelve la llamada para enlazarla con el destinatario y hacerla irrastreable"
+        "title": "Callback",
+        "description": "Un operatore intermediario restituisce la chiamata per collegarla al destinatario e renderla irrintracciabile"
       },
       "callbackTim": {
         "title": "Callback",
-        "description": "Utiliza un operador intermediario para enlazar la llamada y hacerla totalmente irrastreable"
+        "description": "Utilizza un operatore intermediario per collegare la chiamata e renderla completamente irrintracciabile"
       },
       "plans": {
-        "title": "Planes sin fecha de corte",
-        "description": "Sin contratos ni fechas de corte. Disfruta de la flexibilidad de planes sin fechas de vencimiento y con control total de tus datos"
+        "title": "Piani senza data di scadenza",
+        "description": "Senza contratti né date di scadenza. Goditi la flessibilità di piani senza scadenza e il controllo totale sui tuoi dati"
       },
       "geolocalization": {
-        "title": "Geolocalización cifrada",
-        "description": "Protege tu ubicación en todo momento con cifrado avanzado que asegura que no podrás ser rastreado ni localizado"
+        "title": "Geolocalizzazione crittografata",
+        "description": "Proteggi la tua posizione in ogni momento con crittografia avanzata che assicura che non possano tracciarti o localizzarti"
       },
       "globalCoverage": {
-        "title": "Cobertura global",
-        "description": "Conéctate desde cualquier lugar del mundo con cobertura total y sin comprometer tu seguridad"
+        "title": "Copertura globale",
+        "description": "Connettiti da qualsiasi parte del mondo con copertura totale e senza compromettere la tua sicurezza"
       },
       "maskMSI": {
-        "title": "Enmascara el IMSI",
-        "description": "Oculta tu IMSI para evitar interceptaciones o antenas falsas como IMSI Catcher"
+        "title": "Maschera l'IMSI",
+        "description": "Nascondi il tuo IMSI per evitare intercettazioni o antenne false come gli IMSI Catcher"
       },
       "providerPrivateRed": {
-        "title": "Proveedor de red privado",
-        "description": "Somos una MVNO privada con total discreción en el uso de tus datos personales"
+        "title": "Provider di rete privato",
+        "description": "Siamo un MVNO privato con totale discrezione nell'uso dei tuoi dati personali"
       },
       "withOutNumber": {
-        "title": "Sin número de teléfono",
-        "description": "Para mayor seguridad y anonimato, esta SIM no posee número telefónico"
+        "title": "Senza numero di telefono",
+        "description": "Per una maggiore sicurezza e anonimato, questa SIM non possiede un numero telefonico"
       }
     },
-    "ourObjetiveTitle": "Nuestro objetivo es brindarte total protección",
-    "ourObjetiveDescription": "Tener la tarjeta SIM Internacional Encriptada es tener un proveedor de red privado que se encargará de brindarte seguridad y evitar que tu información sea manipulada, compartida o vendida",
-    "comunicationTitle": "Comunícate desde cualquier lugar del mundo con la tranquilidad de estar seguro y anónimo",
-    "secureAndEasyToUse": "¡Segura y fácil de usar!",
-    "secureAndEasyToUseDescription": "Se activa al instante en línea y te garantiza total privacidad y protección para tus datos. Puedes recargarla fácilmente desde el lugar en donde estés",
-    "payOnlyForWhatYouUseTitle": "Paga solo por lo que usas",
-    "payOnlyForWhatYouUseDescription": "Mientras estés usando la SIM Card Encriptada, tu saldo nunca se vence sin importar el tiempo que tardes en consumirlo",
-    "payOnlySecondCard": "Tu plan no tiene fecha de corte",
+    "ourObjetiveTitle": "Il nostro obiettivo è fornirti una protezione totale",
+    "ourObjetiveDescription": "Avere la SIM card Internazionale Crittografata significa avere un provider di rete privato che garantirà la tua sicurezza mentre comunichi da qualsiasi parte del mondo",
+    "comunicationTitle": "Comunica da qualsiasi parte del mondo con la tranquillità di essere sicuro e anonimo",
+    "secureAndEasyToUse": "Sicura e facile da usare!",
+    "secureAndEasyToUseDescription": "Si attiva istantaneamente online e ti garantisce totale privacy e protezione per i tuoi dati. Puoi ricaricarla facilmente dall'app o dal web",
+    "payOnlyForWhatYouUseTitle": "Paga solo per quello che usi",
+    "payOnlyForWhatYouUseDescription": "Mentre stai usando la SIM Card Crittografata, il tuo saldo non scade mai, indipendentemente dal tempo che impieghi per usarlo",
+    "payOnlySecondCard": "Il tuo piano non ha data di scadenza",
     "whyCallWithEncryptedSIM": {
-      "title": "¿Por qué llamar con la SIM Encriptada?",
-      "card1": "No almacenamos historial de llamadas",
-      "card2": "Anonimato en las llamadas por medio de herramientas: Sustitución de ID, Callback y Filtro de voz",
-      "card3": "La SIM genera un número sustituto aleatorio en cada llamada para más anonimato"
+      "title": "Perché chiamare con la SIM Crittografata?",
+      "card1": "Non memorizziamo la cronologia delle chiamate",
+      "card2": "Anonimato nelle chiamate tramite strumenti: Sostituzione ID, Callback e Filtro Vocale",
+      "card3": "La SIM genera un numero sostitutivo casuale per ogni chiamata per un maggiore anonimato"
     },
-    "coverageMoreThan200CountriesTitle": "Cobertura en más de 200 países",
-    "coverageMoreThan200CountriesDescription": "Comunicación segura y sin fronteras",
-    "downloadAppTitle": "Descarga la App para iOS y Android",
-    "downloadAppDescription": "Descarga la App para iOS y Android"
+    "coverageMoreThan200CountriesTitle": "Copertura in oltre 200 paesi",
+    "coverageMoreThan200CountriesDescription": "Comunicazione sicura e senza frontiere",
+    "downloadAppTitle": "Scarica l'App per iOS e Android",
+    "downloadAppDescription": "Scarica l'App per iOS e Android",
+    "FaqSims": {
+      "title": "Domande frequenti",
+      "leftColumn": {
+        "devices": {
+          "question": "Quali dispositivi sono compatibili con l'eSIM?",
+          "answer": "La SIM Encriptados funziona con tutti i telefoni e tablet sbloccati che supportano eSIM. È compatibile con i principali marchi del mercato come Android e iOS."
+        },
+        "places": {
+          "question": "Dove posso usare l'eSIM?",
+          "answer": "Puoi usarla nelle nostre destinazioni disponibili. Basta scegliere il paese o la regione prima dell'acquisto e la tua eSIM funzionerà in quella zona di copertura."
+        },
+        "topup": {
+          "question": "Ogni quanto devo ricaricare la mia eSIM?",
+          "answer": "Puoi ricaricare quando ne hai bisogno. Finché hai dati disponibili e il piano è attivo, non è obbligatorio ricaricare in una data fissa."
+        },
+        "compatible": {
+          "question": "Come sapere se il tuo cellulare è compatibile con l'eSIM?",
+          "answer": "Controlla nelle impostazioni del tuo telefono se appare l'opzione per aggiungere eSIM o un piano mobile digitale. Puoi anche verificare il modello sul sito del produttore."
+        }
+      },
+      "rightColumn": {
+        "howWorks": {
+          "question": "Come funziona ENCRYPTADOS eSIM?",
+          "answer": "Acquisti il tuo piano, ricevi un codice QR, lo attivi dalle impostazioni del tuo telefono e inizi a usare i tuoi dati mobili in modo sicuro e crittografato."
+        },
+        "multiCountry": {
+          "question": "Posso usare ENCRYPTADOS eSIM in più paesi?",
+          "answer": "Sì, a seconda del piano acquistato, puoi usare l'eSIM in uno o più paesi. Verifica sempre l'elenco delle destinazioni incluse prima dell'acquisto."
+        },
+        "secure": {
+          "question": "È sicuro usare ENCRYPTADOS eSIM?",
+          "answer": "Sì. La nostra eSIM crittografa il tuo traffico e protegge la tua identità, offrendo connessioni private e anonime sulle reti mobili."
+        },
+        "help": {
+          "question": "Cosa devo fare se ho bisogno di aiuto con la mia eSIM?",
+          "answer": "Puoi contattare il nostro team di supporto dall'app o dalla chat del sito web. Ti aiuteremo con l'attivazione, la configurazione e l'uso della tua eSIM."
+        }
+      }
+    },
+    "SimBenefits": {
+      "title": "Vantaggi dell'utilizzo dell'eSIM Encriptados in Colombia",
+      "items": {
+        "privacy": {
+          "title": "Privacy e Anonimato",
+          "description": "Non richiediamo alcun dato personale, nemmeno il tuo indirizzo email, e consigliamo di effettuare pagamenti anonimi utilizzando carte prepagate."
+        },
+        "encrypted": {
+          "title": "Comunicazioni crittografate",
+          "description": "Le comunicazioni crittografate garantiscono chiamate e messaggi sicuri, proteggendo la privacy e prevenendo intercettazioni non autorizzate."
+        },
+        "substituteNumber": {
+          "title": "Numero sostitutivo",
+          "description": "Le SIM crittografate generano un numero casuale per ogni chiamata, aumentando la privacy e prevenendo il tracciamento."
+        },
+        "imsiChanges": {
+          "title": "SIM non rintracciabile con cambi IMSI",
+          "description": "I cambi IMSI permettono di modificare l'identità della SIM per evitare il tracciamento e migliorare la sicurezza."
+        },
+        "voiceFilters": {
+          "title": "Filtri vocali",
+          "description": "I filtri vocali alterano il suono delle chiamate per proteggere l'identità dell'utente, aggiungendo un ulteriore livello di sicurezza."
+        },
+        "lifetimePlans": {
+          "title": "Piani a vita",
+          "description": "Gli utenti dispongono di un piano dati attivo per periodi prolungati, adattandosi alle esigenze di utilizzo continuo."
+        }
+      }
+    },
+    "SimSteps": {
+      "title": "Come funziona",
+      "step1": {
+        "title": "Scegli la destinazione dove vuoi usare internet sulla tua",
+        "titleHighlight": "eSIM",
+        "description": "Scegli una delle nostre 65 destinazioni o regioni dove puoi usare la nostra SIM virtuale.",
+        "link": "Come funziona la copertura",
+        "alt": "Seleziona la destinazione per la tua eSIM"
+      },
+      "step2": {
+        "title": "Seleziona il tuo",
+        "titleHighlight": "piano dati",
+        "titleEnd": "e effettua l'acquisto",
+        "description": "Scegli una delle nostre 65 destinazioni o regioni dove puoi usare la nostra SIM virtuale.",
+        "link": "Come funziona",
+        "alt": "Seleziona il tuo piano dati"
+      },
+      "step3": {
+        "title": "Attiva la tua eSIM e goditi i tuoi",
+        "titleHighlight": "dati mobili",
+        "description": "Scegli una delle nostre 65 destinazioni o regioni dove puoi usare la nostra SIM virtuale.",
+        "link": "Come funziona",
+        "alt": "Attiva e usa la tua eSIM"
+      }
+    },
+    "AppDownload": {
+      "title": "Scarica l'App",
+      "titleLine2": "per iOS e Android",
+      "scanQR": "Oppure scansiona il codice QR con la tua fotocamera",
+      "imageAlt": "Anteprima download app"
+    },
+    "CardInfo": {
+      "simLabel": "eSIM crittografata con dati mobili",
+      "simIconAlt": "Icona eSIM",
+      "country": "Colombia",
+      "benefitsTitle": "Vantaggi per te:",
+      "benefits": [
+        "Connessioni sicure e private",
+        "Chiamate anonime",
+        "Dati di geolocalizzazione crittografati",
+        "Nessun limite di tempo per utilizzare le risorse del piano",
+        "Numero sostitutivo per ogni chiamata",
+        "Cambi IMSI per maggiore anonimato"
+      ],
+      "noExpiry": "Nessuna data di scadenza",
+      "gbUnlimited": "GB illimitati",
+      "buyNow": "Acquista ora",
+      "chatSupport": "Chat supporto",
+      "cardAlt": "Carta Encriptados",
+      "noUsageDeadline": "Non esiste una data limite di utilizzo"
+    },
+    "DataCostsByCountry": {
+      "button": "Vedi costi GB per paese",
+      "buttonAlt": "Esplora paesi",
+      "modalTitle": "Tariffe e",
+      "modalTitleHighlight": "costi dei dati",
+      "modalDescription": "Cerca il luogo dove consumerai i tuoi dati, il costo varia a seconda del paese / regione.",
+      "searchPlaceholder": "Cerca paese...",
+      "closeLabel": "Chiudi",
+      "tableHeaders": {
+        "country": "Paese",
+        "countryAlt": "Paese",
+        "profile": "Profilo",
+        "profileAlt": "Profilo",
+        "pricePerGb": "Prezzo 1 GB in EURO"
+      },
+      "noResults": "Nessun paese trovato con quel nome."
+    },
+    "ListOfPlans": {
+      "country": "Paese",
+      "profile": "Profilo",
+      "pricePerGb": "Prezzo 1 GB in EURO"
+    }
   },
   "MayaData": {
     "anonymSim": "eSIM anónima",
@@ -503,146 +646,186 @@
   },
   "BneSimPage": {
     "banner": {
-      "title": "Conéctate en cualquier ",
-      "titleHighlight": "lugar del mundo con total anonimato",
-      "subtitle": "Tus datos no expiran sin importar el tiempo que tardes en consumirlos",
+      "title": "Connettiti da qualsiasi ",
+      "titleHighlight": "parte del mondo con totale anonimato",
+      "subtitle": "I tuoi dati non scadono, indipendentemente dal tempo che impieghi per consumarli",
       "features": {
         "anonymity": {
-          "blue": "Total",
+          "blue": "Totale",
           "black": "anonimato"
         },
         "internet": {
           "blue": "Internet",
-          "black": "ilimitado"
+          "black": "illimitato"
         },
         "compatible": {
-          "blue": "Compatible:",
-          "black": "iOS y Android"
+          "blue": "Compatibile:",
+          "black": "iOS e Android"
         },
         "coverage": {
-          "blue": "Cobertura en de",
-          "black": "150 países"
+          "blue": "Copertura in",
+          "black": "oltre 150 paesi"
         },
         "roaming": {
-          "blue": "Sin recargos",
+          "blue": "Senza costi",
           "black": "Roaming"
         },
         "activation": {
-          "blue": "Activación",
-          "black": "instantánea"
+          "blue": "Attivazione",
+          "black": "istantanea"
         }
       }
     },
-    "headline": "Conéctate en cualquier ",
-    "headline1": "lugar del mundo ",
-    "headline2": "con total anonimato",
-    "subheadline": "Tus datos no expiran sin importar el tiempo ",
-    "subheadline2": "que tardes en consumirlos",
-    "whyChooseSim": "¿Por qué elegir nuestra SIM TIM?",
-    "anonTitle": "Sin registro de datos ¡Anonimato Garantizado!",
-    "anonDescription": "Los datos que no se almacenan no se pueden filtrar ni revelar. Es parte de nuestra filosofía no recopilar información personal ni registros de nuestros clientes.",
+    "headline": "Connettiti da qualsiasi ",
+    "headline1": "parte del mondo ",
+    "headline2": "con totale anonimato",
+    "subheadline": "I tuoi dati non scadono, indipendentemente dal tempo ",
+    "subheadline2": "che impieghi per consumarli",
+    "whyChooseSim": "Perché scegliere la nostra SIM?",
+    "anonTitle": "Nessuna registrazione dati, Anonimato Garantito!",
+    "anonDescription": "I dati che non vengono memorizzati non possono essere filtrati o rivelati. Fa parte della nostra filosofia non raccogliere informazioni personali o registri di navigazione",
     "simSelection": {
-      "mainTitle": "¿Dónde vas a usar tu SIM?",
-      "subtitle": "Conéctate a Internet con tu SIM o eSIM en más de 200 países. Disfruta de internet seguro y con total anonimato.",
-      "category": "Categoría",
-      "physicalSim": "SIM Física",
-      "recharge": "Recargar",
-      "esimData": "eSIM + Datos",
-      "region": "Región/País",
-      "search": "Buscar",
-      "back": "Atrás",
-      "productsFound": "productos encontrados",
-      "noProducts": "0 productos encontrados",
-      "selectRegionCountry": "Elige una región o país",
-      "country": "País",
-      "applyFilter": "Aplicar filtro",
-      "loadingRegions": "Cargando regiones...",
-      "loadingCountries": "Cargando países...",
-      "searching": "Buscando...",
-      "from": "Desde",
-      "countries": "países",
-      "coverage": "Cobertura 4G/5G",
+      "mainTitle": "Dove userai la tua SIM?",
+      "subtitle": "Connettiti a Internet con la tua SIM o eSIM in oltre 200 paesi. Goditi internet sicuro con totale anonimato.",
+      "category": "Categoria",
+      "physicalSim": "SIM Fisica",
+      "recharge": "Ricarica",
+      "esimData": "eSIM + Dati",
+      "region": "Regione/Paese",
+      "search": "Cerca",
+      "back": "Indietro",
+      "productsFound": "prodotti trovati",
+      "noProducts": "0 prodotti trovati",
+      "selectRegionCountry": "Scegli una regione o paese",
+      "country": "Paese",
+      "applyFilter": "Applica filtro",
+      "loadingRegions": "Caricamento regioni...",
+      "loadingCountries": "Caricamento paesi...",
+      "searching": "Ricerca in corso...",
+      "from": "Da",
+      "countries": "paesi",
+      "coverage": "Copertura 4G/5G",
       "minuteAbbr": "min",
-      "monthsLabel": "Meses",
-      "uniqueLicense": "Única",
-      "product": "producto",
-      "products": "productos",
-      "found": "encontrado",
-      "founds": "encontrados"
+      "monthsLabel": "Mesi",
+      "uniqueLicense": "Unica",
+      "product": "prodotto",
+      "products": "prodotti",
+      "found": "trovato",
+      "founds": "trovati",
+      "physicalSimSection": {
+        "title": "Acquista la tua SIM e ricevila ovunque nel mondo",
+        "subtitle": "Disponibile in oltre 200 paesi",
+        "features": {
+          "anonymity": "Anonimato",
+          "globalRoaming": "Roaming globale",
+          "security": "Sicurezza"
+        },
+        "simPhysicalTitle": "SIM Fisica",
+        "simPhysicalFeatures": [
+          "Ricevila ovunque nel mondo",
+          "Privacy e anonimato",
+          "Nessuna scadenza dati né date di taglio",
+          "Copertura globale in oltre 200 paesi"
+        ],
+        "price": "$10 USD",
+        "buyNow": "Acquista ora"
+      },
+      "rechargeSection": {
+        "title": "Inserisci il numero della tua SIM per ricaricare",
+        "placeholder": "1928-423-33",
+        "payNow": "Paga ora",
+        "features": [
+          "La tua ricarica verrà effettuata immediatamente",
+          "Pagamento sicuro garantito",
+          "Non raccogliamo le tue informazioni di acquisto",
+          "Connessione sicura e anonima"
+        ]
+      },
+      "esimSection": {
+        "selectRegion": "Seleziona una regione",
+        "esimLabel": "eSIM con dati mobili",
+        "features": [
+          "Anonimato totale",
+          "Nessuna scadenza dati né date di taglio",
+          "Nessun limite di tempo per utilizzare le risorse del piano",
+          "Copertura in oltre 200 paesi"
+        ],
+        "buyNow": "Acquista ora"
+      }
     },
     "faqs": {
-      "title": "Preguntas frecuentes",
+      "title": "Domande Frequenti",
       "q1": {
-        "question": "¿Qué dispositivos son compatibles con la SIM?",
-        "answer": "La SIM funciona con la mayoría de teléfonos y tablets desbloqueados. Solo necesitas que tu dispositivo admita la banda de tu operador local."
+        "question": "Quali dispositivi sono compatibili con la SIM?",
+        "answer": "La SIM funziona con la maggior parte dei telefoni e tablet sbloccati. Hai solo bisogno che il tuo dispositivo supporti la banda del tuo operatore locale."
       },
       "q2": {
-        "question": "¿Cómo activo mi SIM después de comprarla?",
-        "answer": "Recibirás instrucciones paso a paso por correo y dentro de la app. Generalmente solo debes escanear un código o seguir una guía rápida."
+        "question": "Come attivo la mia SIM dopo averla acquistata?",
+        "answer": "Riceverai istruzioni passo dopo passo via email e nell'app. Generalmente devi solo scansionare un codice o seguire le istruzioni di configurazione."
       },
       "q3": {
-        "question": "¿Puedo usarla en varios países?",
-        "answer": "Sí. Dependiendo del plan contratado, podrás usar la SIM en diferentes países sin cambiar de número ni perder tu saldo de datos."
+        "question": "Posso usarla in più paesi?",
+        "answer": "Sì. In base al piano contrattato, puoi usare la SIM in diversi paesi senza cambiare numero o perdere la configurazione."
       },
       "q4": {
-        "question": "¿Mi información personal queda registrada?",
-        "answer": "No pedimos información sensible innecesaria. Nuestro enfoque está en mantener tu navegación lo más privada posible."
+        "question": "Le mie informazioni personali vengono registrate?",
+        "answer": "Non chiediamo informazioni sensibili non necessarie. Il nostro obiettivo è mantenere la tua navigazione il più privata possibile."
       },
       "q5": {
-        "question": "¿Qué pasa si agoto mis datos?",
-        "answer": "Puedes recargar tu plan desde la app o desde la web en cualquier momento, sin perder tu SIM ni necesidad de volver a activarla."
+        "question": "Cosa succede se esaurisco i dati?",
+        "answer": "Puoi ricaricare il tuo piano dall'app o dal sito web in qualsiasi momento, senza perdere la tua SIM o dover riattivarla."
       },
       "q6": {
-        "question": "¿Hay soporte si tengo problemas con la activación?",
-        "answer": "Sí. Contamos con soporte vía chat y correo para ayudarte con la instalación, activación y uso de tu SIM."
+        "question": "C'è supporto se ho problemi con l'attivazione?",
+        "answer": "Sì. Abbiamo supporto tramite chat ed email per aiutarti con l'installazione, l'attivazione e l'uso della tua SIM."
       }
     },
     "OurSimCard": {
-      "title": "Sin cargos de roaming",
-      "description": "Nuestra SIM te permite conectarte a un operador local y evitar altas tarifas de roaming",
-      "title2": "Conéctate con algunos clics",
-      "description2": "Activa tu SIM de forma fácil, tus datos estarán listos para usar en más de 200 países",
-      "title3": "Planes flexibles",
-      "description3": "Elige entre varios planes de datos según tus necesidades y tarda el tiempo que desees en consumir tus recursos",
-      "title4": "Activación instantánea",
-      "description4": "Adquiere tu SIM desde cualquier lugar del mundo y actívala al instante de forma fácil y con total anonimato"
+      "title": "Senza costi di roaming",
+      "description": "La nostra SIM ti permette di connetterti a un operatore locale ed evitare alte tariffe di roaming",
+      "title2": "Connettiti con pochi clic",
+      "description2": "Attiva la tua SIM facilmente, i tuoi dati saranno pronti da usare in oltre 200 paesi",
+      "title3": "Piani flessibili",
+      "description3": "Scegli tra vari piani dati in base alle tue esigenze e prenditi il tempo che desideri per consumare le tue risorse",
+      "title4": "Attivazione istantanea",
+      "description4": "Acquista la tua SIM da qualsiasi parte del mondo e attivala istantaneamente con facilità e totale anonimato"
     },
     "PromoBanner": {
-      "title": "¡Sin fechas de corte ni planes que expiran!",
-      "description": "Tarda el tiempo que desees en consumir los recursos de tu SIM o eSIM. No tendrás fechas de corte ni vencimiento de datos"
+      "title": "Senza date di scadenza né piani che scadono!",
+      "description": "Prenditi il tempo che desideri per consumare le risorse della tua SIM o eSIM. Non avrai date di scadenza né scadenza dei dati."
     },
     "BannerAnonymous": {
-      "title": "Tu compra es anónima",
-      "description": "Ten completo anonimato en la compra de tu SIM o eSIM, no guardamos ningún rastro o información personal"
+      "title": "Il tuo acquisto è anonimo",
+      "description": "Goditi il completo anonimato nell'acquisto della tua SIM o eSIM, non memorizziamo nessuna traccia o informazione personale"
     },
     "OurBneCard": {
-      "title": "Elige un plan de datos para tu SIM o eSIM",
-      "description": "Selecciona tu región y elige el plan que más se ajuste a tus necesidades y presupuesto",
-      "title2": "Cómprala, cárgala y conéctate desde cualquier lugar",
-      "description2": "Compra tu SIM, carga tu plan y actíva tus comunicaciones anónimas en cualquier parte del mundo",
-      "title3": "Disfruta de tu plan de datos sin fechas de corte",
-      "description3": "Tu plan se activará al instante. Tarda el tiempo que quieras en consumirlo."
+      "title": "Scegli un piano dati per la tua SIM o eSIM",
+      "description": "Seleziona la tua regione e scegli il piano che meglio si adatta alle tue esigenze e al tuo budget",
+      "title2": "Comprala, caricala e connettiti da qualsiasi luogo",
+      "description2": "Acquista la tua SIM, carica il tuo piano e attiva le tue comunicazioni anonime da qualsiasi parte del mondo",
+      "title3": "Goditi il tuo piano dati senza date di scadenza",
+      "description3": "Il tuo piano si attiverà istantaneamente. Prenditi il tempo che desideri per consumarlo."
     },
     "FaqsBne": {
-      "title": "Preguntas Frecuentes",
+      "title": "Domande Frequenti",
       "faqs": {
         "whatIsBne": {
-          "title": "¿Qué es BNE SIM?",
-          "content": "BNE SIM es una tarjeta SIM internacional que te permite conectarte a internet en más de 200 países con total anonimato y sin fechas de corte"
+          "title": "Cos'è la BNE SIM?",
+          "content": "BNE SIM è una scheda SIM internazionale che ti permette di connetterti a internet in oltre 200 paesi con completo anonimato e sicurezza."
         },
         "howToActivate": {
-          "title": "¿Cómo activo mi BNE SIM?",
-          "content": "Activa tu SIM de forma fácil y rápida. Solo debes insertarla en tu dispositivo y seguir las instrucciones de activación"
+          "title": "Come attivo la mia BNE SIM?",
+          "content": "Attiva la tua SIM facilmente e velocemente. Inseriscila nel tuo dispositivo e segui le istruzioni di attivazione."
         },
         "howToBuy": {
-          "title": "¿Cómo compro una BNE SIM?",
-          "content": "Compra tu SIM en nuestra página web, selecciona tu plan de datos y recíbela en tu domicilio o en cualquier parte del mundo"
+          "title": "Come acquisto una BNE SIM?",
+          "content": "Acquista la tua SIM sul nostro sito web, seleziona il tuo piano dati e ricevila a casa o in qualsiasi parte del mondo."
         }
       }
     },
     "QRBanner": {
-      "title": "Descarga la App para iOS & Android y compra ahora tu SIM",
-      "description": "O Escanea el código QR con tu cámara"
+      "title": "Scarica l'App per iOS e Android e acquista ora la tua SIM",
+      "description": "Oppure scansiona il codice QR con la tua fotocamera"
     }
   },
   "DashboardPage": {
@@ -1153,7 +1336,7 @@
         },
         "secureCrypt": {
           "title": "SecureCrypt",
-          "description": "SecureCrypt es una aplicación de mensajería segura."
+          "description": "SecureCrypt è un'applicazione di messaggistica sicura."
         }
       }
     },
@@ -2721,7 +2904,43 @@
     "estimatedDelivery": "Fecha de entrega estimada",
     "shippingDetail": "Detalle de envío",
     "shippedBy": "Enviado por",
-    "trackingNumber": "Número de guía"
+    "trackingNumber": "Número de guía",
+    "purchaseData": "Dati di acquisto",
+    "enterEmail": "Inserisci la tua Email",
+    "simNumber": "Numero di SIM",
+    "simNumberN": "Numero di SIM {n}",
+    "telegramIdOptional": "ID Telegram",
+    "telegramIdOptionalHint": "(opzionale)",
+    "telegramPlaceholder": "@utente o ID numerico",
+    "emailExamplePlaceholder": "email@esempio.com",
+    "licenseType": "Tipo di licenza",
+    "newLicenseBtn": "Nuova licenza",
+    "renewLicenseBtn": "Rinnova licenza",
+    "suggestedUsernamesLabel": "Inserisci i nomi suggeriti",
+    "usernameMinMax": "Minimo 4 e massimo 20 caratteri alfanumerici.",
+    "enterUsername": "Inserisci nome utente",
+    "emailForLicense": "Email per ricevere la licenza",
+    "stripeNotReady": "Stripe non è pronto.",
+    "couldNotInitiatePayment": "Impossibile avviare il pagamento.",
+    "errorConfirmingPayment": "Errore durante la conferma del pagamento.",
+    "couldNotCompletePayment": "Impossibile completare il pagamento.",
+    "errorProcessingPayment": "Errore durante l'elaborazione del pagamento.",
+    "processingOrder": "Elaborazione dell'ordine… potrebbe richiedere alcuni secondi.",
+    "roningCodeDescription": "Ricevi un codice RONING per ricaricare il saldo dall'app Encriptados.",
+    "chooseRechargeType": "Scegli il tipo di ricarica",
+    "normalRecharge": "Normale",
+    "anonymousRecharge": "Anonima",
+    "shippingAddress": "Indirizzo di spedizione",
+    "fullName": "Nome completo",
+    "countryField": "Paese",
+    "phoneField": "Telefono",
+    "loading": "Caricamento...",
+    "initializingPaymentForm": "Inizializzazione del modulo di pagamento...",
+    "noPhoneNumberSecurity": "Questo prodotto non contiene un numero di telefono per sicurezza.",
+    "licenseQuestionLabel": "Come vuoi ricevere la tua licenza?",
+    "wantMyUserBtn": "Voglio il mio utente",
+    "roningCodeBtn": "Codice RONING",
+    "rechargeBtn": "Ricarica"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",

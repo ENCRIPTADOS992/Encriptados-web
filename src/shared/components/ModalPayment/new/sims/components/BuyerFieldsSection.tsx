@@ -1,8 +1,9 @@
-// src/shared/components/ModalPayment/new/sims/components/BuyerFieldsSection.tsx
+﻿// src/shared/components/ModalPayment/new/sims/components/BuyerFieldsSection.tsx
 "use client";
 
 import React from "react";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 import type { SimFormValues, FormType } from "../types/simFormTypes";
 import type { SimFormConfig } from "../config/simFormConfig";
@@ -50,6 +51,7 @@ export function BuyerFieldsSection({
     return fieldError || (showErrors && !isValid);
   };
   const { emailFullWidth } = cfg;
+  const t = useTranslations("paymentModal");
   const simNextToEmail = formType === "tim_data" || formType === "tim_minutes";
 
   const gridForPairs =
@@ -69,7 +71,7 @@ export function BuyerFieldsSection({
                   <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                     <input
                       {...register("email", { required: true })}
-                      placeholder="Ingresa tu Email"
+                      placeholder={t("enterEmail")}
                       type="email"
                       className="w-full bg-transparent outline-none text-[14px] py-2"
                     />
@@ -78,7 +80,7 @@ export function BuyerFieldsSection({
                     <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
                       <input
                         {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
-                        placeholder="Número de SIM"
+                        placeholder={t("simNumber")}
                         className="w-full bg-transparent outline-none text-[14px] py-2"
                       />
                     </div>
@@ -89,7 +91,7 @@ export function BuyerFieldsSection({
                   <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                     <input
                       {...register("email", { required: true })}
-                      placeholder="Ingresa tu Email"
+                      placeholder={t("enterEmail")}
                       type="email"
                       className="w-full bg-transparent outline-none text-[14px] py-2"
                     />
@@ -105,7 +107,7 @@ export function BuyerFieldsSection({
                         {...register(`simNumbers.${idx}` as const, {
                           required: !isAnonymous && cfg.reqSimNumber,
                         })}
-                        placeholder={`Número de SIM ${idx + 1}`}
+                        placeholder={t("simNumberN", { n: idx + 1 })}
                         className="w-full bg-transparent outline-none text-[14px] py-2"
                       />
                     </div>
@@ -119,7 +121,7 @@ export function BuyerFieldsSection({
                     <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                       <input
                         {...register("email", { required: true })}
-                        placeholder="Ingresa tu Email"
+                        placeholder={t("enterEmail")}
                         type="email"
                         className="w-full bg-transparent outline-none text-[14px] py-2"
                       />
@@ -128,7 +130,7 @@ export function BuyerFieldsSection({
                       <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
                         <input
                           {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
-                          placeholder="Número de SIM"
+                          placeholder={t("simNumber")}
                           className="w-full bg-transparent outline-none text-[14px] py-2"
                         />
                       </div>
@@ -140,7 +142,7 @@ export function BuyerFieldsSection({
                       <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
                         <input
                           {...register("email", { required: true })}
-                          placeholder="Ingresa tu Email"
+                          placeholder={t("enterEmail")}
                           type="email"
                           className="w-full bg-transparent outline-none text-[14px] py-2"
                         />
@@ -159,7 +161,7 @@ export function BuyerFieldsSection({
                             {...register(`simNumbers.${idx}` as const, {
                               required: !isAnonymous && cfg.reqSimNumber,
                             })}
-                            placeholder={`Número de SIM ${idx + 1}`}
+                            placeholder={t("simNumberN", { n: idx + 1 })}
                             className="w-full bg-transparent outline-none text-[14px] py-2"
                           />
                         </div>
@@ -175,7 +177,7 @@ export function BuyerFieldsSection({
             <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
               <input
                 {...register("email", { required: true })}
-                placeholder="Ingresa tu Email"
+                placeholder={t("enterEmail")}
                 type="email"
                 className="w-full bg-transparent outline-none text-[14px]"
               />
@@ -187,7 +189,7 @@ export function BuyerFieldsSection({
           <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.email, validations?.emailOk ?? true))}>
             <input
               {...register("email", { required: true })}
-              placeholder="Ingresa tu Email"
+              placeholder={t("enterEmail")}
               type="email"
               className="w-full bg-transparent outline-none text-[14px]"
             />
@@ -196,7 +198,7 @@ export function BuyerFieldsSection({
             <div className={getFieldWrapperClassName(false)}>
               <input
                 {...register("telegram")}
-                placeholder="ID Telegram (opcional)"
+                placeholder={t("telegramIdOptional")}
                 className="w-full bg-transparent outline-none text-[14px]"
               />
             </div>
@@ -215,7 +217,7 @@ export function BuyerFieldsSection({
                 <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.simNumber, validations?.simOk ?? true))}>
                   <input
                     {...register("simNumber", { required: !isAnonymous && cfg.reqSimNumber })}
-                    placeholder="Número de SIM"
+                    placeholder={t("simNumber")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
@@ -235,7 +237,7 @@ export function BuyerFieldsSection({
                       {...register(`simNumbers.${idx}` as const, {
                         required: !isAnonymous && cfg.reqSimNumber,
                       })}
-                      placeholder={`Número de SIM ${idx + 1}`}
+                      placeholder={t("simNumberN", { n: idx + 1 })}
                       className="w-full bg-transparent outline-none text-[14px]"
                     />
                   </div>
@@ -252,7 +254,7 @@ export function BuyerFieldsSection({
           <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.address, validations?.addressOk ?? true))}>
             <input
               {...register("address", { required: cfg.reqAddress })}
-              placeholder="Dirección de envío"
+              placeholder={t("shippingAddress")}
               className="w-full bg-transparent outline-none text-[14px]"
             />
           </div>
@@ -264,7 +266,7 @@ export function BuyerFieldsSection({
           <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.fullName, validations?.fullNameOk ?? true))}>
             <input
               {...register("fullName", { required: cfg.reqFullName })}
-              placeholder="Nombre completo"
+              placeholder={t("fullName")}
               className="w-full bg-transparent outline-none text-[14px]"
             />
           </div>
@@ -284,7 +286,7 @@ export function BuyerFieldsSection({
                 required: cfg.reqCountry,
                 maxLength: 64,
               })}
-              placeholder="País"
+              placeholder={t("countryField")}
               className="w-full bg-transparent outline-none text-[14px]"
               autoComplete="country-name"
               autoCapitalize="words"
@@ -302,7 +304,7 @@ export function BuyerFieldsSection({
               <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.postalCode, validations?.postalOk ?? true))}>
                 <input
                   {...register("postalCode", { required: cfg.reqPostal })}
-                  placeholder="Código postal"
+                  placeholder={t("postalCode")}
                   className="w-full bg-transparent outline-none text-[14px]"
                 />
               </div>
@@ -313,7 +315,7 @@ export function BuyerFieldsSection({
               <div className={getFieldWrapperClassName(shouldShowFieldError(!!errors.phone, validations?.phoneOk ?? true))}>
                 <input
                   {...register("phone", { required: cfg.reqPhone })}
-                  placeholder="Teléfono"
+                  placeholder={t("phoneField")}
                   className="w-full bg-transparent outline-none text-[14px]"
                 />
               </div>

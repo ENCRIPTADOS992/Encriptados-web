@@ -3,47 +3,19 @@
 
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
-const benefits = [
-  {
-    title: "Privacidad y Anonimato",
-    description:
-      "No requerimos ningún dato personal, ni siquiera su dirección de correo electrónico, y recomendamos realizar pagos anónimos utilizando tarjetas prepagadas.",
-    icon: "/images/encrypted-sim/icons/visibility_lock.png",
-  },
-  {
-    title: "Comunicaciones encriptadas",
-    description:
-      "Las comunicaciones encriptadas garantizan llamadas y mensajes seguros, protegiendo la privacidad y evitando interceptaciones o rastreos no autorizados.",
-    icon: "/images/encrypted-sim/icons/key_visualizer.png",
-  },
-  {
-    title: "Número sustituto",
-    description:
-      "Las SIM encriptadas generan un número aleatorio para cada llamada, aumentando la privacidad y evitando rastreos.",
-    icon: "/images/encrypted-sim/icons/published_with_changes.png",
-  },
-  {
-    title: "SIM irrastreable con cambios de IMSI",
-    description:
-      "Los cambios de IMSI permiten modificar la identidad de la SIM para evitar rastreos y mejorar la seguridad, protegiendo la privacidad del usuario en redes móviles.",
-    icon: "/images/encrypted-sim/icons/frame_person_off.png",
-  },
-  {
-    title: "Filtros de voz",
-    description:
-      "Los filtros de voz alteran el sonido de las llamadas para proteger la identidad del usuario, añadiendo una capa extra de seguridad y privacidad.",
-    icon: "/images/encrypted-sim/icons/record_voice_over.png",
-  },
-  {
-    title: "Planes vitalicios",
-    description:
-      "Los usuarios tienen un plan de datos activo durante períodos extensos, adaptándose a necesidades de uso continuo sin necesidad de renovaciones frecuentes.",
-    icon: "/images/encrypted-sim/icons/cell_wifi.png",
-  },
+const benefitKeys = [
+  { key: "privacy", icon: "/images/encrypted-sim/icons/visibility_lock.png" },
+  { key: "encrypted", icon: "/images/encrypted-sim/icons/key_visualizer.png" },
+  { key: "substituteNumber", icon: "/images/encrypted-sim/icons/published_with_changes.png" },
+  { key: "imsiChanges", icon: "/images/encrypted-sim/icons/frame_person_off.png" },
+  { key: "voiceFilters", icon: "/images/encrypted-sim/icons/record_voice_over.png" },
+  { key: "lifetimePlans", icon: "/images/encrypted-sim/icons/cell_wifi.png" },
 ];
 
 const SimBenefits = () => {
+  const t = useTranslations("EncryptedSimPage.SimBenefits");
   return (
     <section
       className="
@@ -56,7 +28,7 @@ const SimBenefits = () => {
       "
     >
       <h2 className="text-center text-[22px] md:text-[26px] font-semibold mb-10">
-        Beneficios al usar la eSIM de Encriptados en Colombia
+        {t("title")}
       </h2>
 
       <div
@@ -66,9 +38,9 @@ const SimBenefits = () => {
           gap-8 md:gap-10
         "
       >
-        {benefits.map((benefit) => (
+        {benefitKeys.map((b) => (
           <div
-            key={benefit.title}
+            key={b.key}
             className="
               flex flex-col items-center text-center
               bg-white 
@@ -82,8 +54,8 @@ const SimBenefits = () => {
           >
             <div className="relative w-[64px] h-[64px] mb-4">
               <Image
-                src={benefit.icon}
-                alt={benefit.title}
+                src={b.icon}
+                alt={t(`items.${b.key}.title`)}
                 fill
                 className="object-contain"
               />
@@ -97,12 +69,12 @@ const SimBenefits = () => {
               "
             >
               <h3 className="text-[18px] sm:text-[20px] font-semibold">
-                {benefit.title}
+                {t(`items.${b.key}.title`)}
               </h3>
             </div>
 
             <p className="text-[14px] sm:text-[14px] leading-relaxed text-black">
-              {benefit.description}
+              {t(`items.${b.key}.description`)}
             </p>
 
           </div>

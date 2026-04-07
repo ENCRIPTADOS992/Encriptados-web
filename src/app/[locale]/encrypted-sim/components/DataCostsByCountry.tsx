@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 type CountryCost = {
   country: string;
@@ -27,6 +28,7 @@ interface DataCostsByCountryProps {
 }
 
 export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryProps) {
+  const t = useTranslations("EncryptedSimPage.DataCostsByCountry");
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -59,12 +61,12 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
         <span className="relative w-4 h-4">
           <Image
             src="/images/encrypted-sim/icons/travel_explore.png"
-            alt="Explorar países"
+            alt={t("buttonAlt")}
             fill
             className="object-contain"
           />
         </span>
-        <span>Ver costos de GB por país</span>
+        <span>{t("button")}</span>
       </button>
 
       {/* MODAL */}
@@ -76,18 +78,17 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
               type="button"
               onClick={() => setOpen(false)}
               className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
-              aria-label="Cerrar"
+              aria-label={t("closeLabel")}
             >
               ✕
             </button>
 
             {/* Título y descripción */}
             <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-1">
-              Tarifas y <span className="text-[#1E8A4C]">costos de datos</span>
+              {t("modalTitle")} <span className="text-[#1E8A4C]">{t("modalTitleHighlight")}</span>
             </h2>
             <p className="text-sm text-gray-600 mb-4">
-              Busca el lugar donde consumirás tus datos, ten en cuenta que el
-              costo de consumo de datos varía según el país / región.
+              {t("modalDescription")}
             </p>
 
             {/* Buscador */}
@@ -97,7 +98,7 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Buscar país..."
+                  placeholder={t("searchPlaceholder")}
                   className="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-4 pr-10 text-sm outline-none focus:border-[#1E8A4C] focus:ring-1 focus:ring-[#1E8A4C]"
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
@@ -137,12 +138,12 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
                           <span className="relative w-4 h-4">
                             <Image
                               src="/images/encrypted-sim/icons/globe.png"
-                              alt="País"
+                              alt={t("tableHeaders.countryAlt")}
                               fill
                               className="object-contain"
                             />
                           </span>
-                          <span>País</span>
+                          <span>{t("tableHeaders.country")}</span>
                         </div>
                       </th>
 
@@ -151,17 +152,17 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
                           <span className="relative w-4 h-4">
                             <Image
                               src="/images/encrypted-sim/icons/online_prediction.png"
-                              alt="Perfil"
+                              alt={t("tableHeaders.profileAlt")}
                               fill
                               className="object-contain"
                             />
                           </span>
-                          <span>Perfil</span>
+                          <span>{t("tableHeaders.profile")}</span>
                         </div>
                       </th>
 
                       <th className="h-[52px] px-6 rounded-tr-[12px]">
-                        Valor 1 GB en EUROS
+                        {t("tableHeaders.pricePerGb")}
                       </th>
                     </tr>
                   </thead>
@@ -198,7 +199,7 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
                           colSpan={3}
                           className="px-6 py-4 text-center text-sm text-gray-500 bg-white"
                         >
-                          No se encontraron países con ese nombre.
+                          {t("noResults")}
                         </td>
                       </tr>
                     )}

@@ -2,7 +2,6 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
-import { InitAuthClient } from "@/shared/InitAuthClient";
 import { StripeProvider } from "@/shared/components/StripeProvider";
 import { ModalPaymentProvider } from "@/providers/ModalPaymentProvider";
 import ModalPaymentController from "@/shared/components/ModalPayment/ModalPaymentController";
@@ -18,7 +17,6 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <InitAuthClient />
       <NextIntlClientProvider messages={messages}>
         <AppMobileProvider>
           <ModalPaymentProvider>
