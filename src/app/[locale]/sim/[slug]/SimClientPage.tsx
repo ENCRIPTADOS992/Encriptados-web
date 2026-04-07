@@ -303,7 +303,10 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
 
     // D. Prioridad 4: GB (Fallback simple)
     if (gbFromUrl) {
-      return product.variants.find((v: any) => (v.gb || "").toUpperCase() === gbFromUrl) || null;
+      return product.variants.find((v: any) => {
+        const vGb = typeof v.gb === 'number' ? String(v.gb) : String(v.gb || "");
+        return vGb.toUpperCase() === gbFromUrl || `${vGb} GB`.toUpperCase() === gbFromUrl;
+      }) || null;
     }
 
     return null;

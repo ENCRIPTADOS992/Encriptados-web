@@ -808,6 +808,14 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     return c.length === 2 ? c : undefined;
   };
 
+  const formatGbTag = (v: any): string | undefined => {
+    if (v == null) return undefined;
+    const gbNum = typeof v.gb === 'number' ? v.gb : parseInt(v.gb, 10);
+    if (gbNum > 0) return `${gbNum} GB`;
+    if (v.planTag) return v.planTag;
+    return v.name || undefined;
+  };
+
   const buildTimBadges = (p: ExpandedProduct): TimBadges | undefined => {
     // Usar la variante pre-seleccionada (de la expansión) o la primera disponible
     const v = p._selectedVariant || p.variants?.[0];
@@ -816,7 +824,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     const selectedCountryLabel = filters.simCountryLabel;
 
     if (selectedCountryCode?.toUpperCase() === "GLOBAL") {
-      const tag = v?.gb || v?.name || undefined;
+      const tag = formatGbTag(v);
 
       return {
         country: {
@@ -842,7 +850,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       };
       const regionKey = selectedCountryCode.toLowerCase();
       const regionLabel = REGION_DISPLAY[regionKey] || selectedCountryCode.charAt(0).toUpperCase() + selectedCountryCode.slice(1).toLowerCase();
-      const tag = v?.gb || v?.name || undefined;
+      const tag = formatGbTag(v);
       return {
         country: { label: regionLabel },
         tag,
@@ -871,7 +879,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         rawCode;
     }
 
-    const tag = v?.gb || v?.name || undefined;
+    const tag = formatGbTag(v);
 
     if (!countryLabel && !tag) return undefined;
 
@@ -1141,20 +1149,17 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                   tag = `${minutesValue} ${minuteUnit}`;
                 }
               } else if (isDataRecharge) {
-                // Para "Recarga Datos" y "eSIM + Datos": mostrar precio como tag (ej: "25 USD", "105 USD")
-                const price = Number(selectedVar.price) || Number(selectedVar.cost) || 0;
-                if (price > 0) {
-                  tag = `${price} USD`;
-                } else if (selectedVar.gb) {
-                  // Fallback a GB si existe
-                  tag = selectedVar.gb;
+                // Para "Recarga Datos" y "eSIM + Datos": mostrar GB del plan (columna gb del módulo de costos)
+                const gbNum = typeof selectedVar.gb === 'number' ? selectedVar.gb : parseInt(selectedVar.gb, 10);
+                if (gbNum > 0) {
+                  tag = `${gbNum} GB`;
+                } else if (selectedVar.planTag) {
+                  // Fallback al planTag del backend
+                  tag = selectedVar.planTag;
                 } else if (selectedVar.name) {
-                  // Buscar GB o precio en el nombre de la variante
+                  // Fallback: parsear GB del nombre de la variante
                   const gbMatch = selectedVar.name.match(/(\d+)\s*GB/i);
-                  const priceMatch = selectedVar.name.match(/(\d+(?:\.\d+)?)\s*(?:USD|\$)/i);
-                  if (priceMatch) {
-                    tag = `${priceMatch[1]} USD`;
-                  } else if (gbMatch) {
+                  if (gbMatch) {
                     tag = `${gbMatch[1]} GB`;
                   } else {
                     tag = selectedVar.name;
