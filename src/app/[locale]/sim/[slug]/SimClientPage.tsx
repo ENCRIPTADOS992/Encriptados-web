@@ -115,12 +115,17 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       // sim_region debe ser un código de país (ej: "ca"), NO el nombre ("Canadá")
       // Priorizar regionCode y sim_region sobre region (que es el nombre para mostrar)
       const simRegionCode = regionCodeFromUrl || searchParams.get("sim_region") || null;
-      const hasRegionContext = regionFromUrl || simRegionCode;
 
-      // Si ya tenemos el producto cargado y no hay contexto de región, no recargar
-      if (product && String(product.id) === String(productIdToLoad) && !hasRegionContext) {
-        setIsLoading(false);
-        return;
+      // Si ya tenemos el producto correcto con variantes, no recargar
+      // (el server-side fetch en page.tsx ya pasa simRegion)
+      if (product && String(product.id) === String(productIdToLoad)) {
+        const hasVariants = Array.isArray(product.variants) && product.variants.length > 0;
+        // Solo recargar si hay contexto de región pero NO tenemos variantes
+        // (indica que el server no pasó sim_region)
+        if (hasVariants || !simRegionCode) {
+          setIsLoading(false);
+          return;
+        }
       }
 
       try {
