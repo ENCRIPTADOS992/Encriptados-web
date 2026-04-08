@@ -31,7 +31,7 @@ import OurBne from "@/app/[locale]/tim-sim/components/OurBne";
 
 // Hooks y servicios
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { getProductById } from "@/features/products/services";
+import { getProductById, getAllProducts } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import StickyPriceBanner from "@/app/[locale]/apps/component/templateProduct/StickyPriceBanner";
@@ -100,10 +100,11 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // ═══════════════════════════════════════════════════════════════════════════
   // CARGA DEL PRODUCTO
   // Prioridad: productId del query param > productId del config estático
+  // Fallback: si getProductById no trae variantes TIM, usar getAllProducts
+  // (que sí pasa sim_region al endpoint de categoría y SÍ devuelve variantes)
   // ═══════════════════════════════════════════════════════════════════════════
   useEffect(() => {
     async function loadProduct() {
-      // Determinar qué productId usar
       const productIdToLoad = productIdFromUrl || (staticConfig?.productId ? String(staticConfig.productId) : null);
 
       if (!productIdToLoad) {
@@ -113,15 +114,11 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       }
 
       // sim_region debe ser un código de país (ej: "ca"), NO el nombre ("Canadá")
-      // Priorizar regionCode y sim_region sobre region (que es el nombre para mostrar)
       const simRegionCode = regionCodeFromUrl || searchParams.get("sim_region") || null;
 
       // Si ya tenemos el producto correcto con variantes, no recargar
-      // (el server-side fetch en page.tsx ya pasa simRegion)
       if (product && String(product.id) === String(productIdToLoad)) {
         const hasVariants = Array.isArray(product.variants) && product.variants.length > 0;
-        // Solo recargar si hay contexto de región pero NO tenemos variantes
-        // (indica que el server no pasó sim_region)
         if (hasVariants || !simRegionCode) {
           setIsLoading(false);
           return;
@@ -132,10 +129,33 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         setIsLoading(true);
         setError(null);
 
-        // Pasar sim_region como CÓDIGO de país (CRITICO para TIM)
+        // Paso 1: Intentar con getProductById (pasa sim_region si el backend lo soporta)
         const productData = await getProductById(productIdToLoad, locale, {
           simRegion: simRegionCode
         });
+
+        // Paso 2: Si es TIM y no trajo variantes, usar getAllProducts como fallback
+        // (getAllProducts usa /v3/store/products que SÍ reenvía sim_region correctamente)
+        const hasVariants = Array.isArray(productData.variants) && productData.variants.length > 0;
+        if (!hasVariants && simRegionCode && productData.provider === "tim") {
+          try {
+            const simCountryCode = simRegionCode.length <= 2 ? simRegionCode : null;
+            const simRegionParam = simRegionCode.length > 2 ? simRegionCode : null;
+            const allProducts = await getAllProducts(40, locale, {
+              simCountry: simCountryCode,
+              simRegion: simRegionParam,
+              provider: "tim",
+            });
+            // Buscar nuestro producto por ID en la lista
+            const match = allProducts.find((p: any) => String(p.id) === String(productIdToLoad));
+            if (match && Array.isArray(match.variants) && match.variants.length > 0) {
+              productData.variants = match.variants as any;
+            }
+          } catch (fallbackErr) {
+            console.warn("[SIM Page] Fallback getAllProducts failed:", fallbackErr);
+          }
+        }
+
         setProduct(productData);
       } catch (err) {
         console.error("Error cargando producto SIM:", err);
