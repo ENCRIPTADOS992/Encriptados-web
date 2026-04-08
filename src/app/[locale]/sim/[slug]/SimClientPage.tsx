@@ -112,14 +112,13 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         return;
       }
 
-      // Si ya tenemos el producto cargado (desde el server) y coincide con el ID que necesitamos, no recargar
-      // EXCEPTO si es TIM y necesitamos variantes que podrían no estar cargadas si falta la región
-      // Por seguridad, si hay región en la URL, forzamos la recarga para asegurar variantes correctas
-      const regionParam = regionFromUrl || regionCodeFromUrl || searchParams.get("sim_region");
+      // sim_region debe ser un código de país (ej: "ca"), NO el nombre ("Canadá")
+      // Priorizar regionCode y sim_region sobre region (que es el nombre para mostrar)
+      const simRegionCode = regionCodeFromUrl || searchParams.get("sim_region") || null;
+      const hasRegionContext = regionFromUrl || simRegionCode;
 
-      // Optimizacion: Si ya tenemos variantes y coinciden, podriamos evitar recarga, 
-      // pero dado el problema reportado, mejor asegurar.
-      if (product && String(product.id) === String(productIdToLoad) && !regionParam) {
+      // Si ya tenemos el producto cargado y no hay contexto de región, no recargar
+      if (product && String(product.id) === String(productIdToLoad) && !hasRegionContext) {
         setIsLoading(false);
         return;
       }
@@ -128,9 +127,9 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
         setIsLoading(true);
         setError(null);
 
-        // Pasar sim_region si existe para cargar variantes (CRITICO para TIM)
+        // Pasar sim_region como CÓDIGO de país (CRITICO para TIM)
         const productData = await getProductById(productIdToLoad, locale, {
-          simRegion: regionParam
+          simRegion: simRegionCode
         });
         setProduct(productData);
       } catch (err) {
