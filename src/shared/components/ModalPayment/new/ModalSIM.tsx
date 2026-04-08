@@ -594,6 +594,20 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       // Si hay cupón, no aplicar oferta: usar precio regular
       const skipSale = hasCoupon && productIsOnSale;
 
+      // Check variant-level sale for skipSale as well
+      const variantHasSale = (() => {
+        if (hasCoupon) {
+          const sv = (selectedVariant ?? (variants ?? [])[0]) as any;
+          if (sv) {
+            const sp = parseFloat(String(sv?.sale_price ?? "0"));
+            const rp = parseFloat(String(sv?.price ?? sv?.cost ?? "0"));
+            if (sp > 0 && sp < rp) return true;
+          }
+        }
+        return false;
+      })();
+      const effectiveSkipSale = skipSale || (hasCoupon && variantHasSale);
+
       const titleNorm = String((product as any)?.name ?? "").toLowerCase();
       const hasDataWordU = /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
       const isTimEsimData =
@@ -620,7 +634,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         // If user hasn't changed the plan and the selected plan matches the initial GB,
         // use initialPrice (which includes regional pricing from the card)
         // Si hay cupón y el producto estaba en oferta, NO usar initialPrice (contiene sale_price)
-        if (!skipSale && !userChangedPlan && initialPrice != null && initialPrice > 0 && initialGb) {
+        if (!effectiveSkipSale && !userChangedPlan && initialPrice != null && initialPrice > 0 && initialGb) {
           if (selected?.label === initialGb) {
             console.log("[ModalSIM] Using initialPrice for TIM data (matches initialGb):", { initialPrice, initialGb });
             return initialPrice;
@@ -640,14 +654,14 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
           variants,
           selectedVariant,
           product,
-          skipSale,
+          skipSale: effectiveSkipSale,
           esimBasePrice,
         });
       }
 
       // Si se pasó un precio inicial desde la card y el usuario no ha cambiado nada, usarlo
       // Pero NO si hay cupón y el producto estaba en oferta (initialPrice contiene sale_price)
-      if (!skipSale && initialPrice != null && initialPrice > 0 && !userChangedPlan) {
+      if (!effectiveSkipSale && initialPrice != null && initialPrice > 0 && !userChangedPlan) {
         console.log("[ModalSIM] Usando initialPrice del params:", initialPrice);
         return initialPrice;
       }
@@ -659,11 +673,11 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         variants,
         selectedVariant,
         product,
-        skipSale,
+        skipSale: effectiveSkipSale,
         esimBasePrice,
       });
     },
-    [formType, minutesPlans, selectedPlanId, variants, selectedVariant, product, initialPrice, userChangedPlan, discount, esimBasePrice]
+    [formType, minutesPlans, selectedPlanId, dataPlans, variants, selectedVariant, product, initialPrice, userChangedPlan, discount, esimBasePrice]
   );
 
   const onApplyCoupon = async () => {
@@ -787,8 +801,17 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   // No mostrar tag de oferta si hay cupón activo (no dos descuentos a la vez)
   const isOnSale = React.useMemo(() => {
     if (discount > 0) return false;
-    return product?.on_sale === true || (product as any)?.on_sale === "true";
-  }, [product, discount]);
+    // Verificar a nivel de producto
+    if (product?.on_sale === true || (product as any)?.on_sale === "true") return true;
+    // Verificar a nivel de variante seleccionada
+    const sv = (selectedVariant ?? variants[0]) as any;
+    if (sv) {
+      const rp = parseFloat(String(sv?.price ?? sv?.cost ?? "0"));
+      const sp = parseFloat(String(sv?.sale_price ?? "0"));
+      if (sp > 0 && sp < rp) return true;
+    }
+    return false;
+  }, [product, discount, selectedVariant, variants]);
 
   const originalTotal = React.useMemo(() => {
     if (!isOnSale) return undefined;
@@ -799,7 +822,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
     // API: variant.price = get_regular_price() (precio original)
     //      variant.sale_price = get_sale_price() (precio oferta)
-    const regularPrice = parseFloat(String(sv?.price ?? "0"));
+    const regularPrice = parseFloat(String(sv?.price ?? sv?.cost ?? "0"));
     const salePrice = parseFloat(String(sv?.sale_price ?? "0"));
 
     // Solo mostrar "Antes" si hay sale_price válido y menor que el regular
