@@ -140,10 +140,10 @@ export function useTranslatedProductsCategories(): any {
       image: "/images/mega-menu/sistemas.webp",
       items: [
         {
-          title: "Zi0n",
+          title: "Zion",
           image: "/images/mega-menu/sistemas/zi0n.webp",
-          link: getAppUrl("Zi0n"),
-          description: "Zi0n es un sistema de seguridad encriptado.",
+          link: getAppUrl("Zion"),
+          description: "Zion es un sistema de seguridad encriptado.",
         },
         {
           title: "Galaxia MDM Iphone",

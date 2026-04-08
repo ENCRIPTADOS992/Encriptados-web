@@ -34,7 +34,7 @@ export default function ManageYourApps() {
                   <source media="(min-width: 800px)" srcSet="/images/apps-group-xl.webp" type="image/webp" />
                   <img
                     src="/images/apps-group-md.webp"
-                    alt="Zi0n - Gestiona tus apps"
+                    alt="Zion - Gestiona tus apps"
                     className="w-full h-full object-contain object-bottom md:object-center"
                   />
                 </picture>

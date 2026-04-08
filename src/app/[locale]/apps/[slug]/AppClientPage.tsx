@@ -464,7 +464,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {slug.includes("galaxia-mdm") && <PrivateAppStore />}
 
-          {slug.includes("zi0n") && <ManageYourApps />}
+          {slug.includes("zion") && <ManageYourApps />}
 
           {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
 
