@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
 import { getProductLink, getSimProductUrl } from "@/shared/utils/productRouteResolver";
-import { Tag } from "lucide-react";
+import { Tag, CircleAlert } from "lucide-react";
 import { useToast } from "@/shared/context/ToastContext";
 import { CircleFlag } from "react-circle-flags";
 import { SIM_DEFAULT_IDS } from "@/shared/constants/simDefaultIds";
@@ -886,10 +886,10 @@ const PurchaseHeader: React.FC<Props> = ({
 
           {/* Warning: prueba gratis 6 horas */}
           {isFreeTrial && (
-            <div className="flex items-start gap-2 rounded-lg border border-[#F59E0B] bg-[#FFFBEB] px-3 py-2">
-              <span className="text-base leading-5 mt-0.5">⚠️</span>
-              <span className="text-xs text-[#92400E] leading-5">
-                {t("freeTrialWarning") || "Esta licencia gratuita tiene una duración de 6 horas. Después de este período, la licencia expirará automáticamente."}
+            <div className="flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
+              <CircleAlert className="h-5 w-5 shrink-0 text-[#C98A00]" />
+              <span className="text-[14px] leading-[20px] text-[#C98A00]">
+                {t("freeTrialWarning")}
               </span>
             </div>
           )}
