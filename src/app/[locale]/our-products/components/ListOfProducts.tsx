@@ -497,7 +497,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
         .replace(/[^a-z0-9]/g, "");
 
     const SYSTEMS_ORDER = [
-      "zion",
+      "zi0n",
       "galaxiamdm",
       "cryptcom",
       "securecrypt",

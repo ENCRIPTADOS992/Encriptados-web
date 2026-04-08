@@ -621,9 +621,9 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
-  // Name: "Zion" -> slug: "zion"
-  "zion": {
-    slug: "zion",
+  // Name: "Zi0n" -> slug: "zi0n"
+  "zi0n": {
+    slug: "zi0n",
     productId: 61335,
     categoryId: 35,
     templateType: "software",

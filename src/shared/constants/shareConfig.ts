@@ -124,12 +124,12 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
 export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
   {
     productId: 61335,
-    slug: "zion",
-    name: "Zion",
+    slug: "zi0n",
+    name: "Zi0n",
     metaImage: "/meta-image/sistemas/zi0n.png",
-    title: "Zion - Sistema Encriptado",
-    description: "Compra aquí Zion.",
-    shareUrl: `${BASE_URL}/apps/zion?buy=1`,
+    title: "Zi0n - Sistema Encriptado",
+    description: "Compra aquí Zi0n.",
+    shareUrl: `${BASE_URL}/apps/zi0n?buy=1`,
     category: "sistemas",
   },
   {
