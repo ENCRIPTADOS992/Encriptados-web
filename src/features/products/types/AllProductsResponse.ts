@@ -216,6 +216,8 @@ export interface ProductVariant {
   gb?: string;
   cost?: number;
   price?: number;  // Algunas variantes usan price en lugar de cost
+  sale_price?: number | string | null;
+  on_sale?: boolean;
   days?: number
   minutes?: number
   minute_price?: number;

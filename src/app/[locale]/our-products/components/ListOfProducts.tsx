@@ -1091,7 +1091,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               }
             } else if (isTimProvider && variant) {
               // Para TIM con variante de product.variants[], revisar sale_price de la variante
-              const variantSalePrice = (variant as any)?.sale_price;
+              const variantSalePrice = variant.sale_price;
               if (variantSalePrice && Number(variantSalePrice) > 0 && Number(variantSalePrice) < priceToShow) {
                 currentIsOnSale = true;
                 regularPrice = priceToShow;
