@@ -142,7 +142,19 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     return plans.find(p => p.label === selectedRadio) || plans[0] || null;
   }, [plans, selectedRadio]);
 
-  const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+  const isOnSale = useMemo(() => {
+    const productOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+    if (productOnSale) return true;
+    // Verificar si la variante seleccionada tiene precio de oferta
+    if (selectedPlan?.salePrice && selectedPlan.salePrice < selectedPlan.price) return true;
+    // Verificar si el producto base tiene sale_price
+    if (product?.sale_price) {
+      const sp = Number(product.sale_price);
+      const pp = Number(product.price ?? 0);
+      if (sp > 0 && sp < pp) return true;
+    }
+    return false;
+  }, [product, selectedPlan]);
 
   const currentPrice = useMemo(() => {
     if (selectedPlan) {
@@ -151,9 +163,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       }
       return formatPrice(selectedPlan.price);
     }
-    const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
-    if (isOnSale && product?.sale_price) {
-      return formatPrice(product.sale_price);
+    // Fallback sin variante: verificar sale_price directamente
+    if (product?.sale_price) {
+      const sp = Number(product.sale_price);
+      const pp = Number(product.price ?? 0);
+      if (sp > 0 && sp < pp) return formatPrice(sp);
     }
     return formatPrice(product?.price || 0);
   }, [selectedPlan, product]);
@@ -165,9 +179,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       }
       return undefined;
     }
-    const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
-    if (isOnSale && product?.sale_price && product?.price) {
-      return formatPrice(product.price);
+    // Fallback sin variante: verificar sale_price directamente
+    if (product?.sale_price && product?.price) {
+      const sp = Number(product.sale_price);
+      const pp = Number(product.price);
+      if (sp > 0 && sp < pp) return formatPrice(pp);
     }
     return undefined;
   }, [selectedPlan, product]);

@@ -312,49 +312,58 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     return null;
   }, [product, variantIdFromUrl, regionFromUrl, regionCodeFromUrl, gbFromUrl]);
 
-  // ¿Producto en oferta?
+  // ¿Producto en oferta? Verificar tanto a nivel de producto como de variante
   const isOnSale = useMemo(() => {
-    return product?.on_sale === true || (product as any)?.on_sale === "true";
-  }, [product]);
+    const productOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+    if (productOnSale) return true;
+    // Verificar si la variante seleccionada tiene precio de oferta
+    if (selectedVariant) {
+      const v = selectedVariant as any;
+      const sp = v.sale_price != null && v.sale_price !== '' ? Number(v.sale_price) : 0;
+      const rp = Number(v.price ?? v.cost ?? 0);
+      if (sp > 0 && sp < rp) return true;
+    }
+    // Verificar si el producto base tiene sale_price
+    if (product?.sale_price) {
+      const sp = Number(product.sale_price);
+      const pp = Number(product.price ?? 0);
+      if (sp > 0 && sp < pp) return true;
+    }
+    return false;
+  }, [product, selectedVariant]);
 
-  // Precio efectivo: usar sale_price cuando hay oferta
+  // Precio efectivo: usar sale_price cuando hay oferta válida (sale_price > 0 y < regular price)
   // API: variant.price = get_regular_price(), variant.sale_price = get_sale_price()
   const effectivePrice = useMemo(() => {
     if (selectedVariant) {
       const v = selectedVariant as any;
-      if (isOnSale && v.sale_price != null && v.sale_price !== '' && Number(v.sale_price) > 0) {
-        return Number(v.sale_price);
+      const vPrice = Number(v.price ?? v.cost ?? 0);
+      const vSale = v.sale_price != null && v.sale_price !== '' ? Number(v.sale_price) : 0;
+      if (vSale > 0 && vSale < vPrice) {
+        return vSale;
       }
-      const vPrice = v.price ?? v.cost;
-      if (vPrice !== undefined && vPrice !== null) {
-        return Number(vPrice);
-      }
+      if (vPrice > 0) return vPrice;
     }
 
     // Fallback al precio base del producto
-    if (isOnSale && product?.sale_price) {
-      const sp = parseFloat(String(product.sale_price));
-      if (sp > 0) return sp;
-    }
-    const productPrice = typeof product?.price === "string"
+    const prodSale = product?.sale_price ? Number(product.sale_price) : 0;
+    const prodPrice = typeof product?.price === "string"
       ? parseFloat(product.price)
-      : product?.price;
+      : Number(product?.price ?? 0);
 
-    return productPrice ?? 0;
-  }, [selectedVariant, product, isOnSale]);
+    if (prodSale > 0 && prodSale < prodPrice) return prodSale;
+    return prodPrice;
+  }, [selectedVariant, product]);
 
   // Precio regular (sin oferta) para mostrar tachado
   const regularPrice = useMemo(() => {
     if (!isOnSale) return undefined;
     if (selectedVariant) {
       const v = selectedVariant as any;
-      const rp = v.price ?? v.cost;
-      if (rp != null) {
-        const n = Number(rp);
-        if (n > effectivePrice) return n;
-      }
+      const rp = Number(v.price ?? v.cost ?? 0);
+      if (rp > effectivePrice) return rp;
     }
-    const pp = typeof product?.price === "string" ? parseFloat(product.price) : Number(product?.price);
+    const pp = typeof product?.price === "string" ? parseFloat(product.price) : Number(product?.price ?? 0);
     if (pp > effectivePrice) return pp;
     return undefined;
   }, [isOnSale, selectedVariant, product, effectivePrice]);

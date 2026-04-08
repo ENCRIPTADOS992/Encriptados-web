@@ -1031,7 +1031,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             }
 
             // Para TIM, usar el cost de la variante correspondiente a la región
-            const effectivePlanDataAmount = isTimProvider && variant
+            // Se recalcula más abajo con priceToShow final (después de evaluar ofertas)
+            let effectivePlanDataAmount: number | undefined = isTimProvider && variant
               ? variant.cost
               : undefined;
 
@@ -1083,20 +1084,35 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
             if (product._selectedVariant) {
               const variantSalePrice = (product._selectedVariant as any)?.sale_price;
-              if (variantSalePrice) {
+              if (variantSalePrice && Number(variantSalePrice) > 0 && Number(variantSalePrice) < priceToShow) {
                 currentIsOnSale = true;
-                regularPrice = priceToShow; // guardar precio original antes de reemplazar
+                regularPrice = priceToShow;
+                priceToShow = Number(variantSalePrice);
+              }
+            } else if (isTimProvider && variant) {
+              // Para TIM con variante de product.variants[], revisar sale_price de la variante
+              const variantSalePrice = (variant as any)?.sale_price;
+              if (variantSalePrice && Number(variantSalePrice) > 0 && Number(variantSalePrice) < priceToShow) {
+                currentIsOnSale = true;
+                regularPrice = priceToShow;
                 priceToShow = Number(variantSalePrice);
               }
             } else {
-              const baseIsOnSale = product.on_sale === true || (product as any)?.on_sale === "true";
-              if (baseIsOnSale && product.sale_price) {
-                currentIsOnSale = true;
-                regularPrice = priceToShow; // guardar precio original
-                priceToShow = Number(product.sale_price);
+              // Sin variante: verificar sale_price del producto base directamente
+              if (product.sale_price) {
+                const sp = Number(product.sale_price);
+                if (sp > 0 && sp < priceToShow) {
+                  currentIsOnSale = true;
+                  regularPrice = priceToShow;
+                  priceToShow = sp;
+                }
               }
             }
 
+            // Para TIM, actualizar effectivePlanDataAmount con el precio final (puede incluir oferta)
+            if (isTimProvider && variant) {
+              effectivePlanDataAmount = priceToShow;
+            }
 
             // 🔑 NUEVA KEY: siempre única en cada render (incluye variantId para expansión TIM)
             const variantIdForKey = product._selectedVariant?.id || "";

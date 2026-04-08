@@ -68,7 +68,6 @@ export function transformVariantsToPlans(
   translations?: LicenseTranslations
 ): LicensePlan[] {
   const t = translations || defaultLicenseTranslations;
-  const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
 
   // Si hay variantes, usarlas
   if (variants && variants.length > 0) {
@@ -87,22 +86,26 @@ export function transformVariantsToPlans(
         if (m === "months") deviceLabel = "Phone";
         else if (m === "mois" || m === "mesi") deviceLabel = "Smartphone";
 
+        const variantSale = variant.sale_price ? Number(variant.sale_price) : 0;
+        const variantPrice = Number(variant.price);
         return {
           label: `6 ${t.months} - ${deviceLabel}`,
           value: String(variant.licensetime),
-          price: Number(variant.price),
-          salePrice: (isOnSale && variant.sale_price) ? Number(variant.sale_price) : undefined,
+          price: variantPrice,
+          salePrice: (variantSale > 0 && variantSale < variantPrice) ? variantSale : undefined,
           variantId: variant.id,
           sku: variant.sku || "",
         };
       }
 
       const monthLabel = count === 1 ? t.month : t.months;
+      const variantSale = variant.sale_price ? Number(variant.sale_price) : 0;
+      const variantPrice = Number(variant.price);
       return {
         label: `${t.license} ${variant.licensetime} ${monthLabel}`,
         value: String(variant.licensetime),
-        price: Number(variant.price),
-        salePrice: (isOnSale && variant.sale_price) ? Number(variant.sale_price) : undefined,
+        price: variantPrice,
+        salePrice: (variantSale > 0 && variantSale < variantPrice) ? variantSale : undefined,
         variantId: variant.id,
         sku: variant.sku || "",
       };
@@ -118,10 +121,12 @@ export function transformVariantsToPlans(
       ? t.unique
       : `${licensetime} ${count === 1 ? t.month : t.months}`;
 
+    const prodSale = product.sale_price ? Number(product.sale_price) : 0;
     return [{
       label: `${t.license} ${licenseLabel}`,
       value: licensetime,
       price: price,
+      salePrice: (prodSale > 0 && prodSale < price) ? prodSale : undefined,
       variantId: (product as any).id || 0,
       sku: (product as any).sku || "",
     }];
@@ -233,23 +238,24 @@ export function buildProductInfo(
   // Priorizar datos del backend sobre la configuración estática
   const iconUrl = (product as any)?.iconUrl || config?.iconUrl || "/images/apps/default-logo.png";
 
-  // Lógica de oferta: si on_sale, mostrar sale_price y guardar price original
-  const isOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
+  // Lógica de oferta: verificar tanto a nivel producto como por variante
   let displayPrice: string;
   let originalPrice: string | undefined;
+  let hasOffer = false;
 
-  if (isOnSale) {
-    if (selectedPlan) {
-      // Usar sale_price de la variante si existe, sino el precio regular de la variante
-      const effectivePrice = selectedPlan.salePrice ?? selectedPlan.price;
-      displayPrice = formatPrice(effectivePrice, "USD", t.priceConsult);
-      // Mostrar precio original de la variante (sin descuento) solo si hay sale_price
-      if (selectedPlan.salePrice) {
-        originalPrice = formatPrice(selectedPlan.price, "USD", t.priceConsult);
-      }
-    } else if (product?.sale_price) {
-      displayPrice = formatPrice(product.sale_price, "USD", t.priceConsult);
-      originalPrice = formatPrice(product.price || 0, "USD", t.priceConsult);
+  if (selectedPlan && selectedPlan.salePrice && selectedPlan.salePrice < selectedPlan.price) {
+    // La variante seleccionada tiene oferta
+    hasOffer = true;
+    displayPrice = formatPrice(selectedPlan.salePrice, "USD", t.priceConsult);
+    originalPrice = formatPrice(selectedPlan.price, "USD", t.priceConsult);
+  } else if (!selectedPlan && product?.sale_price) {
+    // Sin variante: verificar precio oferta del producto
+    const sp = Number(product.sale_price);
+    const pp = Number(product.price ?? 0);
+    if (sp > 0 && sp < pp) {
+      hasOffer = true;
+      displayPrice = formatPrice(sp, "USD", t.priceConsult);
+      originalPrice = formatPrice(pp, "USD", t.priceConsult);
     } else {
       displayPrice = formatPrice(product?.price || 0, "USD", t.priceConsult);
     }
@@ -269,7 +275,7 @@ export function buildProductInfo(
     productId: product?.id || config?.productId || 0,
     onBuy,
     onChat,
-    onSale: isOnSale,
+    onSale: hasOffer,
     regularPrice: originalPrice,
   };
 }
