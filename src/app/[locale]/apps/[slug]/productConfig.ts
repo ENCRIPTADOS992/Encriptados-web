@@ -624,7 +624,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Zion" -> slug: "zion"
   "zion": {
     slug: "zion",
-    productId: 0,
+    productId: 61335,
     categoryId: 35,
     templateType: "software",
     heroBanners: {

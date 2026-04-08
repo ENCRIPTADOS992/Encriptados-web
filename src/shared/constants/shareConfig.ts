@@ -123,7 +123,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
  */
 export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
   {
-    productId: 0,
+    productId: 61335,
     slug: "zion",
     name: "Zion",
     metaImage: "/meta-image/sistemas/zi0n.png",
