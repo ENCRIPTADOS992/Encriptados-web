@@ -1212,12 +1212,18 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                     normalized === "one-time"
                   );
                 };
+                const isFree = (value: unknown) => {
+                  if (!value) return false;
+                  const n = String(value).trim().toLowerCase();
+                  return n === "gratis" || n === "free" || n === "prueba";
+                };
 
                 // Si hay una variante seleccionada (del proceso de expansión), usarla
                 if (product._selectedVariant) {
                   const time = (product._selectedVariant as any).licensetime;
                   if (time) {
                     if (isUnique(time)) return uniqueLicense;
+                    if (isFree(time)) return t("freeTrial") || "Prueba gratis";
                     return `${time} ${monthsLabel}`;
                   }
                 }
@@ -1230,6 +1236,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 if (variants.length > 0 && variants[0]?.licensetime) {
                   const time = variants[0].licensetime;
                   if (isUnique(time)) return uniqueLicense;
+                  if (isFree(time)) return t("freeTrial") || "Prueba gratis";
                   return `${time} ${monthsLabel}`;
                 }
 
@@ -1237,6 +1244,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 if (licenseVariants.length > 0 && licenseVariants[0]?.licensetime) {
                   const time = licenseVariants[0].licensetime;
                   if (isUnique(time)) return uniqueLicense;
+                  if (isFree(time)) return t("freeTrial") || "Prueba gratis";
                   return `${time} ${monthsLabel}`;
                 }
 
@@ -1244,6 +1252,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 const productLicense = product.licensetime;
                 if (productLicense && productLicense !== "0" && productLicense !== "") {
                   if (isUnique(productLicense)) return uniqueLicense;
+                  if (isFree(productLicense)) return t("freeTrial") || "Prueba gratis";
                   return `${productLicense} ${monthsLabel}`;
                 }
 
