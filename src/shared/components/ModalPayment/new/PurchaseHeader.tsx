@@ -142,9 +142,16 @@ const PurchaseHeader: React.FC<Props> = ({
   const discountAmount = discount;
 
   // Normalizador seguro: convierte "3" -> 3, ignora basura
+  const isFreeTrialValue = (v: unknown): boolean => {
+    if (!v) return false;
+    const s = String(v).trim().toLowerCase();
+    return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita";
+  };
+
   const toMonths = (v: unknown): number | undefined => {
     if (typeof v === "number" && Number.isFinite(v)) return v;
     if (typeof v === "string") {
+      if (isFreeTrialValue(v)) return 0;
       const n = parseInt(v, 10);
       return Number.isFinite(n) ? n : undefined;
     }
@@ -166,8 +173,13 @@ const PurchaseHeader: React.FC<Props> = ({
     normVariants[0]?.months ??
     productMonths;
 
-  // Ocultar licencia si: no se debe mostrar, es Threema simple, o la licencia es 0 meses
-  const shouldShowLicense = showLicense && !isOnlyThreema && currentMonths > 0;
+  // Ocultar licencia si: no se debe mostrar o es Threema simple
+  const shouldShowLicense = showLicense && !isOnlyThreema && (currentMonths > 0 || normVariants.some((v) => v.months === 0));
+
+  const isFreeTrial = normVariants.length > 0 && (
+    currentMonths === 0 ||
+    isFreeTrialValue(variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime)
+  );
 
   const subtotal = unitPrice * quantity;
   const [includeEsimAddon, setIncludeEsimAddon] = React.useState(false);
@@ -792,7 +804,10 @@ const PurchaseHeader: React.FC<Props> = ({
                     className="relative min-w-[8rem] w-auto h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                   >
                     <span className="truncate">
-                      {variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths} {t("months")}
+                      {(() => {
+                        const lt = variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths;
+                        return isFreeTrialValue(lt) ? (t("freeTrial") || "Prueba gratis") : `${lt} ${t("months")}`;
+                      })()}
                     </span>
                     <span className="ml-1 text-[#3D3D3D]">▾</span>
                   </button>
@@ -816,7 +831,7 @@ const PurchaseHeader: React.FC<Props> = ({
                             }}
                             className={`w-full px-3 py-2 text-left text-sm whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                           >
-                            {v.months} Meses
+                            {v.months === 0 ? (t("freeTrial") || "Prueba gratis") : `${v.months} Meses`}
                           </button>
                         );
                       })}
@@ -825,7 +840,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 </div>
               ) : (
                 <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
-                  {currentMonths} Meses
+                  {currentMonths === 0 ? (t("freeTrial") || "Prueba gratis") : `${currentMonths} Meses`}
                 </div>
               )}
             </div>
@@ -868,6 +883,16 @@ const PurchaseHeader: React.FC<Props> = ({
               {total} {currency}
             </span>
           </div>
+
+          {/* Warning: prueba gratis 6 horas */}
+          {isFreeTrial && (
+            <div className="flex items-start gap-2 rounded-lg border border-[#F59E0B] bg-[#FFFBEB] px-3 py-2">
+              <span className="text-base leading-5 mt-0.5">⚠️</span>
+              <span className="text-xs text-[#92400E] leading-5">
+                {t("freeTrialWarning") || "Esta licencia gratuita tiene una duración de 6 horas. Después de este período, la licencia expirará automáticamente."}
+              </span>
+            </div>
+          )}
 
           {/* Upsell eSIM removed */}
 

@@ -2826,6 +2826,8 @@
     "loading": "Carregando...",
     "initializingPaymentForm": "Inicializando formulário de pagamento...",
     "noPhoneNumberSecurity": "Este produto não contém um número de telefone por segurança.",
+    "freeTrial": "Teste grátis",
+    "freeTrialWarning": "Esta licença gratuita tem duração de 6 horas. Após esse período, a licença expirará automaticamente.",
     "licenseQuestionLabel": "Como deseja receber sua licença?",
     "wantMyUserBtn": "Quero meu usuário",
     "roningCodeBtn": "Código RONING",
