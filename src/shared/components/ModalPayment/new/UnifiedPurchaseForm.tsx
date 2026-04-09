@@ -358,30 +358,38 @@ export default function UnifiedPurchaseForm({
         console.log("🐛 [UnifiedPurchaseForm] resolvedLicenseTime:", resolvedLicenseTime);
 
         // DEBUG: Log routing decision
+        const hasRenewIds = form.renewIds && form.renewIds.length > 0;
+        const isZi0nRenewal = form.licenseType === "renew" && isZi0nProduct;
         console.log("🔀 [UnifiedPurchaseForm] Routing decision:", {
           orderType,
           licenseType: form.licenseType,
           renewIds: form.renewIds,
           renewIdsLength: form.renewIds?.length,
-          willUseRenewal: form.licenseType === "renew" && form.renewIds && form.renewIds.length > 0,
+          isZi0nRenewal,
+          willUseRenewal: form.licenseType === "renew" && (hasRenewIds || isZi0nRenewal),
         });
 
-        if (form.licenseType === "renew" && form.renewIds && form.renewIds.length > 0) {
+        if (form.licenseType === "renew" && (hasRenewIds || isZi0nRenewal)) {
           // === RENEWAL: use dedicated /orders/renewal endpoint ===
           // Must be checked FIRST — renewal always goes to /orders/renewal regardless of orderType
+          // Zi0n renewals don't require license IDs — codes come from inventory
           const lt = purchaseMeta?.licensetime;
           const months = typeof lt === 'string' ? parseInt(lt) || 12 : (typeof lt === 'number' ? lt : 12);
+          const effectiveLicenseIds = isZi0nRenewal && !hasRenewIds
+            ? Array.from({ length: quantity }, () => "zi0n-auto")
+            : form.renewIds;
           console.log("🔄 [RENEWAL] Using /orders/renewal endpoint", {
             productId,
-            licenseIds: form.renewIds,
+            licenseIds: effectiveLicenseIds,
             email: emailVal.trim(),
             months,
             amountUsd,
             licenseType: form.licenseType,
+            isZi0nRenewal,
           });
           orderResult = await createRenewalOrder({
             productId,
-            licenseIds: form.renewIds,
+            licenseIds: effectiveLicenseIds,
             email: emailVal.trim(),
             quantity,
             months,
