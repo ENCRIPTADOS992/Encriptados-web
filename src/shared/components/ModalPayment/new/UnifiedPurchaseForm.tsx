@@ -212,8 +212,9 @@ export default function UnifiedPurchaseForm({
   const usernamesOk = !requiresUsernames ||
     (usernames.length === quantity && usernames.every((u) => reUser.test(u)));
   const emailOk = /\S+@\S+\.\S+/.test(emailVal) && emailVal.length <= 100 && emailVal.length > 5;
+  const isZi0nProduct = /zi0n|zion/i.test(productName || "");
   const requiresRenewIds =
-    policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew";
+    policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew" && !isZi0nProduct;
   const renewIdsOk =
     !requiresRenewIds ||
     (renewIds.length === quantity && renewIds.every((id) => id.trim().length > 0));
@@ -591,8 +592,8 @@ export default function UnifiedPurchaseForm({
         </div>
       )}
 
-      {/* === RENEW ID FIELD (cuando se selecciona Renovar licencia) === */}
-      {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew" && (
+      {/* === RENEW ID FIELD (cuando se selecciona Renovar licencia, excepto Zi0n) === */}
+      {policy.showLicenseTabs && policy.licenseTabType === "new_renew" && licenseType === "renew" && !isZi0nProduct && (
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
             {t("enterProductId", { productName: productName || t("product") })}

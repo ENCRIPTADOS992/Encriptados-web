@@ -225,7 +225,6 @@ export function getFormPolicyForProduct(
   productName: string,
   categoryId: number
 ): FormPolicy {
-  const nameLower = productName.toLowerCase().trim();
   const formType = getFormTypeForProduct(productName, categoryId);
   const base = FORM_POLICIES[formType];
   if (!base) return FORM_POLICIES.APP_RONING;
@@ -246,14 +245,6 @@ export function getFormPolicyForProduct(
       showEmailField: false,
       showTelegramField: false,
       paymentMethods: [],
-    };
-  }
-  // Zi0n: renovación se maneja desde el panel admin, no desde el checkout
-  if (nameLower.includes("zi0n") || nameLower.includes("zion")) {
-    return {
-      ...base,
-      showLicenseTabs: false,
-      licenseTabType: "none",
     };
   }
   if (shouldHideTelegramField(productName, categoryId) && base.showTelegramField) {
