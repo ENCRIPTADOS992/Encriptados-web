@@ -34,15 +34,27 @@ const ListOfOffers = () => {
         const rawProducts: any[] = data?.products || [];
 
         // Step 1: Deduplicate — the API returns one row per selected variant,
-        // so the same product id appears multiple times. Keep only the first.
-        const seen = new Set<number>();
-        const unique: any[] = [];
+        // so the same product id appears multiple times. We must pick the best
+        // representative for each product: prefer an on-sale variant, and among
+        // those prefer the one with the lowest sale_price (best deal to display).
+        const productMap = new Map<number, any>();
         for (const p of rawProducts) {
-          if (!seen.has(p.id)) {
-            seen.add(p.id);
-            unique.push(p);
+          const existing = productMap.get(p.id);
+          if (!existing) {
+            productMap.set(p.id, p);
+          } else if (p.on_sale === true && existing.on_sale !== true) {
+            // Prefer on-sale variant over non-on-sale
+            productMap.set(p.id, p);
+          } else if (
+            p.on_sale === true &&
+            existing.on_sale === true &&
+            Number(p.sale_price) < Number(existing.sale_price)
+          ) {
+            // Among on-sale variants, prefer the lowest sale price
+            productMap.set(p.id, p);
           }
         }
+        const unique = Array.from(productMap.values());
 
         // Step 2: Filter — only products where on_sale === true (boolean)
         // Some products have sale_price === price which is NOT a real sale.
