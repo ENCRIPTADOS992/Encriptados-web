@@ -33,33 +33,9 @@ const ListOfOffers = () => {
         const data = await response.json();
         const rawProducts: any[] = data?.products || [];
 
-        // Step 1: Deduplicate — the API returns one row per selected variant,
-        // so the same product id appears multiple times. We must pick the best
-        // representative for each product: prefer an on-sale variant, and among
-        // those prefer the one with the lowest sale_price (best deal to display).
-        const productMap = new Map<number, any>();
-        for (const p of rawProducts) {
-          const existing = productMap.get(p.id);
-          if (!existing) {
-            productMap.set(p.id, p);
-          } else if (p.on_sale === true && existing.on_sale !== true) {
-            // Prefer on-sale variant over non-on-sale
-            productMap.set(p.id, p);
-          } else if (
-            p.on_sale === true &&
-            existing.on_sale === true &&
-            Number(p.sale_price) < Number(existing.sale_price)
-          ) {
-            // Among on-sale variants, prefer the lowest sale price
-            productMap.set(p.id, p);
-          }
-        }
-        const unique = Array.from(productMap.values());
-
-        // Step 2: Filter — only products where on_sale === true (boolean)
-        // Some products have sale_price === price which is NOT a real sale.
-        // The `on_sale` boolean from WooCommerce is the source of truth.
-        const onSale = unique.filter((p) => p.on_sale === true);
+        // The API returns one row per expanded variant, each with its own
+        // on_sale flag and sale_price. Show every on-sale variant as its own card.
+        const onSale = rawProducts.filter((p) => p.on_sale === true);
 
         return onSale;
       } catch (err) {
@@ -137,19 +113,26 @@ const ListOfOffers = () => {
       ) : (
         <div className="w-full mt-9 max-w-7xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-full">
-            {activeOffers.map((product) => {
+            {activeOffers.map((product, idx) => {
               const categoryId = product.category?.id || 0;
+              const variantId = product.selected_variant_id || null;
+              // Find the matching variant to get its label (licensetime)
+              const matchedVariant = variantId && product.variants?.length
+                ? product.variants.find((v: any) => v.id === variantId)
+                : null;
+              const variantLabel = matchedVariant?.licensetime || "";
+              const displayName = variantLabel ? `${product.name} - ${variantLabel}` : product.name;
 
               return (
                 <CardProduct
-                  key={`offer-${product.id}`}
+                  key={`offer-${product.id}-${variantId || idx}`}
                   id={product.id}
                   priceDiscount={String(product.sale_price)}
                   productImage={product.images?.[0]?.src ?? ""}
                   features={[]}
                   priceRange={`${product.sale_price}$`}
                   headerIcon={""}
-                  headerTitle={product.name}
+                  headerTitle={displayName}
                   filters={{
                     selectedOption: String(categoryId),
                     provider: product.provider || "all",
@@ -168,6 +151,7 @@ const ListOfOffers = () => {
                   provider={product.provider}
                   typeProduct={product.type_product}
                   variants={product.variants?.length > 0 ? product.variants : undefined}
+                  variantId={variantId}
                   onSale={true}
                   regularPrice={Number(product.price)}
                   iconUrl={product.iconUrl}
