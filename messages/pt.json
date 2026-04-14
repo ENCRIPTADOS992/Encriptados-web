@@ -1253,10 +1253,6 @@
         }
       }
     },
-    "test": {
-      "title": "test",
-      "description": "Esta es una pagina de prueba"
-    },
     "apps": {
       "title": "Aplicativos",
       "description": "Produtos incríveis, aplicativos e sistemas com criptografia de ponta a ponta",
