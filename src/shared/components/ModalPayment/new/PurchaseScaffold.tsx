@@ -42,7 +42,8 @@ export default function PurchaseScaffold({
   const isMdmIphone = /secure\s*mdm\s*iphone/i.test(productName) ||
     /galaxia\s*mdm/i.test(productName);
   const isRouter = /camal[eé]on|router/i.test(productName);
-  const isPhysicalSim = /sim\s*(f[ií]sica?|physics?|physique)/i.test(productName);
+  const isPhysicalSim =
+    mode === "sim" && headerProps.shipping != null && headerProps.shipping > 0;
 
   const AlertBox = ({ lines }: { lines: string[] }) => (
     <div className="flex gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
