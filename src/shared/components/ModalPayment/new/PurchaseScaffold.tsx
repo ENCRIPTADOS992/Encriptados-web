@@ -71,17 +71,14 @@ export default function PurchaseScaffold({
       {/* Alert for Router products */}
       {isRouter && (
         <AlertBox lines={[
-          "Impuestos a cargo del comprador.",
-          "Entrega estimada: 5–7 días hábiles.",
+          "Impuestos a cargo del comprador. Entrega estimada: 5–7 días hábiles.",
         ]} />
       )}
 
       {/* Alert for Physical SIM products */}
       {isPhysicalSim && (
         <AlertBox lines={[
-          "Este producto no contiene número telefónico.",
-          "Impuestos a cargo del comprador.",
-          "Entrega: 5–7 días hábiles.",
+          "Este producto no contiene número telefónico. Impuestos a cargo del comprador. Entrega: 5–7 días hábiles.",
         ]} />
       )}
 
