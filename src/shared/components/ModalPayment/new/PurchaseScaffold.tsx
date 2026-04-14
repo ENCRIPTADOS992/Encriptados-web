@@ -79,7 +79,7 @@ export default function PurchaseScaffold({
       {/* Alert for Physical SIM products */}
       {isPhysicalSim && (
         <AlertBox lines={[
-          "Este producto no contiene número telefónico. Impuestos a cargo del comprador. Entrega: 5–7 días hábiles.",
+          "Impuestos a cargo del comprador. Entrega: 5–7 días hábiles.",
         ]} />
       )}
 
