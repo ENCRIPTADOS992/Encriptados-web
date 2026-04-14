@@ -1307,6 +1307,14 @@
       "title": "Systèmes",
       "description": "Systèmes de cryptage des données",
       "items": {
+        "zi0n": {
+          "title": "Zi0n",
+          "description": "Zi0n est un système fermé axé sur la protection et le contrôle de l'information."
+        },
+        "galaxiaMdmIphone": {
+          "title": "Galaxia MDM Iphone",
+          "description": "Galaxia MDM Iphone est un système fermé axé sur la protection et le contrôle de l'information."
+        },
         "secureMdmIphone": {
           "title": "Secure MDM iPhone",
           "description": "Secure MDM iPhone est un système fermé axé sur la protection et le contrôle de l'information."

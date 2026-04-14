@@ -140,16 +140,20 @@ export function useTranslatedProductsCategories(): any {
       image: "/images/mega-menu/sistemas.webp",
       items: [
         {
-          title: "Zi0n",
+          title: t("systems.items.zi0n.title", { defaultValue: "Zi0n" }),
           image: "/images/mega-menu/sistemas/zi0n.webp",
           link: getAppUrl("Zi0n"),
-          description: "Zi0n es un sistema cerrado enfocado en la protección y control de la información.",
+          description: t("systems.items.zi0n.description", {
+            defaultValue: "Zi0n es un sistema cerrado enfocado en la protección y control de la información.",
+          }),
         },
         {
-          title: "Galaxia MDM Iphone",
+          title: t("systems.items.galaxiaMdmIphone.title", { defaultValue: "Galaxia MDM Iphone" }),
           image: "/images/mega-menu/sistemas/galaxia.webp",
           link: "/apps/galaxia-mdm?productId=61085",
-          description: "Galaxia MDM Iphone es un sistema cerrado enfocado en la protección y control de la información.",
+          description: t("systems.items.galaxiaMdmIphone.description", {
+            defaultValue: "Galaxia MDM Iphone es un sistema cerrado enfocado en la protección y control de la información.",
+          }),
         },
         {
           title: t("systems.items.cryptcom.title", {
