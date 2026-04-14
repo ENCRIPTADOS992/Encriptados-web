@@ -1305,55 +1305,55 @@
       "items": {
         "secureMdmIphone": {
           "title": "Secure MDM iPhone",
-          "description": "Secure MDM iPhone é um sistema de gestão de dispositivos criptografado."
+          "description": "Secure MDM iPhone é um sistema fechado focado na proteção e controle da informação."
         },
         "secureMdmAndroid": {
           "title": "Secure MDM Android",
-          "description": "Secure MDM Android é um sistema de gestão de dispositivos criptografado."
+          "description": "Secure MDM Android é um sistema fechado focado na proteção e controle da informação."
         },
         "cryptcom": {
           "title": "Cryptcom",
-          "description": "Cryptcom é um sistema de segurança e criptografia de comunicações."
+          "description": "Cryptcom é um sistema fechado focado na proteção e controle da informação."
         },
         "renati": {
           "title": "Renati",
-          "description": "Renati é um sistema de segurança criptografado."
+          "description": "Renati é um sistema fechado focado na proteção e controle da informação."
         },
         "ultraX": {
           "title": "Ultra X",
-          "description": "Ultra X é um sistema de segurança criptografado."
+          "description": "Ultra X é um sistema fechado focado na proteção e controle da informação."
         },
         "chatMail": {
           "title": "ChatMail",
-          "description": "ChatMail é um sistema de comunicações criptografado."
+          "description": "ChatMail é um sistema fechado focado na proteção e controle da informação."
         },
         "decSecure": {
           "title": "DEC Secure",
-          "description": "DEC Secure é um sistema de segurança criptografado."
+          "description": "DEC Secure é um sistema fechado focado na proteção e controle da informação."
         },
         "totalSec": {
           "title": "Total Sec",
-          "description": "Total Sec é um sistema de segurança criptografado."
+          "description": "Total Sec é um sistema fechado focado na proteção e controle da informação."
         },
         "armadillo": {
           "title": "Armadillo",
-          "description": "Armadillo é um sistema de segurança criptografado."
+          "description": "Armadillo é um sistema fechado focado na proteção e controle da informação."
         },
         "vaultChat": {
           "title": "VaultChat",
-          "description": "VaultChat é um sistema de comunicações criptografado."
+          "description": "VaultChat é um sistema fechado focado na proteção e controle da informação."
         },
         "t2Communicator": {
           "title": "T2 Communicator",
-          "description": "T2 Communicator é um sistema de comunicações criptografado."
+          "description": "T2 Communicator é um sistema fechado focado na proteção e controle da informação."
         },
         "intactPhone": {
           "title": "Intact Phone",
-          "description": "Intact Phone é um sistema de segurança criptografado."
+          "description": "Intact Phone é um sistema fechado focado na proteção e controle da informação."
         },
         "secureCrypt": {
           "title": "SecureCrypt",
-          "description": "SecureCrypt é um sistema de segurança criptografado."
+          "description": "SecureCrypt é um sistema fechado focado na proteção e controle da informação."
         }
       }
     },

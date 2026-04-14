@@ -143,13 +143,13 @@ export function useTranslatedProductsCategories(): any {
           title: "Zi0n",
           image: "/images/mega-menu/sistemas/zi0n.webp",
           link: getAppUrl("Zi0n"),
-          description: "Zi0n es un sistema de seguridad encriptado.",
+          description: "Zi0n es un sistema cerrado enfocado en la protección y control de la información.",
         },
         {
           title: "Galaxia MDM Iphone",
           image: "/images/mega-menu/sistemas/galaxia.webp",
           link: "/apps/galaxia-mdm?productId=61085",
-          description: "Galaxia MDM Iphone es una solución de gestión de dispositivos móviles.",
+          description: "Galaxia MDM Iphone es un sistema cerrado enfocado en la protección y control de la información.",
         },
         {
           title: t("systems.items.cryptcom.title", {
@@ -159,7 +159,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Cryptcom"),
           description: t("systems.items.cryptcom.description", {
-            defaultValue: "Cryptcom es un sistema de seguridad y encriptación de comunicaciones.",
+            defaultValue: "Cryptcom es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -170,7 +170,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/SecureCrypt.webp",
           link: getAppUrl("SecureCrypt"),
           description: t("systems.items.secureCrypt.description", {
-            defaultValue: "SecureCrypt es un sistema de seguridad encriptado.",
+            defaultValue: "SecureCrypt es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -182,7 +182,7 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("Secure MDM iPhone"),
           description: t("systems.items.secureMdmIphone.description", {
             defaultValue:
-              "Secure MDM iPhone es un sistema de gestión de dispositivos encriptado.",
+              "Secure MDM iPhone es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -194,7 +194,7 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("Secure MDM Android"),
           description: t("systems.items.secureMdmAndroid.description", {
             defaultValue:
-              "Secure MDM Android es un sistema de gestión de dispositivos encriptado.",
+              "Secure MDM Android es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -203,7 +203,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Renati"),
           description: t("systems.items.renati.description", {
-            defaultValue: "Renati es un sistema de seguridad encriptado.",
+            defaultValue: "Renati es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -214,7 +214,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("ChatMail"),
           description: t("systems.items.chatMail.description", {
-            defaultValue: "ChatMail es un sistema de comunicaciones encriptado.",
+            defaultValue: "ChatMail es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -225,7 +225,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Armadillo"),
           description: t("systems.items.armadillo.description", {
-            defaultValue: "Armadillo es un sistema de seguridad encriptado.",
+            defaultValue: "Armadillo es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -236,7 +236,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.webp",
           link: "/apps/vault-chat-v2",
           description: t("systems.items.vaultChat.description", {
-            defaultValue: "VaultChat es un sistema de comunicaciones encriptado.",
+            defaultValue: "VaultChat es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -245,7 +245,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Ultra X"),
           description: t("systems.items.ultraX.description", {
-            defaultValue: "Ultra X es un sistema de seguridad encriptado.",
+            defaultValue: "Ultra X es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -257,7 +257,7 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("Intact Phone"),
           description: t("systems.items.intactPhone.description", {
             defaultValue:
-              "Intact Phone es un sistema de seguridad encriptado.",
+              "Intact Phone es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         {
@@ -268,7 +268,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("DEC Secure"),
           description: t("systems.items.decSecure.description", {
-            defaultValue: "DEC Secure es un sistema de seguridad encriptado.",
+            defaultValue: "DEC Secure es un sistema cerrado enfocado en la protección y control de la información.",
           }),
         },
         // {
@@ -279,7 +279,7 @@ export function useTranslatedProductsCategories(): any {
         //     "/images/mega-menu/sistemas/TotalSec_Sistemas_Encriptados_preview_menu_web.jpg",
         //   link: "/system8",
         //   description: t("systems.items.totalSec.description", {
-        //     defaultValue: "Total Sec es una aplicación de mensajería segura.",
+        //     defaultValue: "Total Sec es un sistema cerrado enfocado en la protección y control de la información.",
         //   }),
         // },
         // {
@@ -291,7 +291,7 @@ export function useTranslatedProductsCategories(): any {
         //   link: "/apps/t2-communicator",
         //   description: t("systems.items.t2Communicator.description", {
         //     defaultValue:
-        //       "T2 Communicator es una aplicación de mensajería segura.",
+        //       "T2 Communicator es un sistema cerrado enfocado en la protección y control de la información.",
         //   }),
         // },
       ],

@@ -1309,55 +1309,55 @@
       "items": {
         "secureMdmIphone": {
           "title": "Secure MDM iPhone",
-          "description": "Secure MDM iPhone est un système de gestion d'appareils chiffré."
+          "description": "Secure MDM iPhone est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "secureMdmAndroid": {
           "title": "Secure MDM Android",
-          "description": "Secure MDM Android est un système de gestion d'appareils chiffré."
+          "description": "Secure MDM Android est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "cryptcom": {
           "title": "Cryptcom",
-          "description": "Cryptcom est un système de sécurité et de chiffrement des communications."
+          "description": "Cryptcom est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "renati": {
           "title": "Renati",
-          "description": "Renati est un système de sécurité chiffré."
+          "description": "Renati est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "ultraX": {
           "title": "Ultra X",
-          "description": "Ultra X est un système de sécurité chiffré."
+          "description": "Ultra X est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "chatMail": {
           "title": "ChatMail",
-          "description": "ChatMail est un système de communications chiffré."
+          "description": "ChatMail est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "decSecure": {
           "title": "DEC Secure",
-          "description": "DEC Secure est un système de sécurité chiffré."
+          "description": "DEC Secure est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "totalSec": {
           "title": "Total Sec",
-          "description": "Total Sec est un système de sécurité chiffré."
+          "description": "Total Sec est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "armadillo": {
           "title": "Armadillo",
-          "description": "Armadillo est un système de sécurité chiffré."
+          "description": "Armadillo est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "vaultChat": {
           "title": "VaultChat",
-          "description": "VaultChat est un système de communications chiffré."
+          "description": "VaultChat est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "t2Communicator": {
           "title": "T2 Communicator",
-          "description": "T2 Communicator est un système de communications chiffré."
+          "description": "T2 Communicator est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "intactPhone": {
           "title": "Intact Phone",
-          "description": "Intact Phone est un système de sécurité chiffré."
+          "description": "Intact Phone est un système fermé axé sur la protection et le contrôle de l'information."
         },
         "secureCrypt": {
           "title": "SecureCrypt",
-          "description": "SecureCrypt est un système de sécurité chiffré."
+          "description": "SecureCrypt est un système fermé axé sur la protection et le contrôle de l'information."
         }
       }
     },
