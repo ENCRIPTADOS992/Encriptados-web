@@ -313,7 +313,7 @@ export function useTranslatedProductsCategories(): any {
             defaultValue: "Router Camaleon",
           }),
           image:
-            "",
+            "/images/mega-menu/camaleon_reuter.webp",
           link: getAppUrl("Router Camaleón"),
           description: t("router.items.routerCamaleon.description", {
             defaultValue:
