@@ -41,6 +41,23 @@ export default function PurchaseScaffold({
   const productName = headerProps.product?.name ?? "";
   const isMdmIphone = /secure\s*mdm\s*iphone/i.test(productName) ||
     /galaxia\s*mdm/i.test(productName);
+  const isRouter = /camal[eé]on|router/i.test(productName);
+  const isPhysicalSim = /sim\s*(f[ií]sica?|physics?|physique)/i.test(productName);
+
+  const AlertBox = ({ lines }: { lines: string[] }) => (
+    <div className="flex gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
+      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#C98A00] text-[14px] font-bold text-[#C98A00]">
+        !
+      </span>
+      <div className="flex flex-col gap-[2px]">
+        {lines.map((line, i) => (
+          <span key={i} className="text-[14px] leading-[20px] text-[#C98A00]">
+            {line}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className={`flex flex-col gap-3 ${className ?? ""}`}>
@@ -48,14 +65,24 @@ export default function PurchaseScaffold({
 
       {/* Alert for MDM iPhone products */}
       {isMdmIphone && (
-        <div className="flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
-          <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#C98A00] text-[14px] font-bold text-[#C98A00]">
-            !
-          </span>
-          <span className="text-[14px] leading-[20px] text-[#C98A00]">
-            Para la instalación se requiere un MAC con OS 15.7 o superior.
-          </span>
-        </div>
+        <AlertBox lines={["Para la instalación se requiere un MAC con OS 15.7 o superior."]} />
+      )}
+
+      {/* Alert for Router products */}
+      {isRouter && (
+        <AlertBox lines={[
+          "Impuestos a cargo del comprador.",
+          "Entrega estimada: 5–7 días hábiles.",
+        ]} />
+      )}
+
+      {/* Alert for Physical SIM products */}
+      {isPhysicalSim && (
+        <AlertBox lines={[
+          "Este producto no contiene número telefónico.",
+          "Impuestos a cargo del comprador.",
+          "Entrega: 5–7 días hábiles.",
+        ]} />
       )}
 
       {/* Tabs are now handled inside UnifiedPurchaseForm based on formPolicy */}
