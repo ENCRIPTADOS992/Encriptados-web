@@ -2834,11 +2834,11 @@
     "rechargeBtn": "Recarregar"
   },
   "TestingProducts": {
-    "badge": "Our products",
-    "title": "Meet our <br/> encrypted products",
-    "sims": "Encrypted <br/> SIMs",
-    "apps": "Secure <br/> messaging apps",
-    "systems": "Security <br/> systems",
-    "routers": "Encrypted <br/> routers"
+    "badge": "Nossos produtos",
+    "title": "Conheça nossos <br></br>produtos criptografados",
+    "sims": "SIMs <br></br>criptografados",
+    "apps": "Aplicativos de <br></br>mensagens <br></br>seguras",
+    "systems": "Sistemas de <br></br>segurança",
+    "routers": "Roteadores <br></br>criptografados"
   }
 }

@@ -2824,11 +2824,11 @@
     "rechargeBtn": "Recharger"
   },
   "TestingProducts": {
-    "badge": "Our products",
-    "title": "Meet our <br/> encrypted products",
-    "sims": "Encrypted <br/> SIMs",
-    "apps": "Secure <br/> messaging apps",
-    "systems": "Security <br/> systems",
-    "routers": "Encrypted <br/> routers"
+    "badge": "Nos produits",
+    "title": "Découvrez nos <br></br>produits chiffrés",
+    "sims": "SIM <br></br>chiffrées",
+    "apps": "Applications de <br></br>messagerie <br></br>sécurisée",
+    "systems": "Systèmes de <br></br>sécurité",
+    "routers": "Routeurs <br></br>chiffrés"
   }
 }

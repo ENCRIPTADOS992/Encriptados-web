@@ -2946,12 +2946,12 @@
     "rechargeBtn": "Ricarica"
   },
   "TestingProducts": {
-    "badge": "Nuestros productos",
-    "title": "Conoce nuestros <br/> productos encriptados",
-    "sims": "SIM's <br/> Encriptadas",
-    "apps": "Aplicaciones de <br/> mensajería <br/> segura",
-    "systems": "Sistemas de <br/> seguridad",
-    "routers": "Routers <br/> encriptados"
+    "badge": "I nostri prodotti",
+    "title": "Scopri i nostri <br></br>prodotti crittografati",
+    "sims": "SIM <br></br>crittografate",
+    "apps": "Applicazioni di <br></br>messaggistica <br></br>sicura",
+    "systems": "Sistemi di <br></br>sicurezza",
+    "routers": "Router <br></br>crittografati"
   },
   "AppTerms": {
     "backButton": "Volver a la App",
