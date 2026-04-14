@@ -159,7 +159,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/Cryptcom_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Cryptcom"),
           description: t("systems.items.cryptcom.description", {
-            defaultValue: "Cryptcom es una aplicación de mensajería segura.",
+            defaultValue: "Cryptcom es un sistema de seguridad y encriptación de comunicaciones.",
           }),
         },
         {
@@ -170,7 +170,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/SecureCrypt.webp",
           link: getAppUrl("SecureCrypt"),
           description: t("systems.items.secureCrypt.description", {
-            defaultValue: "SecureCrypt es una aplicación de mensajería segura.",
+            defaultValue: "SecureCrypt es un sistema de seguridad encriptado.",
           }),
         },
         {
@@ -182,7 +182,7 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("Secure MDM iPhone"),
           description: t("systems.items.secureMdmIphone.description", {
             defaultValue:
-              "Secure MDM iPhone es una aplicación de mensajería segura.",
+              "Secure MDM iPhone es un sistema de gestión de dispositivos encriptado.",
           }),
         },
         {
@@ -194,7 +194,7 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("Secure MDM Android"),
           description: t("systems.items.secureMdmAndroid.description", {
             defaultValue:
-              "Secure MDM Android es una aplicación de mensajería segura.",
+              "Secure MDM Android es un sistema de gestión de dispositivos encriptado.",
           }),
         },
         {
@@ -203,7 +203,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/Renati_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Renati"),
           description: t("systems.items.renati.description", {
-            defaultValue: "Renati es una aplicación de mensajería segura.",
+            defaultValue: "Renati es un sistema de seguridad encriptado.",
           }),
         },
         {
@@ -214,7 +214,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/ChatMail_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("ChatMail"),
           description: t("systems.items.chatMail.description", {
-            defaultValue: "ChatMail es una aplicación de mensajería segura.",
+            defaultValue: "ChatMail es un sistema de comunicaciones encriptado.",
           }),
         },
         {
@@ -225,7 +225,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/armadillo_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Armadillo"),
           description: t("systems.items.armadillo.description", {
-            defaultValue: "Armadillo es una aplicación de mensajería segura.",
+            defaultValue: "Armadillo es un sistema de seguridad encriptado.",
           }),
         },
         {
@@ -236,7 +236,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/VaultChat_Sistemas_Encriptados_preview_menu_web.webp",
           link: "/apps/vault-chat-v2",
           description: t("systems.items.vaultChat.description", {
-            defaultValue: "VaultChat es una aplicación de mensajería segura.",
+            defaultValue: "VaultChat es un sistema de comunicaciones encriptado.",
           }),
         },
         {
@@ -245,7 +245,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/UltraX_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("Ultra X"),
           description: t("systems.items.ultraX.description", {
-            defaultValue: "Ultra X es una aplicación de mensajería segura.",
+            defaultValue: "Ultra X es un sistema de seguridad encriptado.",
           }),
         },
         {
@@ -257,7 +257,7 @@ export function useTranslatedProductsCategories(): any {
           link: getAppUrl("Intact Phone"),
           description: t("systems.items.intactPhone.description", {
             defaultValue:
-              "Intact Phone es una aplicación de mensajería segura.",
+              "Intact Phone es un sistema de seguridad encriptado.",
           }),
         },
         {
@@ -268,7 +268,7 @@ export function useTranslatedProductsCategories(): any {
             "/images/mega-menu/sistemas/DEC-Secure_Sistemas_Encriptados_preview_menu_web.webp",
           link: getAppUrl("DEC Secure"),
           description: t("systems.items.decSecure.description", {
-            defaultValue: "DEC Secure es una aplicación de mensajería segura.",
+            defaultValue: "DEC Secure es un sistema de seguridad encriptado.",
           }),
         },
         // {

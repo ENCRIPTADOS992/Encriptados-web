@@ -1426,55 +1426,55 @@
       "items": {
         "secureMdmIphone": {
           "title": "Secure MDM iPhone",
-          "description": "Secure MDM iPhone is a secure messaging app."
+          "description": "Secure MDM iPhone is an encrypted device management system."
         },
         "secureMdmAndroid": {
           "title": "Secure MDM Android",
-          "description": "Secure MDM Android is a secure messaging app."
+          "description": "Secure MDM Android is an encrypted device management system."
         },
         "cryptcom": {
           "title": "Cryptcom",
-          "description": "Cryptcom is a secure messaging app."
+          "description": "Cryptcom is an encrypted communications security system."
         },
         "renati": {
           "title": "Renati",
-          "description": "Renati is a secure messaging app."
+          "description": "Renati is an encrypted security system."
         },
         "ultraX": {
           "title": "Ultra X",
-          "description": "Ultra X is a secure messaging app."
+          "description": "Ultra X is an encrypted security system."
         },
         "chatMail": {
           "title": "ChatMail",
-          "description": "ChatMail is a secure messaging app."
+          "description": "ChatMail is an encrypted communications system."
         },
         "decSecure": {
           "title": "DEC Secure",
-          "description": "DEC Secure is a secure messaging app."
+          "description": "DEC Secure is an encrypted security system."
         },
         "totalSec": {
           "title": "Total Sec",
-          "description": "Total Sec is a secure messaging app."
+          "description": "Total Sec is an encrypted security system."
         },
         "armadillo": {
           "title": "Armadillo",
-          "description": "Armadillo is a secure messaging app."
+          "description": "Armadillo is an encrypted security system."
         },
         "vaultChat": {
           "title": "VaultChat",
-          "description": "VaultChat is a secure messaging app."
+          "description": "VaultChat is an encrypted communications system."
         },
         "t2Communicator": {
           "title": "T2 Communicator",
-          "description": "T2 Communicator is a secure messaging app."
+          "description": "T2 Communicator is an encrypted communications system."
         },
         "intactPhone": {
           "title": "Intact Phone",
-          "description": "Intact Phone is a secure messaging app."
+          "description": "Intact Phone is an encrypted security system."
         },
         "secureCrypt": {
           "title": "SecureCrypt",
-          "description": "SecureCrypt is a secure messaging application."
+          "description": "SecureCrypt is an encrypted security system."
         }
       }
     },

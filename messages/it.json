@@ -1284,60 +1284,60 @@
       }
     },
     "systems": {
-      "title": "Sistemas",
-      "description": "Sistemas de encriptación de datos",
+      "title": "Sistemi",
+      "description": "Sistemi di crittografia dei dati",
       "items": {
         "secureMdmIphone": {
           "title": "Secure MDM iPhone",
-          "description": "Secure MDM iPhone es una aplicación de mensajería segura."
+          "description": "Secure MDM iPhone è un sistema di gestione dispositivi crittografato."
         },
         "secureMdmAndroid": {
           "title": "Secure MDM Android",
-          "description": "Secure MDM Android es una aplicación de mensajería segura."
+          "description": "Secure MDM Android è un sistema di gestione dispositivi crittografato."
         },
         "cryptcom": {
           "title": "Cryptcom",
-          "description": "Cryptcom es una aplicación de mensajería segura."
+          "description": "Cryptcom è un sistema di sicurezza e crittografia delle comunicazioni."
         },
         "renati": {
           "title": "Renati",
-          "description": "Renati es una aplicación de mensajería segura."
+          "description": "Renati è un sistema di sicurezza crittografato."
         },
         "ultraX": {
           "title": "Ultra X",
-          "description": "Ultra X es una aplicación de mensajería segura."
+          "description": "Ultra X è un sistema di sicurezza crittografato."
         },
         "chatMail": {
           "title": "ChatMail",
-          "description": "ChatMail es una aplicación de mensajería segura."
+          "description": "ChatMail è un sistema di comunicazioni crittografato."
         },
         "decSecure": {
           "title": "DEC Secure",
-          "description": "DEC Secure es una aplicación de mensajería segura."
+          "description": "DEC Secure è un sistema di sicurezza crittografato."
         },
         "totalSec": {
           "title": "Total Sec",
-          "description": "Total Sec es una aplicación de mensajería segura."
+          "description": "Total Sec è un sistema di sicurezza crittografato."
         },
         "armadillo": {
           "title": "Armadillo",
-          "description": "Armadillo es una aplicación de mensajería segura."
+          "description": "Armadillo è un sistema di sicurezza crittografato."
         },
         "vaultChat": {
           "title": "VaultChat",
-          "description": "VaultChat es una aplicación de mensajería segura."
+          "description": "VaultChat è un sistema di comunicazioni crittografato."
         },
         "t2Communicator": {
           "title": "T2 Communicator",
-          "description": "T2 Communicator es una aplicación de mensajería segura."
+          "description": "T2 Communicator è un sistema di comunicazioni crittografato."
         },
         "intactPhone": {
           "title": "Intact Phone",
-          "description": "Intact Phone es una aplicación de mensajería segura."
+          "description": "Intact Phone è un sistema di sicurezza crittografato."
         },
         "secureCrypt": {
           "title": "SecureCrypt",
-          "description": "SecureCrypt è un'applicazione di messaggistica sicura."
+          "description": "SecureCrypt è un sistema di sicurezza crittografato."
         }
       }
     },

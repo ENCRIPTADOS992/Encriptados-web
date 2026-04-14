@@ -38,16 +38,16 @@ export default function PurchaseScaffold({
 
   console.log("[Scaffold] mode:", mode);
 
-  const isSecureMdmIphone = /secure\s*mdm\s*iphone/i.test(
-    headerProps.product?.name ?? ""
-  );
+  const productName = headerProps.product?.name ?? "";
+  const isMdmIphone = /secure\s*mdm\s*iphone/i.test(productName) ||
+    /galaxia\s*mdm/i.test(productName);
 
   return (
     <div className={`flex flex-col gap-3 ${className ?? ""}`}>
       <PurchaseHeader {...headerProps} />
 
-      {/* Alert for Secure MDM iPhone */}
-      {isSecureMdmIphone && (
+      {/* Alert for MDM iPhone products */}
+      {isMdmIphone && (
         <div className="flex items-center gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
           <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#C98A00] text-[14px] font-bold text-[#C98A00]">
             !

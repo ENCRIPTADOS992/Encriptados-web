@@ -1309,55 +1309,55 @@
       "items": {
         "secureMdmIphone": {
           "title": "Secure MDM iPhone",
-          "description": "Secure MDM iPhone é um aplicativo de mensagens seguras."
+          "description": "Secure MDM iPhone é um sistema de gestão de dispositivos criptografado."
         },
         "secureMdmAndroid": {
           "title": "Secure MDM Android",
-          "description": "Secure MDM Android é um aplicativo de mensagens seguras."
+          "description": "Secure MDM Android é um sistema de gestão de dispositivos criptografado."
         },
         "cryptcom": {
           "title": "Cryptcom",
-          "description": "Cryptcom é um aplicativo de mensagens seguras."
+          "description": "Cryptcom é um sistema de segurança e criptografia de comunicações."
         },
         "renati": {
           "title": "Renati",
-          "description": "Renati é um aplicativo de mensagens seguras."
+          "description": "Renati é um sistema de segurança criptografado."
         },
         "ultraX": {
           "title": "Ultra X",
-          "description": "Ultra X é um aplicativo de mensagens seguras."
+          "description": "Ultra X é um sistema de segurança criptografado."
         },
         "chatMail": {
           "title": "ChatMail",
-          "description": "ChatMail é um aplicativo de mensagens seguras."
+          "description": "ChatMail é um sistema de comunicações criptografado."
         },
         "decSecure": {
           "title": "DEC Secure",
-          "description": "DEC Secure é um aplicativo de mensagens seguras."
+          "description": "DEC Secure é um sistema de segurança criptografado."
         },
         "totalSec": {
           "title": "Total Sec",
-          "description": "Total Sec é um aplicativo de mensagens seguras."
+          "description": "Total Sec é um sistema de segurança criptografado."
         },
         "armadillo": {
           "title": "Armadillo",
-          "description": "Armadillo é um aplicativo de mensagens seguras."
+          "description": "Armadillo é um sistema de segurança criptografado."
         },
         "vaultChat": {
           "title": "VaultChat",
-          "description": "VaultChat é um aplicativo de mensagens seguras."
+          "description": "VaultChat é um sistema de comunicações criptografado."
         },
         "t2Communicator": {
           "title": "T2 Communicator",
-          "description": "T2 Communicator é um aplicativo de mensagens seguras."
+          "description": "T2 Communicator é um sistema de comunicações criptografado."
         },
         "intactPhone": {
           "title": "Intact Phone",
-          "description": "Intact Phone é um aplicativo de mensagens seguras."
+          "description": "Intact Phone é um sistema de segurança criptografado."
         },
         "secureCrypt": {
           "title": "SecureCrypt",
-          "description": "SecureCrypt é um aplicativo de mensagens seguro."
+          "description": "SecureCrypt é um sistema de segurança criptografado."
         }
       }
     },
