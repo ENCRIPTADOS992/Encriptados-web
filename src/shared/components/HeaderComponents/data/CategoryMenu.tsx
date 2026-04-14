@@ -306,7 +306,7 @@ export function useTranslatedProductsCategories(): any {
         defaultValue: "Router de encriptación",
       }),
       link: "",
-      image: "/images/mega-menu/camaleon_reuter.png",
+      image: "/images/mega-menu/routers.webp",
       items: [
         {
           title: t("router.items.routerCamaleon.title", {
