@@ -12,7 +12,7 @@ type Props = {
 export function SimTypeAlertSection({ formType }: Props) {
   const t = useTranslations("paymentModal");
   const isEsim = formType === "encrypted_esim";
-  const isPhysical = formType === "encrypted_physical";
+  const isPhysical = formType === "encrypted_physical" || formType === "tim_physical";
 
   if (!isEsim && !isPhysical) return null;
 
