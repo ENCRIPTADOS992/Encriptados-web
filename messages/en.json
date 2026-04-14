@@ -3477,7 +3477,7 @@
     "phoneField": "Phone",
     "loading": "Loading...",
     "initializingPaymentForm": "Initializing payment form...",
-    "noPhoneNumberSecurity": "This product does not contain a phone number for security.",
+    "noPhoneNumberSecurity": "This product does not contain a phone number.",
     "freeTrial": "Free trial",
     "freeTrialWarning": "This free license lasts 6 hours. After this period, the license will expire automatically.",
     "licenseQuestionLabel": "How do you want to receive your license?",

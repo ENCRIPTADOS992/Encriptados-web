@@ -2815,7 +2815,7 @@
     "phoneField": "Téléphone",
     "loading": "Chargement...",
     "initializingPaymentForm": "Initialisation du formulaire de paiement...",
-    "noPhoneNumberSecurity": "Ce produit ne contient pas de numéro de téléphone pour des raisons de sécurité.",
+    "noPhoneNumberSecurity": "Ce produit ne contient pas de numéro de téléphone.",
     "freeTrial": "Essai gratuit",
     "freeTrialWarning": "Cette licence gratuite a une durée de 6 heures. Après cette période, la licence expirera automatiquement.",
     "licenseQuestionLabel": "Comment souhaitez-vous recevoir votre licence ?",
