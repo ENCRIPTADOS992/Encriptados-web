@@ -745,7 +745,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       const isFreeTrialLicense = (lt: unknown) => {
         if (!lt) return false;
         const s = String(lt).trim().toLowerCase();
-        return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita";
+        return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || /^pre[\-\s]?activ/i.test(s);
       };
       const variantsWithLicense = licenseVariants.filter((v: any) =>
         v.licensetime && v.licensetime !== "" && v.licensetime !== "0" && !isFreeTrialLicense(v.licensetime)
@@ -1221,7 +1221,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 const isFree = (value: unknown) => {
                   if (!value) return false;
                   const n = String(value).trim().toLowerCase();
-                  return n === "gratis" || n === "free" || n === "prueba";
+                  return n === "gratis" || n === "free" || n === "prueba" || /^pre[\-\s]?activ/i.test(n);
                 };
 
                 // Si hay una variante seleccionada (del proceso de expansión), usarla

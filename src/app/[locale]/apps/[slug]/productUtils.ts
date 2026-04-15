@@ -69,9 +69,25 @@ export function transformVariantsToPlans(
 ): LicensePlan[] {
   const t = translations || defaultLicenseTranslations;
 
+  // Filtrar Pre-activación (solo disponible en app, no en web)
+  const isPreActivacion = (lt: unknown) => {
+    if (!lt) return false;
+    const s = String(lt).trim().toLowerCase();
+    return /^pre[\-\s]?activ/i.test(s) || s === "0" || s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita";
+  };
+
   // Si hay variantes, usarlas
   if (variants && variants.length > 0) {
-    return variants.map(variant => {
+    const filtered = variants.filter(v => !isPreActivacion(v.licensetime));
+    if (filtered.length === 0 && variants.length > 0) {
+      // Si TODAS las variantes son pre-activación, devolver las originales como fallback
+      return variants.map(variant => {
+        const variantSale = variant.sale_price ? Number(variant.sale_price) : 0;
+        const variantPrice = Number(variant.price);
+        return { label: variant.licensetime || 'Pre-Activación', value: String(variant.licensetime), price: variantPrice, salePrice: (variantSale > 0 && variantSale < variantPrice) ? variantSale : undefined, variantId: variant.id, sku: variant.sku || '' };
+      });
+    }
+    return filtered.map(variant => {
       const count = Number(variant.licensetime);
 
       // Override especifico para "6+phone"

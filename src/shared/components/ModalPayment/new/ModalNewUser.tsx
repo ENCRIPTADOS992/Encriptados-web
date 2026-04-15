@@ -80,7 +80,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
     // Si no hay match o no hay initialPrice, usar la primera variante que no sea prueba gratuita
     const isFreeTrialLt = (lt: unknown) => {
       const s = String(lt ?? "").trim().toLowerCase();
-      return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || s === "0";
+      return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || s === "0" || /^pre[\-\s]?activ/i.test(s);
     };
     const firstPaid = variants.find((v) => !isFreeTrialLt(v.licensetime));
     setSelectedVariant(firstPaid ?? variants[0] ?? null);

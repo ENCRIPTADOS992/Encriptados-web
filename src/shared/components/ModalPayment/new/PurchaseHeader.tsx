@@ -145,7 +145,7 @@ const PurchaseHeader: React.FC<Props> = ({
   const isFreeTrialValue = (v: unknown): boolean => {
     if (!v) return false;
     const s = String(v).trim().toLowerCase();
-    return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita";
+    return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || /^pre[\-\s]?activ/i.test(s);
   };
 
   const toMonths = (v: unknown): number | undefined => {
