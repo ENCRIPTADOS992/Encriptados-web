@@ -164,13 +164,16 @@ const PurchaseHeader: React.FC<Props> = ({
     .map((v) => ({ ...v, months: toMonths(v.licensetime) }))
     .filter((v) => v.months !== undefined);
 
+  // Variantes seleccionables en el dropdown — excluir Pre-Activación (months=0) de la web
+  const selectableVariants = normVariants.filter((v) => v.months !== 0);
+
   const productMonths = toMonths(product?.licensetime) ?? 12;
 
-  const showSelect = normVariants.length > 1;
+  const showSelect = selectableVariants.length > 1;
 
   const currentMonths =
     normVariants.find((v) => v.id === (selectedVariantId ?? -1))?.months ??
-    normVariants[0]?.months ??
+    selectableVariants[0]?.months ??
     productMonths;
 
   // Ocultar licencia si: no se debe mostrar o es Threema simple
@@ -818,8 +821,8 @@ const PurchaseHeader: React.FC<Props> = ({
                       tabIndex={-1}
                       className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                     >
-                      {normVariants.map((v) => {
-                        const isActive = (selectedVariantId ?? normVariants[0]?.id) === v.id;
+                      {selectableVariants.map((v) => {
+                        const isActive = (selectedVariantId ?? selectableVariants[0]?.id) === v.id;
                         return (
                           <button
                             key={v.id}

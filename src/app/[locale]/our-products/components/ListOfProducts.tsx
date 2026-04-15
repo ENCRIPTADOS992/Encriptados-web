@@ -741,8 +741,14 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       const licenseVariants = (product as any).licenseVariants ?? [];
 
       // Filtrar solo variantes con licensetime válido
+      // Excluir variantes de prueba gratuita (Pre-Activación Zi0n) — no se muestran en la web
+      const isFreeTrialLicense = (lt: unknown) => {
+        if (!lt) return false;
+        const s = String(lt).trim().toLowerCase();
+        return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita";
+      };
       const variantsWithLicense = licenseVariants.filter((v: any) =>
-        v.licensetime && v.licensetime !== "" && v.licensetime !== "0"
+        v.licensetime && v.licensetime !== "" && v.licensetime !== "0" && !isFreeTrialLicense(v.licensetime)
       );
 
       console.log(`🔄 [Expansión Licencias] Producto "${product.name}" (id: ${product.id})`, {

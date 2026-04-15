@@ -77,8 +77,13 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
         return;
       }
     }
-    // Si no hay match o no hay initialPrice, usar el primero
-    setSelectedVariant(variants.length ? variants[0] : null);
+    // Si no hay match o no hay initialPrice, usar la primera variante que no sea prueba gratuita
+    const isFreeTrialLt = (lt: unknown) => {
+      const s = String(lt ?? "").trim().toLowerCase();
+      return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || s === "0";
+    };
+    const firstPaid = variants.find((v) => !isFreeTrialLt(v.licensetime));
+    setSelectedVariant(firstPaid ?? variants[0] ?? null);
   }, [product, initialPrice, variantId]);
 
   // Detectar oferta — se desactiva si hay cupón aplicado (no dos descuentos a la vez)

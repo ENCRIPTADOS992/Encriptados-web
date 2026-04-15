@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { CircleFlag } from "react-circle-flags";
+import { Search } from "lucide-react";
 import {
   useRegionCountryFilter,
   UseRegionCountryFilterArgs,
@@ -34,6 +35,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
   props
 ) => {
   const t = useTranslations("OurProductsPage");
+  const triggerInputRef = useRef<HTMLInputElement>(null);
   const {
     open,
     setOpen,
@@ -51,6 +53,13 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
     handleSelectCountry,
   } = useRegionCountryFilter(props);
 
+  // Auto-focus the trigger input when dropdown opens
+  useEffect(() => {
+    if (open && triggerInputRef.current) {
+      requestAnimationFrame(() => triggerInputRef.current?.focus());
+    }
+  }, [open]);
+
   // De momento solo 0 ó 1, pero dejamos el cálculo centralizado por si luego agregamos arrays
   const selectedCount =
     (filters as any).selectedRegions?.length ??
@@ -60,10 +69,9 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
   return (
     <div className="flex flex-col h-full">
       <div ref={dropdownRef} className="relative">
-        {/* Trigger TIM */}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
+        {/* Trigger TIM — se convierte en input al abrir */}
+        <div
+          onClick={() => { if (!open) setOpen(true); }}
           className="
             inline-flex items-center
             w-fit min-w-[120px] h-[64px]
@@ -71,32 +79,50 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
             border border-[#D0D0D0]
             bg-[#EDEDED]
             px-[14px]
+            cursor-pointer
           "
         >
           <div className="flex items-center gap-3 h-[36px]">
-            <span className="inline-flex w-[32px] h-[32px] flex-shrink-0">
-              {selectedInfo.isCountry && selectedInfo.flagCode ? (
-                <CircleFlag
-                  countryCode={selectedInfo.flagCode}
-                  style={{ width: "32px", height: "32px" }}
+            {open ? (
+              <>
+                <Search className="w-5 h-5 flex-shrink-0 text-[#9CA3AF]" />
+                <input
+                  ref={triggerInputRef}
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Buscar región o país..."
+                  className="bg-transparent outline-none w-[160px] text-[#171717] placeholder:text-[#9CA3AF] text-[14px] font-medium"
+                  onClick={(e) => e.stopPropagation()}
                 />
-              ) : (
-                <RegionIconTim size={30} />
-              )}
-            </span>
+              </>
+            ) : (
+              <>
+                <span className="inline-flex w-[32px] h-[32px] flex-shrink-0">
+                  {selectedInfo.isCountry && selectedInfo.flagCode ? (
+                    <CircleFlag
+                      countryCode={selectedInfo.flagCode}
+                      style={{ width: "32px", height: "32px" }}
+                    />
+                  ) : (
+                    <RegionIconTim size={30} />
+                  )}
+                </span>
 
-            <span
-              className="
-                inline-flex items-center 
-                text-[16px] sm:text-[16px] font-semibold
-                text-[#171717]
-                truncate
-              "
-            >
-              {selectedInfo.label}
-            </span>
+                <span
+                  className="
+                    inline-flex items-center 
+                    text-[16px] sm:text-[16px] font-semibold
+                    text-[#171717]
+                    truncate
+                  "
+                >
+                  {selectedInfo.label}
+                </span>
+              </>
+            )}
           </div>
-        </button>
+        </div>
 
         {open && (
           <div
@@ -137,42 +163,6 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                   />
                 </svg>
               </button>
-            </div>
-
-            {/* Buscador */}
-            <div className="mb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="
-                    w-full rounded-2xl
-                    pl-4 pr-9 py-3 text-sm outline-none border
-                    bg-[#F4F4F4] text-[#171717] border-[#D0D0D0]
-                    placeholder:text-[#9CA3AF]
-                  "
-                  placeholder="Buscar"
-                />
-
-                {/* Lupa a la DERECHA */}
-                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-4 h-4 text-[#9CA3AF]"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M11 5a6 6 0 014.472 9.994l3.267 3.267a1 1 0 01-1.414 1.414l-3.267-3.267A6 6 0 1111 5z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
             </div>
 
             {/* Tabs País / Región + Aplicar filtro */}

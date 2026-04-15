@@ -1,6 +1,7 @@
 "use client";
 
 import TelegramButton from '@/shared/components/TelegramButton';
+import SearchableSelect from '@/shared/components/SearchableSelect';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
@@ -105,23 +106,19 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
           {/* Región/País */}
           <div className="w-full lg:flex-1">
             <p className="text-[12px] font-medium text-[#7E7E7E] mb-3">{t('region')}</p>
-            <div className="relative">
-              <select 
-                value={selectedRegion}
-                onChange={(e) => setSelectedRegion(e.target.value)}
-                className="w-full h-[48px] md:h-[56px] lg:h-[56px] pl-4 pr-10 bg-[#F5F5F5] border-2 border-transparent rounded-xl md:rounded-[18px] lg:rounded-[18px] text-[12px] appearance-none focus:outline-none focus:border-[#00A3FF] transition-all cursor-pointer"
-              >
-                <option value="">🇨🇴 Global / Colombia</option>
-                {regions.map((region) => (
-                  <option key={region.name} value={region.name}>{region.icon} {region.name}</option>
-                ))}
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
+            <SearchableSelect
+              value={selectedRegion}
+              onChange={setSelectedRegion}
+              variant="light"
+              placeholder="🌍 Global / Seleccionar región"
+              searchPlaceholder="Buscar región..."
+              className="w-full"
+              options={regions.map((r) => ({
+                value: r.name,
+                label: r.name,
+                icon: <span className="text-lg">{r.icon}</span>,
+              }))}
+            />
           </div>
 
           {/* Buscar */}

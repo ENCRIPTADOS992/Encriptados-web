@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { CircleFlag } from "react-circle-flags";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 
 import {
@@ -32,6 +32,7 @@ const RegionIcon: React.FC<{ size?: number }> = ({ size = 36 }) => (
 
 const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
   const t = useTranslations("OurProductsPage");
+  const triggerInputRef = useRef<HTMLInputElement>(null);
   const {
     open,
     setOpen,
@@ -49,6 +50,25 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
     handleSelectCountry,
   } = useRegionCountryFilter(props);
 
+  // Auto-focus the trigger input when dropdown opens
+  useEffect(() => {
+    if (open && triggerInputRef.current) {
+      requestAnimationFrame(() => triggerInputRef.current?.focus());
+    }
+  }, [open]);
+
+  const displayLabel = (() => {
+    const text =
+      filters.regionOrCountryType === "country" &&
+        selectedInfo.code !== "global"
+        ? selectedInfo.label || selectedInfo.code
+        : selectedInfo.label;
+    if (!text) return "";
+    return text.replace(/\w\S*/g, (txt: string) =>
+      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+  })();
+
   return (
     <div className="flex flex-col h-full">
       <span
@@ -63,16 +83,15 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
         ref={dropdownRef}
         className="relative flex-1 min-w-0 max-w-full"
       >
-        {/* Trigger */}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
+        {/* Trigger — se convierte en input al abrir */}
+        <div
+          onClick={() => { if (!open) setOpen(true); }}
           className={`
             flex items-center justify-between
             w-full
             border rounded-2xl shadow-md
             px-4 py-4
-            transition duration-150 ease-in-out
+            transition duration-150 ease-in-out cursor-pointer
             ${open
               ? "border-[#CCCCCC] text-[#CCCCCC] bg-[#3E3E3E]"
               : "border-gray-300 text-[#7E7E7E] bg-[#222222]"
@@ -85,40 +104,49 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
             boxSizing: "border-box",
           }}
         >
-          <span className="flex items-center gap-x-2 truncate">
-            {selectedInfo.isCountry && selectedInfo.flagCode ? (
-              <CircleFlag
-                countryCode={selectedInfo.flagCode}
-                style={{ width: "18px", height: "18px", flexShrink: 0 }}
+          {open ? (
+            <span className="flex items-center gap-x-2 flex-1 min-w-0">
+              <Search className="w-4 h-4 flex-shrink-0 opacity-60" />
+              <input
+                ref={triggerInputRef}
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder={
+                  filters.regionOrCountryType === "region"
+                    ? "Buscar región..."
+                    : "Buscar país..."
+                }
+                className="bg-transparent outline-none w-full text-[#CCCCCC] placeholder:text-[#7E7E7E] text-sm"
+                onClick={(e) => e.stopPropagation()}
               />
-            ) : (
-              <RegionIcon size={22} />
-            )}
-
-            <span className="truncate text-left">
-              {(() => {
-                const text =
-                  filters.regionOrCountryType === "country" &&
-                    selectedInfo.code !== "global"
-                    ? selectedInfo.label || selectedInfo.code
-                    : selectedInfo.label;
-
-                if (!text) return "";
-                // Title Case conversion
-                return text.replace(/\w\S*/g, (txt) =>
-                  txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                );
-              })()}
             </span>
-          </span>
+          ) : (
+            <span className="flex items-center gap-x-2 truncate">
+              {selectedInfo.isCountry && selectedInfo.flagCode ? (
+                <CircleFlag
+                  countryCode={selectedInfo.flagCode}
+                  style={{ width: "18px", height: "18px", flexShrink: 0 }}
+                />
+              ) : (
+                <RegionIcon size={22} />
+              )}
+              <span className="truncate text-left">{displayLabel}</span>
+            </span>
+          )}
 
           <ChevronDown
             className={`
-              ml-2 w-4 h-4 ml-2 opacity-60
-              ${open ? "text-[#CCCCCC]" : "text-[#7E7E7E]"}
+              ml-2 w-4 h-4 opacity-60 transition-transform duration-200
+              ${open ? "rotate-180 text-[#CCCCCC]" : "text-[#7E7E7E]"}
             `}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen((v) => !v);
+              setSearchTerm("");
+            }}
           />
-        </button>
+        </div>
 
         {open && (
           <div
@@ -170,26 +198,6 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
               >
                 País
               </button>
-            </div>
-
-            {/* Buscador */}
-            <div className="mb-4">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="
-                  w-full rounded-2xl
-                  pl-10 pr-4 py-3 text-sm outline-none border
-                  bg-[#18191B] text-white border-[#3E3E3E]
-                  placeholder:text-[#7E7E7E]
-                "
-                placeholder={
-                  filters.regionOrCountryType === "region"
-                    ? "Buscar región..."
-                    : "Buscar país..."
-                }
-              />
             </div>
 
             {/* Lista */}
