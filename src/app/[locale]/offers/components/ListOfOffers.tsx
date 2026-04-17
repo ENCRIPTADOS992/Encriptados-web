@@ -10,8 +10,104 @@ import CardProduct from "@/app/[locale]/our-products/components/CardProduct";
 
 const API_BASE = (process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json") + "/encriptados/v3/store/products";
 
+/** Build badges for an offer product, replicating the same logic as ListOfProducts (home). */
+function buildOfferBadges(
+  product: any,
+  categoryId: number,
+  matchedVariant: any,
+  t: (key: string) => string,
+): { tag?: string; country?: { label: string; code?: string } } | undefined {
+  const simName = (product.name ?? "").toLowerCase().trim();
+  const skuLower = (product.sku ?? "").toLowerCase().trim();
+  const providerLower = (product.provider ?? "").toLowerCase().trim();
+  const isTimProvider = providerLower === "tim" || providerLower.includes("tim");
+  const minuteUnit = t("minuteAbbr");
+  const monthsLabel = t("monthsLabel");
+
+  // ---------- Category 40: SIMs ----------
+  if (categoryId === 40) {
+    const isMinutesSku = skuLower.includes("minutes") || skuLower.includes("minute");
+    const isMinutosProduct =
+      isMinutesSku ||
+      /minut(os?|es?|i)/i.test(simName) ||
+      /(recarga|recharge|ricarica)\s*minut/i.test(simName);
+    const isDataProduct =
+      /(datos?|data|dati|donn[ée]es|dados)/i.test(simName) ||
+      /esim\s*\+\s*(recarga|recharge|ricarica)?\s*(datos?|data|dati|donn[ée]es|dados)/i.test(simName) ||
+      /(recarga|recharge|ricarica)\s+(datos?|data|dati|donn[ée]es|dados)/i.test(simName);
+
+    const sv = matchedVariant || product.variants?.[0];
+
+    if (isMinutosProduct && sv) {
+      let minutesValue = sv.minutes;
+      if (!minutesValue && sv.attributes) {
+        const attr = (sv.attributes as { name: string; option: string }[])?.find(
+          (a: { name: string }) => /minuto/i.test(a.name),
+        );
+        if (attr) minutesValue = parseInt(attr.option, 10) || undefined;
+      }
+      if (!minutesValue) {
+        const price = Number(sv.price) || Number(sv.cost) || 0;
+        if (price > 0) minutesValue = Math.floor(price / 2);
+      }
+      if (minutesValue) return { tag: `${minutesValue} ${minuteUnit}` };
+    }
+
+    if (isDataProduct && sv) {
+      const gbNum = typeof sv.gb === "number" ? sv.gb : parseInt(sv.gb, 10);
+      if (gbNum > 0) return { tag: `${gbNum} GB` };
+      if (sv.planTag) return { tag: sv.planTag };
+      if (sv.name) {
+        const gbMatch = sv.name.match(/(\d+)\s*GB/i);
+        if (gbMatch) return { tag: `${gbMatch[1]} GB` };
+      }
+    }
+
+    // TIM products may have GB tag
+    if (isTimProvider && sv) {
+      const gbNum = typeof sv.gb === "number" ? sv.gb : parseInt(sv.gb, 10);
+      if (gbNum > 0) return { tag: `${gbNum} GB` };
+      if (sv.planTag) return { tag: sv.planTag };
+    }
+
+    // Other SIMs (eSIM, Sim Física) — no badge
+    return undefined;
+  }
+
+  // ---------- Category 38 (Apps) / 35 (Sistemas) / 36 (Router) ----------
+  if (categoryId === 38 || categoryId === 35 || categoryId === 36) {
+    const isUnique = (value: unknown) => {
+      if (value === 0 || value === "0") return true;
+      if (!value) return false;
+      const n = String(value).trim().toLowerCase();
+      return n === "única" || n === "unica" || n === "unique" || n === "single" || n === "one-time";
+    };
+    const isFree = (value: unknown) => {
+      if (!value) return false;
+      const n = String(value).trim().toLowerCase();
+      return n === "gratis" || n === "free" || n === "prueba" || /^pre[\-\s]?activ/i.test(n);
+    };
+
+    // Try variant licensetime first, then product-level
+    const time =
+      matchedVariant?.licensetime ||
+      product.variants?.[0]?.licensetime ||
+      (product as any).licenseVariants?.[0]?.licensetime ||
+      product.licensetime;
+
+    if (time) {
+      if (isUnique(time)) return { tag: t("uniqueLicense") };
+      if (isFree(time)) return { tag: t("freeTrial") || "Pre-Activación" };
+      return { tag: `${time} ${monthsLabel}` };
+    }
+  }
+
+  return undefined;
+}
+
 const ListOfOffers = () => {
   const o = useTranslations("OffersPage");
+  const t = useTranslations("OurProductsPage");
   const locale = useLocale();
 
   const { watch } = useFormContext();
@@ -116,11 +212,12 @@ const ListOfOffers = () => {
             {activeOffers.map((product, idx) => {
               const categoryId = product.category?.id || 0;
               const variantId = product.selected_variant_id || null;
-              // Find the matching variant to get its label (licensetime)
               const matchedVariant = variantId && product.variants?.length
                 ? product.variants.find((v: any) => v.id === variantId)
                 : null;
-              const variantLabel = matchedVariant?.licensetime || product.licensetime || "";
+
+              // Use the same badge logic as the home product grid
+              const badges = buildOfferBadges(product, categoryId, matchedVariant, t);
 
               return (
                 <CardProduct
@@ -132,7 +229,7 @@ const ListOfOffers = () => {
                   priceRange={`${product.sale_price}$`}
                   headerIcon={""}
                   headerTitle={product.name}
-                  badges={variantLabel ? { tag: `${variantLabel} Meses` } : undefined}
+                  badges={badges}
                   filters={{
                     selectedOption: String(categoryId),
                     provider: product.provider || "all",
