@@ -107,7 +107,7 @@ function buildOfferBadges(
 
 const ListOfOffers = () => {
   const o = useTranslations("OffersPage");
-  const t = useTranslations("OurProductsPage");
+  const t = useTranslations("BneSimPage.simSelection");
   const locale = useLocale();
 
   const { watch } = useFormContext();
