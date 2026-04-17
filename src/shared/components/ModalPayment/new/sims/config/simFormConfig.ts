@@ -26,7 +26,7 @@ export function buildSimFormConfig(
     case "tim_physical":
       return {
         emailFullWidth: false,
-        showTelegram: true,
+        showTelegram: false,
         showFullName: true,
         reqFullName: true,
         showAddress: true,
@@ -62,7 +62,7 @@ export function buildSimFormConfig(
     case "encrypted_physical":
       return {
         emailFullWidth: false,
-        showTelegram: true,
+        showTelegram: false,
         showFullName: true,
         reqFullName: true,
         showAddress: true,
@@ -176,7 +176,7 @@ export function buildSimFormConfig(
     default:
       return {
         emailFullWidth: false,
-        showTelegram: true,
+        showTelegram: false,
         showFullName: true,
         reqFullName: true,
         showAddress: true,

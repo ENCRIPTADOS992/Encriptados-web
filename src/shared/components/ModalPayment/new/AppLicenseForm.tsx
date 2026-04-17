@@ -220,21 +220,6 @@ export default function AppLicenseForm({
               />
             </div>
           </div>
-
-          {/* Telegram ID */}
-          <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-              ID Telegram <span className="font-normal text-[#010C0F]/50">({t("telegramIdOptionalHint")})</span>
-            </p>
-            <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
-              <input
-                value={telegramId}
-                onChange={(e) => setTelegramId(e.target.value)}
-                placeholder={t("telegramPlaceholder")}
-                className="w-full bg-transparent outline-none text-[14px]"
-              />
-            </div>
-          </div>
         </div>
 
         {/* Términos */}

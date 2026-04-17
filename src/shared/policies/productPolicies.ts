@@ -17,8 +17,8 @@ export const ProductPolicies: Record<CategoryKind, FieldPolicy> = {
   SIM: {
     requireEmail: true,
     requireTerms: true,
-    showShippingFields: false,    // eSIM no; si deseas distinguir física vs eSIM añade otra señal
-    allowTelegramId: true,
+    showShippingFields: false,
+    allowTelegramId: false,
     allowQuantity: true,
     allowCoupon: true,
     paymentMethods: ["credit_card", "crypto"],
@@ -26,8 +26,8 @@ export const ProductPolicies: Record<CategoryKind, FieldPolicy> = {
   ROUTERS: {
     requireEmail: true,
     requireTerms: true,
-    showShippingFields: true,     // routers normalmente requieren envío
-    allowTelegramId: true,
+    showShippingFields: true,
+    allowTelegramId: false,
     allowQuantity: true,
     allowCoupon: true,
     paymentMethods: ["credit_card", "crypto"],
@@ -35,8 +35,8 @@ export const ProductPolicies: Record<CategoryKind, FieldPolicy> = {
   APLICACIONES: {
     requireEmail: true,
     requireTerms: true,
-    showShippingFields: false,    // ⬅️ lo que querías ocultar
-    allowTelegramId: true,
+    showShippingFields: false,
+    allowTelegramId: false,
     allowQuantity: true,
     allowCoupon: true,
     paymentMethods: ["credit_card", "crypto"],
@@ -44,8 +44,8 @@ export const ProductPolicies: Record<CategoryKind, FieldPolicy> = {
   SOFTWARE: {
     requireEmail: true,
     requireTerms: true,
-    showShippingFields: false,    // ⬅️ también oculto
-    allowTelegramId: true,
+    showShippingFields: false,
+    allowTelegramId: false,
     allowQuantity: true,
     allowCoupon: true,
     paymentMethods: ["credit_card", "crypto"],
@@ -54,7 +54,7 @@ export const ProductPolicies: Record<CategoryKind, FieldPolicy> = {
     requireEmail: true,
     requireTerms: true,
     showShippingFields: false,
-    allowTelegramId: true,
+    allowTelegramId: false,
     allowQuantity: true,
     allowCoupon: true,
     paymentMethods: ["credit_card", "crypto"],
