@@ -120,7 +120,7 @@ const ListOfOffers = () => {
               const matchedVariant = variantId && product.variants?.length
                 ? product.variants.find((v: any) => v.id === variantId)
                 : null;
-              const variantLabel = matchedVariant?.licensetime || "";
+              const variantLabel = matchedVariant?.licensetime || product.licensetime || "";
 
               return (
                 <CardProduct
