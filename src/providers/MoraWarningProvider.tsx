@@ -8,7 +8,7 @@ import React, {
   useCallback,
   ReactNode,
 } from "react";
-import axiosInstance from "../../../config/axionsInstance";
+import axiosInstance from "../../config/axionsInstance";
 
 interface MoraStatus {
   has_mora: boolean;
