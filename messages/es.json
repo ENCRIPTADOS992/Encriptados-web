@@ -845,6 +845,15 @@
         "accountAdmin": "Administrar cuentas",
         "userConfig": "Configuración"
       }
+    },
+    "mora": {
+      "title": "Saldo en mora",
+      "weeklyMessage": "Tienes un saldo pendiente. Para evitar bloqueos, debes recargar tu saldo.",
+      "dailyMessage": "Recuerda tener tu saldo en cero antes del día 5 de cada mes. De lo contrario, tu cuenta será bloqueada.",
+      "blockedMessage": "Tu cuenta está bloqueada por saldo en mora. Recarga tu saldo para desbloquearla.",
+      "thanks": "Gracias por tu comprensión",
+      "rechargeButton": "Recargar saldo",
+      "closeButton": "Cerrar"
     }
   },
   "OurProductsPage": {

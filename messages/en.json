@@ -850,6 +850,15 @@
         "accountAdmin": "Manage accounts",
         "userConfig": "Settings"
       }
+    },
+    "mora": {
+      "title": "Overdue balance",
+      "weeklyMessage": "You have a pending balance. To avoid being blocked, please recharge your balance.",
+      "dailyMessage": "Remember to clear your balance before the 5th of each month. Otherwise, your account will be blocked.",
+      "blockedMessage": "Your account is blocked due to an overdue balance. Recharge your balance to unblock it.",
+      "thanks": "Thank you for your understanding",
+      "rechargeButton": "Recharge balance",
+      "closeButton": "Close"
     }
   },
   "OurProductsPage": {

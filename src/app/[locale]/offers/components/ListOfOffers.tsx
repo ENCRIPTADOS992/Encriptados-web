@@ -121,7 +121,6 @@ const ListOfOffers = () => {
                 ? product.variants.find((v: any) => v.id === variantId)
                 : null;
               const variantLabel = matchedVariant?.licensetime || "";
-              const displayName = variantLabel ? `${product.name} - ${variantLabel}` : product.name;
 
               return (
                 <CardProduct
@@ -132,7 +131,8 @@ const ListOfOffers = () => {
                   features={[]}
                   priceRange={`${product.sale_price}$`}
                   headerIcon={""}
-                  headerTitle={displayName}
+                  headerTitle={product.name}
+                  badges={variantLabel ? { tag: `${variantLabel} Meses` } : undefined}
                   filters={{
                     selectedOption: String(categoryId),
                     provider: product.provider || "all",
