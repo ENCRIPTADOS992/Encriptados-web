@@ -375,9 +375,9 @@ export default function UnifiedPurchaseForm({
           // Zi0n renewals don't require license IDs — codes come from inventory
           const lt = purchaseMeta?.licensetime;
           const months = typeof lt === 'string' ? parseInt(lt) || 12 : (typeof lt === 'number' ? lt : 12);
-          const effectiveLicenseIds = isZi0nRenewal && !hasRenewIds
+          const effectiveLicenseIds: string[] = isZi0nRenewal && !hasRenewIds
             ? Array.from({ length: quantity }, () => "zi0n-auto")
-            : form.renewIds;
+            : (form.renewIds ?? []);
           console.log("🔄 [RENEWAL] Using /orders/renewal endpoint", {
             productId,
             licenseIds: effectiveLicenseIds,

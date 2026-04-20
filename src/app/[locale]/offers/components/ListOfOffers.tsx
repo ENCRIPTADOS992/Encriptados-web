@@ -10,6 +10,76 @@ import CardProduct from "@/app/[locale]/our-products/components/CardProduct";
 
 const API_BASE = (process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json") + "/encriptados/v3/store/products";
 
+const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
+  CO: "Colombia",
+  MX: "Mexico",
+  US: "Estados Unidos",
+  AR: "Argentina",
+  CA: "Canada",
+  BR: "Brasil",
+  CL: "Chile",
+  PE: "Peru",
+};
+
+const REGION_LABEL_BY_CODE: Record<string, string> = {
+  africa: "Africa",
+  europa: "Europa",
+  asia: "Asia",
+  oceania: "Oceania",
+  norteamerica: "Norte America",
+  "centro-sur-america": "Centro/Sur America",
+  "north-america": "Norte America",
+  "central-south-america": "Centro/Sur America",
+  europe: "Europa",
+};
+
+const normalizeCountryCode = (code?: string) => {
+  if (!code) return undefined;
+  const c = code.trim().toLowerCase();
+  if (c === "uk") return "gb";
+  if (c === "el") return "gr";
+  return c.length === 2 ? c : undefined;
+};
+
+const formatRegionLabel = (raw: string) => {
+  const key = raw.trim().toLowerCase();
+  if (REGION_LABEL_BY_CODE[key]) return REGION_LABEL_BY_CODE[key];
+  return raw
+    .replace(/[-_]/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .toLowerCase()
+    .replace(/\b\w/g, (m) => m.toUpperCase());
+};
+
+const getTimScopeBadge = (
+  product: any,
+  matchedVariant: any,
+): { label: string; code?: string } | undefined => {
+  const scopeCodeRaw = matchedVariant?.scope?.code || product?.scope?.code;
+  const scopeType = (matchedVariant?.scope?.type || product?.scope?.type || "").toLowerCase();
+
+  if (!scopeCodeRaw) return undefined;
+
+  const scopeCode = String(scopeCodeRaw).trim();
+  const scopeCodeUpper = scopeCode.toUpperCase();
+
+  if (scopeCodeUpper === "GLOBAL" || scopeCodeUpper === "WW") {
+    return { label: "Global" };
+  }
+
+  const normalizedCountryCode = normalizeCountryCode(scopeCode);
+  const isCountryScope = scopeType === "country" || (!!normalizedCountryCode && scopeCode.length <= 3);
+
+  if (isCountryScope) {
+    return {
+      label: COUNTRY_LABEL_BY_CODE[scopeCodeUpper] || scopeCodeUpper,
+      ...(normalizedCountryCode ? { code: normalizedCountryCode } : {}),
+    };
+  }
+
+  return { label: formatRegionLabel(scopeCode) };
+};
+
 /** Build badges for an offer product, replicating the same logic as ListOfProducts (home). */
 function buildOfferBadges(
   product: any,
@@ -37,6 +107,7 @@ function buildOfferBadges(
       /(recarga|recharge|ricarica)\s+(datos?|data|dati|donn[ée]es|dados)/i.test(simName);
 
     const sv = matchedVariant || product.variants?.[0];
+    let tag: string | undefined;
 
     if (isMinutosProduct && sv) {
       let minutesValue = sv.minutes;
@@ -50,27 +121,39 @@ function buildOfferBadges(
         const price = Number(sv.price) || Number(sv.cost) || 0;
         if (price > 0) minutesValue = Math.floor(price / 2);
       }
-      if (minutesValue) return { tag: `${minutesValue} ${minuteUnit}` };
+      if (minutesValue) tag = `${minutesValue} ${minuteUnit}`;
     }
 
-    if (isDataProduct && sv) {
+    if (!tag && isDataProduct && sv) {
       const gbNum = typeof sv.gb === "number" ? sv.gb : parseInt(sv.gb, 10);
-      if (gbNum > 0) return { tag: `${gbNum} GB` };
-      if (sv.planTag) return { tag: sv.planTag };
+      if (gbNum > 0) tag = `${gbNum} GB`;
+      else if (sv.planTag) tag = sv.planTag;
       if (sv.name) {
         const gbMatch = sv.name.match(/(\d+)\s*GB/i);
-        if (gbMatch) return { tag: `${gbMatch[1]} GB` };
+        if (!tag && gbMatch) tag = `${gbMatch[1]} GB`;
       }
     }
 
     // TIM products may have GB tag
-    if (isTimProvider && sv) {
+    if (!tag && isTimProvider && sv) {
       const gbNum = typeof sv.gb === "number" ? sv.gb : parseInt(sv.gb, 10);
-      if (gbNum > 0) return { tag: `${gbNum} GB` };
-      if (sv.planTag) return { tag: sv.planTag };
+      if (gbNum > 0) tag = `${gbNum} GB`;
+      else if (sv.planTag) tag = sv.planTag;
     }
 
-    // Other SIMs (eSIM, Sim Física) — no badge
+    if (isTimProvider) {
+      const timScope = getTimScopeBadge(product, sv);
+      if (tag || timScope) {
+        return {
+          ...(tag ? { tag } : {}),
+          ...(timScope ? { country: timScope } : {}),
+        };
+      }
+    }
+
+    if (tag) return { tag };
+
+    // Other SIMs (eSIM, Sim Fisica) - no badge
     return undefined;
   }
 
@@ -217,7 +300,13 @@ const ListOfOffers = () => {
                 : null;
 
               // Use the same badge logic as the home product grid
-              const badges = buildOfferBadges(product, categoryId, matchedVariant, t);
+              const badges = buildOfferBadges(
+                product,
+                categoryId,
+                matchedVariant,
+                (key: string) => t(key as any),
+              );
+              const offerRegionType: "country" | "region" = badges?.country?.code ? "country" : "region";
 
               return (
                 <CardProduct
@@ -237,11 +326,11 @@ const ListOfOffers = () => {
                     license: "all",
                     encriptadosprovider: "all",
                     timprovider: "all",
-                    regionOrCountry: "all",
-                    regionOrCountryType: "region",
+                    regionOrCountry: badges?.country?.label || "all",
+                    regionOrCountryType: offerRegionType,
                     simRegion: "all",
-                    simCountry: "all",
-                    simCountryLabel: "",
+                    simCountry: badges?.country?.code?.toUpperCase() || "all",
+                    simCountryLabel: badges?.country?.label || "",
                     searchQuery: "",
                   }}
                   checks={product.checks || []}

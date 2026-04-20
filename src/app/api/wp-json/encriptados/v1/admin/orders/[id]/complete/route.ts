@@ -3,7 +3,10 @@ import { requireBasicAuth } from '@/lib/auth';
 import { adminCompleteSchema } from '@/lib/validation';
 import { completeUserIdOrder } from '@/lib/services/adminService';
 
-export async function POST(req: NextRequest, { params }: { params: { id: string }}) {
+export async function POST(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
     // auth
     const auth = req.headers.get('authorization') ?? undefined;
@@ -14,7 +17,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const parsed = adminCompleteSchema.safeParse(body);
     if (!parsed.success) return NextResponse.json({ message:'faltan campos' }, { status: 400 });
 
-    const idNum = Number(params.id);
+    const { id } = await context.params;
+    const idNum = Number(id);
     if (!Number.isInteger(idNum)) return NextResponse.json({ message:'id inválido' }, { status: 400 });
 
     const { final_username, final_password } = parsed.data;

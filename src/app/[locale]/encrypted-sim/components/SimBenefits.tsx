@@ -5,7 +5,15 @@ import React from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-const benefitKeys = [
+type BenefitKey =
+  | "privacy"
+  | "encrypted"
+  | "substituteNumber"
+  | "imsiChanges"
+  | "voiceFilters"
+  | "lifetimePlans";
+
+const benefitKeys: { key: BenefitKey; icon: string }[] = [
   { key: "privacy", icon: "/images/encrypted-sim/icons/visibility_lock.png" },
   { key: "encrypted", icon: "/images/encrypted-sim/icons/key_visualizer.png" },
   { key: "substituteNumber", icon: "/images/encrypted-sim/icons/published_with_changes.png" },
@@ -13,6 +21,12 @@ const benefitKeys = [
   { key: "voiceFilters", icon: "/images/encrypted-sim/icons/record_voice_over.png" },
   { key: "lifetimePlans", icon: "/images/encrypted-sim/icons/cell_wifi.png" },
 ];
+
+type BenefitTitleKey = `items.${BenefitKey}.title`;
+type BenefitDescriptionKey = `items.${BenefitKey}.description`;
+
+const getBenefitTitleKey = (key: BenefitKey): BenefitTitleKey => `items.${key}.title`;
+const getBenefitDescriptionKey = (key: BenefitKey): BenefitDescriptionKey => `items.${key}.description`;
 
 const SimBenefits = () => {
   const t = useTranslations("EncryptedSimPage.SimBenefits");
@@ -55,7 +69,7 @@ const SimBenefits = () => {
             <div className="relative w-[64px] h-[64px] mb-4">
               <Image
                 src={b.icon}
-                alt={t(`items.${b.key}.title`)}
+                alt={t(getBenefitTitleKey(b.key))}
                 fill
                 className="object-contain"
               />
@@ -69,12 +83,12 @@ const SimBenefits = () => {
               "
             >
               <h3 className="text-[18px] sm:text-[20px] font-semibold">
-                {t(`items.${b.key}.title`)}
+                {t(getBenefitTitleKey(b.key))}
               </h3>
             </div>
 
             <p className="text-[14px] sm:text-[14px] leading-relaxed text-black">
-              {t(`items.${b.key}.description`)}
+              {t(getBenefitDescriptionKey(b.key))}
             </p>
 
           </div>

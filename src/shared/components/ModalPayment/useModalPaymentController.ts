@@ -154,6 +154,11 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     const productIdFromUrl = search.get("productId");
     const priceFromUrl = search.get("price");
     const parsedPrice = priceFromUrl ? Number.parseFloat(priceFromUrl) : NaN;
+    const variantIdFromUrlRaw = search.get("variantId");
+    const parsedVariantId = variantIdFromUrlRaw ? Number.parseInt(variantIdFromUrlRaw, 10) : NaN;
+    const variantIdFromUrl = Number.isFinite(parsedVariantId) && parsedVariantId > 0
+      ? parsedVariantId
+      : undefined;
 
     if (isRouterPath) {
       openModal({
@@ -161,6 +166,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
         languageCode: locale,
         selectedOption: 36,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
+        variantId: variantIdFromUrl,
       });
     } else {
       if (!productIdFromUrl) return;
@@ -176,6 +182,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
         languageCode: locale,
         selectedOption: 40,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
+        variantId: variantIdFromUrl,
         mode: "sim",
         // Pass captured SIM params
         initialGb: gbFromUrl || undefined,
