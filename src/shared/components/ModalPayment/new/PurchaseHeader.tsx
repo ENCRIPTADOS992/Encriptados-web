@@ -165,7 +165,13 @@ const PurchaseHeader: React.FC<Props> = ({
     .filter((v) => v.months !== undefined);
 
   // Variantes seleccionables en el dropdown — excluir Pre-Activación (months=0) de la web
-  const selectableVariants = normVariants.filter((v) => v.months !== 0);
+  // y ordenar por duración ascendente (3, 6, 12, ...)
+  const selectableVariants = normVariants
+    .filter((v) => v.months !== 0)
+    .sort((a, b) => {
+      if (a.months !== b.months) return a.months - b.months;
+      return a.id - b.id;
+    });
 
   const productMonths = toMonths(product?.licensetime) ?? 12;
 
