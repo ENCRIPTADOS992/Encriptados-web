@@ -254,10 +254,11 @@ const CardProduct: React.FC<CardSimProps> = ({
           <h2
             className="
               flex-1 min-w-0
-              text-[14px] sm:text-[17px] leading-[1.2] tracking-[0.005em] font-[950] text-black
+              text-[14px] sm:text-[17px] leading-[1.2] tracking-[0.005em] font-black text-black
               truncate whitespace-nowrap
             "
             title={headerTitle}
+            style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif", fontWeight: 900 }}
           >
             {headerTitle}
           </h2>
@@ -316,7 +317,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
         <div className="mt-auto flex flex-col gap-1.5 sm:gap-2 lg:gap-1.5">
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            <span className="text-[16px] sm:text-[20px] lg:text-[26px] leading-[1.1] tracking-tight font-[950] text-black">{displayPrice}</span>
+            <span className="text-[16px] sm:text-[20px] lg:text-[26px] leading-[1.1] tracking-tight font-black text-black" style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif", fontWeight: 900 }}>{displayPrice}</span>
             {onSale && regularPrice != null && (
               <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-1.5 sm:px-2 lg:px-2.5 py-0 sm:py-0.5">
                 <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3 lg:w-3.5 lg:h-3.5 text-black" />
