@@ -249,12 +249,12 @@ const CardProduct: React.FC<CardSimProps> = ({
       </div>
 
       {/* Contenido */}
-      <div className="p-2 sm:p-3.5 flex flex-col flex-grow bg-white rounded-b-xl sm:rounded-b-2xl">
-        <div className="flex items-start justify-between gap-1 sm:gap-2 mb-3 sm:mb-4">
+      <div className="p-2 sm:p-3.5 lg:p-3 flex flex-col flex-grow bg-white rounded-b-xl sm:rounded-b-2xl">
+        <div className="flex items-start justify-between gap-1 sm:gap-2 mb-1 sm:mb-1.5 lg:mb-1">
           <h2
             className="
               flex-1 min-w-0
-              text-[14px] sm:text-[17px] leading-[1.2] tracking-[0.01em] font-black
+              text-[14px] sm:text-[17px] leading-[1.2] tracking-[0.005em] font-[950] text-black
               truncate whitespace-nowrap
             "
             title={headerTitle}
@@ -300,7 +300,7 @@ const CardProduct: React.FC<CardSimProps> = ({
           ))}
         </ul>
 
-        <div className="flex flex-col justify-start space-y-1.5 sm:space-y-2 mb-2 sm:mb-2.5">
+        <div className="flex flex-col justify-start space-y-1.5 sm:space-y-2 lg:space-y-1.5 mb-2 sm:mb-2.5 lg:mb-2">
           {checks.slice(0, 3).map((adv, idx) => (
             <div
               key={idx}
@@ -312,15 +312,15 @@ const CardProduct: React.FC<CardSimProps> = ({
           ))}
         </div>
 
-        <hr className="my-1.5 sm:my-2.5 border-gray-200" />
+        <hr className="my-1.5 sm:my-2.5 lg:my-2 border-gray-200" />
 
-        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2">
+        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2 lg:gap-1.5">
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            <span className="text-[16px] sm:text-[20px] leading-[1.1] tracking-tight font-black">{displayPrice}</span>
+            <span className="text-[16px] sm:text-[20px] lg:text-[26px] leading-[1.1] tracking-tight font-[950] text-black">{displayPrice}</span>
             {onSale && regularPrice != null && (
-              <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-1.5 sm:px-2 py-0 sm:py-0.5">
-                <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-black" />
-                <span className="text-[10px] sm:text-[12px] text-black">
+              <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-1.5 sm:px-2 lg:px-2.5 py-0 sm:py-0.5">
+                <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3 lg:w-3.5 lg:h-3.5 text-black" />
+                <span className="text-[10px] sm:text-[12px] lg:text-[13px] text-black font-semibold">
                   <span className="line-through">${regularPrice} USD</span>
                 </span>
               </span>
