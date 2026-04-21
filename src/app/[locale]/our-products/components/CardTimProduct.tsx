@@ -200,11 +200,11 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
             </div>
 
             {/* Parte Inferior: Contenido Blanco */}
-            <div className="flex flex-col flex-grow p-5 space-y-4">
+            <div className="flex flex-col flex-grow p-3 sm:p-4 space-y-3 sm:space-y-4">
 
                 {/* Título y GB Tag */}
                 <div className="flex justify-between items-start gap-2">
-                    <h3 className="font-bold text-lg text-gray-900 leading-tight">
+                    <h3 className="flex-1 min-w-0 font-black text-[14px] sm:text-[17px] text-gray-900 leading-tight truncate whitespace-nowrap" title={formattedTitle}>
                         {formattedTitle}
                     </h3>
                     {badges?.tag && (
@@ -216,14 +216,14 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
 
                 {/* Lista de Checks */}
                 {checks.length > 0 && (
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                         {checks.slice(0, 3).map((check, idx) => (
-                            <div key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                            <div key={idx} className="flex items-start gap-2 text-[12px] sm:text-[13px] text-gray-600">
                                 {/* Check icon */}
-                                <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
-                                <span className="leading-tight">{check.name}</span>
+                                <span className="leading-tight flex-1 min-w-0 truncate whitespace-nowrap">{check.name}</span>
                             </div>
                         ))}
                     </div>
@@ -232,15 +232,15 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
                 <div className="flex-grow"></div>
 
                 {/* Precio */}
-                <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xl font-bold text-gray-900">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    <span className="text-[22px] sm:text-xl font-black text-gray-900 leading-[1.1] tracking-tight">
                         {displayPrice}
                     </span>
                     {onSale && regularPrice != null && (
-                        <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
-                            <Tag className="w-3.5 h-3.5 text-black" />
-                            <span className="text-sm text-black">
-                                Antes <span className="line-through">${regularPrice} USD</span>
+                        <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-1.5 sm:px-2 py-0 sm:py-0.5">
+                            <Tag className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-black" />
+                            <span className="text-[11px] sm:text-sm text-black">
+                                <span className="line-through">${regularPrice} USD</span>
                             </span>
                         </span>
                     )}

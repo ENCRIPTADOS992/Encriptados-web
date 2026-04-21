@@ -190,7 +190,7 @@ const CardProduct: React.FC<CardSimProps> = ({
   return (
     <div
       onClick={handleCardClick}
-      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01] block relative"
+      className="w-full shadow-lg rounded-xl sm:rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-transform hover:scale-[1.01] relative"
     >
       {/* Imagen de cabecera - imagen completa sin recorte */}
       <div className="relative w-full aspect-[16/10] flex-shrink-0 bg-[#1a1a1a]">
@@ -249,13 +249,15 @@ const CardProduct: React.FC<CardSimProps> = ({
       </div>
 
       {/* Contenido */}
-      <div className="p-2.5 sm:p-4 flex flex-col flex-grow bg-white rounded-b-xl sm:rounded-b-2xl">
-        <div className="flex items-start justify-between gap-1 sm:gap-2 mb-1.5 sm:mb-2">
+      <div className="p-2 sm:p-3.5 flex flex-col flex-grow bg-white rounded-b-xl sm:rounded-b-2xl">
+        <div className="flex items-start justify-between gap-1 sm:gap-2 mb-3 sm:mb-4">
           <h2
             className="
-              text-[13px] sm:text-[18px] leading-[1.2] sm:leading-[1.3] tracking-[0.01em] font-bold
-              line-clamp-2 min-h-[32px] sm:min-h-[47px]
+              flex-1 min-w-0
+              text-[14px] sm:text-[17px] leading-[1.2] tracking-[0.01em] font-black
+              truncate whitespace-nowrap
             "
+            title={headerTitle}
           >
             {headerTitle}
           </h2>
@@ -298,28 +300,28 @@ const CardProduct: React.FC<CardSimProps> = ({
           ))}
         </ul>
 
-        <div className="flex flex-col justify-start space-y-1 sm:space-y-1.5 mb-2 sm:mb-3">
+        <div className="flex flex-col justify-start space-y-1.5 sm:space-y-2 mb-2 sm:mb-2.5">
           {checks.slice(0, 3).map((adv, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-[14px] leading-[1.3] sm:leading-[1.4]"
+              className="flex items-start gap-1.5 sm:gap-2 text-[10px] sm:text-[13px] leading-[1.25] sm:leading-[1.35]"
             >
-              <Image src={CheckSvg} alt="✓" className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-              <span className="line-clamp-1">{adv.name}</span>
+              <Image src={CheckSvg} alt="✓" className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+              <span className="flex-1 min-w-0 truncate whitespace-nowrap">{adv.name}</span>
             </div>
           ))}
         </div>
 
-        <hr className="my-2 sm:my-3 border-gray-200" />
+        <hr className="my-1.5 sm:my-2.5 border-gray-200" />
 
-        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2.5">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[14px] sm:text-[16px] leading-[1.2] font-bold">{displayPrice}</span>
+        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <span className="text-[16px] sm:text-[20px] leading-[1.1] tracking-tight font-black">{displayPrice}</span>
             {onSale && regularPrice != null && (
-              <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
-                <Tag className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-black" />
-                <span className="text-[11px] sm:text-[13px] text-black">
-                  Antes <span className="line-through">${regularPrice} USD</span>
+              <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-1.5 sm:px-2 py-0 sm:py-0.5">
+                <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-black" />
+                <span className="text-[10px] sm:text-[12px] text-black">
+                  <span className="line-through">${regularPrice} USD</span>
                 </span>
               </span>
             )}
