@@ -164,42 +164,18 @@ const PurchaseHeader: React.FC<Props> = ({
     .map((v) => ({ ...v, months: toMonths(v.licensetime) }))
     .filter((v) => v.months !== undefined);
 
-  const isActivarAppsProduct = /activar\s*apps?/i.test(titleNorm);
-
-  const activarAppsVariants = variants.filter(
-    (v) =>
-      v.id != null &&
-      (String(v.name ?? "").trim() !== "" ||
-        String(v.sku ?? "").trim() !== "" ||
-        Number(v.price ?? v.cost ?? 0) > 0)
-  );
-
   // Variantes seleccionables en el dropdown — excluir Pre-Activación (months=0) de la web
   // y ordenar por duración ascendente (3, 6, 12, ...)
-  const selectableVariants = isActivarAppsProduct
-    ? activarAppsVariants
-    : normVariants
-        .filter((v) => v.months !== 0)
-        .sort((a, b) => {
-          if (a.months !== b.months) return a.months - b.months;
-          return a.id - b.id;
-        });
+  const selectableVariants = normVariants
+    .filter((v) => v.months !== 0)
+    .sort((a, b) => {
+      if (a.months !== b.months) return a.months - b.months;
+      return a.id - b.id;
+    });
 
   const productMonths = toMonths(product?.licensetime) ?? 12;
 
   const showSelect = selectableVariants.length > 1;
-
-  const getActivarAppsVariantLabel = (variant?: Variant) => {
-    if (!variant) return t("details", { defaultValue: "Detalle" });
-
-    const parts = [variant.name, variant.sku]
-      .map((value) => String(value ?? "").trim())
-      .filter(Boolean);
-
-    if (parts.length > 0) return parts.join(" - ");
-
-    return `${resolveVariantPrice(variant, !!onSale)} ${currency}`;
-  };
 
   const currentMonths =
     normVariants.find((v) => v.id === (selectedVariantId ?? -1))?.months ??
@@ -207,9 +183,7 @@ const PurchaseHeader: React.FC<Props> = ({
     productMonths;
 
   // Ocultar licencia si: no se debe mostrar o es Threema simple
-  const shouldShowLicense = isActivarAppsProduct
-    ? selectableVariants.length > 0
-    : showLicense && !isOnlyThreema && (currentMonths > 0 || normVariants.some((v) => v.months === 0));
+  const shouldShowLicense = showLicense && !isOnlyThreema && (currentMonths > 0 || normVariants.some((v) => v.months === 0));
 
   const isFreeTrial = normVariants.length > 0 && (
     currentMonths === 0 ||
@@ -262,6 +236,18 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const providerNorm = ((product?.provider || product?.brand) ?? "").toLowerCase();
   const titleNorm = (product?.name || product?.headerTitle || "").toLowerCase();
+
+  // ACTIVAR APPS: Detección y lógica específica (no afecta otros productos)
+  const isActivarAppsProduct = /activar\s*apps?/i.test(titleNorm);
+  const activarAppsVariants = isActivarAppsProduct
+    ? variants.filter((v) => v.id != null && (String(v.name ?? "").trim() !== "" || String(v.sku ?? "").trim() !== ""))
+    : [];
+  const getActivarAppsVariantLabel = (variant?: Variant) => {
+    if (!variant) return t("details", { defaultValue: "Detalle" });
+    const parts = [variant.name, variant.sku].map((value) => String(value ?? "").trim()).filter(Boolean);
+    if (parts.length > 0) return parts.join(" - ");
+    return `${resolveVariantPrice(variant, !!onSale)} ${currency}`;
+  };
 
   const isEncryptedProvider =
     providerNorm.includes("encript") || providerNorm.includes("encrypted");
@@ -340,6 +326,7 @@ const PurchaseHeader: React.FC<Props> = ({
       { id: 500, value: 500 },
     ];
   }, [product]);
+
   return (
     <div className="w-full">
       {/* Título */}
@@ -825,11 +812,11 @@ const PurchaseHeader: React.FC<Props> = ({
           </div>
 
           {/* Fila: Licencia (ocultable) */}
-          {shouldShowLicense && (
+          {(shouldShowLicense || (isActivarAppsProduct && activarAppsVariants.length > 0)) && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{isActivarAppsProduct ? t("details", { defaultValue: "Detalle" }) : t("license")}</span>
 
-              {showSelect ? (
+              {(isActivarAppsProduct ? activarAppsVariants.length > 1 : showSelect) ? (
                 <div ref={licenseRef} className="relative z-[1000]">
                   <button
                     type="button"
@@ -841,7 +828,7 @@ const PurchaseHeader: React.FC<Props> = ({
                     <span className="truncate">
                       {isActivarAppsProduct
                         ? getActivarAppsVariantLabel(
-                            variants.find((v) => v.id === (selectedVariantId ?? selectableVariants[0]?.id)) ?? selectableVariants[0]
+                            activarAppsVariants.find((v) => v.id === selectedVariantId) ?? activarAppsVariants[0]
                           )
                         : (() => {
                         const lt = variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths;
@@ -857,8 +844,8 @@ const PurchaseHeader: React.FC<Props> = ({
                       tabIndex={-1}
                       className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                     >
-                      {selectableVariants.map((v) => {
-                        const isActive = (selectedVariantId ?? selectableVariants[0]?.id) === v.id;
+                      {(isActivarAppsProduct ? activarAppsVariants : selectableVariants).map((v) => {
+                        const isActive = (selectedVariantId ?? (isActivarAppsProduct ? activarAppsVariants[0]?.id : selectableVariants[0]?.id)) === v.id;
                         return (
                           <button
                             key={v.id}
@@ -884,7 +871,7 @@ const PurchaseHeader: React.FC<Props> = ({
               ) : (
                 <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
                   {isActivarAppsProduct
-                    ? getActivarAppsVariantLabel(selectableVariants[0])
+                    ? getActivarAppsVariantLabel(activarAppsVariants[0])
                     : currentMonths === 0
                       ? (t("freeTrial") || "Prueba gratis")
                       : `${currentMonths} Meses`}
