@@ -37,6 +37,7 @@ export function getProductCategoryKind(
   }
 ): { kind: CategoryKind; reason: string } {
   const name       = norm(product?.name);
+  const slug       = norm(product?.slug || product?.post_name);
   const typeProd   = norm(product?.type_product);
   const shipProd   = norm(product?.shipping);               // "si" para físico
   const cfgProd    = norm(product?.config_sim?.[0]?.type);  // "esim" | "data" | "minutes"
@@ -47,6 +48,15 @@ export function getProductCategoryKind(
   const catId      = extra?.categoryId ?? product?.category?.id;
   const catName    = extra?.categoryName ?? product?.category?.name;
   const hint       = mapSelectedOptionToKind(extra?.selectedOption);
+
+  const isActivarAppsProduct =
+    /activar\s*apps?/.test(name) ||
+    /activar[-_\s]*apps?/.test(slug);
+
+  // Caso especial: Activar Apps se vende desde SIMs pero usa plantilla/checkout de Apps.
+  if (isActivarAppsProduct) {
+    return { kind: "APLICACIONES", reason: "Activar Apps usa plantilla de aplicaciones" };
+  }
 
   // 0) Si la UI ya “sugiere” pestaña actual, y no contradice señales fuertes:
   if (hint) {

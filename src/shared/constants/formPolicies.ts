@@ -198,6 +198,10 @@ export function getFormTypeForProduct(
 ): FormType {
   const nameLower = productName.toLowerCase().trim();
 
+  if (nameLower.includes("activar app")) {
+    return "APP_RONING";
+  }
+
   // 1. Verificar mapeo directo por nombre
   for (const [key, formType] of Object.entries(PRODUCT_FORM_MAPPING)) {
     if (nameLower.includes(key)) {
