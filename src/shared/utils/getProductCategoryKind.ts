@@ -47,6 +47,17 @@ export function getProductCategoryKind(
   const catId      = extra?.categoryId ?? product?.category?.id;
   const catName    = extra?.categoryName ?? product?.category?.name;
   const hint       = mapSelectedOptionToKind(extra?.selectedOption);
+  const slug       = norm(product?.slug || product?.post_name);
+
+  const isActivarApps =
+    /activar\s*apps?/.test(name) ||
+    /activar[-_\s]*apps?/.test(slug) ||
+    /activar\s*apps?/.test(brand);
+
+  // Caso especial: Activar Apps se muestra en SIMs pero usa flujo tipo app.
+  if (isActivarApps) {
+    return { kind: "APLICACIONES", reason: "producto Activar Apps usa checkout de aplicación" };
+  }
 
   // 0) Si la UI ya “sugiere” pestaña actual, y no contradice señales fuertes:
   if (hint) {
