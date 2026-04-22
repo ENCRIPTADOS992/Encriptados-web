@@ -73,6 +73,10 @@ export const getProductLink = (
   provider?: string,
   typeProduct?: string
 ): string | null => {
+  if (/activar\s*apps?/i.test(productName)) {
+    return `/apps/${generateSlug(productName)}`;
+  }
+
   // 0. Excepción Global: Router Camaleón siempre va a /apps/router-camaleon
   if (
     productName.toLowerCase().includes("router") ||

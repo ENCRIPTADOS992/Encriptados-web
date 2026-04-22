@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
@@ -10,10 +10,12 @@ import CardSimInfo from "./CardSimInfo";
 
 import { useGetProductByIdUpdate } from "@/features/products/queries/useGetProductById";
 import SectionWrapper from "@/shared/components/SectionWrapper";
+import { getProductLink } from "@/shared/utils/productRouteResolver";
 
 const FixedSimProductDetail: React.FC = () => {
   const t = useTranslations("EncryptedSimPage");
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const selectedId = searchParams.get("productId");
   const selectedOption = searchParams.get("selectedOption") || "40";
@@ -34,6 +36,28 @@ const FixedSimProductDetail: React.FC = () => {
     isError,
     product,
   });
+
+  React.useEffect(() => {
+    if (!product?.name) return;
+
+    if (!/activar\s*apps?/i.test(product.name)) return;
+
+    const targetPath = getProductLink(
+      product.name,
+      Number(product.category?.id ?? categoryId),
+      product.id,
+      (product as any)?.provider,
+      (product as any)?.type_product
+    );
+
+    if (!targetPath) return;
+
+    const nextParams = new URLSearchParams(searchParams.toString());
+    nextParams.set("productId", String(product.id));
+    nextParams.set("categoryId", String(product.category?.id ?? categoryId));
+
+    router.replace(`/${locale}${targetPath}?${nextParams.toString()}`);
+  }, [categoryId, locale, product, router, searchParams]);
 
   if (isLoading) {
     return <div className="text-center py-10">Cargando producto...</div>;
