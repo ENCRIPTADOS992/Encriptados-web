@@ -22,6 +22,7 @@ interface ListOfProductsProps {
 const providerMap: Record<string, string[]> = {
   encriptados: ["Sim Encriptados", "encrypted", "encriptados"],
   tim: ["Sim TIM", "tim"],
+  activarapps: ["activar app", "activar apps", "activar_app", "activar-app"],
 };
 
 const serviceMap: Record<string, string> = {
@@ -157,6 +158,23 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     const before = filteredProducts.length;
 
     filteredProducts = uniqueProducts.filter((product) => {
+      if (filters.provider === "activarapps") {
+        const nameNormalized = product.name?.toLowerCase().trim() ?? "";
+        const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
+        const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
+
+        return (
+          nameNormalized.includes("activar app") ||
+          nameNormalized.includes("activar apps") ||
+          providerNormalized.includes("activar app") ||
+          providerNormalized.includes("activar-app") ||
+          providerNormalized.includes("activar_app") ||
+          brandNormalized.includes("activar app") ||
+          brandNormalized.includes("activar-app") ||
+          brandNormalized.includes("activar_app")
+        );
+      }
+
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
 

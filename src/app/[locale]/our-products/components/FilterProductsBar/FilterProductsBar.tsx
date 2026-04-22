@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
@@ -80,8 +81,22 @@ export default function FilterProductsBar({
   const shouldShowTimRegion = isTim && !isTimSimFisica;
 
   // Logic for SIM Provider/Services (Inline)
-  type ProviderType = "encriptados" | "tim" | undefined;
+  type ProviderType = "encriptados" | "tim" | "activarapps" | undefined;
   const currentProvider = filters.provider as ProviderType;
+
+  const activarAppsProviderIcon = (
+    <div className="flex items-center gap-2">
+      <Image
+        src="/icons/activar_apps.svg"
+        alt="Activar Apps"
+        width={20}
+        height={20}
+      />
+      <span className="text-[14px] font-semibold tracking-[0.02em] text-[#CCCCCC]">
+        ACTIVAR APPS
+      </span>
+    </div>
+  );
 
   // Helper to capitalize text in Title Case
   const toTitleCase = (str: string) => {
@@ -133,6 +148,19 @@ export default function FilterProductsBar({
         />
       </div>
     ),
+    activarapps: (
+      <div className="w-full">
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <MenuDropdownProductBar
+          name="encriptadosprovider"
+          externalValue={filters.encriptadosprovider}
+          options={[{ label: "Todos", value: "all" }]}
+          onChangeExternal={() => {
+            updateFilters({ encriptadosprovider: "all" });
+          }}
+        />
+      </div>
+    ),
   };
 
   // Rendering logic for subfilters based on Flex to fill space dynamically
@@ -157,6 +185,11 @@ export default function FilterProductsBar({
                 label: " ",
                 value: "tim",
                 icon: <TimSimIcon width={88} height={25} />
+              },
+              {
+                label: " ",
+                value: "activarapps",
+                icon: activarAppsProviderIcon,
               },
             ]}
             onChangeExternal={(value) => {
