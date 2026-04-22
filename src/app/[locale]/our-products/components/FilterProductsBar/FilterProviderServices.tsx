@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
 import FilterRegionCountry from "./FilterRegionCountry";
 
@@ -82,17 +81,14 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   };
 
   const activarAppsProviderIcon = (
-    <div className="flex items-center gap-2">
-      <Image
-        src="/icons/activar_apps.svg"
-        alt="Activar Apps"
-        width={20}
-        height={20}
-      />
-      <span className="text-[14px] font-semibold tracking-[0.02em] text-[#CCCCCC]">
-        ACTIVAR APPS
-      </span>
-    </div>
+    <img
+      src="/icons/activar_apps.svg"
+      alt=""
+      width={118}
+      height={25}
+      className="h-[25px] w-auto"
+      loading="lazy"
+    />
   );
 
   return (

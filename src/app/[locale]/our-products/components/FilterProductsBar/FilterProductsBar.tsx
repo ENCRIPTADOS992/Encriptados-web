@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from "react";
-import Image from "next/image";
 import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
@@ -85,17 +84,14 @@ export default function FilterProductsBar({
   const currentProvider = filters.provider as ProviderType;
 
   const activarAppsProviderIcon = (
-    <div className="flex items-center gap-2">
-      <Image
-        src="/icons/activar_apps.svg"
-        alt="Activar Apps"
-        width={20}
-        height={20}
-      />
-      <span className="text-[14px] font-semibold tracking-[0.02em] text-[#CCCCCC]">
-        ACTIVAR APPS
-      </span>
-    </div>
+    <img
+      src="/icons/activar_apps.svg"
+      alt=""
+      width={118}
+      height={25}
+      className="h-[25px] w-auto"
+      loading="lazy"
+    />
   );
 
   // Helper to capitalize text in Title Case
