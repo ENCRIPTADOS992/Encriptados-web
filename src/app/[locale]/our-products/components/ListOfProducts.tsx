@@ -88,7 +88,10 @@ const normalizeProviderValue = (value: unknown): string | undefined => {
 
 const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const t = useTranslations('BneSimPage.simSelection');
-  const selectedOption = parseInt(filters.selectedOption, 10);
+  // Si el provider es "activarapps", consultar la categoría 371 directamente
+  const selectedOption = filters.provider === "activarapps"
+    ? 371
+    : parseInt(filters.selectedOption, 10);
   const { data, isFetching, isError } = useGetProducts(
     selectedOption,
     filters.provider,
