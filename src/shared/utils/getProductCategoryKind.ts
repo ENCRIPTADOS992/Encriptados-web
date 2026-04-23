@@ -23,8 +23,7 @@ const mapSelectedOptionToKind = (selectedOption?: number): CategoryKind | null =
     case 40: return "SIM";
     case 35: return "SOFTWARE";
     case 38: return "APLICACIONES";
-    case 41: return "ROUTERS";
-    default: return null;
+    case 41: return "ROUTERS";    case 371: return "APLICACIONES"; // Activar Apps    default: return null;
   }
 };
 
@@ -50,12 +49,14 @@ export function getProductCategoryKind(
   const hint       = mapSelectedOptionToKind(extra?.selectedOption);
 
   const isActivarAppsProduct =
+    catId === 371 ||
+    String(catId) === "371" ||
     /activar\s*apps?/.test(name) ||
     /activar[-_\s]*apps?/.test(slug);
 
-  // Caso especial: Activar Apps se vende desde SIMs pero usa plantilla/checkout de Apps.
+  // Caso especial: Activar Apps (categoría 371) se vende desde SIMs pero usa plantilla/checkout de Apps.
   if (isActivarAppsProduct) {
-    return { kind: "APLICACIONES", reason: "Activar Apps usa plantilla de aplicaciones" };
+    return { kind: "APLICACIONES", reason: "Activar Apps (categoría 371) usa plantilla de aplicaciones" };
   }
 
   // 0) Si la UI ya “sugiere” pestaña actual, y no contradice señales fuertes:

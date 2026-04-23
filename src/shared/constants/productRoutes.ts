@@ -59,4 +59,12 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
   { name: "VaultChat", link: "/apps/vault-chat", categoryId: 38 },
   { name: "Salt App", link: "/apps/salt", categoryId: 38 },
   { name: "VNC Lagoon", link: "/apps/vnc-lagoon", categoryId: 38 },
+  
+  // Activar Apps (371)
+  {
+    name: "Activar Apps",
+    link: "/activar-apps",
+    categoryId: 371,
+    displayNames: ["Activar App"],
+  },
 ];

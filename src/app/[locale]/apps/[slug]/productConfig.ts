@@ -292,6 +292,32 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   },
 
   // ════════════════════════════════════════════════════════════════
+  // ACTIVAR APPS (Categoría 371)
+  // Producto especial que se vende desde SIMs pero usa flujo de Apps
+  // ════════════════════════════════════════════════════════════════
+
+  // Name: "Activar Apps" -> slug: "activar-apps"
+  // Nota: Este producto usa ruta especial /activar-apps (no /apps/activar-apps)
+  "activar-apps": {
+    slug: "activar-apps",
+    productId: 0, // TODO: Actualizar con el productId correcto cuando esté disponible
+    categoryId: 371,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/activar-apps/hero-desktop.png",
+      tablet: "/images/activar-apps/hero-tablet.png",
+      mobile: "/images/activar-apps/hero-mobile.jpg",
+    },
+    productImage: "/images/activar-apps/banner.png",
+    iconUrl: "/images/activar-apps/logo.png",
+    benefitIcon: "/images/activar-apps/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // ════════════════════════════════════════════════════════════════
   // SISTEMAS / SOFTWARE (Categoría 35)
   // ════════════════════════════════════════════════════════════════
 

@@ -217,6 +217,8 @@ export function getFormTypeForProduct(
       return "SOFTWARE_LICENSE";
     case 40: // SIMs
       return "SIM_FORM";
+    case 371: // Activar Apps
+      return "APP_RONING";
     default:
       return "APP_RONING";
   }

@@ -73,11 +73,13 @@ export const getProductLink = (
   provider?: string,
   typeProduct?: string
 ): string | null => {
-  if (/activar\s*apps?/i.test(productName)) {
-    return `/apps/${generateSlug(productName)}`;
+  // 0a. Excepción específica: Activar Apps (categoría 371)
+  // Usa ruta directa pero con plantilla de apps
+  if (categoryId === 371 || /activar\s*apps?/i.test(productName)) {
+    return `/activar-apps`;
   }
 
-  // 0. Excepción Global: Router Camaleón siempre va a /apps/router-camaleon
+  // 0b. Excepción Global: Router Camaleón siempre va a /apps/router-camaleon
   if (
     productName.toLowerCase().includes("router") ||
     productName.toLowerCase().includes("camaleon") ||
@@ -86,7 +88,7 @@ export const getProductLink = (
     return "/apps/router-camaleon";
   }
 
-  // 1. Routers
+  // 1. Routers (Categoría 36)
   if (categoryId === 36) {
     return "/apps/router-camaleon";
   }
