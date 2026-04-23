@@ -3500,7 +3500,8 @@
     "licenseQuestionLabel": "How do you want to receive your license?",
     "wantMyUserBtn": "I want my user",
     "roningCodeBtn": "RONING Code",
-    "rechargeBtn": "Recharge"
+    "rechargeBtn": "Recharge",
+    "details": "Detail"
   },
   "TestingProducts": {
     "badge": "Our products",

@@ -2829,7 +2829,8 @@
     "licenseQuestionLabel": "Comment souhaitez-vous recevoir votre licence ?",
     "wantMyUserBtn": "Je veux mon utilisateur",
     "roningCodeBtn": "Code RONING",
-    "rechargeBtn": "Recharger"
+    "rechargeBtn": "Recharger",
+    "details": "Détail"
   },
   "TestingProducts": {
     "badge": "Nos produits",
