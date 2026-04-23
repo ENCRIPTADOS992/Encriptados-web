@@ -240,10 +240,14 @@ const PurchaseHeader: React.FC<Props> = ({
   // ACTIVAR APPS: Detección y lógica específica (no afecta otros productos)
   const isActivarAppsProduct = /activar\s*apps?/i.test(titleNorm);
   const activarAppsVariants = isActivarAppsProduct
-    ? variants.filter((v) => v.id != null && (String(v.name ?? "").trim() !== "" || String(v.sku ?? "").trim() !== ""))
+    ? variants.filter((v) => v.id != null)
     : [];
   const getActivarAppsVariantLabel = (variant?: Variant) => {
     if (!variant) return t("details", { defaultValue: "Detalle" });
+    // Usar atributo WooCommerce de la variante (ej: "1 Nro. temporal", "5 Nro. temporales")
+    const attrOption = (variant as any).attributes?.[0]?.option;
+    if (attrOption && String(attrOption).trim()) return String(attrOption).trim();
+    // Fallback: nombre o SKU
     const parts = [variant.name, variant.sku].map((value) => String(value ?? "").trim()).filter(Boolean);
     if (parts.length > 0) return parts.join(" - ");
     return `${resolveVariantPrice(variant, !!onSale)} ${currency}`;

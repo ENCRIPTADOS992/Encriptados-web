@@ -1208,6 +1208,17 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               // Para Apps, Sistemas, Router y Activar Apps: mostrar licencia en meses
               // Si el producto fue expandido, usar la variante seleccionada
               const getLicenseTag = (): string | undefined => {
+                // Cat 371 (Activar Apps): no usa licensetime — usar atributo de variante WooCommerce
+                if (selectedOption === 371) {
+                  if (product._selectedVariant) {
+                    const vid = (product._selectedVariant as any)?.id;
+                    const fullVariant = ((product as any).variants ?? []).find((v: any) => v.id === vid);
+                    const attrOption = fullVariant?.attributes?.[0]?.option;
+                    if (attrOption && String(attrOption).trim()) return String(attrOption).trim();
+                  }
+                  return undefined;
+                }
+
                 const uniqueLicense = t("uniqueLicense");
                 const monthsLabel = t("monthsLabel");
                 const isUnique = (value: unknown) => {
