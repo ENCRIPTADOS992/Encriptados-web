@@ -155,29 +155,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   let filteredProducts: Product[] = uniqueProducts;
 
-  // Filtro por provider (categoría 40 y 371)
-  if (filters.provider && filters.provider !== "all" && (selectedOption === 40 || selectedOption === 371)) {
+  // Filtro por provider (solo categoría 40 — para 371 la API ya filtra por categoría)
+  if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
     const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
 
     filteredProducts = uniqueProducts.filter((product) => {
-      if (filters.provider === "activarapps") {
-        const nameNormalized = product.name?.toLowerCase().trim() ?? "";
-        const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
-        const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
-
-        return (
-          nameNormalized.includes("activar app") ||
-          nameNormalized.includes("activar apps") ||
-          providerNormalized.includes("activar app") ||
-          providerNormalized.includes("activar-app") ||
-          providerNormalized.includes("activar_app") ||
-          brandNormalized.includes("activar app") ||
-          brandNormalized.includes("activar-app") ||
-          brandNormalized.includes("activar_app")
-        );
-      }
-
       const providerNormalized = product.provider?.toLowerCase().trim() ?? "";
       const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
 
