@@ -732,7 +732,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   // ========== EXPANSIÓN DE VARIANTES DE LICENCIA (Apps, Sistemas, Router) ==========
   // Para productos con variantes de licencia (3 meses, 6 meses, etc.), crear una tarjeta por cada variante
   // SOLO si hay más de una variante con licensetime diferente
-  if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38) {
+  if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) {
     console.log("🔄 [Expansión Licencias] Iniciando expansión de variantes de licencia", {
       categoría: selectedOption,
       productosAntes: productsToRender.length
@@ -1030,8 +1030,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             // Para TIM usamos el id de la variante de región, para Apps/Sistemas/Router usamos la variante de licencia
             let variantId: number | undefined = isTim ? variant?.id : undefined;
 
-            // Si es producto expandido por licencia (Apps, Sistemas, Router), usar su _selectedVariant
-            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38) && product._selectedVariant) {
+            // Si es producto expandido por licencia (Apps, Sistemas, Router, Activar Apps), usar su _selectedVariant
+            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) && product._selectedVariant) {
               variantId = (product._selectedVariant as any).id;
             }
 
@@ -1072,8 +1072,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               priceToShow = Number(variant.cost);
             }
 
-            // Para productos de Apps/Sistemas/Router expandidos, usar el precio de la variante de licencia
-            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38) && product._selectedVariant) {
+            // Para productos de Apps/Sistemas/Router/Activar Apps expandidos, usar el precio de la variante de licencia
+            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) && product._selectedVariant) {
               const variantPrice = (product._selectedVariant as any).price;
               if (variantPrice) {
                 priceToShow = Number(variantPrice);
@@ -1204,8 +1204,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               if (minutesTag) {
                 badges = { tag: minutesTag };
               }
-            } else if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38) {
-              // Para Apps, Sistemas y Router: mostrar licencia en meses
+            } else if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) {
+              // Para Apps, Sistemas, Router y Activar Apps: mostrar licencia en meses
               // Si el producto fue expandido, usar la variante seleccionada
               const getLicenseTag = (): string | undefined => {
                 const uniqueLicense = t("uniqueLicense");
