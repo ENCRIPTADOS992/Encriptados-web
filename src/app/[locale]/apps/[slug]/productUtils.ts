@@ -88,6 +88,23 @@ export function transformVariantsToPlans(
       });
     }
     return filtered.map(variant => {
+      // Para variantes con licensetime null/inválido (ej: Activar Apps), usar attributes[0].option
+      if (!variant.licensetime || variant.licensetime === "null") {
+        if (variant.attributes?.[0]?.option) {
+          const attrLabel = String(variant.attributes[0].option).trim();
+          const variantSale = variant.sale_price ? Number(variant.sale_price) : 0;
+          const variantPrice = Number(variant.price);
+          return {
+            label: attrLabel,
+            value: String(variant.id),
+            price: variantPrice,
+            salePrice: (variantSale > 0 && variantSale < variantPrice) ? variantSale : undefined,
+            variantId: variant.id,
+            sku: variant.sku || '',
+          };
+        }
+      }
+
       const count = Number(variant.licensetime);
 
       // Override especifico para "6+phone"

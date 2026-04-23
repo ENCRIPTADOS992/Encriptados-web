@@ -237,4 +237,5 @@ export interface ProductLicenseVariant {
   sale_price: number | string | null;
   sku: string;
   image: string;
+  attributes?: { name: string; option: string }[];
 }

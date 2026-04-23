@@ -57,6 +57,7 @@ export const getAllProducts = async (
           sale_price: v.sale_price != null && v.sale_price !== '' ? Number(v.sale_price) : null,
           sku: v.sku,
           image: v.image,
+          attributes: v.attributes ?? [],
         })) ?? [];
 
       return {
