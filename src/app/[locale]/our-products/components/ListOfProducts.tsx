@@ -152,8 +152,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   let filteredProducts: Product[] = uniqueProducts;
 
-  // Filtro por provider (solo categoría 40)
-  if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
+  // Filtro por provider (categoría 40 y 371)
+  if (filters.provider && filters.provider !== "all" && (selectedOption === 40 || selectedOption === 371)) {
     const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
 

@@ -29,7 +29,13 @@ const OurProductsPage = () => {
 
   const filterRef = useRef<HTMLDivElement | null>(null);
   const cardSectionRef = useRef<HTMLDivElement | null>(null);
-  const selectedOption = parseInt(filters.selectedOption, 10);
+  
+  // Si el provider es "activarapps", usar categoría 371
+  let selectedOption = parseInt(filters.selectedOption, 10);
+  if (filters.provider === "activarapps") {
+    selectedOption = 371;
+  }
+  
   const { data: products, isFetching, isError } = useGetProducts(
     selectedOption,
     filters.provider

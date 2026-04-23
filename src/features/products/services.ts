@@ -30,8 +30,8 @@ export const getAllProducts = async (
     if (options?.simRegion && categoryId === 40) {
       params.sim_region = options.simRegion;
     }
-    // Enviar provider a la API si está disponible (solo para categoría 40)
-    if (options?.provider && options.provider !== "all" && categoryId === 40) {
+    // Enviar provider a la API si está disponible (para categoría 40 y 371)
+    if (options?.provider && options.provider !== "all" && (categoryId === 40 || categoryId === 371)) {
       params.provider = options.provider;
     }
 
