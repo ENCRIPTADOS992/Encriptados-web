@@ -890,6 +890,11 @@
       "cta": "Achetez votre Silent Phone ici facilement et sans complications",
       "moreInfo": "Info"
     },
+    "activarApps": {
+      "badge": "Nouveau lancement",
+      "title": "Activer les Apps",
+      "description": "Obtenez des numéros de téléphone temporaires instantanément et recevez des codes SMS pour activer vos Apps préférées comme WhatsApp, Telegram et Signal sans compromettre votre vie privée."
+    },
     "smsBanner": {
       "title": "Activez des Apps par SMS avec Encriptados",
       "subtitle": "Inscrivez-vous à n'importe quelle application avec un numéro de téléphone virtuel",

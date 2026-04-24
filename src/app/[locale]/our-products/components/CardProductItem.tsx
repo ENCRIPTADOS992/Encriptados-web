@@ -4,13 +4,76 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import type { Product } from "@/features/products/types/AllProductsResponse";
-import { FC, useState, MouseEvent } from "react";
+import { FC, useState, MouseEvent, useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { getProductLink } from "@/shared/utils/productRouteResolver";
 
 interface CardProductItemProps {
   product: Product;
   showPeriodSelector?: boolean;
   periodOptions?: string[];
+}
+
+/** Returns the cheapest numeric price across all variant sources, or falls back to product.price */
+function getMinPrice(product: Product): string {
+  const candidates: number[] = [];
+
+  const base = parseFloat(product.price);
+  if (!isNaN(base) && base > 0) candidates.push(base);
+
+  product.licenseVariants?.forEach((v) => {
+    const p = typeof v.price === "number" ? v.price : parseFloat(String(v.price));
+    if (!isNaN(p) && p > 0) candidates.push(p);
+    if (v.sale_price != null) {
+      const sp = typeof v.sale_price === "number" ? v.sale_price : parseFloat(String(v.sale_price));
+      if (!isNaN(sp) && sp > 0) candidates.push(sp);
+    }
+  });
+
+  product.variants?.forEach((v) => {
+    const p = v.price ?? v.cost;
+    if (p != null) {
+      const n = typeof p === "number" ? p : parseFloat(String(p));
+      if (!isNaN(n) && n > 0) candidates.push(n);
+    }
+    if (v.sale_price != null) {
+      const sp = typeof v.sale_price === "number" ? v.sale_price : parseFloat(String(v.sale_price));
+      if (!isNaN(sp) && sp > 0) candidates.push(sp);
+    }
+  });
+
+  if (candidates.length === 0) return product.price;
+  const min = Math.min(...candidates);
+  return Number.isInteger(min) ? String(min) : min.toFixed(2);
+}
+
+/**
+ * Returns the WooCommerce variant id of the cheapest variant,
+ * considering sale_price when lower than price.
+ * Returns null if the product has no variants.
+ */
+function getCheapestVariantId(product: Product): number | null {
+  type Entry = { id: number; effectivePrice: number };
+  const entries: Entry[] = [];
+
+  product.licenseVariants?.forEach((v) => {
+    const p = Number(v.price);
+    const sp = v.sale_price != null ? Number(v.sale_price) : null;
+    const effective = sp != null && sp > 0 && sp < p ? sp : p;
+    if (!isNaN(effective) && effective > 0) entries.push({ id: v.id, effectivePrice: effective });
+  });
+
+  product.variants?.forEach((v) => {
+    const raw = v.price ?? v.cost;
+    if (raw == null) return;
+    const p = Number(raw);
+    const sp = v.sale_price != null ? Number(v.sale_price) : null;
+    const effective = sp != null && sp > 0 && sp < p ? sp : p;
+    if (!isNaN(effective) && effective > 0) entries.push({ id: v.id, effectivePrice: effective });
+  });
+
+  if (entries.length === 0) return null;
+  return entries.reduce((min, e) => (e.effectivePrice < min.effectivePrice ? e : min)).id;
 }
 
 const CardProductItem: FC<CardProductItemProps> = ({
@@ -23,38 +86,52 @@ const CardProductItem: FC<CardProductItemProps> = ({
   const router = useRouter();
   const t = useTranslations("OurProductsPage.productCard");
 
+  const minPrice = useMemo(() => getMinPrice(product), [product]);
+
   const handleMoreInfo = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const isSilentPhone = product.name.toLowerCase().includes("silent phone");
+    const route = getProductLink(
+      product.name,
+      product.category?.id ?? 0,
+      product.id,
+      product.provider,
+      product.type_product,
+    );
 
-    if (isSilentPhone) {
-      // Next i18n se encarga de anteponer /es si ese es el locale actual
-      router.push(`/apps/silent-circle?productId=${product.id}`);
-    } else {
-      router.push(`/mas-informacion?id=${product.id}`);
-    }
+    if (!route) return;
+
+    const params = new URLSearchParams();
+    if (product.id) params.set("productId", String(product.id));
+    const cheapestId = getCheapestVariantId(product);
+    if (cheapestId != null) params.set("variantId", String(cheapestId));
+    const qs = params.toString();
+    const url = qs ? `${route}?${qs}` : route;
+    router.push(url);
   };
 
   return (
-    <div className="bg-[#181818] dark:bg-[#131313] text-black dark:text-white rounded-xl p-6 w-full max-w-md shadow-lg">
-      <div className="w-full flex justify-center mb-4">
-        <Image
-          src={product.images[0]?.src || "/images/fallback.png"}
-          alt={product.name}
-          width={140}
-          height={140}
-          className="object-contain rounded-xl"
-        />
+    <div className="bg-[#181818] dark:bg-[#131313] text-black dark:text-white rounded-2xl overflow-hidden w-full max-w-[305px] shadow-lg">
+      {/* Image with padding so it breathes from card edges */}
+      <div className="px-3 pt-3">
+        <div className="relative w-full h-36 rounded-xl overflow-hidden">
+          <Image
+            src={product.images[0]?.src || "/images/fallback.png"}
+            alt={product.name}
+            fill
+            className="object-cover"
+          />
+        </div>
       </div>
 
+      <div className="px-6 pt-4 pb-6">
       <h3 className="text-xl text-white font-bold text-center mb-2">
         {product.name}
       </h3>
 
       <p className="text-center text-xs text-white dark:text-gray-400 mb-4">
-        Desde ${product.price} USD
+        Desde ${minPrice} USD
       </p>
 
       {showPeriodSelector && (
@@ -97,6 +174,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
         >
           {t("moreInfo")}
         </button>
+      </div>
       </div>
     </div>
   );

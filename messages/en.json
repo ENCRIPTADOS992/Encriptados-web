@@ -906,6 +906,11 @@
       "cta": "Buy your Silent Phone here easily and hassle-free",
       "moreInfo": "Info"
     },
+    "activarApps": {
+      "badge": "New launch",
+      "title": "Activate Apps",
+      "description": "Get temporary phone numbers instantly and receive SMS codes to activate your favourite Apps like WhatsApp, Telegram and Signal without compromising your privacy."
+    },
     "smsBanner": {
       "title": "Activate Apps via SMS with Encriptados",
       "subtitle": "Register for any app with a virtual phone number",

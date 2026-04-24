@@ -19,6 +19,7 @@ import SilentCircleBanner from "./components/SilentCircleBanner";
 import BannerSecureMdmNew from "./components/BannerSecureMdmNew";
 import SecureCommunicationBanner from "./components/SecureCommunicationBanner";
 import BannerSmsActivation from "./components/BannerSmsActivation";
+import ActivarAppsBanner from "./components/ActivarAppsBanner";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 
 const OurProductsPage = () => {
@@ -198,11 +199,9 @@ const OurProductsPage = () => {
             <SilentCircleBanner />
           </SectionWrapper>
 
-          {/* BannerSmsActivation oculto temporalmente
           <SectionWrapper className="py-0 md:py-2">
-            <BannerSmsActivation />
+            <ActivarAppsBanner />
           </SectionWrapper>
-          */}
 
           <SectionWrapper className="py-0 md:py-1">
             <BannerSecureMdmNew />
