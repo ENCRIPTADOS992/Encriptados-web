@@ -160,7 +160,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/armadillo-video",
     appStoreUrl: "https://apps.apple.com/app/armadillo-chat",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.armadillo",
-    apkUrl: "https://encriptados.io/armadillo_chat_base.apk",
+    apkUrl: "https://apk.encriptados.io/Armadillo_Chat.apk",
     storeButtons: { appStore: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
@@ -182,7 +182,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/threema-video",
     appStoreUrl: "https://apps.apple.com/app/threema",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=ch.threema.app",
-    apkUrl: "https://encriptados.io/Threema-4.63.apk",
+    apkUrl: "https://apk.encriptados.io/Threema.apk",
     storeButtons: { appStore: false, googlePlay: false },
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
@@ -204,7 +204,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/threema-work-video",
     appStoreUrl: "https://apps.apple.com/app/threema-work",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=ch.threema.app.work",
-    apkUrl: "https://encriptados.io/threema_work_base.apk",
+    apkUrl: "https://apk.encriptados.io/Threem_Work.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
@@ -225,7 +225,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/vnc-lagoon-video",
     appStoreUrl: "https://apps.apple.com/app/vnc-lagoon",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.vnc.lagoon",
-    apkUrl: "https://encriptados.io/VNCtalk.apk",
+    apkUrl: "https://apk.encriptados.io/VNC_Lagoon.xapk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
@@ -246,7 +246,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/salt-video",
     appStoreUrl: "https://apps.apple.com/app/salt-communications",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.salt",
-    apkUrl: "https://encriptados.io/saltIm_base.apk",
+    apkUrl: "https://apk.encriptados.io/Salt_App.xapk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
   // Alias legacy
@@ -266,7 +266,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/salt-video",
     appStoreUrl: "https://apps.apple.com/app/salt-communications",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.salt",
-    apkUrl: "https://encriptados.io/saltIm_base.apk",
+    apkUrl: "https://apk.encriptados.io/Salt_App.xapk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
@@ -287,7 +287,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     videoUrl: "https://www.youtube.com/embed/nord-vpn-video",
     appStoreUrl: "https://apps.apple.com/app/nordvpn",
     googlePlayUrl: "https://play.google.com/store/apps/details?id=com.nordvpn.android",
-    apkUrl: "https://encriptados.io/NordVPN_Layer_base.apk",
+    apkUrl: "https://apk.encriptados.io/Nord_VPN.apk",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
