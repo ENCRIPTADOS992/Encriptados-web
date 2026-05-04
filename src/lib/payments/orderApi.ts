@@ -221,6 +221,7 @@ export async function createRenewalOrder({
   paymentProvider = "stripe",
   couponCode,
   discount,
+  osType,
 }: {
   productId: number;
   licenseIds: string[];
@@ -232,6 +233,7 @@ export async function createRenewalOrder({
   paymentProvider?: "stripe" | "kriptomus";
   couponCode?: string;
   discount?: number;
+  osType?: "android" | "ios";
 }): Promise<{
   ok: boolean;
   order_id: number;
@@ -254,6 +256,7 @@ export async function createRenewalOrder({
     currency,
     coupon_code: couponCode,
     discount,
+    system: osType,
   });
 
   const r = await fetch(url, {

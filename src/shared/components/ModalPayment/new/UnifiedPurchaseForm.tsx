@@ -398,6 +398,7 @@ export default function UnifiedPurchaseForm({
             paymentProvider: "stripe",
             couponCode: purchaseMeta?.couponCode,
             discount: purchaseMeta?.discount,
+            osType: form.osType,
           });
         } else if (orderType === "roaming") {
           orderResult = await createOrderAndIntent({
