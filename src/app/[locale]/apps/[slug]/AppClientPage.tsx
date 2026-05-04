@@ -470,6 +470,13 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
 
+          {!videoUrl && product?.id === 61588 && (
+            <HeroVideoSection
+              title={videoText}
+              imageUrl="https://encriptados.es/wp-content/uploads/2026/05/Activar-app-logo.webp"
+            />
+          )}
+
           <PromoSection />
 
           {faqs.length > 0 && <FAQSection faqs={faqs} title={t("faqTitle")} />}
