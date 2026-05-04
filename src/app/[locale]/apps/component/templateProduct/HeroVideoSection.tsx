@@ -1,8 +1,10 @@
 import React from "react";
+import Image from "next/image";
 
 interface HeroVideoSectionProps {
   title: string;
-  videoUrl: string;
+  videoUrl?: string;
+  imageUrl?: string;
 }
 
 /**
@@ -49,8 +51,12 @@ function toEmbedUrl(url: string): string {
 const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
   title,
   videoUrl,
+  imageUrl,
 }) => {
-  const embedUrl = toEmbedUrl(videoUrl);
+  const embedUrl = videoUrl ? toEmbedUrl(videoUrl) : "";
+
+  if (!embedUrl && !imageUrl) return null;
+
   return (
     <section className="w-full bg-white py-12 lg:py-20">
       <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14">
@@ -60,17 +66,29 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
             {title}
           </h2>
 
-          {/* Video */}
-          <div className="w-full aspect-video rounded-2xl overflow-hidden bg-black">
-            <iframe
-              src={embedUrl}
-              title={title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full border-0"
-              loading="lazy"
-            />
-          </div>
+          {embedUrl ? (
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black">
+              <iframe
+                src={embedUrl}
+                title={title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full border-0"
+                loading="lazy"
+              />
+            </div>
+          ) : imageUrl ? (
+            <div className="flex justify-center lg:justify-end">
+              <Image
+                src={imageUrl}
+                alt={title}
+                width={521}
+                height={313}
+                className="w-[373px] h-[200px] rounded-[31.5px] md:w-[287px] md:h-[172px] md:rounded-[24.24px] lg:w-[521px] lg:h-[313px] lg:rounded-[44px] object-cover"
+                sizes="(max-width: 768px) 373px, (max-width: 1024px) 287px, 521px"
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
