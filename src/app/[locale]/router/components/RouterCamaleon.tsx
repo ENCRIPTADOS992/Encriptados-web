@@ -101,7 +101,7 @@ export default function RouterCamaleon() {
                             title="SIM Encriptada"
                             subtitle="470 USD en datos"
                         />
-                        <FeatureItem icon={<RouterIcon />} title="Router Camaleón" subtitle="470 USD en datos" />
+                        <FeatureItem icon={<RouterIcon />} title="Router Camaleón" subtitle="150 USD" />
                         <FeatureItem icon={<GlobeIcon />} title="Cobertura Global" subtitle="Disponible en 200 países" />
                         <FeatureItem icon={<SecurityIcon />} title="VPN Privado" subtitle="130 USD" />
                     </div>
