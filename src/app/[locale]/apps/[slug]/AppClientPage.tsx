@@ -474,7 +474,6 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
               videoUrl={videoUrl}
               videoThumbnail={(product as any)?.videoThumbnail}
               videoImage={(product as any)?.videoImage}
-              productImage={(product as any)?.images?.[0]?.src}
             />
           )}
 

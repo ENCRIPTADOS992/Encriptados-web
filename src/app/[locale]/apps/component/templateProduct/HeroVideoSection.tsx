@@ -8,10 +8,8 @@ interface HeroVideoSectionProps {
   videoUrl?: string;
   /** Thumbnail de YouTube generado desde el videoId — se usa para comprobar si el video existe */
   videoThumbnail?: string;
-  /** Imagen de fallback explícita configurada en el admin (tiene prioridad sobre productImage) */
+  /** Imagen de fallback configurable desde el admin de WooCommerce */
   videoImage?: string;
-  /** Imagen principal del producto (último recurso de fallback) */
-  productImage?: string;
   /** Imagen de fallback legacy (compatibilidad con usos anteriores) */
   imageUrl?: string;
 }
@@ -68,7 +66,6 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
   videoUrl,
   videoThumbnail,
   videoImage,
-  productImage,
   imageUrl,
 }) => {
   const embedUrl = videoUrl ? toEmbedUrl(videoUrl) : "";
@@ -102,8 +99,8 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
     img.src = thumbnailSrc;
   }, [embedUrl, videoThumbnail]);
 
-  // Imagen de fallback: prioridad videoImage (admin) > imageUrl (legacy) > productImage (WooCommerce)
-  const fallbackSrc = videoImage || imageUrl || productImage || "";
+  // Imagen de fallback: prioridad videoImage (admin) > imageUrl (legacy)
+  const fallbackSrc = videoImage || imageUrl || "";
 
   // No renderizar si no hay nada que mostrar
   if (videoValid === false && !fallbackSrc) return null;
