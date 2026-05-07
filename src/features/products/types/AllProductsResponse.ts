@@ -75,6 +75,12 @@ export type Product = {
   /** URL embed de YouTube con texto acompañante */
   videoUrl?: string;
 
+  /** Thumbnail de YouTube generado desde el videoId (para validar si el video existe) */
+  videoThumbnail?: string;
+
+  /** Imagen de fallback configurable para la sección de video */
+  videoImage?: string;
+
   /** Link a App Store (opcional) */
   appStoreUrl?: string;
 
@@ -140,6 +146,12 @@ export interface ProductById {
 
   /** URL embed de YouTube con texto acompañante */
   videoUrl?: string;
+
+  /** Thumbnail de YouTube generado desde el videoId (para validar si el video existe) */
+  videoThumbnail?: string;
+
+  /** Imagen de fallback configurable para la sección de video */
+  videoImage?: string;
 
   /** Link a App Store (opcional) */
   appStoreUrl?: string;

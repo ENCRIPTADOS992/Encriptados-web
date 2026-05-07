@@ -420,6 +420,9 @@ export default function RouterPage() {
         <HeroVideoSection
           videoUrl={(product as any)?.videoUrl || ROUTER_CONFIG.videoUrl}
           title={(product as any)?.video_text || ROUTER_CONFIG.videoTitle}
+          videoThumbnail={(product as any)?.videoThumbnail}
+          videoImage={(product as any)?.videoImage}
+          productImage={(product as any)?.images?.[0]?.src}
         />
       )}
 

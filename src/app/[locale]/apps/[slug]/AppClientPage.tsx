@@ -468,7 +468,15 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
 
-          {videoUrl && <HeroVideoSection title={videoText} videoUrl={videoUrl} />}
+          {videoUrl && (
+            <HeroVideoSection
+              title={videoText}
+              videoUrl={videoUrl}
+              videoThumbnail={(product as any)?.videoThumbnail}
+              videoImage={(product as any)?.videoImage}
+              productImage={(product as any)?.images?.[0]?.src}
+            />
+          )}
 
           {!videoUrl && product?.id === 61588 && (
             <HeroVideoSection

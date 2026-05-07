@@ -1,9 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 interface HeroVideoSectionProps {
   title: string;
   videoUrl?: string;
+  /** Thumbnail de YouTube generado desde el videoId — se usa para comprobar si el video existe */
+  videoThumbnail?: string;
+  /** Imagen de fallback explícita configurada en el admin (tiene prioridad sobre productImage) */
+  videoImage?: string;
+  /** Imagen principal del producto (último recurso de fallback) */
+  productImage?: string;
+  /** Imagen de fallback legacy (compatibilidad con usos anteriores) */
   imageUrl?: string;
 }
 
@@ -45,17 +54,60 @@ function toEmbedUrl(url: string): string {
 
 /**
  * HeroVideoSection - Componente unificado y responsive
- * Mobile: título arriba, video abajo (columna)
- * Tablet/Desktop: título a la izquierda, video a la derecha (fila)
+ *
+ * Lógica de visualización:
+ *  1. Si hay videoUrl y el thumbnail de YouTube carga OK  → mostrar iframe del video
+ *  2. Si el thumbnail falla o no hay videoUrl             → mostrar videoImage (admin) o imageUrl o productImage
+ *  3. Si no hay nada                                      → no renderizar
+ *
+ * Mobile: título arriba, contenido abajo (columna)
+ * Tablet/Desktop: título a la izquierda, contenido a la derecha (fila)
  */
 const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
   title,
   videoUrl,
+  videoThumbnail,
+  videoImage,
+  productImage,
   imageUrl,
 }) => {
   const embedUrl = videoUrl ? toEmbedUrl(videoUrl) : "";
 
-  if (!embedUrl && !imageUrl) return null;
+  // null = pendiente, true = video válido, false = usar fallback
+  const [videoValid, setVideoValid] = useState<boolean | null>(
+    embedUrl ? null : false
+  );
+
+  useEffect(() => {
+    if (!embedUrl) {
+      setVideoValid(false);
+      return;
+    }
+
+    const thumbnailSrc = videoThumbnail || (() => {
+      // Intentar extraer el thumbnail localmente si no viene del backend
+      const m = embedUrl.match(/embed\/([^?&/]+)/);
+      return m ? `https://img.youtube.com/vi/${m[1]}/maxresdefault.jpg` : "";
+    })();
+
+    if (!thumbnailSrc) {
+      // Sin thumbnail para verificar → mostrar video directamente
+      setVideoValid(true);
+      return;
+    }
+
+    const img = new window.Image();
+    img.onload = () => setVideoValid(true);
+    img.onerror = () => setVideoValid(false);
+    img.src = thumbnailSrc;
+  }, [embedUrl, videoThumbnail]);
+
+  // Imagen de fallback: prioridad videoImage (admin) > imageUrl (legacy) > productImage (WooCommerce)
+  const fallbackSrc = videoImage || imageUrl || productImage || "";
+
+  // No renderizar si no hay nada que mostrar
+  if (videoValid === false && !fallbackSrc) return null;
+  if (videoValid === null && !fallbackSrc && !embedUrl) return null;
 
   return (
     <section className="w-full bg-white py-12 lg:py-20">
@@ -66,7 +118,8 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
             {title}
           </h2>
 
-          {embedUrl ? (
+          {/* Contenido: video o imagen de fallback */}
+          {videoValid === true && embedUrl ? (
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black">
               <iframe
                 src={embedUrl}
@@ -77,10 +130,10 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
                 loading="lazy"
               />
             </div>
-          ) : imageUrl ? (
+          ) : videoValid === false && fallbackSrc ? (
             <div className="flex justify-center lg:justify-end">
               <Image
-                src={imageUrl}
+                src={fallbackSrc}
                 alt={title}
                 width={521}
                 height={313}
@@ -88,7 +141,22 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
                 sizes="(max-width: 768px) 373px, (max-width: 1024px) 287px, 521px"
               />
             </div>
-          ) : null}
+          ) : fallbackSrc ? (
+            /* Estado pendiente (videoValid === null): mostrar imagen mientras se valida */
+            <div className="flex justify-center lg:justify-end">
+              <Image
+                src={fallbackSrc}
+                alt={title}
+                width={521}
+                height={313}
+                className="w-[373px] h-[200px] rounded-[31.5px] md:w-[287px] md:h-[172px] md:rounded-[24.24px] lg:w-[521px] lg:h-[313px] lg:rounded-[44px] object-cover"
+                sizes="(max-width: 768px) 373px, (max-width: 1024px) 287px, 521px"
+              />
+            </div>
+          ) : (
+            /* Estado pendiente sin fallback: espacio reservado para evitar layout shift */
+            <div className="relative w-full aspect-video rounded-2xl bg-gray-100 animate-pulse" />
+          )}
         </div>
       </div>
     </section>
@@ -96,3 +164,4 @@ const HeroVideoSectionUnified: React.FC<HeroVideoSectionProps> = ({
 };
 
 export default HeroVideoSectionUnified;
+
