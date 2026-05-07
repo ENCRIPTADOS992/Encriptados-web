@@ -926,7 +926,8 @@
     },
     "productCard": {
       "buy": "Comprar",
-      "moreInfo": "Más información"
+      "moreInfo": "Más información",
+      "fromPrice": "Da"
     }
   },
   "DistributorsPage": {
@@ -2053,7 +2054,7 @@
         "threeMonths": "3 Meses",
         "sixMonths": "12 Meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "250$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2137,7 +2138,7 @@
         "threeMonths": "3 Meses",
         "sixMonths": "12 Meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "729$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2262,7 +2263,7 @@
         "threeMonths": "3 Meses",
         "sixMonths": "3 Meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "650$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2387,7 +2388,7 @@
         "threeMonths": "3 Meses",
         "sixMonths": "6 Meses + Celular gratis"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "650$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2512,7 +2513,7 @@
         "twelveMonths": "Licencia 3 meses",
         "sixMonths": "Licencia 6 meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "550$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2602,7 +2603,7 @@
       "license": {
         "sixMonths": "6 Meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "600$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2686,7 +2687,7 @@
         "threeMonths": "Licencia 3 meses",
         "sixMonths": "Licencia 6 meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "375$ USD",
       "buttons": {
         "buyNow": "Comprar",
@@ -2769,7 +2770,7 @@
         "threeMonths": "Licencia 3 meses",
         "sixMonths": "Licencia 6 meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "Da",
       "price": "375$ USD",
       "buttons": {
         "buyNow": "Comprar",

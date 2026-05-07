@@ -940,7 +940,8 @@
     },
     "productCard": {
       "buy": "Buy",
-      "moreInfo": "Info"
+      "moreInfo": "Info",
+      "fromPrice": "From"
     }
   },
   "DistributorsPage": {
@@ -3318,7 +3319,7 @@
         "threeMonths": "Licencia 3 meses",
         "sixMonths": "Licencia 6 meses"
       },
-      "pricePrefix": "Desde",
+      "pricePrefix": "From",
       "price": "375$ USD",
       "buttons": {
         "buyNow": "Comprar ahora",

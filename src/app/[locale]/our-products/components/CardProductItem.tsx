@@ -131,7 +131,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
       </h3>
 
       <p className="text-center text-xs text-white dark:text-gray-400 mb-4">
-        Desde ${minPrice} USD
+        {t("fromPrice")} ${minPrice} USD
       </p>
 
       {showPeriodSelector && (

@@ -935,7 +935,8 @@
     },
     "productCard": {
       "buy": "Comprar",
-      "moreInfo": "Más información"
+      "moreInfo": "Más información",
+      "fromPrice": "Desde"
     }
   },
   "DistributorsPage": {

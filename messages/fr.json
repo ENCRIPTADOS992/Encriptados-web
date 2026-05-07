@@ -924,7 +924,8 @@
     },
     "productCard": {
       "buy": "Acheter",
-      "moreInfo": "Info"
+      "moreInfo": "Info",
+      "fromPrice": "À partir de"
     },
     "faqs": {
       "title": "Questions fréquentes",
