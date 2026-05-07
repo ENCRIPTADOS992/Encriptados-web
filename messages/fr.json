@@ -463,6 +463,8 @@
       "card3": "La SIM génère un numéro de remplacement aléatoire à chaque appel pour plus d'anonymat"
     },
     "coverageMoreThan200CountriesTitle": "Couverture dans plus de 200 pays",
+    "coverageMoreThan200CountriesTitleBlue": "Couverture dans ",
+    "coverageMoreThan200CountriesTitleWhite": "plus de 200 pays",
     "coverageMoreThan200CountriesDescription": "Communication sécurisée sans frontières",
     "downloadAppTitle": "Téléchargez l'application pour iOS et Android",
     "downloadAppDescription": "Téléchargez l'application pour iOS et Android",

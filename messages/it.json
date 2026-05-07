@@ -463,6 +463,8 @@
       "card3": "La SIM genera un numero sostitutivo casuale per ogni chiamata per un maggiore anonimato"
     },
     "coverageMoreThan200CountriesTitle": "Copertura in oltre 200 paesi",
+    "coverageMoreThan200CountriesTitleBlue": "Copertura in ",
+    "coverageMoreThan200CountriesTitleWhite": "oltre 200 paesi",
     "coverageMoreThan200CountriesDescription": "Comunicazione sicura e senza frontiere",
     "downloadAppTitle": "Scarica l'App per iOS e Android",
     "downloadAppDescription": "Scarica l'App per iOS e Android",

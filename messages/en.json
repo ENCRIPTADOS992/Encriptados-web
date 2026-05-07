@@ -468,6 +468,8 @@
       "card3": "The SIM generates a random substitute number for each call for increased anonymity"
     },
     "coverageMoreThan200CountriesTitle": "Coverage in over 200 countries",
+    "coverageMoreThan200CountriesTitleBlue": "Coverage in ",
+    "coverageMoreThan200CountriesTitleWhite": "over 200 countries",
     "coverageMoreThan200CountriesDescription": "Secure communication without borders",
     "downloadAppTitle": "Download the app for iOS & Android",
     "downloadAppDescription": "Download the app for iOS & Android",

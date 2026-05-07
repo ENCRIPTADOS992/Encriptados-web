@@ -34,10 +34,10 @@ const BannerCoverage = () => {
           <div className="max-w-[500px]">
             <h2 className="text-[28px] sm:text-[36px] md:text-[44px] lg:text-[52px] font-bold leading-[1.1] mb-3 md:mb-4">
               <span className="text-[#33CDFB]">
-                {t("coverageMoreThan200CountriesTitle").split("más")[0]}
+                {t("coverageMoreThan200CountriesTitleBlue")}
               </span>
               <span className="text-white">
-                más{t("coverageMoreThan200CountriesTitle").split("más")[1]}
+                {t("coverageMoreThan200CountriesTitleWhite")}
               </span>
             </h2>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-gray-300 leading-relaxed">
