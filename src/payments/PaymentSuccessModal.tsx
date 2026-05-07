@@ -39,6 +39,8 @@ export type ProductSuccessInfo = {
   osType?: "android" | "ios";
   /** Fecha de entrega estimada (solo SIM Física) */
   estimatedDelivery?: string;
+  /** Detalle de activaciones (solo Activar Apps) — ej: "5 Nro. temporales" */
+  activationDetail?: string;
 };
 
 type Props = {
@@ -166,7 +168,15 @@ export default function PaymentSuccessModal({ open, onClose, intent, orderId, pr
                 </span>
               </div>
 
-              {/* Row 2: OS type (SecureCrypt) */}
+              {/* Row 2: Activation detail (Activar Apps only) */}
+              {product.activationDetail ? (
+                <div className="flex items-center justify-between px-4 py-3">
+                  <span className="text-[#333]">{t("activationDetail")}:</span>
+                  <span className="font-semibold text-[#101010]">{product.activationDetail}</span>
+                </div>
+              ) : null}
+
+              {/* Row 3: OS type (SecureCrypt) */}
               {product.osType ? (
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-[#333]">{t("operatingSystem")}:</span>

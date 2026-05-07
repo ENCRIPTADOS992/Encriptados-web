@@ -2968,7 +2968,8 @@
     "wantMyUserBtn": "Quiero mi usuario",
     "roningCodeBtn": "Código RONING",
     "rechargeBtn": "Recargar",
-    "details": "Detalle"
+    "details": "Detalle",
+    "activationDetail": "Activaciones"
   },
   "TestingProducts": {
     "badge": "Nuestros productos",

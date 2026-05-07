@@ -363,6 +363,12 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
                 ? `${lt} ${lt === 1 ? t("month") : t("months")}`
                 : undefined;
 
+            // Activar Apps (categoría 371): incluir detalle de activaciones del variant seleccionado
+            const isActivarApps = product?.category?.id === 371;
+            const activationDetail = isActivarApps
+              ? String((selectedVariant as any)?.attributes?.[0]?.option ?? "").trim() || undefined
+              : undefined;
+
             onPaymentSuccess({
               intent: data.intent,
               orderId: data.orderId,
@@ -377,6 +383,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
                 licenseMonths: !isNaN(lt) && lt > 0 ? lt : undefined,
                 licensePeriod,
                 osType: data.osType,
+                activationDetail,
               },
             });
           }
