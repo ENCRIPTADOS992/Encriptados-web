@@ -17,6 +17,7 @@ import RouterCamaleon from "../component/RouterCamaleon";
 import PrivateAppStore from "../component/PrivateAppStore";
 import ManageYourApps from "../component/ManageYourApps";
 import CustomizeAppCatalog from "../component/CustomizeAppCatalog";
+import ActivarAppsModules from "../component/ActivarAppsModules";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -467,6 +468,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
           {slug.includes("zi0n") && <ManageYourApps />}
 
           {slug.includes("galaxia-mdm") && <CustomizeAppCatalog />}
+
+          {slug === "activar-apps" && <ActivarAppsModules />}
 
           {videoUrl && (
             <HeroVideoSection
