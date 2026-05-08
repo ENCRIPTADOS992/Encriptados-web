@@ -39,11 +39,13 @@ export default function PurchaseScaffold({
   console.log("[Scaffold] mode:", mode);
 
   const productName = headerProps.product?.name ?? "";
+  const productId = headerProps.product?.id;
   const isMdmIphone = /secure\s*mdm\s*iphone/i.test(productName) ||
     /galaxia\s*mdm/i.test(productName);
   const isRouter = /camal[eé]on|router/i.test(productName);
   const isPhysicalSim =
     mode === "sim" && headerProps.shipping != null && headerProps.shipping > 0;
+  const isProduct61588 = productId === 61588;
 
   const AlertBox = ({ lines }: { lines: string[] }) => (
     <div className="flex gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
@@ -80,6 +82,13 @@ export default function PurchaseScaffold({
       {isPhysicalSim && (
         <AlertBox lines={[
           "Impuestos a cargo del comprador. Entrega: 5–7 días hábiles.",
+        ]} />
+      )}
+
+      {/* Alert for product 61588 */}
+      {isProduct61588 && (
+        <AlertBox lines={[
+          "Descarga la App Encriptados para poder activar tus aplicaciones favoritas",
         ]} />
       )}
 
