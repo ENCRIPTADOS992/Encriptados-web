@@ -40,10 +40,10 @@ export default function ActivarAppsModules() {
             height={56}
             className="hidden desktop:block mb-2"
           />
-          <h2 className="text-white font-bold text-[22px] tablet:text-[28px] desktop:text-[36px] text-center desktop:text-left leading-tight">
+          <h2 className="text-white font-bold text-[20px] tablet:text-[28px] desktop:text-[38px] text-center desktop:text-left leading-tight">
             Activa tus apps al instante
           </h2>
-          <p className="text-white text-[14px] tablet:text-[16px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[400px] leading-relaxed">
+          <p className="text-white text-[14px] tablet:text-[16px] desktop:text-[22px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[400px] leading-relaxed">
             Utiliza un número temporal y accede a{" "}
             <span className="font-bold">más de 30 aplicaciones</span> de forma
             rápida y segura desde tu dispositivo.
@@ -85,10 +85,10 @@ export default function ActivarAppsModules() {
               height={56}
               className="hidden desktop:block mb-2"
             />
-            <h2 className="text-white font-bold text-[22px] tablet:text-[28px] desktop:text-[36px] text-center desktop:text-left leading-tight">
+            <h2 className="text-white font-bold text-[20px] tablet:text-[28px] desktop:text-[38px] text-center desktop:text-left leading-tight">
               Más de 20 países disponibles
             </h2>
-            <p className="text-white text-[14px] tablet:text-[16px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[400px] leading-relaxed">
+            <p className="text-white text-[14px] tablet:text-[16px] desktop:text-[22px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[400px] leading-relaxed">
               Activa tus apps con números temporales de diversos países sin usar
               tu número personal.
             </p>
