@@ -12,21 +12,21 @@ export default function ActivarAppsModules() {
       <div className="relative w-full overflow-hidden rounded-[20px] mobile:h-[564px] tablet:h-[562px]">
         {/* Background Images - Using custom breakpoints to avoid globals.css md:hidden override */}
         <Image
-          src="/images/activar-apps/mobile-acivar.instantaneo-background.png"
+          src="/images/activar-apps/mobile-acivar.instantaneo-background.webp"
           alt=""
           fill
           className="object-cover hidden mobile:block desktop:!hidden"
           priority
         />
         <Image
-          src="/images/activar-apps/tablet-acivar.instantaneo-background.png"
+          src="/images/activar-apps/tablet-acivar.instantaneo-background.webp"
           alt=""
           fill
           className="object-cover hidden tablet:block desktop:!hidden"
           priority
         />
         <Image
-          src="/images/activar-apps/desktop-acivar.instantaneo.png"
+          src="/images/activar-apps/desktop-acivar.instantaneo.webp"
           alt=""
           width={2544}
           height={1084}
@@ -37,7 +37,7 @@ export default function ActivarAppsModules() {
         {/* Text Overlay */}
         <div className="absolute inset-0 z-10 flex flex-col items-center desktop:items-start justify-start pt-10 px-6 tablet:pt-12 desktop:justify-center desktop:pt-0 desktop:px-16">
           <Image
-            src="/images/activar-apps/add_task.png"
+            src="/images/activar-apps/add_task.webp"
             alt=""
             width={56}
             height={56}
@@ -58,19 +58,19 @@ export default function ActivarAppsModules() {
       <div className="relative w-full overflow-hidden rounded-[20px] mobile:h-[564px] tablet:h-[562px]">
         {/* Background Images */}
         <Image
-          src="/images/activar-apps/mobile-countries-background.png"
+          src="/images/activar-apps/mobile-countries-background.webp"
           alt=""
           fill
           className="object-cover hidden mobile:block desktop:!hidden"
         />
         <Image
-          src="/images/activar-apps/tablet-countries-background.png"
+          src="/images/activar-apps/tablet-countries-background.webp"
           alt=""
           fill
           className="object-cover hidden tablet:block desktop:!hidden"
         />
         <Image
-          src="/images/activar-apps/desktop-countries-background.png"
+          src="/images/activar-apps/desktop-countries-background.webp"
           alt=""
           width={2544}
           height={1084}
@@ -82,7 +82,7 @@ export default function ActivarAppsModules() {
           {/* Text */}
           <div className="flex flex-col items-center desktop:items-start desktop:justify-center pt-10 px-6 tablet:pt-12 desktop:pt-0 desktop:px-16 desktop:w-[45%]">
             <Image
-              src="/images/activar-apps/globe_location_pin.png"
+              src="/images/activar-apps/globe_location_pin.webp"
               alt=""
               width={56}
               height={56}
@@ -99,21 +99,21 @@ export default function ActivarAppsModules() {
           {/* Country Group Images - Responsive */}
           <div className="flex-1 flex items-center justify-center px-4 py-4 desktop:items-center desktop:justify-end desktop:pr-12">
             <Image
-              src="/images/activar-apps/mobile-group-countries.png"
+              src="/images/activar-apps/mobile-group-countries.webp"
               alt="Países disponibles"
               width={746}
               height={552}
               className="w-[85%] max-w-[373px] h-auto hidden mobile:block"
             />
             <Image
-              src="/images/activar-apps/tablet-group-countries.png"
+              src="/images/activar-apps/tablet-group-countries.webp"
               alt="Países disponibles"
               width={1078}
               height={456}
               className="w-[80%] max-w-[539px] h-auto hidden tablet:block"
             />
             <Image
-              src="/images/activar-apps/desktop-group-countries.png"
+              src="/images/activar-apps/desktop-group-countries.webp"
               alt="Países disponibles"
               width={1078}
               height={456}
