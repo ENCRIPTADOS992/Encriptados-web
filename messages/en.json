@@ -1638,7 +1638,11 @@
       "videoTitle": "{productName}, your secure communication app",
       "productNotAvailable": "This product is not yet available in the catalog.",
       "productComingSoon": "This product will be added soon.",
-      "productLoadError": "Could not load product information."
+      "productLoadError": "Could not load product information.",
+      "activarAppsTitle": "Activate your apps instantly",
+      "activarAppsDescription": "Use a temporary number and access <bold>more than 30 applications</bold> quickly and securely from your device.",
+      "activarAppsCountriesTitle": "More than 20 countries available",
+      "activarAppsCountriesDescription": "Activate your apps with temporary numbers from various countries without using your personal number."
     }
   },
   "silentCircle": {

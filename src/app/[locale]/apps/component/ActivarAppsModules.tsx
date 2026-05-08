@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function ActivarAppsModules() {
+  const t = useTranslations("appsShared.productTemplate");
+
   return (
     <section className="w-full max-w-7xl mx-auto px-4 py-8 flex flex-col gap-6">
       {/* Module 1: Activa tus apps al instante */}
@@ -32,7 +35,7 @@ export default function ActivarAppsModules() {
         />
 
         {/* Text Overlay */}
-        <div className="absolute inset-0 z-10 flex flex-col items-center desktop:items-start justify-start pt-10 px-6 tablet:pt-12 desktop:pt-16 desktop:px-16">
+        <div className="absolute inset-0 z-10 flex flex-col items-center desktop:items-start justify-start pt-10 px-6 tablet:pt-12 desktop:justify-center desktop:pt-0 desktop:px-16">
           <Image
             src="/images/activar-apps/add_task.png"
             alt=""
@@ -40,13 +43,13 @@ export default function ActivarAppsModules() {
             height={56}
             className="hidden desktop:block mb-2"
           />
-          <h2 className="text-white font-bold text-[20px] tablet:text-[28px] desktop:text-[38px] text-center desktop:text-left leading-tight">
-            Activa tus apps al instante
+          <h2 className="text-white font-bold text-[20px] tablet:text-[28px] desktop:text-[32px] text-center desktop:text-left leading-tight desktop:max-w-[540px]">
+            {t("activarAppsTitle")}
           </h2>
-          <p className="text-white text-[14px] tablet:text-[16px] desktop:text-[22px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[400px] leading-relaxed">
-            Utiliza un número temporal y accede a{" "}
-            <span className="font-bold">más de 30 aplicaciones</span> de forma
-            rápida y segura desde tu dispositivo.
+          <p className="text-white text-[14px] tablet:text-[16px] desktop:text-[18px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[540px] leading-relaxed">
+            {t.rich("activarAppsDescription", {
+              bold: (chunks) => <span className="font-bold">{chunks}</span>,
+            })}
           </p>
         </div>
       </div>
@@ -77,7 +80,7 @@ export default function ActivarAppsModules() {
         {/* Content Overlay */}
         <div className="absolute inset-0 z-10 flex flex-col desktop:flex-row">
           {/* Text */}
-          <div className="flex flex-col items-center desktop:items-start pt-10 px-6 tablet:pt-12 desktop:pt-16 desktop:px-16 desktop:w-[45%]">
+          <div className="flex flex-col items-center desktop:items-start desktop:justify-center pt-10 px-6 tablet:pt-12 desktop:pt-0 desktop:px-16 desktop:w-[45%]">
             <Image
               src="/images/activar-apps/globe_location_pin.png"
               alt=""
@@ -85,12 +88,11 @@ export default function ActivarAppsModules() {
               height={56}
               className="hidden desktop:block mb-2"
             />
-            <h2 className="text-white font-bold text-[20px] tablet:text-[28px] desktop:text-[38px] text-center desktop:text-left leading-tight">
-              Más de 20 países disponibles
+            <h2 className="text-white font-bold text-[20px] tablet:text-[28px] desktop:text-[32px] text-center desktop:text-left leading-tight desktop:max-w-[540px]">
+              {t("activarAppsCountriesTitle")}
             </h2>
-            <p className="text-white text-[14px] tablet:text-[16px] desktop:text-[22px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[400px] leading-relaxed">
-              Activa tus apps con números temporales de diversos países sin usar
-              tu número personal.
+            <p className="text-white text-[14px] tablet:text-[16px] desktop:text-[18px] text-center desktop:text-left mt-3 max-w-[300px] tablet:max-w-[380px] desktop:max-w-[540px] leading-relaxed">
+              {t("activarAppsCountriesDescription")}
             </p>
           </div>
 
