@@ -1508,7 +1508,11 @@
       "videoTitle": "{productName}, seu aplicativo de comunicação segura",
       "productNotAvailable": "Este produto ainda não está disponível no catálogo.",
       "productComingSoon": "Este produto será adicionado em breve.",
-      "productLoadError": "Não foi possível carregar as informações do produto."
+      "productLoadError": "Não foi possível carregar as informações do produto.",
+      "activarAppsTitle": "Ative seus apps instantaneamente",
+      "activarAppsDescription": "Use um número temporário e acesse <bold>mais de 30 aplicativos</bold> de forma rápida e segura no seu dispositivo.",
+      "activarAppsCountriesTitle": "Mais de 20 países disponíveis",
+      "activarAppsCountriesDescription": "Ative seus apps com números temporários de diversos países sem usar seu número pessoal."
     }
   },
   "ThreemaPage": {

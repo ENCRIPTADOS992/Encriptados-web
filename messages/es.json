@@ -1501,7 +1501,11 @@
       "videoTitle": "{productName}, tu app de comunicación segura",
       "productNotAvailable": "Este producto aún no está disponible en el catálogo.",
       "productComingSoon": "Este producto será añadido próximamente.",
-      "productLoadError": "No se pudo cargar la información del producto."
+      "productLoadError": "No se pudo cargar la información del producto.",
+      "activarAppsTitle": "Activa tus apps al instante",
+      "activarAppsDescription": "Utiliza un número temporal y accede a <bold>más de 30 aplicaciones</bold> de forma rápida y segura desde tu dispositivo.",
+      "activarAppsCountriesTitle": "Más de 20 países disponibles",
+      "activarAppsCountriesDescription": "Activa tus apps con números temporales de diversos países sin usar tu número personal."
     }
   },
   "silentCircle": {
