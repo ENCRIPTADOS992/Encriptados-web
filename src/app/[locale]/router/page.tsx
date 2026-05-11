@@ -350,6 +350,9 @@ export default function RouterPage() {
     product?.images?.[0]?.src ||
     ROUTER_CONFIG.productImage;
 
+  const videoUrl = String((product as any)?.videoUrl || "").trim();
+  const videoImage = String((product as any)?.videoImage || "").trim();
+
   return (
     <main className="bg-white min-h-screen">
       {/* Custom Key Visual for Router Camaleón */}
@@ -416,12 +419,12 @@ export default function RouterPage() {
       <RouterCamaleon />
 
       {/* Video Section - Priorizar datos del backend */}
-      {((product as any)?.videoUrl || ROUTER_CONFIG.videoUrl) && (
+      {(videoUrl || videoImage) && (
         <HeroVideoSection
-          videoUrl={(product as any)?.videoUrl || ROUTER_CONFIG.videoUrl}
+          videoUrl={videoUrl}
           title={(product as any)?.video_text || ROUTER_CONFIG.videoTitle}
           videoThumbnail={(product as any)?.videoThumbnail}
-          videoImage={(product as any)?.videoImage}
+          videoImage={videoImage}
         />
       )}
 

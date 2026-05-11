@@ -311,7 +311,9 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   };
 
   // URLs de video y tiendas de apps - Priorizar datos del backend
-  const videoUrl = (product as any)?.videoUrl || config?.videoUrl;
+  const backendVideoUrl = String((product as any)?.videoUrl || "").trim();
+  const videoImage = String((product as any)?.videoImage || "").trim();
+  const videoUrl = backendVideoUrl || (videoImage ? "" : config?.videoUrl || "");
   const videoText = (product as any)?.video_text || t("videoTitle", { productName: product?.name || "" });
   const apiAppStoreUrl = (product as any)?.appStoreUrl;
   const apiGooglePlayUrl = (product as any)?.googlePlayUrl;
@@ -471,16 +473,16 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {slug === "activar-apps" && <ActivarAppsModules />}
 
-          {videoUrl && (
+          {(videoUrl || videoImage) && (
             <HeroVideoSection
               title={videoText}
               videoUrl={videoUrl}
               videoThumbnail={(product as any)?.videoThumbnail}
-              videoImage={(product as any)?.videoImage}
+              videoImage={videoImage}
             />
           )}
 
-          {!videoUrl && product?.id === 61588 && (
+          {!videoUrl && !videoImage && product?.id === 61588 && (
             <HeroVideoSection
               title={videoText}
               imageUrl="https://encriptados.es/wp-content/uploads/2026/05/Activar-app-logo.webp"
