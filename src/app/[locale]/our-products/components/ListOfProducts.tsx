@@ -822,8 +822,16 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     if (v == null) return undefined;
     const gbNum = typeof v.gb === 'number' ? v.gb : parseInt(v.gb, 10);
     if (gbNum > 0) return `${gbNum} GB`;
-    if (v.planTag) return v.planTag;
-    return v.name || undefined;
+    if (v.planTag) {
+      // Si planTag es un número puro (ej: "5"), agregar el sufijo " GB"
+      const trimmed = String(v.planTag).trim();
+      return /^\d+$/.test(trimmed) ? `${trimmed} GB` : trimmed;
+    }
+    if (v.name) {
+      const trimmedName = String(v.name).trim();
+      return /^\d+$/.test(trimmedName) ? `${trimmedName} GB` : trimmedName;
+    }
+    return undefined;
   };
 
   const buildTimBadges = (p: ExpandedProduct): TimBadges | undefined => {

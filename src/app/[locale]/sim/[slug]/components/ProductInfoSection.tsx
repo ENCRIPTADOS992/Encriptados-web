@@ -223,24 +223,28 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({
           {/* Benefits Column - Segunda en móvil, primera en desktop */}
           <motion.div className="space-y-6 order-2 lg:order-1" variants={textVariants}>
             {/* Icon and Title */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ background: "#35CDFB" }}
-              >
-                <SimIconSvg width={24} height={24} color="white" />
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: "#35CDFB" }}
+                >
+                  <SimIconSvg width={24} height={24} color="white" />
+                </div>
+                <h1 className="text-[28px] sm:text-[36px] font-bold text-gray-900 leading-tight">
+                  {(() => {
+                    if (!productName) return "";
+                    const withSpaces = productName.replace(/-/g, " ");
+                    return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
+                  })()}
+                </h1>
               </div>
-              <h1 className="text-[36px] font-bold text-gray-900 leading-tight">
-                {(() => {
-                  if (!productName) return "";
-                  const withSpaces = productName.replace(/-/g, " ");
-                  return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
-                })()}
-              </h1>
               {gbBadge && (
-                <span className="inline-flex items-center justify-center rounded-full bg-[#1CB9EC] text-[#010101] text-sm font-semibold px-3 py-1 shadow-md">
-                  {gbBadge}
-                </span>
+                <div>
+                  <span className="inline-flex items-center justify-center rounded-full bg-[#1CB9EC] text-[#010101] text-sm font-semibold px-3 py-1 shadow-md">
+                    {gbBadge}
+                  </span>
+                </div>
               )}
             </div>
 
