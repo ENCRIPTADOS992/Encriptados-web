@@ -49,6 +49,8 @@ interface ModalPaymentParams {
   initialRegionCode?: string;
   /** URL del icono/logo del producto para mostrar en el modal de éxito */
   iconUrl?: string;
+  /** Detalle de activaciones para Activar Apps, ej: "1 Nro. temporal" */
+  initialActivationDetail?: string;
 }
 
 interface ModalPaymentContextProps {

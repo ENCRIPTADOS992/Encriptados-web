@@ -23,7 +23,9 @@ const mapSelectedOptionToKind = (selectedOption?: number): CategoryKind | null =
     case 40: return "SIM";
     case 35: return "SOFTWARE";
     case 38: return "APLICACIONES";
-    case 41: return "ROUTERS";    case 371: return "APLICACIONES"; // Activar Apps    default: return null;
+    case 41: return "ROUTERS";
+    case 371: return "APLICACIONES"; // Activar Apps
+    default: return null;
   }
 };
 

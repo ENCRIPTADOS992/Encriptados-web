@@ -98,10 +98,13 @@ const CardProduct: React.FC<CardSimProps> = ({
   const handleBuy = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct });
+    const selectedOption = Number(filters.selectedOption);
+    const isActivarApps = selectedOption === 371 || /activar\s*apps?/i.test(headerTitle);
+    const modalSelectedOption = isActivarApps ? 371 : selectedOption;
     openModal({
       productid: id.toString(),
       languageCode: "es",
-      selectedOption: Number(filters.selectedOption),
+      selectedOption: modalSelectedOption,
       initialPrice: numericPrice,
       variantId: variantId,
       variants,
@@ -113,7 +116,8 @@ const CardProduct: React.FC<CardSimProps> = ({
       initialRegionCode: badges?.country?.code,
       flagUrl: badges?.country?.flagUrl,
       iconUrl: iconUrl,
-      mode: Number(filters.selectedOption) === 40 ? "sim" : undefined,
+      initialActivationDetail: isActivarApps ? badges?.tag : undefined,
+      mode: modalSelectedOption === 40 ? "sim" : undefined,
     });
   };
 
@@ -157,7 +161,8 @@ const CardProduct: React.FC<CardSimProps> = ({
 
     // Determinar categoría correcta
     const isRouter = (headerTitle || "").toLowerCase().includes("router");
-    params.set("categoryId", isRouter ? "36" : "40"); // 36=Router, 40=SIMs
+    const isActivarApps = /activar\s*apps?/i.test(headerTitle || "");
+    params.set("categoryId", isActivarApps ? "371" : isRouter ? "36" : "40"); // 36=Router, 40=SIMs, 371=Activar Apps
 
     // Usar variantId si está disponible (prioridad para seguridad)
     if (variantId) params.set("variantId", String(variantId));

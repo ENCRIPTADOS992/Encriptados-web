@@ -162,7 +162,7 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const normVariants = rawVariants
     .map((v) => ({ ...v, months: toMonths(v.licensetime) }))
-    .filter((v) => v.months !== undefined);
+    .filter((v): v is Variant & { months: number } => v.months !== undefined);
 
   // Variantes seleccionables en el dropdown — excluir Pre-Activación (months=0) de la web
   // y ordenar por duración ascendente (3, 6, 12, ...)
@@ -863,9 +863,9 @@ const PurchaseHeader: React.FC<Props> = ({
                           >
                             {isActivarAppsProduct
                               ? getActivarAppsVariantLabel(v)
-                              : v.months === 0
+                              : (v as Variant & { months: number }).months === 0
                                 ? (t("freeTrial") || "Prueba gratis")
-                                : `${v.months} Meses`}
+                                : `${(v as Variant & { months: number }).months} Meses`}
                           </button>
                         );
                       })}

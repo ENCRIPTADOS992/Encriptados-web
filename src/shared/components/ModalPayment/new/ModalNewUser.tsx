@@ -14,7 +14,16 @@ import { validateCoupon } from "@/lib/payments/orderApi";
 import { useToast } from "@/shared/context/ToastContext";
 import { useTranslations } from "next-intl";
 
-type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
+type Variant = {
+  id: number;
+  licensetime: number | string;
+  price: number;
+  sku?: string;
+  image?: string;
+  name?: string;
+  label?: string;
+  attributes?: Array<{ name?: string; option?: string }>;
+};
 
 type ModalProduct = {
   variants?: Variant[];
@@ -34,7 +43,13 @@ type SilentPhoneMode = "new_user" | "roning_code" | "recharge";
 
 export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params, openModal, closeModal } = useModalPayment();
-  const { productid, initialPrice, variantId, iconUrl: paramIconUrl } = (params || {}) as { productid?: string; initialPrice?: number; variantId?: number; iconUrl?: string };
+  const { productid, initialPrice, variantId, iconUrl: paramIconUrl, initialActivationDetail } = (params || {}) as {
+    productid?: string;
+    initialPrice?: number;
+    variantId?: number;
+    iconUrl?: string;
+    initialActivationDetail?: string;
+  };
   const { payUserId, payRoaming, payRenewal, loading } = useCheckout();
   const { formType, policy } = useFormPolicy();
   const toast = useToast();
@@ -363,10 +378,20 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
                 ? `${lt} ${lt === 1 ? t("month") : t("months")}`
                 : undefined;
 
-            // Activar Apps (categoría 371): incluir detalle de activaciones del variant seleccionado
-            const isActivarApps = product?.category?.id === 371;
+            // Activar Apps: incluir detalle de activaciones del variant seleccionado.
+            const selectedOption = Number((params as any)?.selectedOption ?? NaN);
+            const isActivarApps =
+              product?.category?.id === 371 ||
+              selectedOption === 371 ||
+              /activar\s*apps?/i.test(product?.name ?? "");
             const activationDetail = isActivarApps
-              ? String((selectedVariant as any)?.attributes?.[0]?.option ?? "").trim() || undefined
+              ? String(
+                  selectedVariant?.attributes?.[0]?.option ??
+                  initialActivationDetail ??
+                  selectedVariant?.label ??
+                  selectedVariant?.name ??
+                  ""
+                ).trim() || undefined
               : undefined;
 
             onPaymentSuccess({
