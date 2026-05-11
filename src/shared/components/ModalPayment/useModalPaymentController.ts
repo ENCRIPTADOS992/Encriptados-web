@@ -73,6 +73,17 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
 
+  const formatGbBadge = (raw?: string | null) => {
+    const value = String(raw ?? "").trim();
+    if (!value) return undefined;
+    if (/^\d+(?:[.,]\d+)?$/i.test(value)) return `${value.replace(",", ".")} GB`;
+    if (/^\d+(?:[.,]\d+)?\s*(gb|gigas?)$/i.test(value)) {
+      const amount = value.match(/^\d+(?:[.,]\d+)?/)?.[0]?.replace(",", ".");
+      return amount ? `${amount} GB` : value.toUpperCase();
+    }
+    return value.toUpperCase();
+  };
+
   const isEncryptedSim = React.useMemo(() => {
     const p: any = params || {};
     const provP = norm(p.provider || p.brand || "");
@@ -172,7 +183,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       if (!productIdFromUrl) return;
 
       // Extract additional SIM parameters from URL
-      const gbFromUrl = search.get("gb")?.toUpperCase();
+      const gbFromUrl = formatGbBadge(search.get("gb"));
       const regionFromUrl = search.get("region");
       const regionCodeFromUrl = search.get("regionCode");
       const flagUrlFromUrl = search.get("flagUrl");

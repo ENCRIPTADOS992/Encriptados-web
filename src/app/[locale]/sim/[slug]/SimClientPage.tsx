@@ -69,6 +69,17 @@ const sectionVariants = {
   },
 };
 
+function formatGbBadge(raw: string | null | undefined): string | undefined {
+  const value = String(raw ?? "").trim();
+  if (!value) return undefined;
+  if (/^\d+(?:[.,]\d+)?$/i.test(value)) return `${value.replace(",", ".")} GB`;
+  if (/^\d+(?:[.,]\d+)?\s*(gb|gigas?)$/i.test(value)) {
+    const amount = value.match(/^\d+(?:[.,]\d+)?/)?.[0]?.replace(",", ".");
+    return amount ? `${amount} GB` : value.toUpperCase();
+  }
+  return value.toUpperCase();
+}
+
 export default function SimProductPageContent({ slug, locale, initialProduct }: PageProps) {
   const { openModal } = useModalPayment();
   const router = useRouter();
@@ -86,6 +97,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   const productIdFromUrl = searchParams.get("productId");
   const priceFromUrl = searchParams.get("price");
   const gbFromUrl = searchParams.get("gb")?.toUpperCase();
+  const gbBadgeLabel = formatGbBadge(gbFromUrl);
   const regionFromUrl = searchParams.get("region");
   const regionCodeFromUrl = searchParams.get("regionCode");
   const flagUrlFromUrl = searchParams.get("flagUrl");
@@ -427,7 +439,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       selectedOption: 40,
       mode: "sim",
       initialPrice: priceOverride ?? effectivePrice,
-      initialGb: gbFromUrl || undefined,
+      initialGb: gbBadgeLabel,
       initialRegion: regionFromUrl || undefined,
       initialRegionCode: regionCodeFromUrl || undefined,
       flagUrl: flagUrlFromUrl || undefined,
@@ -519,7 +531,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             appStoreUrl="https://apps.apple.com/app/encriptados"
             googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
             apkUrl="https://encriptados.io/apk"
-            gbBadge={gbFromUrl || undefined}
+            gbBadge={gbBadgeLabel}
             regionBadge={regionFromUrl || undefined}
             regionCode={regionCodeFromUrl || undefined}
             flagUrl={flagUrlFromUrl || undefined}
