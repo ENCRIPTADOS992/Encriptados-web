@@ -2,6 +2,55 @@
 
 ## Estado Actual
 
+### Endpoint unificado para app
+
+La app puede consumir la misma lista híbrida que usa la web desde:
+
+```http
+GET /api/app-blog?lang=es
+GET /api/app-blog?lang=es&page=1&per_page=20
+```
+
+El endpoint combina:
+
+- WordPress REST estándar desde `NEXT_PUBLIC_WP_BLOG_API` (fallback: `https://encriptados.io/wp-json`)
+- Blogs Markdown locales en `content/blog/`
+
+Respuesta:
+
+```json
+{
+  "locale": "es",
+  "total": 115,
+  "page": 1,
+  "perPage": 20,
+  "hasMore": true,
+  "sources": {
+    "wordpress": 112,
+    "markdown": 3
+  },
+  "items": [
+    {
+      "id": "wp-60831",
+      "slug": "60831",
+      "source": "wordpress",
+      "title": "...",
+      "description": "...",
+      "image": "https://...",
+      "imageFull": "https://...",
+      "author": "Equipo Encriptados",
+      "date": "2026-05-...",
+      "path": "/es/blog/60831",
+      "url": "https://www.encriptados.net/es/blog/60831"
+    }
+  ]
+}
+```
+
+Si `page` y `per_page` no se envían, devuelve todos los artículos. Las imágenes locales Markdown se devuelven como URLs absolutas para consumo externo. La respuesta incluye CORS básico (`GET`, `OPTIONS`) y cache HTTP corto.
+
+Documentación técnica para el desarrollador de la app: [`docs/app/APP-BLOG-ENDPOINT.md`](../docs/app/APP-BLOG-ENDPOINT.md).
+
 ### Arquitectura
 
 El blog actual es 100% client-side. Todas las páginas usan `"use client"` y obtienen los datos directamente desde la API REST de WordPress en `encriptados.es`.

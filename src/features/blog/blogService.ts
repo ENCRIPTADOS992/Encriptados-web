@@ -5,8 +5,9 @@ import type {
   WordPressBlogItem,
 } from "./types";
 
-const WP_BLOGS_BASE =
-  process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
+type AppBlogListResponse = {
+  items: BlogPostCard[];
+};
 
 /** Resolve the base URL for internal API calls (works SSR + client) */
 function getBaseUrl(): string {
@@ -162,10 +163,25 @@ export async function fetchMarkdownBlogPost(
 
 // ─── Unified (Hybrid) ───────────────────────────────────────
 
-/** Fetch first batch of blog cards (10 WP + all MD) — fast initial load */
+/** Fetch all blog cards from the same unified endpoint consumed by the app */
 export async function fetchAllBlogCards(
   locale: string,
 ): Promise<BlogPostCard[]> {
+  try {
+    const base = getBaseUrl();
+    const res = await fetch(
+      `${base}/api/app-blog?lang=${encodeURIComponent(locale)}`,
+      { cache: "no-store" },
+    );
+
+    if (res.ok) {
+      const data: AppBlogListResponse = await res.json();
+      return data.items;
+    }
+  } catch {
+    // Fall back to the legacy split fetch below.
+  }
+
   const [wpCards, mdCards] = await Promise.all([
     fetchWordPressBlogCards(locale),
     fetchMarkdownBlogCards(locale),
