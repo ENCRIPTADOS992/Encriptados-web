@@ -1,12 +1,7 @@
 import React from "react";
+import Image from "next/image";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
-import FilterRegionCountry from "./FilterRegionCountry";
-
-import { useFormContext } from "react-hook-form";
-import IraSimIcon from "./simicons/IraSimIcon";
-import TimSimIcon from "./simicons/TimSimIcon";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 interface FilterAppWithLicenseProps {
   filters: ProductFilters;
@@ -80,13 +75,37 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
     ),
   };
 
+  const providerLogoClass = "h-[25px] w-auto max-w-[144px] object-contain";
+
+  const encriptadosProviderIcon = (
+    <Image
+      src="/icons/sim_encriptada.svg"
+      alt=""
+      width={137}
+      height={34}
+      className={providerLogoClass}
+      loading="lazy"
+    />
+  );
+
+  const timProviderIcon = (
+    <Image
+      src="/icons/sim_tim.svg"
+      alt=""
+      width={106}
+      height={34}
+      className={providerLogoClass}
+      loading="lazy"
+    />
+  );
+
   const activarAppsProviderIcon = (
-    <img
+    <Image
       src="/icons/activar_apps.svg"
       alt=""
-      width={118}
-      height={25}
-      className="h-[25px] w-auto"
+      width={144}
+      height={34}
+      className={providerLogoClass}
       loading="lazy"
     />
   );
@@ -101,14 +120,12 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             {
               label: " ",
               value: "encriptados",
-              icon: <EncryptedLogoSvg width={100} height={25}
-              />
+              icon: encriptadosProviderIcon,
             },
             {
               label: " ",
               value: "tim",
-              icon: <TimSimIcon width={100} height={25}
-              />
+              icon: timProviderIcon,
             },
             {
               label: " ",

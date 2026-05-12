@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import ListOfFiltersButton from "./ListOfFiltersButton";
 import SimProductsBarIcon from "./icons/SimProductsBarIcon";
 import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
@@ -11,15 +12,12 @@ import FilterAppWithLicense from "./FilterAppWithLicense";
 import FilterRegionCountry from "./FilterRegionCountry";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
-import EncryptedLogoSvg from "@/shared/svgs/EncryptedLogoSvg";
-import TimSimIcon from "./simicons/TimSimIcon";
 
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
-
 import MobileMenuSvg from "@/shared/svgs/EncryptedLogoSvg";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
@@ -83,13 +81,37 @@ export default function FilterProductsBar({
   type ProviderType = "encriptados" | "tim" | "activarapps" | undefined;
   const currentProvider = filters.provider as ProviderType;
 
+  const providerLogoClass = "h-[25px] w-auto max-w-[144px] object-contain";
+
+  const encriptadosProviderIcon = (
+    <Image
+      src="/icons/sim_encriptada.svg"
+      alt=""
+      width={137}
+      height={34}
+      className={providerLogoClass}
+      loading="lazy"
+    />
+  );
+
+  const timProviderIcon = (
+    <Image
+      src="/icons/sim_tim.svg"
+      alt=""
+      width={106}
+      height={34}
+      className={providerLogoClass}
+      loading="lazy"
+    />
+  );
+
   const activarAppsProviderIcon = (
-    <img
+    <Image
       src="/icons/activar_apps.svg"
       alt=""
-      width={118}
-      height={25}
-      className="h-[25px] w-auto"
+      width={144}
+      height={34}
+      className={providerLogoClass}
       loading="lazy"
     />
   );
@@ -175,12 +197,12 @@ export default function FilterProductsBar({
               {
                 label: " ",
                 value: "encriptados",
-                icon: <EncryptedLogoSvg width={115} height={25} />
+                icon: encriptadosProviderIcon,
               },
               {
                 label: " ",
                 value: "tim",
-                icon: <TimSimIcon width={88} height={25} />
+                icon: timProviderIcon,
               },
               {
                 label: " ",
