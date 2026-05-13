@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type StickyPriceBannerDesktopProps = {
   visible: boolean;
@@ -20,6 +21,7 @@ const StickyPriceBannerDesktop: React.FC<StickyPriceBannerDesktopProps> = ({
   visible,
   productInfo,
 }) => {
+  const t = useTranslations("RouterUi");
   const [dismissed, setDismissed] = useState(false);
 
   if (!visible || dismissed) return null;
@@ -75,7 +77,7 @@ const StickyPriceBannerDesktop: React.FC<StickyPriceBannerDesktopProps> = ({
             onClick={productInfo.onBuy}
             className="bg-white text-[#161616] text-sm font-semibold px-5 py-3 rounded-lg hover:bg-white/90 transition"
           >
-            {productInfo.ctaLabel ?? "Comprar ahora"}
+            {productInfo.ctaLabel ?? t("buy")}
           </button>
         </div>
       </div>
@@ -83,7 +85,7 @@ const StickyPriceBannerDesktop: React.FC<StickyPriceBannerDesktopProps> = ({
       <button
         onClick={() => setDismissed(true)}
         className="absolute top-2 right-2 text-white/40 hover:text-white rounded-full w-7 h-7 flex items-center justify-center text-sm"
-        aria-label="Cerrar banner"
+        aria-label={t("closeBanner")}
       >
         ✕
       </button>

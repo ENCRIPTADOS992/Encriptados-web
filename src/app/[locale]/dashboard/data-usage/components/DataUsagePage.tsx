@@ -11,6 +11,7 @@ import GooglePlayGenericSvg from "@/shared/svgs/GooglePlayGenericSvg";
 import Image from "next/image";
 import Button from "@/shared/components/Button";
 import ArrowDown from "@/shared/svgs/ArrowDown";
+import { useTranslations } from "next-intl";
 
 type MenuOption = {
   label: string;
@@ -23,20 +24,21 @@ type CardUsageData = {
 };
 
 const DataUsagePage: React.FC = () => {
+  const t = useTranslations("DashboardPage.dataUsage");
   const { watch } = useFormContext();
   const Man = "/images/dashboard/man.png";
 
   const menuOptions: MenuOption[] = [
-    { label: "DATOS", value: "mobiledata" },
-    { label: "MINUTOS", value: "minutes" },
+    { label: t("menu.data"), value: "mobiledata" },
+    { label: t("menu.minutes"), value: "minutes" },
     { label: "MSI", value: "msi" },
   ];
 
   const cardUsageData: CardUsageData[] = [
-    { title: "Saldo consumido", price: "208.418 COP" },
-    { title: "Datos consumidos", price: "1.5GB" },
-    { title: "Minutos", price: "32min" },
-    { title: "Cambios IMSI", price: "5" },
+    { title: t("cards.balanceUsed"), price: "208.418 COP" },
+    { title: t("cards.dataUsed"), price: "1.5GB" },
+    { title: t("cards.minutes"), price: "32min" },
+    { title: t("cards.imsiChanges"), price: "5" },
   ];
 
   const currentMenu = watch("currentmenu") as "mobiledata" | "minutes" | "msi";
@@ -50,7 +52,7 @@ const DataUsagePage: React.FC = () => {
   return (
     <>
       <div className="flex  mt-2   items-center mb-8 gap-x-2">
-        <p className="text-[#777B7D] tracking-[0.2em] ">MI CONSUMO DE SIM:</p>
+        <p className="text-[#777B7D] tracking-[0.2em] ">{t("simUsage")}</p>
 
         <Button
           rounded="md"
@@ -70,7 +72,7 @@ const DataUsagePage: React.FC = () => {
       </div>
 
       <p className="text-[#777B7D] tracking-[0.2em]  mt-7 mb-2">
-        RECARGA RAPIDA:
+        {t("quickRecharge")}
       </p>
 
       {/* Sección que se ajustará responsivamente */}
@@ -88,9 +90,9 @@ const DataUsagePage: React.FC = () => {
           <div className="bg-cyan-black-gradient  rounded-2xl w-full lg:w-1/2 flex flex-col items-center lg:flex-row">
             <div className="flex flex-col justify-center w-full lg:w-6/12 p-5 text-center lg:text-left">
               <h1 className="font-bold text-2xl mb-2">
-                Recargar tu saldo desde la App y obtén 15% más
+                {t("promoTitle")}
               </h1>
-              <p className="mb-4">Descarga la App aquí:</p>
+              <p className="mb-4">{t("downloadApp")}</p>
               <div className="flex justify-center lg:justify-start gap-2">
                 <AppleGenericSvg />
                 <GooglePlayGenericSvg />
@@ -100,7 +102,7 @@ const DataUsagePage: React.FC = () => {
             {/* Ajuste de imagen para pantallas grandes */}
             <div className="relative h-[513px] w-full overflow-hidden md:h-[413px]">
               <Image
-                alt="Image"
+                alt={t("imageAlt")}
                 src={Man}
                 layout="fill"
                 objectFit="cover"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormContext, Controller } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 interface FilterItem {
   value: string;
@@ -9,25 +10,27 @@ interface FilterItem {
 }
 
 interface ListOfFiltersButtonProps {
-  items: FilterItem[];
+  items?: FilterItem[];
   name: string;
 }
 
 export default function FiltersOffers({
-  items = [
-    { value: "sims", label: "SIMS" },
-    { value: "aplicaciones", label: "Aplicaciones" },
-    { value: "sistemas", label: "Sistemas" },
-  ],
+  items,
   name = "navigation",
 }: ListOfFiltersButtonProps) {
+  const t = useTranslations("OffersPage");
   const { control, watch } = useFormContext();
   const selectedItem = watch(name);
+  const filterItems = items ?? [
+    { value: "sims", label: t("menu.sims") },
+    { value: "aplicaciones", label: t("menu.apps") },
+    { value: "sistemas", label: t("menu.system") },
+  ];
 
   return (
-    <nav className="w-full max-w-[720px] min-w-[320px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-2 sm:px-3 h-14 sm:h-16 overflow-hidden mx-auto" aria-label="Filtros de categorías de ofertas">
+    <nav className="w-full max-w-[720px] min-w-[320px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-2 sm:px-3 h-14 sm:h-16 overflow-hidden mx-auto" aria-label={t("filtersAriaLabel")}>
       <div className="flex items-center h-full gap-1">
-        {items?.map((item, index) => (
+        {filterItems.map((item, index) => (
           <Controller
             key={index}
             name={name}
@@ -37,7 +40,7 @@ export default function FiltersOffers({
               <button
                 type="button"
                 onClick={() => onChange(item.value)}
-                aria-label={`Filtrar por ${item.label}`}
+                aria-label={t("filterBy", { category: item.label })}
                 aria-pressed={selectedItem === item.value}
                 className={`basis-1/3 grow-0 shrink-0 h-10 sm:h-12 text-center px-0 text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1A1A1A]
                   ${

@@ -1,0 +1,56 @@
+{
+  "DeliveryPage": {
+    "unnecessaryWaits": "Avoid unnecessary waits",
+    "fastDeliveryBannerTitle": "With Fast Delivery, receive your encrypted phone in the shortest time possible",
+    "fastDeliveryBannerSubtitle": "Find a nearby pickup point",
+    "fastDeliveryLocation": "View Delivery Locations",
+    "encriptedProductsTitle": "Encrypted Products",
+    "deliveryPointsTitle": "Find our fast delivery points",
+    "deliveryPointsDescription": "Use the interactive map to find our selected pickup points closest to your location",
+    "chatTelegram": "Chat on Telegram",
+    "howDoesFastDeliveryTitle": "How does Fast Delivery of Encrypted work?",
+    "howDoesFastDeliveryOptions": {
+      "deliveyPoint": {
+        "title": "Select a delivery point",
+        "description": "Check the nearest location where you would like to pick up your encrypted phone"
+      },
+      "contactUsOnTelegram": {
+        "title": "Contact us on Telegram",
+        "description": "Contact us through our Telegram channel and coordinate the purchase of your encrypted phone"
+      },
+      "pickUpYourPhone": {
+        "title": "Pick up your encrypted phone",
+        "description": "Once the delivery is coordinated, pick up your encrypted phone and enjoy secure communications"
+      }
+    },
+    "renatiTitle": "Encrypted Cell Phone Renati",
+    "buyNow": "Buy",
+    "encryptedPhone": "Encrypted Phone",
+    "saveMoney": "Save up to",
+    "downloadApp": "Download the App for iOS & Android and buy your SIM now",
+    "scanQR": "Or scan the QR code with your camera",
+    "joinModal": {
+      "title": "Register",
+      "namePlaceholder": "Name",
+      "emailPlaceholder": "Email",
+      "messagePlaceholder": "Message (optional)",
+      "send": "Send",
+      "close": "Close"
+    },
+    "titleFAQS": "Frequently Asked Questions",
+    "faqs": {
+      "immediateDelivery": {
+        "title": "What is Fast Delivery of Encrypted Devices?",
+        "content": "Delivery of Encrypted Devices is a specialized service that allows you to enjoy your encrypted SIM or device in less than 48 hours."
+      },
+      "whereDelivery": {
+        "title": "What products can I buy with Fast Delivery?",
+        "content": "You can obtain any of the selected encrypted cell phone brands on our website."
+      },
+      "costDelivery": {
+        "title": "What is the cost of Fast Delivery of Encrypted Devices?",
+        "content": "The cost of Fast Delivery of Encrypted Devices varies according to your location; you just need to message us on Telegram, and we will assist you with the prices and arrangements so you can get your product as soon as possible."
+      }
+    }
+  }
+}

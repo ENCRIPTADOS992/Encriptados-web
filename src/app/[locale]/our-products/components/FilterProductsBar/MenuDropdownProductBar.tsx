@@ -30,7 +30,7 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
       externalValue={externalValue}
       onChangeExternal={onChangeExternal}
       placeholder={t("filterProducts.selectPlacerholder")}
-      searchPlaceholder="Buscar..."
+      searchPlaceholder={t("filterProducts.searchSelectPlaceholder")}
       variant="dark"
       searchable={options.length > 5}
       showRadio

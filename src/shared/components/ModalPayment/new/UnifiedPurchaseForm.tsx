@@ -138,7 +138,7 @@ export default function UnifiedPurchaseForm({
     expiry.on("change", onChange("expiry"));
     cvc.on("change", onChange("cvc"));
 
-    // No dedicated cleanup needed as elements unmount handles it, 
+    // No dedicated cleanup needed as elements unmount handles it,
     // but safe to leave as-is since stripe logic is robust.
   }, [stripeStatus, splitRef]);
 
@@ -777,7 +777,7 @@ export default function UnifiedPurchaseForm({
                 <input
                   value={shippingAddress}
                   onChange={(e) => setShippingAddress(e.target.value)}
-                  placeholder="Dirección de envío"
+                  placeholder={t("shippingAddress")}
                   className="w-full bg-transparent outline-none text-[14px]"
                 />
               </div>
@@ -787,7 +787,7 @@ export default function UnifiedPurchaseForm({
                   <input
                     value={shippingFullName}
                     onChange={(e) => setShippingFullName(e.target.value)}
-                    placeholder="Nombre completo"
+                    placeholder={t("fullName")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
@@ -795,7 +795,7 @@ export default function UnifiedPurchaseForm({
                   <input
                     value={shippingCountry}
                     onChange={(e) => setShippingCountry(e.target.value)}
-                    placeholder="País"
+                    placeholder={t("countryField")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
@@ -806,7 +806,7 @@ export default function UnifiedPurchaseForm({
                   <input
                     value={shippingPostalCode}
                     onChange={(e) => setShippingPostalCode(e.target.value)}
-                    placeholder="Código postal"
+                    placeholder={t("postalCode")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>

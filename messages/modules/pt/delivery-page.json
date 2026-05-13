@@ -1,0 +1,56 @@
+{
+  "DeliveryPage": {
+    "unnecessaryWaits": "Evite esperas desnecessárias",
+    "fastDeliveryBannerTitle": "Com a Entrega Rápida, receba seu celular criptografado no menor tempo possível",
+    "fastDeliveryBannerSubtitle": "Encontre um ponto de coleta próximo a você",
+    "fastDeliveryLocation": "Ver Locais de entrega",
+    "encriptedProductsTitle": "Produtos Criptografados",
+    "deliveryPointsTitle": "Encontre nossos pontos de entrega rápida",
+    "deliveryPointsDescription": "Use o mapa interativo e encontre nossos pontos de coleta selecionados mais próximos de sua localização",
+    "chatTelegram": "Conversar pelo Telegram",
+    "howDoesFastDeliveryTitle": "Como funciona a Entrega Rápida de Criptografados?",
+    "howDoesFastDeliveryOptions": {
+      "deliveyPoint": {
+        "title": "Selecione um ponto de entrega",
+        "description": "Consulte a localização mais próxima onde você gostaria de retirar seu celular criptografado"
+      },
+      "contactUsOnTelegram": {
+        "title": "Entre em contato conosco pelo Telegram",
+        "description": "Entre em contato conosco pelo nosso canal no Telegram e coordene a compra do seu celular criptografado"
+      },
+      "pickUpYourPhone": {
+        "title": "Retire seu celular criptografado",
+        "description": "Uma vez coordenada a entrega, retire seu celular criptografado e desfrute de comunicações seguras"
+      }
+    },
+    "renatiTitle": "Celular Criptografado Renati",
+    "buyNow": "Comprar",
+    "encryptedPhone": "Telefone Criptografado",
+    "saveMoney": "Economize até",
+    "downloadApp": "Baixe o aplicativo para iOS e Android e compre seu SIM agora",
+    "scanQR": "Ou escaneie o código QR com sua câmera",
+    "joinModal": {
+      "title": "Cadastre-se",
+      "namePlaceholder": "Nome",
+      "emailPlaceholder": "E-mail",
+      "messagePlaceholder": "Mensagem (opcional)",
+      "send": "Enviar",
+      "close": "Fechar"
+    },
+    "titleFAQS": "Perguntas Frequentes",
+    "faqs": {
+      "immediateDelivery": {
+        "title": "O que é a Entrega Rápida de Dispositivos Criptografados?",
+        "content": "A Entrega Rápida de Dispositivos Criptografados é um serviço especializado que permite desfrutar de seu SIM ou dispositivo criptografado em menos de 48 horas."
+      },
+      "whereDelivery": {
+        "title": "Quais produtos posso comprar com Entrega Rápida?",
+        "content": "Você pode obter qualquer uma das marcas de celulares criptografados selecionadas em nosso site."
+      },
+      "costDelivery": {
+        "title": "Qual é o custo da Entrega Rápida de Dispositivos Criptografados?",
+        "content": "O custo da Entrega Rápida de Dispositivos Criptografados varia de acordo com a sua localidade; basta nos enviar uma mensagem no Telegram e nós o ajudaremos com os preços e a gestão para que você receba seu produto o mais rápido possível."
+      }
+    }
+  }
+}

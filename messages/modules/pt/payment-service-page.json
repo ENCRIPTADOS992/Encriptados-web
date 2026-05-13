@@ -1,0 +1,24 @@
+{
+  "PaymentServicePage": {
+    "back": "Voltar",
+    "productTitle": "eSIM com dados móveis",
+    "regionTitle": "EUROPA",
+    "benefitsTitle": "Benefícios para você",
+    "countriesList": "Lista de países (40)",
+    "chooseGigabytes": "Escolha seus Gigabytes",
+    "choosePlanTime": "Escolha a duração do seu plano",
+    "buyNow": "Comprar agora",
+    "benefits": {
+      "anonymousConnections": "Conexões anônimas",
+      "regionalCoverage": "Cobertura regional",
+      "flexiblePlans": "Planos que se ajustam às suas necessidades",
+      "easyInstall": "Instalação e uso fáceis",
+      "lowRoamingRates": "Tarifas de roaming mais baixas"
+    },
+    "plans": {
+      "oneMonth": "1 mês",
+      "threeMonths": "3 meses",
+      "sixMonths": "6 meses"
+    }
+  }
+}

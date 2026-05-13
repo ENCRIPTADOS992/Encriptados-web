@@ -1,0 +1,65 @@
+{
+  "DashboardPage": {
+    "menuDashboard": {
+      "header": {
+        "supportChat": "Support Chat",
+        "myAccount": "My Account",
+        "logOut": "Log out",
+        "limitedAccount": "UNLIMITED TIME ACCOUNT"
+      },
+      "items": {
+        "mySimConsume": "My SIM data usage",
+        "myActivities": "My activities",
+        "store": "Store",
+        "myPurchases": "My purchases",
+        "accountAdmin": "Manage accounts",
+        "userConfig": "Settings"
+      }
+    },
+    "mora": {
+      "title": "Overdue balance",
+      "weeklyMessage": "You have a pending balance. To avoid being blocked, please recharge your balance.",
+      "dailyMessage": "Remember to clear your balance before the 5th of each month. Otherwise, your account will be blocked.",
+      "blockedMessage": "Your account is blocked due to an overdue balance. Recharge your balance to unblock it.",
+      "thanks": "Thank you for your understanding",
+      "rechargeButton": "Recharge balance",
+      "closeButton": "Close"
+    },
+    "promoBanner": {
+      "title": "Recharge your balance from the App and",
+      "highlight": "get 15% more",
+      "downloadApp": "Download the App here:",
+      "imageAlt": "Person using the Encriptados app"
+    },
+    "dataUsage": {
+      "simUsage": "MY SIM USAGE:",
+      "quickRecharge": "QUICK RECHARGE:",
+      "promoTitle": "Recharge your balance from the App and get 15% more",
+      "downloadApp": "Download the App here:",
+      "imageAlt": "Person using the Encriptados app",
+      "menu": {
+        "data": "DATA",
+        "minutes": "MINUTES"
+      },
+      "cards": {
+        "balanceUsed": "Balance used",
+        "dataUsed": "Data used",
+        "minutes": "Minutes",
+        "imsiChanges": "IMSI changes"
+      }
+    },
+    "configAccount": {
+      "email": {
+        "activeEmail": "Email (Active)",
+        "deactivate": "Deactivate",
+        "description": "You can enable receiving access codes, SIMs and other SIM data. You can disable it and we will not keep any of your data.",
+        "emailPrompt": "Enter your email address",
+        "save": "Save"
+      },
+      "credentials": {
+        "accessId": "ACCESS ID",
+        "lastAccessDate": "LAST ACCESS DATE"
+      }
+    }
+  }
+}

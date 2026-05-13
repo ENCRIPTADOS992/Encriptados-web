@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 const SimCardIcon = () => (
     <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,6 +63,8 @@ function FeatureItem({ icon, title, subtitle }: FeatureItemProps) {
 }
 
 export default function RouterCamaleon() {
+    const t = useTranslations("RouterUi")
+
     return (
         <section className="w-full bg-white">
             <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-14 py-1">
@@ -101,8 +104,8 @@ export default function RouterCamaleon() {
                                     fontSize: '24px',
                                     lineHeight: '100%',
                                     letterSpacing: '0.07px'
-                                }}>Router Camaleón te da más</h2>
-                                <p className="text-[#9CA3AF] text-xs">Incluye todo para ti:</p>
+                                }}>{t("moreTitle")}</h2>
+                                <p className="text-[#9CA3AF] text-xs">{t("includesAll")}</p>
                             </div>
 
                             <div
@@ -119,19 +122,19 @@ export default function RouterCamaleon() {
                                         fontSize: '24px',
                                         lineHeight: '100%',
                                         letterSpacing: '0.07px'
-                                    }}>Router Camaleón te da más</h2>
-                                    <p className="text-[#9CA3AF] text-xs">Incluye todo para ti:</p>
+                                    }}>{t("moreTitle")}</h2>
+                                    <p className="text-[#9CA3AF] text-xs">{t("includesAll")}</p>
                                 </div>
 
                                 <div className="flex flex-col gap-0.5">
                                     <FeatureItem
                                         icon={<SimCardIcon />}
-                                        title="SIM Encriptada"
-                                        subtitle="470 USD en datos"
+                                        title={t("encryptedSim")}
+                                        subtitle={t("simDataValue")}
                                     />
-                                    <FeatureItem icon={<RouterIcon />} title="Router Camaleón" subtitle="150 USD" />
-                                    <FeatureItem icon={<GlobeIcon />} title="Cobertura Global" subtitle="Disponible en 200 países" />
-                                    <FeatureItem icon={<SecurityIcon />} title="VPN Privado" subtitle="130 USD" />
+                                    <FeatureItem icon={<RouterIcon />} title={t("productName")} subtitle="150 USD" />
+                                    <FeatureItem icon={<GlobeIcon />} title={t("globalCoverage")} subtitle={t("availableCountries")} />
+                                    <FeatureItem icon={<SecurityIcon />} title={t("privateVpn")} subtitle="130 USD" />
                                 </div>
 
                                 <div
@@ -141,7 +144,7 @@ export default function RouterCamaleon() {
                                     }}
                                 >
                                     <p className="text-white font-bold text-base">
-                                        Total: <span className="text-white">750 USD</span>
+                                        {t("total")}: <span className="text-white">750 USD</span>
                                     </p>
                                 </div>
                             </div>

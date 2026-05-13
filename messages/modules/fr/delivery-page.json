@@ -1,0 +1,56 @@
+{
+  "DeliveryPage": {
+    "unnecessaryWaits": "Évitez les attentes inutiles",
+    "fastDeliveryBannerTitle": "Avec la Livraison Rapide, recevez votre téléphone crypté dans les plus brefs délais",
+    "fastDeliveryBannerSubtitle": "Trouvez un point de collecte près de chez vous",
+    "fastDeliveryLocation": "Voir les Lieux de livraison",
+    "encriptedProductsTitle": "Produits Cryptés",
+    "deliveryPointsTitle": "Trouvez nos points de livraison rapide",
+    "deliveryPointsDescription": "Utilisez la carte interactive pour trouver nos points de collecte sélectionnés les plus proches de votre emplacement",
+    "chatTelegram": "Discuter sur Telegram",
+    "howDoesFastDeliveryTitle": "Comment fonctionne la Livraison Rapide des Cryptés ?",
+    "howDoesFastDeliveryOptions": {
+      "deliveyPoint": {
+        "title": "Sélectionnez un point de livraison",
+        "description": "Consultez le lieu le plus proche où vous souhaitez récupérer votre téléphone crypté"
+      },
+      "contactUsOnTelegram": {
+        "title": "Contactez-nous sur Telegram",
+        "description": "Contactez-nous via notre canal Telegram et coordonnez l'achat de votre téléphone crypt"
+      },
+      "pickUpYourPhone": {
+        "title": "Récupérez votre téléphone crypté",
+        "description": "Une fois la livraison coordonnée, récupérez votre téléphone crypté et profitez de communications sécurisées"
+      }
+    },
+    "renatiTitle": "Téléphone Portable Crypté Renati",
+    "buyNow": "Acheter",
+    "encryptedPhone": "Téléphone Crypté",
+    "saveMoney": "Économisez jusqu'à",
+    "downloadApp": "Téléchargez l'application pour iOS et Android et achetez votre carte SIM maintenant",
+    "scanQR": "Ou scannez le code QR avec votre appareil photo",
+    "joinModal": {
+      "title": "Inscrivez-vous",
+      "namePlaceholder": "Nom",
+      "emailPlaceholder": "E-mail",
+      "messagePlaceholder": "Message (facultatif)",
+      "send": "Envoyer",
+      "close": "Fermer"
+    },
+    "titleFAQS": "Questions Fréquemment Posées",
+    "faqs": {
+      "immediateDelivery": {
+        "title": "Qu'est-ce que la Livraison Rapide de Dispositifs Cryptés ?",
+        "content": "La Livraison Rapide de Dispositifs Cryptés est un service spécialisé qui vous permet de profiter de votre carte SIM ou appareil crypté en moins de 48 heures."
+      },
+      "whereDelivery": {
+        "title": "Quels produits puis-je acheter avec la Livraison Rapide ?",
+        "content": "Vous pouvez obtenir n'importe quelle marque de téléphone portable crypté sélectionnée sur notre site web."
+      },
+      "costDelivery": {
+        "title": "Quel est le coût de la Livraison Rapide de Dispositifs Cryptés ?",
+        "content": "Le coût de la Livraison Rapide de Dispositifs Cryptés varie en fonction de votre localisation ; il vous suffit de nous écrire sur Telegram et nous vous aiderons avec les prix et les démarches pour que vous receviez votre produit le plus rapidement possible."
+      }
+    }
+  }
+}

@@ -2,8 +2,10 @@
 import Image from "next/image";
 import BannerOur from "/public/images/our-products/banner-our.png";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 const FormOurProducts: React.FC = () => {
+  const t = useTranslations("OurProductsPage.newsletter");
   const { register } = useFormContext();
 
   return (
@@ -12,10 +14,10 @@ const FormOurProducts: React.FC = () => {
         {/* Header Section */}
         <div className="max-w-3xl mx-auto text-center space-y-6 mb-12">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight max-w-[400px] m-auto">
-            Recibe noticias de productos en tu email
+            {t("title")}
           </h1>
           <p className="text-lg text-gray-400">
-            Registra tu email para recibir nuestro newsletter
+            {t("subtitle")}
           </p>
 
           {/* Form Section */}
@@ -23,7 +25,7 @@ const FormOurProducts: React.FC = () => {
             <input
               {...register("mail")}
               type="email"
-              placeholder="Ingresa tu correo electrónico"
+              placeholder={t("emailPlaceholder")}
               className="w-full h-12 pl-6 pr-32 rounded-full bg-white border-0 text-black text-sm"
               required
             />
@@ -32,7 +34,7 @@ const FormOurProducts: React.FC = () => {
                 type="submit"
                 className="h-12 rounded-full bg-[#35CDFB] hover:bg-[#2eb0d8]/90 text-[#085D77] px-6 font-semibold"
               >
-                Suscribirme
+                {t("subscribe")}
               </button>
             </div>
           </div>
@@ -43,7 +45,7 @@ const FormOurProducts: React.FC = () => {
           <div className="aspect-[16/9] w-full">
             <Image
               src={BannerOur}
-              alt="Interface preview"
+              alt={t("imageAlt")}
               width={1920}
               height={1080}
               className="object-cover"

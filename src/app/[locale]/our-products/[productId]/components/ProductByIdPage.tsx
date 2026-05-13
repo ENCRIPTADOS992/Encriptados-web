@@ -29,6 +29,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 
 const ProductByIdPage = () => {
   const e = useTranslations("EncryptedSimPage");
+  const coverage = useTranslations("OurProductsPage.coverageBanner");
   const { currentProduct } = useProductById();
   const searchParams = useSearchParams();
   const params = useParams();
@@ -95,13 +96,11 @@ const ProductByIdPage = () => {
               <BasicFormProvider>
                 <div className=" p-4 ">
                   <h1 className="bg-gradient-to-r text-3xl text-center justify-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent mb-4 ">
-                    Cobertura en más de 200 países
+                    {coverage("title")}
                   </h1>
                   <div className=" flex justify-center text-center mb-4">
                     <p className="text-lg mb-4  text-[#012029]">
-                      Consulta el costo del gigabyte según el país y el perfil
-                      recomendado, así optimizas el consumo de tus datos al
-                      mejor precio
+                      {coverage("desktopDescription")}
                     </p>
                   </div>
 
@@ -109,7 +108,7 @@ const ProductByIdPage = () => {
                     inputClassName="border-4 border-[#DCF2F8] focus:outline-none focus:border-[#DCF2F8]"
                     iconPosition="left"
                     name="searchinputcountry"
-                    placeholder="Colombia"
+                    placeholder={coverage("searchPlaceholder")}
                   />
                   <div className="mt-4 w-full">
                     <ListOfPlans data={ListOfProductsData} />

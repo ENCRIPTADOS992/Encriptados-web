@@ -3,12 +3,14 @@
 import { CircleArrowDown } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect } from "react"
+import { useTranslations } from "next-intl"
 
 interface DownloadAppButtonProps {
     onClick: () => void
 }
 
 export function DownloadAppButton({ onClick }: DownloadAppButtonProps) {
+    const t = useTranslations("SharedUi.downloadApp")
     const [hasScrolled, setHasScrolled] = useState(false)
 
     useEffect(() => {
@@ -36,7 +38,7 @@ export function DownloadAppButton({ onClick }: DownloadAppButtonProps) {
         >
             <Image
                 src="/images/modal-home/qr.webp"
-                alt="QR Code para descargar la App Encriptados"
+                alt={t("qrAlt")}
                 width={70}
                 height={70}
                 className="rounded-lg"
@@ -46,8 +48,8 @@ export function DownloadAppButton({ onClick }: DownloadAppButtonProps) {
                     <CircleArrowDown className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex flex-col items-start">
-                    <span className="text-white text-sm font-normal leading-tight">Descarga la</span>
-                    <span className="text-white text-sm font-normal leading-tight">App Encriptados</span>
+                    <span className="text-white text-sm font-normal leading-tight">{t("buttonLine1")}</span>
+                    <span className="text-white text-sm font-normal leading-tight">{t("buttonLine2")}</span>
                 </div>
             </div>
         </button>

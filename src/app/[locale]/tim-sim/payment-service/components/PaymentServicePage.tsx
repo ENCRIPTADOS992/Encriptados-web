@@ -13,19 +13,21 @@ import { useRouter } from "next/navigation";
 import ThreeCountries from "@/app/[locale]/ira-sim/svgs/ThreeCountries";
 import { useFormContext } from "react-hook-form";
 import TelegramButton from "@/shared/components/TelegramButton";
+import { useTranslations } from "next-intl";
 
 const PaymentServicePage = () => {
+  const t = useTranslations("PaymentServicePage");
   const { watch } = useFormContext();
 
   console.log(watch());
   const AllWorld = "/images/maya-data/payment-service/allworld.webp";
 
   const benefits = [
-    "Conexiones anónimas",
-    "Cobertura regional",
-    "Planes que se ajustan a tus necesidades",
-    "Fácil instalación y uso",
-    "Tarifas más bajas de roaming",
+    t("benefits.anonymousConnections"),
+    t("benefits.regionalCoverage"),
+    t("benefits.flexiblePlans"),
+    t("benefits.easyInstall"),
+    t("benefits.lowRoamingRates"),
   ];
 
   const gigabyteOptions = [
@@ -35,9 +37,9 @@ const PaymentServicePage = () => {
   ];
 
   const planOptions = [
-    { label: "1 Mes", value: "1month" },
-    { label: "3 Meses", value: "3month" },
-    { label: "6 Meses", value: "6month" },
+    { label: t("plans.oneMonth"), value: "1month" },
+    { label: t("plans.threeMonths"), value: "3month" },
+    { label: t("plans.sixMonths"), value: "6month" },
   ];
 
   const router = useRouter();
@@ -52,7 +54,7 @@ const PaymentServicePage = () => {
           className="flex items-center mb-4 cursor-pointer"
         >
           <ChevronLeft className="w-6 h-6 text-gray-600" />
-          <span className="ml-2 text-black font-bold">Atrás</span>
+          <span className="ml-2 text-black font-bold">{t("back")}</span>
         </div>
         <div className="flex items-center mb-4">
           <div className="bg-[#C7EDFA] p-3 rounded-lg">
@@ -60,7 +62,7 @@ const PaymentServicePage = () => {
           </div>
           <div className="ml-3">
             <h2 className="text-lg font-semibold text-black">
-              eSIM con datos móviles
+              {t("productTitle")}
             </h2>
           </div>
         </div>
@@ -69,10 +71,10 @@ const PaymentServicePage = () => {
             <WorldSvg height={40} width={40} />
           </div>
           <div className="ml-3">
-            <h2 className="text-lg font-semibold text-black">EUROPA</h2>
+            <h2 className="text-lg font-semibold text-black">{t("regionTitle")}</h2>
           </div>
         </div>
-        <p className="mb-2 text-sm">Beneficios para ti</p>
+        <p className="mb-2 text-sm">{t("benefitsTitle")}</p>
         <ul className="text-sm text-black mb-4">
           {benefits.map((benefit, index) => (
             <li key={index} className="flex items-center font-bold">
@@ -84,13 +86,13 @@ const PaymentServicePage = () => {
           <div className="flex items-center justify-center border rounded-lg p-2 bg-white border-[#183368]">
             <div className="flex justify-center items-center gap-x-2 py-2">
               <ThreeCountries />
-              <p className="text-[#183368] font-bold">Lista de países (40)</p>
+              <p className="text-[#183368] font-bold">{t("countriesList")}</p>
             </div>
           </div>
         </div>
         <div className="mb-4">
           <p className="text-sm text-black mb-2 font-semibold">
-            Elige tus Gigabytes{" "}
+            {t("chooseGigabytes")}{" "}
             <Info className="inline w-4 h-4 text-[#35CDFB]" />
           </p>
           <div className="flex space-x-2">
@@ -103,7 +105,7 @@ const PaymentServicePage = () => {
 
         <div className="mb-4">
           <p className="text-sm text-black mb-2 font-semibold">
-            Elige tu tiempo de plan{" "}
+            {t("choosePlanTime")}{" "}
             <Info className="inline w-4 h-4 text-[#35CDFB]" />
           </p>
           <div className="flex">
@@ -123,7 +125,7 @@ const PaymentServicePage = () => {
               customStyles="w-[250px]"
               intent="black"
             >
-              Comprar ahora
+              {t("buyNow")}
             </Button>
           </div>
           

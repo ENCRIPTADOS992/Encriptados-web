@@ -1,15 +1,19 @@
 // src/shared/BannerCoverageTablet.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export const BannerCoverageTablet = () => {
+  const t = useTranslations("OurProductsPage.coverageBanner");
+
   return (
     <section className="hidden sm:block lg:hidden bg-white py-12">
       <div className="mx-auto max-w-[720px] px-6">
         <h2 className="text-center text-[26px] leading-tight font-semibold text-black">
-          Cobertura en <span className="text-[#00B4FF]">más de 200 países</span>
+          {t("titlePrefix")} <span className="text-[#00B4FF]">{t("titleHighlight")}</span>
         </h2>
         <p className="mt-3 text-center text-sm text-[#4B5563] max-w-xl mx-auto">
-          Consulta el costo del gigabyte según el país y el perfil recomendado.
+          {t("tabletDescription")}
         </p>
 
         {/* Buscador */}
@@ -17,7 +21,7 @@ export const BannerCoverageTablet = () => {
           <div className="w-full max-w-[560px] relative">
             <input
               type="text"
-              placeholder="Colombia"
+              placeholder={t("searchPlaceholder")}
               className="w-full h-[52px] rounded-full border border-[#D1D5DB] px-5 pr-14 text-sm text-[#111827] placeholder:text-[#9CA3AF] outline-none"
             />
             <button
@@ -36,14 +40,14 @@ export const BannerCoverageTablet = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#003040] text-white text-xs">
-                <th className="py-3 pl-5 pr-3 font-medium">País</th>
-                <th className="py-3 px-3 font-medium">Perfil</th>
-                <th className="py-3 px-3 font-medium">1 GB (USD)</th>
+                <th className="py-3 pl-5 pr-3 font-medium">{t("countryHeader")}</th>
+                <th className="py-3 px-3 font-medium">{t("profileHeader")}</th>
+                <th className="py-3 px-3 font-medium">{t("gbShortHeader")}</th>
               </tr>
             </thead>
             <tbody>
               <tr className="bg-[#EAF5FF] text-xs text-[#111827]">
-                <td className="py-3 pl-5 pr-3">Colombia</td>
+                <td className="py-3 pl-5 pr-3">{t("sampleCountry")}</td>
                 <td className="py-3 px-3">SG</td>
                 <td className="py-3 px-3">50.14</td>
               </tr>

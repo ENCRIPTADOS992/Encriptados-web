@@ -19,10 +19,11 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
   const t = useTranslations("OurProductsPage");
   const osOptions = useBrandsFromProducts(products);
   console.log("[FilterAppWithLicense] products:", products);
+  const allOption = useMemo(() => [{ label: t("filterProducts.allOption"), value: "all" }], [t]);
 
   const licenseOptions = useMemo(() => {
     if (!products || products.length === 0) {
-      return [{ label: "Todos", value: "all" }];
+      return allOption;
     }
 
     const filteredByBrand = products.filter((p) => {
@@ -36,7 +37,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     });
 
     if (filteredByBrand.length === 0) {
-      return [{ label: "Todos", value: "all" }];
+      return allOption;
     }
 
     const licenseSet = new Set<string>();
@@ -56,7 +57,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     });
 
     if (licenseSet.size === 0) {
-      return [{ label: "Todos", value: "all" }];
+      return allOption;
     }
 
     const sorted = Array.from(licenseSet).sort(
@@ -64,13 +65,13 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     );
 
     return [
-      { label: "Todos", value: "all" },
+      allOption[0],
       ...sorted.map((time) => ({
-        label: `${time} mes${time === "1" ? "" : "es"}`,
+        label: `${time} ${time === "1" ? t("filterProducts.monthSingular") : t("filterProducts.monthPlural")}`,
         value: time,
       })),
     ];
-  }, [products, filters.os]);
+  }, [allOption, products, filters.os, filters.selectedOption, t]);
 
 
   return (

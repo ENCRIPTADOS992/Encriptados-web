@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 import { Locale } from "@/shared/types/Locale";
+import { loadMessages } from "./messages";
 
 export default getRequestConfig(async ({ requestLocale }) => {
   // Await the requested locale
@@ -12,11 +13,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
-    messages: (
-      await (locale === "en"
-        ? // When using Turbopack, this will enable HMR for `en`
-          import("../../messages/en.json")
-        : import(`../../messages/${locale}.json`))
-    ).default,
+    messages: await loadMessages(locale as Locale),
   };
 });

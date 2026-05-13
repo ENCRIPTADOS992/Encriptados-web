@@ -1,0 +1,16 @@
+{
+  "SharedUi": {
+    "loading": "Cargando...",
+    "downloadApp": {
+      "buttonLine1": "Descarga la",
+      "buttonLine2": "App Encriptados",
+      "scanQr": "Escanea este QR y",
+      "download": "descarga",
+      "appName": "la App Encriptados",
+      "closeModal": "Cerrar modal",
+      "qrAlt": "Código QR para descargar la App Encriptados",
+      "appAlt": "App Encriptados",
+      "phoneQrAlt": "Código QR en celular"
+    }
+  }
+}

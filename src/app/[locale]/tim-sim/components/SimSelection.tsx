@@ -25,14 +25,14 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
   const [selectedRegion, setSelectedRegion] = useState<string>('');
 
   const regions: Region[] = [
-    { name: 'Global', icon: '🌍' },
-    { name: 'Europa', icon: '🌍' },
-    { name: 'Asia', icon: '🌍' },
-    { name: 'América del norte', icon: '🌍' },
-    { name: 'Oriente Medio y el norte de África', icon: '🌍' },
-    { name: 'Latinoamérica', icon: '🌍' },
-    { name: 'África', icon: '🌍' },
-    { name: 'Islas del Caribe', icon: '🌍' },
+    { name: t('regions.global'), icon: '🌍' },
+    { name: t('regions.europe'), icon: '🌍' },
+    { name: t('regions.asia'), icon: '🌍' },
+    { name: t('regions.northAmerica'), icon: '🌍' },
+    { name: t('regions.middleEastNorthAfrica'), icon: '🌍' },
+    { name: t('regions.latinAmerica'), icon: '🌍' },
+    { name: t('regions.africa'), icon: '🌍' },
+    { name: t('regions.caribbeanIslands'), icon: '🌍' },
   ];
 
   const dataPlans: DataPlan[] = [
@@ -41,7 +41,7 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
     { size: '15GB', price: '$20' },
     { size: '25GB', price: '$30' },
     { size: '50GB', price: '$50' },
-    { size: 'GB ilimitado', price: '$100' },
+    { size: t('unlimitedGb'), price: '$100' },
   ];
 
   return (
@@ -110,8 +110,8 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
               value={selectedRegion}
               onChange={setSelectedRegion}
               variant="light"
-              placeholder="🌍 Global / Seleccionar región"
-              searchPlaceholder="Buscar región..."
+              placeholder={t('selectRegionPlaceholder')}
+              searchPlaceholder={t('searchRegionPlaceholder')}
               className="w-full"
               options={regions.map((r) => ({
                 value: r.name,

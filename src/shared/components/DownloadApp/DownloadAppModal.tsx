@@ -3,6 +3,7 @@
 import { X } from "lucide-react"
 import Image from "next/image"
 import { AppStoreButton, GooglePlayButton, ApkButton } from "./StoreButtons"
+import { useTranslations } from "next-intl"
 
 interface DownloadAppModalProps {
     isOpen: boolean
@@ -10,6 +11,7 @@ interface DownloadAppModalProps {
 }
 
 export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
+    const t = useTranslations("SharedUi.downloadApp")
     if (!isOpen) return null
 
     return (
@@ -29,16 +31,16 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
-                    aria-label="Cerrar modal"
+                    aria-label={t("closeModal")}
                 >
                     <X className="w-6 h-6" />
                 </button>
 
                 {/* Title */}
                 <h2 className="text-white text-xl font-light text-center leading-tight mb-16 mt-4">
-                    <span className="font-light">Escanea este QR y</span> <span className="font-bold">descarga</span>
+                    <span className="font-light">{t("scanQr")}</span> <span className="font-bold">{t("download")}</span>
                     <br />
-                    <span className="font-bold">la App Encriptados</span>
+                    <span className="font-bold">{t("appName")}</span>
                 </h2>
 
                 {/* QR and Phone Container */}
@@ -52,7 +54,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                     <div className="bg-white p-3 rounded-lg shrink-0 z-10">
                         <Image
                             src="/images/modal-home/qr.webp"
-                            alt="QR Code para descargar la App Encriptados"
+                            alt={t("qrAlt")}
                             width={130}
                             height={130}
                             className="rounded"
@@ -63,7 +65,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                     <div className="absolute right-12 bottom-0 h-[250px]">
                         <Image
                             src="/images/modal-home/celular-escritorio.webp"
-                            alt="App Encriptados"
+                            alt={t("appAlt")}
                             width={280}
                             height={300}
                             className="object-contain object-bottom h-full w-auto"
@@ -91,16 +93,16 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
-                    aria-label="Cerrar modal"
+                    aria-label={t("closeModal")}
                 >
                     <X className="w-6 h-6" />
                 </button>
 
                 {/* Title */}
                 <h2 className="text-white text-lg font-light text-center leading-tight mb-6 mt-2">
-                    <span className="font-light">Escanea este QR y</span> <span className="font-bold">descarga</span>
+                    <span className="font-light">{t("scanQr")}</span> <span className="font-bold">{t("download")}</span>
                     <br />
-                    <span className="font-bold">la App Encriptados</span>
+                    <span className="font-bold">{t("appName")}</span>
                 </h2>
 
                 {/* Store Buttons - First on mobile */}
@@ -114,7 +116,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                 <div className="w-full mt-auto">
                     <Image
                         src="/images/modal-home/qr -celular-misma-imagen-movil.webp"
-                        alt="QR Code en celular"
+                        alt={t("phoneQrAlt")}
                         width={400}
                         height={450}
                         className="w-full h-auto object-contain translate-y-2"

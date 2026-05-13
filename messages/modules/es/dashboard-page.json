@@ -1,0 +1,65 @@
+{
+  "DashboardPage": {
+    "menuDashboard": {
+      "header": {
+        "supportChat": "Chat de soporte",
+        "myAccount": "Mi Cuenta",
+        "logOut": "Cerrar sesión",
+        "limitedAccount": "CUENTA DE TIEMPO ILIMITADO"
+      },
+      "items": {
+        "mySimConsume": "Mi consumo de datos de SIM",
+        "myActivities": "Mis actividades",
+        "store": "Tienda",
+        "myPurchases": "Mis compras",
+        "accountAdmin": "Administrar cuentas",
+        "userConfig": "Configuración"
+      }
+    },
+    "mora": {
+      "title": "Saldo en mora",
+      "weeklyMessage": "Tienes un saldo pendiente. Para evitar bloqueos, debes recargar tu saldo.",
+      "dailyMessage": "Recuerda tener tu saldo en cero antes del día 5 de cada mes. De lo contrario, tu cuenta será bloqueada.",
+      "blockedMessage": "Tu cuenta está bloqueada por saldo en mora. Recarga tu saldo para desbloquearla.",
+      "thanks": "Gracias por tu comprensión",
+      "rechargeButton": "Recargar saldo",
+      "closeButton": "Cerrar"
+    },
+    "promoBanner": {
+      "title": "Recargar tu saldo desde la App y",
+      "highlight": "obtén 15% más",
+      "downloadApp": "Descarga la App aquí:",
+      "imageAlt": "Persona usando la app Encriptados"
+    },
+    "dataUsage": {
+      "simUsage": "MI CONSUMO DE SIM:",
+      "quickRecharge": "RECARGA RÁPIDA:",
+      "promoTitle": "Recargar tu saldo desde la App y obtén 15% más",
+      "downloadApp": "Descarga la App aquí:",
+      "imageAlt": "Persona usando la app Encriptados",
+      "menu": {
+        "data": "DATOS",
+        "minutes": "MINUTOS"
+      },
+      "cards": {
+        "balanceUsed": "Saldo consumido",
+        "dataUsed": "Datos consumidos",
+        "minutes": "Minutos",
+        "imsiChanges": "Cambios IMSI"
+      }
+    },
+    "configAccount": {
+      "email": {
+        "activeEmail": "Correo Electrónico (Activo)",
+        "deactivate": "Desactivar",
+        "description": "Puedes habilitar la opción de recibir códigos de acceso, SIMs y demás datos de tu SIM. Puedes desactivarla y no conservaremos ninguno de tus datos.",
+        "emailPrompt": "Ingresa tu correo electrónico",
+        "save": "Guardar"
+      },
+      "credentials": {
+        "accessId": "ID DE ACCESO",
+        "lastAccessDate": "ÚLTIMA FECHA DE ACCESO"
+      }
+    }
+  }
+}

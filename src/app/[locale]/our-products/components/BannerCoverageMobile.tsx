@@ -1,16 +1,19 @@
 // src/shared/BannerCoverageMobile.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export const BannerCoverageMobile = () => {
+  const t = useTranslations("OurProductsPage.coverageBanner");
+
   return (
     <section className="block sm:hidden bg-white py-10">
       <div className="mx-auto max-w-md px-4">
         <h2 className="text-center text-[22px] leading-tight font-semibold text-black">
-          Cobertura en{" "}
-          <span className="text-[#00B4FF]">más de 200 países</span>
+          {t("titlePrefix")} <span className="text-[#00B4FF]">{t("titleHighlight")}</span>
         </h2>
         <p className="mt-2 text-center text-xs text-[#4B5563]">
-          Consulta el costo por GB según el país.
+          {t("shortDescription")}
         </p>
 
         {/* Buscador */}
@@ -18,7 +21,7 @@ export const BannerCoverageMobile = () => {
           <div className="w-full relative">
             <input
               type="text"
-              placeholder="Colombia"
+              placeholder={t("searchPlaceholder")}
               className="w-full h-[48px] rounded-full border border-[#D1D5DB] px-4 pr-12 text-xs text-[#111827] placeholder:text-[#9CA3AF] outline-none"
             />
             <button
@@ -37,14 +40,14 @@ export const BannerCoverageMobile = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#003040] text-white text-[11px]">
-                <th className="py-2 pl-4 pr-2 font-medium">País</th>
-                <th className="py-2 px-2 font-medium">Perfil</th>
-                <th className="py-2 px-2 font-medium">1 GB (USD)</th>
+                <th className="py-2 pl-4 pr-2 font-medium">{t("countryHeader")}</th>
+                <th className="py-2 px-2 font-medium">{t("profileHeader")}</th>
+                <th className="py-2 px-2 font-medium">{t("gbShortHeader")}</th>
               </tr>
             </thead>
             <tbody>
               <tr className="bg-[#EAF5FF] text-[11px] text-[#111827]">
-                <td className="py-2 pl-4 pr-2">Colombia</td>
+                <td className="py-2 pl-4 pr-2">{t("sampleCountry")}</td>
                 <td className="py-2 px-2">SG</td>
                 <td className="py-2 px-2">50.14</td>
               </tr>

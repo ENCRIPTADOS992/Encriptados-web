@@ -864,8 +864,8 @@ const PurchaseHeader: React.FC<Props> = ({
                             {isActivarAppsProduct
                               ? getActivarAppsVariantLabel(v)
                               : (v as Variant & { months: number }).months === 0
-                                ? (t("freeTrial") || "Prueba gratis")
-                                : `${(v as Variant & { months: number }).months} Meses`}
+                                ? t("freeTrial")
+                                : `${(v as Variant & { months: number }).months} ${t("months")}`}
                           </button>
                         );
                       })}
@@ -877,8 +877,8 @@ const PurchaseHeader: React.FC<Props> = ({
                   {isActivarAppsProduct
                     ? getActivarAppsVariantLabel(activarAppsVariants[0])
                     : currentMonths === 0
-                      ? (t("freeTrial") || "Prueba gratis")
-                      : `${currentMonths} Meses`}
+                      ? t("freeTrial")
+                      : `${currentMonths} ${t("months")}`}
                 </div>
               )}
             </div>
@@ -887,7 +887,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Envío */}
           {typeof shipping === "number" && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Envío</span>
+              <span className="text-base text-[#3D3D3D]">{t("shipping")}</span>
               <span className="text-base text-[#141414]">
                 {shipping} {currency}
               </span>
@@ -897,7 +897,7 @@ const PurchaseHeader: React.FC<Props> = ({
           {/* Fila: Descuento */}
           {(showCoupon || discountAmount > 0) && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">Descuento</span>
+              <span className="text-base text-[#3D3D3D]">{t("discount")}</span>
               <span className="text-base font-bold text-[#141414]">
                 {discountAmount.toFixed(2)} {currency}
               </span>
@@ -912,7 +912,7 @@ const PurchaseHeader: React.FC<Props> = ({
                 <span className="inline-flex items-center gap-1 bg-[#EDEDED] rounded-full px-2 py-0.5">
                   <Tag className="w-3.5 h-3.5 text-black" />
                   <span className="text-xs text-black">
-                    Antes <span className="line-through">{originalTotal} {currency}</span>
+                    {t("beforePrice")} <span className="line-through">{originalTotal} {currency}</span>
                   </span>
                 </span>
               )}
@@ -939,7 +939,7 @@ const PurchaseHeader: React.FC<Props> = ({
             <div className="flex items-center gap-2 h-9">
               <div className="flex items-center h-full flex-1 rounded-lg bg-[#EBEBEB] px-3">
                 <input
-                  placeholder="Ingresa el código"
+                  placeholder={t("couponPlaceholder")}
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                   onKeyDown={(e) => {
@@ -964,7 +964,7 @@ const PurchaseHeader: React.FC<Props> = ({
                   setCoupon("");
                   onRemoveCoupon?.();
                 }}
-                aria-label="Cerrar cupón"
+                aria-label={t("closeCoupon")}
                 className="shrink-0 text-xl text-[#5D5D5D] hover:text-black"
               >
                 ×

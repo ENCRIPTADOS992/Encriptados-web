@@ -76,7 +76,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
           mb-2 text-sm font-semibold text-[#7E7E7E] block pl-[4px]
         "
       >
-        {t("filterProducts.regionTitle") || "Región / País"}
+        {t("filterProducts.regionCountryTitle")}
       </span>
 
       <div
@@ -114,8 +114,8 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder={
                   filters.regionOrCountryType === "region"
-                    ? "Buscar región..."
-                    : "Buscar país..."
+                    ? t("filterProducts.searchRegionPlaceholder")
+                    : t("filterProducts.searchCountryPlaceholder")
                 }
                 className="bg-transparent outline-none w-full text-[#CCCCCC] placeholder:text-[#7E7E7E] text-sm"
                 onClick={(e) => e.stopPropagation()}
@@ -178,7 +178,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                   setSearchTerm("");
                 }}
               >
-                Región
+                {t("filterProducts.regionTab")}
               </button>
 
               <button
@@ -196,7 +196,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                   setSearchTerm("");
                 }}
               >
-                País
+                {t("filterProducts.countryTab")}
               </button>
             </div>
 
@@ -208,12 +208,12 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                     className="font-semibold text-sm mb-3 text-[#CCCCCC]"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
-                    {t("filterProducts.regionTitle") || "Regiones"}
+                    {t("filterProducts.regionTitle")}
                   </div>
 
                   {loadingRegions && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      Cargando regiones...
+                      {t("filterProducts.loadingRegions")}
                     </div>
                   )}
 
@@ -221,7 +221,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                     loadingSearch &&
                     searchTerm.length >= 2 && (
                       <div className="text-[#7E7E7E] text-sm py-2">
-                        Buscando...
+                        {t("filterProducts.searching")}
                       </div>
                     )}
 
@@ -279,12 +279,12 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                     className="font-semibold text-sm mb-3 text-[#CCCCCC]"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
-                    {t("filterProducts.countryTitle") || "Países"}
+                    {t("filterProducts.countryTitle")}
                   </div>
 
                   {loadingCountries && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      Cargando países...
+                      {t("filterProducts.loadingCountries")}
                     </div>
                   )}
 
@@ -292,7 +292,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                     loadingSearch &&
                     searchTerm.length >= 2 && (
                       <div className="text-[#7E7E7E] text-sm py-2">
-                        Buscando...
+                        {t("filterProducts.searching")}
                       </div>
                     )}
 
@@ -337,7 +337,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                                 {c.name}
                               </span>
                               <span className="text-xs text-[#CCCCCC]">
-                                Cobertura 4G/5G
+                                {t("filterProducts.mobileCoverage")}
                               </span>
                             </span>
                           </span>

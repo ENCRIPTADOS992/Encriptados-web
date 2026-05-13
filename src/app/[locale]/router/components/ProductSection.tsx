@@ -8,6 +8,7 @@ import Button from "@/shared/components/Button";
 import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import { useTranslations } from "next-intl";
 
 interface ProductSectionProps {
   title: string;
@@ -51,6 +52,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   selectedOption,
   languageCode = "es",
 }) => {
+  const t = useTranslations("RouterUi");
   const { openModal } = useModalPayment();
   const priceBlockRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -102,7 +104,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                 </div>
               ))
             ) : loading ? (
-              <p className="text-sm text-gray-400">Cargando características...</p>
+              <p className="text-sm text-gray-400">{t("loadingFeatures")}</p>
             ) : null}
           </div>
 

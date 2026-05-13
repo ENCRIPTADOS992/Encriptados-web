@@ -1,0 +1,22 @@
+{
+  "RouterUi": {
+    "productName": "Router Camaleón",
+    "privacySubtitle": "Privacidad total",
+    "buy": "Comprar",
+    "tryAgainLater": "Por favor, intenta más tarde.",
+    "moreTitle": "Router Camaleón te da más",
+    "includesAll": "Incluye todo para ti:",
+    "includes": "Incluye:",
+    "encryptedSim": "SIM Encriptada",
+    "simDataValue": "470 USD en datos",
+    "simDataBundle": "470 USD de datos SIM Encriptada",
+    "globalCoverage": "Cobertura Global",
+    "availableCountries": "Disponible en 200 países",
+    "privateVpn": "VPN Privado",
+    "coverageIn": "Cobertura en",
+    "countries200": "200 países",
+    "total": "TOTAL",
+    "loadingFeatures": "Cargando características...",
+    "closeBanner": "Cerrar banner"
+  }
+}

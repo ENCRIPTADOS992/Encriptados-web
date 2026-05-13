@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 const SimCardIcon = () => (
     <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,6 +63,8 @@ function FeatureItem({ icon, title, subtitle }: FeatureItemProps) {
 }
 
 export default function RouterCamaleon() {
+    const t = useTranslations("RouterUi")
+
     return (
         <section
             className="relative w-full max-w-[1276px] mx-auto overflow-hidden rounded-[44px]"
@@ -92,18 +95,18 @@ export default function RouterCamaleon() {
                         borderTop: "1px solid rgba(54, 65, 83, 0.5)",
                     }}
                 >
-                    <h2 className="text-white text-lg lg:text-xl font-bold mb-1">Router Camaleón te da más</h2>
-                    <p className="text-[#9CA3AF] text-sm mb-3">Incluye todo para ti:</p>
+                    <h2 className="text-white text-lg lg:text-xl font-bold mb-1">{t("moreTitle")}</h2>
+                    <p className="text-[#9CA3AF] text-sm mb-3">{t("includesAll")}</p>
 
                     <div className="flex flex-col">
                         <FeatureItem
                             icon={<SimCardIcon />}
-                            title="SIM Encriptada"
-                            subtitle="470 USD en datos"
+                            title={t("encryptedSim")}
+                            subtitle={t("simDataValue")}
                         />
-                        <FeatureItem icon={<RouterIcon />} title="Router Camaleón" subtitle="150 USD" />
-                        <FeatureItem icon={<GlobeIcon />} title="Cobertura Global" subtitle="Disponible en 200 países" />
-                        <FeatureItem icon={<SecurityIcon />} title="VPN Privado" subtitle="130 USD" />
+                        <FeatureItem icon={<RouterIcon />} title={t("productName")} subtitle="150 USD" />
+                        <FeatureItem icon={<GlobeIcon />} title={t("globalCoverage")} subtitle={t("availableCountries")} />
+                        <FeatureItem icon={<SecurityIcon />} title={t("privateVpn")} subtitle="130 USD" />
                     </div>
 
                     <div
@@ -113,7 +116,7 @@ export default function RouterCamaleon() {
                         }}
                     >
                         <p className="text-white font-bold text-lg">
-                            Total: <span className="text-white">750 USD</span>
+                            {t("total")}: <span className="text-white">750 USD</span>
                         </p>
                     </div>
                 </div>
@@ -131,7 +134,7 @@ export default function RouterCamaleon() {
                         />
                         <Image
                             src="/images/router/router.webp"
-                            alt="Router Camaleón"
+                            alt={t("productName")}
                             fill
                             className="object-contain object-bottom relative z-10"
                             priority

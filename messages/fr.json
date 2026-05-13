@@ -60,6 +60,42 @@
         "benefit3": "Matériel promotionnel, publicité et contenu numérique",
         "sendRequest": "Envoyer la demande de distributeur"
       }
+    },
+    "promoBanner": {
+      "title": "Rechargez votre solde depuis l'app et",
+      "highlight": "obtenez 15 % de plus",
+      "downloadApp": "Téléchargez l'app ici :",
+      "imageAlt": "Personne utilisant l'app Encriptados"
+    },
+    "dataUsage": {
+      "simUsage": "MA CONSOMMATION SIM :",
+      "quickRecharge": "RECHARGE RAPIDE :",
+      "promoTitle": "Rechargez votre solde depuis l'app et obtenez 15 % de plus",
+      "downloadApp": "Téléchargez l'app ici :",
+      "imageAlt": "Personne utilisant l'app Encriptados",
+      "menu": {
+        "data": "DONNÉES",
+        "minutes": "MINUTES"
+      },
+      "cards": {
+        "balanceUsed": "Solde utilisé",
+        "dataUsed": "Données utilisées",
+        "minutes": "Minutes",
+        "imsiChanges": "Changements IMSI"
+      }
+    },
+    "configAccount": {
+      "email": {
+        "activeEmail": "E-mail (Actif)",
+        "deactivate": "Désactiver",
+        "description": "Vous pouvez activer la réception des codes d'accès, SIMs et autres données de votre SIM. Vous pouvez la désactiver et nous ne conserverons aucune de vos données.",
+        "emailPrompt": "Saisissez votre adresse e-mail",
+        "save": "Enregistrer"
+      },
+      "credentials": {
+        "accessId": "ID D'ACCÈS",
+        "lastAccessDate": "DERNIÈRE DATE D'ACCÈS"
+      }
     }
   },
   "AboutUsPage": {
@@ -180,53 +216,9 @@
     "termsAndConditions": "Conditions Générales",
     "dataProcesing": "Politique et traitement des données"
   },
-  "DeliveryPage": {
-    "unnecessaryWaits": "Évitez les attentes inutiles",
-    "fastDeliveryBannerTitle": "Avec la Livraison Rapide, recevez votre téléphone crypté dans les plus brefs délais",
-    "fastDeliveryBannerSubtitle": "Trouvez un point de collecte près de chez vous",
-    "fastDeliveryLocation": "Voir les Lieux de livraison",
-    "encriptedProductsTitle": "Produits Cryptés",
-    "deliveryPointsTitle": "Trouvez nos points de livraison rapide",
-    "deliveryPointsDescription": "Utilisez la carte interactive pour trouver nos points de collecte sélectionnés les plus proches de votre emplacement",
-    "chatTelegram": "Discuter sur Telegram",
-    "howDoesFastDeliveryTitle": "Comment fonctionne la Livraison Rapide des Cryptés ?",
-    "howDoesFastDeliveryOptions": {
-      "deliveyPoint": {
-        "title": "Sélectionnez un point de livraison",
-        "description": "Consultez le lieu le plus proche où vous souhaitez récupérer votre téléphone crypté"
-      },
-      "contactUsOnTelegram": {
-        "title": "Contactez-nous sur Telegram",
-        "description": "Contactez-nous via notre canal Telegram et coordonnez l'achat de votre téléphone crypt"
-      },
-      "pickUpYourPhone": {
-        "title": "Récupérez votre téléphone crypté",
-        "description": "Une fois la livraison coordonnée, récupérez votre téléphone crypté et profitez de communications sécurisées"
-      }
-    },
-    "renatiTitle": "Téléphone Portable Crypté Renati",
-    "buyNow": "Acheter",
-    "encryptedPhone": "Téléphone Crypté",
-    "saveMoney": "Économisez jusqu'à",
-    "downloadApp": "Téléchargez l'application pour iOS et Android et achetez votre carte SIM maintenant",
-    "scanQR": "Ou scannez le code QR avec votre appareil photo",
-    "titleFAQS": "Questions Fréquemment Posées",
-    "faqs": {
-      "immediateDelivery": {
-        "title": "Qu'est-ce que la Livraison Rapide de Dispositifs Cryptés ?",
-        "content": "La Livraison Rapide de Dispositifs Cryptés est un service spécialisé qui vous permet de profiter de votre carte SIM ou appareil crypté en moins de 48 heures."
-      },
-      "whereDelivery": {
-        "title": "Quels produits puis-je acheter avec la Livraison Rapide ?",
-        "content": "Vous pouvez obtenir n'importe quelle marque de téléphone portable crypté sélectionnée sur notre site web."
-      },
-      "costDelivery": {
-        "title": "Quel est le coût de la Livraison Rapide de Dispositifs Cryptés ?",
-        "content": "Le coût de la Livraison Rapide de Dispositifs Cryptés varie en fonction de votre localisation ; il vous suffit de nous écrire sur Telegram et nous vous aiderons avec les prix et les démarches pour que vous receviez votre produit le plus rapidement possible."
-      }
-    }
-  },
   "EncryptedSimPage": {
+    "loadingProduct": "Chargement du produit...",
+    "productLoadError": "Le produit n'a pas pu être chargé.",
     "SimTimBanner": {
       "title": "Connectez-vous depuis n'importe où",
       "titleHighlight": "dans le monde avec un anonymat total",
@@ -695,6 +687,19 @@
       "esimData": "eSIM + Données",
       "region": "Région/Pays",
       "search": "Rechercher",
+      "selectRegionPlaceholder": "🌍 Global / Sélectionner une région",
+      "searchRegionPlaceholder": "Rechercher une région...",
+      "unlimitedGb": "Go illimité",
+      "regions": {
+        "global": "Global",
+        "europe": "Europe",
+        "asia": "Asie",
+        "northAmerica": "Amérique du Nord",
+        "middleEastNorthAfrica": "Moyen-Orient et Afrique du Nord",
+        "latinAmerica": "Amérique latine",
+        "africa": "Afrique",
+        "caribbeanIslands": "Îles des Caraïbes"
+      },
       "back": "Retour",
       "productsFound": "produits trouvés",
       "noProducts": "0 produits trouvés",
@@ -831,24 +836,6 @@
       "description": "Ou scannez le code QR avec votre caméra"
     }
   },
-  "DashboardPage": {
-    "menuDashboard": {
-      "header": {
-        "supportChat": "Chat de support",
-        "myAccount": "Mon Compte",
-        "logOut": "Se déconnecter",
-        "limitedAccount": "COMPTE DE TEMPS ILLIMITÉ"
-      },
-      "items": {
-        "mySimConsume": "Ma consommation de données SIM",
-        "myActivities": "Mes activités",
-        "store": "Magasin",
-        "myPurchases": "Mes achats",
-        "accountAdmin": "Gérer les comptes",
-        "userConfig": "Paramètres"
-      }
-    }
-  },
   "OurProductsPage": {
     "banner": {
       "title": "Gérez plusieurs SIM avec notre",
@@ -867,11 +854,53 @@
       "categoryTitle": "Catégorie",
       "sim": "Sim",
       "apps": "Applications",
+      "categories": {
+        "sim": "SIM",
+        "app": "Applications",
+        "mobile": "Systèmes",
+        "routers": "Routeurs"
+      },
       "software": "Fournisseur",
+      "providerTitle": "Fournisseur",
+      "servicesTitle": "Services",
       "osTitle": "Systèmes d'exploitation",
       "licenseTitle": "Durée de licence",
       "selectPlacerholder": "Sélectionner",
-      "searchPlaceholder": "Chercher"
+      "searchPlaceholder": "Chercher",
+      "searchSelectPlaceholder": "Chercher...",
+      "regionCountryTitle": "Région / Pays",
+      "regionTitle": "Régions",
+      "countryTitle": "Pays",
+      "regionTab": "Région",
+      "countryTab": "Pays",
+      "searchRegionPlaceholder": "Rechercher une région...",
+      "searchCountryPlaceholder": "Rechercher un pays...",
+      "searchRegionCountryPlaceholder": "Rechercher une région ou un pays...",
+      "selectRegionCountry": "Choisissez une région ou un pays",
+      "applyFilter": "Appliquer le filtre",
+      "loadingRegions": "Chargement des régions...",
+      "loadingCountries": "Chargement des pays...",
+      "searching": "Recherche...",
+      "countriesCount": "{count} pays",
+      "mobileCoverage": "Couverture 4G/5G",
+      "allOption": "Tous",
+      "monthSingular": "mois",
+      "monthPlural": "mois",
+      "services": {
+        "rechargeData": "Recharge de données",
+        "esimData": "eSIM + Données",
+        "rechargeMinutes": "Recharge de minutes",
+        "esimMinutes": "eSIM + Minutes",
+        "esim": "eSIM",
+        "physicalSim": "SIM physique"
+      },
+      "floating": {
+        "sims": "SIM",
+        "apps": "Apps",
+        "systems": "Systèmes",
+        "routers": "Routeurs",
+        "offers": "Offres"
+      }
     },
     "simCards": {
       "encrypted": {
@@ -908,10 +937,34 @@
       "title": "Systèmes cryptés avec sécurité chiffrée",
       "description": "Logiciels et systèmes d'exploitation conçus pour protéger chaque aspect de votre appareil mobile",
       "fromPrice": "À partir de",
+      "legacyTitle": "Secure MDM iPhone",
+      "legacyRegularPrice": "600 USD",
+      "legacySalePrice": "Maintenant 50 USD",
       "save": "Économisez",
       "consultPrice": "Consultez nos prix",
       "buy": "Acheter",
       "moreInfo": "Plus d'infos"
+    },
+    "coverageBanner": {
+      "title": "Couverture dans plus de 200 pays",
+      "titlePrefix": "Couverture dans",
+      "titleHighlight": "plus de 200 pays",
+      "desktopDescription": "Consultez le coût du gigaoctet selon le pays et le profil recommandé afin d'optimiser votre consommation de données au meilleur prix",
+      "tabletDescription": "Consultez le coût du gigaoctet selon le pays et le profil recommandé.",
+      "shortDescription": "Consultez le coût par Go selon le pays.",
+      "searchPlaceholder": "Colombie",
+      "countryHeader": "Pays",
+      "profileHeader": "Profil",
+      "gbValueHeader": "Valeur de 1 Go en USD",
+      "gbShortHeader": "1 Go (USD)",
+      "sampleCountry": "Colombie"
+    },
+    "newsletter": {
+      "title": "Recevez les nouveautés produits par e-mail",
+      "subtitle": "Inscrivez votre e-mail pour recevoir notre newsletter",
+      "emailPlaceholder": "Saisissez votre adresse e-mail",
+      "subscribe": "S'abonner",
+      "imageAlt": "Aperçu de l'interface"
     },
     "secureCommunication": {
       "title": "Nous sommes spécialistes en solutions de communication sécurisée :",
@@ -1168,6 +1221,8 @@
     },
     "exclusiveOffersTitle": "Offres Exclusives",
     "menu": {
+      "filtersAriaLabel": "Filtres de catégories d'offres",
+      "filterBy": "Filtrer par {category}",
       "sims": "SIMS",
       "apps": "Applications",
       "system": "Systèmes"
@@ -1204,6 +1259,8 @@
   "BlogPage": {
     "ourBlogTitleBanner": "Notre blog",
     "ourBlogDescriptionBanner": "Informez-vous sur la sécurité chiffrée",
+    "categoryLabel": "Catégorie :",
+    "selectPlaceholder": "Sélectionner",
     "menu": {
       "techTitle": "Technologie",
       "ventureTitle": "Entrepreneuriat",
@@ -2722,135 +2779,18 @@
       ]
     }
   },
-  "paymentModal": {
-    "purchaseDetails": "Détails de l'achat",
-    "quantity": "Quantité",
-    "license": "Licence",
-    "months": "Mois",
-    "month": "Mois",
-    "minutes": "Minutes",
-    "rechargeAmount": "Montant de recharge",
-    "esimPrice": "Prix de l'eSIM",
-    "simPrice": "Prix de la SIM",
-    "chooseGigas": "Choisissez vos Gigas (GB)",
-    "countryOrRegion": "Pays ou région",
-    "totalToPay": "Total à payer",
-    "enterPromoCode": "Entrez un code promo",
-    "apply": "Appliquer",
-    "share": "Partager",
-    "paymentMethod": "Méthode de paiement",
-    "creditCard": "Carte de crédit",
-    "cryptocurrency": "Cryptomonnaies",
-    "payNow": "Payer maintenant",
-    "continue": "Continuer",
-    "confirmPayment": "Confirmer le paiement",
-    "processing": "Traitement en cours",
-    "acceptTerms": "J'accepte les",
-    "termsAndConditions": "termes et conditions",
-    "ofPurchase": "de l'achat",
-    "emailLabel": "Email pour recevoir la licence",
-    "emailLabelRoning": "Email pour recevoir votre licence",
-    "emailPlaceholder": "Email",
-    "cardholderName": "Nom du titulaire",
-    "postalCode": "Code postal",
-    "loadingPaymentForm": "Chargement du formulaire de paiement...",
-    "licenseQuestion": "Comment voulez-vous recevoir votre licence ?",
-    "newLicense": "Nouvelle licence",
-    "renewLicense": "Renouveler licence",
-    "wantMyUser": "Je veux mon utilisateur",
-    "roningCode": "Code RONING",
-    "recharge": "Recharger",
-    "suggestedUsernames": "Entrez les noms d'utilisateur suggérés",
-    "usernameHint": "Vous pouvez suggérer des noms d'utilisateur avec un minimum de 4 caractères et un maximum de 20 caractères alphanumériques.",
-    "usernamePlaceholder": "Entrez un nom d'utilisateur",
-    "rechargeTitle": "Si vous voulez recharger",
-    "rechargeSubtitle": "contactez-nous",
-    "goToTelegram": "Aller sur Telegram",
-    "needHelp": "Écrivez-nous pour l'acheter !",
-    "chatNow": "Discuter maintenant",
-    "needHelpQuestion": "Besoin d'aide ?",
-    "linkCopied": "Lien copié dans le presse-papiers",
-    "linkCopyFailed": "Impossible de copier le lien",
-    "includeEsim": "Inclure eSIM",
-    "shipping": "Livraison",
-    "enterProductId": "Entrez votre ID {productName}",
-    "enterIdPlaceholder": "Entrez votre ID",
-    "product": "produit",
-    "successTitle": "Merci pour votre achat !",
-    "orderNumber": "N° de commande",
-    "total": "Total",
-    "telegramLicenseMsg1": "Écrivez au support Telegram",
-    "telegramLicenseMsg2": "pour gérer votre licence.",
-    "orderDispatchMsg1": "Votre commande sera expédiée immédiatement !",
-    "orderDispatchMsg2": "Si vous avez des questions, contactez-nous",
-    "paymentConfirmed": "Paiement confirmé",
-    "transactionSuccess": "Votre transaction a été effectuée avec succès",
-    "amount": "Montant",
-    "paymentId": "ID de paiement",
-    "date": "Date",
-    "descriptionLabel": "Description",
-    "licenseByEmail": "Nous vous enverrons votre licence par email si applicable à votre achat",
-    "brandApp": "Application",
-    "brandSystem": "Système",
-    "brandRouter": "Routeur",
-    "brandEncrypted": "SIM Encriptados",
-    "brandTim": "SIM TIM",
-    "couponReplacesOffer": "Ce produit a déjà une offre appliquée. Votre coupon sera appliqué sur le prix régulier du produit sans l'offre.",
-    "closeModal": "Fermer",
-    "operatingSystem": "Système",
-    "discount": "Remise",
-    "productLabel": "Produit",
-    "estimatedDelivery": "Date de livraison estimée",
-    "shippingDetail": "Détail de l'envoi",
-    "shippedBy": "Envoyé par",
-    "trackingNumber": "Numéro de suivi",
-    "purchaseData": "Données d'achat",
-    "enterEmail": "Entrez votre Email",
-    "simNumber": "Numéro de SIM",
-    "simNumberN": "Numéro de SIM {n}",
-    "telegramIdOptional": "ID Telegram",
-    "telegramIdOptionalHint": "(optionnel)",
-    "telegramPlaceholder": "@utilisateur ou ID numérique",
-    "emailExamplePlaceholder": "email@exemple.com",
-    "licenseType": "Type de licence",
-    "newLicenseBtn": "Nouvelle licence",
-    "renewLicenseBtn": "Renouveler licence",
-    "suggestedUsernamesLabel": "Entrez les noms suggérés",
-    "usernameMinMax": "Minimum 4 et maximum 20 caractères alphanumériques.",
-    "enterUsername": "Entrez un nom d'utilisateur",
-    "emailForLicense": "Email pour recevoir la licence",
-    "stripeNotReady": "Stripe n'est pas prêt.",
-    "couldNotInitiatePayment": "Impossible d'initier le paiement.",
-    "errorConfirmingPayment": "Erreur lors de la confirmation du paiement.",
-    "couldNotCompletePayment": "Impossible de terminer le paiement.",
-    "errorProcessingPayment": "Erreur lors du traitement du paiement.",
-    "processingOrder": "Traitement de la commande… cela peut prendre quelques secondes.",
-    "roningCodeDescription": "Recevez un code RONING pour recharger le solde depuis l'application Encriptados.",
-    "chooseRechargeType": "Choisir le type de recharge",
-    "normalRecharge": "Normale",
-    "anonymousRecharge": "Anonyme",
-    "shippingAddress": "Adresse de livraison",
-    "fullName": "Nom complet",
-    "countryField": "Pays",
-    "phoneField": "Téléphone",
-    "loading": "Chargement...",
-    "initializingPaymentForm": "Initialisation du formulaire de paiement...",
-    "noPhoneNumberSecurity": "Ce produit ne contient pas de numéro de téléphone.",
-    "freeTrial": "Essai gratuit",
-    "freeTrialWarning": "Cette licence gratuite a une durée de 6 heures. Après cette période, la licence expirera automatiquement.",
-    "licenseQuestionLabel": "Comment souhaitez-vous recevoir votre licence ?",
-    "wantMyUserBtn": "Je veux mon utilisateur",
-    "roningCodeBtn": "Code RONING",
-    "rechargeBtn": "Recharger",
-    "details": "Détail",
-    "activationDetail": "Activations"
-  },
   "TestingProducts": {
     "badge": "Nos produits",
     "title": "Découvrez nos <br></br>produits chiffrés",
     "sims": "SIM <br></br>chiffrées",
     "apps": "Applications de <br></br>messagerie <br></br>sécurisée",
     "systems": "Systèmes de <br></br>sécurité",
-    "routers": "Routeurs <br></br>chiffrés"
+    "routers": "Routeurs <br></br>chiffrés",
+    "testPage": {
+      "title": "Liste des produits depuis WooCommerce",
+      "fetchError": "Erreur lors de la récupération des produits.",
+      "empty": "Il n'y a aucun produit ou la réponse est vide.",
+      "priceLabel": "Prix"
+    }
   }
 }

@@ -34,12 +34,13 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 import { plans } from "../consts/plans";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const RouterPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations("RouterUi");
   const { openModal } = useModalPayment();
   const plan = searchParams.get("plan");
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
@@ -50,9 +51,9 @@ const RouterPage = () => {
   const productInfo = {
     title: "Silent Phone",
     price: "99$ USD",
-    subtitle: "Comunicación cifrada y segura",
+    subtitle: t("privacySubtitle"),
     iconUrl: "/images/apps/silent-circle/logo.png",
-    ctaLabel: "Comprar ahora",
+    ctaLabel: t("buy"),
     categoryId: 35,
     productId: 142,
     onBuy: () => {

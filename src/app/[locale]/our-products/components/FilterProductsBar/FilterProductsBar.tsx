@@ -24,10 +24,10 @@ const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
 const FILTER_OPTIONS = [
-  { key: "sim", label: "SIMs", catId: 40, Icon: SimProductsBarIcon },
-  { key: "app", label: "Aplicaciones", catId: 38, Icon: AplicationsProductsBarIcon },
-  { key: "mobile", label: "Sistemas", catId: 35, Icon: PhoneProductsBarIcon },
-  { key: "routers", label: "Routers", catId: 36, Icon: RoutersBarIcon },
+  { key: "sim", catId: 40, Icon: SimProductsBarIcon },
+  { key: "app", catId: 38, Icon: AplicationsProductsBarIcon },
+  { key: "mobile", catId: 35, Icon: PhoneProductsBarIcon },
+  { key: "routers", catId: 36, Icon: RoutersBarIcon },
 ] as const;
 
 interface FilterProductsBarProps {
@@ -51,14 +51,9 @@ export default function FilterProductsBar({
 
   const selectedCat = parseInt(filters.selectedOption, 10);
 
-  const items = FILTER_OPTIONS.map(({ key, label, catId, Icon }) => ({
+  const items = FILTER_OPTIONS.map(({ key, catId, Icon }) => ({
     value: String(catId),
-    label:
-      key === "app"
-        ? t("filterProducts.apps")
-        : key === "mobile"
-          ? "Sistemas"
-          : label,
+    label: t(`filterProducts.categories.${key}`),
     icon: (
       <Icon
         color={
@@ -116,28 +111,21 @@ export default function FilterProductsBar({
     />
   );
 
-  // Helper to capitalize text in Title Case
-  const toTitleCase = (str: string) => {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  };
-
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
       <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
         <MenuDropdownProductBar
           name="encriptadosprovider"
           externalValue={filters.encriptadosprovider}
           options={[
-            { label: "Todos", value: "all" },
-            { label: "Recarga Datos", value: "datarecharge" },
-            { label: "eSIM + Datos", value: "eSimData" },
-            { label: "Recarga Minutos", value: "minuterecharge" },
-            { label: "eSIM + Minutos", value: "eSimMinutes" },
-            { label: "eSim", value: "esim" },
-            { label: "SIM Física", value: "physicsim" },
+            { label: t("filterProducts.allOption"), value: "all" },
+            { label: t("filterProducts.services.rechargeData"), value: "datarecharge" },
+            { label: t("filterProducts.services.esimData"), value: "eSimData" },
+            { label: t("filterProducts.services.rechargeMinutes"), value: "minuterecharge" },
+            { label: t("filterProducts.services.esimMinutes"), value: "eSimMinutes" },
+            { label: t("filterProducts.services.esim"), value: "esim" },
+            { label: t("filterProducts.services.physicalSim"), value: "physicsim" },
           ]}
           onChangeExternal={(value) => {
             const normalized = Array.isArray(value)
@@ -150,15 +138,15 @@ export default function FilterProductsBar({
     ),
     tim: (
       <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
         <MenuDropdownProductBar
           name="timprovider"
           externalValue={filters.timprovider}
           options={[
-            { label: "Todos", value: "all" },
-            { label: "Recarga Datos", value: "datarechargetim" },
-            { label: "eSIM + Datos", value: "esimplusdatatim" },
-            { label: "SIM Física", value: "physicsimtim" },
+            { label: t("filterProducts.allOption"), value: "all" },
+            { label: t("filterProducts.services.rechargeData"), value: "datarechargetim" },
+            { label: t("filterProducts.services.esimData"), value: "esimplusdatatim" },
+            { label: t("filterProducts.services.physicalSim"), value: "physicsimtim" },
           ]}
           onChangeExternal={(value) => {
             updateFilters({ timprovider: value });
@@ -168,11 +156,11 @@ export default function FilterProductsBar({
     ),
     activarapps: (
       <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
         <MenuDropdownProductBar
           name="encriptadosprovider"
           externalValue={filters.encriptadosprovider}
-          options={[{ label: "Todos", value: "all" }]}
+          options={[{ label: t("filterProducts.allOption"), value: "all" }]}
           onChangeExternal={() => {
             updateFilters({ encriptadosprovider: "all" });
           }}
@@ -189,7 +177,7 @@ export default function FilterProductsBar({
       <div className={`grid grid-cols-2 ${gridColsSm} lg:flex lg:flex-row gap-3 w-full items-end`}>
         {/* 1. Proveedor */}
         <div className="flex-1 w-full min-w-0">
-          <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
+          <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.providerTitle")}</h1>
           <MenuDropdownProductBar
             name="provider"
             externalValue={filters.provider}
@@ -251,11 +239,11 @@ export default function FilterProductsBar({
       label: string;
       catId?: number;
     }[] = [
-        { key: "sims", label: "SIM's", catId: 40 },
-        { key: "apps", label: "Apps", catId: 38 },
-        { key: "systems", label: "Sistemas", catId: 35 },
-        { key: "routers", label: "Routers", catId: 36 },
-        { key: "offers", label: "Ofertas" },
+        { key: "sims", label: t("filterProducts.floating.sims"), catId: 40 },
+        { key: "apps", label: t("filterProducts.floating.apps"), catId: 38 },
+        { key: "systems", label: t("filterProducts.floating.systems"), catId: 35 },
+        { key: "routers", label: t("filterProducts.floating.routers"), catId: 36 },
+        { key: "offers", label: t("filterProducts.floating.offers") },
       ];
 
     const handleNavClick = (item: (typeof navItems)[number]) => {

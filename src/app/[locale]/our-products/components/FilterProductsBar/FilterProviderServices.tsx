@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
+import { useTranslations } from "next-intl";
 
 interface FilterAppWithLicenseProps {
   filters: ProductFilters;
@@ -9,6 +10,7 @@ interface FilterAppWithLicenseProps {
 }
 
 const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, updateFilters }) => {
+  const t = useTranslations("OurProductsPage");
   type ProviderType = "encriptados" | "tim" | "activarapps" | undefined;
 
   const currentProvider = filters.provider as ProviderType;
@@ -16,17 +18,17 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
         <MenuDropdownProductBar
           name="encriptadosprovider"
           options={[
-            { label: "Todo", value: "all" },
-            { label: "Recarga Datos", value: "datarecharge" },
-            { label: "eSIM + Datos", value: "eSimData" },
-            { label: "Recarga Minutos", value: "minuterecharge" },
-            { label: "eSIM + Minutos", value: "eSimMinutes" },
-            { label: "eSim", value: "esim" },
-            { label: "Sim Física", value: "physicsim" },
+            { label: t("filterProducts.allOption"), value: "all" },
+            { label: t("filterProducts.services.rechargeData"), value: "datarecharge" },
+            { label: t("filterProducts.services.esimData"), value: "eSimData" },
+            { label: t("filterProducts.services.rechargeMinutes"), value: "minuterecharge" },
+            { label: t("filterProducts.services.esimMinutes"), value: "eSimMinutes" },
+            { label: t("filterProducts.services.esim"), value: "esim" },
+            { label: t("filterProducts.services.physicalSim"), value: "physicsim" },
           ]}
           onChangeExternal={(value) => {
             const normalized = Array.isArray(value)
@@ -45,14 +47,14 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
     ),
     tim: (
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
         <MenuDropdownProductBar
           name="timprovider"
           options={[
-            { label: "Todo", value: "all" },
-            { label: "Recarga Datos", value: "datarechargetim" },
-            { label: "eSIM + Datos", value: "esimplusdatatim" },
-            { label: "SIM Física", value: "physicsimtim" },
+            { label: t("filterProducts.allOption"), value: "all" },
+            { label: t("filterProducts.services.rechargeData"), value: "datarechargetim" },
+            { label: t("filterProducts.services.esimData"), value: "esimplusdatatim" },
+            { label: t("filterProducts.services.physicalSim"), value: "physicsimtim" },
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de timprovider:", value);
@@ -63,10 +65,10 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
     ),
     activarapps: (
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Servicios</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
         <MenuDropdownProductBar
           name="encriptadosprovider"
-          options={[{ label: "Todos", value: "all" }]}
+          options={[{ label: t("filterProducts.allOption"), value: "all" }]}
           onChangeExternal={() => {
             updateFilters({ encriptadosprovider: "all" });
           }}
@@ -113,7 +115,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   return (
     <div className="flex flex-row space-x-2">
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">Proveedor</h1>
+        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.providerTitle")}</h1>
         <MenuDropdownProductBar
           name="provider"
           options={[

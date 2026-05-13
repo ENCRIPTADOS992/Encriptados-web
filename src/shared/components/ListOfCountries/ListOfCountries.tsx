@@ -3,6 +3,7 @@ import axios from "axios";
 import CountryCard from "./CountryCard";
 import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface Country {
   cca3: string;
@@ -15,6 +16,7 @@ interface Country {
 }
 
 const CountryList: React.FC = () => {
+  const t = useTranslations("SharedUi");
   const router = useRouter();
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -43,7 +45,7 @@ const CountryList: React.FC = () => {
   }, [getValues("country")]);
 
   if (loading) {
-    return <div className="text-center text-lg">Cargando...</div>;
+    return <div className="text-center text-lg">{t("loading")}</div>;
   }
 
   const currentRedirect: Record<string, string> = {

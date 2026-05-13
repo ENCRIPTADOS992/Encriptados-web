@@ -91,7 +91,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Buscar región o país..."
+                  placeholder={t("filterProducts.searchRegionCountryPlaceholder")}
                   className="bg-transparent outline-none w-[160px] text-[#171717] placeholder:text-[#9CA3AF] text-[14px] font-medium"
                   onClick={(e) => e.stopPropagation()}
                 />
@@ -142,7 +142,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
             {/* Título + botón cerrar */}
             <div className="mb-3 flex items-center justify-between">
               <p className="text-[14px] font-semibold text-[#111827]">
-                Elige una región o país
+                {t("filterProducts.selectRegionCountry")}
               </p>
 
               <button
@@ -184,7 +184,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     setSearchTerm("");
                   }}
                 >
-                  País
+                  {t("filterProducts.countryTab")}
                 </button>
 
                 <button
@@ -203,7 +203,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     setSearchTerm("");
                   }}
                 >
-                  Región
+                  {t("filterProducts.regionTab")}
                 </button>
               </div>
 
@@ -218,7 +218,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                   whitespace-nowrap
                 "
               >
-                Aplicar filtro ({selectedCount})
+                {t("filterProducts.applyFilter")} ({selectedCount})
               </button>
             </div>
 
@@ -228,7 +228,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                 <>
                   {loadingRegions && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      Cargando regiones...
+                      {t("filterProducts.loadingRegions")}
                     </div>
                   )}
 
@@ -236,7 +236,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     loadingSearch &&
                     searchTerm.length >= 2 && (
                       <div className="text-[#7E7E7E] text-sm py-2">
-                        Buscando...
+                        {t("filterProducts.searching")}
                       </div>
                     )}
 
@@ -284,7 +284,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                                 {typeof countriesCount === "number" &&
                                   countriesCount > 0 && (
                                     <span className="font-normal text-[#6B7280]">
-                                      ({countriesCount} países)
+                                      ({t("filterProducts.countriesCount", { count: countriesCount })})
                                     </span>
                                   )}
                               </span>
@@ -320,7 +320,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                 <>
                   {loadingCountries && (
                     <div className="text-[#7E7E7E] text-sm py-2">
-                      Cargando países...
+                      {t("filterProducts.loadingCountries")}
                     </div>
                   )}
 
@@ -328,7 +328,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                     loadingSearch &&
                     searchTerm.length >= 2 && (
                       <div className="text-[#7E7E7E] text-sm py-2">
-                        Buscando...
+                        {t("filterProducts.searching")}
                       </div>
                     )}
 
@@ -384,7 +384,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                                 {c.name}
                               </span>
                               <span className="text-[13px] text-[#6B7280]">
-                                Cobertura 4G/5G
+                                {t("filterProducts.mobileCoverage")}
                               </span>
                             </span>
                           </span>

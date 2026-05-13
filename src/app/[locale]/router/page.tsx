@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 // Componentes Template Producto
 import HeroBanner from "../apps/component/templateProduct/HeroBanner";
@@ -120,6 +121,7 @@ function formatPrice(price: number | string | undefined): string {
 }
 
 export default function RouterPage() {
+  const t = useTranslations("RouterUi");
   const params = useParams();
   const locale = (params?.locale as string) || "es";
   const searchParams = useSearchParams();
@@ -242,18 +244,18 @@ export default function RouterPage() {
   const productIconUrl = (product as any)?.iconUrl || ROUTER_CONFIG.iconUrl;
 
   const productInfo = useMemo(() => ({
-    title: (product as any)?.name || "Camaleón Router",
+    title: (product as any)?.name || t("productName"),
     price: formatPrice(currentPrice),
-    subtitle: (product as any)?.description?.substring(0, 50) + "..." || "Privacidad total",
+    subtitle: (product as any)?.description?.substring(0, 50) + "..." || t("privacySubtitle"),
     iconUrl: productIconUrl,
-    ctaLabel: "Comprar",
+    ctaLabel: t("buy"),
     categoryId: ROUTER_CONFIG.categoryId,
     productId: ROUTER_CONFIG.productId,
     onBuy: handleBuy,
     onChat: handleChat,
     onSale: selectedPlan ? !!selectedPlan.salePrice : isOnSale,
     regularPrice: originalPrice,
-  }), [product, currentPrice, handleBuy, isOnSale, originalPrice, selectedPlan]);
+  }), [product, currentPrice, handleBuy, isOnSale, originalPrice, selectedPlan, t]);
 
   // Loading state
   if (isLoading) {
@@ -268,9 +270,9 @@ export default function RouterPage() {
   if (error) {
     return (
       <main className="bg-white min-h-screen flex flex-col items-center justify-center p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">Camaleón Router</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">{t("productName")}</h1>
         <p className="text-gray-600 mb-2">{error}</p>
-        <p className="text-gray-400 text-sm">Por favor, intenta más tarde.</p>
+        <p className="text-gray-400 text-sm">{t("tryAgainLater")}</p>
       </main>
     );
   }

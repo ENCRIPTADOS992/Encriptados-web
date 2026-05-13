@@ -1,0 +1,56 @@
+{
+  "DeliveryPage": {
+    "unnecessaryWaits": "Evita esperas innecesarias",
+    "fastDeliveryBannerTitle": "Con la Entrega Rápida, recibe tu celular encriptado en el menor tiempo posible",
+    "fastDeliveryBannerSubtitle": "Encuentra un punto de recogida cercano a ti",
+    "fastDeliveryLocation": "Ver Lugares de entrega",
+    "encriptedProductsTitle": "Productos Encriptados",
+    "deliveryPointsTitle": "Encuentra nuestros puntos de entrega rápida",
+    "deliveryPointsDescription": "Usa el mapa interactivo y encuentra nuestros puntos seleccionados de recogida más cercanos a tu ubicación",
+    "chatTelegram": "Chatear por Telegram",
+    "howDoesFastDeliveryTitle": "¿Cómo funciona la Entrega Rápida de Encriptados?",
+    "howDoesFastDeliveryOptions": {
+      "deliveyPoint": {
+        "title": "Selecciona un punto de entrega",
+        "description": "Consulta la ubicación más cercana donde te gustaría recoger tu celular encriptado"
+      },
+      "contactUsOnTelegram": {
+        "title": "Contáctanos por Telegram",
+        "description": "Contáctanos por nuestro canal de Telegram y coordina la compra de tu celular encriptado"
+      },
+      "pickUpYourPhone": {
+        "title": "Recoge tu celular encriptado",
+        "description": "Una vez coordinada la entrega, recoge tu celular encriptado y disfruta de comunicaciones seguras"
+      }
+    },
+    "renatiTitle": " Celular Encriptado Renati",
+    "buyNow": "Comprar",
+    "encryptedPhone": "Teléfono Encriptado",
+    "saveMoney": "Ahorra hasta",
+    "downloadApp": "Descarga la App para iOS & Android y compra ahora tu SIM",
+    "scanQR": "O escanea el código QR con tu cámara",
+    "joinModal": {
+      "title": "Regístrate",
+      "namePlaceholder": "Nombre",
+      "emailPlaceholder": "Correo Electrónico",
+      "messagePlaceholder": "Mensaje (opcional)",
+      "send": "Enviar",
+      "close": "Cerrar"
+    },
+    "titleFAQS": "Preguntas Frecuentes",
+    "faqs": {
+      "immediateDelivery": {
+        "title": "¿Qué es la Entrega Rápida de Encriptados?",
+        "content": "La Entrega Rápida de Encriptados es un servicio especializado que te permite disfrutar de tu SIM o equipo encriptado en menos de 48 horas."
+      },
+      "whereDelivery": {
+        "title": "¿Qué productos puedo comprar con Entrega Rápida?",
+        "content": "Puedes obtener cualquiera de las marcas de celulares encriptados seleccionadas en nuestra página web."
+      },
+      "costDelivery": {
+        "title": "¿Qué costo tiene la Entrega Rápida de Encriptados?",
+        "content": "El costo de la entrega rápida de Encriptados varía de acuerdo a tu localidad, solo debes escribirnos al Telegram y te ayudaremos con los valores y gestión para que tengas tu producto cuanto antes."
+      }
+    }
+  }
+}

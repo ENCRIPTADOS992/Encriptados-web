@@ -1,9 +1,12 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import WomenActivate from "../../../../../public/images/our-products/woman-activate.png";
 import LogoSecureSVG from "../../../../../public/images/our-products/svg/icon-secure-mdm.svg";
 import PhoneSecure from "../../../../../public/images/our-products/phone-secure.png";
 
 export default function BannerSecureMdm() {
+  const t = useTranslations("OurProductsPage.secureMdm");
+
   return (
     <div className="flex flex-col md:flex-row md:max-h-[400px] bg-custom-gradient-secure-black-y-grey lg:pl-[16vh] pl-5">
       <div className="order-2 sm:order-1 md:w-1/2 self-center py-8">
@@ -19,14 +22,14 @@ export default function BannerSecureMdm() {
                 height={40}
               />
             </div>
-            <h1 className="text-2xl sm:text-sm md:text-3xl font-semibold text-white">Secure MDM iPhone</h1>
-            <p className="text-base sm:text-base md:text-lg text-blue-300">Desde $600 USD</p>
-            <p className="text-xs sm:text-sm md:text-base text-gray-400">Ahora 50 USD</p>
+            <h1 className="text-2xl sm:text-sm md:text-3xl font-semibold text-white">{t("legacyTitle")}</h1>
+            <p className="text-base sm:text-base md:text-lg text-blue-300">{t("fromPrice")} {t("legacyRegularPrice")}</p>
+            <p className="text-xs sm:text-sm md:text-base text-gray-400">{t("legacySalePrice")}</p>
           </div>
           {/* Botones de acción */}
           <div className="flex flex-col gap-4 items-center sm:items-start mt-6">
-            <button className="bg-blue-300 text-black px-6 py-2 rounded-full w-full sm:w-[200px] font-semibold">Comprar</button>
-            <button className="text-white underline w-full sm:w-[200px] md:text-left">Más información</button>
+            <button className="bg-blue-300 text-black px-6 py-2 rounded-full w-full sm:w-[200px] font-semibold">{t("buy")}</button>
+            <button className="text-white underline w-full sm:w-[200px] md:text-left">{t("moreInfo")}</button>
           </div>
         </div>
       </div>

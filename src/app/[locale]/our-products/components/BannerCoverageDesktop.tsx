@@ -1,17 +1,19 @@
 // src/app/[locale]/our-products/components/BannerCoverageDesktop.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export const BannerCoverageDesktop = () => {
+  const t = useTranslations("OurProductsPage.coverageBanner");
+
   return (
     <section className="hidden lg:block bg-white py-16">
       <div className="mx-auto max-w-5xl px-6">
-        {/* Título */}
         <h2 className="text-center text-[32px] leading-tight font-semibold">
-          <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">Cobertura en más de 200 países</span>
+          <span className="bg-gradient-to-r from-[#33CDFB] via-[#0EA5E9] to-[#1E3A8A] bg-clip-text text-transparent">{t("title")}</span>
         </h2>
         <p className="mt-3 text-center text-base text-[#4B5563] max-w-2xl mx-auto">
-          Consulta el costo del gigabyte según el país y el perfil recomendado,
-          así optimizas el consumo de tus datos al mejor precios
+          {t("desktopDescription")}
         </p>
 
         {/* Buscador */}
@@ -29,7 +31,7 @@ export const BannerCoverageDesktop = () => {
             </button>
             <input
               type="text"
-              placeholder="Colombia"
+              placeholder={t("searchPlaceholder")}
               className="w-full h-[56px] rounded-full border border-[#D1D5DB] pl-14 pr-6 text-sm text-[#111827] placeholder:text-[#9CA3AF] outline-none focus:outline-none focus:border-[#33CDFB] transition-colors"
             />
           </div>
@@ -40,14 +42,14 @@ export const BannerCoverageDesktop = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#003040] text-white text-sm">
-                <th className="py-3 pl-6 pr-4 font-medium">País</th>
-                <th className="py-3 px-4 font-medium">Perfil</th>
-                <th className="py-3 px-4 font-medium">Valor de 1 GB en USD</th>
+                <th className="py-3 pl-6 pr-4 font-medium">{t("countryHeader")}</th>
+                <th className="py-3 px-4 font-medium">{t("profileHeader")}</th>
+                <th className="py-3 px-4 font-medium">{t("gbValueHeader")}</th>
               </tr>
             </thead>
             <tbody>
               <tr className="bg-[#EAF5FF] text-sm text-[#111827]">
-                <td className="py-3 pl-6 pr-4">Colombia</td>
+                <td className="py-3 pl-6 pr-4">{t("sampleCountry")}</td>
                 <td className="py-3 px-4">SG</td>
                 <td className="py-3 px-4">50.14</td>
               </tr>

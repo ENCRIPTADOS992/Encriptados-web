@@ -24,11 +24,11 @@ const MenuCategoryResponsive: React.FC<MenuDropdownProductBarProps> = ({
   const { control, watch } = useFormContext();
   const selectedItem = watch(name);
 
-  const t = useTranslations("OurProductsPage");
+  const t = useTranslations("BlogPage");
 
   return (
     <div className="flex items-center justify-between w-full px-4">
-      <h1 className="text-white text-sm font-bold w-6/12">Categoría:</h1>
+      <h1 className="text-white text-sm font-bold w-6/12">{t("categoryLabel")}</h1>
       <Controller
         name={name}
         control={control}
@@ -46,8 +46,8 @@ const MenuCategoryResponsive: React.FC<MenuDropdownProductBarProps> = ({
                 <span>
                   {selectedItem
                     ? options.find((option) => option.value === selectedItem)
-                        ?.label || t("filterProducts.selectPlacerholder")
-                    : t("filterProducts.selectPlacerholder")}
+                        ?.label || t("selectPlaceholder")
+                      : t("selectPlaceholder")}
                 </span>
                 <ArrowDown />
               </MenuButton>

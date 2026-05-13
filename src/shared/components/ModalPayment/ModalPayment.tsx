@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   onClose?: () => void;
@@ -19,6 +20,7 @@ const ModalPayment: React.FC<Props> = ({
   panelClassName,
   overlayClassName,
 }) => {
+  const t = useTranslations("paymentModal");
   const panelRef = useRef<HTMLDivElement | null>(null);
 
   console.log("[ModalPayment] render", {
@@ -149,7 +151,7 @@ const ModalPayment: React.FC<Props> = ({
             onClose();
           }}
           className="absolute top-2 right-2 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10 transition-colors z-10"
-          aria-label="Cerrar"
+          aria-label={t("closeModal")}
         >
           ✕
         </button>

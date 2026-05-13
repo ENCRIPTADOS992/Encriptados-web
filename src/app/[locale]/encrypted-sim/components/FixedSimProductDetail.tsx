@@ -60,13 +60,13 @@ const FixedSimProductDetail: React.FC = () => {
   }, [categoryId, locale, product, router, searchParams]);
 
   if (isLoading) {
-    return <div className="text-center py-10">Cargando producto...</div>;
+    return <div className="text-center py-10">{t("loadingProduct")}</div>;
   }
 
   if (isError || !product) {
     return (
       <div className="text-center py-10 text-red-500">
-        No se pudo cargar el producto.
+        {t("productLoadError")}
       </div>
     );
   }

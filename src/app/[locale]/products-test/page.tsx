@@ -1,6 +1,13 @@
 import React from "react";
+import { getTranslations } from "next-intl/server";
 
-export default async function ProductsTestPage() {
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function ProductsTestPage({ params }: PageProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "TestingProducts.testPage" });
   const endpoint = "https://encriptados.es/wp-json/wc/v3/products";
 
   const headers = {
@@ -14,14 +21,14 @@ export default async function ProductsTestPage() {
   });
 
   if (!res.ok) {
-    return <div>Error al obtener los productos.</div>;
+    return <div>{t("fetchError")}</div>;
   }
 
   const products = await res.json();
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Lista de productos desde WooCommerce</h1>
+      <h1>{t("title")}</h1>
       {products && products.length > 0 ? (
         products.map((product: any) => (
           <div
@@ -41,7 +48,7 @@ export default async function ProductsTestPage() {
               />
             )}
             <p>
-              <strong>Precio:</strong> {product.price}
+              <strong>{t("priceLabel")}:</strong> {product.price}
             </p>
             <div
               dangerouslySetInnerHTML={{ __html: product.description }}
@@ -49,7 +56,7 @@ export default async function ProductsTestPage() {
           </div>
         ))
       ) : (
-        <p>No hay productos o la respuesta está vacía.</p>
+        <p>{t("empty")}</p>
       )}
     </div>
   );

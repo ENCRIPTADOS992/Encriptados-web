@@ -1,0 +1,20 @@
+{
+  "DashboardPage": {
+    "menuDashboard": {
+      "header": {
+        "supportChat": "Chat de soporte",
+        "myAccount": "Mi Cuenta",
+        "logOut": "Cerrar sesión",
+        "limitedAccount": "CUENTA DE TIEMPO ILIMITADO"
+      },
+      "items": {
+        "mySimConsume": "Mi consumo de datos de SIM",
+        "myActivities": "Mis actividades",
+        "store": "Tienda",
+        "myPurchases": "Mis compras",
+        "accountAdmin": "Administrar cuentas",
+        "userConfig": "Configuración"
+      }
+    }
+  }
+}

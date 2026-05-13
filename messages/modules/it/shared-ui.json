@@ -1,0 +1,16 @@
+{
+  "SharedUi": {
+    "loading": "Caricamento...",
+    "downloadApp": {
+      "buttonLine1": "Scarica",
+      "buttonLine2": "l'app Encriptados",
+      "scanQr": "Scansiona questo QR e",
+      "download": "scarica",
+      "appName": "l'app Encriptados",
+      "closeModal": "Chiudi finestra",
+      "qrAlt": "Codice QR per scaricare l'app Encriptados",
+      "appAlt": "App Encriptados",
+      "phoneQrAlt": "Codice QR sul telefono"
+    }
+  }
+}
