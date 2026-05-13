@@ -17,43 +17,25 @@ const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostSlug }) =>
     <>
       <BannerPostById />
 
-      <div className="w-full bg-black flex flex-col justify-center items-center py-10 md:py-16 px-4 gap-10">
-        {/* CONTENIDO + SIDEBAR (artículos anteriores) */}
+      <div className="relative flex w-full flex-col items-center justify-center gap-10 overflow-hidden bg-black px-4 py-10 md:py-16">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
         <div
-          className={`w-full ${MAX_WIDTH} mx-auto flex flex-col md:flex-row items-start gap-8`}
+          className={`w-full ${MAX_WIDTH} mx-auto flex flex-col items-start gap-8 lg:flex-row`}
         >
-          {/* Columna izquierda: artículo */}
-          <div className="w-full md:flex-1">
+          <div className="w-full lg:flex-1">
             <ContentBlogById />
           </div>
 
-          {/* Columna derecha: artículos anteriores */}
-          <aside className="w-full md:w-[340px] lg:w-[380px]">
+          <aside className="w-full lg:sticky lg:top-24 lg:w-[360px] xl:w-[390px]">
             <PreviousPosts posts={allPosts} currentPostSlug={currentPostSlug} />
           </aside>
         </div>
 
-        {/* Banner "Habla con nosotros" debajo, ocupando el ancho */}
         <div
           className={`relative w-full ${MAX_WIDTH} mx-auto flex justify-center items-center overflow-hidden`}
         >
-          <div
-            className="absolute left-0 top-0 h-full w-[36vw] md:w-[30vw] xl:w-[26rem] rounded-full blur-2xl pointer-events-none z-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, #00372B 60%, transparent 100%)",
-              opacity: 0.7,
-            }}
-          ></div>
-
-          <div
-            className="absolute right-0 top-0 h-full w-[36vw] md:w-[30vw] xl:w-[26rem] rounded-full blur-2xl pointer-events-none z-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, #022530 60%, transparent 100%)",
-              opacity: 0.7,
-            }}
-          ></div>
+          <div className="pointer-events-none absolute inset-x-4 top-8 z-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-32 bg-[linear-gradient(90deg,rgba(34,158,217,0.08),rgba(255,255,255,0.025),rgba(42,255,166,0.06))] blur-2xl" />
 
           <div className="relative z-10 w-full flex justify-center">
             <TalkNowBanner />

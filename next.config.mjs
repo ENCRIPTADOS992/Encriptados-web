@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['swiper'],
-  distDir: process.env.NEXT_DIST_DIR || ".next",
+  distDir: process.env.NEXT_DIST_DIR || (process.env.NODE_ENV === "development" ? ".next-dev" : ".next"),
   skipTrailingSlashRedirect: true,
   images: {
     unoptimized: true, // Desactivar optimización de Vercel - las webp ya están optimizadas

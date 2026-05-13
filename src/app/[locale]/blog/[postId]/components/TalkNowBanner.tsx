@@ -3,30 +3,75 @@ import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 
 export default function TalkNowBanner() {
-  const ManWoman = "/images/blog/man-woman.webp";
+  const GirlAndMan = "/images/blog/girlandman.webp";
+  const TelegramLogo = "/images/components/telegram.svg";
   const t = useTranslations("BlogPage");
 
   return (
-    <div className="bg-[#232323] py-12 md:py-16 px-4 md:px-8 rounded-2xl">
-      <SectionWrapper>
-        <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-12">
-          <Image
-            src={ManWoman}
-            width={350}
-            height={350}
-            alt="Soporte en línea"
-            objectFit="cover"
-            className="rounded-xl"
-          />
+    <section
+      data-blog-telegram-cta
+      className="relative w-full overflow-hidden rounded-[28px] border border-white/10 shadow-[0_26px_90px_rgba(0,0,0,0.42)]"
+      style={{
+        background: "rgba(14,14,14,0.7)",
+        backdropFilter: "blur(34px)",
+      }}
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.075)_0%,rgba(255,255,255,0.025)_38%,rgba(0,0,0,0.22)_100%)]" />
+      <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
+      <div className="absolute bottom-0 left-0 h-28 w-full bg-[linear-gradient(90deg,rgba(34,158,217,0.12),rgba(255,255,255,0.03),rgba(42,255,166,0.08))] blur-2xl" />
 
-          {/* Text Content */}
+      <SectionWrapper className="relative z-10">
+        <div className="grid items-center gap-8 px-5 py-10 md:grid-cols-[0.9fr_1fr] md:gap-12 md:px-8 md:py-12 lg:px-12 lg:py-14">
+          <div className="relative mx-auto w-full max-w-[380px] md:max-w-[420px]">
+            <div className="relative aspect-[1.18/1] overflow-hidden rounded-[24px] border border-white/10 bg-[#0E0E0E]/70 p-3 shadow-[0_18px_60px_rgba(0,0,0,0.34)] backdrop-blur-[34px]">
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.015)_48%,rgba(34,158,217,0.08))]" />
+              <div className="absolute inset-x-5 top-5 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+              <div className="relative h-full overflow-hidden rounded-[18px] border border-white/10 bg-[#171717]/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                <Image
+                  src={GirlAndMan}
+                  fill
+                  alt="Asesoria por Telegram"
+                  sizes="(max-width: 768px) 82vw, 420px"
+                  className="object-cover object-center transition duration-700 hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(14,14,14,0.56),rgba(14,14,14,0.1)_45%,rgba(14,14,14,0.36))]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,14,14,0.08),rgba(14,14,14,0.52))]" />
+
+                <div className="relative flex h-full flex-col justify-between p-5">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-[#0E0E0E]/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
+                    <Image
+                      src={TelegramLogo}
+                      width={34}
+                      height={34}
+                      alt="Telegram"
+                      className="h-8 w-8"
+                    />
+                  </div>
+
+                  <div className="w-full max-w-[260px] rounded-2xl border border-white/10 bg-[#0E0E0E]/55 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+                    <div className="mb-3 h-2 w-20 rounded-full bg-white/18" />
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="h-10 rounded-xl border border-white/10 bg-white/[0.06]" />
+                      <div className="h-10 rounded-xl border border-white/10 bg-white/[0.09]" />
+                      <div className="h-10 rounded-xl border border-white/10 bg-white/[0.05]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
-            <h2 className="max-w-md text-[30px] md:text-[38px] leading-[1.3] font-bold text-white">
+            <div className="inline-flex rounded-lg border border-white/10 bg-[#171717] px-4 py-2 text-sm font-medium text-[#9D9D9D] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+              Telegram
+            </div>
+            <h2 className="max-w-xl text-[30px] font-bold leading-[1.16] text-white md:text-[40px] lg:text-[44px]">
               {t("talkWithSupport")}
             </h2>
             <a
               href="#"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#229ED9] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#1d8abd]"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#229ED9] px-6 py-3 font-semibold text-white shadow-[0_14px_40px_rgba(34,158,217,0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#35cdfb] hover:text-black hover:shadow-[0_18px_52px_rgba(53,205,251,0.34)] focus:outline-none focus:ring-2 focus:ring-cyan-200/70"
             >
               <svg
                 className="h-5 w-5"
@@ -41,6 +86,6 @@ export default function TalkNowBanner() {
           </div>
         </div>
       </SectionWrapper>
-    </div>
+    </section>
   );
 }

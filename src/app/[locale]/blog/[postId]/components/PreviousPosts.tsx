@@ -35,18 +35,18 @@ const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostSlug })
   }
 
   return (
-    <div className="w-full py-12 md:py-16">
-      <h3 className="text-[24px] leading-[1.5] font-bold text-white mb-8">
+    <div className="w-full rounded-[22px] border border-white/10 bg-white/[0.04] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.28)] backdrop-blur-sm md:p-6">
+      <h3 className="mb-6 text-[24px] font-bold leading-[1.3] text-white">
         {t("previousArticles")}
       </h3>
 
-      {/* Lista vertical */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         {previousPosts.map((post) => (
           <CardOfPost
             key={post.id}
             id={post.id}
             slug={post.slug}
+            legacyPath={post.legacyPath}
             image={post.image}
             title={post.title}
             description={post.description}
