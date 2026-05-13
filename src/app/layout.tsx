@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   publisher: SEO_SITE_NAME,
   referrer: "origin-when-cross-origin",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [{ url: "/favicon.ico?v=2", type: "image/x-icon", sizes: "any" }],
+    shortcut: [{ url: "/favicon.ico?v=2", type: "image/x-icon" }],
+    apple: [{ url: "/favicon.ico?v=2", type: "image/x-icon" }],
   },
   alternates: {
     canonical: buildAbsoluteUrl("/"),
