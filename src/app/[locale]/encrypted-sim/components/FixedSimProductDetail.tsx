@@ -40,8 +40,6 @@ const FixedSimProductDetail: React.FC = () => {
   React.useEffect(() => {
     if (!product?.name) return;
 
-    if (!/activar\s*apps?/i.test(product.name)) return;
-
     const targetPath = getProductLink(
       product.name,
       Number(product.category?.id ?? categoryId),
@@ -50,11 +48,11 @@ const FixedSimProductDetail: React.FC = () => {
       (product as any)?.type_product
     );
 
-    if (!targetPath) return;
+    if (targetPath !== "/activar-apps") return;
 
     const nextParams = new URLSearchParams(searchParams.toString());
     nextParams.set("productId", String(product.id));
-    nextParams.set("categoryId", String(product.category?.id ?? categoryId));
+    nextParams.set("categoryId", "371");
 
     router.replace(`/${locale}${targetPath}?${nextParams.toString()}`);
   }, [categoryId, locale, product, router, searchParams]);

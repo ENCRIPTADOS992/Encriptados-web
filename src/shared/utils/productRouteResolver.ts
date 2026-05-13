@@ -10,6 +10,20 @@ type ProductFamily = "encrypted" | "tim";
 type ProductFormat = "physical" | "digital";
 type SimSlug = "sim-encriptada" | "esim-encriptada" | "tim-sim" | "esim-tim";
 
+const ACTIVAR_APPS_PRODUCT_IDS = new Set([61588]);
+
+export function isActivarAppsProduct(
+  productName?: string,
+  categoryId?: number,
+  productId?: number
+): boolean {
+  return Boolean(
+    categoryId === 371 ||
+    (productId && ACTIVAR_APPS_PRODUCT_IDS.has(productId)) ||
+    /activar\s*apps?/i.test(productName || "")
+  );
+}
+
 /** Deriva family desde el campo `provider` del backend */
 function deriveProductFamily(provider: string | undefined): ProductFamily {
   const prov = (provider || "").toLowerCase();
@@ -73,9 +87,9 @@ export const getProductLink = (
   provider?: string,
   typeProduct?: string
 ): string | null => {
-  // 0a. Excepción específica: Activar Apps (categoría 371)
+  // 0a. Excepción específica: Activar Apps
   // Usa ruta directa pero con plantilla de apps
-  if (categoryId === 371 || /activar\s*apps?/i.test(productName)) {
+  if (isActivarAppsProduct(productName, categoryId, productId)) {
     return `/activar-apps`;
   }
 

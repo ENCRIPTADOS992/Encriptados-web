@@ -53,6 +53,7 @@ export function getProductCategoryKind(
   const isActivarAppsProduct =
     catId === 371 ||
     String(catId) === "371" ||
+    Number(product?.id ?? product?.productId) === 61588 ||
     /activar\s*apps?/.test(name) ||
     /activar[-_\s]*apps?/.test(slug);
 

@@ -6,7 +6,7 @@ import { useLocale } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { getProductLink, getSimProductUrl } from "@/shared/utils/productRouteResolver";
+import { getProductLink, getSimProductUrl, isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
 
 interface Product {
   id: number;
@@ -52,17 +52,21 @@ const normalizeText = (text: string) => {
 // Obtener ruta correcta del producto usando productRouteResolver
 const getProductRoute = (product: Product): string => {
   const categoryId = product.category.id;
-  
+
+  if (isActivarAppsProduct(product.name, categoryId, product.id)) {
+    return "/activar-apps";
+  }
+
   // SIMs (categoría 40) - Usar derivación desde provider y type_product
   if (categoryId === 40) {
     return getSimProductUrl(product.provider, product.type_product);
   }
-  
+
   // Router (categoría 36) - Siempre es /router
   if (categoryId === 36) {
     return "/router";
   }
-  
+
   // Apps (38) y Sistemas (35) - Usar getProductLink
   const link = getProductLink(
     product.name,
@@ -71,18 +75,18 @@ const getProductRoute = (product: Product): string => {
     product.provider,
     product.type_product
   );
-  
+
   // Si getProductLink retorna una URL válida, usarla
   if (link) {
     return link;
   }
-  
+
   // Fallback: construir URL desde slug del producto o nombre
   const slug = product.slug || product.name
     .toLowerCase()
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
-  
+
   return `/apps/${slug}`;
 };
 

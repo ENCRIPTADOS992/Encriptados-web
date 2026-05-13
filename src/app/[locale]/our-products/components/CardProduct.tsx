@@ -5,7 +5,7 @@ import Image from "next/image";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-import { getProductLink } from "@/shared/utils/productRouteResolver";
+import { getProductLink, isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
@@ -99,7 +99,7 @@ const CardProduct: React.FC<CardSimProps> = ({
     e.stopPropagation();
     console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct });
     const selectedOption = Number(filters.selectedOption);
-    const isActivarApps = selectedOption === 371 || /activar\s*apps?/i.test(headerTitle);
+    const isActivarApps = isActivarAppsProduct(headerTitle, selectedOption, id);
     const modalSelectedOption = isActivarApps ? 371 : selectedOption;
     openModal({
       productid: id.toString(),
@@ -161,7 +161,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
     // Determinar categoría correcta
     const isRouter = (headerTitle || "").toLowerCase().includes("router");
-    const isActivarApps = /activar\s*apps?/i.test(headerTitle || "");
+    const isActivarApps = isActivarAppsProduct(headerTitle, Number(filters.selectedOption), id);
     params.set("categoryId", isActivarApps ? "371" : isRouter ? "36" : "40"); // 36=Router, 40=SIMs, 371=Activar Apps
 
     // Usar variantId si está disponible (prioridad para seguridad)

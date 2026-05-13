@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import CopyPaste from "@/shared/svgs/CopyPast";
 import { getShareConfigByProductId, getShareUrlWithLocale } from "@/shared/constants/shareConfig";
-import { getProductLink, getSimProductUrl } from "@/shared/utils/productRouteResolver";
+import { getProductLink, getSimProductUrl, isActivarAppsProduct as isActivarAppsRouteProduct } from "@/shared/utils/productRouteResolver";
 import { Tag, CircleAlert } from "lucide-react";
 import { useToast } from "@/shared/context/ToastContext";
 import { CircleFlag } from "react-circle-flags";
@@ -391,9 +391,10 @@ const PurchaseHeader: React.FC<Props> = ({
                 // Detectar si es un producto SIM (categoría 40) basándose en el provider
                 // Solo "Sim Encriptados", "Sim TIM", "encrypted", "tim" son productos SIM
                 const providerLower = (provider || "").toLowerCase();
-                const isSimProduct = providerLower.includes("encript") ||
+                const isActivarAppsShare = isActivarAppsRouteProduct(String(product?.name || ""), Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN), Number(productId));
+                const isSimProduct = !isActivarAppsShare && (providerLower.includes("encript") ||
                   providerLower.includes("tim") ||
-                  providerLower === "encrypted";
+                  providerLower === "encrypted");
 
                 // Debug: mostrar datos del producto para verificar derivación
                 console.log("🔗 [PurchaseHeader] Share button clicked:", {
@@ -467,7 +468,8 @@ const PurchaseHeader: React.FC<Props> = ({
                   });
                 } else {
                   // Para Apps/Sistemas/Router: usar getProductLink con lógica dinámica de slugs
-                  const categoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
+                  const rawCategoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
+                  const categoryId = isActivarAppsShare ? 371 : rawCategoryId;
                   const productName = String(product?.name || "");
 
                   // Generar el slug dinámicamente basado en el nombre (ej: "Silent Phone" -> "/apps/silent-phone")
