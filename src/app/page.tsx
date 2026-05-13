@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
 import { StripeProvider } from "@/shared/components/StripeProvider";
@@ -18,22 +19,24 @@ export default async function RootSpanishHomePage() {
 
   return (
     <NextIntlClientProvider locale="es" messages={messages}>
-      <AppMobileProvider>
-        <ModalPaymentProvider>
-          <StripeProvider>
-            <AppMobileLayout
-              header={<CurrentHeader />}
-              footer={<FooterEncrypted />}
-            >
-              <HomePage />
-            </AppMobileLayout>
-          </StripeProvider>
-          <ModalPaymentController />
-        </ModalPaymentProvider>
-        <MoraWarningProvider>
-          <MoraWarningModal />
-        </MoraWarningProvider>
-      </AppMobileProvider>
+      <Suspense fallback={null}>
+        <AppMobileProvider>
+          <ModalPaymentProvider>
+            <StripeProvider>
+              <AppMobileLayout
+                header={<CurrentHeader />}
+                footer={<FooterEncrypted />}
+              >
+                <HomePage />
+              </AppMobileLayout>
+            </StripeProvider>
+            <ModalPaymentController />
+          </ModalPaymentProvider>
+          <MoraWarningProvider>
+            <MoraWarningModal />
+          </MoraWarningProvider>
+        </AppMobileProvider>
+      </Suspense>
     </NextIntlClientProvider>
   );
 }
