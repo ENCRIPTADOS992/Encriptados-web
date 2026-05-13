@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 type CardOfPostProps = {
   id: string;
   slug: string;
+  legacyPath?: string;
   image: string;
   title: string;
   description: string;
@@ -13,13 +14,14 @@ type CardOfPostProps = {
 
 export default function CardOfPost({
   slug,
+  legacyPath,
   image,
   title,
   description,
   author,
 }: CardOfPostProps) {
   const t = useTranslations("BlogPage");
-  const postUrl = `/blog/${slug}`;
+  const postUrl = legacyPath ?? `/blog/${slug}`;
   return (
     <div className="flex flex-col w-full rounded-2xl shadow-lg overflow-hidden">
       <Link href={postUrl} className="relative w-full h-40 sm:h-48 md:h-52 lg:h-56 block">
@@ -53,7 +55,7 @@ export default function CardOfPost({
           </div>
           <Link
             className="text-sm font-medium text-black hover:underline"
-            href={`/blog/${slug}`}
+            href={postUrl}
           >
             {t("readMore")} →
           </Link>

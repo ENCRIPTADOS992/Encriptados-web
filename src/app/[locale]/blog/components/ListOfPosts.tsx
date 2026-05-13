@@ -95,6 +95,7 @@ const ListOfPosts = ({ posts, loading }: ListOfPostsProps) => {
               key={post.id || index}
               id={post.id}
               slug={post.slug}
+              legacyPath={post.legacyPath}
               image={post.image}
               title={post.title}
               description={post.description}

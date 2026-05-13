@@ -6,6 +6,9 @@ export type BlogSource = "wordpress" | "markdown";
 export interface BlogPostCard {
   id: string;
   slug: string;
+  wpId?: number;
+  legacyPath?: string;
+  categorySlug?: string;
   source: BlogSource;
   title: string;
   description: string;
@@ -25,6 +28,7 @@ export interface WordPressBlogItem {
   id: number;
   date: string;
   slug: string;
+  link?: string;
   title: { rendered: string };
   content: { rendered: string };
   excerpt: { rendered: string };

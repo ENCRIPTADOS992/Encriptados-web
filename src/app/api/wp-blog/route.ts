@@ -10,10 +10,15 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 export async function GET(req: NextRequest) {
   const lang = req.nextUrl.searchParams.get("lang") ?? "es";
   const id = req.nextUrl.searchParams.get("id"); // optional: single post
+  const slug = req.nextUrl.searchParams.get("slug"); // optional: single post by legacy slug
   const perPage = req.nextUrl.searchParams.get("per_page") ?? "100";
   const page = req.nextUrl.searchParams.get("page") ?? "1";
 
-  const cacheKey = id ? `wp-post-${id}` : `wp-cards-${lang}-p${page}-n${perPage}`;
+  const cacheKey = id
+    ? `wp-post-${id}`
+    : slug
+      ? `wp-post-${lang}-${slug}`
+      : `wp-cards-${lang}-p${page}-n${perPage}`;
   const cached = cache.get(cacheKey);
   if (cached && Date.now() - cached.ts < CACHE_TTL) {
     return NextResponse.json(cached.data, {
@@ -24,7 +29,9 @@ export async function GET(req: NextRequest) {
   try {
     const url = id
       ? `${WP_BASE}/wp/v2/posts/${encodeURIComponent(id)}?_embed`
-      : `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&per_page=${encodeURIComponent(perPage)}&page=${encodeURIComponent(page)}&_embed`;
+      : slug
+        ? `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`
+        : `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&per_page=${encodeURIComponent(perPage)}&page=${encodeURIComponent(page)}&_embed`;
 
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {
@@ -35,9 +42,18 @@ export async function GET(req: NextRequest) {
     }
 
     const data = await res.json();
-    cache.set(cacheKey, { data, ts: Date.now() });
+    const payload = slug ? data?.[0] : data;
 
-    return NextResponse.json(data, {
+    if (slug && !payload) {
+      return NextResponse.json(
+        { error: "WP post not found" },
+        { status: 404 },
+      );
+    }
+
+    cache.set(cacheKey, { data: payload, ts: Date.now() });
+
+    return NextResponse.json(payload, {
       headers: { "X-Cache": "MISS" },
     });
   } catch (err) {

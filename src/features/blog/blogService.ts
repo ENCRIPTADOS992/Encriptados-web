@@ -1,9 +1,103 @@
-import DOMPurify from "isomorphic-dompurify";
 import type {
   BlogPost,
   BlogPostCard,
   WordPressBlogItem,
 } from "./types";
+
+const ALLOWED_TAGS = new Set([
+  "a",
+  "b",
+  "blockquote",
+  "br",
+  "code",
+  "del",
+  "div",
+  "em",
+  "figcaption",
+  "figure",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "hr",
+  "i",
+  "iframe",
+  "img",
+  "li",
+  "ol",
+  "p",
+  "pre",
+  "span",
+  "strong",
+  "table",
+  "tbody",
+  "td",
+  "tfoot",
+  "th",
+  "thead",
+  "tr",
+  "u",
+  "ul",
+]);
+
+const GLOBAL_ALLOWED_ATTRS = new Set([
+  "alt",
+  "aria-label",
+  "class",
+  "height",
+  "href",
+  "id",
+  "loading",
+  "rel",
+  "src",
+  "style",
+  "target",
+  "title",
+  "width",
+]);
+
+const IFRAME_ALLOWED_ATTRS = new Set([
+  "allow",
+  "allowfullscreen",
+  "frameborder",
+  "referrerpolicy",
+  "scrolling",
+]);
+
+function isSafeUrl(value: string): boolean {
+  const trimmed = value.trim().toLowerCase();
+  return !trimmed || trimmed.startsWith("/") || trimmed.startsWith("#") || /^(https?:|mailto:|tel:)/.test(trimmed);
+}
+
+function sanitizeBlogHtml(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<(script|style|object|embed|form|input|button|textarea|select|option|link|meta)[\s\S]*?<\/\1>/gi, "")
+    .replace(/<\/?([a-z][a-z0-9-]*)(\s[^>]*)?>/gi, (match, rawTag: string, rawAttrs = "") => {
+      const tag = rawTag.toLowerCase();
+
+      if (!ALLOWED_TAGS.has(tag)) return "";
+      if (match.startsWith("</")) return `</${tag}>`;
+
+      const attrs: string[] = [];
+      rawAttrs.replace(/([:\w-]+)(?:\s*=\s*("[^"]*"|'[^']*'|[^\s"'>]+))?/g, (_attrMatch: string, rawName: string, rawValue = "") => {
+        const name = rawName.toLowerCase();
+        if (name.startsWith("on")) return "";
+        if (!GLOBAL_ALLOWED_ATTRS.has(name) && !(tag === "iframe" && IFRAME_ALLOWED_ATTRS.has(name))) return "";
+
+        const unquotedValue = String(rawValue).replace(/^['"]|['"]$/g, "");
+        if ((name === "href" || name === "src") && !isSafeUrl(unquotedValue)) return "";
+
+        const escapedValue = unquotedValue.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+        attrs.push(`${name}="${escapedValue}"`);
+        return "";
+      });
+
+      return `<${tag}${attrs.length ? ` ${attrs.join(" ")}` : ""}>`;
+    });
+}
 
 type AppBlogListResponse = {
   items: BlogPostCard[];
@@ -40,10 +134,32 @@ function getAuthorFromEmbed(item: WordPressBlogItem): string {
   return item._embedded?.author?.[0]?.name ?? "Equipo Encriptados";
 }
 
+function getPathFromUrl(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  try {
+    return new URL(value).pathname;
+  } catch {
+    return value.startsWith("/") ? value : undefined;
+  }
+}
+
+function getCategorySlugFromLegacyPath(path: string | undefined): string | undefined {
+  if (!path) return undefined;
+  const parts = path.split("/").filter(Boolean);
+  const blogsIndex = parts.indexOf("blogs");
+  if (blogsIndex < 0) return undefined;
+  return parts[blogsIndex + 1];
+}
+
 function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
+  const legacyPath = getPathFromUrl(item.link);
+
   return {
     id: `wp-${item.id}`,
-    slug: String(item.id),
+    slug: item.slug || String(item.id),
+    wpId: item.id,
+    legacyPath,
+    categorySlug: getCategorySlugFromLegacyPath(legacyPath),
     source: "wordpress",
     title: item.title.rendered,
     description: stripHtml(item.excerpt.rendered),
@@ -57,18 +173,7 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
 function mapWpItemToPost(item: WordPressBlogItem): BlogPost {
   return {
     ...mapWpItemToCard(item),
-    content: DOMPurify.sanitize(item.content.rendered, {
-      ADD_TAGS: ["iframe"],
-      ADD_ATTR: [
-        "allow",
-        "allowfullscreen",
-        "frameborder",
-        "scrolling",
-        "loading",
-        "referrerpolicy",
-        "title",
-      ],
-    }),
+    content: sanitizeBlogHtml(item.content.rendered),
   };
 }
 
@@ -115,6 +220,24 @@ export async function fetchWordPressBlogPost(
     const base = getBaseUrl();
     const res = await fetch(
       `${base}/api/wp-blog?id=${encodeURIComponent(wpId)}`,
+    );
+    if (!res.ok) return null;
+    const item: WordPressBlogItem = await res.json();
+    return mapWpItemToPost(item);
+  } catch {
+    return null;
+  }
+}
+
+/** Fetch a single WordPress blog post by legacy slug (via cached proxy) */
+export async function fetchWordPressBlogPostBySlug(
+  slug: string,
+  locale: string,
+): Promise<BlogPost | null> {
+  try {
+    const base = getBaseUrl();
+    const res = await fetch(
+      `${base}/api/wp-blog?slug=${encodeURIComponent(slug)}&lang=${encodeURIComponent(locale)}`,
     );
     if (!res.ok) return null;
     const item: WordPressBlogItem = await res.json();
@@ -211,8 +334,13 @@ export async function fetchBlogPost(
   postId: string,
   locale: string,
 ): Promise<BlogPost | null> {
+  const wpBySlug = await fetchWordPressBlogPostBySlug(postId, locale);
+  if (wpBySlug) return wpBySlug;
+
   if (isWordPressId(postId)) {
-    return fetchWordPressBlogPost(postId, locale);
+    const wpById = await fetchWordPressBlogPost(postId, locale);
+    if (wpById) return wpById;
   }
+
   return fetchMarkdownBlogPost(postId, locale);
 }

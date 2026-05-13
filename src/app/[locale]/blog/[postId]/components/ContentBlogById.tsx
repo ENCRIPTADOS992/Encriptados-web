@@ -10,7 +10,8 @@ import type { BlogPost } from "@/features/blog/types";
 const ContentBlogById = () => {
   const params = useParams();
   const locale = useLocale();
-  const postId = params?.postId as string | undefined;
+  const routePostId = params?.postId ?? params?.slug;
+  const postId = Array.isArray(routePostId) ? routePostId[0] : routePostId;
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);

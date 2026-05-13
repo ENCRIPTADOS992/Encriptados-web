@@ -23,10 +23,23 @@ export async function middleware(
 ): Promise<NextResponse | undefined> {
   // Protección contra rutas inválidas con "/null" o "/undefined"
   const pathname = request.nextUrl.pathname;
+
+  if (pathname === "/es" || pathname === "/es/") {
+    return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url), 308));
+  }
+
+  if (pathname === "/") {
+    return withNoIndexHeader(request, NextResponse.next());
+  }
+
   if (pathname.endsWith("/null") || pathname.endsWith("/undefined") || 
       pathname.includes("/null/") || pathname.includes("/undefined/")) {
     console.warn(`[Middleware] ⚠️ Ruta inválida detectada: ${pathname}, redirigiendo a home`);
     return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url)));
+  }
+
+  if (pathname.startsWith("/blogs/")) {
+    return withNoIndexHeader(request, NextResponse.next());
   }
 
   // Manejo de internacionalización

@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   transpilePackages: ['swiper'],
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  skipTrailingSlashRedirect: true,
   images: {
     unoptimized: true, // Desactivar optimización de Vercel - las webp ya están optimizadas
     remotePatterns: [

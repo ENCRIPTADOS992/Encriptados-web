@@ -67,10 +67,32 @@ function getAuthorFromEmbed(item: WordPressBlogItem): string {
   return item._embedded?.author?.[0]?.name ?? "Equipo Encriptados";
 }
 
+function getPathFromUrl(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  try {
+    return new URL(value).pathname;
+  } catch {
+    return value.startsWith("/") ? value : undefined;
+  }
+}
+
+function getCategorySlugFromLegacyPath(path: string | undefined): string | undefined {
+  if (!path) return undefined;
+  const parts = path.split("/").filter(Boolean);
+  const blogsIndex = parts.indexOf("blogs");
+  if (blogsIndex < 0) return undefined;
+  return parts[blogsIndex + 1];
+}
+
 function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
+  const legacyPath = getPathFromUrl(item.link);
+
   return {
     id: `wp-${item.id}`,
-    slug: String(item.id),
+    slug: item.slug || String(item.id),
+    wpId: item.id,
+    legacyPath,
+    categorySlug: getCategorySlugFromLegacyPath(legacyPath),
     source: "wordpress",
     title: item.title.rendered,
     description: stripHtml(item.excerpt.rendered),
@@ -91,7 +113,7 @@ function toAbsoluteUrl(value: string | undefined, origin: string): string {
 }
 
 function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBlogItem {
-  const path = `/${locale}/blog/${item.slug}`;
+  const path = item.legacyPath ?? `/${locale}/blog/${item.slug}`;
 
   return {
     ...item,
