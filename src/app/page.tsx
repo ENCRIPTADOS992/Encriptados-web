@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
@@ -11,7 +12,25 @@ import MoraWarningModal from "@/shared/components/MoraWarningModal";
 import { AppMobileProvider } from "@/shared/context/AppMobileContext";
 import AppMobileLayout from "@/shared/components/AppMobileLayout";
 import { loadMessages } from "@/i18n/messages";
+import { buildHomeLanguageAlternates, buildSeoMetadata } from "@/shared/seo/metadata";
 import HomePage from "./[locale]/page";
+
+export const metadata: Metadata = buildSeoMetadata({
+  title: "Celulares encriptados, SIMs anonimas y apps seguras",
+  description:
+    "Compra celulares encriptados, SIMs anonimas, eSIMs, routers y aplicaciones de comunicacion privada con soporte especializado de Encriptados.",
+  canonicalPath: "/",
+  locale: "es",
+  languages: buildHomeLanguageAlternates(),
+  keywords: [
+    "celulares encriptados",
+    "SIM anonima",
+    "eSIM encriptada",
+    "apps seguras",
+    "privacidad digital",
+    "Encriptados",
+  ],
+});
 
 export default async function RootSpanishHomePage() {
   setRequestLocale("es");

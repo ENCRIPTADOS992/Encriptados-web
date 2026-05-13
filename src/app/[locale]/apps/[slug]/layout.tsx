@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
 import { getProductConfig, isValidProductSlug } from "./productConfig";
+import JsonLd from "@/shared/components/JsonLd/JsonLd";
+import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
+import { getCanonicalSiteUrl } from "@/shared/seo/url";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -9,7 +12,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
   const { slug, locale } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+  const baseUrl = getCanonicalSiteUrl();
 
   try {
     // Validar slug
@@ -137,6 +140,32 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   }
 }
 
-export default function AppsSlugLayout({ children }: Props) {
-  return <>{children}</>;
+export default async function AppsSlugLayout({ children, params }: Props) {
+  const { slug, locale } = await params;
+  const config = getProductConfig(slug);
+
+  if (!config) return <>{children}</>;
+
+  try {
+    const product = await getProductById(String(config.productId), locale || "es");
+    if (!product) return <>{children}</>;
+
+    return (
+      <>
+        <JsonLd
+          data={buildProductJsonLd({
+            name: product.name || slug,
+            description: product.description,
+            canonicalPath: `/${locale}/apps/${slug}`,
+            image: product.images?.[0]?.src || config.productImage || config.iconUrl,
+            price: product.price,
+            currency: "USD",
+          })}
+        />
+        {children}
+      </>
+    );
+  } catch {
+    return <>{children}</>;
+  }
 }

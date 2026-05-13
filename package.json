@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "i18n:split": "node scripts/split-i18n-namespaces.mjs"
+    "i18n:split": "node scripts/split-i18n-namespaces.mjs",
+    "seo:validate:blogs": "node scripts/validate-blog-legacy-urls.mjs"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",

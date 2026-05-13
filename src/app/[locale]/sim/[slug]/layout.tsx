@@ -1,5 +1,8 @@
 import { Metadata } from "next";
-import { isValidSimProductSlug } from "./simProductConfig";
+import { getSimProductConfig, isValidSimProductSlug } from "./simProductConfig";
+import JsonLd from "@/shared/components/JsonLd/JsonLd";
+import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
+import { getCanonicalSiteUrl } from "@/shared/seo/url";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -8,7 +11,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
   const { slug, locale } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+  const baseUrl = getCanonicalSiteUrl();
 
   try {
     // Validar slug
@@ -87,6 +90,32 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   }
 }
 
-export default function SimSlugLayout({ children }: Props) {
-  return <>{children}</>;
+export default async function SimSlugLayout({ children, params }: Props) {
+  const { slug, locale } = await params;
+  const config = getSimProductConfig(slug);
+
+  if (!config) return <>{children}</>;
+
+  const productName = slug === "esim-encriptada"
+    ? "eSIM Encriptada"
+    : slug === "tim-sim"
+      ? "TIM SIM"
+      : slug === "esim-tim"
+        ? "TIM eSIM"
+        : "SIM Encriptada";
+
+  return (
+    <>
+      <JsonLd
+        data={buildProductJsonLd({
+          name: productName,
+          description: "SIM y eSIM para comunicacion privada y segura con Encriptados.",
+          canonicalPath: `/${locale}/sim/${slug}`,
+          image: config.productImage,
+          currency: "USD",
+        })}
+      />
+      {children}
+    </>
+  );
 }

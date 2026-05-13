@@ -11,8 +11,21 @@ function shouldNoIndexHost(request: NextRequest): boolean {
   return host === "encriptados.net" || host.endsWith(".encriptados.net");
 }
 
+function shouldNoIndexPath(pathname: string): boolean {
+  return [
+    /^\/(en|es|fr|it|pt)?\/?dashboard(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?login(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?test(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?test-design-system(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?test-payment-modal(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?products-test(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?encrypted-test(?:\/|$)/,
+    /^\/(en|es|fr|it|pt)?\/?security-test(?:\/|$)/,
+  ].some((pattern) => pattern.test(pathname));
+}
+
 function withNoIndexHeader(request: NextRequest, response: NextResponse): NextResponse {
-  if (shouldNoIndexHost(request)) {
+  if (shouldNoIndexHost(request) || shouldNoIndexPath(request.nextUrl.pathname)) {
     response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
   }
   return response;

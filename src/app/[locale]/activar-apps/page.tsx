@@ -6,6 +6,7 @@
 import { getTranslations } from "next-intl/server";
 import { getProductConfig } from "../apps/[slug]/productConfig";
 import ProductPageContent from "../apps/[slug]/AppClientPage";
+import { buildSeoMetadata } from "@/shared/seo/metadata";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -21,22 +22,19 @@ export async function generateMetadata({ params }: PageProps) {
   const imageUrl = config?.iconUrl || config?.productImage || "/images/logo-encriptados.png";
   const buyNowText = t("buyNow");
 
-  return {
-    title: `${titleBase} | Encriptados`,
+  return buildSeoMetadata({
+    title: titleBase,
     description: buyNowText,
-    openGraph: {
-      title: titleBase,
-      description: buyNowText,
-      images: [
-        {
-          url: imageUrl,
-          width: 800,
-          height: 600,
-          alt: titleBase,
-        },
-      ],
+    canonicalPath: `/${locale}/activar-apps`,
+    locale,
+    image: {
+      url: imageUrl,
+      width: 1200,
+      height: 630,
+      alt: titleBase,
     },
-  };
+    keywords: ["activar apps", "apps encriptadas", "licencias Encriptados"],
+  });
 }
 
 export default async function ActivarAppsPage({ params }: PageProps) {

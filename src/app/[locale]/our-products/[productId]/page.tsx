@@ -13,6 +13,7 @@ import React from "react";
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
 import ProductByIdPage from "./components/ProductByIdPage";
+import { getCanonicalSiteUrl } from "@/shared/seo/url";
 
 type Props = {
   params: Promise<{ productId: string; locale: string }>;
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const product = await getProductById(productId, locale || "es");
     const productName = product?.name || "Producto";
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+    const baseUrl = getCanonicalSiteUrl();
     
     // Obtener la imagen del producto y asegurar que sea URL absoluta
     let productImage = product?.images?.[0]?.src || "/images/default-product.png";
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     
     const productPrice = product?.price || "0";
     const productDescription = `${productName} - ${productPrice} USD. Compra ahora en Encriptados.`;
-    const productUrl = `${baseUrl}/our-products/${productId}`;
+    const productUrl = `${baseUrl}/${locale}/our-products/${productId}`;
 
     return {
       title: `${productName} | Encriptados`,
@@ -62,6 +63,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: productName,
         description: productDescription,
         images: [productImage],
+      },
+      alternates: {
+        canonical: productUrl,
       },
     };
   } catch (error) {

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
+import { getCanonicalSiteUrl } from "@/shared/seo/url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -8,7 +9,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
   const { locale } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+  const baseUrl = getCanonicalSiteUrl();
 
   try {
     const TIM_SIM_PRODUCT_ID = 448;

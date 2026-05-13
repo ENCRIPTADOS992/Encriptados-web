@@ -1,7 +1,7 @@
 import { getProductConfig } from "./productConfig";
 import ProductPageContent from "./AppClientPage";
 import { getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { buildSeoMetadata } from "@/shared/seo/metadata";
 
 
 interface PageProps {
@@ -22,22 +22,19 @@ export async function generateMetadata({ params }: PageProps) {
   const imageUrl = config?.iconUrl || config?.productImage || "/images/logo-encriptados.png";
   const buyNowText = t("buyNow");
 
-  return {
-    title: `${titleBase} | Encriptados`,
+  return buildSeoMetadata({
+    title: titleBase,
     description: buyNowText,
-    openGraph: {
-      title: titleBase,
-      description: buyNowText,
-      images: [
-        {
-          url: imageUrl,
-          width: 800,
-          height: 600,
-          alt: titleBase,
-        },
-      ],
+    canonicalPath: `/${locale}/apps/${slug}`,
+    locale,
+    image: {
+      url: imageUrl,
+      width: 1200,
+      height: 630,
+      alt: titleBase,
     },
-  };
+    keywords: [titleBase, "app encriptada", "comunicacion segura", "Encriptados"],
+  });
 }
 
 export default async function ProductPage({ params }: PageProps) {
