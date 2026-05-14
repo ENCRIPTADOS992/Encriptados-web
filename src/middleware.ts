@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { protectedRoutesArray } from "./app/constants/protectedRoutes";
+import { resolveLegacyRoute } from "./shared/seo/legacyRoutes";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -57,6 +58,22 @@ export async function middleware(
 
   if (pathname.startsWith("/location/")) {
     return withNoIndexHeader(request, NextResponse.next());
+  }
+
+  const legacyRoute = resolveLegacyRoute(pathname);
+  if (legacyRoute.type === "redirect") {
+    return withNoIndexHeader(
+      request,
+      NextResponse.redirect(new URL(legacyRoute.destination, request.url), legacyRoute.permanent ? 301 : 302),
+    );
+  }
+
+  if (legacyRoute.type === "wp-page") {
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = `/legacy-seo/${legacyRoute.slug}`;
+    rewriteUrl.searchParams.set("legacyLocale", legacyRoute.locale);
+    rewriteUrl.searchParams.set("legacyPath", legacyRoute.legacyPath);
+    return withNoIndexHeader(request, NextResponse.rewrite(rewriteUrl));
   }
 
   // Manejo de internacionalización
