@@ -166,11 +166,13 @@ function removeCommerceContent(html: string): string {
     .replace(
       /<[^>]+>\s*(?:Comprar(?:\s+ahora)?!?|Buy(?:\s+here)?!?|See more|Ver más|Ver mas|Más información\s*(?:>|&gt;)?|Mas informacion\s*(?:>|&gt;)?|More information\s*(?:>>|&gt;&gt;|>|&gt;)?|Learn more)\s*<\/[^>]+>/gi,
       "",
-    );
+    )
+    .replace(/<h[1-6]\b[^>]*>[\s\S]*?\d+\s*\$[\s\S]*?\bUSD\b[\s\S]*?<\/h[1-6]>/gi, "")
+    .replace(/<p\b[^>]*>[\s\S]*?\b(?:Data plan|Plans data|Encrypted SIM Card Plans|Plan de datos|Planes de datos)\b[\s\S]*?<\/p>/gi, "");
 }
 
 function sanitizeHtml(html: string, previewImage?: string): string {
-  return removeCommerceContent(html)
+  const sanitized = removeCommerceContent(html)
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<(script|style|object|embed|form|input|button|textarea|select|option|link|meta)[\s\S]*?<\/\1>/gi, "")
     .replace(/<\/?([a-z][a-z0-9-]*)(\s[^>]*)?>/gi, (match, rawTag: string, rawAttrs = "") => {
@@ -203,6 +205,8 @@ function sanitizeHtml(html: string, previewImage?: string): string {
 
       return `<${tag}${attrs.length ? ` ${attrs.join(" ")}` : ""}>`;
     });
+
+  return removeCommerceContent(sanitized);
 }
 
 function getImageFromEmbed(item: WordPressPageItem): string | undefined {
