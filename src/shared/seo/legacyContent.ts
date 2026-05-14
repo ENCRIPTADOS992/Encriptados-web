@@ -156,8 +156,25 @@ function getContentPreviewImage(html: string): string | undefined {
   );
 }
 
-function sanitizeHtml(html: string, previewImage?: string): string {
+function removeCommerceContent(html: string): string {
   return html
+    .replace(
+      /<([a-z][a-z0-9-]*)\b[^>]*>\s*(?:Related Products|Productos relacionados|Produtos relacionados|Produits associés|Produits connexes|Prodotti correlati)\s*<\/\1>[\s\S]*$/i,
+      "",
+    )
+    .replace(
+      /<(p|li|h[1-6]|span)\b[^>]*>[\s\S]*?(?:\bBuy\b|\bComprar\b|\bprice\b|\bprecio\b|\bcost\b|\bcosto\b|\bdiscount\b|\bdescuento\b|\bUSD\b|\$)[\s\S]*?<\/\1>/gi,
+      "",
+    )
+    .replace(/<[^>]+>[\s\S]*?(?:Desde\s+\d+\$?\s*USD|From\s+\d+\$?\s*USD|Ahorra\s+hasta\s+\d+\s*USD|Save\s+up\s+to\s+\d+\s*USD)[\s\S]*?<\/[^>]+>/gi, "")
+    .replace(
+      /<[^>]+>\s*(?:Comprar(?:\s+ahora)?!?|Buy(?:\s+here)?!?|See more|Ver más|Ver mas|Más información\s*(?:>|&gt;)?|Mas informacion\s*(?:>|&gt;)?|More information\s*(?:>>|&gt;&gt;|>|&gt;)?|Learn more)\s*<\/[^>]+>/gi,
+      "",
+    );
+}
+
+function sanitizeHtml(html: string, previewImage?: string): string {
+  return removeCommerceContent(html)
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<(script|style|object|embed|form|input|button|textarea|select|option|link|meta)[\s\S]*?<\/\1>/gi, "")
     .replace(/<\/?([a-z][a-z0-9-]*)(\s[^>]*)?>/gi, (match, rawTag: string, rawAttrs = "") => {
