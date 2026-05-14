@@ -3,7 +3,6 @@ import type { SeoLocale } from "./constants";
 const WP_BASE = process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
 
 const ALLOWED_TAGS = new Set([
-  "a",
   "b",
   "blockquote",
   "br",
@@ -193,10 +192,6 @@ function sanitizeHtml(html: string, previewImage?: string): string {
     });
 }
 
-function rewriteLegacyLinks(html: string): string {
-  return html.replace(/<a\b([^>]*)>([\s\S]*?Ver\s*m(?:a|á)s[\s\S]*?)<\/a>/gi, '<a href="/">$2</a>');
-}
-
 function getImageFromEmbed(item: WordPressPageItem): string | undefined {
   const media = item._embedded?.["wp:featuredmedia"]?.[0];
   return media?.media_details?.sizes?.full?.source_url ?? media?.media_details?.sizes?.large?.source_url ?? media?.source_url;
@@ -216,7 +211,7 @@ function mapWpPage(item: WordPressPageItem, locale: SeoLocale): LegacySeoPageCon
     locale,
     title: stripHtml(item.title.rendered),
     description,
-    content: rewriteLegacyLinks(sanitizeHtml(item.content.rendered, previewImage)),
+    content: sanitizeHtml(item.content.rendered, previewImage),
     author: getAuthorFromEmbed(item),
     date: item.date,
     modified: item.modified,
