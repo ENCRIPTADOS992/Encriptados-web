@@ -45,13 +45,17 @@ export async function middleware(
     return withNoIndexHeader(request, NextResponse.next());
   }
 
-  if (pathname.endsWith("/null") || pathname.endsWith("/undefined") || 
+  if (pathname.endsWith("/null") || pathname.endsWith("/undefined") ||
       pathname.includes("/null/") || pathname.includes("/undefined/")) {
     console.warn(`[Middleware] ⚠️ Ruta inválida detectada: ${pathname}, redirigiendo a home`);
     return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url)));
   }
 
   if (pathname.startsWith("/blogs/")) {
+    return withNoIndexHeader(request, NextResponse.next());
+  }
+
+  if (pathname.startsWith("/location/")) {
     return withNoIndexHeader(request, NextResponse.next());
   }
 
