@@ -25,6 +25,8 @@ const ICONS: BannerIcon[] = [
   },
 ];
 
+const PRODUCT_NAME_FILTERS = ["activar", "activate", "activer", "attivare", "ativar"];
+
 /**
  * "Activar Apps" banner.
  * Thin wrapper around ProductBannerSection with the circuit-board background
@@ -43,7 +45,7 @@ const ActivarAppsBanner: React.FC = () => {
       description={t("description")}
       icons={ICONS}
       categoryId={371}
-      productNameFilter="activar"
+      productNameFilter={PRODUCT_NAME_FILTERS}
     />
   );
 };

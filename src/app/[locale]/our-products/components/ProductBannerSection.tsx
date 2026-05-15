@@ -35,9 +35,9 @@ export interface ProductBannerSectionProps {
   categoryId: number;
   /**
    * Case-insensitive substring used to find the product inside the fetched list.
-   * E.g. "silent phone" or "activar".
+   * E.g. "silent phone", "activar", or localized alternatives.
    */
-  productNameFilter: string;
+  productNameFilter: string | string[];
   className?: string;
 }
 
@@ -79,9 +79,18 @@ const ProductBannerSection: React.FC<ProductBannerSectionProps> = ({
 
   const product = useMemo(() => {
     if (!allProducts) return undefined;
-    return allProducts.find((p) =>
-      p.name.toLowerCase().includes(productNameFilter.toLowerCase())
+
+    const filters = Array.isArray(productNameFilter)
+      ? productNameFilter
+      : [productNameFilter];
+
+    const matchedProduct = allProducts.find((product) =>
+      filters.some((filter) =>
+        product.name.toLowerCase().includes(filter.toLowerCase())
+      )
     );
+
+    return matchedProduct ?? (allProducts.length === 1 ? allProducts[0] : undefined);
   }, [allProducts, productNameFilter]);
 
   if (isLoading) return null;

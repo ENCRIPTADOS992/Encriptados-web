@@ -27,6 +27,19 @@ const formatPrice = (value: number) => {
   return `${value.toFixed(2)}`;
 };
 
+const isFreeTrialLabel = (value: unknown) => {
+  if (!value) return false;
+  const normalized = String(value).trim().toLowerCase();
+
+  return (
+    normalized === "gratis" ||
+    normalized === "free" ||
+    normalized === "prueba" ||
+    normalized === "prueba gratuita" ||
+    /^pre[-\s]?activ/i.test(normalized)
+  );
+};
+
 /* ── component ───────────────────────────────── */
 
 const BannerSecureMdmNew = () => {
@@ -37,7 +50,7 @@ const BannerSecureMdmNew = () => {
   const t = useTranslations("OurProductsPage.secureMdm");
 
   /* Map ALL systems products (not just Secure MDM) */
-  const systemCards = (products ?? []).map((p: Product) => {
+  const systemCards = (products ?? []).flatMap((p: Product) => {
     const img = p.images?.[0]?.src ?? "/images/home/secure-mdm-placeholder.png";
 
     const v0 = p.variants?.[0];
@@ -70,8 +83,15 @@ const BannerSecureMdmNew = () => {
 
     const baseName = p.name.split(" - ")[0].trim();
     const infoLink = getProductLink(baseName, 35);
+    const isHiddenWebCard =
+      displayPrice === 0 ||
+      isFreeTrialLabel(p.name) ||
+      isFreeTrialLabel((v0 as any)?.name) ||
+      isFreeTrialLabel((v0 as any)?.licensetime);
 
-    return {
+    if (isHiddenWebCard) return [];
+
+    return [{
       id: p.id,
       title: baseName,
       image: img,
@@ -81,7 +101,7 @@ const BannerSecureMdmNew = () => {
       savings,
       infoLink,
       iconUrl: p.iconUrl,
-    };
+    }];
   });
 
   if (systemCards.length === 0) return null;
