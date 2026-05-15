@@ -20,7 +20,7 @@
 | Metadata global | Completado fase inicial | Existe `metadataBase`, title template, canonicals globales, normalizacion a `https://www.encriptados.net` y OG/Twitter por defecto desde helpers SEO. |
 | robots/sitemap | Completado fase inicial | Existen `src/app/robots.ts`, `src/app/sitemap.ts` y `src/app/manifest.ts`; sitemap genera paginas estaticas, blogs legacy y productos publicos desde inventario/API con revalidate; falta validacion post-deploy en Search Console/Bing. |
 | JSON-LD | Parcial avanzado | Organization, WebSite, Breadcrumb, Article, Product y FAQPage implementados en rutas principales; falta auditoria Rich Results completa. |
-| Location pages | Pendiente critico | Hay miles de URLs `/location/*`; falta ruta dinamica o redirecciones fallback. |
+| Location pages | Completado fase inicial | Existe ruta dinamica `src/app/location/[...slug]/page.tsx`; las URLs legacy `/location/*` responden 200 con contenido SSR, canonical hacia producto/home y `noindex, follow` salvo allowlist explicita. |
 
 ---
 
@@ -118,7 +118,7 @@ Fase 2 - Blog legacy WordPress         9/10   EN PROGRESO
 Fase 3 - robots, sitemap y noindex     8/8    COMPLETADO FASE INICIAL
 Fase 4 - Metadata por pagina           16/18  EN PROGRESO
 Fase 5 - Structured data JSON-LD       8/10   EN PROGRESO
-Fase 6 - Redirecciones legacy          2/9    EN PROGRESO
+Fase 6 - Redirecciones legacy          6/9    EN PROGRESO
 Fase 7 - Auditoria y validacion        4/8    EN PROGRESO
 ```
 
@@ -275,11 +275,11 @@ Reglas:
 | SEO-061 | Mantener redirecciones app legacy ya existentes | `next.config.mjs` | Parcial | Alta |
 | SEO-062 | Completar mapeo producto/app legacy hacia rutas actuales | `doc/seo/PLAN-REDIRECCIONES-WORDPRESS-A-NEXT.md` | Parcial | Critica |
 | SEO-063 | No replicar paginas de producto legacy; solo redirigir | Politica de implementacion | Completado | Critica |
-| SEO-064 | Crear ruta dinamica `/location/[[...parts]]` o fallback 301 por patron | `src/app/location/[[...parts]]/page.tsx` | Pendiente | Critica |
-| SEO-065 | Si se generan location pages 200, crear contenido unico por producto + ciudad | Location page | Pendiente | Alta |
-| SEO-066 | Si no se generan location pages, implementar 301 a apps actuales | `next.config.mjs` | Pendiente | Critica |
-| SEO-067 | Validar sitemaps legacy consultados por Google | `sitemaps/apps-en.xml` y otros | Pendiente | Alta |
-| SEO-068 | Evitar catch-all a home para URLs importantes | Middleware/redirects | Pendiente | Alta |
+| SEO-064 | Crear ruta dinamica `/location/[[...parts]]` o fallback 301 por patron | `src/app/location/[...slug]/page.tsx` | Completado fase inicial | Critica |
+| SEO-065 | Si se generan location pages 200, crear contenido unico por producto + ciudad | `src/app/location/[...slug]/page.tsx` | Parcial controlado: contenido plantilla SSR y `noindex`; pasar a indexable solo por allowlist | Alta |
+| SEO-066 | Si no se generan location pages, implementar 301 a apps actuales | `src/shared/seo/locationPages.ts` | No aplica: estrategia actual es 200 noindex con canonical a producto/home | Critica |
+| SEO-067 | Validar sitemaps legacy consultados por Google | `src/app/sitemaps/apps-en.xml/route.ts` | Completado fase inicial: `/sitemaps/apps-en.xml` redirige 308 a `/sitemap.xml` | Alta |
+| SEO-068 | Evitar catch-all a home para URLs importantes | `src/shared/seo/locationPages.ts` + `src/middleware.ts` | Completado fase inicial: `/location/*` no cae por catch-all global; unknown devuelve 200 noindex con canonical home | Alta |
 | SEO-069 | Crear script de validacion de redirecciones legacy | `scripts/validate-seo-urls.*` | Pendiente | Alta |
 
 Nota importante: no usar una redireccion masiva de todo lo desconocido al home como solucion SEO. Para Google, un soft 404 masivo puede ser peor que redirecciones especificas. Priorizar mapeos reales.
