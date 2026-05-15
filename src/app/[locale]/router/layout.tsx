@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
+import { getProductById } from "@/features/products/services";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,9 +13,10 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
 
   try {
     const productUrl = `${baseUrl}/${locale}/router`;
+    const product = await getProductById("59747", locale || "es").catch(() => null);
 
     // Usar imagen de metadatos específica para Router
-    let metaImage = "/meta-image/router/router-camaleon.png";
+    let metaImage = product?.iconUrl || "/meta-image/router/router-camaleon.png";
     
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
@@ -22,7 +24,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     }
 
     // Título y descripción cortos
-    const shortTitle = "Camaleón Router";
+    const shortTitle = product?.name || "Camaleón Router";
     const shortDescription = "¡Compra ahora!";
 
     return {
