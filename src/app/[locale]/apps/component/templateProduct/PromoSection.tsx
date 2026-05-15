@@ -1,30 +1,28 @@
 "use client";
 
 import { PromoCard } from "./PromoCard";
-import { useParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 export function PromoSection() {
-  const params = useParams();
-  const locale = params?.locale || "es";
+  const locale = useLocale();
+  const t = useTranslations("OurProductsPage.simCards");
 
   const promoCards = [
     {
-      title: "eSIM Encriptada",
-      description:
-        "Protégete de los ciberdelincuentes y mantén tu información personal segura.",
-      buttonText: "Más información",
+      title: t("encrypted.title"),
+      description: t("encrypted.description"),
+      buttonText: t("moreInfo"),
       buttonHref: `/${locale}/sim-encriptada`,
       backgroundImage: "/images/home/fondo-encriptados.webp",
-      backgroundAlt: "Fondo eSIM Encriptada con tarjetas eSIM y SIM física",
+      backgroundAlt: t("encrypted.title"),
     },
     {
-      title: "eSIM TIM Conéctate con total anonimato",
-      description:
-        "Tus datos no expiran sin importar el tiempo que tardes en consumirlos.",
-      buttonText: "Más información",
+      title: t("tim.title"),
+      description: t("tim.description"),
+      buttonText: t("moreInfo"),
       buttonHref: `/${locale}/tim-sim`,
       backgroundImage: "/images/home/fondo-tim.webp",
-      backgroundAlt: "Fondo SIM TIM con tarjetas eSIM y SIM física",
+      backgroundAlt: t("tim.title"),
     },
   ];
 
