@@ -44,6 +44,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: copy.description,
     canonicalPath: locale === "es" ? "/" : `/${locale}`,
     locale,
+    image: {
+      url: "/encriptados.svg",
+      width: 500,
+      height: 500,
+      alt: "Encriptados",
+    },
     languages: buildHomeLanguageAlternates(),
   });
 }

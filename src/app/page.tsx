@@ -21,6 +21,12 @@ export const metadata: Metadata = buildSeoMetadata({
     "Compra celulares encriptados, SIMs anonimas, eSIMs, routers y aplicaciones de comunicacion privada con soporte especializado de Encriptados.",
   canonicalPath: "/",
   locale: "es",
+  image: {
+    url: "/encriptados.svg",
+    width: 500,
+    height: 500,
+    alt: "Encriptados",
+  },
   languages: buildHomeLanguageAlternates(),
   keywords: [
     "celulares encriptados",
