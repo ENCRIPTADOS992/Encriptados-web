@@ -28,6 +28,86 @@ const RESERVED_TOP_LEVEL = new Set([
   "sitemaps",
 ]);
 
+const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
+  "about-us",
+  "activar-apps",
+  "ambassadors",
+  "ambassadeurs",
+  "ambasciatori",
+  "a-propos-de-nous",
+  "become-an-encrypted-partner",
+  "become-encrypted-partner",
+  "blog",
+  "chi-siamo",
+  "consegna-rapida",
+  "consegne",
+  "dashboard",
+  "devenir-partenaire-crypte",
+  "deliveries",
+  "diventa-partner-crittografato",
+  "distributors",
+  "distributeurs",
+  "distributeurs-telephones-cryptees",
+  "distributori",
+  "distributori-telefoni-crittografati",
+  "distribuidores",
+  "distribuidores-de-telefones-encriptados",
+  "donde-encontrar-encriptados",
+  "donde-encontrarnos",
+  "dove-trovarci",
+  "dove-trovare-crittografati",
+  "encrypted-phones-distributors",
+  "encrypted-sim",
+  "encrypted-test",
+  "entrega-rapida",
+  "entregas",
+  "embajadores",
+  "embaixadores",
+  "fast-delivery",
+  "identity-verification",
+  "ira-sim",
+  "livraison-rapide",
+  "livraisons",
+  "login",
+  "news",
+  "noticias",
+  "notizie",
+  "nosotros",
+  "nouvelles",
+  "offers",
+  "offerte",
+  "offres",
+  "ofertas",
+  "onde-encontrar-encriptados",
+  "onde-nos-encontrar",
+  "ou-nous-trouver",
+  "ou-trouver-cryptees",
+  "our-products",
+  "pages",
+  "products-test",
+  "router",
+  "security-test",
+  "seja-socio-de-encriptados",
+  "se-socio-de-encriptados",
+  "sim",
+  "sim-crittografata",
+  "sim-cryptee",
+  "sim-encriptada",
+  "sobre-nos",
+  "terms-app",
+  "test",
+  "test-chiffré",
+  "test-design-system",
+  "test-payment-modal",
+  "tim-sim",
+  "verifica-dellidentita",
+  "verificacion-de-identidad",
+  "verificacao-de-identidade",
+  "verification-didentite",
+  "where-to-find-encrypted",
+  "where-to-find-us",
+]);
+
 const CURRENT_SITE_ROUTES: Record<string, string> = {
   "entrega-rapida": "/fast-delivery",
   "donde-encontrar-encriptados": "/where-to-find-encrypted",
@@ -148,11 +228,16 @@ function getLegacyProductSlug(parts: string[]): string | null {
   return null;
 }
 
+function isCurrentSiteRoute(parts: string[]): boolean {
+  return CURRENT_SITE_TOP_LEVEL_ROUTES.has(parts[0]);
+}
+
 export function resolveLegacyRoute(pathname: string): LegacyRouteResolution {
   const normalizedPath = normalizePath(pathname);
   const { locale, parts } = getLocaleAndParts(normalizedPath);
 
   if (!parts.length || RESERVED_TOP_LEVEL.has(parts[0])) return { type: "none" };
+  if (isCurrentSiteRoute(parts)) return { type: "none" };
 
   const productSlug = getLegacyProductSlug(parts);
   if (productSlug) {
