@@ -7,9 +7,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import EncryptedLogoMobile from "./EncrytedLogoMovbile";
 import LanguageDropdown from "./LanguageSelector";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 export default function MobileMenu() {
+  const locale = useLocale();
   const t = useTranslations("menuMobile");
 
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +34,7 @@ export default function MobileMenu() {
 
   const handleLinkClick = (link: string) => {
     setIsOpen(false);
-    router.push(link);
+    router.push(localizeInternalHref(link, locale));
   };
 
   useEffect(() => {

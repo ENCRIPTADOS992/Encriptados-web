@@ -14,10 +14,12 @@ import {
   useTranslatedOthersCategories,
   useTranslatedUsCategories
 } from "./HeaderComponents/data/CategoryMenu";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import SectionWrapper from "./SectionWrapper";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 export default function EncryptedHeader() {
+  const locale = useLocale();
   const t = useTranslations("encryptedHeader");
 
   const productsCategories = useTranslatedProductsCategories();
@@ -98,7 +100,7 @@ export default function EncryptedHeader() {
             {/* Navegación - Derecha */}
             <div className="hidden lg:flex items-center gap-0 flex-shrink-0">
               <Link
-                href="/"
+                href={localizeInternalHref("/", locale)}
                 prefetch
                 className="px-4 py-2 text-sm text-white hover:bg-[#054d6121] rounded-full transition-colors"
               >
@@ -109,7 +111,7 @@ export default function EncryptedHeader() {
               </Link>
 
               <Link
-                href="/offers"
+                href={localizeInternalHref("/offers", locale)}
                 prefetch
                 className="px-4 py-2 text-sm text-white hover:bg-[#054d6121] rounded-full transition-colors"
               >

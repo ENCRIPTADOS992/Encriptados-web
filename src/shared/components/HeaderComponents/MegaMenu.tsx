@@ -3,8 +3,9 @@ import CategoryPreview from "./CategoryPreview";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { AnimatePresence } from "framer-motion";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 type MenuItem = {
   title: string;
@@ -39,6 +40,7 @@ export default function MegaMenu({
   setHoveredItem,
   closeMegaMenu,
 }: Props) {
+  const locale = useLocale();
   const t = useTranslations("megaMenu");
   const isExternal = (href: string) => /^https?:\/\//i.test(href);
 
@@ -46,6 +48,7 @@ export default function MegaMenu({
   const activeItems = activeCategoryData.items || [];
   const activeCategoryLink = activeCategoryData.link;
   const activeCategoryImage = activeCategoryData.image || "/placeholder.svg";
+  const previewHref = hoveredItem?.link || activeCategoryLink || "#";
 
   // Determinar el título de la tercera columna según la categoría
   const getSubcategoryTitle = (categoryTitle: string) => {
@@ -100,7 +103,7 @@ export default function MegaMenu({
                 </h3>
                 <Link
                   prefetch={true}
-                  href={hoveredItem?.link || activeCategoryLink || "#"}
+                  href={localizeInternalHref(previewHref, locale)}
                   className="inline-flex items-center text-[16px] font-normal text-[#757575] hover:text-white mt-3 transition-colors leading-none"
                   onClick={closeMegaMenu}
                 >
@@ -153,7 +156,7 @@ export default function MegaMenu({
                 ) : (
                   <Link
                     prefetch={true}
-                    href={category.link}
+                    href={localizeInternalHref(category.link, locale)}
                     key={index}
                     onClick={closeMegaMenu}
                   >
@@ -171,6 +174,7 @@ export default function MegaMenu({
                 categoryLink={activeCategoryLink}
                 closeMegaMenu={closeMegaMenu}
                 categoryTitle={getSubcategoryTitle(activeCategoryData.title)}
+                locale={locale}
               />
             )}
           </div>

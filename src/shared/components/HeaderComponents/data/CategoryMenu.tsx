@@ -370,7 +370,7 @@ export function useTranslatedUsCategories(): any[] {
         defaultValue: "Conoce más sobre nuestra misión y valores.",
       }),
       image: "/images/mega-menu/nosotros.webp",
-      link: "/nosotros",
+      link: "/about-us",
       items: [],
     },
     {

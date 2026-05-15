@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 type MenuItem = {
   title: string;
@@ -12,6 +13,7 @@ type Props = {
   categoryLink?: string;
   closeMegaMenu?: () => void;
   categoryTitle?: string;
+  locale: string;
 };
 
 export default function CategoryPreview({
@@ -19,6 +21,7 @@ export default function CategoryPreview({
   setHoveredItem,
   closeMegaMenu,
   categoryTitle,
+  locale,
 }: Props) {
   const isExternal = (href: string) => /^https?:\/\//i.test(href);
   
@@ -49,7 +52,7 @@ export default function CategoryPreview({
             ) : (
               <Link
                 key={index}
-                href={item.link}
+                href={localizeInternalHref(item.link, locale)}
                 className="block"
                 onMouseEnter={() => setHoveredItem(item)}
                 onClick={() => closeMegaMenu && closeMegaMenu()}
