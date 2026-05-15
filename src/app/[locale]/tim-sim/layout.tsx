@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { getProductById } from "@/features/products/services";
-import { getCanonicalSiteUrl } from "@/shared/seo/url";
+import { buildLocalizedLanguageAlternates, buildSeoMetadata } from "@/shared/seo/metadata";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -9,82 +8,44 @@ interface Props {
 
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
   const { locale } = await params;
-  const baseUrl = getCanonicalSiteUrl();
+  const copy = {
+    es: {
+      title: "SIM TIM con datos internacionales",
+      description: "Compra SIM TIM y recargas de datos para navegar en multiples destinos con activacion sencilla y soporte de Encriptados.",
+    },
+    en: {
+      title: "TIM SIM with international data",
+      description: "Buy TIM SIM and data top-ups to stay connected in multiple destinations with simple activation and Encriptados support.",
+    },
+    fr: {
+      title: "SIM TIM avec donnees internationales",
+      description: "Achetez une SIM TIM et des recharges de donnees pour rester connecte dans plusieurs destinations avec l'assistance Encriptados.",
+    },
+    it: {
+      title: "SIM TIM con dati internazionali",
+      description: "Acquista SIM TIM e ricariche dati per restare connesso in piu destinazioni con il supporto Encriptados.",
+    },
+    pt: {
+      title: "SIM TIM com dados internacionais",
+      description: "Compre SIM TIM e recargas de dados para navegar em varios destinos com ativacao simples e suporte da Encriptados.",
+    },
+  } as const;
+  const safeLocale = locale in copy ? (locale as keyof typeof copy) : "es";
 
-  try {
-    const TIM_SIM_PRODUCT_ID = 448;
-    
-    // Obtener datos del producto desde la API
-    let product;
-    try {
-      product = await getProductById(String(TIM_SIM_PRODUCT_ID), locale || "es");
-    } catch {
-      // Si falla, usamos valores por defecto
-    }
-
-    // Preparar metadatos
-    const productName = product?.name || "TIM SIM";
-    const productDescription = product?.description || "Descubre las opciones de SIM TIM en Encriptados";
-    const productUrl = `${baseUrl}/${locale}/tim-sim`;
-
-    // Derivar imagen basada en provider del backend (ÚNICA fuente de verdad)
-    const providerLower = (product?.provider || "").toLowerCase();
-    const typeProductLower = (product?.type_product || "").toLowerCase();
-    const isTim = providerLower.includes("tim");
-    const isDigital = typeProductLower === "digital";
-    
-    // Seleccionar imagen según provider y type_product del backend
-    let metaImage: string;
-    if (isTim) {
-      metaImage = isDigital ? "/meta-image/sim-tim/tim-esim-datos.png" : "/meta-image/sim-tim/tim-fisica.png";
-    } else {
-      metaImage = isDigital ? "/meta-image/sim-encriptados/encriptados-esim.png" : "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
-    }
-    
-    // Asegurar que la imagen sea URL absoluta
-    if (metaImage.startsWith("/")) {
-      metaImage = `${baseUrl}${metaImage}`;
-    } else if (!metaImage.startsWith("http")) {
-      metaImage = `${baseUrl}/${metaImage}`;
-    }
-
-    return {
-      title: `${productName} | Encriptados`,
-      description: productDescription,
-      openGraph: {
-        title: productName,
-        description: productDescription,
-        url: productUrl,
-        siteName: "Encriptados",
-        images: [
-          {
-            url: metaImage,
-            width: 1200,
-            height: 630,
-            alt: productName,
-            type: "image/png",
-          },
-        ],
-        locale: locale || "es",
-        type: "website",
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: productName,
-        description: productDescription,
-        images: [metaImage],
-      },
-      alternates: {
-        canonical: productUrl,
-      },
-    };
-  } catch (error) {
-    console.error("Error generando metadata para TIM SIM:", error);
-    return {
-      title: "TIM SIM | Encriptados",
-      description: "Descubre las opciones de SIM TIM en Encriptados",
-    };
-  }
+  return buildSeoMetadata({
+    title: copy[safeLocale].title,
+    description: copy[safeLocale].description,
+    canonicalPath: `/${safeLocale}/tim-sim`,
+    locale: safeLocale,
+    languages: buildLocalizedLanguageAlternates("/tim-sim"),
+    image: {
+      url: "/images/seo/sim-pages/tim-sim.png",
+      width: 1200,
+      height: 630,
+      alt: copy[safeLocale].title,
+    },
+    keywords: ["SIM TIM", "datos internacionales", "recarga de datos", "Encriptados"],
+  });
 }
 
 export default function TimSimLayout({ children }: Props) {

@@ -20,6 +20,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     canonicalPath: `/${locale}/blog`,
     locale,
     languages: buildLocalizedLanguageAlternates("/blog"),
+    image: {
+      url: "/images/seo/pages/blog.png",
+      width: 1200,
+      height: 630,
+      alt: locale === "es" ? "Blog de seguridad digital" : "Digital security blog",
+    },
     keywords: ["blog Encriptados", "seguridad digital", "privacidad", "celulares encriptados"],
   });
 }
