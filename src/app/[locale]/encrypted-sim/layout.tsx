@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import JsonLd from "@/shared/components/JsonLd/JsonLd";
+import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
 
@@ -57,6 +60,27 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   });
 }
 
-export default function EncryptedSimLayout({ children }: Props) {
-  return <>{children}</>;
+export default async function EncryptedSimLayout({ children, params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "EncryptedSimPage.FaqSims" });
+  const faqJsonLd = buildFaqJsonLd([
+    "leftColumn.devices",
+    "leftColumn.places",
+    "leftColumn.topup",
+    "leftColumn.compatible",
+    "rightColumn.howWorks",
+    "rightColumn.multiCountry",
+    "rightColumn.secure",
+    "rightColumn.help",
+  ].map((key) => ({
+    question: t(`${key}.question`),
+    answer: t(`${key}.answer`),
+  })));
+
+  return (
+    <>
+      {faqJsonLd && <JsonLd data={faqJsonLd} />}
+      {children}
+    </>
+  );
 }

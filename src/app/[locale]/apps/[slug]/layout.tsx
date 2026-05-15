@@ -3,6 +3,7 @@ import { getProductById } from "@/features/products/services";
 import { getProductConfig, isValidProductSlug } from "./productConfig";
 import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
+import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
 
 interface Props {
@@ -90,14 +91,14 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
 
     // Título corto basado en el nombre del producto
     let shortTitle = product.name || "Encriptados";
-    
+
     // Acortar nombres largos
     if (shortTitle.length > 20) {
       // Usar solo las primeras palabras significativas
       const words = shortTitle.split(/[\s-]+/).slice(0, 3);
       shortTitle = words.join(" ");
     }
-    
+
     // Descripción corta - llamado a la acción
     const shortDescription = "¡Compra ahora!";
 
@@ -149,18 +150,25 @@ export default async function AppsSlugLayout({ children, params }: Props) {
   try {
     const product = await getProductById(String(config.productId), locale || "es");
     if (!product) return <>{children}</>;
+    const productJsonLd = buildProductJsonLd({
+      name: product.name || slug,
+      description: product.description,
+      canonicalPath: `/${locale}/apps/${slug}`,
+      image: product.images?.[0]?.src || config.productImage || config.iconUrl,
+      price: product.price,
+      currency: "USD",
+    });
+    const faqJsonLd = buildFaqJsonLd(
+      (product.faqs || []).map((faq) => ({
+        question: faq.name,
+        answer: faq.description,
+      })),
+    );
 
     return (
       <>
         <JsonLd
-          data={buildProductJsonLd({
-            name: product.name || slug,
-            description: product.description,
-            canonicalPath: `/${locale}/apps/${slug}`,
-            image: product.images?.[0]?.src || config.productImage || config.iconUrl,
-            price: product.price,
-            currency: "USD",
-          })}
+          data={faqJsonLd ? [productJsonLd, faqJsonLd] : productJsonLd}
         />
         {children}
       </>

@@ -1,4 +1,7 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import JsonLd from "@/shared/components/JsonLd/JsonLd";
+import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { buildLocalizedLanguageAlternates, buildSeoMetadata } from "@/shared/seo/metadata";
 
 interface Props {
@@ -48,6 +51,18 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   });
 }
 
-export default function TimSimLayout({ children }: Props) {
-  return <>{children}</>;
+export default async function TimSimLayout({ children, params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "BneSimPage.faqs" });
+  const faqJsonLd = buildFaqJsonLd(["q1", "q2", "q3"].map((key) => ({
+    question: t(`${key}.question`),
+    answer: t(`${key}.answer`),
+  })));
+
+  return (
+    <>
+      {faqJsonLd && <JsonLd data={faqJsonLd} />}
+      {children}
+    </>
+  );
 }

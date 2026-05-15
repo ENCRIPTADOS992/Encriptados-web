@@ -2,7 +2,9 @@ import { Metadata } from "next";
 import { getSimProductConfig, isValidSimProductSlug } from "./simProductConfig";
 import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
+import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
+import { getProductById } from "@/features/products/services";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -25,7 +27,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     // Título corto basado en el slug
     let shortTitle = "SIM Encriptada";
     let metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
-    
+
     // Mapeo de slugs a títulos e imágenes
     if (slug === "esim-encriptada") {
       shortTitle = "eSIM Encriptada";
@@ -40,7 +42,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       shortTitle = "TIM eSIM";
       metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
     }
-    
+
     // Descripción corta - llamado a la acción
     const shortDescription = "¡Compra ahora!";
 
@@ -103,17 +105,28 @@ export default async function SimSlugLayout({ children, params }: Props) {
       : slug === "esim-tim"
         ? "TIM eSIM"
         : "SIM Encriptada";
+  const product = config.productId
+    ? await getProductById(String(config.productId), locale || "es").catch(() => null)
+    : null;
+  const productJsonLd = buildProductJsonLd({
+    name: product?.name || productName,
+    description: product?.description || "SIM y eSIM para comunicacion privada y segura con Encriptados.",
+    canonicalPath: `/${locale}/sim/${slug}`,
+    image: product?.images?.[0]?.src || config.productImage,
+    price: product?.price,
+    currency: "USD",
+  });
+  const faqJsonLd = buildFaqJsonLd(
+    (product?.faqs || []).map((faq) => ({
+      question: faq.name,
+      answer: faq.description,
+    })),
+  );
 
   return (
     <>
       <JsonLd
-        data={buildProductJsonLd({
-          name: productName,
-          description: "SIM y eSIM para comunicacion privada y segura con Encriptados.",
-          canonicalPath: `/${locale}/sim/${slug}`,
-          image: config.productImage,
-          currency: "USD",
-        })}
+        data={faqJsonLd ? [productJsonLd, faqJsonLd] : productJsonLd}
       />
       {children}
     </>
