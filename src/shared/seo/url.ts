@@ -1,4 +1,4 @@
-const PRODUCTION_ORIGIN = "https://encriptados.io";
+const PRODUCTION_ORIGIN = "https://www.encriptados.net";
 
 function trimTrailingSlash(value: string): string {
   return value.replace(/\/+$/, "");
@@ -9,7 +9,12 @@ function normalizeOrigin(value: string | undefined): string {
 
   try {
     const url = new URL(value);
-    if (url.hostname === "encriptados.net" || url.hostname.endsWith(".encriptados.net")) {
+    if (
+      url.hostname === "encriptados.io" ||
+      url.hostname.endsWith(".encriptados.io") ||
+      url.hostname === "encriptados.net" ||
+      url.hostname.endsWith(".encriptados.net")
+    ) {
       return PRODUCTION_ORIGIN;
     }
     return trimTrailingSlash(url.origin);
