@@ -114,7 +114,7 @@ Nota: optimizar para IA no significa escribir texto para bots. Significa que el 
 ```text
 Fase 0 - Infraestructura base          9/10   EN PROGRESO
 Fase 1 - Home, canonicals y metadata   8/8    COMPLETADO FASE INICIAL
-Fase 2 - Blog legacy WordPress         9/10   EN PROGRESO
+Fase 2 - Blog legacy WordPress         10/10  COMPLETADO FASE INICIAL
 Fase 3 - robots, sitemap y noindex     8/8    COMPLETADO FASE INICIAL
 Fase 4 - Metadata por pagina           16/18  EN PROGRESO
 Fase 5 - Structured data JSON-LD       8/10   EN PROGRESO
@@ -154,7 +154,7 @@ Fase 7 - Auditoria y validacion        4/8    EN PROGRESO
 | SEO-015 | Agregar hreflang del home: `/`, `/en`, `/fr`, `/it`, `/pt`, `x-default` | `src/app/page.tsx`, `src/app/[locale]/page.tsx` | Completado fase inicial | Critica |
 | SEO-016 | Revisar links internos al home: ES debe apuntar a `/`, otros idiomas a `/{locale}` | Header/Footer/Language switcher, prueba encriptada, distribuidores, terminos, politica de datos | Completado fase inicial | Alta |
 | SEO-017 | Agregar `metadataBase` para evitar warning de Vercel | `src/app/layout.tsx` | Completado | Alta |
-| SEO-018 | Evitar canonicals relativos en metadata existente | Metadata helpers | En progreso | Alta |
+| SEO-018 | Evitar canonicals relativos en metadata existente | Metadata helpers | Completado fase inicial: helpers generan URLs absolutas desde `NEXT_PUBLIC_CANONICAL_SITE_URL` | Alta |
 
 ---
 
@@ -172,7 +172,7 @@ Fase 7 - Auditoria y validacion        4/8    EN PROGRESO
 | SEO-026 | Metadata dinamica para blogs WordPress legacy | Rutas legacy blog | Completado fase inicial | Critica |
 | SEO-027 | Canonical igual a URL legacy del CSV, conservando slash final | Rutas legacy blog | Completado fase inicial | Critica |
 | SEO-028 | Article JSON-LD para posts WordPress y Markdown | Rutas detalle blog | Completado fase inicial | Alta |
-| SEO-029 | Redireccionar `/es/blog/{wp-id}` a URL legacy cuando exista mapeo | Middleware o route handler | Pendiente | Media |
+| SEO-029 | Redireccionar `/es/blog/{wp-id}` a URL legacy cuando exista mapeo | `src/app/[locale]/blog/[postId]/page.tsx` | Completado: IDs WordPress redirigen 308 a `legacyPath` | Media |
 | SEO-030 | Smoke test de las 334 URLs del CSV | `scripts/validate-blog-legacy-urls.*` | Completado: 334/334 OK en local production | Critica |
 
 Validaciones ya realizadas localmente:
@@ -184,6 +184,7 @@ Validaciones ya realizadas localmente:
 | `/en/blogs/news/encrypted-cell-phones-in-the-crypto-world/` | 200 en dev |
 | `/api/wp-blog?lang=es&slug=top-5-aplicaciones-para-chatear-en-secreto` | 200 |
 | `/api/app-blog?lang=es&page=1&per_page=3` | 200 con `legacyPath` |
+| `/es/blog/60185` | 308 a ruta legacy WordPress |
 
 ---
 
@@ -197,7 +198,7 @@ Validaciones ya realizadas localmente:
 | SEO-034 | Crear `sitemap.ts` principal con rutas publicas actuales | `src/app/sitemap.ts` | Completado fase inicial: home, estaticas, apps/SIM estaticas, inventario store y blogs legacy | Critica |
 | SEO-035 | Incluir blogs legacy WordPress en sitemap desde API/cache | `src/app/sitemap.ts` o sitemap especifico | Completado fase inicial | Critica |
 | SEO-036 | Excluir dashboard, login, test, API y checkout transaccional del sitemap | `src/app/sitemap.ts` | Completado fase inicial | Critica |
-| SEO-037 | Mantener `/sitemaps/apps-en.xml` o redirigirlo correctamente | Route handler o redirect | Completado: 308 a `/sitemap.xml` | Alta |
+| SEO-037 | Mantener sitemaps legacy o redirigirlos correctamente | Route handlers de sitemaps legacy | Completado: `/sitemap_index.xml`, `/post-sitemap1.xml`, `/page-sitemap.xml`, `/category-sitemap.xml` y `/sitemaps/*.xml` redirigen 308 a `/sitemap.xml` | Alta |
 | SEO-038 | Validar que `X-Robots-Tag` no se aplique a `encriptados.io` | Middleware | Completado: `.net` noindex, `.io` sin header noindex | Critica |
 | SEO-038A | Crear sitemap segmentado si el volumen crece: `sitemap-blog.xml`, `sitemap-products.xml`, `sitemap-pages.xml` | Route handlers o sitemap index | Pendiente | Media |
 | SEO-038B | Evaluar IndexNow para Bing si se publican/actualizan muchos blogs/productos | API/script deploy | Pendiente opcional | Baja |
@@ -278,7 +279,7 @@ Reglas:
 | SEO-064 | Crear ruta dinamica `/location/[[...parts]]` o fallback 301 por patron | `src/app/location/[...slug]/page.tsx` | Completado fase inicial | Critica |
 | SEO-065 | Si se generan location pages 200, crear contenido unico por producto + ciudad | `src/app/location/[...slug]/page.tsx` | Parcial controlado: contenido plantilla SSR y `noindex`; pasar a indexable solo por allowlist | Alta |
 | SEO-066 | Si no se generan location pages, implementar 301 a apps actuales | `src/shared/seo/locationPages.ts` | No aplica: estrategia actual es 200 noindex con canonical a producto/home | Critica |
-| SEO-067 | Validar sitemaps legacy consultados por Google | `src/app/sitemaps/apps-en.xml/route.ts` | Completado fase inicial: `/sitemaps/apps-en.xml` redirige 308 a `/sitemap.xml` | Alta |
+| SEO-067 | Validar sitemaps legacy consultados por Google | `src/app/sitemaps/[...slug]/route.ts` y handlers XML raiz | Completado fase inicial: sitemaps legacy de WordPress y locations redirigen 308 a `/sitemap.xml` | Alta |
 | SEO-068 | Evitar catch-all a home para URLs importantes | `src/shared/seo/locationPages.ts` + `src/middleware.ts` | Completado fase inicial: `/location/*` no cae por catch-all global; unknown devuelve 200 noindex con canonical home | Alta |
 | SEO-069 | Crear script de validacion de redirecciones legacy | `scripts/validate-seo-urls.*` | Pendiente | Alta |
 
@@ -324,8 +325,8 @@ URLs minimas a validar en cada deploy:
 3. Crear `robots.ts` y `sitemap.ts`.
 4. Agregar metadata dinamica a blogs legacy y Article JSON-LD.
 5. Ejecutar smoke test de las 334 URLs del CSV de blogs.
-6. Implementar estrategia para `/location/*` antes de mover DNS.
-7. Completar redirecciones legacy de productos/apps sin tocar productos actuales.
+6. Validar estrategia `/location/*` y redirects de sitemaps legacy antes de mover DNS.
+7. Completar redirecciones legacy restantes de productos/apps sin tocar productos actuales.
 8. Validar con `pnpm run build`, Lighthouse, Search Console, Bing Webmaster Tools y previews sociales.
 
 ---
@@ -376,6 +377,7 @@ foreach ($url in $urls) {
 
 - Durante la fase actual en `www.encriptados.net`, el host `.net` responde con `X-Robots-Tag: noindex` para evitar indexacion prematura.
 - Al migrar a `encriptados.io`, el host `.io` debe responder sin `X-Robots-Tag: noindex` y conservar canonicals absolutos a `https://encriptados.io`.
+- En el deploy final se debe configurar `NEXT_PUBLIC_CANONICAL_SITE_URL=https://encriptados.io`; los helpers SEO, `robots.txt`, `sitemap.xml` y redirects legacy toman el dominio desde esa variable.
 - `https://encriptados.io/` responde 200, indexable y canonico a `/`.
 - `https://encriptados.io/es` redirige permanentemente a `/`.
 - `https://encriptados.io/es/apps/securecrypt` responde 200 y conserva `/es`.
@@ -383,5 +385,6 @@ foreach ($url in $urls) {
 - No hay `X-Robots-Tag: noindex` en `encriptados.io`.
 - `robots.txt` y `sitemap.xml` existen y no listan rutas privadas.
 - Las URLs de productos actuales siguen igual y no fueron modificadas.
-- Las URLs `/location/*` tienen estrategia 200 o 301 antes de mover DNS.
+- Las URLs `/location/*` tienen estrategia 200 noindex/canonical o 301 antes de mover DNS.
+- Los sitemaps legacy de WordPress y locations (`/sitemap_index.xml`, `/post-sitemap1.xml`, `/page-sitemap.xml`, `/category-sitemap.xml`, `/sitemaps/*.xml`) no responden 404; redirigen al sitemap canonico.
 - El build de produccion pasa en local y Vercel.

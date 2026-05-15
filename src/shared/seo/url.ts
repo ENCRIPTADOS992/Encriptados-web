@@ -1,25 +1,18 @@
-const PRODUCTION_ORIGIN = "https://www.encriptados.net";
+const DEFAULT_CANONICAL_ORIGIN = "https://www.encriptados.net";
 
 function trimTrailingSlash(value: string): string {
   return value.replace(/\/+$/, "");
 }
 
 function normalizeOrigin(value: string | undefined): string {
-  if (!value) return PRODUCTION_ORIGIN;
+  if (!value) return DEFAULT_CANONICAL_ORIGIN;
 
   try {
     const url = new URL(value);
-    if (
-      url.hostname === "encriptados.io" ||
-      url.hostname.endsWith(".encriptados.io") ||
-      url.hostname === "encriptados.net" ||
-      url.hostname.endsWith(".encriptados.net")
-    ) {
-      return PRODUCTION_ORIGIN;
-    }
+    if (url.protocol !== "https:" && url.protocol !== "http:") return DEFAULT_CANONICAL_ORIGIN;
     return trimTrailingSlash(url.origin);
   } catch {
-    return PRODUCTION_ORIGIN;
+    return DEFAULT_CANONICAL_ORIGIN;
   }
 }
 
