@@ -1,8 +1,8 @@
 # SEO - Backlog de Produccion Encriptados
 
 > Proyecto: Encriptados Web (`Encriptados-frontend`)  
-> Framework: Next.js 15.5.14 + App Router + next-intl 3.26.5  
-> Ultima actualizacion: 13 de mayo de 2026  
+> Framework: Next.js 15.5.18 + App Router + next-intl 4.12.0  
+> Ultima actualizacion: 15 de mayo de 2026  
 > Objetivo: migrar `encriptados.io` a Next.js sin perder trafico organico de WordPress y sin romper las rutas actuales de productos. La prioridad principal es Google, pero la implementacion debe ser indexable y legible tambien para Bing, navegadores, previews sociales y crawlers usados por buscadores con IA.
 
 ---
@@ -17,9 +17,9 @@
 | WordPress como backend blog | Completado fase inicial | `/api/wp-blog` soporta busqueda por `slug`; `/api/app-blog` entrega `legacyPath`. |
 | Productos actuales | Respetado | No se deben modificar rutas ni comportamiento de productos actuales; solo redirecciones legacy hacia rutas vigentes. |
 | Noindex por host staging | Completado fase inicial | Mientras la web actual viva en `www.encriptados.net`, ese host y subdominios `.net` deben llevar `X-Robots-Tag: noindex`. `encriptados.io` queda sin noindex y sera el destino indexable cuando termine la migracion. |
-| Metadata global | Completado fase inicial | Existe `metadataBase`, title template, canonicals globales y OG/Twitter por defecto desde helpers SEO. |
+| Metadata global | Completado fase inicial | Existe `metadataBase`, title template, canonicals globales, normalizacion a `https://www.encriptados.net` y OG/Twitter por defecto desde helpers SEO. |
 | robots/sitemap | Completado fase inicial | Existen `src/app/robots.ts`, `src/app/sitemap.ts` y `src/app/manifest.ts`; falta validacion post-deploy en Search Console/Bing. |
-| JSON-LD | Parcialmente completado | Organization, WebSite, Breadcrumb, Article y Product implementados en rutas principales; falta auditoria Rich Results completa. |
+| JSON-LD | Parcial avanzado | Organization, WebSite, Breadcrumb, Article, Product y FAQPage implementados en rutas principales; falta auditoria Rich Results completa. |
 | Location pages | Pendiente critico | Hay miles de URLs `/location/*`; falta ruta dinamica o redirecciones fallback. |
 
 ---
@@ -52,15 +52,15 @@ Estas tareas no se consideran terminadas hasta que el sitio tenga una capa SEO a
 | robots automatico | `src/app/robots.ts` debe permitir `.io`, bloquear rutas privadas y apuntar al sitemap canonico. No debe bloquear bots utiles de buscadores/IA sin decision explicita. | Completado fase inicial |
 | Metadata global | `metadataBase`, `title.template`, default description, default OG/Twitter image e icons. | Completado fase inicial |
 | Metadata por ruta | Cada pagina publica debe tener `title`, `description`, `alternates.canonical`, `alternates.languages`, `openGraph`, `twitter` y robots apropiado. | Parcial avanzado |
-| Imagen meta | Cada pagina importante debe tener una imagen OG/Twitter inspeccionable. Producto/blog usan imagen real si existe; fallback de marca si no existe. | Parcial avanzado |
+| Imagen meta | Cada pagina importante debe tener una imagen OG/Twitter inspeccionable. Producto/blog usan imagen real si existe; fallback de marca si no existe. | Parcial avanzado: home, estaticas, blog index, prueba encriptada, TIM SIM y SIM Encriptada tienen PNG interno o imagen real. |
 | Meta keywords | Se pueden definir para consistencia interna, pero no son factor principal en Google. No deben sustituir title, description, contenido ni enlaces internos. | Pendiente opcional |
 | Canonical | Una sola URL canonica por contenido. Home ES es `/`; blogs WP usan la URL legacy; paginas ES internas mantienen `/es/...`. | Parcial |
 | Hreflang | Páginas con equivalentes traducidos deben publicar alternates por locale y `x-default`. | Parcial avanzado |
-| Structured data | Organization, WebSite, Breadcrumb, Article y Product donde aplique. | Parcialmente completado |
+| Structured data | Organization, WebSite, Breadcrumb, Article, Product y FAQPage donde aplique. | Parcial avanzado |
 | Render SEO-friendly | Contenido principal debe estar prerenderizado o server-rendered; evitar depender de JS cliente para texto indexable. Esto ayuda a Google, Bing, navegadores y crawlers con menor capacidad JS. | Parcial |
 | Performance | Optimizar imagenes, fuentes, JS y Core Web Vitals; seguir Vercel/Next.js SEO Playbook. | Pendiente |
 | Legibilidad para IA | Contenido, headings, breadcrumbs, JSON-LD y enlaces internos deben ser claros para sistemas de respuesta generativa y buscadores semanticos. | Pendiente |
-| Previews sociales/navegador | WhatsApp, Telegram, X, LinkedIn, Discord y navegadores deben mostrar titulo, descripcion e imagen correctos. | Pendiente |
+| Previews sociales/navegador | WhatsApp, Telegram, X, LinkedIn, Discord y navegadores deben mostrar titulo, descripcion e imagen correctos. | Parcial avanzado: implementadas imagenes PNG internas y URLs absolutas; faltan validadores externos. |
 
 Contrato minimo de metadata por pagina indexable:
 
@@ -116,8 +116,8 @@ Fase 0 - Infraestructura base          9/10   EN PROGRESO
 Fase 1 - Home, canonicals y metadata   7/8    EN PROGRESO
 Fase 2 - Blog legacy WordPress         9/10   EN PROGRESO
 Fase 3 - robots, sitemap y noindex     8/8    COMPLETADO FASE INICIAL
-Fase 4 - Metadata por pagina           15/18  EN PROGRESO
-Fase 5 - Structured data JSON-LD       7/10   EN PROGRESO
+Fase 4 - Metadata por pagina           16/18  EN PROGRESO
+Fase 5 - Structured data JSON-LD       8/10   EN PROGRESO
 Fase 6 - Redirecciones legacy          2/9    EN PROGRESO
 Fase 7 - Auditoria y validacion        4/8    EN PROGRESO
 ```
@@ -222,14 +222,14 @@ Buenas practicas:
 | SEO-039 | Apps por slug: revisar metadata duplicada layout/page | `src/app/[locale]/apps/[slug]/layout.tsx`, `page.tsx` | Completado fase inicial | Alta |
 | SEO-040 | Apps por slug: i18n de title/description y canonical absoluto | `src/app/[locale]/apps/[slug]/layout.tsx` | Completado fase inicial; falta auditoria copy por idioma | Alta |
 | SEO-041 | SIM por slug: canonical, OG, Twitter, hreflang | `src/app/[locale]/sim/[slug]/layout.tsx` | Completado fase inicial; falta hreflang especifico | Alta |
-| SEO-042 | Router: i18n metadata, canonical, hreflang | `src/app/[locale]/router/layout.tsx` | Parcial: canonical `.io` corregido | Media |
-| SEO-043 | TIM SIM: i18n metadata, canonical, hreflang | `src/app/[locale]/tim-sim/layout.tsx` | Parcial: canonical `.io` corregido | Media |
+| SEO-042 | Router: i18n metadata, canonical, hreflang | `src/app/[locale]/router/layout.tsx` | Parcial avanzado: canonical absoluto e imagen del backend; faltan copy i18n y hreflang | Media |
+| SEO-043 | TIM SIM: i18n metadata, canonical, hreflang | `src/app/[locale]/tim-sim/layout.tsx` | Completado fase inicial: metadata i18n, canonical, hreflang e imagen PNG interna | Media |
 | SEO-044 | Producto por ID: canonical y evitar indexar variantes duplicadas si corresponde | `src/app/[locale]/our-products/[productId]/page.tsx` | Parcial avanzado: canonical `.io` + locale corregido | Alta |
-| SEO-045 | Blog listing `/{locale}/blog` | `src/app/[locale]/blog/page.tsx` | Completado fase inicial | Alta |
+| SEO-045 | Blog listing `/{locale}/blog` | `src/app/[locale]/blog/page.tsx` | Completado fase inicial: metadata, hreflang e imagen PNG interna | Alta |
 | SEO-046 | Blog Markdown `/{locale}/blog/{slug}` | `src/app/[locale]/blog/[postId]/page.tsx` | Completado fase inicial | Media |
 | SEO-047 | About us | `src/app/[locale]/about-us/page.tsx` | Completado fase inicial | Media |
 | SEO-048 | Offers | `src/app/[locale]/offers/page.tsx` | Completado fase inicial | Media |
-| SEO-049 | Deliveries / fast delivery | `src/app/[locale]/deliveries`, `fast-delivery` | Completado fase inicial | Media |
+| SEO-049 | Deliveries / fast delivery | `src/app/[locale]/deliveries`, `fast-delivery` | Completado fase inicial: metadata estatica, preview PNG y FAQPage en deliveries | Media |
 | SEO-050 | Distributors / where to find us | `src/app/[locale]/distributors`, `where-to-find-us` | Completado fase inicial | Media |
 | SEO-051 | News / ambassadors / partner pages | Varias paginas institucionales | Completado fase inicial para news, ambassadors y distributors | Media |
 | SEO-052 | Activar apps: revisar si debe indexar o quedar fuera del sitemap | `src/app/[locale]/activar-apps/page.tsx` | Completado fase inicial: indexable con metadata propia | Media |
@@ -253,8 +253,8 @@ Buenas practicas para metadata:
 | SEO-056 | `BreadcrumbJsonLd` reutilizable | `src/shared/components/JsonLd/BreadcrumbJsonLd.tsx` | Completado fase inicial | Alta |
 | SEO-057 | `ArticleJsonLd` para blogs WordPress y Markdown | `src/shared/components/JsonLd/ArticleJsonLd.tsx` | Completado fase inicial | Alta |
 | SEO-058 | `ProductJsonLd` para apps, SIM, routers y productos | `src/shared/components/JsonLd/ProductJsonLd.tsx` | Parcialmente completado apps/SIM | Alta |
-| SEO-059 | `FAQJsonLd` solo donde las FAQs sean visibles en pantalla | FAQ components | Pendiente | Media |
-| SEO-060 | Validar JSON-LD con Rich Results Test | Externo | Pendiente | Media |
+| SEO-059 | `FAQJsonLd` solo donde las FAQs sean visibles en pantalla | `src/shared/components/JsonLd/faqJsonLd.ts`, layouts de productos y landings | Completado fase inicial: apps, SIM, router, TIM SIM, SIM Encriptada y deliveries | Media |
+| SEO-060 | Validar JSON-LD con Rich Results Test | Externo | Pendiente: validado localmente por HTML, falta Google Rich Results Test | Media |
 | SEO-060A | Agregar autor, fecha publicada/modificada e imagen real en Article schema | Rutas blog legacy y markdown | Completado fase inicial | Alta |
 | SEO-060B | Agregar breadcrumbs visibles + JSON-LD en paginas principales | Layouts/paginas publicas | Parcial: JSON-LD agregado; faltan breadcrumbs visibles | Media |
 
@@ -299,8 +299,8 @@ Nota importante: no usar una redireccion masiva de todo lo desconocido al home c
 | SEO-076 | Enviar sitemap a Search Console despues de deploy | Google Search Console | Pendiente | Alta |
 | SEO-077 | Monitorear 404, soft 404 y cobertura 2-6 semanas | GSC/Vercel logs | Pendiente | Alta |
 | SEO-078 | Validar Bing Webmaster Tools y sitemap | Bing Webmaster Tools | Pendiente | Media |
-| SEO-079 | Validar previews sociales de home, producto y blog | WhatsApp/Telegram/X/LinkedIn debuggers | Pendiente | Media |
-| SEO-080 | Validar HTML sin JS de paginas clave | `curl`, View Source, Rich Results Test | Pendiente | Alta |
+| SEO-079 | Validar previews sociales de home, producto y blog | WhatsApp/Telegram/X/LinkedIn debuggers | Parcial: OG/Twitter implementado con PNG/imagenes reales; faltan debuggers externos post-deploy | Media |
+| SEO-080 | Validar HTML sin JS de paginas clave | `curl`, View Source, Rich Results Test | Parcial: FAQPage validado localmente en HTML para TIM SIM, SIM Encriptada, Router, Cryptcom y deliveries; faltan URLs minimas completas | Alta |
 
 URLs minimas a validar en cada deploy:
 
