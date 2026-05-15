@@ -36,6 +36,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Conheca a Encriptados, plataforma especializada em comunicacao segura, privacidade digital, SIMs anonimos e solucoes moveis criptografadas.",
     },
     keywords: ["Encriptados", "privacidad digital", "comunicacion segura"],
+    image: "/images/about-us/phone-hand.webp",
   },
   offers: {
     route: "/offers",
@@ -61,7 +62,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Encontre ofertas em SIMs, eSIMs, apps e sistemas de comunicacao segura da Encriptados.",
     },
     keywords: ["ofertas Encriptados", "SIM en oferta", "apps encriptadas"],
-    image: "/images/offers/sim.png",
+    image: "/images/hombre.png",
   },
   deliveries: {
     route: "/deliveries",
@@ -81,6 +82,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Consulte opcoes de entrega para produtos Encriptados, SIMs, eSIMs e dispositivos de comunicacao segura.",
     },
     keywords: ["entregas Encriptados", "envios SIM", "entrega segura"],
+    image: "/images/deliveries/Group 480956537.webp",
   },
   "fast-delivery": {
     route: "/fast-delivery",
@@ -100,6 +102,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Opcoes de entrega rapida para produtos de privacidade, SIMs e dispositivos seguros da Encriptados.",
     },
     keywords: ["entrega rapida", "envio Encriptados", "SIM rapida"],
+    image: "/images/fastdeliverypage/man.webp",
   },
   distributors: {
     route: "/distributors",
@@ -119,6 +122,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Encontre distribuidores e canais de venda Encriptados para produtos de comunicacao segura.",
     },
     keywords: ["distribuidores Encriptados", "venta Encriptados", "privacidad movil"],
+    image: "/images/distributors/bannerdistributors1.webp",
   },
   "where-to-find-us": {
     route: "/where-to-find-us",
@@ -138,6 +142,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Encontre pontos de atendimento, compra e suporte Encriptados para solucoes de privacidade.",
     },
     keywords: ["donde comprar Encriptados", "soporte Encriptados", "puntos Encriptados"],
+    image: "/images/where-to-find-us/backgroundbanner.png",
   },
   "where-to-find-encrypted": {
     route: "/where-to-find-encrypted",
@@ -157,6 +162,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Encontre solucoes Encriptados para comunicacao privada, telefones criptografados, SIMs anonimos e apps seguros.",
     },
     keywords: ["productos encriptados", "celulares cifrados", "SIM anonima"],
+    image: "/images/where-to-find-us/backgroundbanner2.png",
   },
   news: {
     route: "/news",
@@ -189,6 +195,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Conheca o programa de embaixadores Encriptados e oportunidades para promover privacidade digital.",
     },
     keywords: ["embajadores Encriptados", "programa Encriptados", "privacidad digital"],
+    image: "/images/ambassadors/ambassadors-banner.webp",
   },
   "encrypted-phones-distributors": {
     route: "/encrypted-phones-distributors",
@@ -214,6 +221,7 @@ export const SEO_STATIC_PAGE_DEFINITIONS: Record<string, StaticPageDefinition> =
       pt: "Informacoes para distribuidores de telefones criptografados, SIMs e solucoes de comunicacao segura.",
     },
     keywords: ["distribuidores celulares encriptados", "celulares cifrados", "Encriptados"],
+    image: "/images/distributors/phones-distributors.webp",
   },
 };
 
