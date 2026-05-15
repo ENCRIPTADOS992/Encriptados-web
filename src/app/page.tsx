@@ -22,9 +22,9 @@ export const metadata: Metadata = buildSeoMetadata({
   canonicalPath: "/",
   locale: "es",
   image: {
-    url: "/encriptados.svg",
-    width: 500,
-    height: 500,
+    url: "/images/home/encriptados-preview.png",
+    width: 1200,
+    height: 630,
     alt: "Encriptados",
   },
   languages: buildHomeLanguageAlternates(),
