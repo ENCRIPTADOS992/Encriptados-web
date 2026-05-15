@@ -143,7 +143,7 @@ const ProductCarouselTablet = () => {
                     TELEFONO ENCRIPTADO
                   </p>
 
-                  <h3 className="w-full text-[14px] font-bold leading-[14px] tracking-[0.01em] text-[#102542]">
+                  <h3 className="w-full text-[14px] font-semibold leading-[14px] tracking-[0.01em] text-[#102542]">
                     {product.name}
                   </h3>
 

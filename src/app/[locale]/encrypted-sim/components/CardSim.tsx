@@ -86,7 +86,7 @@ const CardSim: React.FC<CardSimProps> = ({
           />
           */}
           <div className="flex justify-between items-center w-full">
-            <h2 className="text-lg font-bold text-black">{headerTitle}</h2>
+            <h2 className="text-lg font-semibold text-black">{headerTitle}</h2>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ const CardSim: React.FC<CardSimProps> = ({
         <div>
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">{priceRange}</span>
+              <span className="text-lg font-semibold">{priceRange}</span>
               {originalPrice && (
                 <span className="text-xs text-gray-500 line-through decoration-red-500 decoration-2 font-bold bg-gray-100 px-1.5 py-0.5 rounded">
                   {originalPrice}

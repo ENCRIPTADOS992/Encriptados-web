@@ -143,7 +143,7 @@ const ProductCarouselMobile = () => {
                     TELEFONO ENCRIPTADO
                   </p>
 
-                  <h3 className="text-base text-[#102542] font-bold">
+                  <h3 className="text-base text-[#102542] font-semibold">
                     {product.name}
                   </h3>
 

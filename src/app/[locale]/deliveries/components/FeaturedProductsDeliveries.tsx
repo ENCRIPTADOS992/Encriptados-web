@@ -186,7 +186,7 @@ const ProductCarousel = () => {
                     <p className="text-[10px] sm:text-[12px] lg:text-[14px] font-small tracking-widest text-[#102542] uppercase">
                       TELEFONO ENCRIPTADO
                     </p>
-                    <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] text-[#102542] font-bold">
+                    <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] text-[#102542] font-semibold">
                       {product.name}
                     </h3>
                     <p className="text-[14px] sm:text-[16px] lg:text-[18px] text-black-800 font-normal">

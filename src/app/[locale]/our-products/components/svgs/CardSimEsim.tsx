@@ -42,7 +42,7 @@ const CardSimEsim: FC<CardSimEsimProps> = ({
     <div className={`${background} min-w-0 h-full rounded-2xl sm:rounded-3xl overflow-hidden relative`}>
       <div className="p-6 pb-0 sm:p-9 flex flex-col sm:flex-row gap-4 sm:gap-6 items-start justify-start h-full">
         <div className="w-full sm:w-[55%] text-center sm:text-left flex flex-col h-full">
-          <h2 className={`text-lg sm:text-xl mb-2 font-bold ${titleColor}`}>{title}</h2>
+          <h2 className={`text-lg sm:text-xl mb-2 font-semibold ${titleColor}`}>{title}</h2>
           {description && <p className={`text-sm mb-6 ${descriptionColor}`}>{description}</p>}
           <button
             type="button"

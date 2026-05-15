@@ -126,7 +126,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
       </div>
 
       <div className="px-6 pt-4 pb-6">
-      <h3 className="text-xl text-white font-bold text-center mb-2">
+      <h3 className="text-xl text-white font-semibold text-center mb-2">
         {product.name}
       </h3>
 

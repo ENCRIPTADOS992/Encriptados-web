@@ -204,7 +204,7 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
 
                 {/* Título y GB Tag */}
                 <div className="flex justify-between items-start gap-2">
-                    <h3 className="flex-1 min-w-0 font-black text-[14px] sm:text-[17px] text-black leading-tight truncate whitespace-nowrap" title={formattedTitle} style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif", fontWeight: 900 }}>
+                    <h3 className="flex-1 min-w-0 font-bold text-[14px] sm:text-[17px] text-black leading-tight truncate whitespace-nowrap" title={formattedTitle} style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif" }}>
                         {formattedTitle}
                     </h3>
                     {badges?.tag && (
@@ -233,7 +233,7 @@ const CardTimProduct: React.FC<CardTimProductProps> = ({
 
                 {/* Precio */}
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                    <span className="text-[22px] sm:text-xl lg:text-[26px] font-black text-black leading-[1.1] tracking-tight" style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif", fontWeight: 900 }}>
+                    <span className="text-[22px] sm:text-xl lg:text-[26px] font-bold text-black leading-[1.1] tracking-tight" style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif" }}>
                         {displayPrice}
                     </span>
                     {onSale && regularPrice != null && (

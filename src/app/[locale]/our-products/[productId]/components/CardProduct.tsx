@@ -24,7 +24,7 @@ export default function CardProduct() {
   return (
     <div className="w-full rounded-lg overflow-hidden flex flex-col">
       <div className="space-y-4">
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
           {currentProduct?.name}
         </h2>
         <p className="text-sm text-gray-600">{currentProduct?.description}</p>
@@ -77,7 +77,7 @@ export default function CardProduct() {
           <hr className="border-t border-1 border-[#D9D9D9]" />
           <p className="text-sm text-gray-500">Desde</p>
           <div className="flex items-center gap-2 flex-wrap pb-2">
-            <p className="text-xl md:text-2xl font-bold text-gray-800">
+            <p className="text-xl md:text-2xl font-semibold text-gray-800">
               {precioAMostrar} $ USD
             </p>
             {isOnSale && currentProduct.price && (

@@ -36,7 +36,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
       {/* Título con ícono */}
       <div className="flex items-center gap-3 mb-4">
         <SimProductsBarIconColor className="w-8 h-8 text-cyan-500" />
-        <h2 className="text-2xl font-bold text-black">{headerTitle}</h2>
+        <h2 className="text-2xl font-semibold text-black">{headerTitle}</h2>
       </div>
 
       <p className="text-md text-gray-600 mb-4">{t("benefitsLabel")}</p>
@@ -53,7 +53,7 @@ const CardDescriptionSimInfo: React.FC<CardDescriptionSimInfoProps> = ({
 
       {/* Precio */}
       <div className="text-md text-gray-600 mb-1">{t("fromLabel")}</div>
-      <div className="text-2xl font-bold mb-4">{priceRange}</div>
+      <div className="text-2xl font-semibold mb-4">{priceRange}</div>
 
       {/* Botones */}
       <div className="flex justify-between gap-2 whitespace-nowrap">
