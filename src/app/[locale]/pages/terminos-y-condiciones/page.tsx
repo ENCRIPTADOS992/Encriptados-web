@@ -1,18 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import Button from "@/shared/components/Button";
 import { ArrowLeft } from "lucide-react";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 export default function TerminosYCondicionesPage() {
+    const locale = useLocale();
+    const homeHref = localizeInternalHref("/", locale);
+
     return (
         <main className="bg-black text-text-secondary min-h-screen pt-32 pb-20">
             <SectionWrapper>
                 <div className="max-w-4xl mx-auto">
                     {/* Header Action */}
                     <div className="mb-8">
-                        <Link href="/">
+                        <Link href={homeHref}>
                             <Button intent="ghost" size="sm" className="pl-0 text-primary hover:text-white hover:bg-transparent">
                                 <ArrowLeft className="w-4 h-4 mr-2" />
                                 Volver al inicio
@@ -383,7 +388,7 @@ export default function TerminosYCondicionesPage() {
                         </div>
 
                         <div className="flex justify-center pt-8 border-t border-stroke-border/50">
-                            <Link href="/">
+                            <Link href={homeHref}>
                                 <Button intent="primary">
                                     <ArrowLeft className="w-4 h-4 mr-2" />
                                     Volver al inicio

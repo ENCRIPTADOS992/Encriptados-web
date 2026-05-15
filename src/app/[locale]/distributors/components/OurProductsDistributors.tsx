@@ -1,12 +1,14 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React from "react";
 import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 const OurProductsDistributors = () => {
   const t = useTranslations("DistributorsPage.ourProducts");
+  const locale = useLocale();
   const { isFromAppMobile } = useAppMobile();
 
   const distributors = [
@@ -30,22 +32,11 @@ const OurProductsDistributors = () => {
     },
   ];
 
-  const router = useRouter();
-
   const redirectMap: Record<number, string> = {
     1: "40",
     2: "38",
     3: "35",
   };
-
-  const handleRedirect = (id: number) => {
-  const target = redirectMap[id];
-  if (!target) return;
-
-  // 🔥 Navega al home con el tab seleccionado y ancla a la sección
-  router.push(`/?selectedOption=${target}#buysimappsection` as any);
-};
-
 
   return (
     <div className="w-full bg-black relative overflow-hidden py-12 md:py-16 lg:py-20">
@@ -131,7 +122,10 @@ const OurProductsDistributors = () => {
                   {!isFromAppMobile && (
                     <Link
                       href={
-                        `/?selectedOption=${redirectMap[distributor.id]}#buysimappsection` as any
+                        localizeInternalHref(
+                          `/?selectedOption=${redirectMap[distributor.id]}#buysimappsection`,
+                          locale,
+                        ) as any
                       }
                       className="px-5 py-2 rounded-full text-xs font-normal text-white bg-[#1CB9EC] hover:bg-[#12b4e7] shadow-md"
                     >

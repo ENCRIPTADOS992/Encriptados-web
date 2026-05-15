@@ -5,8 +5,11 @@ import { getAllSimProductSlugs } from "@/app/[locale]/sim/[slug]/simProductConfi
 import { SEO_LOCALES } from "@/shared/seo/constants";
 import { getStaticPageSitemapPaths } from "@/shared/seo/staticPages";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
+import { getProductLink } from "@/shared/utils/productRouteResolver";
 
 const WP_BASE = process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
+const STORE_API_BASE = process.env.NEXT_PUBLIC_WP_API;
+const PUBLIC_PRODUCT_CATEGORY_IDS = [35, 36, 38, 40, 371] as const;
 
 export const revalidate = 3600;
 
@@ -49,6 +52,71 @@ async function fetchWordPressBlogPaths(locale: string): Promise<Array<{ path: st
   }
 }
 
+type StoreProduct = {
+  id?: number;
+  name?: string;
+  provider?: string;
+  type_product?: string;
+  modified?: string;
+  date_modified?: string;
+  updated_at?: string;
+  category?: { id?: number };
+};
+
+type SitemapPath = { path: string; lastModified?: string };
+
+async function fetchStoreProducts(categoryId: number, locale: string): Promise<StoreProduct[]> {
+  if (!STORE_API_BASE) return [];
+
+  try {
+    const url = new URL("/encriptados/v3/store/products", STORE_API_BASE);
+    url.searchParams.set("category_id", String(categoryId));
+    url.searchParams.set("lang", locale);
+
+    const res = await fetch(url, { next: { revalidate } });
+    if (!res.ok) return [];
+
+    const data = (await res.json()) as { products?: Record<string, StoreProduct> | StoreProduct[] };
+    if (Array.isArray(data.products)) return data.products;
+    return Object.values(data.products || {});
+  } catch {
+    return [];
+  }
+}
+
+async function fetchStoreProductPaths(locale: string): Promise<SitemapPath[]> {
+  const categories = await Promise.all(
+    PUBLIC_PRODUCT_CATEGORY_IDS.map(async (categoryId) => {
+      const products = await fetchStoreProducts(categoryId, locale);
+
+      return products
+        .map((product): SitemapPath | null => {
+          const name = String(product.name || "").trim();
+          if (!name) return null;
+
+          const productCategoryId = Number(product.category?.id || categoryId);
+          const route = getProductLink(
+            name,
+            productCategoryId,
+            product.id,
+            product.provider,
+            product.type_product,
+          );
+          if (!route) return null;
+
+          const cleanRoute = route.split("?")[0].replace(/\/+$/, "") || "/";
+          return {
+            path: `/${locale}${cleanRoute}`,
+            lastModified: product.modified || product.date_modified || product.updated_at,
+          };
+        })
+        .filter((item): item is SitemapPath => item !== null);
+    }),
+  );
+
+  return categories.flat();
+}
+
 function entry(path: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "weekly", lastModified?: string) {
   return {
     url: buildAbsoluteUrl(path),
@@ -68,11 +136,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const simEntries = SEO_LOCALES.flatMap((locale) =>
     getAllSimProductSlugs().map((slug) => entry(`/${locale}/sim/${slug}`, 0.8, "weekly")),
   );
+  const storeProductPaths = (await Promise.all(SEO_LOCALES.map((locale) => fetchStoreProductPaths(locale)))).flat();
+  const storeProductEntries = storeProductPaths.map((item) => entry(item.path, 0.8, "weekly", item.lastModified));
   const blogPaths = (await Promise.all(SEO_LOCALES.map((locale) => fetchWordPressBlogPaths(locale)))).flat();
   const blogEntries = blogPaths.map((item) => entry(item.path, 0.6, "weekly", item.lastModified));
   const deduped = new Map<string, MetadataRoute.Sitemap[number]>();
 
-  for (const item of [...staticEntries, ...appEntries, ...simEntries, ...blogEntries]) {
+  for (const item of [...staticEntries, ...appEntries, ...simEntries, ...storeProductEntries, ...blogEntries]) {
     deduped.set(item.url, item);
   }
 

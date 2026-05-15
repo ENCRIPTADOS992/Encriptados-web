@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
 
 export default function ProductosEncriptados() {
     const locale = useLocale();
@@ -45,7 +46,7 @@ export default function ProductosEncriptados() {
                     {/* SIM's Encriptadas */}
                     <Link
                         href={`/${locale}/sim-encriptada`}
-                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
+                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
                             {t.rich("sims", { br: () => <br /> })}
@@ -62,8 +63,8 @@ export default function ProductosEncriptados() {
 
                     {/* Aplicaciones de mensajería segura */}
                     <Link
-                        href={`/${locale}?selectedOption=38`}
-                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
+                        href={localizeInternalHref("/?selectedOption=38", locale)}
+                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
                             {t.rich("apps", { br: () => <br /> })}
@@ -80,8 +81,8 @@ export default function ProductosEncriptados() {
 
                     {/* Sistemas de seguridad */}
                     <Link
-                        href={`/${locale}?selectedOption=35`}
-                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
+                        href={localizeInternalHref("/?selectedOption=35", locale)}
+                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
                             {t.rich("systems", { br: () => <br /> })}
@@ -98,8 +99,8 @@ export default function ProductosEncriptados() {
 
                     {/* Routers encriptados */}
                     <Link
-                        href={`/${locale}?selectedOption=36`}
-                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors block"
+                        href={localizeInternalHref("/?selectedOption=36", locale)}
+                        className="rounded-2xl border border-[#2F2F2F] bg-[#0E0E0E] p-5 md:p-6 xl:p-8 flex items-center justify-between min-h-[180px] md:min-h-[220px] gap-2 md:gap-4 group hover:border-[#35CDFB] transition-colors"
                     >
                         <h3 className="text-white text-lg md:text-xl font-semibold leading-tight text-balance">
                             {t.rich("routers", { br: () => <br /> })}

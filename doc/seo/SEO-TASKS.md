@@ -18,7 +18,7 @@
 | Productos actuales | Respetado | No se deben modificar rutas ni comportamiento de productos actuales; solo redirecciones legacy hacia rutas vigentes. |
 | Noindex por host staging | Completado fase inicial | Mientras la web actual viva en `www.encriptados.net`, ese host y subdominios `.net` deben llevar `X-Robots-Tag: noindex`. `encriptados.io` queda sin noindex y sera el destino indexable cuando termine la migracion. |
 | Metadata global | Completado fase inicial | Existe `metadataBase`, title template, canonicals globales, normalizacion a `https://www.encriptados.net` y OG/Twitter por defecto desde helpers SEO. |
-| robots/sitemap | Completado fase inicial | Existen `src/app/robots.ts`, `src/app/sitemap.ts` y `src/app/manifest.ts`; falta validacion post-deploy en Search Console/Bing. |
+| robots/sitemap | Completado fase inicial | Existen `src/app/robots.ts`, `src/app/sitemap.ts` y `src/app/manifest.ts`; sitemap genera paginas estaticas, blogs legacy y productos publicos desde inventario/API con revalidate; falta validacion post-deploy en Search Console/Bing. |
 | JSON-LD | Parcial avanzado | Organization, WebSite, Breadcrumb, Article, Product y FAQPage implementados en rutas principales; falta auditoria Rich Results completa. |
 | Location pages | Pendiente critico | Hay miles de URLs `/location/*`; falta ruta dinamica o redirecciones fallback. |
 
@@ -48,7 +48,7 @@ Estas tareas no se consideran terminadas hasta que el sitio tenga una capa SEO a
 
 | Elemento | Requisito para Encriptados | Estado actual |
 |---|---|---|
-| Sitemap automatico | `src/app/sitemap.ts` debe generar URLs canonicas para home, paginas estaticas, productos publicos, SIM/router/apps y blogs WordPress legacy. Debe servir a Google, Bing y otros crawlers estandar. | Completado fase inicial |
+| Sitemap automatico | `src/app/sitemap.ts` debe generar URLs canonicas para home, paginas estaticas, productos publicos, SIM/router/apps y blogs WordPress legacy. Debe servir a Google, Bing y otros crawlers estandar. | Completado fase inicial: incluye inventario publico desde backend/store con `revalidate = 3600` y URLs limpias sin parametros. |
 | robots automatico | `src/app/robots.ts` debe permitir `.io`, bloquear rutas privadas y apuntar al sitemap canonico. No debe bloquear bots utiles de buscadores/IA sin decision explicita. | Completado fase inicial |
 | Metadata global | `metadataBase`, `title.template`, default description, default OG/Twitter image e icons. | Completado fase inicial |
 | Metadata por ruta | Cada pagina publica debe tener `title`, `description`, `alternates.canonical`, `alternates.languages`, `openGraph`, `twitter` y robots apropiado. | Parcial avanzado |
@@ -113,7 +113,7 @@ Nota: optimizar para IA no significa escribir texto para bots. Significa que el 
 
 ```text
 Fase 0 - Infraestructura base          9/10   EN PROGRESO
-Fase 1 - Home, canonicals y metadata   7/8    EN PROGRESO
+Fase 1 - Home, canonicals y metadata   8/8    COMPLETADO FASE INICIAL
 Fase 2 - Blog legacy WordPress         9/10   EN PROGRESO
 Fase 3 - robots, sitemap y noindex     8/8    COMPLETADO FASE INICIAL
 Fase 4 - Metadata por pagina           16/18  EN PROGRESO
@@ -152,7 +152,7 @@ Fase 7 - Auditoria y validacion        4/8    EN PROGRESO
 | SEO-013 | Agregar metadata completa del home raiz: title, description, canonical `/`, OG/Twitter | `src/app/page.tsx` | Completado | Critica |
 | SEO-014 | Agregar metadata para `/{locale}` en idiomas no ES | `src/app/[locale]/page.tsx` | Completado fase inicial | Alta |
 | SEO-015 | Agregar hreflang del home: `/`, `/en`, `/fr`, `/it`, `/pt`, `x-default` | `src/app/page.tsx`, `src/app/[locale]/page.tsx` | Completado fase inicial | Critica |
-| SEO-016 | Revisar links internos al home: ES debe apuntar a `/`, otros idiomas a `/{locale}` | Header/Footer/Language switcher | Pendiente | Alta |
+| SEO-016 | Revisar links internos al home: ES debe apuntar a `/`, otros idiomas a `/{locale}` | Header/Footer/Language switcher, prueba encriptada, distribuidores, terminos, politica de datos | Completado fase inicial | Alta |
 | SEO-017 | Agregar `metadataBase` para evitar warning de Vercel | `src/app/layout.tsx` | Completado | Alta |
 | SEO-018 | Evitar canonicals relativos en metadata existente | Metadata helpers | En progreso | Alta |
 
@@ -194,7 +194,7 @@ Validaciones ya realizadas localmente:
 | SEO-031 | Crear `robots.ts` dinamico | `src/app/robots.ts` | Completado fase inicial | Critica |
 | SEO-032 | En `.io`, permitir indexacion publica y bloquear dashboard/API/test | `src/app/robots.ts` | Completado fase inicial | Critica |
 | SEO-033 | En `.net`, devolver `noindex` o bloquear segun fase de staging | `src/app/robots.ts`, middleware | Completado via `X-Robots-Tag` en middleware | Alta |
-| SEO-034 | Crear `sitemap.ts` principal con rutas publicas actuales | `src/app/sitemap.ts` | Completado fase inicial | Critica |
+| SEO-034 | Crear `sitemap.ts` principal con rutas publicas actuales | `src/app/sitemap.ts` | Completado fase inicial: home, estaticas, apps/SIM estaticas, inventario store y blogs legacy | Critica |
 | SEO-035 | Incluir blogs legacy WordPress en sitemap desde API/cache | `src/app/sitemap.ts` o sitemap especifico | Completado fase inicial | Critica |
 | SEO-036 | Excluir dashboard, login, test, API y checkout transaccional del sitemap | `src/app/sitemap.ts` | Completado fase inicial | Critica |
 | SEO-037 | Mantener `/sitemaps/apps-en.xml` o redirigirlo correctamente | Route handler o redirect | Completado: 308 a `/sitemap.xml` | Alta |
