@@ -151,7 +151,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
 
   // Default translations (fallback)
   const t = {
-    priceFrom: translations?.priceFrom || "Desde",
+    priceFrom: translations?.priceFrom || "À partir de",
     buyNow: translations?.buyNow || "Comprar ahora",
     selectPlan: translations?.selectPlan || "Selecciona un plan",
     downloadAppStore: translations?.downloadAppStore || "Descargar en App Store",

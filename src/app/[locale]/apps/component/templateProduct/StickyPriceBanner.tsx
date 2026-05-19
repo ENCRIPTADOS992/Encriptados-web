@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
 import { Tag } from "lucide-react";
 
@@ -23,6 +24,7 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
   visible,
   productInfo,
 }) => {
+  const t = useTranslations("AppsPage.productTemplate");
   const { isFromAppMobile } = useAppMobile();
   const bannerRef = useRef<HTMLDivElement>(null);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
@@ -139,7 +141,7 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
             <div className="flex items-center gap-3">
               <div className="flex flex-col text-left lg:text-right items-end justify-center">
                 <span className="text-white/75 text-xs sm:text-sm leading-none">
-                  Desde
+                  {t("priceFrom")}
                 </span>
                 <span className="text-white font-bold text-2xl sm:text-3xl leading-none mt-0.5">
                   {productInfo.price}
@@ -170,4 +172,3 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
 };
 
 export default StickyPriceBannerUnified;
-
