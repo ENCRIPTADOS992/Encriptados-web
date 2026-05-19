@@ -1,5 +1,6 @@
 // src/shared/components/TelegramButton.tsx
 import React from "react";
+import { useTranslations } from "next-intl";
 import TelegramIcon from "@/shared/svgs/TelegramIcon";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
 
@@ -10,6 +11,7 @@ interface TelegramButtonProps {
 
 const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "", chatAction = "OPEN_CHAT" }) => {
   const { appMode } = useAppMobile();
+  const t = useTranslations("BlogPage");
   const telegramUrl = "https://t.me/encriptados";
 
   const isUserMode = appMode === "user";
@@ -37,8 +39,8 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "", chatAct
       `}
     >
       {!isUserMode && <TelegramIcon className="w-5 h-5 text-white flex-shrink-0" />}
-      <span className="hidden sm:inline">{isUserMode ? "Chatear ahora" : "Chatear Telegram"}</span>
-      <span className="sm:hidden">{isUserMode ? "Chatear ahora" : "Chat soporte"}</span>
+      <span className="hidden sm:inline">{isUserMode ? t("talkWithSupport") : t("goTelegram")}</span>
+      <span className="sm:hidden">{t("goTelegram")}</span>
     </a>
   );
 };
