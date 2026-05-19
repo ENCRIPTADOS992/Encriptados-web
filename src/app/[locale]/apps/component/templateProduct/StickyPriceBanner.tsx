@@ -24,7 +24,7 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
   visible,
   productInfo,
 }) => {
-  const t = useTranslations("AppsPage.productTemplate");
+  const t = useTranslations("appsShared.productTemplate");
   const { isFromAppMobile } = useAppMobile();
   const bannerRef = useRef<HTMLDivElement>(null);
   const [isLandscapeMobile, setIsLandscapeMobile] = useState(false);
