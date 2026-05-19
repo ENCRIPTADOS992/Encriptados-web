@@ -912,14 +912,14 @@
         "description": "Vos données n'expirent jamais, peu importe le temps que vous mettez à les consommer"
       },
       "buyButton": "Acheter ici",
-      "moreInfo": "Info"
+      "moreInfo": "Plus d'infos"
     },
     "silentCircle": {
       "badge": "Silent Circle",
       "title": "Silent Phone",
       "description": "Développée par des experts en technologie mobile, cette application protège vos données avec une sécurité maximale à tout moment.",
       "cta": "Achetez votre Silent Phone ici facilement et sans complications",
-      "moreInfo": "Info"
+      "moreInfo": "Plus d'infos"
     },
     "activarApps": {
       "badge": "Nouveau lancement",
@@ -977,7 +977,7 @@
     },
     "productCard": {
       "buy": "Acheter",
-      "moreInfo": "Info",
+      "moreInfo": "Plus d'infos",
       "fromPrice": "À partir de"
     },
     "faqs": {
