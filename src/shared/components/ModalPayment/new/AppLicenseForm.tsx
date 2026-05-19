@@ -209,7 +209,7 @@ export default function AppLicenseForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Email */}
           <div className="space-y-1.5">
-            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">Email</p>
+            <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">{t("emailForLicense")}</p>
             <div className="w-full h-[42px] rounded-[8px] bg-[#EBEBEB] px-[14px] flex items-center">
               <input
                 value={emailVal}

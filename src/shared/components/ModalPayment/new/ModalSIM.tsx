@@ -696,7 +696,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
               : res.discount_value;
         } else {
           setDiscount(0);
-          toast.error(res.message || "Cupón inválido");
+          toast.error(res.message || t("invalidCoupon"));
           return;
         }
         setDiscount(Math.round(effectiveDiscount * 100) / 100);
@@ -704,15 +704,15 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         if (productIsOnSale) {
           toast.info(t("couponReplacesOffer"));
         } else {
-          toast.success(res.message || "Cupón aplicado");
+          toast.success(res.message || t("couponApplied"));
         }
       } else {
         setDiscount(0);
-        toast.error(res.message || "Cupón inválido");
+        toast.error(res.message || t("invalidCoupon"));
       }
     } catch (e) {
       setDiscount(0);
-      toast.error("Error validando el cupón");
+      toast.error(t("couponValidationError"));
     }
   };
 

@@ -3,6 +3,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import PurchaseHeader from "./PurchaseHeader";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
 
@@ -35,6 +36,7 @@ export default function PurchaseScaffold({
   className,
   ...headerProps
 }: Props) {
+  const t = useTranslations("paymentModal");
 
   console.log("[Scaffold] mode:", mode);
 
@@ -68,27 +70,27 @@ export default function PurchaseScaffold({
 
       {/* Alert for MDM iPhone products */}
       {isMdmIphone && (
-        <AlertBox lines={["Para la instalación se requiere un MAC con OS 15.7 o superior."]} />
+        <AlertBox lines={[t("mdmInstallWarning")]} />
       )}
 
       {/* Alert for Router products */}
       {isRouter && (
         <AlertBox lines={[
-          "Impuestos a cargo del comprador. Entrega estimada: 5–7 días hábiles.",
+          t("routerShippingWarning"),
         ]} />
       )}
 
       {/* Alert for Physical SIM products */}
       {isPhysicalSim && (
         <AlertBox lines={[
-          "Impuestos a cargo del comprador. Entrega: 5–7 días hábiles.",
+          t("simShippingWarning"),
         ]} />
       )}
 
       {/* Alert for product 61588 */}
       {isProduct61588 && (
         <AlertBox lines={[
-          "Descarga la App Encriptados para poder activar tus aplicaciones favoritas",
+          t("downloadAppWarning"),
         ]} />
       )}
 
@@ -101,17 +103,17 @@ export default function PurchaseScaffold({
           <div className="text-center py-4">
             <Image
               src="/images/home/currency_exchange.webp"
-              alt="Recargar"
+              alt={t("recharge")}
               width={28}
               height={28}
               className="mx-auto"
               priority
             />
             <p className="mt-3 text-[24px] leading-[22px] font-semibold text-black">
-              Si quieres recargar
+              {t("rechargeTitle")}
             </p>
             <p className="text-[24px] leading-[28px] font-semibold text-black">
-              comunícate con nosotros
+              {t("rechargeSubtitle")}
             </p>
           </div>
 
@@ -127,7 +129,7 @@ export default function PurchaseScaffold({
         [&>svg]:mr-[10px]
       "
             >
-              Ir a Telegram
+              {t("goToTelegram")}
             </TelegramButton>
           </div>
         </div>

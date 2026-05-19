@@ -233,7 +233,7 @@ export default function NewUserForm({
               <input
                 value={emailVal}
                 onChange={(e) => setEmailVal(e.target.value)}
-                placeholder="Email"
+                placeholder={t("emailPlaceholder")}
                 type="email"
                 className="w-full bg-transparent outline-none text-[14px]"
               />

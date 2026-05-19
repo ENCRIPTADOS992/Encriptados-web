@@ -4,7 +4,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import PaymentSuccessModal from "@/payments/PaymentSuccessModal";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
@@ -17,8 +17,6 @@ const TelegramButton = TelegramButtonOriginal as unknown as React.ComponentType<
   className?: string;
   children?: React.ReactNode;
 }>;
-
-const TERMS_URL = "/es/pages/terminos-y-condiciones";
 
 type LicenseType = "new" | "renew";
 type OsType = "android" | "ios";
@@ -80,8 +78,10 @@ export default function UnifiedPurchaseForm({
   purchaseMeta,
   onSuccess,
 }: Props) {
+  const locale = useLocale();
   const t = useTranslations("paymentModal");
   const { policy, formType, isLoading: policyLoading, productName, categoryId } = useFormPolicy();
+  const termsUrl = `/${locale}/pages/terminos-y-condiciones`;
 
   // Estado del formulario
   const [emailVal, setEmailVal] = React.useState(email);
@@ -731,7 +731,7 @@ export default function UnifiedPurchaseForm({
           {policy.showEmailField && (
             <div className="space-y-1.5">
               <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-                {policy.emailLabel}
+                {formType === "APP_RONING" ? t("emailLabelRoning") : t("emailLabel")}
               </p>
               {policy.showTelegramField ? (
                 // Email + Telegram side by side
@@ -740,7 +740,7 @@ export default function UnifiedPurchaseForm({
                     <input
                       value={emailVal}
                       onChange={(e) => setEmailVal(e.target.value)}
-                      placeholder={policy.emailPlaceholder}
+                      placeholder={t("emailPlaceholder")}
                       type="email"
                       className="w-full bg-transparent outline-none text-[14px]"
                     />
@@ -749,7 +749,7 @@ export default function UnifiedPurchaseForm({
                     <input
                       value={telegramId}
                       onChange={(e) => setTelegramId(e.target.value)}
-                      placeholder="ID Telegram (opcional)"
+                      placeholder={`${t("telegramIdOptional")} ${t("telegramIdOptionalHint")}`}
                       className="w-full bg-transparent outline-none text-[14px]"
                     />
                   </div>
@@ -761,7 +761,7 @@ export default function UnifiedPurchaseForm({
                     <input
                       value={emailVal}
                       onChange={(e) => setEmailVal(e.target.value)}
-                      placeholder={policy.emailPlaceholder}
+                      placeholder={t("emailPlaceholder")}
                       type="email"
                       className="w-full bg-transparent outline-none text-[14px]"
                     />
@@ -814,7 +814,7 @@ export default function UnifiedPurchaseForm({
                   <input
                     value={shippingPhone}
                     onChange={(e) => setShippingPhone(e.target.value)}
-                    placeholder="Teléfono"
+                    placeholder={t("phoneField")}
                     className="w-full bg-transparent outline-none text-[14px]"
                   />
                 </div>
@@ -832,7 +832,7 @@ export default function UnifiedPurchaseForm({
             />
             <span className="select-none">
               {t("acceptTerms")}{" "}
-              <Link href={TERMS_URL} target="_blank" className="underline font-medium">
+              <Link href={termsUrl} target="_blank" className="underline font-medium">
                 {t("termsAndConditions")}
               </Link>{" "}
               {t("ofPurchase")}

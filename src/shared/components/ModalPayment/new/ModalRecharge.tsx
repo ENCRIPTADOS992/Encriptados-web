@@ -8,6 +8,7 @@ import PurchaseScaffold from "./PurchaseScaffold";
 import type { Mode } from "./PurchaseTabs";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import { useToast } from "@/shared/context/ToastContext";
+import { useTranslations } from "next-intl";
 
 type Variant = { id: number; licensetime: number | string; price: number; sku?: string; image?: string };
 
@@ -25,6 +26,7 @@ type ModalProduct = {
 export default function ModalRecharge() {
   const { params, openModal } = useModalPayment();
   const toast = useToast();
+  const t = useTranslations("paymentModal");
   const { productid, mode = "recharge", initialPrice, variantId } = (params || {}) as {
     productid?: string;
     mode?: Mode;
@@ -90,18 +92,18 @@ export default function ModalRecharge() {
               : res.discount_value;
         } else {
           setDiscount(0);
-          toast.error(res.message || "Cupón inválido");
+          toast.error(res.message || t("invalidCoupon"));
           return;
         }
         setDiscount(Math.round(effectiveDiscount * 100) / 100);
-        toast.success(res.message || "Cupón aplicado");
+        toast.success(res.message || t("couponApplied"));
       } else {
         setDiscount(0);
-        toast.error(res.message || "Cupón inválido");
+        toast.error(res.message || t("invalidCoupon"));
       }
     } catch (e) {
       setDiscount(0);
-      toast.error("Error validando el cupón");
+      toast.error(t("couponValidationError"));
     }
   };
 
