@@ -47,8 +47,7 @@ const BannerOurProducts = () => {
             className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] leading-tight sm:leading-snug"
           >
             <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}
-            <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>{" "}
-            <span className="text-[#0AB4E9]">{t("banner.titleNewInComunication")}</span>
+            <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>
           </Typography>
           
           {/* Descripción */}
