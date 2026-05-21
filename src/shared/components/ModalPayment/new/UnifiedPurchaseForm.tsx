@@ -322,9 +322,9 @@ export default function UnifiedPurchaseForm({
     // === CARD PAYMENT ===
     try {
       // 1. Validate Stripe elements
-      if (!stripeRef.current || !splitRef.current?.number) {
-        throw new Error("Stripe no está listo.");
-      }
+        if (!stripeRef.current || !splitRef.current?.number) {
+          throw new Error(t("stripeNotReady"));
+        }
 
       // 2. Create Order & Intent (if not already created)
       let currentClientSecret = clientSecret;
@@ -477,11 +477,11 @@ export default function UnifiedPurchaseForm({
       } else if (res.error) {
         setStripeError(res.error);
       } else {
-        setStripeError("Error desconocido al procesar el pago.");
+        setStripeError(t("unknownPaymentError"));
       }
 
     } catch (e: any) {
-      setStripeError(e?.message || "Error procesando el pago.");
+      setStripeError(e?.message || t("errorProcessingPayment"));
     } finally {
       setIsSubmitting(false);
     }
@@ -549,7 +549,7 @@ export default function UnifiedPurchaseForm({
       {policy.showOsSelector && (
         <div className="space-y-1.5">
           <p className="text-[12px] leading-[12px] font-bold text-[#010C0F]/80">
-            Selecciona tu sistema operativo
+            {t("operatingSystem")}
           </p>
           <div className="flex gap-2">
             <button

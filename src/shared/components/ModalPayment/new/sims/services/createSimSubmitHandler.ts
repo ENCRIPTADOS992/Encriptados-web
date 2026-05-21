@@ -249,7 +249,7 @@ export function createSimSubmitHandler({
             "[createSimSubmitHandler] provider cryptomus pero sin payment_url en respuesta",
             res
           );
-          toast.error("Pedido creado, pero no se recibió URL de pago.");
+          toast.error("Order created, but payment URL was not received.");
         }
         return;
       }
@@ -261,7 +261,7 @@ export function createSimSubmitHandler({
           res,
         }
       );
-      toast.error("Método de pago Tottoli desconocido.");
+      toast.error("Unknown Tottoli payment method.");
       return;
     }
 
@@ -301,9 +301,9 @@ export function createSimSubmitHandler({
       });
     } catch (e: any) {
       if (e?.code === "out_of_stock") {
-        toast.error("Stock insuficiente");
+        toast.error("Insufficient stock");
       } else {
-        toast.error(e?.message || "Error procesando el pago");
+        toast.error(e?.message || "Error processing payment");
       }
     }
   };

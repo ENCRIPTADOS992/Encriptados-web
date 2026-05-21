@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import { useStripeSplit } from "@/shared/hooks/useStripeSplit";
 import { confirmCardPayment } from "@/payments/stripeClient";
 import type { StripeConfirmFn } from "../types/simFormTypes";
@@ -17,6 +18,7 @@ export function useSimStripeBridge({
   method,
   onStripeConfirmReady,
 }: UseSimStripeBridgeParams) {
+  const t = useTranslations("paymentModal");
   const { status, error, stripeRef, splitRef } = useStripeSplit(
     method === "card"
   );
@@ -57,7 +59,7 @@ export function useSimStripeBridge({
       });
 
       if (!stripeRef.current || !splitRef.current?.number) {
-        throw new Error("Stripe no está listo.");
+        throw new Error(t("stripeNotReady"));
       }
 
       return confirmCardPayment(
@@ -83,7 +85,7 @@ export function useSimStripeBridge({
       // No limpiamos al desmontar porque puede causar race conditions
       // El padre debe manejar el estado null cuando sea necesario
     };
-  }, [method, status, stripeRef, splitRef, onStripeConfirmReady]);
+  }, [method, status, stripeRef, splitRef, onStripeConfirmReady, t]);
 
   return { stripeStatus: status, mountError: error };
 }

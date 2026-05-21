@@ -355,7 +355,7 @@ export default function SimFormUnified({
           if ((res as any).payment_url) {
             window.location.href = (res as any).payment_url;
           } else {
-            setStripeError("No se recibió URL de pago crypto.");
+            setStripeError(t("missingCryptoPaymentUrl"));
           }
           return; // Redirecting or error, stop here
         }
@@ -363,7 +363,7 @@ export default function SimFormUnified({
         // === 4. HANDLE CARD CONFIRMATION ===
         const secret = (res as any).client_secret;
         if (!secret) {
-          throw new Error("No se recibió client_secret para el pago.");
+          throw new Error(t("missingClientSecret"));
         }
         setClientSecret(secret); // Save state just in case, though we use `secret` var
 

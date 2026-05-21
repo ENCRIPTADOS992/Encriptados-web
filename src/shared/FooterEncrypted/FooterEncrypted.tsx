@@ -165,7 +165,7 @@ export default function FooterEncrypted() {
               <div className="flex flex-wrap justify-center gap-3">
                 <Link href="#" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/app-store.svg" alt="App Store" width={116} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
                 <Link href="#" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/google-play.svg" alt="Google Play" width={119} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
-                <Link href="#" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/apk.svg" alt="Descargar APK" width={119} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
+                <Link href="https://apk.encriptados.io/app.apk" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/apk.svg" alt="Descargar APK" width={119} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
               </div>
             </div>
 
