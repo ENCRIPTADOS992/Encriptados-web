@@ -8,6 +8,7 @@ import type { ProductById } from "@/features/products/types/AllProductsResponse"
 import { useSearchParams, useRouter } from "next/navigation";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import LocalMallSvgNew from "@/app/[locale]/our-products/components/svgs/LocalMallSvgNew";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 const ROUTER_PRODUCT_ID = "59747"; // ID del Camaleón Router
 
@@ -91,7 +92,7 @@ const RouterCamaleon = () => {
                 openModal({
                   productid: productId,
                   languageCode: "es",
-                  categoryId: 36, // Router
+                  categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
                 });
               }}
               className="bg-black text-white px-6 py-[10px] h-[44px] rounded-full text-[14px] flex items-center gap-2 hover:opacity-90"

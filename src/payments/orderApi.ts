@@ -1,6 +1,7 @@
 // src/payments/orderApi.ts
-const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-export const API_BASE_URL = `${WP_API}/encriptados/v1`;
+import { WP_V1_BASE } from "@/shared/constants/backend";
+
+export const API_BASE_URL = WP_V1_BASE;
 
 const USE_CREDENTIALS = false;
 
@@ -48,7 +49,7 @@ export async function createOrderAndIntent(params: {
 }
 
 export async function fetchPublicStatus(orderId: number) {
-  const r = await fetch(`${WP_API}/encriptados/v1/orders/${orderId}/public-status`);
+  const r = await fetch(`${API_BASE_URL}/orders/${orderId}/public-status`);
   if (!r.ok) throw new Error("No se pudo consultar el estado");
   return (await r.json()) as { status: string };
 }
@@ -72,7 +73,7 @@ export async function createManualOrderAndIntent({
   currency?: "USD";
   successUrl?: string;
 }): Promise<{ order_id: number; client_secret: string }> {
-  const url = `${WP_API}/encriptados/v1/orders/manual`;
+  const url = `${API_BASE_URL}/orders/manual`;
 
   const payload = {
     product_id: productId,

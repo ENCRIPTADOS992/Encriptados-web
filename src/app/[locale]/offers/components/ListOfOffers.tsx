@@ -7,8 +7,14 @@ import { BadgePercent } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import Loader from "@/shared/components/Loader";
 import CardProduct from "@/app/[locale]/our-products/components/CardProduct";
+import { buildWpV3Url } from "@/shared/constants/backend";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isRouterCategoryId,
+  isSimCategoryId,
+} from "@/shared/constants/productCategories";
 
-const API_BASE = (process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json") + "/encriptados/v3/store/products";
+const API_BASE = buildWpV3Url("/store/products");
 
 const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
   CO: "Colombia",
@@ -95,7 +101,7 @@ function buildOfferBadges(
   const monthsLabel = t("monthsLabel");
 
   // ---------- Category 40: SIMs ----------
-  if (categoryId === 40) {
+  if (isSimCategoryId(categoryId)) {
     const isMinutesSku = skuLower.includes("minutes") || skuLower.includes("minute");
     const isMinutosProduct =
       isMinutesSku ||
@@ -158,7 +164,11 @@ function buildOfferBadges(
   }
 
   // ---------- Category 38 (Apps) / 35 (Sistemas) / 36 (Router) ----------
-  if (categoryId === 38 || categoryId === 35 || categoryId === 36) {
+  if (
+    categoryId === PRODUCT_CATEGORY_IDS.APPS ||
+    categoryId === PRODUCT_CATEGORY_IDS.SOFTWARE ||
+    isRouterCategoryId(categoryId)
+  ) {
     const isUnique = (value: unknown) => {
       if (value === 0 || value === "0") return true;
       if (!value) return false;
@@ -225,9 +235,9 @@ const ListOfOffers = () => {
 
     const fetchAll = async () => {
       const [sims, apps, systems] = await Promise.all([
-        fetchAndFilter(40),
-        fetchAndFilter(38),
-        fetchAndFilter(35),
+        fetchAndFilter(PRODUCT_CATEGORY_IDS.SIMS),
+        fetchAndFilter(PRODUCT_CATEGORY_IDS.APPS),
+        fetchAndFilter(PRODUCT_CATEGORY_IDS.SOFTWARE),
       ]);
 
       if (mounted) {

@@ -35,6 +35,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { plans } from "../consts/plans";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useLocale, useTranslations } from "next-intl";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 const RouterPage = () => {
   const searchParams = useSearchParams();
@@ -54,13 +55,13 @@ const RouterPage = () => {
     subtitle: t("privacySubtitle"),
     iconUrl: "/images/apps/silent-circle/logo.png",
     ctaLabel: t("buy"),
-    categoryId: 35,
+    categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
     productId: 142,
     onBuy: () => {
       openModal({
         productid: "142",
         languageCode: "es",
-        selectedOption: 35,
+        selectedOption: PRODUCT_CATEGORY_IDS.ROUTERS,
         iconUrl: "/images/apps/silent-circle/logo.png",
       });
     },

@@ -13,6 +13,11 @@ import { useFormPolicy } from "./useFormPolicy";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import { useToast } from "@/shared/context/ToastContext";
 import { useTranslations } from "next-intl";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isActivateAppsCategoryId,
+  isRouterCategoryId,
+} from "@/shared/constants/productCategories";
 
 type Variant = {
   id: number;
@@ -164,8 +169,8 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
 
   const selectedOption = Number((params as any)?.selectedOption ?? NaN);
   const isRouterCheckout =
-    selectedOption === 36 ||
-    product?.category?.id === 36 ||
+    isRouterCategoryId(selectedOption) ||
+    isRouterCategoryId(product?.category?.id) ||
     /router|mifi|hotspot|cpe/i.test(product?.name ?? "");
   const shipping = isRouterCheckout ? 80 : undefined;
 
@@ -211,8 +216,8 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
   }
 
   const isRoamingProduct =
-    product?.category?.id === 35 || // Sistemas (Secure MDM, etc.) -> Roaming
-    (product?.category?.id === 38 && !/silent/i.test(product?.name ?? "")) || // Apps (except Silent Phone) -> Roaming
+    product?.category?.id === PRODUCT_CATEGORY_IDS.SOFTWARE ||
+    (product?.category?.id === PRODUCT_CATEGORY_IDS.APPS && !/silent/i.test(product?.name ?? "")) ||
     /armadillo|threema|vault|vnc|nordvpn|salt/i.test(product?.name ?? "");
 
   const isSilentPhone = /silent/i.test(product?.name ?? "");
@@ -365,11 +370,11 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
         onSuccess={(data) => {
           if (onPaymentSuccess) {
             const brandKey =
-              product?.category?.id === 38
+              product?.category?.id === PRODUCT_CATEGORY_IDS.APPS
                 ? "app" as const
-                : product?.category?.id === 35
+                : product?.category?.id === PRODUCT_CATEGORY_IDS.SOFTWARE
                   ? "system" as const
-                  : product?.category?.id === 36
+                  : isRouterCategoryId(product?.category?.id)
                     ? "router" as const
                     : undefined;
             const lt = Number(selectedVariant?.licensetime ?? product?.licensetime);
@@ -381,8 +386,8 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
             // Activar Apps: incluir detalle de activaciones del variant seleccionado.
             const selectedOption = Number((params as any)?.selectedOption ?? NaN);
             const isActivarApps =
-              product?.category?.id === 371 ||
-              selectedOption === 371 ||
+              isActivateAppsCategoryId(product?.category?.id) ||
+              isActivateAppsCategoryId(selectedOption) ||
               /activar\s*apps?/i.test(product?.name ?? "");
             const activationDetail = isActivarApps
               ? String(

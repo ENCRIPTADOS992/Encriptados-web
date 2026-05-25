@@ -1,8 +1,9 @@
 import type { BlogPost, WordPressBlogItem } from "./types";
 import fs from "fs";
 import path from "path";
+import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
 
-const WP_BASE = process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
+const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
 type MarkdownSeoMeta = {

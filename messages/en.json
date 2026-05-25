@@ -827,7 +827,9 @@
         "sim": "SIMs",
         "app": "Applications",
         "mobile": "Systems",
-        "routers": "Routers"
+        "routers": "Routers",
+        "activateApps": "Activate Apps",
+        "recharges": "Recharges"
       },
       "software": "Provider",
       "providerTitle": "Provider",

@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter, usePathname } from "next/navigation";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 console.log("[ProductCarousel] 📦 Módulo cargado");
 
@@ -65,8 +66,8 @@ const ProductCarousel = () => {
   const pathname = usePathname();
   
   // Obtener productos de Apps (categoría 38) y Sistemas (categoría 35)
-  const { data: appsProducts } = useGetProducts(38, "all");
-  const { data: systemsProducts } = useGetProducts(35, "all");
+  const { data: appsProducts } = useGetProducts(PRODUCT_CATEGORY_IDS.APPS, "all");
+  const { data: systemsProducts } = useGetProducts(PRODUCT_CATEGORY_IDS.SOFTWARE, "all");
 
   // Combinar productos de ambas categorías y eliminar duplicados
   const apiProducts = useMemo(() => {

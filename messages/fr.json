@@ -858,7 +858,9 @@
         "sim": "SIM",
         "app": "Applications",
         "mobile": "Systèmes",
-        "routers": "Routeurs"
+        "routers": "Routeurs",
+        "activateApps": "Activer Apps",
+        "recharges": "Recharges"
       },
       "software": "Fournisseur",
       "providerTitle": "Fournisseur",

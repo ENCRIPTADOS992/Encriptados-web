@@ -24,6 +24,7 @@ import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
 import { buildDataPlans } from "./sims/utils/buildDataPlans";
 import { resolveVariantPrice, isProductOnSale } from "./sims/utils/resolveVariantPrice";
 import { CODE_BY_COUNTRY_LABEL } from "@/shared/constants/countries";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params } = useModalPayment();
@@ -78,13 +79,13 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
       // If Global, simple.
       if (isGlobal) {
-        return getAllProducts(40, "es", { simRegion: "global", simCountry: null });
+        return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", { simRegion: "global", simCountry: null });
       }
 
       // If Broad Region (Length > 2) OR "EU" -> Send as simRegion
       if (regionCode.length > 2 || regionCode === "EU") {
         console.log("🌍 [ModalSIM] Fetching by Region (Broad):", regionCode);
-        return getAllProducts(40, "es", { simRegion: regionCode, simCountry: null });
+        return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", { simRegion: regionCode, simCountry: null });
       }
 
       // If Specific Country (Length 2) -> Send as simCountry
@@ -92,7 +93,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       const countryParam = regionCode || initialRegion;
       console.log("🏳️ [ModalSIM] Fetching by Country:", countryParam);
 
-      return getAllProducts(40, "es", {
+      return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", {
         simRegion: null,
         simCountry: countryParam
       });

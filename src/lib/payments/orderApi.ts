@@ -1,6 +1,7 @@
 // src/payments/orderApi.ts
-const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-const API_BASE_URL = `${WP_API}/encriptados/v1`;
+import { WP_V1_BASE } from "@/shared/constants/backend";
+
+const API_BASE_URL = WP_V1_BASE;
 
 export type OrderType = "roaming" | "userid";
 
@@ -202,7 +203,7 @@ export async function fetchPublicStatus(orderId: number): Promise<{
   status: "pending" | "paid" | "fulfilled" | "pending_admin" | "cancelled";
   provider: string;
 }> {
-  const r = await fetch(`${WP_API}/encriptados/v1/orders/${orderId}/public-status`);
+  const r = await fetch(`${API_BASE_URL}/orders/${orderId}/public-status`);
   if (!r.ok) throw new Error(`HTTP ${r.status} consultando estado público`);
   return r.json();
 }

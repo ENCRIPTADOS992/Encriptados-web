@@ -10,6 +10,7 @@ const nextConfig = {
   images: {
     unoptimized: true, // Desactivar optimización de Vercel - las webp ya están optimizadas
     remotePatterns: [
+      { protocol: 'https', hostname: 'admin.encriptados.io' },
       { protocol: 'https', hostname: 'encriptados.io' },
       { protocol: 'https', hostname: 'encriptados.nyc3.cdn.digitaloceanspaces.com' },
       { protocol: 'https', hostname: 'encriptados.es' },

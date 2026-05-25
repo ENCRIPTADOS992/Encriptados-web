@@ -822,7 +822,9 @@
         "sim": "SIMs",
         "app": "Aplicaciones",
         "mobile": "Sistemas",
-        "routers": "Routers"
+        "routers": "Routers",
+        "activateApps": "Activar Apps",
+        "recharges": "Recargas"
       },
       "software": "Proveedor",
       "providerTitle": "Proveedor",

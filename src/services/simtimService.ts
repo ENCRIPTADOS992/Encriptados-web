@@ -1,26 +1,24 @@
 // src/services/simtimService.ts
+import { buildSimtimUrl } from "@/shared/constants/backend";
+
 export type Region = {
   code: string;
   name: string;
   countryCount: number;
   minFrom: null | {
-    amount: number;   
-    currency: string; 
+    amount: number;
+    currency: string;
   };
 };
 
 export type Country = {
   code: string;
   name: string;
-  flag: string; 
+  flag: string;
 };
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SIMTIM_BASEURL ??
-  "https://encriptados.es/wp-json/encriptados/v3/simtim";
-
 async function safeGet<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const res = await fetch(buildSimtimUrl(path), {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -12,6 +12,7 @@ import { createUserIdOrderAndIntent, createOrderAndIntent, createRenewalOrder, f
 import { useFormPolicy } from "./useFormPolicy";
 import JellyLoader from "@/shared/components/JellyLoader";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
+import { isRouterCategoryId } from "@/shared/constants/productCategories";
 
 const TelegramButton = TelegramButtonOriginal as unknown as React.ComponentType<{
   className?: string;
@@ -101,7 +102,8 @@ export default function UnifiedPurchaseForm({
   // Para Silent Phone: usernames
   const [usernames, setUsernames] = React.useState<string[]>([]);
 
-  const isRouterCheckout = categoryId === 36 || purchaseMeta?.selectedOption === 36;
+  const isRouterCheckout =
+    isRouterCategoryId(categoryId) || isRouterCategoryId(purchaseMeta?.selectedOption);
   const [shippingAddress, setShippingAddress] = React.useState("");
   const [shippingFullName, setShippingFullName] = React.useState("");
   const [shippingCountry, setShippingCountry] = React.useState("");

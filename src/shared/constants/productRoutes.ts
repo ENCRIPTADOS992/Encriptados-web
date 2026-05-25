@@ -1,4 +1,5 @@
-// src/shared/constants/productRoutes.ts
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
+
 export type AllowedMode = "new_user" | "roning_code" | "recharge";
 
 export interface ProductRouteItem {
@@ -19,52 +20,46 @@ export interface SimProductRouteItem {
   productId: number;
 }
 
-// Rutas de productos SIM (categoría 40)
 export const SIM_PRODUCT_ROUTES: SimProductRouteItem[] = [
-  { name: "SIM Encriptada", link: "/sim/sim-encriptada", categoryId: 40, productId: 508 },
-  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: 40, productId: 449 },
-  { name: "SIM TIM", link: "/sim/tim-sim", categoryId: 40, productId: 448 },
-  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: 40, productId: 454 },
+  { name: "SIM Encriptada", link: "/sim/sim-encriptada", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 508 },
+  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 449 },
+  { name: "SIM TIM", link: "/sim/tim-sim", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 448 },
+  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 454 },
 ];
 
 export const PRODUCT_ROUTES: ProductRouteItem[] = [
-  // Sistemas (35)
-  { name: "Galaxia MDM Iphone", link: "/apps/galaxia-mdm", categoryId: 35 },
-  { name: "Secure MDM iPhone", link: "/apps/secure-mdm-iphone", categoryId: 35 },
-  { name: "Secure MDM Android", link: "/apps/secure-mdm-android", categoryId: 35 },
-  { name: "Cryptcom", link: "/apps/cryptcom", categoryId: 35 },
-  { name: "Renati", link: "/apps/renati", categoryId: 35 },
-  { name: "ChatMail", link: "/apps/chat-mail", categoryId: 35 },
-  { name: "SecureCrypt", link: "/apps/secureCrypt", categoryId: 35 },
-  { name: "Armadillo", link: "/apps/armadillo-v2", categoryId: 35 },
-  { name: "VaultChat", link: "/apps/vault-chat-v2", categoryId: 35 },
-  { name: "Ultra X", link: "/apps/ultrax", categoryId: 35 },
-  { name: "Intact Phone", link: "/apps/intact-phone", categoryId: 35 },
-  { name: "DEC Secure", link: "/apps/dec-secure", categoryId: 35 },
-  
-  // Aplicaciones (38)
+  { name: "Galaxia MDM Iphone", link: "/apps/galaxia-mdm", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Secure MDM iPhone", link: "/apps/secure-mdm-iphone", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Secure MDM Android", link: "/apps/secure-mdm-android", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Cryptcom", link: "/apps/cryptcom", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Renati", link: "/apps/renati", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "ChatMail", link: "/apps/chat-mail", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "SecureCrypt", link: "/apps/secureCrypt", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Armadillo", link: "/apps/armadillo-v2", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "VaultChat", link: "/apps/vault-chat-v2", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Ultra X", link: "/apps/ultrax", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "Intact Phone", link: "/apps/intact-phone", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+  { name: "DEC Secure", link: "/apps/dec-secure", categoryId: PRODUCT_CATEGORY_IDS.SOFTWARE },
   {
     name: "Silent Phone",
     link: "/apps/silent-circle",
-    categoryId: 38,
+    categoryId: PRODUCT_CATEGORY_IDS.APPS,
     uiPolicy: {
       showTabs: true,
       allowedModes: ["new_user", "roning_code", "recharge"],
     },
   },
-  { name: "Armadillo Chat", link: "/apps/armadillo", categoryId: 38 },
-  { name: "Threema Work", link: "/apps/threema-work", categoryId: 38 },
-  { name: "Threema", link: "/apps/threema", categoryId: 38 },
-  { name: "Nord VPN", link: "/apps/nord-vpn", categoryId: 38 },
-  { name: "VaultChat", link: "/apps/vault-chat", categoryId: 38 },
-  { name: "Salt App", link: "/apps/salt", categoryId: 38 },
-  { name: "VNC Lagoon", link: "/apps/vnc-lagoon", categoryId: 38 },
-  
-  // Activar Apps (371)
+  { name: "Armadillo Chat", link: "/apps/armadillo", categoryId: PRODUCT_CATEGORY_IDS.APPS },
+  { name: "Threema Work", link: "/apps/threema-work", categoryId: PRODUCT_CATEGORY_IDS.APPS },
+  { name: "Threema", link: "/apps/threema", categoryId: PRODUCT_CATEGORY_IDS.APPS },
+  { name: "Nord VPN", link: "/apps/nord-vpn", categoryId: PRODUCT_CATEGORY_IDS.APPS },
+  { name: "VaultChat", link: "/apps/vault-chat", categoryId: PRODUCT_CATEGORY_IDS.APPS },
+  { name: "Salt App", link: "/apps/salt", categoryId: PRODUCT_CATEGORY_IDS.APPS },
+  { name: "VNC Lagoon", link: "/apps/vnc-lagoon", categoryId: PRODUCT_CATEGORY_IDS.APPS },
   {
     name: "Activar Apps",
     link: "/activar-apps",
-    categoryId: 371,
+    categoryId: PRODUCT_CATEGORY_IDS.ACTIVATE_APPS,
     displayNames: ["Activar App"],
   },
 ];

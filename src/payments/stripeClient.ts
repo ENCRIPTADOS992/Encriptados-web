@@ -9,6 +9,7 @@ import type {
   StripeCardExpiryElement,
   StripeCardCvcElement,
 } from "@stripe/stripe-js";
+import { buildWpV1Url } from "@/shared/constants/backend";
 
 let stripePromise: Promise<Stripe | null> | null = null;
 
@@ -142,8 +143,7 @@ export async function confirmCardPayment(
   // (los webhooks reales apuntan a producción, no a localhost)
   if (process.env.NODE_ENV === "development" && paymentIntent.status === "succeeded" && paymentIntent.id) {
     try {
-      const wpApi = process.env.NEXT_PUBLIC_WP_API ?? "";
-      await fetch(`${wpApi}/encriptados/v1/payments/stripe`, {
+      await fetch(buildWpV1Url("/payments/stripe"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ provider_ref: paymentIntent.id, status: "paid" }),

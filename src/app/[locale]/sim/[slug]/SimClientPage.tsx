@@ -35,6 +35,7 @@ import { getProductById, getAllProducts } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import StickyPriceBanner from "@/app/[locale]/apps/component/templateProduct/StickyPriceBanner";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // Configuración y utilidades locales
 import {
@@ -153,7 +154,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           try {
             const simCountryCode = simRegionCode.length <= 2 ? simRegionCode : null;
             const simRegionParam = simRegionCode.length > 2 ? simRegionCode : null;
-            const allProducts = await getAllProducts(40, locale, {
+            const allProducts = await getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, locale, {
               simCountry: simCountryCode,
               simRegion: simRegionParam,
               provider: "tim",
@@ -436,7 +437,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     openModal({
       productid: productId || String(product?.id || config?.productId),
       languageCode: locale,
-      selectedOption: 40,
+      selectedOption: PRODUCT_CATEGORY_IDS.SIMS,
       mode: "sim",
       initialPrice: priceOverride ?? effectivePrice,
       initialGb: gbBadgeLabel,

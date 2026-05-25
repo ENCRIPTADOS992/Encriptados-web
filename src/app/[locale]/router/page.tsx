@@ -23,11 +23,12 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { getProductBannerImages } from "../apps/[slug]/productUtils";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // Configuración del router
 const ROUTER_CONFIG = {
   productId: 59747,
-  categoryId: 36,
+  categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
   heroBanners: {
     desktop: "/images/router/hero-desktop.png",
     tablet: "/images/router/hero-tablet.png",

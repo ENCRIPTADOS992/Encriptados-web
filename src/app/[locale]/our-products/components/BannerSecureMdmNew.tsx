@@ -7,6 +7,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import type { Product } from "@/features/products/types/AllProductsResponse";
 import { getProductLink } from "@/utils/productRouteResolver";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
 
@@ -46,7 +47,7 @@ const BannerSecureMdmNew = () => {
   const router = useRouter();
   const locale = useLocale();
   const { openModal } = useModalPayment();
-  const { data: products } = useGetProducts(35, "all"); // category 35 = Sistemas
+  const { data: products } = useGetProducts(PRODUCT_CATEGORY_IDS.SOFTWARE, "all");
   const t = useTranslations("OurProductsPage.secureMdm");
 
   /* Map ALL systems products (not just Secure MDM) */
@@ -82,7 +83,7 @@ const BannerSecureMdmNew = () => {
     }
 
     const baseName = p.name.split(" - ")[0].trim();
-    const infoLink = getProductLink(baseName, 35);
+    const infoLink = getProductLink(baseName, PRODUCT_CATEGORY_IDS.SOFTWARE);
     const isHiddenWebCard =
       displayPrice === 0 ||
       isFreeTrialLabel(p.name) ||

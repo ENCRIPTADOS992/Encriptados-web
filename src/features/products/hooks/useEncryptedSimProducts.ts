@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../services";
 import { Product } from "../types/AllProductsResponse";
 import { useLocale } from "next-intl";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // IDs de productos específicos para la página de SIM Encriptada
 const ENCRYPTED_SIM_PRODUCT_IDS = {
@@ -55,7 +56,7 @@ export const useEncryptedSimProducts = () => {
       console.log("🔐 [useEncryptedSimProducts] Fetching encrypted SIM products...");
 
       // Obtener todos los productos de la categoría 40 (SIMs)
-      const products = await getAllProducts(40, locale);
+      const products = await getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, locale);
 
       console.log("🔐 [useEncryptedSimProducts] Products received:", products.length);
 

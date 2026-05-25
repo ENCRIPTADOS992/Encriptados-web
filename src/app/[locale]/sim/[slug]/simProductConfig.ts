@@ -1,3 +1,5 @@
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
+
 /**
  * Configuración estática de productos SIM y TIM-SIM
  * 
@@ -68,7 +70,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   "sim-encriptada": {
     slug: "sim-encriptada",
     productId: 508,
-    categoryId: 40,
+    categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "sim",
     heroBanners: {
       desktop: "/images/encrypted-sim/men-cel.webp",
@@ -92,7 +94,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   "esim-encriptada": {
     slug: "esim-encriptada",
     productId: 449,
-    categoryId: 40,
+    categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "esim",
     heroBanners: {
       desktop: "/images/encrypted-sim/men-cel.webp",
@@ -120,7 +122,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   "tim-sim": {
     slug: "tim-sim",
     productId: 448,
-    categoryId: 40,
+    categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "tim-sim",
     heroBanners: {
       desktop: "/images/bne-sim/anonymous-desktop.webp",
@@ -144,7 +146,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   "esim-tim": {
     slug: "esim-tim",
     productId: 454,
-    categoryId: 40,
+    categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "esim-tim",
     heroBanners: {
       desktop: "/images/bne-sim/anonymous-desktop.webp",

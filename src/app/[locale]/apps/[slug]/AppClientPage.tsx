@@ -25,6 +25,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById, getProductBySlug } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { useProductDetail } from "@/features/products/queries/useProductDetail";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // Configuración y utilidades locales
 import { getProductConfig } from "./productConfig";
@@ -210,7 +211,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       openModal({
         productid: String(product?.id || config?.productId),
         languageCode: locale,
-        selectedOption: Number(searchParamCategoryId) || product?.category?.id || config?.categoryId || 38,
+        selectedOption:
+          Number(searchParamCategoryId) ||
+          product?.category?.id ||
+          config?.categoryId ||
+          PRODUCT_CATEGORY_IDS.APPS,
         initialPrice: numericPrice,
         iconUrl: config?.iconUrl,
         variantId: planToUse?.variantId,
@@ -230,7 +235,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       openModal({
         productid: String(product?.id || config?.productId),
         languageCode: locale,
-        selectedOption: Number(searchParamCategoryId) || product?.category?.id || config?.categoryId || 38,
+        selectedOption:
+          Number(searchParamCategoryId) ||
+          product?.category?.id ||
+          config?.categoryId ||
+          PRODUCT_CATEGORY_IDS.APPS,
         initialPrice: numericPrice,
         iconUrl: config?.iconUrl,
         variantId: selectedPlan?.variantId,
@@ -252,7 +261,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     openModal({
       productid: String(product?.id || config?.productId),
       languageCode: locale,
-      selectedOption: product?.category?.id || config?.categoryId || 38,
+      selectedOption:
+        product?.category?.id || config?.categoryId || PRODUCT_CATEGORY_IDS.APPS,
       initialPrice: numericPrice,
       iconUrl: config?.iconUrl,
       variantId: selectedPlan?.variantId,
@@ -269,7 +279,12 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   };
 
   const handleMoreInfo = (slug: string) => router.push(buildSimUrl(slug));
-  const handleSimBuy = (productId: string) => openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
+  const handleSimBuy = (productId: string) =>
+    openModal({
+      productid: productId,
+      languageCode: locale,
+      selectedOption: PRODUCT_CATEGORY_IDS.SIMS,
+    });
   const handleFeaturedSimInfo = (path: string) => router.push(`/${locale}${path}`);
 
   const productInfo = useMemo(() =>

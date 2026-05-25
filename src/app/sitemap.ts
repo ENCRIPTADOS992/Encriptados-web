@@ -6,9 +6,10 @@ import { SEO_LOCALES } from "@/shared/seo/constants";
 import { getStaticPageSitemapPaths } from "@/shared/seo/staticPages";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
+import { WP_BLOG_API_BASE, WP_API_BASE } from "@/shared/constants/backend";
 
-const WP_BASE = process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
-const STORE_API_BASE = process.env.NEXT_PUBLIC_WP_API;
+const WP_BASE = WP_BLOG_API_BASE;
+const STORE_API_BASE = WP_API_BASE;
 const PUBLIC_PRODUCT_CATEGORY_IDS = [35, 36, 38, 40, 371] as const;
 
 export const revalidate = 3600;

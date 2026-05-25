@@ -1,4 +1,6 @@
 // src/features/products/payments/tottoliCheckout.ts
+import { buildWpV1Url } from "@/shared/constants/backend";
+
 export type TottoliProductType = "esim" | "data" | "minutes" | "sim_physical";
 export type TottoliMethod = "card" | "cryptomus";
 
@@ -30,15 +32,12 @@ export interface TottoliOkResponse {
   client_secret?: string;
   payment_url?: string | null;
 }
-
-
-
 export async function tottoliCheckout(
   payload: TottoliCheckoutPayload
 ): Promise<TottoliOkResponse> {
   console.log("➡️ [tottoliCheckout] payload enviado:", payload);
 
-  const url = "https://encriptados.es/wp-json/encriptados/v1/tottoli/checkout";
+  const url = buildWpV1Url("/tottoli/checkout");
   const doPost = async (body: any) =>
     fetch(url, {
       method: "POST",

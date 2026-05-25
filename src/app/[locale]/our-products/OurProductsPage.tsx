@@ -21,6 +21,7 @@ import SecureCommunicationBanner from "./components/SecureCommunicationBanner";
 import BannerSmsActivation from "./components/BannerSmsActivation";
 import ActivarAppsBanner from "./components/ActivarAppsBanner";
 import SectionWrapper from "@/shared/components/SectionWrapper";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 const OurProductsPage = () => {
   const { openModal } = useModalPayment();
@@ -34,7 +35,7 @@ const OurProductsPage = () => {
   // Si el provider es "activarapps", usar categoría 371
   let selectedOption = parseInt(filters.selectedOption, 10);
   if (filters.provider === "activarapps") {
-    selectedOption = 371;
+    selectedOption = PRODUCT_CATEGORY_IDS.ACTIVATE_APPS;
   }
   
   const { data: products, isFetching, isError } = useGetProducts(

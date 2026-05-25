@@ -14,6 +14,14 @@ import { Product } from "@/features/products/types/AllProductsResponse";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isActivateAppsCategoryId,
+  isAppCategoryId,
+  isLicenseCategoryId,
+  isSimCategoryId,
+  isSoftwareCategoryId,
+} from "@/shared/constants/productCategories";
 
 interface ListOfProductsProps {
   filters: ProductFilters;
@@ -90,8 +98,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const t = useTranslations('BneSimPage.simSelection');
   // Si el provider es "activarapps", consultar la categoría 371 directamente
   const selectedOption = filters.provider === "activarapps"
-    ? 371
+    ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS
     : parseInt(filters.selectedOption, 10);
+  const isSelectedSimCategory = isSimCategoryId(selectedOption);
+  const isSelectedSoftwareCategory = isSoftwareCategoryId(selectedOption);
+  const isSelectedAppCategory = isAppCategoryId(selectedOption);
+  const isSelectedActivateAppsCategory = isActivateAppsCategoryId(selectedOption);
+  const isSelectedLicenseCategory = isLicenseCategoryId(selectedOption);
   const { data, isFetching, isError } = useGetProducts(
     selectedOption,
     filters.provider,
@@ -156,7 +169,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   let filteredProducts: Product[] = uniqueProducts;
 
   // Filtro por provider (solo categoría 40 — para 371 la API ya filtra por categoría)
-  if (filters.provider && filters.provider !== "all" && selectedOption === 40) {
+  if (filters.provider && filters.provider !== "all" && isSelectedSimCategory) {
     const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
 
@@ -354,7 +367,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   }
 
   if (
-    (selectedOption === 38 || selectedOption === 35) &&
+    (isSelectedAppCategory || isSelectedSoftwareCategory) &&
     filters.os &&
     filters.os !== "all"
   ) {
@@ -375,7 +388,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   // Filtro por licencia
   if (
-    (selectedOption === 38 || selectedOption === 35) &&
+    (isSelectedAppCategory || isSelectedSoftwareCategory) &&
     filters.license &&
     filters.license !== "all"
   ) {
@@ -492,7 +505,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
-  if (selectedOption === 35) {
+  if (isSelectedSoftwareCategory) {
     const normKey = (s: string) =>
       (s ?? "")
         .toLowerCase()
@@ -533,7 +546,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     });
   }
 
-  if (selectedOption === 38) {
+  if (isSelectedAppCategory) {
     const normKey = (s: string) =>
       (s ?? "")
         .toLowerCase()
@@ -664,7 +677,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
 
   // ========== EXPANSIÓN DE VARIANTES SIM ENCRIPTADAS (categoría 40, NO TIM) ==========
   // Para productos SIM Encriptadas con variantes (minutos, datos, etc.), crear una tarjeta por cada variante
-  if (selectedOption === 40 && filters.provider !== "tim") {
+  if (isSelectedSimCategory && filters.provider !== "tim") {
     console.log("🔄 [Expansión SIM Encriptadas] Iniciando expansión de variantes", {
       categoría: selectedOption,
       provider: filters.provider,
@@ -732,7 +745,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   // ========== EXPANSIÓN DE VARIANTES DE LICENCIA (Apps, Sistemas, Router) ==========
   // Para productos con variantes de licencia (3 meses, 6 meses, etc.), crear una tarjeta por cada variante
   // SOLO si hay más de una variante con licensetime diferente
-  if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) {
+  if (isSelectedLicenseCategory) {
     console.log("🔄 [Expansión Licencias] Iniciando expansión de variantes de licencia", {
       categoría: selectedOption,
       productosAntes: productsToRender.length
@@ -920,7 +933,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
       <div className="w-full">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:landscape:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-3 w-full max-w-7xl mx-auto">
           {productsToRender.map((product, index) => {
-            const isCategory40 = selectedOption === 40;
+            const isCategory40 = isSelectedSimCategory;
             const providerLower = (product.provider ?? "").toLowerCase();
             // Soportar tanto "Sim TIM" como "tim" del backend
             const isTimProvider = providerLower === "tim" || providerLower.includes("tim");
@@ -1039,12 +1052,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             let variantId: number | undefined = isTim ? variant?.id : undefined;
 
             // Si es producto expandido por licencia (Apps, Sistemas, Router, Activar Apps), usar su _selectedVariant
-            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) && product._selectedVariant) {
+            if (isSelectedLicenseCategory && product._selectedVariant) {
               variantId = (product._selectedVariant as any).id;
             }
 
             // Si es producto SIM Encriptadas expandido, usar su _selectedVariant
-            if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
+            if (isSelectedSimCategory && !isTimProvider && product._selectedVariant) {
               variantId = (product._selectedVariant as any).id;
             }
 
@@ -1081,7 +1094,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             }
 
             // Para productos de Apps/Sistemas/Router/Activar Apps expandidos, usar el precio de la variante de licencia
-            if ((selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) && product._selectedVariant) {
+            if (isSelectedLicenseCategory && product._selectedVariant) {
               const variantPrice = (product._selectedVariant as any).price;
               if (variantPrice) {
                 priceToShow = Number(variantPrice);
@@ -1089,7 +1102,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             }
 
             // Para productos SIM Encriptadas expandidos, usar el precio de la variante
-            if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
+            if (isSelectedSimCategory && !isTimProvider && product._selectedVariant) {
               const variantPrice = (product._selectedVariant as any).price ?? (product._selectedVariant as any).cost;
               if (variantPrice) {
                 priceToShow = Number(variantPrice);
@@ -1142,7 +1155,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
             let badges: TimBadges | undefined;
             if (showTimBadges) {
               badges = buildTimBadges(product);
-            } else if (selectedOption === 40 && !isTimProvider && product._selectedVariant) {
+            } else if (isSelectedSimCategory && !isTimProvider && product._selectedVariant) {
               // SIM Encriptadas expandidas: usar el tag de la variante
               const selectedVar = product._selectedVariant as any;
 
@@ -1212,12 +1225,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
               if (minutesTag) {
                 badges = { tag: minutesTag };
               }
-            } else if (selectedOption === 35 || selectedOption === 36 || selectedOption === 38 || selectedOption === 371) {
+            } else if (isSelectedLicenseCategory) {
               // Para Apps, Sistemas, Router y Activar Apps: mostrar licencia en meses
               // Si el producto fue expandido, usar la variante seleccionada
               const getLicenseTag = (): string | undefined => {
                 // Cat 371 (Activar Apps): no usa licensetime — usar atributo de variante WooCommerce
-                if (selectedOption === 371) {
+                if (isSelectedActivateAppsCategory) {
                   if (product._selectedVariant) {
                     const vid = (product._selectedVariant as any)?.id;
                     const fullVariant = ((product as any).variants ?? []).find((v: any) => v.id === vid);
@@ -1311,7 +1324,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 typeProduct={product.type_product}
                 planDataAmount={effectivePlanDataAmount}
                 variantId={variantId}
-                variants={selectedOption === 40 ? (product.variants ?? []) : undefined}
+                variants={isSelectedSimCategory ? (product.variants ?? []) : undefined}
                 onSale={currentIsOnSale}
                 regularPrice={regularPrice}
                 iconUrl={product.iconUrl}

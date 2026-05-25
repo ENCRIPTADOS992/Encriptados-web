@@ -16,6 +16,10 @@ import {
   getModalPanelClassName,
   getModalContentClassName,
 } from "./modalLayout";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isSimCategoryId,
+} from "@/shared/constants/productCategories";
 
 export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
@@ -92,7 +96,9 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
 
     const providerCandidate = provP || qpProvider;
     const isSimCategoryParams =
-      catIdP === "40" || catNameP.includes("sim") || qpSelectedOption === "40";
+      isSimCategoryId(catIdP) ||
+      catNameP.includes("sim") ||
+      isSimCategoryId(qpSelectedOption);
 
     const provProd = norm(
       (product as any)?.provider || (product as any)?.brand
@@ -175,7 +181,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       openModal({
         productid: productIdFromUrl || "59747",
         languageCode: locale,
-        selectedOption: 36,
+        selectedOption: PRODUCT_CATEGORY_IDS.ROUTERS,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
         variantId: variantIdFromUrl,
       });
@@ -191,7 +197,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       openModal({
         productid: productIdFromUrl,
         languageCode: locale,
-        selectedOption: 40,
+        selectedOption: PRODUCT_CATEGORY_IDS.SIMS,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
         variantId: variantIdFromUrl,
         mode: "sim",

@@ -7,6 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { getProductLink, getSimProductUrl, isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
+import { buildWpV3Url } from "@/shared/constants/backend";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isRouterCategoryId,
+  isSimCategoryId,
+} from "@/shared/constants/productCategories";
 
 interface Product {
   id: number;
@@ -23,15 +29,16 @@ interface ProductSearchProps {
   placeholder?: string;
 }
 
-// Función para obtener productos de una categoría
 const fetchProductsByCategory = async (
   categoryId: number,
   lang: string
 ): Promise<Product[]> => {
   try {
-    const wpApi = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
     const response = await fetch(
-      `${wpApi}/encriptados/v3/store/products?category_id=${categoryId}&lang=${lang}`
+      buildWpV3Url("/store/products", {
+        category_id: categoryId,
+        lang,
+      })
     );
     if (!response.ok) return [];
     const data = await response.json();
@@ -41,7 +48,6 @@ const fetchProductsByCategory = async (
   }
 };
 
-// Normalizar texto para búsqueda
 const normalizeText = (text: string) => {
   return text
     .toLowerCase()
@@ -49,7 +55,6 @@ const normalizeText = (text: string) => {
     .replace(/[\u0300-\u036f]/g, "");
 };
 
-// Obtener ruta correcta del producto usando productRouteResolver
 const getProductRoute = (product: Product): string => {
   const categoryId = product.category.id;
 
@@ -57,17 +62,14 @@ const getProductRoute = (product: Product): string => {
     return "/activar-apps";
   }
 
-  // SIMs (categoría 40) - Usar derivación desde provider y type_product
-  if (categoryId === 40) {
+  if (isSimCategoryId(categoryId)) {
     return getSimProductUrl(product.provider, product.type_product);
   }
 
-  // Router (categoría 36) - Siempre es /router
-  if (categoryId === 36) {
+  if (isRouterCategoryId(categoryId)) {
     return "/router";
   }
 
-  // Apps (38) y Sistemas (35) - Usar getProductLink
   const link = getProductLink(
     product.name,
     categoryId,
@@ -76,12 +78,10 @@ const getProductRoute = (product: Product): string => {
     product.type_product
   );
 
-  // Si getProductLink retorna una URL válida, usarla
   if (link) {
     return link;
   }
 
-  // Fallback: construir URL desde slug del producto o nombre
   const slug = product.slug || product.name
     .toLowerCase()
     .replace(/\s+/g, "-")
@@ -101,32 +101,30 @@ export default function ProductSearch({
   const router = useRouter();
   const locale = useLocale();
 
-  // Fetch productos de todas las categorías
   const { data: appsProducts = [] } = useQuery({
-    queryKey: ["search-products", 38, locale],
-    queryFn: () => fetchProductsByCategory(38, locale),
-    staleTime: 5 * 60 * 1000, // 5 minutos
+    queryKey: ["search-products", PRODUCT_CATEGORY_IDS.APPS, locale],
+    queryFn: () => fetchProductsByCategory(PRODUCT_CATEGORY_IDS.APPS, locale),
+    staleTime: 5 * 60 * 1000,
   });
 
   const { data: systemsProducts = [] } = useQuery({
-    queryKey: ["search-products", 35, locale],
-    queryFn: () => fetchProductsByCategory(35, locale),
+    queryKey: ["search-products", PRODUCT_CATEGORY_IDS.SOFTWARE, locale],
+    queryFn: () => fetchProductsByCategory(PRODUCT_CATEGORY_IDS.SOFTWARE, locale),
     staleTime: 5 * 60 * 1000,
   });
 
   const { data: routerProducts = [] } = useQuery({
-    queryKey: ["search-products", 36, locale],
-    queryFn: () => fetchProductsByCategory(36, locale),
+    queryKey: ["search-products", PRODUCT_CATEGORY_IDS.ROUTERS, locale],
+    queryFn: () => fetchProductsByCategory(PRODUCT_CATEGORY_IDS.ROUTERS, locale),
     staleTime: 5 * 60 * 1000,
   });
 
   const { data: simProducts = [] } = useQuery({
-    queryKey: ["search-products", 40, locale],
-    queryFn: () => fetchProductsByCategory(40, locale),
+    queryKey: ["search-products", PRODUCT_CATEGORY_IDS.SIMS, locale],
+    queryFn: () => fetchProductsByCategory(PRODUCT_CATEGORY_IDS.SIMS, locale),
     staleTime: 5 * 60 * 1000,
   });
 
-  // Combinar todos los productos y eliminar duplicados
   const allProducts = useMemo(() => {
     const combined = [
       ...appsProducts,
@@ -143,16 +141,14 @@ export default function ProductSearch({
     return Array.from(uniqueMap.values());
   }, [appsProducts, systemsProducts, routerProducts, simProducts]);
 
-  // Filtrar productos basado en la búsqueda
   const filteredProducts = useMemo(() => {
     if (!query.trim()) return [];
     const normalizedQuery = normalizeText(query);
     return allProducts
       .filter((product) => normalizeText(product.name).includes(normalizedQuery))
-      .slice(0, 8); // Máximo 8 resultados
+      .slice(0, 8);
   }, [query, allProducts]);
 
-  // Cerrar al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -166,7 +162,6 @@ export default function ProductSearch({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Manejar navegación con teclado
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!isOpen || filteredProducts.length === 0) return;
 
