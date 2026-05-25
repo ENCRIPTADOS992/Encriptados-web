@@ -1315,6 +1315,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
                 onSale={currentIsOnSale}
                 regularPrice={regularPrice}
                 iconUrl={product.iconUrl}
+                purchaseType={product.purchase_type}
+                telegramLink={product.telegram_link}
               />
             );
           })}
