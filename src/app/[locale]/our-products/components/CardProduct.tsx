@@ -128,7 +128,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       flagUrl: badges?.country?.flagUrl,
       iconUrl: iconUrl,
       initialActivationDetail: isActivarApps ? badges?.tag : undefined,
-      mode: modalSelectedOption === 40 ? "sim" : undefined,
+      mode: (modalSelectedOption === 40 || modalSelectedOption === 451) ? "sim" : undefined,
     });
   };
 
@@ -292,8 +292,8 @@ const CardProduct: React.FC<CardSimProps> = ({
                 shadow-md
                 whitespace-nowrap
                 ${
-                // SIM y SIM TIM (categoría 40) usan azul, Apps/Sistemas/Router usan gris
-                filters.selectedOption === "40"
+                // SIM y SIM TIM (categoría 40/451) usan azul, Apps/Sistemas/Router usan gris
+                filters.selectedOption === "40" || filters.selectedOption === "451"
                   ? "bg-[#1CB9EC] text-[#010101]"
                   : "bg-[#DEDEDE] text-[#010101]"
                 }
