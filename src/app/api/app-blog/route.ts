@@ -125,10 +125,25 @@ function toAbsoluteUrl(value: string | undefined, origin: string): string {
 function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBlogItem {
   const path = item.legacyPath ?? `/${locale}/blog/${item.slug}`;
 
+  const isWp = item.source === "wordpress";
+  const resolveImage = (img: string | undefined) => {
+    if (!img) return "";
+    const trimmed = img.trim();
+    if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+      return trimmed;
+    }
+    if (isWp) {
+      const wpDomain = "https://admin.encriptados.io";
+      return `${wpDomain}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+    }
+    // For local Markdown posts, keep it relative to the current host
+    return trimmed;
+  };
+
   return {
     ...item,
-    image: toWpAbsoluteUrl(item.image),
-    imageFull: toWpAbsoluteUrl(item.imageFull ?? item.image),
+    image: resolveImage(item.image),
+    imageFull: resolveImage(item.imageFull ?? item.image),
     path,
     url: toAbsoluteUrl(path, origin),
   };
