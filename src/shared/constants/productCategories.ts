@@ -7,6 +7,20 @@ export const PRODUCT_CATEGORY_IDS = {
   RECHARGES: 464,
 } as const;
 
+const PRODUCT_CATEGORY_API_PARAM_BY_ID: Record<number, string> = {
+  35: "software",
+  36: "routers",
+  38: "apps",
+  40: "sims",
+  371: "activar-apps",
+  [PRODUCT_CATEGORY_IDS.SOFTWARE]: "software",
+  [PRODUCT_CATEGORY_IDS.APPS]: "apps",
+  [PRODUCT_CATEGORY_IDS.ROUTERS]: "routers",
+  [PRODUCT_CATEGORY_IDS.SIMS]: "sims",
+  [PRODUCT_CATEGORY_IDS.ACTIVATE_APPS]: "activar-apps",
+  [PRODUCT_CATEGORY_IDS.RECHARGES]: "recargas",
+};
+
 export const PRODUCT_LIST_CATEGORY_IDS = [
   PRODUCT_CATEGORY_IDS.SOFTWARE,
   PRODUCT_CATEGORY_IDS.APPS,
@@ -35,3 +49,22 @@ export const isLicenseCategoryId = (categoryId?: number | string | null) =>
   isAppCategoryId(categoryId) ||
   isRouterCategoryId(categoryId) ||
   isActivateAppsCategoryId(categoryId);
+
+export const getProductCategoryApiParam = (
+  categoryId?: number | string | null
+): string | undefined => {
+  if (categoryId === null || categoryId === undefined || categoryId === "") {
+    return undefined;
+  }
+
+  if (typeof categoryId === "string") {
+    const trimmed = categoryId.trim();
+    if (!trimmed) return undefined;
+    if (!/^\d+$/.test(trimmed)) return trimmed;
+  }
+
+  const numericId = Number(categoryId);
+  if (Number.isNaN(numericId)) return undefined;
+
+  return PRODUCT_CATEGORY_API_PARAM_BY_ID[numericId] ?? String(numericId);
+};

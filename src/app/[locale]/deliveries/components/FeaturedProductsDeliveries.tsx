@@ -46,7 +46,7 @@ const baseProducts = [
     id: 6,
     name: "SecureCrypt",
     image: "/images/deliveries/securecrypt.webp",
-    href: "/apps/secureCrypt",
+    href: "/apps/securecrypt",
   },
   {
     id: 7,

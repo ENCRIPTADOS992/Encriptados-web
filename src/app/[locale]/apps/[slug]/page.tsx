@@ -2,7 +2,7 @@ import { getProductConfig } from "./productConfig";
 import ProductPageContent from "./AppClientPage";
 import { getTranslations } from "next-intl/server";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
-import { getProductById } from "@/features/products/services";
+import { getResolvedAppProduct } from "./productData";
 
 
 interface PageProps {
@@ -18,10 +18,8 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   const sp = searchParams ? await searchParams : {};
   const t = await getTranslations({ locale, namespace: "appsShared.productTemplate" });
   const config = getProductConfig(slug);
-  const productId = firstParam(sp.productId) || (config?.productId ? String(config.productId) : undefined);
-  const product = productId
-    ? await getProductById(productId, locale).catch(() => null)
-    : null;
+  const explicitProductId = config?.productId ? undefined : firstParam(sp.productId);
+  const product = await getResolvedAppProduct(slug, locale, explicitProductId).catch(() => null);
 
   // Fallback for metadata if config doesn't exist
   const titleBase = slug
@@ -50,8 +48,7 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug, locale } = await params;
-  // We don't check for config existence here anymore to allow dynamic products
-  // via API even if they are not in productConfig.ts
+  const initialProduct = await getResolvedAppProduct(slug, locale).catch(() => null);
 
-  return <ProductPageContent slug={slug} locale={locale} initialProduct={null} />;
+  return <ProductPageContent slug={slug} locale={locale} initialProduct={initialProduct} />;
 }

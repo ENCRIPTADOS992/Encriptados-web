@@ -27,7 +27,7 @@ import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // Configuración del router
 const ROUTER_CONFIG = {
-  productId: 59747,
+  productId: 60975,
   categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
   heroBanners: {
     desktop: "/images/router/hero-desktop.png",

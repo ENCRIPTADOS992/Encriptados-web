@@ -50,19 +50,19 @@ const RouterPage = () => {
   const { isVisible } = usePriceVisibility(priceBlockRef);
 
   const productInfo = {
-    title: "Silent Phone",
+    title: "Router Camaleón",
     price: "99$ USD",
     subtitle: t("privacySubtitle"),
-    iconUrl: "/images/apps/silent-circle/logo.png",
+    iconUrl: "/images/router/logo.png",
     ctaLabel: t("buy"),
     categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
-    productId: 142,
+    productId: 60975,
     onBuy: () => {
       openModal({
-        productid: "142",
+        productid: "60975",
         languageCode: "es",
         selectedOption: PRODUCT_CATEGORY_IDS.ROUTERS,
-        iconUrl: "/images/apps/silent-circle/logo.png",
+        iconUrl: "/images/router/logo.png",
       });
     },
     onChat: () => {

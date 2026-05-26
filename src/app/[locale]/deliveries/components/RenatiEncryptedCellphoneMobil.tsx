@@ -3,9 +3,10 @@
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { buildWpV3Url } from "@/shared/constants/backend";
+import { getProductCategoryApiParam } from "@/shared/constants/productCategories";
 
 const RENATI_PRICE_URL = buildWpV3Url("/store/products", {
-  category_id: 35,
+  category_id: getProductCategoryApiParam(35),
   lang: "es",
   sim_region: "global",
 });

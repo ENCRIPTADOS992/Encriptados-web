@@ -53,7 +53,7 @@ const products = [
     price: "$449 USD",
     discount: "Ahorra hasta 150 USD",
     image: "/images/deliveries/securecrypt.webp",
-    href: "/apps/secureCrypt",
+    href: "/apps/securecrypt",
   },
   {
     id: 7,

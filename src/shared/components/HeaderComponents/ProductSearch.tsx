@@ -9,6 +9,7 @@ import Image from "next/image";
 import { getProductLink, getSimProductUrl, isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
 import { buildWpV3Url } from "@/shared/constants/backend";
 import {
+  getProductCategoryApiParam,
   PRODUCT_CATEGORY_IDS,
   isRouterCategoryId,
   isSimCategoryId,
@@ -34,9 +35,10 @@ const fetchProductsByCategory = async (
   lang: string
 ): Promise<Product[]> => {
   try {
+    const categoryParam = getProductCategoryApiParam(categoryId);
     const response = await fetch(
       buildWpV3Url("/store/products", {
-        category_id: categoryId,
+        category_id: categoryParam,
         lang,
       })
     );

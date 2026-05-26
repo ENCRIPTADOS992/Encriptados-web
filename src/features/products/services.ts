@@ -4,20 +4,35 @@ import { generateSlug } from "@/shared/utils/slugUtils";
 import { WP_API_BASE } from "@/shared/constants/backend";
 import {
   PRODUCT_CATEGORY_IDS,
+  getProductCategoryApiParam,
   isActivateAppsCategoryId,
   isSimCategoryId,
 } from "@/shared/constants/productCategories";
 
 const api = axios.create({
   baseURL: WP_API_BASE,
-  timeout: 8000,
+  timeout: 12000,
 });
 
 type GetAllProductsOptions = {
   simCountry?: string | null;
   simRegion?: string | null;
   provider?: string | null;
+  silent?: boolean;
+  timeoutMs?: number;
 };
+
+type ResolvePublicProductOptions = {
+  preferredProductId?: string | number | null;
+  slugs: Array<string | undefined | null>;
+  lang?: string;
+  categoryId?: number | null;
+};
+
+function shouldLogProductServiceError(error: unknown): boolean {
+  if (!axios.isAxiosError(error)) return true;
+  return error.response?.status !== 404;
+}
 
 export const getAllProducts = async (
   categoryId: number,
@@ -25,23 +40,25 @@ export const getAllProducts = async (
   options?: GetAllProductsOptions
 ): Promise<Allproducts> => {
   try {
+    const categoryParam = getProductCategoryApiParam(categoryId);
+    const { timeoutMs, ...queryOptions } = options ?? {};
     const params: Record<string, string | number> = {
-      category_id: categoryId,
+      category_id: categoryParam ?? categoryId,
       lang,
     };
 
-    if (options?.simCountry && isSimCategoryId(categoryId)) {
-      params.sim_country = options.simCountry;
+    if (queryOptions.simCountry && isSimCategoryId(categoryId)) {
+      params.sim_country = queryOptions.simCountry;
     }
-    if (options?.simRegion && isSimCategoryId(categoryId)) {
-      params.sim_region = options.simRegion;
+    if (queryOptions.simRegion && isSimCategoryId(categoryId)) {
+      params.sim_region = queryOptions.simRegion;
     }
     if (
-      options?.provider &&
-      options.provider !== "all" &&
+      queryOptions.provider &&
+      queryOptions.provider !== "all" &&
       (isSimCategoryId(categoryId) || isActivateAppsCategoryId(categoryId))
     ) {
-      params.provider = options.provider;
+      params.provider = queryOptions.provider;
     }
 
     console.log("➡️ [getAllProducts] Requesting:", {
@@ -55,6 +72,7 @@ export const getAllProducts = async (
       products: Record<string, Product>;
     }>("/encriptados/v3/store/products", {
       params,
+      timeout: timeoutMs,
     });
 
     const rawProducts = response.data.products;
@@ -79,7 +97,9 @@ export const getAllProducts = async (
 
     return products;
   } catch (error) {
-    console.error("Error en getAllProducts:", error);
+    if (!options?.silent && shouldLogProductServiceError(error)) {
+      console.error("Error en getAllProducts:", error);
+    }
     throw error;
   }
 };
@@ -91,26 +111,95 @@ export const getProductById = async (
     simRegion?: string | null;
     simCountry?: string | null;
     provider?: string | null;
+    silent?: boolean;
+    timeoutMs?: number;
   }
 ): Promise<ProductById> => {
   try {
+    const { timeoutMs, ...queryOptions } = options ?? {};
     const params: Record<string, string | number> = { lang };
 
-    if (options?.simRegion) params.sim_region = options.simRegion;
-    if (options?.simCountry) params.sim_country = options.simCountry;
-    if (options?.provider) params.provider = options.provider;
+    if (queryOptions.simRegion) params.sim_region = queryOptions.simRegion;
+    if (queryOptions.simCountry) params.sim_country = queryOptions.simCountry;
+    if (queryOptions.provider) params.provider = queryOptions.provider;
 
     const response = await api.get<ProductById>(
       `/encriptados/v3/store/product/${encodeURIComponent(productId)}`,
       {
         params,
+        timeout: timeoutMs,
       }
     );
     return response.data;
   } catch (error) {
-    console.error("Error en getProductById:", error);
+    if (!options?.silent && shouldLogProductServiceError(error)) {
+      console.error("Error en getProductById:", error);
+    }
     throw error;
   }
+};
+
+function normalizeSlugCandidate(value: string | undefined | null): string | null {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return generateSlug(trimmed);
+}
+
+async function getProductBySlugInCategory(
+  categoryId: number,
+  slugCandidates: string[],
+  lang: string
+): Promise<ProductById | null> {
+  const products = await getAllProducts(categoryId, lang, { silent: true });
+  if (!Array.isArray(products) || products.length === 0) return null;
+
+  const found = products.find((product) => {
+    const productSlug = generateSlug(product.name);
+    return slugCandidates.includes(productSlug);
+  });
+
+  if (!found?.id) return null;
+  return getProductById(String(found.id), lang, { silent: true });
+}
+
+export const resolvePublicProduct = async ({
+  preferredProductId,
+  slugs,
+  lang = "es",
+  categoryId,
+}: ResolvePublicProductOptions): Promise<ProductById | null> => {
+  const normalizedSlugs = Array.from(
+    new Set(slugs.map(normalizeSlugCandidate).filter((value): value is string => Boolean(value)))
+  );
+
+  if (preferredProductId !== null && preferredProductId !== undefined && preferredProductId !== "") {
+    try {
+      return await getProductById(String(preferredProductId), lang, { silent: true });
+    } catch {
+      // continue with slug-based fallbacks
+    }
+  }
+
+  if (categoryId && normalizedSlugs.length > 0) {
+    try {
+      const product = await getProductBySlugInCategory(categoryId, normalizedSlugs, lang);
+      if (product) return product;
+    } catch {
+      // continue with global slug search
+    }
+  }
+
+  for (const slug of normalizedSlugs) {
+    try {
+      const product = await getProductBySlug(slug, lang);
+      if (product) return product;
+    } catch {
+      // try next slug candidate
+    }
+  }
+
+  return null;
 };
 
 export const getProductBySlug = async (
@@ -127,8 +216,7 @@ export const getProductBySlug = async (
 
     const results = await Promise.all(
       categories.map((catId) =>
-        getAllProducts(catId, lang, { simRegion: "global" }).catch((err) => {
-          console.error(`Error fetching category ${catId} for slug search:`, err);
+        getAllProducts(catId, lang, { simRegion: "global", silent: true }).catch(() => {
           return [] as Product[];
         })
       )
@@ -138,7 +226,7 @@ export const getProductBySlug = async (
       if (Array.isArray(products)) {
         const found = products.find((p) => generateSlug(p.name) === slug);
         if (found) {
-          return getProductById(String(found.id), lang);
+          return getProductById(String(found.id), lang, { silent: true });
         }
       }
     }

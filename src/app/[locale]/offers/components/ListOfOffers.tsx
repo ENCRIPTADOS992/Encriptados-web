@@ -9,6 +9,7 @@ import Loader from "@/shared/components/Loader";
 import CardProduct from "@/app/[locale]/our-products/components/CardProduct";
 import { buildWpV3Url } from "@/shared/constants/backend";
 import {
+  getProductCategoryApiParam,
   PRODUCT_CATEGORY_IDS,
   isRouterCategoryId,
   isSimCategoryId,
@@ -217,7 +218,8 @@ const ListOfOffers = () => {
 
     const fetchAndFilter = async (categoryId: number): Promise<any[]> => {
       try {
-        const url = `${API_BASE}?category_id=${categoryId}&lang=${locale}`;
+        const categoryParam = getProductCategoryApiParam(categoryId);
+        const url = `${API_BASE}?category_id=${encodeURIComponent(categoryParam ?? String(categoryId))}&lang=${locale}`;
         const response = await fetch(url);
         const data = await response.json();
         const rawProducts: any[] = data?.products || [];

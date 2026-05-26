@@ -22,6 +22,7 @@ export interface ProductStaticConfig {
   slug: string;
   productId: number;
   categoryId: number; // 38=apps, 35=software, 36=router
+  lookupSlugs?: string[];
   templateType: TemplateType;
   heroBanners: {
     desktop: string;
@@ -60,7 +61,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Silent Phone" -> slug: "silent-phone"
   "silent-phone": {
     slug: "silent-phone",
-    productId: 122,
+    productId: 60924,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -81,7 +82,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy
   "silent-circle": {
     slug: "silent-phone",
-    productId: 122,
+    productId: 60924,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -103,7 +104,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "VaultChat" -> slug: "vaultchat"
   "vaultchat": {
     slug: "vaultchat",
-    productId: 127,
+    productId: 60925,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -124,7 +125,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy
   "vault-chat": {
     slug: "vaultchat",
-    productId: 127,
+    productId: 60925,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -146,7 +147,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Armadillo Chat" -> slug: "armadillo-chat"
   "armadillo-chat": {
     slug: "armadillo-chat",
-    productId: 177,
+    productId: 60938,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -168,7 +169,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Threema" -> slug: "threema"
   "threema": {
     slug: "threema",
-    productId: 136,
+    productId: 60929,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -190,7 +191,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Threema Work" -> slug: "threema-work"
   "threema-work": {
     slug: "threema-work",
-    productId: 135,
+    productId: 60928,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -211,7 +212,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "VNC Lagoon" -> slug: "vnc-lagoon"
   "vnc-lagoon": {
     slug: "vnc-lagoon",
-    productId: 134,
+    productId: 60927,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -232,7 +233,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Salt App" -> slug: "salt-app"
   "salt-app": {
     slug: "salt-app",
-    productId: 133,
+    productId: 60926,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -252,7 +253,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy
   "salt": {
     slug: "salt-app",
-    productId: 133,
+    productId: 60926,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -273,7 +274,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Nord VPN" -> slug: "nord-vpn"
   "nord-vpn": {
     slug: "nord-vpn",
-    productId: 137,
+    productId: 60930,
     categoryId: 38,
     templateType: "app",
     heroBanners: {
@@ -300,7 +301,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Nota: Este producto usa ruta especial /activar-apps (no /apps/activar-apps)
   "activar-apps": {
     slug: "activar-apps",
-    productId: 0, // TODO: Actualizar con el productId correcto cuando esté disponible
+    productId: 61021,
     categoryId: 371,
     templateType: "app",
     heroBanners: {
@@ -324,7 +325,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Secure MDM iPhone" -> slug: "secure-mdm-iphone"
   "secure-mdm-iphone": {
     slug: "secure-mdm-iphone",
-    productId: 168,
+    productId: 60935,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -344,7 +345,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Secure MDM Android" -> slug: "secure-mdm-android"
   "secure-mdm-android": {
     slug: "secure-mdm-android",
-    productId: 169,
+    productId: 60936,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -364,7 +365,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Cryptcom" -> slug: "cryptcom"
   "cryptcom": {
     slug: "cryptcom",
-    productId: 139,
+    productId: 60931,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -384,7 +385,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Renati" -> slug: "renati"
   "renati": {
     slug: "renati",
-    productId: 151,
+    productId: 60934,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -404,7 +405,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "ChatMail" -> slug: "chatmail"
   "chatmail": {
     slug: "chatmail",
-    productId: 142,
+    productId: 60932,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -423,7 +424,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy
   "chat-mail": {
     slug: "chatmail",
-    productId: 142,
+    productId: 60932,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -444,7 +445,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // ¡IMPORTANTE! Este es el sistema (ID 180), NO la app.
   "armadillo": {
     slug: "armadillo",
-    productId: 180,
+    productId: 60939,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -463,7 +464,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy para sistema
   "armadillo-v2": {
     slug: "armadillo",
-    productId: 180,
+    productId: 60939,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -488,8 +489,9 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Por ahora, agregamos el alias legacy del sistema.
   "vault-chat-v2": {
     slug: "vault-chat-v2",
-    productId: 148,
+    productId: 60933,
     categoryId: 35,
+    lookupSlugs: ["vaultchat"],
     templateType: "software",
     heroBanners: {
       desktop: "/images/apps/vault-chat/hero-desktop.png",
@@ -508,7 +510,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Ultra X" -> slug: "ultra-x"
   "ultra-x": {
     slug: "ultra-x",
-    productId: 182,
+    productId: 60940,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -527,7 +529,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy
   "ultrax": {
     slug: "ultra-x",
-    productId: 182,
+    productId: 60940,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -547,7 +549,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Intact Phone" -> slug: "intact-phone"
   "intact-phone": {
     slug: "intact-phone",
-    productId: 188,
+    productId: 60941,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -567,7 +569,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "DEC Secure" -> slug: "dec-secure"
   "dec-secure": {
     slug: "dec-secure",
-    productId: 233,
+    productId: 60942,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -587,7 +589,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "SecureCrypt" -> slug: "securecrypt"
   "securecrypt": {
     slug: "securecrypt",
-    productId: 174,
+    productId: 60937,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -606,7 +608,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Alias legacy
   "secure-crypt": {
     slug: "securecrypt",
-    productId: 174,
+    productId: 60937,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -630,8 +632,9 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Router Camaleón" -> slug: "router-camaleon"
   "router-camaleon": {
     slug: "router-camaleon",
-    productId: 59747,
+    productId: 60975,
     categoryId: 36,
+    lookupSlugs: ["camaleon-router", "camaleon"],
     templateType: "router",
     heroBanners: {
       desktop: "/images/router/hero-desktop.png",
@@ -650,7 +653,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Name: "Zi0n" -> slug: "zi0n"
   "zi0n": {
     slug: "zi0n",
-    productId: 61335,
+    productId: 61009,
     categoryId: 35,
     templateType: "software",
     heroBanners: {
@@ -672,6 +675,15 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
 
 export function getProductConfig(slug: string): ProductStaticConfig | null {
   return productConfigs[slug] || null;
+}
+
+export function getProductLookupSlugs(
+  routeSlug: string,
+  config: ProductStaticConfig | null | undefined
+): string[] {
+  return Array.from(
+    new Set([routeSlug, config?.slug, ...(config?.lookupSlugs ?? [])].filter(Boolean) as string[])
+  );
 }
 
 export function isValidProductSlug(slug: string): boolean {

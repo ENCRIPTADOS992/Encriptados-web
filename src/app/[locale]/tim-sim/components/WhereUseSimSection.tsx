@@ -10,6 +10,7 @@ import FilterRegionCountryTim from "@/app/[locale]/our-products/components/Filte
 import ListOfProducts from "@/app/[locale]/our-products/components/ListOfProducts";
 
 import { ProductFilters } from "@/features/products/types/ProductFilters";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 type TimServiceType = "esim_datos" | "recarga_datos" | "sim_fisica";
 
@@ -48,7 +49,7 @@ const WhereUseSimSection = ({ locale }: WhereUseSimSectionProps) => {
   const tProducts = useTranslations("OurProductsPage");
 
   const [filters, setFilters] = useState<ProductFilters>({
-    selectedOption: "40",
+    selectedOption: String(PRODUCT_CATEGORY_IDS.SIMS),
     provider: "tim",
     timService: "esim_datos",
     timprovider: "esimplusdatatim",

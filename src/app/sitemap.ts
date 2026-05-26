@@ -5,6 +5,7 @@ import { getAllSimProductSlugs } from "@/app/[locale]/sim/[slug]/simProductConfi
 import { SEO_LOCALES } from "@/shared/seo/constants";
 import { getStaticPageSitemapPaths } from "@/shared/seo/staticPages";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
+import { getProductCategoryApiParam } from "@/shared/constants/productCategories";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
 import { WP_BLOG_API_BASE, WP_API_BASE } from "@/shared/constants/backend";
 
@@ -71,7 +72,7 @@ async function fetchStoreProducts(categoryId: number, locale: string): Promise<S
 
   try {
     const url = new URL("/encriptados/v3/store/products", STORE_API_BASE);
-    url.searchParams.set("category_id", String(categoryId));
+    url.searchParams.set("category_id", getProductCategoryApiParam(categoryId) ?? String(categoryId));
     url.searchParams.set("lang", locale);
 
     const res = await fetch(url, { next: { revalidate } });

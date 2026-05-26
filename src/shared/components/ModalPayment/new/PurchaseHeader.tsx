@@ -480,19 +480,13 @@ const PurchaseHeader: React.FC<Props> = ({
                   if (derivedLink) {
                     const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://encriptados.io";
                     // Construir URL con productId, categoryId, variantId y buy=1
-                    let appShareUrl = `${baseUrl}/${locale}${derivedLink}?productId=${productId}`;
+                    let appShareUrl = `${baseUrl}/${locale}${derivedLink}?buy=1`;
 
                     // Agregar categoryId si está disponible
-                    if (Number.isFinite(categoryId)) {
-                      appShareUrl += `&categoryId=${categoryId}`;
-                    }
-
                     // Agregar variantId si hay una variante seleccionada
                     if (selectedVariantId) {
                       appShareUrl += `&variantId=${selectedVariantId}`;
                     }
-
-                    appShareUrl += `&buy=1`;
                     shareUrl = appShareUrl;
                   } else if (sourceUrl) {
                     // Usar sourceUrl si está disponible
