@@ -82,7 +82,7 @@ export default function FooterEncrypted() {
   };
 
   const SYSTEMS_LINKS: Record<string, string> = {
-    "Galaxia MDM Iphone": "/apps/galaxia-mdm?productId=61085",
+    "Galaxia MDM Iphone": "/apps/galaxia-mdm?productId=60996",
     "Secure MDM iphone": getAppUrl("Secure MDM iPhone"),
     "Secure MDM Android": getAppUrl("Secure MDM Android"),
     "Cryptcom": getAppUrl("Cryptcom"),
@@ -120,7 +120,7 @@ export default function FooterEncrypted() {
   ];
   const sistemasLinks = [
     { name: "Zi0n", href: getAppUrl("Zi0n") },
-    { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=61085" },
+    { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=60996" },
     { name: "Cryptcom", href: getAppUrl("Cryptcom") },
     { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
     { name: "Secure MDM iPhone", href: getAppUrl("Secure MDM iPhone") },

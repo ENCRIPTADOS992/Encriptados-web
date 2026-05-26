@@ -150,7 +150,7 @@ export function useTranslatedProductsCategories(): any {
         {
           title: t("systems.items.galaxiaMdmIphone.title", { defaultValue: "Galaxia MDM Iphone" }),
           image: "/images/mega-menu/sistemas/galaxia.webp",
-          link: "/apps/galaxia-mdm?productId=61085",
+          link: "/apps/galaxia-mdm?productId=60996",
           description: t("systems.items.galaxiaMdmIphone.description", {
             defaultValue: "Galaxia MDM Iphone es un sistema cerrado enfocado en la protección y control de la información.",
           }),

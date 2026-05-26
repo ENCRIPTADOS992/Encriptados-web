@@ -317,17 +317,50 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
+    categoryId: 371,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/activar-apps/hero-desktop.png",
+      tablet: "/images/activar-apps/hero-tablet.png",
+      mobile: "/images/activar-apps/hero-mobile.jpg",
+    },
+    productImage: "/images/activar-apps/banner.png",
+    iconUrl: "/images/activar-apps/logo.png",
+    benefitIcon: "/images/activar-apps/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
 
   // ════════════════════════════════════════════════════════════════
   // SISTEMAS / SOFTWARE (Categoría 35)
   // ════════════════════════════════════════════════════════════════
 
+  // Name: "Galaxia MDM" -> slug: "galaxia-mdm"
+  "galaxia-mdm": {
+    slug: "galaxia-mdm",
+    productId: 60996,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/secure-mdm-iphone/hero-desktop.png",
+      tablet: "/images/apps/secure-mdm-iphone/hero-tablet.png",
+      mobile: "/images/apps/secure-mdm-iphone/hero-mobile.jpg",
+    },
+    productImage: "/images/mega-menu/sistemas/galaxia.webp",
+    iconUrl: "/images/mega-menu/sistemas/galaxia.webp",
+    benefitIcon: "/images/apps/secure-mdm-iphone/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
   // Name: "Secure MDM iPhone" -> slug: "secure-mdm-iphone"
   "secure-mdm-iphone": {
     slug: "secure-mdm-iphone",
     productId: 60935,
-    categoryId: 35,
-    templateType: "software",
     heroBanners: {
       desktop: "/images/apps/secure-mdm-iphone/hero-desktop.png",
       tablet: "/images/apps/secure-mdm-iphone/hero-tablet.png",
