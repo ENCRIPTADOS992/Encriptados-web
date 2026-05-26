@@ -103,6 +103,16 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
   };
 }
 
+function toWpAbsoluteUrl(value: string | undefined): string {
+  if (!value) return "";
+  const trimmed = value.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  const wpDomain = "https://admin.encriptados.io";
+  return `${wpDomain}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+}
+
 function toAbsoluteUrl(value: string | undefined, origin: string): string {
   if (!value) return "";
   try {
@@ -117,14 +127,16 @@ function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBl
 
   return {
     ...item,
-    image: toAbsoluteUrl(item.image, origin),
-    imageFull: toAbsoluteUrl(item.imageFull ?? item.image, origin),
+    image: toWpAbsoluteUrl(item.image),
+    imageFull: toWpAbsoluteUrl(item.imageFull ?? item.image),
     path,
     url: toAbsoluteUrl(path, origin),
   };
 }
 
-async function fetchWordPressCards(locale: string): Promise<BlogPostCard[]> {
+async function fetchWordPressCardsFirstPage(
+  locale: string,
+): Promise<{ cards: BlogPostCard[]; totalPages: number; firstPageItems: WordPressBlogItem[] }> {
   const firstUrl = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=${WP_PER_PAGE}&page=1&_embed`;
   const firstRes = await fetch(firstUrl, { cache: "no-store" });
 
@@ -132,23 +144,64 @@ async function fetchWordPressCards(locale: string): Promise<BlogPostCard[]> {
     throw new Error(`WordPress API error: ${firstRes.status}`);
   }
 
-  const firstPage = (await firstRes.json()) as WordPressBlogItem[];
+  const firstPageItems = (await firstRes.json()) as WordPressBlogItem[];
   const totalPages = Number(firstRes.headers.get("x-wp-totalpages") ?? 1);
-  const remainingPages = Array.from(
-    { length: Math.max(totalPages - 1, 0) },
-    (_, index) => index + 2,
-  );
+  const cards = firstPageItems.map(mapWpItemToCard);
 
-  const remaining = await Promise.all(
-    remainingPages.map(async (page) => {
-      const url = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=${WP_PER_PAGE}&page=${page}&_embed`;
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) return [] as WordPressBlogItem[];
-      return (await res.json()) as WordPressBlogItem[];
-    }),
-  );
+  return { cards, totalPages, firstPageItems };
+}
 
-  return [...firstPage, ...remaining.flat()].map(mapWpItemToCard);
+async function fetchRemainingWordPressCardsInBackground(
+  locale: string,
+  firstPageItems: WordPressBlogItem[],
+  markdownCards: BlogPostCard[],
+  totalPages: number,
+  origin: string,
+  cacheKeyAll: string,
+) {
+  try {
+    const remainingPages = Array.from(
+      { length: Math.max(totalPages - 1, 0) },
+      (_, index) => index + 2,
+    );
+
+    const remaining = await Promise.all(
+      remainingPages.map(async (page) => {
+        const url = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=${WP_PER_PAGE}&page=${page}&_embed`;
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) return [] as WordPressBlogItem[];
+        return (await res.json()) as WordPressBlogItem[];
+      }),
+    );
+
+    const allWpCards = [...firstPageItems, ...remaining.flat()].map(mapWpItemToCard);
+
+    const byId = new Map<string, BlogPostCard>();
+    for (const post of [...allWpCards, ...markdownCards]) {
+      byId.set(post.id, post);
+    }
+
+    const allItems = Array.from(byId.values())
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .map((item) => mapToAppItem(item, locale, origin));
+
+    const data: AppBlogResponse = {
+      locale,
+      total: allItems.length,
+      page: null,
+      perPage: null,
+      hasMore: false,
+      sources: {
+        wordpress: allWpCards.length,
+        markdown: markdownCards.length,
+      },
+      items: allItems,
+    };
+
+    cache.set(cacheKeyAll, { data, ts: Date.now() });
+  } catch (err) {
+    console.error("Error in background fetch of remaining WP cards:", err);
+  }
 }
 
 function fetchMarkdownCards(locale: string): BlogPostCard[] {
@@ -229,10 +282,8 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [wordpressCards, markdownCards] = await Promise.all([
-      fetchWordPressCards(locale),
-      Promise.resolve(fetchMarkdownCards(locale)),
-    ]);
+    const { cards: wordpressCards, totalPages, firstPageItems } = await fetchWordPressCardsFirstPage(locale);
+    const markdownCards = fetchMarkdownCards(locale);
 
     const byId = new Map<string, BlogPostCard>();
     for (const post of [...wordpressCards, ...markdownCards]) {
@@ -257,6 +308,17 @@ export async function GET(req: NextRequest) {
     };
 
     cache.set(cacheKey, { data, ts: Date.now() });
+
+    if (totalPages > 1) {
+      fetchRemainingWordPressCardsInBackground(
+        locale,
+        firstPageItems,
+        markdownCards,
+        totalPages,
+        origin,
+        cacheKey,
+      ).catch((err) => console.error("Error in background fetch of remaining WP cards:", err));
+    }
 
     return NextResponse.json(data, {
       headers: {

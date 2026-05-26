@@ -151,8 +151,20 @@ function getCategorySlugFromLegacyPath(path: string | undefined): string | undef
   return parts[blogsIndex + 1];
 }
 
+function toWpAbsoluteUrl(value: string | undefined): string {
+  if (!value) return "";
+  const trimmed = value.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  const wpDomain = "https://admin.encriptados.io";
+  return `${wpDomain}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+}
+
 function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
   const legacyPath = getPathFromUrl(item.link);
+  const imageRaw = getImageFromEmbed(item);
+  const imageFullRaw = getImageFullFromEmbed(item);
 
   return {
     id: `wp-${item.id}`,
@@ -163,8 +175,8 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
     source: "wordpress",
     title: item.title.rendered,
     description: stripHtml(item.excerpt.rendered),
-    image: getImageFromEmbed(item),
-    imageFull: getImageFullFromEmbed(item),
+    image: toWpAbsoluteUrl(imageRaw),
+    imageFull: toWpAbsoluteUrl(imageFullRaw || imageRaw),
     author: getAuthorFromEmbed(item),
     date: item.date,
   };
