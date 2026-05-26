@@ -317,21 +317,6 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     googlePlayUrl: "",
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
-    categoryId: 371,
-    templateType: "app",
-    heroBanners: {
-      desktop: "/images/activar-apps/hero-desktop.png",
-      tablet: "/images/activar-apps/hero-tablet.png",
-      mobile: "/images/activar-apps/hero-mobile.jpg",
-    },
-    productImage: "/images/activar-apps/banner.png",
-    iconUrl: "/images/activar-apps/logo.png",
-    benefitIcon: "/images/activar-apps/icono.png",
-    videoUrl: "",
-    appStoreUrl: "",
-    googlePlayUrl: "",
-    relatedProducts: { simProductId: "508", esimProductId: "454" },
-  },
 
   // ════════════════════════════════════════════════════════════════
   // SISTEMAS / SOFTWARE (Categoría 35)
@@ -361,6 +346,8 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   "secure-mdm-iphone": {
     slug: "secure-mdm-iphone",
     productId: 60935,
+    categoryId: 35,
+    templateType: "software",
     heroBanners: {
       desktop: "/images/apps/secure-mdm-iphone/hero-desktop.png",
       tablet: "/images/apps/secure-mdm-iphone/hero-tablet.png",

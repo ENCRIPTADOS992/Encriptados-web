@@ -126,8 +126,6 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     productId: 61009,
     slug: "zi0n",
     name: "Zi0n",
-    slug: "zi0n",
-    name: "Zi0n",
     metaImage: "/meta-image/sistemas/zi0n.png",
     title: "Zi0n - Sistema Encriptado",
     description: "Compra aquí Zi0n.",
@@ -146,6 +144,8 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
   },
   {
     productId: 60931,
+    slug: "cryptcom",
+    name: "CryptCom",
     metaImage: "/meta-image/sistemas/cryptcom.png",
     title: "CryptCom - Cifrado Avanzado",
     description: "Compra aquí CryptCom.",
