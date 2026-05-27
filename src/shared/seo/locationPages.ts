@@ -366,9 +366,13 @@ const LOCATION_PATTERNS = [...APP_PATTERNS, ...SIM_PATTERNS, ...PHONE_PATTERNS].
   (first, second) => second.legacyPrefix.length - first.legacyPrefix.length,
 );
 
-const INDEXABLE_LOCATION_PATHS = new Set<string>([
+export const INDEXABLE_LOCATION_PATHS = new Set<string>([
   // Add Search Console validated URLs here when a location page deserves indexing.
 ]);
+
+export function getIndexableLocationPaths(): string[] {
+  return Array.from(INDEXABLE_LOCATION_PATHS);
+}
 
 function titleCaseFromSlug(slug: string): string {
   return slug
