@@ -23,6 +23,34 @@ export default function robots(): MetadataRoute.Robots {
           "/*/checkout",
         ],
       },
+      {
+        userAgent: "GPTBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "ChatGPT-User",
+        disallow: "/",
+      },
+      {
+        userAgent: "Google-Extended",
+        disallow: "/",
+      },
+      {
+        userAgent: "CCBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "anthropic-ai",
+        disallow: "/",
+      },
+      {
+        userAgent: "Claude-Web",
+        disallow: "/",
+      },
+      {
+        userAgent: "PerplexityBot",
+        disallow: "/",
+      },
     ],
     sitemap: buildAbsoluteUrl("/sitemap.xml"),
     host: getCanonicalSiteUrl(),
