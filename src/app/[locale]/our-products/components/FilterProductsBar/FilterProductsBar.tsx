@@ -101,16 +101,8 @@ export default function FilterProductsBar({
     />
   );
 
-  const activarAppsProviderIcon = (
-    <Image
-      src="/icons/activar_apps.svg"
-      alt=""
-      width={144}
-      height={34}
-      className={providerLogoClass}
-      loading="lazy"
-    />
-  );
+  // Activar Apps oculto del selector de proveedor
+  // const activarAppsProviderIcon = ...
 
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
@@ -155,19 +147,7 @@ export default function FilterProductsBar({
         />
       </div>
     ),
-    activarapps: (
-      <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
-        <MenuDropdownProductBar
-          name="encriptadosprovider"
-          externalValue={filters.encriptadosprovider}
-          options={[{ label: t("filterProducts.allOption"), value: "all" }]}
-          onChangeExternal={() => {
-            updateFilters({ encriptadosprovider: "all" });
-          }}
-        />
-      </div>
-    ),
+    // activarapps: oculto del selector de proveedor
   };
 
   // Rendering logic for subfilters based on Flex to fill space dynamically
@@ -193,11 +173,7 @@ export default function FilterProductsBar({
                 value: "tim",
                 icon: timProviderIcon,
               },
-              {
-                label: " ",
-                value: "activarapps",
-                icon: activarAppsProviderIcon,
-              },
+              // activarapps oculto del selector
             ]}
             onChangeExternal={(value) => {
               updateFilters({

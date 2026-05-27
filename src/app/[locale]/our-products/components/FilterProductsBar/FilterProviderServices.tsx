@@ -63,18 +63,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
         />
       </div>
     ),
-    activarapps: (
-      <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
-        <MenuDropdownProductBar
-          name="encriptadosprovider"
-          options={[{ label: t("filterProducts.allOption"), value: "all" }]}
-          onChangeExternal={() => {
-            updateFilters({ encriptadosprovider: "all" });
-          }}
-        />
-      </div>
-    ),
+    // activarapps: oculto del selector de proveedor
   };
 
   const providerLogoClass = "h-[25px] w-auto max-w-[144px] object-contain";
@@ -101,16 +90,8 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
     />
   );
 
-  const activarAppsProviderIcon = (
-    <Image
-      src="/icons/activar_apps.svg"
-      alt=""
-      width={144}
-      height={34}
-      className={providerLogoClass}
-      loading="lazy"
-    />
-  );
+  // Activar Apps oculto del selector de proveedor
+  // const activarAppsProviderIcon = ...
 
   return (
     <div className="flex flex-row space-x-2">
@@ -129,11 +110,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
               value: "tim",
               icon: timProviderIcon,
             },
-            {
-              label: " ",
-              value: "activarapps",
-              icon: activarAppsProviderIcon,
-            },
+            // activarapps oculto del selector
           ]}
           onChangeExternal={(value) => {
             console.log("[FilterAppWithLicense] Cambio de provider:", value);
