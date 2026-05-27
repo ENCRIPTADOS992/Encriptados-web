@@ -15,7 +15,11 @@
  * - Router: /router?buy=1
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+const BASE_URL = typeof window !== "undefined"
+  ? window.location.origin
+  : (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes("encriptados.net")
+      ? process.env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, "")
+      : "https://encriptados.io");
 
 export interface ShareConfig {
   productId: number;

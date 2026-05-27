@@ -1,4 +1,4 @@
-const DEFAULT_CANONICAL_ORIGIN = "https://www.encriptados.net";
+const DEFAULT_CANONICAL_ORIGIN = "https://encriptados.io";
 
 function trimTrailingSlash(value: string): string {
   return value.replace(/\/+$/, "");
@@ -17,9 +17,14 @@ function normalizeOrigin(value: string | undefined): string {
 }
 
 export function getCanonicalSiteUrl(): string {
-  return normalizeOrigin(
-    process.env.NEXT_PUBLIC_CANONICAL_SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
-  );
+  if (typeof window !== "undefined") {
+    return trimTrailingSlash(window.location.origin);
+  }
+  const envUrl = process.env.NEXT_PUBLIC_CANONICAL_SITE_URL ?? process.env.NEXT_PUBLIC_SITE_URL;
+  if (envUrl && !envUrl.includes("encriptados.net")) {
+    return normalizeOrigin(envUrl);
+  }
+  return DEFAULT_CANONICAL_ORIGIN;
 }
 
 export function getSiteUrlObject(): URL {
