@@ -163,7 +163,14 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
 
   let filteredProducts: Product[] = uniqueProducts;
 
-  // Filtro por provider (solo categoría 40 — para 371 la API ya filtra por categoría)
+  // ========== OCULTAR Zi0n DEL LISTADO (solo navegación) ==========
+  // Zi0n se oculta del home y navegación; su página directa /apps/zi0n sigue activa
+  filteredProducts = filteredProducts.filter((product) => {
+    const name = (product.name ?? "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+    return !name.includes("zi0n") && !name.includes("zion");
+  });
+
+
   if (filters.provider && filters.provider !== "all" && isSelectedSimCategory) {
     const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
