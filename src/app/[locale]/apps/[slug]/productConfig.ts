@@ -63,6 +63,29 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     slug: "silent-phone",
     productId: 60924,
     categoryId: 38,
+    lookupSlugs: ["silent-circle", "silent_phone"],
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/apps/silent-circle/hero-desktop.png",
+      tablet: "/images/apps/silent-circle/hero-tablet.png",
+      mobile: "/images/apps/silent-circle/hero-mobile.jpg",
+    },
+    productImage: "/images/apps/silent-circle/banner.png",
+    iconUrl: "/images/apps/silent-circle/logo.png",
+    benefitIcon: "/images/apps/silent-circle/icono.png",
+    videoUrl: "https://www.youtube.com/embed/X9iE-f8briY",
+    appStoreUrl: "https://apps.apple.com/app/silent-phone",
+    googlePlayUrl: "https://play.google.com/store/apps/details?id=com.silentcircle.silentphone",
+    apkUrl: "https://encriptados.io/descargas/silent-phone.apk",
+    storeButtons: { apk: false },
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+  // Alias legacy with underscore
+  "silent_phone": {
+    slug: "silent-phone",
+    productId: 60924,
+    categoryId: 38,
+    lookupSlugs: ["silent-phone", "silent-circle"],
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/silent-circle/hero-desktop.png",
@@ -84,6 +107,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     slug: "silent-phone",
     productId: 60924,
     categoryId: 38,
+    lookupSlugs: ["silent-phone", "silent_phone"],
     templateType: "app",
     heroBanners: {
       desktop: "/images/apps/silent-circle/hero-desktop.png",
