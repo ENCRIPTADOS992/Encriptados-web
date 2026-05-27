@@ -54,6 +54,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
+    staleTime: 1000 * 60 * 5, // 5 minutos — igual que ModalNewUser, evita doble fetch
   });
 
   const selectedOption = Number(

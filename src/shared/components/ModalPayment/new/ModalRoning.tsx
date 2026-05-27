@@ -46,6 +46,7 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
+    staleTime: 1000 * 60 * 5,
   });
 
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(
