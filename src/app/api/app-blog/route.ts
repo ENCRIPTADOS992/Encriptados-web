@@ -7,6 +7,7 @@ import type {
   WordPressBlogItem,
 } from "@/features/blog/types";
 import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
+import { resolveLegacyRoute } from "@/shared/seo/legacyRoutes";
 
 const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
@@ -38,6 +39,43 @@ type AppBlogItem = BlogPostCard & {
   url: string;
 };
 
+type WordPressContentItem = {
+  id: number;
+  date?: string;
+  modified?: string;
+  slug: string;
+  link?: string;
+  title: { rendered: string };
+  excerpt?: { rendered: string };
+  content?: { rendered: string };
+  _embedded?: WordPressBlogItem["_embedded"];
+};
+
+const LEGACY_BLOG_EXCLUDED_SLUGS = new Set([
+  "gracias",
+  "pruebas",
+  "router-camaleon",
+  "securecrypt-red",
+  "distribuidores-encriptados-formulario",
+]);
+
+const LEGACY_BLOG_EXCLUDED_SLUG_PARTS = [
+  "agradecimiento",
+  "checkout",
+  "contacto",
+  "encuesta",
+  "formulario",
+  "gracias",
+  "herramienta",
+  "landing",
+  "pages-",
+  "quiz",
+  "simulador",
+  "test",
+];
+
+const LEGACY_BLOG_MIN_CONTENT_LENGTH = 600;
+
 const responseHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
@@ -60,17 +98,17 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-function getImageFromEmbed(item: WordPressBlogItem): string {
+function getImageFromEmbed(item: WordPressContentItem): string {
   const media = item._embedded?.["wp:featuredmedia"]?.[0];
   return media?.media_details?.sizes?.medium?.source_url ?? media?.source_url ?? "";
 }
 
-function getImageFullFromEmbed(item: WordPressBlogItem): string {
+function getImageFullFromEmbed(item: WordPressContentItem): string {
   const media = item._embedded?.["wp:featuredmedia"]?.[0];
   return media?.media_details?.sizes?.full?.source_url ?? media?.source_url ?? "";
 }
 
-function getAuthorFromEmbed(item: WordPressBlogItem): string {
+function getAuthorFromEmbed(item: WordPressContentItem): string {
   return item._embedded?.author?.[0]?.name ?? "Equipo Encriptados";
 }
 
@@ -91,46 +129,38 @@ function getCategorySlugFromLegacyPath(path: string | undefined): string | undef
   return parts[blogsIndex + 1];
 }
 
-function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
+function getDescriptionFromWpItem(item: WordPressContentItem): string {
+  return stripHtml(item.excerpt?.rendered ?? item.content?.rendered ?? "");
+}
+
+function mapWpItemToCard(item: WordPressContentItem, idPrefix = "wp"): BlogPostCard {
   const legacyPath = getPathFromUrl(item.link);
 
   return {
-    id: `wp-${item.id}`,
+    id: `${idPrefix}-${item.id}`,
     slug: item.slug || String(item.id),
     wpId: item.id,
     legacyPath,
     categorySlug: getCategorySlugFromLegacyPath(legacyPath),
     source: "wordpress",
     title: item.title.rendered,
-    description: stripHtml(item.excerpt.rendered),
+    description: getDescriptionFromWpItem(item),
     image: getImageFromEmbed(item),
     imageFull: getImageFullFromEmbed(item),
     author: getAuthorFromEmbed(item),
-    date: item.date,
+    date: item.modified ?? item.date ?? "",
   };
 }
 
-function toWpAbsoluteUrl(value: string | undefined): string {
-  if (!value) return "";
-  const trimmed = value.trim();
-  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-    return trimmed;
-  }
-  const wpDomain = "https://admin.encriptados.io";
-  return `${wpDomain}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
-}
-
-function toAbsoluteUrl(value: string | undefined, origin: string): string {
-  if (!value) return "";
-  try {
-    return new URL(value, origin).toString();
-  } catch {
-    return value;
-  }
-}
-
-function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBlogItem {
+function mapToAppItem(item: BlogPostCard, locale: string): AppBlogItem {
   const path = item.legacyPath ?? `/${locale}/blog/${item.slug}`;
+  const wpOrigin = (() => {
+    try {
+      return new URL(WP_BASE).origin;
+    } catch {
+      return "";
+    }
+  })();
 
   const isWp = item.source === "wordpress";
   const resolveImage = (img: string | undefined) => {
@@ -139,9 +169,8 @@ function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBl
     if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
       return trimmed;
     }
-    if (isWp) {
-      const wpDomain = "https://admin.encriptados.io";
-      return `${wpDomain}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+    if (isWp && wpOrigin) {
+      return `${wpOrigin}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
     }
     // For local Markdown posts, keep it relative to the current host
     return trimmed;
@@ -152,80 +181,98 @@ function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBl
     image: resolveImage(item.image),
     imageFull: resolveImage(item.imageFull ?? item.image),
     path,
-    url: toAbsoluteUrl(path, origin),
+    // Keep links relative so staging/prod domain changes do not require data rewrites.
+    url: path,
   };
 }
 
-async function fetchWordPressCardsFirstPage(
+async function fetchWordPressCollection(
+  endpoint: "posts" | "pages",
   locale: string,
-): Promise<{ cards: BlogPostCard[]; totalPages: number; firstPageItems: WordPressBlogItem[] }> {
-  const catId = LOCALE_TO_CATEGORY_ID[locale] || 96;
-  const firstUrl = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=${WP_PER_PAGE}&page=1&_embed`;
+  extraParams?: Record<string, string>,
+): Promise<WordPressContentItem[]> {
+  const params = new URLSearchParams({
+    per_page: String(WP_PER_PAGE),
+    page: "1",
+    _embed: "1",
+    ...(extraParams ?? {}),
+  });
+
+  if (locale) {
+    params.set("lang", locale);
+  }
+
+  const firstUrl = `${WP_BASE}/wp/v2/${endpoint}?${params.toString()}`;
   const firstRes = await fetch(firstUrl, { cache: "no-store" });
 
   if (!firstRes.ok) {
-    throw new Error(`WordPress API error: ${firstRes.status}`);
+    throw new Error(`WordPress ${endpoint} API error: ${firstRes.status}`);
   }
 
-  const firstPageItems = (await firstRes.json()) as WordPressBlogItem[];
+  const firstPageItems = (await firstRes.json()) as WordPressContentItem[];
   const totalPages = Number(firstRes.headers.get("x-wp-totalpages") ?? 1);
-  const cards = firstPageItems.map(mapWpItemToCard);
 
-  return { cards, totalPages, firstPageItems };
+  if (totalPages <= 1) {
+    return firstPageItems;
+  }
+
+  const remainingPages = Array.from(
+    { length: Math.max(totalPages - 1, 0) },
+    (_, index) => index + 2,
+  );
+
+  const remaining = await Promise.all(
+    remainingPages.map(async (page) => {
+      params.set("page", String(page));
+      const url = `${WP_BASE}/wp/v2/${endpoint}?${params.toString()}`;
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) return [] as WordPressContentItem[];
+      return (await res.json()) as WordPressContentItem[];
+    }),
+  );
+
+  return [...firstPageItems, ...remaining.flat()];
 }
 
-async function fetchRemainingWordPressCardsInBackground(
-  locale: string,
-  firstPageItems: WordPressBlogItem[],
-  markdownCards: BlogPostCard[],
-  totalPages: number,
-  origin: string,
-  cacheKeyAll: string,
-) {
-  try {
-    const remainingPages = Array.from(
-      { length: Math.max(totalPages - 1, 0) },
-      (_, index) => index + 2,
-    );
+function isLegacyListingPage(item: WordPressContentItem): boolean {
+  const legacyPath = getPathFromUrl(item.link);
+  if (!legacyPath) return false;
 
-    const catId = LOCALE_TO_CATEGORY_ID[locale] || 96;
-    const remaining = await Promise.all(
-      remainingPages.map(async (page) => {
-        const url = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=${WP_PER_PAGE}&page=${page}&_embed`;
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) return [] as WordPressBlogItem[];
-        return (await res.json()) as WordPressBlogItem[];
-      }),
-    );
-
-    const allWpCards = [...firstPageItems, ...remaining.flat()].map(mapWpItemToCard);
-
-    const byId = new Map<string, BlogPostCard>();
-    for (const post of [...allWpCards, ...markdownCards]) {
-      byId.set(post.id, post);
-    }
-
-    const allItems = Array.from(byId.values())
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .map((item) => mapToAppItem(item, locale, origin));
-
-    const data: AppBlogResponse = {
-      locale,
-      total: allItems.length,
-      page: null,
-      perPage: null,
-      hasMore: false,
-      sources: {
-        wordpress: allWpCards.length,
-        markdown: markdownCards.length,
-      },
-      items: allItems,
-    };
-
-    cache.set(cacheKeyAll, { data, ts: Date.now() });
-  } catch (err) {
-    console.error("Error in background fetch of remaining WP cards:", err);
+  const resolution = resolveLegacyRoute(legacyPath);
+  if (resolution.type !== "wp-page" || resolution.slug !== item.slug) {
+    return false;
   }
+
+  const slug = item.slug.toLowerCase();
+  const hyphenCount = slug.split("-").length - 1;
+  const articleText = stripHtml(item.content?.rendered ?? item.excerpt?.rendered ?? "");
+
+  if (LEGACY_BLOG_EXCLUDED_SLUGS.has(slug)) return false;
+  if (LEGACY_BLOG_EXCLUDED_SLUG_PARTS.some((part) => slug.includes(part))) return false;
+  if (articleText.length < LEGACY_BLOG_MIN_CONTENT_LENGTH) return false;
+
+  // Keep long-form editorial pages and skip short utility/product landing slugs.
+  return hyphenCount >= 3;
+}
+
+async function fetchWordPressPostCards(locale: string): Promise<BlogPostCard[]> {
+  const catId = LOCALE_TO_CATEGORY_ID[locale] || 96;
+  const items = await fetchWordPressCollection("posts", locale, {
+    categories: String(catId),
+  });
+
+  return items.map((item) => mapWpItemToCard(item, "wp-post"));
+}
+
+async function fetchLegacyWordPressPageCards(locale: string): Promise<BlogPostCard[]> {
+  const items = await fetchWordPressCollection("pages", locale, {
+    orderby: "modified",
+    order: "desc",
+  });
+
+  return items
+    .filter(isLegacyListingPage)
+    .map((item) => mapWpItemToCard(item, "wp-page"));
 }
 
 function fetchMarkdownCards(locale: string): BlogPostCard[] {
@@ -293,7 +340,6 @@ function paginateItems(
 
 export async function GET(req: NextRequest) {
   const locale = normalizeLocale(req.nextUrl.searchParams.get("lang"));
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? req.nextUrl.origin;
   const pageParam = req.nextUrl.searchParams.get("page");
   const perPageParam = req.nextUrl.searchParams.get("per_page");
   const cacheKey = `app-blog-${locale}-${pageParam ?? "all"}-${perPageParam ?? "all"}`;
@@ -306,17 +352,22 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const { cards: wordpressCards, totalPages, firstPageItems } = await fetchWordPressCardsFirstPage(locale);
+    const [wordpressPostCards, legacyPageCards] = await Promise.all([
+      fetchWordPressPostCards(locale),
+      fetchLegacyWordPressPageCards(locale),
+    ]);
     const markdownCards = fetchMarkdownCards(locale);
 
     const byId = new Map<string, BlogPostCard>();
+    const wordpressCards = [...wordpressPostCards, ...legacyPageCards];
+
     for (const post of [...wordpressCards, ...markdownCards]) {
       byId.set(post.id, post);
     }
 
     const allItems = Array.from(byId.values())
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .map((item) => mapToAppItem(item, locale, origin));
+      .map((item) => mapToAppItem(item, locale));
     const paginated = paginateItems(allItems, pageParam, perPageParam);
     const data: AppBlogResponse = {
       locale,
@@ -332,17 +383,6 @@ export async function GET(req: NextRequest) {
     };
 
     cache.set(cacheKey, { data, ts: Date.now() });
-
-    if (totalPages > 1) {
-      fetchRemainingWordPressCardsInBackground(
-        locale,
-        firstPageItems,
-        markdownCards,
-        totalPages,
-        origin,
-        cacheKey,
-      ).catch((err) => console.error("Error in background fetch of remaining WP cards:", err));
-    }
 
     return NextResponse.json(data, {
       headers: {

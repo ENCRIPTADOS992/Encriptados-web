@@ -29,6 +29,7 @@ const withPath = (baseUrl: string, path?: string) =>
 
 const isServer = typeof window === "undefined";
 const rawWpApi = process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE;
+const rawWpBlogApi = process.env.NEXT_PUBLIC_WP_BLOG_API || DEFAULT_WP_API_BASE;
 
 export const WP_API_BASE = trimTrailingSlash(
   isServer
@@ -40,7 +41,9 @@ export const WP_V1_BASE = `${WP_API_BASE}/encriptados/v1`;
 export const WP_V3_BASE = `${WP_API_BASE}/encriptados/v3`;
 
 export const WP_BLOG_API_BASE = isServer
-  ? trimTrailingSlash(process.env.NEXT_PUBLIC_WP_BLOG_API || WP_API_BASE)
+  // Legacy SEO/blog content must resolve from the admin WordPress even if the
+  // generic storefront WP API points somewhere else.
+  ? trimTrailingSlash(rawWpBlogApi)
   : WP_API_BASE;
 
 export const WP_POSTS_API_BASE = isServer

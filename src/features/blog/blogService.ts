@@ -3,6 +3,7 @@ import type {
   BlogPostCard,
   WordPressBlogItem,
 } from "./types";
+import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
 
 const ALLOWED_TAGS = new Set([
   "a",
@@ -157,8 +158,12 @@ function toWpAbsoluteUrl(value: string | undefined): string {
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
     return trimmed;
   }
-  const wpDomain = "https://admin.encriptados.io";
-  return `${wpDomain}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+  try {
+    const wpOrigin = new URL(WP_BLOG_API_BASE).origin;
+    return `${wpOrigin}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+  } catch {
+    return trimmed;
+  }
 }
 
 function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {

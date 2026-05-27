@@ -4,6 +4,7 @@ import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
 const WP_BASE = WP_BLOG_API_BASE;
 
 const ALLOWED_TAGS = new Set([
+  "a",
   "b",
   "blockquote",
   "br",
