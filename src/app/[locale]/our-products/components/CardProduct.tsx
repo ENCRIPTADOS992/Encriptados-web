@@ -1,11 +1,19 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-import { getProductLink, isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isRouterCategoryId,
+  isSimCategoryId,
+} from "@/shared/constants/productCategories";
+import {
+  getCanonicalSimProductId,
+  getProductLink,
+  isActivarAppsProduct,
+} from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
@@ -157,9 +165,10 @@ const CardProduct: React.FC<CardSimProps> = ({
   // Pre-calcular URL de "Más información" para usar en un Link nativo
   // Esto mejora SEO, accesibilidad y velocidad (prefetching de Next.js)
   const moreInfoUrl = (() => {
+    const selectedCategoryId = Number(filters.selectedOption);
     const url = getProductLink(
       headerTitle,
-      Number(filters.selectedOption),
+      selectedCategoryId,
       id,
       provider,
       typeProduct
@@ -168,12 +177,22 @@ const CardProduct: React.FC<CardSimProps> = ({
 
     // Build query string with all relevant params - SECURE LOGIC
     const params = new URLSearchParams();
-    params.set("productId", String(id));
+    const isSelectedSimCategory = isSimCategoryId(selectedCategoryId);
+    const isRouter = isRouterCategoryId(selectedCategoryId) || (headerTitle || "").toLowerCase().includes("router");
+    const isActivarApps = isActivarAppsProduct(headerTitle, selectedCategoryId, id);
+    const canonicalSimProductId = isSelectedSimCategory
+      ? getCanonicalSimProductId(provider, typeProduct, id)
+      : undefined;
+    const productIdForMoreInfo = canonicalSimProductId ?? id;
+    params.set("productId", String(productIdForMoreInfo));
 
     // Determinar categoría correcta
-    const isRouter = (headerTitle || "").toLowerCase().includes("router");
-    const isActivarApps = isActivarAppsProduct(headerTitle, Number(filters.selectedOption), id);
-    params.set("categoryId", isActivarApps ? "371" : isRouter ? "36" : "40"); // 36=Router, 40=SIMs, 371=Activar Apps
+    const categoryIdForMoreInfo = isActivarApps
+      ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS
+      : isRouter
+        ? PRODUCT_CATEGORY_IDS.ROUTERS
+        : selectedCategoryId;
+    params.set("categoryId", String(categoryIdForMoreInfo));
 
     // Usar variantId si está disponible (prioridad para seguridad)
     if (variantId) params.set("variantId", String(variantId));

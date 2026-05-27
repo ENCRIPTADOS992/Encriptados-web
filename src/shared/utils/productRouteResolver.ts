@@ -61,6 +61,27 @@ export function getSimProductUrl(
   return `/sim/${slug}`;
 }
 
+export function getCanonicalSimProductId(
+  provider: string | undefined,
+  typeProduct: string | undefined,
+  fallbackProductId?: number
+): number | undefined {
+  const simUrl = getSimProductUrl(provider, typeProduct);
+  const routeBySlug = SIM_PRODUCT_ROUTES.find((route) => route.link === simUrl);
+  if (routeBySlug) {
+    return routeBySlug.productId;
+  }
+
+  if (fallbackProductId) {
+    const routeById = SIM_PRODUCT_ROUTES.find((route) => route.productId === fallbackProductId);
+    if (routeById) {
+      return routeById.productId;
+    }
+  }
+
+  return undefined;
+}
+
 export const getProductLink = (
   productName: string,
   categoryId: number,
