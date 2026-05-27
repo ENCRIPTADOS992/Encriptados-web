@@ -1,7 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../services";
-import { Allproducts } from "../types/AllProductsResponse";
+import { Allproducts, Product } from "../types/AllProductsResponse";
 import { useLocale } from "next-intl";
+
+const dedupeProductsById = (products: Allproducts): Allproducts => {
+  const uniqueProducts = new Map<number, Product>();
+
+  for (const product of products) {
+    if (!uniqueProducts.has(product.id)) {
+      uniqueProducts.set(product.id, product);
+    }
+  }
+
+  return Array.from(uniqueProducts.values());
+};
 
 export const useGetProducts = (
   categoryId: number,
@@ -15,31 +27,16 @@ export const useGetProducts = (
 
   return useQuery<Allproducts>({
     queryKey: ["products", categoryId, provider, country, region, locale],
-    queryFn: async () => {
-      console.log("🔍 [useGetProducts] LOCALE DETECTADO:", locale);
-      console.log("🔍 [useGetProducts] PARAMS:", { categoryId, provider, country, region });
-      const res = await getAllProducts(categoryId, locale, {
+    queryFn: async () =>
+      getAllProducts(categoryId, locale, {
         simCountry: country ?? null,
         simRegion: region ?? null,
         provider: provider ?? null,
-      });
-      console.log("✅ [useGetProducts] productos recibidos:", res);
-      console.log("✅ [useGetProducts] cantidad de productos:", res?.length);
-      if (res && res.length > 0) {
-        console.log("✅ [useGetProducts] primer producto:", res[0]);
-        // Log de productos TIM para debug
-        const timProducts = res.filter(p => p.provider?.toLowerCase() === "tim");
-        console.log("✅ [useGetProducts] productos TIM encontrados:", timProducts.length);
-        if (timProducts.length > 0) {
-          console.log("✅ [useGetProducts] productos TIM:", timProducts.map(p => ({ id: p.id, name: p.name, provider: p.provider })));
-        }
-      } else {
-        console.warn("⚠️ [useGetProducts] NO SE RECIBIERON PRODUCTOS");
-      }
-      return res;
-    },
+      }),
     enabled,
+    select: dedupeProductsById,
     staleTime: 5 * 60 * 1000, // 5 minutes cache
+    placeholderData: (previousData) => previousData,
     refetchOnWindowFocus: false,
   });
 };

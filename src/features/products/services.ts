@@ -11,7 +11,7 @@ import {
 
 const api = axios.create({
   baseURL: WP_API_BASE,
-  timeout: 12000,
+  timeout: 20000,
 });
 
 type GetAllProductsOptions = {
@@ -60,12 +60,6 @@ export const getAllProducts = async (
     ) {
       params.provider = queryOptions.provider;
     }
-
-    console.log("➡️ [getAllProducts] Requesting:", {
-      baseURL: api.defaults.baseURL,
-      url: "/encriptados/v3/store/products",
-      params,
-    });
 
     const response = await api.get<{
       message: string;

@@ -4,7 +4,7 @@ import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
 import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
-import { getProductById } from "@/features/products/services";
+import { getCachedSimProduct } from "./getCachedSimProduct";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -105,9 +105,10 @@ export default async function SimSlugLayout({ children, params }: Props) {
       : slug === "esim-tim"
         ? "TIM eSIM"
         : "SIM Encriptada";
-  const product = config.productId
-    ? await getProductById(String(config.productId), locale || "es").catch(() => null)
-    : null;
+  const product = await getCachedSimProduct(
+    config.productId ? String(config.productId) : null,
+    locale || "es"
+  );
   const productJsonLd = buildProductJsonLd({
     name: product?.name || productName,
     description: product?.description || "SIM y eSIM para comunicacion privada y segura con Encriptados.",

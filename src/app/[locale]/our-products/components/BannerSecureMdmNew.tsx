@@ -10,6 +10,7 @@ import { getProductLink } from "@/utils/productRouteResolver";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
+import { useFetchOnView } from "@/shared/hooks/useFetchOnView";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -47,7 +48,14 @@ const BannerSecureMdmNew = () => {
   const router = useRouter();
   const locale = useLocale();
   const { openModal } = useModalPayment();
-  const { data: products } = useGetProducts(PRODUCT_CATEGORY_IDS.SOFTWARE, "all");
+  const { ref, enabled } = useFetchOnView();
+  const { data: products, isFetching } = useGetProducts(
+    PRODUCT_CATEGORY_IDS.SOFTWARE,
+    "all",
+    undefined,
+    undefined,
+    { enabled }
+  );
   const t = useTranslations("OurProductsPage.secureMdm");
 
   /* Map ALL systems products (not just Secure MDM) */
@@ -105,10 +113,10 @@ const BannerSecureMdmNew = () => {
     }];
   });
 
-  if (systemCards.length === 0) return null;
+  if (enabled && !isFetching && systemCards.length === 0) return null;
 
   return (
-    <section className="w-full bg-black text-white py-10 md:py-12 lg:py-16">
+    <section ref={ref} className="w-full bg-black text-white py-10 md:py-12 lg:py-16">
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-14 flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-center">
         {/* ── Left: text ── */}
         <div className="lg:flex-[0_0_300px] xl:flex-[0_0_340px] w-full flex flex-col items-start space-y-3 md:space-y-4 shrink-0">

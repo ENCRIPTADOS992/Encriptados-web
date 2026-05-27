@@ -1,8 +1,8 @@
-import { getProductById } from "@/features/products/services";
 import { getSimProductConfig } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
 import { redirect } from "next/navigation";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
+import { getCachedSimProduct } from "./getCachedSimProduct";
 
 interface PageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -18,9 +18,7 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   const staticConfig = getSimProductConfig(slug);
   const productId = firstParam(sp.productId) || (staticConfig?.productId ? String(staticConfig.productId) : undefined);
   const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
-  const product = productId
-    ? await getProductById(productId, locale, { simRegion }).catch(() => null)
-    : null;
+  const product = await getCachedSimProduct(productId, locale, simRegion);
 
   const fallbackTitle = slug === "esim-encriptada"
     ? "eSIM Encriptada"
@@ -73,9 +71,7 @@ export default async function SimProductPage({ params, searchParams }: PageProps
 
   if (staticConfig?.productId) {
     try {
-      initialProduct = await getProductById(String(staticConfig.productId), locale, {
-        simRegion,
-      });
+      initialProduct = await getCachedSimProduct(String(staticConfig.productId), locale, simRegion);
     } catch (error) {
        console.error("Error fetching SIM product server-side:", error);
     }

@@ -13,18 +13,15 @@ import { useTranslations } from "next-intl";
 import BannerOurProductsMobile from "./components/BannerOurProductsMobile";
 import BannerOurProducts from "./components/BannerOurProducts";
 import { useProductFilters } from "@/features/products/hooks/useProductFilters";
-import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import SilentCircleBanner from "./components/SilentCircleBanner";
 import BannerSecureMdmNew from "./components/BannerSecureMdmNew";
 import SecureCommunicationBanner from "./components/SecureCommunicationBanner";
-import BannerSmsActivation from "./components/BannerSmsActivation";
 import ActivarAppsBanner from "./components/ActivarAppsBanner";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 const OurProductsPage = () => {
-  const { openModal } = useModalPayment();
   const t = useTranslations("OurProductsPage");
   const { filters, updateFilters } = useProductFilters();
   const pathname = usePathname();
@@ -40,12 +37,12 @@ const OurProductsPage = () => {
   
   const { data: products, isFetching, isError } = useGetProducts(
     selectedOption,
-    filters.provider
+    filters.provider,
+    filters.simCountry,
+    filters.simRegion
   );
 
   useEffect(() => {
-    console.log("[OurProductsPage] Página montada correctamente ✅");
-
     // Leer parámetro 'category' de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get("category");
@@ -69,12 +66,7 @@ const OurProductsPage = () => {
       url.searchParams.delete("category");
       window.history.replaceState({}, "", url.toString());
     }
-  }, []);
-
-  useEffect(() => {
-    console.log("[OurProductsPage] Current filters:", filters);
-  }, [filters]);
-
+  }, [updateFilters]);
 
   // Detectar cuando la barra de filtros estática sale del viewport
   const { isVisible: isFilterVisible } = usePriceVisibility(filterRef);
@@ -184,7 +176,12 @@ const OurProductsPage = () => {
                 />
               )}
 
-              <ListOfProducts filters={filters} />
+              <ListOfProducts
+                filters={filters}
+                products={products}
+                isFetchingProducts={isFetching}
+                isProductsError={isError}
+              />
             </div>
 
           </SectionWrapper>

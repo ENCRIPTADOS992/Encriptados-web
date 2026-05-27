@@ -1,19 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
-import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
-import { CircleFlag } from "react-circle-flags";
-import { useLocale, useTranslations } from "next-intl";
+import React from "react";
+import { useTranslations } from "next-intl";
 
 import CardProduct from "./CardProduct";
 import Loader from "@/shared/components/Loader";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-import { getProductLink } from "@/shared/utils/productRouteResolver";
-import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import {
   PRODUCT_CATEGORY_IDS,
   isActivateAppsCategoryId,
@@ -25,6 +18,9 @@ import {
 
 interface ListOfProductsProps {
   filters: ProductFilters;
+  products?: Product[];
+  isFetchingProducts?: boolean;
+  isProductsError?: boolean;
 }
 
 const providerMap: Record<string, string[]> = {
@@ -51,6 +47,8 @@ type TimBadges = {
   tag?: string;
 };
 
+const ENABLE_PRODUCTS_DEBUG = false;
+
 const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
   CO: "Colombia",
   MX: "México",
@@ -60,6 +58,8 @@ const COUNTRY_LABEL_BY_CODE: Record<string, string> = {
 
 // 👇 helper para ver qué está pasando con las recargas
 const logRecargaSummary = (label: string, products: Product[]) => {
+  if (!ENABLE_PRODUCTS_DEBUG) return;
+
   const recargaNames = ["recarga datos", "recarga minutos"];
 
   const summary: Record<
@@ -94,7 +94,12 @@ const normalizeProviderValue = (value: unknown): string | undefined => {
   return String(value);
 };
 
-const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
+const ListOfProducts: React.FC<ListOfProductsProps> = ({
+  filters,
+  products: prefetchedProducts,
+  isFetchingProducts,
+  isProductsError,
+}) => {
   const t = useTranslations('BneSimPage.simSelection');
   // Si el provider es "activarapps", consultar la categoría 371 directamente
   const selectedOption = filters.provider === "activarapps"
@@ -105,22 +110,18 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   const isSelectedAppCategory = isAppCategoryId(selectedOption);
   const isSelectedActivateAppsCategory = isActivateAppsCategoryId(selectedOption);
   const isSelectedLicenseCategory = isLicenseCategoryId(selectedOption);
-  const { data, isFetching, isError } = useGetProducts(
+  const query = useGetProducts(
     selectedOption,
     filters.provider,
     filters.simCountry,
-    filters.simRegion
+    filters.simRegion,
+    { enabled: !prefetchedProducts }
   );
-
-  console.log("🎛️ [ListOfProducts] filtros actuales =>", {
-    ...filters,
-    selectedOption,
-    isTim: filters.provider === "tim",
-    timproviderValue: filters.timprovider,
-  });
+  const products = prefetchedProducts ?? query.data ?? [];
+  const isFetching = prefetchedProducts ? Boolean(isFetchingProducts) : query.isFetching;
+  const isError = prefetchedProducts ? Boolean(isProductsError) : query.isError;
 
   if (isFetching) {
-    console.log("[STATE] isFetching...");
     return (
       <div className="flex justify-center items-center mt-6">
         <Loader />
@@ -129,16 +130,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
   }
 
   if (isError) {
-    console.log("[STATE] isError...");
     return (
       <div className="flex justify-center items-center mt-6">
         Error al cargar productos.
       </div>
     );
   }
-
-  const products: Product[] = data ?? [];
-  console.log("📦 [ListOfProducts] productos recibidos:", products.length);
 
   // Deduplicar productos por ID (evitar duplicados de la API)
   const uniqueProductsMap = new Map<number, Product>();
@@ -148,11 +145,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({ filters }) => {
     }
   }
   const uniqueProducts = Array.from(uniqueProductsMap.values());
-  console.log("📦 [ListOfProducts] productos únicos después de deduplicar:", uniqueProducts.length);
 
   // Debug: mostrar todos los productos TIM recibidos de la API
   const allTimProducts = uniqueProducts.filter(p => p.provider?.toLowerCase() === "tim");
-  console.log("📦 [ListOfProducts] productos TIM en respuesta API:", allTimProducts.length);
   if (allTimProducts.length > 0) {
     console.log("📦 [ListOfProducts] lista productos TIM:", allTimProducts.map(p => ({
       id: p.id,
