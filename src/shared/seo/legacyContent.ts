@@ -257,11 +257,38 @@ async function fetchWordPressPage(slug: string, locale: SeoLocale | null): Promi
   return data[0] ?? null;
 }
 
+async function fetchWordPressPost(slug: string, locale: SeoLocale | null): Promise<WordPressPageItem | null> {
+  const params = new URLSearchParams({
+    slug,
+    per_page: "1",
+    _embed: "1",
+  });
+
+  if (locale) params.set("lang", locale);
+
+  const url = `${WP_BASE}/wp/v2/posts?${params.toString()}`;
+  const response = await fetch(url, {
+    next: { revalidate: 300 },
+  });
+
+  if (!response.ok) return null;
+
+  const data = (await response.json()) as WordPressPageItem[];
+  return data[0] ?? null;
+}
+
 export async function fetchLegacySeoPage(slug: string, locale: SeoLocale): Promise<LegacySeoPageContent | null> {
   const fallbackLocales = locale === "es" ? [locale, null] : [locale, "es" as const, null];
 
+  // Intentar primero con Páginas
   for (const fallbackLocale of fallbackLocales) {
     const item = await fetchWordPressPage(slug, fallbackLocale);
+    if (item) return mapWpPage(item, fallbackLocale ?? locale);
+  }
+
+  // Fallback a Entradas/Posts de Blog
+  for (const fallbackLocale of fallbackLocales) {
+    const item = await fetchWordPressPost(slug, fallbackLocale);
     if (item) return mapWpPage(item, fallbackLocale ?? locale);
   }
 
