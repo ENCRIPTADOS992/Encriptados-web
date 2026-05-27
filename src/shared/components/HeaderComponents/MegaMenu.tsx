@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { AnimatePresence } from "framer-motion";
 import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
+import { useRouter } from "next/navigation";
 
 type MenuItem = {
   title: string;
@@ -42,6 +43,7 @@ export default function MegaMenu({
 }: Props) {
   const locale = useLocale();
   const t = useTranslations("megaMenu");
+  const router = useRouter();
   const isExternal = (href: string) => /^https?:\/\//i.test(href);
 
   const activeCategoryData = categories[activeCategory] || {};
@@ -49,6 +51,10 @@ export default function MegaMenu({
   const activeCategoryLink = activeCategoryData.link;
   const activeCategoryImage = activeCategoryData.image || "/placeholder.svg";
   const previewHref = hoveredItem?.link || activeCategoryLink || "#";
+  const prefetchInternalRoute = (href?: string) => {
+    if (!href || href === "#" || isExternal(href)) return;
+    router.prefetch(localizeInternalHref(href, locale));
+  };
 
   // Determinar el título de la tercera columna según la categoría
   const getSubcategoryTitle = (categoryTitle: string) => {
@@ -105,6 +111,7 @@ export default function MegaMenu({
                   prefetch={true}
                   href={localizeInternalHref(previewHref, locale)}
                   className="inline-flex items-center text-[16px] font-normal text-[#757575] hover:text-white mt-3 transition-colors leading-none"
+                  onMouseEnter={() => prefetchInternalRoute(previewHref)}
                   onClick={closeMegaMenu}
                 >
                   {t("seeMore")}
@@ -131,6 +138,7 @@ export default function MegaMenu({
                         description: "",
                         image: "",
                       });
+                      prefetchInternalRoute(category.link);
                     }}
                   >
                     <h3 className={`text-[18px] font-semibold leading-none flex items-center gap-2 ${isActive ? "text-white" : "text-[#757575]"
@@ -158,6 +166,7 @@ export default function MegaMenu({
                     prefetch={true}
                     href={localizeInternalHref(category.link, locale)}
                     key={index}
+                    onMouseEnter={() => prefetchInternalRoute(category.link)}
                     onClick={closeMegaMenu}
                   >
                     {CategoryContent}

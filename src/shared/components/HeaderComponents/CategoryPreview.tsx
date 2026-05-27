@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { localizeInternalHref } from "@/shared/utils/localizedNavigation";
+import { useRouter } from "next/navigation";
 
 type MenuItem = {
   title: string;
@@ -23,7 +24,12 @@ export default function CategoryPreview({
   categoryTitle,
   locale,
 }: Props) {
+  const router = useRouter();
   const isExternal = (href: string) => /^https?:\/\//i.test(href);
+  const prefetchInternalRoute = (href?: string) => {
+    if (!href || isExternal(href)) return;
+    router.prefetch(localizeInternalHref(href, locale));
+  };
   
   return (
     <div className="w-[150px] xl:w-[180px] flex-shrink-0">
@@ -54,7 +60,10 @@ export default function CategoryPreview({
                 key={index}
                 href={localizeInternalHref(item.link, locale)}
                 className="block"
-                onMouseEnter={() => setHoveredItem(item)}
+                onMouseEnter={() => {
+                  setHoveredItem(item);
+                  prefetchInternalRoute(item.link);
+                }}
                 onClick={() => closeMegaMenu && closeMegaMenu()}
               >
                 {ItemContent}
