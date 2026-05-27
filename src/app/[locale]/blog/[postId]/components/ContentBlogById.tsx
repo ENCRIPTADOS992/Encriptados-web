@@ -92,7 +92,11 @@ const ContentBlogById = () => {
 
       <article
         className="prose prose-invert max-w-none text-white/78 prose-headings:font-bold prose-headings:text-white prose-h2:mt-12 prose-h2:text-[30px] prose-h2:leading-[1.25] prose-h3:text-[24px] prose-h3:leading-[1.35] prose-p:text-base prose-p:leading-8 prose-a:text-cyan-200 prose-a:no-underline hover:prose-a:text-cyan-100 prose-img:rounded-[18px] prose-img:border prose-img:border-white/10 prose-img:shadow-[0_18px_60px_rgba(0,0,0,0.28)] prose-blockquote:border-cyan-300/60 prose-blockquote:bg-white/[0.04] prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:text-white/80"
-        dangerouslySetInnerHTML={{ __html: post.content }}
+        dangerouslySetInnerHTML={{
+          __html: post.content
+            .replace(/href="https?:\/\/(?:www\.)?encriptados\.(?:net|io|es|co)(\/[^"]*)"/gi, 'href="$1"')
+            .replace(/href="https?:\/\/(?:www\.)?encriptados\.(?:net|io|es|co)"/gi, 'href="/"')
+        }}
       />
     </SectionWrapper>
   );

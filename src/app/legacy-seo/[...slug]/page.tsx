@@ -139,7 +139,11 @@ export default async function LegacySeoPage({ params, searchParams }: PageProps)
 
                   <div
                     className="legacy-seo-content mt-8 max-w-none text-[#334155] [&_a]:font-semibold [&_a]:text-[#057C8D] [&_blockquote]:border-l-4 [&_blockquote]:border-[#35CDFB] [&_blockquote]:bg-white [&_blockquote]:px-5 [&_blockquote]:py-4 [&_blockquote]:text-[#475569] [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-[#111827] [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#111827] [&_img]:my-8 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-lg [&_li]:my-2 [&_ol]:my-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:my-5 [&_p]:text-base [&_p]:leading-8 [&_strong]:text-[#111827] [&_table]:my-8 [&_table]:w-full [&_table]:border-collapse [&_td]:border [&_td]:border-[#DDE6EE] [&_td]:p-3 [&_th]:border [&_th]:border-[#DDE6EE] [&_th]:bg-white [&_th]:p-3 [&_ul]:my-5 [&_ul]:list-disc [&_ul]:pl-6"
-                    dangerouslySetInnerHTML={{ __html: page.content }}
+                    dangerouslySetInnerHTML={{
+                      __html: page.content
+                        .replace(/href="https?:\/\/(?:www\.)?encriptados\.(?:net|io|es|co)(\/[^"]*)"/gi, 'href="$1"')
+                        .replace(/href="https?:\/\/(?:www\.)?encriptados\.(?:net|io|es|co)"/gi, 'href="/"')
+                    }}
                   />
 
                   <style>{`
