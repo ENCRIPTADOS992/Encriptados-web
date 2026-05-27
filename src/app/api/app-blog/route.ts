@@ -6,19 +6,12 @@ import type {
   MarkdownBlogMeta,
   WordPressBlogItem,
 } from "@/features/blog/types";
-import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
+import { WP_BLOG_API_BASE, WP_BLOG_CATEGORY_IDS } from "@/shared/constants/backend";
 import { resolveLegacyRoute } from "@/shared/seo/legacyRoutes";
 
 const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 const WP_PER_PAGE = 100;
-const LOCALE_TO_CATEGORY_ID: Record<string, number> = {
-  es: 1,   // noticias
-  en: 12,  // news
-  pt: 393, // noticias-pt
-  it: 180, // notizia
-  fr: 16,  // nouvelles
-};
 const CACHE_TTL = 5 * 60 * 1000;
 
 type AppBlogResponse = {
@@ -289,7 +282,7 @@ function isLegacyListingPage(item: WordPressContentItem): boolean {
 }
 
 async function fetchWordPressPostCards(locale: string): Promise<BlogPostCard[]> {
-  const catId = LOCALE_TO_CATEGORY_ID[locale] || 96;
+  const catId = WP_BLOG_CATEGORY_IDS[locale] || 1;
   const items = await fetchWordPressCollection("posts", locale, {
     categories: String(catId),
   });

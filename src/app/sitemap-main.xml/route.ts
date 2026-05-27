@@ -6,7 +6,7 @@ import { getStaticPageSitemapPaths } from "@/shared/seo/staticPages";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
 import { getProductCategoryApiParam } from "@/shared/constants/productCategories";
 import { getProductLink } from "@/shared/utils/productRouteResolver";
-import { WP_BLOG_API_BASE, WP_API_BASE } from "@/shared/constants/backend";
+import { WP_BLOG_API_BASE, WP_API_BASE, WP_BLOG_CATEGORY_IDS } from "@/shared/constants/backend";
 import { buildUrlSet, xmlResponse, type SitemapUrlEntry } from "@/shared/seo/sitemapXml";
 
 const WP_BASE = WP_BLOG_API_BASE;
@@ -26,7 +26,7 @@ function getPathFromUrl(value: string | undefined): string | null {
 
 async function fetchWordPressBlogPaths(locale: string): Promise<Array<{ path: string; lastModified?: string }>> {
   try {
-    const catId = (locale === "en" ? 97 : locale === "pt" ? 101 : locale === "it" ? 100 : locale === "fr" ? 98 : 96);
+    const catId = WP_BLOG_CATEGORY_IDS[locale] || 1;
     const firstUrl = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=100&page=1&_fields=link,modified,date&orderby=modified&order=desc`;
     const firstRes = await fetch(firstUrl, { next: { revalidate } });
     if (!firstRes.ok) return [];
@@ -47,6 +47,8 @@ async function fetchWordPressBlogPaths(locale: string): Promise<Array<{ path: st
       .map((item) => {
         const path = getPathFromUrl(item.link);
         if (!path) return null;
+        // Only include URLs that look like blog content (same filter as app-blog)
+        if (!path.toLowerCase().includes("blog")) return null;
         return { path, lastModified: item.date } as { path: string; lastModified?: string };
       })
       .filter((item): item is { path: string; lastModified?: string } => item !== null);

@@ -56,6 +56,14 @@ export const SIMTIM_API_BASE = isServer
 
 export const BLOGS_API_URL = withQuery(`${WP_V1_BASE}/blogs`, { lang: "es" });
 
+export const WP_BLOG_CATEGORY_IDS: Record<string, number> = {
+  es: 1,   // noticias
+  en: 12,  // news
+  pt: 393, // noticias-pt
+  it: 180, // notizia
+  fr: 16,  // nouvelles
+};
+
 export const buildWpApiUrl = (path: string, query?: QueryParams) =>
   withQuery(withPath(WP_API_BASE, path), query);
 

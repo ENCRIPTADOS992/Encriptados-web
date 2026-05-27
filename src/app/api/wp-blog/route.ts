@@ -1,19 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
+import { WP_BLOG_API_BASE, WP_BLOG_CATEGORY_IDS } from "@/shared/constants/backend";
 
 const WP_BASE = WP_BLOG_API_BASE;
 
 // Simple in-memory cache for WP responses
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
-const LOCALE_TO_CATEGORY_ID: Record<string, number> = {
-  es: 96,  // noticias
-  en: 97,  // news
-  pt: 101, // noticias-pt
-  it: 100, // notizia
-  fr: 98,  // nouvelles
-};
 
 export async function GET(req: NextRequest) {
   const lang = req.nextUrl.searchParams.get("lang") ?? "es";
@@ -35,7 +27,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const catId = LOCALE_TO_CATEGORY_ID[lang] || 96;
+    const catId = WP_BLOG_CATEGORY_IDS[lang] || 1;
     const url = id
       ? `${WP_BASE}/wp/v2/posts/${encodeURIComponent(id)}?_embed`
       : slug
