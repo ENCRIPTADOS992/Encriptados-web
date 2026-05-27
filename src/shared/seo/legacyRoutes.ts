@@ -26,6 +26,7 @@ const RESERVED_TOP_LEVEL = new Set([
   "blogs",
   "location",
   "legacy-seo",
+  "legacy-current",
   "manifest.webmanifest",
   "robots.txt",
   "sitemap.xml",

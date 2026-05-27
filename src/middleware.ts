@@ -69,9 +69,12 @@ export async function middleware(
   }
 
   if (legacyRoute.type === "rewrite") {
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = "/legacy-current";
+    rewriteUrl.searchParams.set("target", legacyRoute.destination);
     return withNoIndexHeader(
       request,
-      NextResponse.rewrite(new URL(legacyRoute.destination, request.url)),
+      NextResponse.rewrite(rewriteUrl),
     );
   }
 
@@ -146,4 +149,3 @@ export const config = {
     "/((?!api|_next|_vercel|.*\\..*).*)", // Excluye API, rutas internas y archivos estáticos
   ],
 };
-
