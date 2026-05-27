@@ -49,6 +49,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
+    staleTime: 1000 * 60 * 5, // 5 minutos — evita doble fetch
   });
   console.log("[ModalSIM] product crudo =>", product);
 

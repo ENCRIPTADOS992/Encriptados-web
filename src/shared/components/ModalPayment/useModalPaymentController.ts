@@ -226,7 +226,15 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       return;
     }
 
-    if (!product || modeResolved) return;
+    if (modeResolved) return;
+
+    // If query is finished but product is not found or failed, resolve it anyway to avoid infinite spinner
+    if (!isLoadingProduct && !product) {
+      setModeResolved(true);
+      return;
+    }
+
+    if (!product) return;
 
     if (supportOnly) {
       if (mode !== "new_user") setMode("new_user");
@@ -243,7 +251,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
       setMode("roning_code");
     }
     setModeResolved(true);
-  }, [isModalOpen, product, kind, mode, setMode, supportOnly, modeResolved]);
+  }, [isModalOpen, product, kind, mode, setMode, supportOnly, modeResolved, isLoadingProduct]);
 
   // The modal is "ready" once we've loaded the product and determined the correct mode,
   // or if there's no productid to fetch at all.
