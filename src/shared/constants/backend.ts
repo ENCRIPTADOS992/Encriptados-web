@@ -1,3 +1,5 @@
+import axios from "axios";
+
 // ════════════════════════════════════════════════════════════════
 // Server-Side Request Local Routing Optimization (Cloudflare DNS Bottleneck Fix)
 // ════════════════════════════════════════════════════════════════
@@ -56,6 +58,21 @@ if (typeof window === "undefined") {
 
     return originalFetch(input, init);
   };
+
+  // ════════════════════════════════════════════════════════════════
+  // Axios Request Local Routing Interceptor
+  // ════════════════════════════════════════════════════════════════
+  axios.interceptors.request.use((config) => {
+    const url = config.url || "";
+    const baseURL = config.baseURL || "";
+    if (url.startsWith("http://127.0.0.1") || baseURL.startsWith("http://127.0.0.1")) {
+      config.headers = config.headers || {};
+      config.headers["Host"] = "admin.encriptados.io";
+    }
+    return config;
+  }, (error) => {
+    return Promise.reject(error);
+  });
 }
 
 type QueryValue = string | number | boolean | null | undefined;
@@ -83,8 +100,13 @@ const withQuery = (baseUrl: string, query?: QueryParams) => {
 const withPath = (baseUrl: string, path?: string) =>
   path ? `${baseUrl}${normalizePath(path)}` : baseUrl;
 
+const isServer = typeof window === "undefined";
+const rawWpApi = process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE;
+
 export const WP_API_BASE = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE
+  isServer && rawWpApi.startsWith("https://admin.encriptados.io")
+    ? rawWpApi.replace("https://admin.encriptados.io", "http://127.0.0.1")
+    : rawWpApi
 );
 
 export const WP_V1_BASE = `${WP_API_BASE}/encriptados/v1`;
