@@ -15,8 +15,9 @@ if (typeof window === "undefined") {
       urlStr = input.url;
     }
 
-    if (urlStr.startsWith("https://admin.encriptados.io")) {
-      const localUrl = urlStr.replace("https://admin.encriptados.io", "http://127.0.0.1");
+    const isWpTarget = urlStr.startsWith("https://admin.encriptados.io") || urlStr.startsWith("https://encriptados.es");
+    if (isWpTarget) {
+      const localUrl = urlStr.replace(/https:\/\/(admin\.encriptados\.io|encriptados\.es)/, "http://127.0.0.1");
 
       if (input instanceof Request) {
         const newHeaders = new Headers(input.headers);
@@ -107,23 +108,26 @@ const rawWpApi = process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE;
 
 export const WP_API_BASE = trimTrailingSlash(
   isServer
-    ? (rawWpApi.startsWith("https://admin.encriptados.io")
-        ? rawWpApi.replace("https://admin.encriptados.io", "http://127.0.0.1")
+    ? (rawWpApi.startsWith("https://admin.encriptados.io") || rawWpApi.startsWith("https://encriptados.es")
+        ? rawWpApi.replace(/https:\/\/(admin\.encriptados\.io|encriptados\.es)/, "http://127.0.0.1")
         : rawWpApi)
     : "/api/wp-json"
 );
 
 export const WP_V1_BASE = `${WP_API_BASE}/encriptados/v1`;
 export const WP_V3_BASE = `${WP_API_BASE}/encriptados/v3`;
-export const WP_BLOG_API_BASE = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_WP_BLOG_API || WP_API_BASE
-);
-export const WP_POSTS_API_BASE = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_WP_API_URL || `${WP_BLOG_API_BASE}/wp/v2`
-);
-export const SIMTIM_API_BASE = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_SIMTIM_BASEURL || `${WP_V3_BASE}/simtim`
-);
+
+export const WP_BLOG_API_BASE = isServer
+  ? trimTrailingSlash(process.env.NEXT_PUBLIC_WP_BLOG_API || WP_API_BASE)
+  : WP_API_BASE;
+
+export const WP_POSTS_API_BASE = isServer
+  ? trimTrailingSlash(process.env.NEXT_PUBLIC_WP_API_URL || `${WP_BLOG_API_BASE}/wp/v2`)
+  : `${WP_BLOG_API_BASE}/wp/v2`;
+
+export const SIMTIM_API_BASE = isServer
+  ? trimTrailingSlash(process.env.NEXT_PUBLIC_SIMTIM_BASEURL || `${WP_V3_BASE}/simtim`)
+  : `${WP_V3_BASE}/simtim`;
 
 export const BLOGS_API_URL = withQuery(`${WP_V1_BASE}/blogs`, { lang: "es" });
 
