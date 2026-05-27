@@ -119,7 +119,8 @@ export default function FooterEncrypted() {
     { name: "VNClagoon", href: getAppUrl("VNC Lagoon") },
   ];
   const sistemasLinks = [
-    { name: "Zi0n", href: getAppUrl("Zi0n") },
+    // Zi0n oculto del footer de navegación (no del producto en sí)
+    // { name: "Zi0n", href: getAppUrl("Zi0n") },
     { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=60996" },
     { name: "Cryptcom", href: getAppUrl("Cryptcom") },
     { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
