@@ -397,6 +397,10 @@ export async function GET(req: NextRequest) {
     }
 
     const allItems = Array.from(byId.values())
+      .filter((item) => {
+        const path = item.legacyPath ?? `/${locale}/blog/${item.slug}`;
+        return path.toLowerCase().includes("blog");
+      })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .map((item) => mapToAppItem(item, locale));
     const paginated = paginateItems(allItems, pageParam, perPageParam);
