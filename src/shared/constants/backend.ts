@@ -1,81 +1,5 @@
 import axios from "axios";
 
-// ════════════════════════════════════════════════════════════════
-// Server-Side Request Local Routing Optimization (Cloudflare DNS Bottleneck Fix)
-// ════════════════════════════════════════════════════════════════
-if (typeof window === "undefined") {
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = async function (input: RequestInfo | URL, init?: RequestInit) {
-    let urlStr = "";
-    if (typeof input === "string") {
-      urlStr = input;
-    } else if (input instanceof URL) {
-      urlStr = input.toString();
-    } else if (input instanceof Request) {
-      urlStr = input.url;
-    }
-
-    const isWpTarget = urlStr.startsWith("https://admin.encriptados.io") || urlStr.startsWith("https://encriptados.es");
-    if (isWpTarget) {
-      const localUrl = urlStr.replace(/https:\/\/(admin\.encriptados\.io|encriptados\.es)/, "http://127.0.0.1");
-
-      if (input instanceof Request) {
-        const newHeaders = new Headers(input.headers);
-        newHeaders.set("Host", "admin.encriptados.io");
-        
-        if (init?.headers) {
-          const initHeaders = new Headers(init.headers);
-          initHeaders.forEach((val, key) => {
-            newHeaders.set(key, val);
-          });
-        }
-
-        const newRequest = new Request(localUrl, {
-          method: input.method,
-          headers: newHeaders,
-          body: input.body,
-          referrer: input.referrer,
-          referrerPolicy: input.referrerPolicy,
-          mode: input.mode,
-          credentials: input.credentials,
-          cache: input.cache,
-          redirect: input.redirect,
-          integrity: input.integrity,
-          keepalive: input.keepalive,
-          signal: input.signal,
-          ...(init || {}),
-        });
-
-        return originalFetch(newRequest);
-      } else {
-        const newInit = { ...init };
-        const headers = new Headers(init?.headers);
-        headers.set("Host", "admin.encriptados.io");
-        newInit.headers = headers;
-
-        return originalFetch(localUrl, newInit);
-      }
-    }
-
-    return originalFetch(input, init);
-  };
-
-  // ════════════════════════════════════════════════════════════════
-  // Axios Request Local Routing Interceptor
-  // ════════════════════════════════════════════════════════════════
-  axios.interceptors.request.use((config) => {
-    const url = config.url || "";
-    const baseURL = config.baseURL || "";
-    if (url.startsWith("http://127.0.0.1") || baseURL.startsWith("http://127.0.0.1")) {
-      config.headers = config.headers || {};
-      config.headers["Host"] = "admin.encriptados.io";
-    }
-    return config;
-  }, (error) => {
-    return Promise.reject(error);
-  });
-}
-
 type QueryValue = string | number | boolean | null | undefined;
 type QueryParams = Record<string, QueryValue>;
 
@@ -108,9 +32,7 @@ const rawWpApi = process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE;
 
 export const WP_API_BASE = trimTrailingSlash(
   isServer
-    ? (rawWpApi.startsWith("https://admin.encriptados.io") || rawWpApi.startsWith("https://encriptados.es")
-        ? rawWpApi.replace(/https:\/\/(admin\.encriptados\.io|encriptados\.es)/, "http://127.0.0.1")
-        : rawWpApi)
+    ? rawWpApi
     : "/api/wp-json"
 );
 

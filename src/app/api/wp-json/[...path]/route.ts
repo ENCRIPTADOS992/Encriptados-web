@@ -7,12 +7,14 @@ export async function GET(
   const { path } = await params;
   const { searchParams } = new URL(request.url);
   const pathStr = path.join("/");
-  const targetUrl = `http://127.0.0.1/wp-json/${pathStr}?${searchParams.toString()}`;
+  const targetUrl = `https://admin.encriptados.io/wp-json/${pathStr}?${searchParams.toString()}`;
 
   try {
-    const headers = new Headers(request.headers);
-    // Force Host header so WordPress knows which site to serve
-    headers.set("Host", "admin.encriptados.io");
+    const headers = new Headers();
+    const auth = request.headers.get("authorization");
+    if (auth) headers.set("authorization", auth);
+    const accept = request.headers.get("accept");
+    if (accept) headers.set("accept", accept);
 
     const response = await fetch(targetUrl, {
       method: "GET",
@@ -43,15 +45,18 @@ export async function POST(
   const { path } = await params;
   const { searchParams } = new URL(request.url);
   const pathStr = path.join("/");
-  const targetUrl = `http://127.0.0.1/wp-json/${pathStr}?${searchParams.toString()}`;
+  const targetUrl = `https://admin.encriptados.io/wp-json/${pathStr}?${searchParams.toString()}`;
 
   try {
-    const headers = new Headers(request.headers);
-    // Force Host header so WordPress knows which site to serve
-    headers.set("Host", "admin.encriptados.io");
+    const headers = new Headers();
+    const auth = request.headers.get("authorization");
+    if (auth) headers.set("authorization", auth);
+    const contentType = request.headers.get("content-type") || "";
+    if (contentType) headers.set("content-type", contentType);
+    const accept = request.headers.get("accept");
+    if (accept) headers.set("accept", accept);
 
     let body: any = null;
-    const contentType = request.headers.get("content-type") || "";
     if (contentType.includes("application/json")) {
       body = JSON.stringify(await request.json());
     } else if (
