@@ -89,6 +89,10 @@ function normalizeLocale(locale: string | null): string {
   return locale.toLowerCase();
 }
 
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function stripHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, "")
@@ -186,6 +190,42 @@ function mapToAppItem(item: BlogPostCard, locale: string): AppBlogItem {
   };
 }
 
+async function fetchWordPressJson<T>(url: string): Promise<{
+  data: T;
+  headers: Headers;
+}> {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        cache: "no-store",
+        headers: {
+          connection: "close",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`WordPress API error: ${response.status}`);
+      }
+
+      return {
+        data: (await response.json()) as T,
+        headers: response.headers,
+      };
+    } catch (error) {
+      lastError = error;
+      if (attempt === 0) {
+        await wait(250);
+      }
+    }
+  }
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Unknown WordPress fetch error");
+}
+
 async function fetchWordPressCollection(
   endpoint: "posts" | "pages",
   locale: string,
@@ -203,35 +243,28 @@ async function fetchWordPressCollection(
   }
 
   const firstUrl = `${WP_BASE}/wp/v2/${endpoint}?${params.toString()}`;
-  const firstRes = await fetch(firstUrl, { cache: "no-store" });
-
-  if (!firstRes.ok) {
-    throw new Error(`WordPress ${endpoint} API error: ${firstRes.status}`);
-  }
-
-  const firstPageItems = (await firstRes.json()) as WordPressContentItem[];
-  const totalPages = Number(firstRes.headers.get("x-wp-totalpages") ?? 1);
+  const firstResponse = await fetchWordPressJson<WordPressContentItem[]>(firstUrl);
+  const firstPageItems = firstResponse.data;
+  const totalPages = Number(firstResponse.headers.get("x-wp-totalpages") ?? 1);
 
   if (totalPages <= 1) {
     return firstPageItems;
   }
 
-  const remainingPages = Array.from(
-    { length: Math.max(totalPages - 1, 0) },
-    (_, index) => index + 2,
-  );
+  const remaining: WordPressContentItem[] = [];
+  for (let page = 2; page <= totalPages; page += 1) {
+    params.set("page", String(page));
+    const url = `${WP_BASE}/wp/v2/${endpoint}?${params.toString()}`;
 
-  const remaining = await Promise.all(
-    remainingPages.map(async (page) => {
-      params.set("page", String(page));
-      const url = `${WP_BASE}/wp/v2/${endpoint}?${params.toString()}`;
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) return [] as WordPressContentItem[];
-      return (await res.json()) as WordPressContentItem[];
-    }),
-  );
+    try {
+      const response = await fetchWordPressJson<WordPressContentItem[]>(url);
+      remaining.push(...response.data);
+    } catch (error) {
+      console.error(`Failed to fetch WordPress ${endpoint} page ${page}:`, error);
+    }
+  }
 
-  return [...firstPageItems, ...remaining.flat()];
+  return [...firstPageItems, ...remaining];
 }
 
 function isLegacyListingPage(item: WordPressContentItem): boolean {
@@ -352,10 +385,8 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [wordpressPostCards, legacyPageCards] = await Promise.all([
-      fetchWordPressPostCards(locale),
-      fetchLegacyWordPressPageCards(locale),
-    ]);
+    const wordpressPostCards = await fetchWordPressPostCards(locale);
+    const legacyPageCards = await fetchLegacyWordPressPageCards(locale);
     const markdownCards = fetchMarkdownCards(locale);
 
     const byId = new Map<string, BlogPostCard>();
