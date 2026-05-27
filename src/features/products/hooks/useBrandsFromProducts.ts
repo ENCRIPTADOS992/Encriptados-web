@@ -11,7 +11,7 @@ export const useBrandsFromProducts = (products: Product[] | undefined) => {
 
     const uniqueBrands = Array.from(
       new Set(products.map((p) => p.brand?.trim()).filter(Boolean))
-    );
+    ).filter((brand) => brand.toLowerCase() !== "zion");
 
     console.log("[useBrandsFromProducts] uniqueBrands:", uniqueBrands);
 
