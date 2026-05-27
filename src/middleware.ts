@@ -53,6 +53,17 @@ export async function middleware(
   }
 
   if (pathname.startsWith("/blogs/") && !pathname.startsWith("/blogs/category/")) {
+    const blogParts = pathname.split("/").filter(Boolean);
+    if (blogParts.length > 3) {
+      const legacyBlogRoute = resolveLegacyRoute(pathname);
+      if (legacyBlogRoute.type === "rewrite") {
+        const rewriteUrl = request.nextUrl.clone();
+        rewriteUrl.pathname = "/legacy-current";
+        rewriteUrl.searchParams.set("target", legacyBlogRoute.destination);
+        return withNoIndexHeader(request, NextResponse.rewrite(rewriteUrl));
+      }
+    }
+
     return withNoIndexHeader(request, NextResponse.next());
   }
 

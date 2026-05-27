@@ -17,6 +17,7 @@ import HomePage from "@/app/[locale]/page";
 import AboutUsPage from "@/app/[locale]/about-us/page";
 import BecomeEncryptedPartnerPage from "@/app/[locale]/become-an-encrypted-partner/page";
 import BlogIndexPage from "@/app/[locale]/blog/page";
+import BlogDetailPage from "@/app/[locale]/blogs/[category]/[slug]/page";
 import EncryptedPhonesDistributorsPage from "@/app/[locale]/encrypted-phones-distributors/page";
 import FastDeliveryPage from "@/app/[locale]/fast-delivery/page";
 import IdentityVerificationPage from "@/app/[locale]/identity-verification/page";
@@ -25,8 +26,10 @@ import OffersPage from "@/app/[locale]/offers/page";
 import PrivacyPolicyPage from "@/app/[locale]/pages/politica-de-tratamiento-de-datos/page";
 import TermsPage from "@/app/[locale]/pages/terminos-y-condiciones/page";
 import ProductPage from "@/app/[locale]/apps/[slug]/page";
+import SecurityTestPage from "@/app/[locale]/security-test/page";
 import SimProductPage from "@/app/[locale]/sim/[slug]/page";
 import WhereToFindEncryptedPage from "@/app/[locale]/where-to-find-encrypted/page";
+import WhereToFindUsPage from "@/app/[locale]/where-to-find-us/page";
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -71,6 +74,18 @@ async function renderTarget(locale: SeoLocale, segments: string[]): Promise<Reac
     return <ProductPage params={Promise.resolve({ locale, slug: segments[1] })} />;
   }
 
+  if (segments[0] === "blogs" && segments[1] && segments[2]) {
+    return (
+      <BlogDetailPage
+        params={Promise.resolve({
+          locale,
+          category: segments[1],
+          slug: segments[2],
+        })}
+      />
+    );
+  }
+
   if (segments[0] === "sim" && segments[1]) {
     return (
       <SimProductPage
@@ -105,8 +120,12 @@ async function renderTarget(locale: SeoLocale, segments: string[]): Promise<Reac
       return <NewsPage />;
     case "offers":
       return <OffersPage />;
+    case "security-test":
+      return <SecurityTestPage />;
     case "where-to-find-encrypted":
       return <WhereToFindEncryptedPage params={pageParams} />;
+    case "where-to-find-us":
+      return <WhereToFindUsPage />;
     default:
       return notFound();
   }

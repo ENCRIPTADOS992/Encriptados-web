@@ -33,6 +33,18 @@ const RESERVED_TOP_LEVEL = new Set([
   "sitemaps",
 ]);
 
+const LEGACY_SECTION_PREFIXES = new Set([
+  "author",
+  "blogs",
+  "categoria-producto",
+  "collections",
+  "marca",
+  "news",
+  "noticias",
+  "pages",
+  "producto",
+]);
+
 const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
   "about-us",
   "activar-apps",
@@ -46,6 +58,7 @@ const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
   "chi-siamo",
   "consegna-rapida",
   "consegne",
+  "coverage",
   "dashboard",
   "devenir-partenaire-crypte",
   "deliveries",
@@ -89,9 +102,11 @@ const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
   "ou-trouver-cryptees",
   "our-products",
   "pages",
+  "pricing",
   "products-test",
   "prueba-encriptada",
   "router",
+  "checkout",
   "security-test",
   "seja-socio-de-encriptados",
   "se-socio-de-encriptados",
@@ -102,6 +117,7 @@ const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
   "sobre-nos",
   "terms-app",
   "test",
+  "test-de-securite",
   "test-chiffré",
   "test-crittografato",
   "test-design-system",
@@ -132,20 +148,32 @@ const CURRENT_SITE_ROUTES: Record<string, string> = {
   "politica-de-tratamiendo-de-datos": "/pages/politica-de-tratamiento-de-datos",
   "politica-de-tratamiento-de-datos": "/pages/politica-de-tratamiento-de-datos",
   "terminos-y-condiciones": "/pages/terminos-y-condiciones",
+  "termos-e-condicoes": "/pages/terminos-y-condiciones",
   "termes-et-conditions": "/pages/terminos-y-condiciones",
+  coverage: "/where-to-find-us",
+  checkout: "/offers",
+  pricing: "/offers",
+  "test-de-securite": "/security-test",
   "pagina-iniziale": "",
   "pagina-inicial": "",
 };
 
 const LEGACY_TOP_LEVEL_REWRITE_ROUTES: Record<string, string> = {
+  checkout: "/offers",
+  coverage: "/where-to-find-us",
   "donde-encontrar-encriptados": "/where-to-find-encrypted",
   "entrega-rapida": "/fast-delivery",
   noticias: "/news",
   ofertas: "/offers",
+  pricing: "/offers",
   "se-socio-de-encriptados": "/become-an-encrypted-partner",
+  "termos-e-condicoes": "/pages/terminos-y-condiciones",
+  "test-de-securite": "/security-test",
 };
 
 const PRODUCT_ROUTES: Record<string, string> = {
+  "armadillo-licencias-y-celular": "/apps/armadillo",
+  "armadillo-chat-licencias-activacion-renovacion": "/apps/armadillo-chat",
   "secure-mdm-android": "/apps/secure-mdm-android",
   "secure-mdm-iphone": "/apps/secure-mdm-iphone",
   "securecrypt-app": "/apps/securecrypt",
@@ -161,11 +189,16 @@ const PRODUCT_ROUTES: Record<string, string> = {
   "armadillo-phone": "/apps/armadillo",
   "armadillo-chat": "/apps/armadillo-chat",
   armadillo: "/apps/armadillo",
+  "galaxia-mdm": "/apps/galaxia-mdm",
+  "galaxia-mdm-iphone": "/apps/galaxia-mdm",
   "vaultchat-app": "/apps/vaultchat",
   vaultchat: "/apps/vault-chat-v2",
   "vault-chat": "/apps/vaultchat",
+  zi0n: "/apps/zi0n",
+  zion: "/apps/zi0n",
   "silent-circle": "/apps/silent-phone",
   "silent-circle-app": "/apps/silent-phone",
+  "silent-circle-app-encriptada-6-meses-de-servicio": "/apps/silent-phone",
   "silent-phone": "/apps/silent-phone",
   threema: "/apps/threema",
   "threema-app": "/apps/threema",
@@ -179,8 +212,11 @@ const PRODUCT_ROUTES: Record<string, string> = {
   "sim-encriptada": "/sim/sim-encriptada",
   "sim-cifrada": "/sim/sim-encriptada",
   "encrypted-sim-card": "/sim/sim-encriptada",
+  "encriptados-sim-card-encriptada": "/sim/sim-encriptada",
   "encrypted-esim": "/sim/esim-encriptada",
   "esim-encriptada": "/sim/esim-encriptada",
+  "sim-encriptada-encriptados": "/sim/sim-encriptada",
+  "cambio-imsi-para-sim-encriptada": "/sim/sim-encriptada",
   "tarjeta-prepago-movil": "/sim/sim-encriptada",
   "tarjeta-prepago-movil-encriptada": "/sim/sim-encriptada",
   "international-prepaid-card": "/sim/sim-encriptada",
@@ -198,8 +234,10 @@ const RETIRED_PRODUCT_SLUGS = new Set([
   "elyon",
   "parrot",
   "totalsec",
+  "totalsec-2",
   "total-sec",
   "t2-communicator",
+  "celular-t2-communicator",
   "ghost-chat",
   "tribu-phone",
 ]);
@@ -227,6 +265,14 @@ function getLocaleAndParts(pathname: string): { locale: SeoLocale; parts: string
     return { locale: first as SeoLocale, parts: parts.slice(1) };
   }
 
+  if (
+    /^[a-z]{2,3}$/i.test(first ?? "") &&
+    parts[1] &&
+    LEGACY_SECTION_PREFIXES.has(parts[1])
+  ) {
+    return { locale: "es", parts: parts.slice(1) };
+  }
+
   return { locale: "es", parts };
 }
 
@@ -246,6 +292,16 @@ function getLegacyProductSlug(parts: string[]): string | null {
 
 function isCurrentSiteRoute(parts: string[]): boolean {
   return parts.length === 1 && CURRENT_SITE_TOP_LEVEL_ROUTES.has(parts[0]);
+}
+
+function getCollectionSlug(parts: string[]): string | null {
+  if (parts[0] !== "collections" || !parts[1]) return null;
+
+  const normalized = parts[1]
+    .replace(/^celulares-encriptados-/, "")
+    .replace(/^encrypted-phones-/, "");
+
+  return normalized || null;
 }
 
 function resolveKnownSlug(
@@ -297,6 +353,54 @@ export function resolveLegacyRoute(pathname: string): LegacyRouteResolution {
     return {
       type: "rewrite",
       destination: localizePath(locale, "/blog"),
+    };
+  }
+
+  if (parts[0] === "blogs" && parts[1] && parts[2] && parts.length > 3) {
+    return {
+      type: "rewrite",
+      destination: localizePath(locale, `/blogs/${parts[1]}/${parts[2]}`),
+    };
+  }
+
+  if (parts[0] === "author" && parts[1]) {
+    return {
+      type: "rewrite",
+      destination: localizePath(locale, "/blog"),
+    };
+  }
+
+  if ((parts[0] === "news" || parts[0] === "noticias") && parts[1] === "page") {
+    return {
+      type: "rewrite",
+      destination: localizePath(locale, "/news"),
+    };
+  }
+
+  if (parts[0] === "categoria-producto" && parts[1]) {
+    return {
+      type: "rewrite",
+      destination: localizePath(locale, "/offers"),
+    };
+  }
+
+  if (parts[0] === "collections" && parts[1]) {
+    const collectionSlug = getCollectionSlug(parts);
+    const collectionResolution = collectionSlug
+      ? resolveKnownSlug(locale, collectionSlug, "rewrite")
+      : null;
+
+    return collectionResolution ?? {
+      type: "rewrite",
+      destination: localizePath(locale, "/offers"),
+    };
+  }
+
+  if (parts[0] === "producto" && parts[1]) {
+    const productResolution = resolveKnownSlug(locale, parts[1], "rewrite");
+    return productResolution ?? {
+      type: "rewrite",
+      destination: localizePath(locale, "/offers"),
     };
   }
 
