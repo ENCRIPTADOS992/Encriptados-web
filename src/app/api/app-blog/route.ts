@@ -13,11 +13,11 @@ const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 const WP_PER_PAGE = 100;
 const LOCALE_TO_CATEGORY_ID: Record<string, number> = {
-  es: 96,  // noticias
-  en: 97,  // news
-  pt: 101, // noticias-pt
-  it: 100, // notizia
-  fr: 98,  // nouvelles
+  es: 1,   // noticias
+  en: 12,  // news
+  pt: 393, // noticias-pt
+  it: 180, // notizia
+  fr: 16,  // nouvelles
 };
 const CACHE_TTL = 5 * 60 * 1000;
 
