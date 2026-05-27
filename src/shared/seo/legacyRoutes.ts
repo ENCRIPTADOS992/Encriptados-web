@@ -2,6 +2,10 @@ import type { SeoLocale } from "./constants";
 
 export type LegacyRouteResolution =
   | {
+      type: "rewrite";
+      destination: string;
+    }
+  | {
       type: "redirect";
       destination: string;
       permanent: boolean;
@@ -132,6 +136,14 @@ const CURRENT_SITE_ROUTES: Record<string, string> = {
   "pagina-inicial": "",
 };
 
+const LEGACY_TOP_LEVEL_REWRITE_ROUTES: Record<string, string> = {
+  "donde-encontrar-encriptados": "/where-to-find-encrypted",
+  "entrega-rapida": "/fast-delivery",
+  noticias: "/news",
+  ofertas: "/offers",
+  "se-socio-de-encriptados": "/become-an-encrypted-partner",
+};
+
 const PRODUCT_ROUTES: Record<string, string> = {
   "secure-mdm-android": "/apps/secure-mdm-android",
   "secure-mdm-iphone": "/apps/secure-mdm-iphone",
@@ -232,43 +244,106 @@ function getLegacyProductSlug(parts: string[]): string | null {
 }
 
 function isCurrentSiteRoute(parts: string[]): boolean {
-  return CURRENT_SITE_TOP_LEVEL_ROUTES.has(parts[0]);
+  return parts.length === 1 && CURRENT_SITE_TOP_LEVEL_ROUTES.has(parts[0]);
+}
+
+function resolveKnownSlug(
+  locale: SeoLocale,
+  slug: string,
+  mode: "redirect" | "rewrite",
+): LegacyRouteResolution | null {
+  const siteRoute = LEGACY_TOP_LEVEL_REWRITE_ROUTES[slug];
+  if (siteRoute) {
+    return {
+      type: "rewrite",
+      destination: localizePath(locale, siteRoute),
+    };
+  }
+
+  const currentSiteRoute = CURRENT_SITE_ROUTES[slug];
+  if (currentSiteRoute !== undefined) {
+    const destination = localizePath(locale, currentSiteRoute);
+    return mode === "rewrite"
+      ? { type: "rewrite", destination }
+      : { type: "redirect", destination, permanent: true };
+  }
+
+  const productRoute = PRODUCT_ROUTES[slug];
+  if (productRoute) {
+    const destination = localizePath(locale, productRoute);
+    return mode === "rewrite"
+      ? { type: "rewrite", destination }
+      : { type: "redirect", destination, permanent: true };
+  }
+
+  if (RETIRED_PRODUCT_SLUGS.has(slug)) {
+    const destination = getHome(locale);
+    return mode === "rewrite"
+      ? { type: "rewrite", destination }
+      : { type: "redirect", destination, permanent: true };
+  }
+
+  return null;
 }
 
 export function resolveLegacyRoute(pathname: string): LegacyRouteResolution {
   const normalizedPath = normalizePath(pathname);
   const { locale, parts } = getLocaleAndParts(normalizedPath);
 
-  if (!parts.length || RESERVED_TOP_LEVEL.has(parts[0])) return { type: "none" };
+  if (!parts.length) return { type: "none" };
+
+  if (parts[0] === "blogs" && parts[1] === "category" && parts[2]) {
+    return {
+      type: "rewrite",
+      destination: localizePath(locale, "/blog"),
+    };
+  }
+
+  if (parts[0] === "pages") {
+    if (!parts[1]) {
+      return {
+        type: "rewrite",
+        destination: getHome(locale),
+      };
+    }
+
+    const pagesResolution = resolveKnownSlug(locale, parts[1], "rewrite");
+    if (pagesResolution) return pagesResolution;
+
+    return {
+      type: "wp-page",
+      locale,
+      slug: parts[1],
+      legacyPath: normalizedPath.endsWith("/") ? normalizedPath : `${normalizedPath}/`,
+    };
+  }
+
+  if (parts[0] === "marca" && parts[1]) {
+    const brandResolution = resolveKnownSlug(locale, parts[1], "rewrite");
+    if (brandResolution) return brandResolution;
+
+    return {
+      type: "wp-page",
+      locale,
+      slug: parts[1],
+      legacyPath: normalizedPath.endsWith("/") ? normalizedPath : `${normalizedPath}/`,
+    };
+  }
+
+  if (parts.length === 1) {
+    const topLevelResolution = resolveKnownSlug(locale, parts[0], "redirect");
+    if (topLevelResolution?.type === "rewrite") {
+      return topLevelResolution;
+    }
+  }
+
+  if (RESERVED_TOP_LEVEL.has(parts[0])) return { type: "none" };
   if (isCurrentSiteRoute(parts)) return { type: "none" };
 
   const productSlug = getLegacyProductSlug(parts);
   if (productSlug) {
-    const siteRoute = CURRENT_SITE_ROUTES[productSlug];
-    if (siteRoute !== undefined) {
-      return {
-        type: "redirect",
-        destination: localizePath(locale, siteRoute),
-        permanent: true,
-      };
-    }
-
-    const productRoute = PRODUCT_ROUTES[productSlug];
-    if (productRoute) {
-      return {
-        type: "redirect",
-        destination: localizePath(locale, productRoute),
-        permanent: true,
-      };
-    }
-
-    if (RETIRED_PRODUCT_SLUGS.has(productSlug)) {
-      return {
-        type: "redirect",
-        destination: getHome(locale),
-        permanent: true,
-      };
-    }
+    const knownResolution = resolveKnownSlug(locale, productSlug, "redirect");
+    if (knownResolution) return knownResolution;
   }
 
   const contentSlug = getLegacyContentSlug(parts);

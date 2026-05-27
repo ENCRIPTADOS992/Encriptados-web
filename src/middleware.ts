@@ -52,7 +52,7 @@ export async function middleware(
     return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url)));
   }
 
-  if (pathname.startsWith("/blogs/")) {
+  if (pathname.startsWith("/blogs/") && !pathname.startsWith("/blogs/category/")) {
     return withNoIndexHeader(request, NextResponse.next());
   }
 
@@ -65,6 +65,13 @@ export async function middleware(
     return withNoIndexHeader(
       request,
       NextResponse.redirect(new URL(legacyRoute.destination, request.url), legacyRoute.permanent ? 301 : 302),
+    );
+  }
+
+  if (legacyRoute.type === "rewrite") {
+    return withNoIndexHeader(
+      request,
+      NextResponse.rewrite(new URL(legacyRoute.destination, request.url)),
     );
   }
 
@@ -139,5 +146,4 @@ export const config = {
     "/((?!api|_next|_vercel|.*\\..*).*)", // Excluye API, rutas internas y archivos estáticos
   ],
 };
-
 
