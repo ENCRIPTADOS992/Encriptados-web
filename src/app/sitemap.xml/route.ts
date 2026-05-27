@@ -19,6 +19,7 @@ export function GET() {
   sitemaps.unshift(
     buildAbsoluteUrl("/sitemap-main.xml"),
     buildAbsoluteUrl("/sitemap-legacy.xml"),
+    buildAbsoluteUrl("/sitemap-blog-legacy.xml"),
   );
 
   return xmlResponse(buildSitemapIndex(sitemaps));

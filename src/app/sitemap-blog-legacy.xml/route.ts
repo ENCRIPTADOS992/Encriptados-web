@@ -15,6 +15,7 @@ type WordPressPageItem = {
   link?: string;
   modified?: string;
   date?: string;
+  content?: { rendered?: string };
 };
 
 async function fetchWordPressPages(locale: string): Promise<WordPressPageItem[]> {
@@ -22,7 +23,7 @@ async function fetchWordPressPages(locale: string): Promise<WordPressPageItem[]>
     const params = new URLSearchParams({
       per_page: "100",
       page: "1",
-      _fields: "id,slug,link,modified,date",
+      _fields: "id,slug,link,modified,date,content",
       orderby: "modified",
       order: "desc",
     });
@@ -77,8 +78,8 @@ export async function GET() {
       const resolution = resolveLegacyRoute(path);
       if (resolution.type !== "wp-page") continue;
 
-      // Skip editorial blog pages — they live in sitemap-blog-legacy.xml
-      if (isLegacyBlogPage(page.slug)) continue;
+      // Only keep legacy pages that look like editorial blog content
+      if (!isLegacyBlogPage(page.slug, page.content?.rendered)) continue;
 
       entries.push({
         loc: buildAbsoluteUrl(path),
