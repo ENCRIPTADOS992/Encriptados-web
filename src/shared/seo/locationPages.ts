@@ -362,9 +362,35 @@ const PHONE_PATTERNS: LocationPattern[] = [
   },
 ];
 
+export { APP_PATTERNS, SIM_PATTERNS, PHONE_PATTERNS };
+
 const LOCATION_PATTERNS = [...APP_PATTERNS, ...SIM_PATTERNS, ...PHONE_PATTERNS].sort(
   (first, second) => second.legacyPrefix.length - first.legacyPrefix.length,
 );
+
+// Default cities for location sitemap generation.
+// Edit this list to add/remove cities. Each city generates URLs like:
+// /location/{prefix}-{city} and /location/{locale}/{prefix}-{city}
+export const LOCATION_CITIES = [
+  "miami", "new-york", "los-angeles", "london", "paris", "berlin", "madrid", "barcelona",
+  "rome", "milan", "lisbon", "sao-paulo", "buenos-aires", "mexico-city", "bogota",
+  "lima", "santiago", "caracas", "panama-city", "san-jose", "guatemala-city",
+  "dubai", "singapore", "hong-kong", "tokyo", "sydney", "toronto", "vancouver",
+  "chicago", "houston", "dallas", "san-francisco", "las-vegas", "boston", "seattle",
+  "atlanta", "denver", "phoenix", "philadelphia", "detroit", "minneapolis",
+  "amsterdam", "brussels", "vienna", "zurich", "prague", "warsaw", "budapest",
+  "stockholm", "oslo", "copenhagen", "helsinki", "dublin", "edinburgh",
+  "istanbul", "moscow", "cairo", "johannesburg", "nairobi", "lagos",
+  "mumbai", "delhi", "bangalore", "chennai", "kolkata", "hyderabad",
+  "bangkok", "jakarta", "kuala-lumpur", "manila", "ho-chi-minh-city",
+  "seoul", "taipei", "shanghai", "beijing", "guangzhou", "shenzhen",
+  "melbourne", "brisbane", "perth", "auckland", "wellington",
+  "montreal", "calgary", "ottawa", "edmonton", "winnipeg",
+  "tijuana", "monterrey", "guadalajara", "puebla", "leon",
+  "medellin", "cali", "barranquilla", "cartagena", "cucuta",
+  "guayaquil", "quito", "cuenca", "la-paz", "santa-cruz",
+  "asuncion", "montevideo", "rosario", "cordoba", "mendoza",
+];
 
 export const INDEXABLE_LOCATION_PATHS = new Set<string>([
   // Add Search Console validated URLs here when a location page deserves indexing.
