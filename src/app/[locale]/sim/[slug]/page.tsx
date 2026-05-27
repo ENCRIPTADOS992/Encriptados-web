@@ -68,10 +68,12 @@ export default async function SimProductPage({ params, searchParams }: PageProps
 
   // sim_region debe ser código de país (ej: "ca"), usar regionCode como fallback
   const simRegion = (sp.regionCode as string) || (sp.sim_region as string) || null;
+  const requestedProductId =
+    firstParam(sp.productId) || (staticConfig?.productId ? String(staticConfig.productId) : null);
 
-  if (staticConfig?.productId) {
+  if (requestedProductId) {
     try {
-      initialProduct = await getCachedSimProduct(String(staticConfig.productId), locale, simRegion);
+      initialProduct = await getCachedSimProduct(requestedProductId, locale, simRegion);
     } catch (error) {
        console.error("Error fetching SIM product server-side:", error);
     }

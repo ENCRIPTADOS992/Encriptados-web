@@ -21,10 +21,10 @@ export interface SimProductRouteItem {
 }
 
 export const SIM_PRODUCT_ROUTES: SimProductRouteItem[] = [
-  { name: "SIM Encriptada", link: "/sim/sim-encriptada", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 508 },
-  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 449 },
-  { name: "SIM TIM", link: "/sim/tim-sim", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 448 },
-  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 454 },
+  { name: "SIM Encriptada", link: "/sim/sim-encriptada", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 60950 },
+  { name: "eSIM Encriptada", link: "/sim/esim-encriptada", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 60947 },
+  { name: "SIM TIM", link: "/sim/tim-sim", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 60946 },
+  { name: "eSIM TIM", link: "/sim/esim-tim", categoryId: PRODUCT_CATEGORY_IDS.SIMS, productId: 60949 },
 ];
 
 export const PRODUCT_ROUTES: ProductRouteItem[] = [

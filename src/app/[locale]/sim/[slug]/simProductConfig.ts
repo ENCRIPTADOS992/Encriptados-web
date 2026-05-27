@@ -55,12 +55,12 @@ export interface SimProductStaticConfig {
  * ════════════════════════════════════════════════════════════════
  * 
  * SIM ENCRIPTADAS:
- * - sim-encriptada (508): SIM física encriptada
- * - esim-encriptada (449): eSIM encriptada digital
+ * - sim-encriptada (60950): SIM física encriptada
+ * - esim-encriptada (60947): eSIM encriptada digital
  * 
  * TIM-SIM (Planes de datos):
- * - tim-sim (448): SIM TIM física con datos
- * - esim-tim (454): eSIM TIM con datos
+ * - tim-sim (60946): SIM TIM física con datos
+ * - esim-tim (60949): eSIM TIM con datos
  */
 export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   // ════════════════════════════════════════════════════════════════
@@ -69,7 +69,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   
   "sim-encriptada": {
     slug: "sim-encriptada",
-    productId: 508,
+    productId: 60950,
     categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "sim",
     heroBanners: {
@@ -93,7 +93,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
 
   "esim-encriptada": {
     slug: "esim-encriptada",
-    productId: 449,
+    productId: 60947,
     categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "esim",
     heroBanners: {
@@ -121,7 +121,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
   
   "tim-sim": {
     slug: "tim-sim",
-    productId: 448,
+    productId: 60946,
     categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "tim-sim",
     heroBanners: {
@@ -145,7 +145,7 @@ export const simProductConfigs: Record<string, SimProductStaticConfig> = {
 
   "esim-tim": {
     slug: "esim-tim",
-    productId: 454,
+    productId: 60949,
     categoryId: PRODUCT_CATEGORY_IDS.SIMS,
     templateType: "esim-tim",
     heroBanners: {

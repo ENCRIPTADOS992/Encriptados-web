@@ -7,10 +7,8 @@ import { ProductFilters } from "@/features/products/types/ProductFilters";
 import {
   PRODUCT_CATEGORY_IDS,
   isRouterCategoryId,
-  isSimCategoryId,
 } from "@/shared/constants/productCategories";
 import {
-  getCanonicalSimProductId,
   getProductLink,
   isActivarAppsProduct,
 } from "@/shared/utils/productRouteResolver";
@@ -177,13 +175,9 @@ const CardProduct: React.FC<CardSimProps> = ({
 
     // Build query string with all relevant params - SECURE LOGIC
     const params = new URLSearchParams();
-    const isSelectedSimCategory = isSimCategoryId(selectedCategoryId);
     const isRouter = isRouterCategoryId(selectedCategoryId) || (headerTitle || "").toLowerCase().includes("router");
     const isActivarApps = isActivarAppsProduct(headerTitle, selectedCategoryId, id);
-    const canonicalSimProductId = isSelectedSimCategory
-      ? getCanonicalSimProductId(provider, typeProduct, id)
-      : undefined;
-    const productIdForMoreInfo = canonicalSimProductId ?? id;
+    const productIdForMoreInfo = id;
     params.set("productId", String(productIdForMoreInfo));
 
     // Determinar categoría correcta

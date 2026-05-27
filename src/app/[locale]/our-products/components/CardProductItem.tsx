@@ -6,8 +6,7 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import type { Product } from "@/features/products/types/AllProductsResponse";
 import { FC, useState, MouseEvent, useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { getProductLink, getCanonicalSimProductId } from "@/shared/utils/productRouteResolver";
-import { isSimCategoryId } from "@/shared/constants/productCategories";
+import { getProductLink } from "@/shared/utils/productRouteResolver";
 
 interface CardProductItemProps {
   product: Product;
@@ -104,9 +103,7 @@ const CardProductItem: FC<CardProductItemProps> = ({
     if (!route) return;
 
     const params = new URLSearchParams();
-    const productIdForMoreInfo = isSimCategoryId(product.category?.id)
-      ? getCanonicalSimProductId(product.provider, product.type_product, product.id) ?? product.id
-      : product.id;
+    const productIdForMoreInfo = product.id;
     if (productIdForMoreInfo) params.set("productId", String(productIdForMoreInfo));
     const cheapestId = getCheapestVariantId(product);
     if (cheapestId != null) params.set("variantId", String(cheapestId));
