@@ -84,7 +84,8 @@ const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 const normalizePath = (path: string) => (path.startsWith("/") ? path : `/${path}`);
 
 const withQuery = (baseUrl: string, query?: QueryParams) => {
-  const url = new URL(baseUrl);
+  const base = typeof window !== "undefined" ? window.location.origin : "http://127.0.0.1";
+  const url = baseUrl.startsWith("http") ? new URL(baseUrl) : new URL(baseUrl, base);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -94,7 +95,8 @@ const withQuery = (baseUrl: string, query?: QueryParams) => {
     });
   }
 
-  return url.toString();
+  // If the input was a relative URL, return the relative URL part
+  return baseUrl.startsWith("http") ? url.toString() : url.pathname + url.search;
 };
 
 const withPath = (baseUrl: string, path?: string) =>
@@ -104,9 +106,11 @@ const isServer = typeof window === "undefined";
 const rawWpApi = process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE;
 
 export const WP_API_BASE = trimTrailingSlash(
-  isServer && rawWpApi.startsWith("https://admin.encriptados.io")
-    ? rawWpApi.replace("https://admin.encriptados.io", "http://127.0.0.1")
-    : rawWpApi
+  isServer
+    ? (rawWpApi.startsWith("https://admin.encriptados.io")
+        ? rawWpApi.replace("https://admin.encriptados.io", "http://127.0.0.1")
+        : rawWpApi)
+    : "/api/wp-json"
 );
 
 export const WP_V1_BASE = `${WP_API_BASE}/encriptados/v1`;
