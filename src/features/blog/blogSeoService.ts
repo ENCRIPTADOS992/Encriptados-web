@@ -58,8 +58,9 @@ async function fetchWordPressPostById(id: string): Promise<WordPressBlogItem | n
 }
 
 async function fetchWordPressPostBySlug(slug: string, locale: string): Promise<WordPressBlogItem | null> {
+  const catId = (locale === "en" ? 97 : locale === "pt" ? 101 : locale === "it" ? 100 : locale === "fr" ? 98 : 96);
   const res = await fetch(
-    `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`,
+    `${WP_BASE}/wp/v2/posts?categories=${catId}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`,
     { next: { revalidate: 300 } },
   );
   if (!res.ok) return null;

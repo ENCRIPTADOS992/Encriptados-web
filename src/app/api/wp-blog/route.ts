@@ -7,6 +7,14 @@ const WP_BASE = WP_BLOG_API_BASE;
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+const LOCALE_TO_CATEGORY_ID: Record<string, number> = {
+  es: 96,  // noticias
+  en: 97,  // news
+  pt: 101, // noticias-pt
+  it: 100, // notizia
+  fr: 98,  // nouvelles
+};
+
 export async function GET(req: NextRequest) {
   const lang = req.nextUrl.searchParams.get("lang") ?? "es";
   const id = req.nextUrl.searchParams.get("id"); // optional: single post
@@ -27,11 +35,12 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    const catId = LOCALE_TO_CATEGORY_ID[lang] || 96;
     const url = id
       ? `${WP_BASE}/wp/v2/posts/${encodeURIComponent(id)}?_embed`
       : slug
-        ? `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`
-        : `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&per_page=${encodeURIComponent(perPage)}&page=${encodeURIComponent(page)}&_embed`;
+        ? `${WP_BASE}/wp/v2/posts?categories=${catId}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`
+        : `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=${encodeURIComponent(perPage)}&page=${encodeURIComponent(page)}&_embed`;
 
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {

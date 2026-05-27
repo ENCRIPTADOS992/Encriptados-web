@@ -11,6 +11,13 @@ import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
 const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 const WP_PER_PAGE = 100;
+const LOCALE_TO_CATEGORY_ID: Record<string, number> = {
+  es: 96,  // noticias
+  en: 97,  // news
+  pt: 101, // noticias-pt
+  it: 100, // notizia
+  fr: 98,  // nouvelles
+};
 const CACHE_TTL = 5 * 60 * 1000;
 
 type AppBlogResponse = {
@@ -152,7 +159,8 @@ function mapToAppItem(item: BlogPostCard, locale: string, origin: string): AppBl
 async function fetchWordPressCardsFirstPage(
   locale: string,
 ): Promise<{ cards: BlogPostCard[]; totalPages: number; firstPageItems: WordPressBlogItem[] }> {
-  const firstUrl = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=${WP_PER_PAGE}&page=1&_embed`;
+  const catId = LOCALE_TO_CATEGORY_ID[locale] || 96;
+  const firstUrl = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=${WP_PER_PAGE}&page=1&_embed`;
   const firstRes = await fetch(firstUrl, { cache: "no-store" });
 
   if (!firstRes.ok) {
@@ -180,9 +188,10 @@ async function fetchRemainingWordPressCardsInBackground(
       (_, index) => index + 2,
     );
 
+    const catId = LOCALE_TO_CATEGORY_ID[locale] || 96;
     const remaining = await Promise.all(
       remainingPages.map(async (page) => {
-        const url = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=${WP_PER_PAGE}&page=${page}&_embed`;
+        const url = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=${WP_PER_PAGE}&page=${page}&_embed`;
         const res = await fetch(url, { cache: "no-store" });
         if (!res.ok) return [] as WordPressBlogItem[];
         return (await res.json()) as WordPressBlogItem[];

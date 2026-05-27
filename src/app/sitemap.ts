@@ -26,7 +26,8 @@ function getPathFromUrl(value: string | undefined): string | null {
 
 async function fetchWordPressBlogPaths(locale: string): Promise<Array<{ path: string; lastModified?: string }>> {
   try {
-    const firstUrl = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=100&page=1&_fields=link,modified,date&orderby=modified&order=desc`;
+    const catId = (locale === "en" ? 97 : locale === "pt" ? 101 : locale === "it" ? 100 : locale === "fr" ? 98 : 96);
+    const firstUrl = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=100&page=1&_fields=link,modified,date&orderby=modified&order=desc`;
     const firstRes = await fetch(firstUrl, { next: { revalidate } });
     if (!firstRes.ok) return [];
 
@@ -35,7 +36,7 @@ async function fetchWordPressBlogPaths(locale: string): Promise<Array<{ path: st
     const remainingPages = Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) => index + 2);
     const remaining = await Promise.all(
       remainingPages.map(async (page) => {
-        const url = `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&per_page=100&page=${page}&_fields=link,modified,date&orderby=modified&order=desc`;
+        const url = `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=100&page=${page}&_fields=link,modified,date&orderby=modified&order=desc`;
         const res = await fetch(url, { next: { revalidate } });
         if (!res.ok) return [] as WordPressBlogItem[];
         return (await res.json()) as WordPressBlogItem[];
