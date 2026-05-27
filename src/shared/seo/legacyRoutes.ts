@@ -172,6 +172,7 @@ const LEGACY_TOP_LEVEL_REWRITE_ROUTES: Record<string, string> = {
 };
 
 const PRODUCT_ROUTES: Record<string, string> = {
+  "celulares-encriptados-armadillo-phone": "/apps/armadillo",
   "armadillo-licencias-y-celular": "/apps/armadillo",
   "armadillo-chat-licencias-activacion-renovacion": "/apps/armadillo-chat",
   "secure-mdm-android": "/apps/secure-mdm-android",
@@ -240,6 +241,9 @@ const RETIRED_PRODUCT_SLUGS = new Set([
   "celular-t2-communicator",
   "ghost-chat",
   "tribu-phone",
+  "wickr",
+  "wickr-pro",
+  "apps-encriptadas-wickr-pro",
 ]);
 
 function getHome(locale: SeoLocale): string {
