@@ -285,6 +285,7 @@ export default function FilterProductsBar({
         />
         <div
           ref={modalRef}
+          id="floating-nav-menu"
           className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl"
         >
           <div
