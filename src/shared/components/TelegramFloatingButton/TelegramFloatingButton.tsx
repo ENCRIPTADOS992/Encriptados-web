@@ -51,19 +51,19 @@ export default function TelegramFloatingButton() {
       href="https://t.me/encriptados"
       target="_blank"
       rel="noopener noreferrer"
-      className={`group fixed ${
-        hasFloatingMenu ? "bottom-20 md:bottom-6" : "bottom-6"
-      } right-4 md:right-6 z-[999999] flex items-center justify-start bg-[#24a1de] hover:bg-[#1f8ec4] text-white rounded-full shadow-2xl transition-all duration-300 ease-in-out p-3 w-12 h-12 hover:w-36 overflow-hidden select-none cursor-pointer font-sans`}
+      className={`fixed ${
+        hasFloatingMenu ? "bottom-36 md:bottom-24" : "bottom-24 md:bottom-20"
+      } right-4 md:right-6 z-[999999] flex items-center justify-center gap-3 bg-[#24a1de] hover:bg-[#1f8ec4] text-white rounded-full shadow-[0_8px_25px_rgba(36,161,222,0.35)] hover:shadow-[0_10px_30px_rgba(36,161,222,0.5)] transition-all duration-300 ease-in-out px-5 md:px-7 h-14 md:h-16 select-none cursor-pointer font-sans hover:scale-105 active:scale-95`}
       aria-label="Telegram Support"
     >
       {/* Icono de Telegram */}
-      <div className="flex items-center justify-center w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
-        <TelegramIcon className="w-6 h-6 text-white" />
+      <div className="flex items-center justify-center w-7 h-7 md:w-8 md:h-8 flex-shrink-0 transition-transform duration-300">
+        <TelegramIcon className="w-7 h-7 md:w-8 md:h-8 text-white" />
       </div>
       
-      {/* Texto expansivo al hacer Hover */}
-      <span className="max-w-0 opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2.5 transition-all duration-300 ease-in-out font-bold text-sm tracking-wide uppercase whitespace-nowrap overflow-hidden text-white font-sans">
-        Telegram
+      {/* Texto CHATEAR siempre visible */}
+      <span className="font-extrabold text-base md:text-lg tracking-wider uppercase text-white font-sans">
+        Chatear
       </span>
     </a>
   );
