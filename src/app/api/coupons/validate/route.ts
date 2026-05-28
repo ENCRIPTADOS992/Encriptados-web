@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildWpV3Url } from "@/shared/constants/backend";
+import { buildWpAdminV3Url } from "@/shared/constants/backend";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: true, message: "Código requerido" }, { status: 400 });
     }
 
-    const endpoint = buildWpV3Url("/coupon/validate", {
+    const endpoint = buildWpAdminV3Url("/coupon/validate", {
         code,
         product_id: productId ?? undefined,
         amount: amount ?? undefined,
