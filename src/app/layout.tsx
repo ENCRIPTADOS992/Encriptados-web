@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 import { ClientProviders } from "@/shared/components/Providers";
 import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/shared/components/JsonLd/siteJsonLd";
@@ -95,6 +97,8 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
   return (
     <html suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
@@ -102,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClientProviders>
           {children}
         </ClientProviders>
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
