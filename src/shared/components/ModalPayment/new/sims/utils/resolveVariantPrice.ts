@@ -4,7 +4,7 @@
  * The onSale flag is kept for backward compatibility but not required.
  */
 export function resolveVariantPrice(v: any, onSale: boolean): number {
-  const raw = v?.price ?? v?.cost ?? v?.regular_price ?? 0;
+  const raw = v?.regular_price ?? v?.price ?? v?.cost ?? 0;
   const regularPrice = typeof raw === "string" ? parseFloat(raw) || 0 : Number(raw) || 0;
 
   // Check variant-level sale_price directly (no dependency on product-level flag)
@@ -26,7 +26,7 @@ export function resolveVariantPrice(v: any, onSale: boolean): number {
  * Check if a variant has a valid sale price (sale_price > 0 and < regular price)
  */
 export function isVariantOnSale(v: any): boolean {
-  const raw = v?.price ?? v?.cost ?? v?.regular_price ?? 0;
+  const raw = v?.regular_price ?? v?.price ?? v?.cost ?? 0;
   const regularPrice = typeof raw === "string" ? parseFloat(raw) || 0 : Number(raw) || 0;
   const sp = v?.sale_price;
   const salePrice =

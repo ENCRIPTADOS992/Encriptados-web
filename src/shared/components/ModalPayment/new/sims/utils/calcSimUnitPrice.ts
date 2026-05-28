@@ -40,7 +40,7 @@ export function calcSimUnitPrice({
     if (skipSale) return undefined;
     const sp = v?.sale_price;
     const salePrice = sp != null && sp !== "" ? (typeof sp === "string" ? parseFloat(sp) : Number(sp)) : NaN;
-    const regPrice = toNumber(v?.price ?? v?.cost ?? v?.regular_price ?? 0);
+    const regPrice = toNumber(v?.regular_price ?? v?.price ?? v?.cost ?? 0);
     if (!isNaN(salePrice) && salePrice > 0 && salePrice < regPrice) return salePrice;
     if (productOnSale && !isNaN(salePrice) && salePrice > 0) return salePrice;
     return undefined;

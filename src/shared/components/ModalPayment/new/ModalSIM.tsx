@@ -385,7 +385,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       if (paramVariantId != null) {
         const matchingVariant = variants.find((v: any) => String(v.id) === String(paramVariantId));
         if (matchingVariant) {
-          const variantPrice = Number((matchingVariant as any).price ?? (matchingVariant as any).cost ?? 0);
+          const variantPrice = resolveVariantPrice(matchingVariant, isProductOnSale(product));
           const rechargeValue = variantPrice - base;
           console.log("[ModalSIM] ✅ Setting recharge from paramVariantId:", { paramVariantId, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
@@ -421,7 +421,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       }
 
       // Fallback: usar el primer variante como monto de recarga
-      const firstVariantPrice = Number((variants[0] as any)?.price ?? (variants[0] as any)?.cost ?? 0);
+      const firstVariantPrice = resolveVariantPrice(variants[0], isProductOnSale(product));
       const defaultRecharge = Math.max(firstVariantPrice - base, 0);
       console.log("[ModalSIM] Using default recharge from first variant:", { firstVariantPrice, base, defaultRecharge });
       setSelectedPlanId(defaultRecharge);
