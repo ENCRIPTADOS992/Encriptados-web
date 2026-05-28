@@ -371,73 +371,139 @@ function paginateItems(
   };
 }
 
+const activeRefreshes = new Set<string>();
+
+async function refreshBlogCache(locale: string): Promise<AppBlogItem[]> {
+  const [wordpressPostCards, legacyPageCards] = await Promise.all([
+    fetchWordPressPostCards(locale),
+    fetchLegacyWordPressPageCards(locale),
+  ]);
+  const markdownCards = fetchMarkdownCards(locale);
+
+  const byId = new Map<string, BlogPostCard>();
+  const wordpressCards = [...wordpressPostCards, ...legacyPageCards];
+
+  for (const post of [...wordpressCards, ...markdownCards]) {
+    byId.set(post.id, post);
+  }
+
+  const allItems = Array.from(byId.values())
+    .filter((item) => {
+      const path = item.legacyPath ?? `/${locale}/blog/${item.slug}`;
+      return path.toLowerCase().includes("blog");
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map((item) => mapToAppItem(item, locale));
+
+  const cacheDir = path.join(process.cwd(), ".blog-cache");
+  if (!fs.existsSync(cacheDir)) {
+    fs.mkdirSync(cacheDir, { recursive: true });
+  }
+
+  const cacheFile = path.join(cacheDir, `blog-cache-${locale}.json`);
+  const cacheData = {
+    ts: Date.now(),
+    wordpressCount: wordpressCards.length,
+    markdownCount: markdownCards.length,
+    items: allItems,
+  };
+
+  fs.writeFileSync(cacheFile, JSON.stringify(cacheData), "utf-8");
+  return allItems;
+}
+
 export async function GET(req: NextRequest) {
   const locale = normalizeLocale(req.nextUrl.searchParams.get("lang"));
   const pageParam = req.nextUrl.searchParams.get("page");
   const perPageParam = req.nextUrl.searchParams.get("per_page");
-  const cacheKey = `app-blog-${locale}-${pageParam ?? "all"}-${perPageParam ?? "all"}`;
-  const cached = cache.get(cacheKey);
 
-  if (cached && Date.now() - cached.ts < CACHE_TTL) {
-    return NextResponse.json(cached.data, {
-      headers: { ...responseHeaders, "X-Cache": "HIT" },
-    });
+  const cacheDir = path.join(process.cwd(), ".blog-cache");
+  const cacheFile = path.join(cacheDir, `blog-cache-${locale}.json`);
+
+  let cacheData: {
+    ts: number;
+    wordpressCount: number;
+    markdownCount: number;
+    items: AppBlogItem[];
+  } | null = null;
+
+  if (fs.existsSync(cacheFile)) {
+    try {
+      cacheData = JSON.parse(fs.readFileSync(cacheFile, "utf-8"));
+    } catch (err) {
+      console.error(`Failed to parse blog cache for ${locale}:`, err);
+    }
   }
 
-  try {
-    // Parallelize external fetches to prevent blocking sequential API execution
-    const [wordpressPostCards, legacyPageCards] = await Promise.all([
-      fetchWordPressPostCards(locale),
-      fetchLegacyWordPressPageCards(locale),
-    ]);
-    const markdownCards = fetchMarkdownCards(locale);
+  const now = Date.now();
+  const isExpired = !cacheData || now - cacheData.ts > CACHE_TTL;
 
-    const byId = new Map<string, BlogPostCard>();
-    const wordpressCards = [...wordpressPostCards, ...legacyPageCards];
-
-    for (const post of [...wordpressCards, ...markdownCards]) {
-      byId.set(post.id, post);
+  if (cacheData) {
+    if (isExpired && !activeRefreshes.has(locale)) {
+      activeRefreshes.add(locale);
+      refreshBlogCache(locale)
+        .then(() => {
+          console.log(`Successfully refreshed blog cache in background for ${locale}`);
+        })
+        .catch((err) => {
+          console.error(`Failed to refresh blog cache in background for ${locale}:`, err);
+        })
+        .finally(() => {
+          activeRefreshes.delete(locale);
+        });
     }
 
-    const allItems = Array.from(byId.values())
-      .filter((item) => {
-        const path = item.legacyPath ?? `/${locale}/blog/${item.slug}`;
-        return path.toLowerCase().includes("blog");
-      })
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .map((item) => mapToAppItem(item, locale));
-    const paginated = paginateItems(allItems, pageParam, perPageParam);
-    const data: AppBlogResponse = {
+    const paginated = paginateItems(cacheData.items, pageParam, perPageParam);
+    const responseData: AppBlogResponse = {
       locale,
-      total: allItems.length,
+      total: cacheData.items.length,
       page: paginated.page,
       perPage: paginated.perPage,
       hasMore: paginated.hasMore,
       sources: {
-        wordpress: wordpressCards.length,
-        markdown: markdownCards.length,
+        wordpress: cacheData.wordpressCount,
+        markdown: cacheData.markdownCount,
       },
       items: paginated.items,
     };
 
-    cache.set(cacheKey, { data, ts: Date.now() });
-
-    return NextResponse.json(data, {
+    return NextResponse.json(responseData, {
       headers: {
         ...responseHeaders,
         "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400", // 1h CDN cache, 24h stale background update
+        "X-Cache": isExpired ? "STALE" : "HIT",
+      },
+    });
+  }
+
+  try {
+    const items = await refreshBlogCache(locale);
+    const wordpressCount = items.filter((i) => i.source === "wordpress").length;
+    const markdownCount = items.filter((i) => i.source === "markdown").length;
+
+    const paginated = paginateItems(items, pageParam, perPageParam);
+    const responseData: AppBlogResponse = {
+      locale,
+      total: items.length,
+      page: paginated.page,
+      perPage: paginated.perPage,
+      hasMore: paginated.hasMore,
+      sources: {
+        wordpress: wordpressCount,
+        markdown: markdownCount,
+      },
+      items: paginated.items,
+    };
+
+    return NextResponse.json(responseData, {
+      headers: {
+        ...responseHeaders,
+        "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
         "X-Cache": "MISS",
       },
     });
   } catch (err) {
-    console.error("App blog endpoint error:", err);
-
-    if (cached) {
-      return NextResponse.json(cached.data, {
-        headers: { ...responseHeaders, "X-Cache": "STALE" },
-      });
-    }
-
+    console.error(`App blog endpoint error on cache MISS for ${locale}:`, err);
     return NextResponse.json(
       { error: "Failed to fetch blog list" },
       { status: 502, headers: responseHeaders },
