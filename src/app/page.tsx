@@ -14,6 +14,8 @@ import AppMobileLayout from "@/shared/components/AppMobileLayout";
 import { loadMessages } from "@/i18n/messages";
 import { buildHomeLanguageAlternates, buildSeoMetadata } from "@/shared/seo/metadata";
 import HomePage from "./[locale]/page";
+import TelegramFloatingButton from "@/shared/components/TelegramFloatingButton/TelegramFloatingButton";
+
 
 export const metadata: Metadata = buildSeoMetadata({
   title: "Celulares encriptados, SIMs anonimas y apps seguras",
@@ -60,7 +62,9 @@ export default async function RootSpanishHomePage() {
           <MoraWarningProvider>
             <MoraWarningModal />
           </MoraWarningProvider>
+          <TelegramFloatingButton />
         </AppMobileProvider>
+
       </Suspense>
     </NextIntlClientProvider>
   );
