@@ -61,7 +61,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
   const t = useTranslations("paymentModal");
 
   // Estado para Silent Phone: modo de tabs
-  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
+  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("new_user");
 
   const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
