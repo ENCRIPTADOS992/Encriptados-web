@@ -197,9 +197,9 @@ const OurProductsPage = () => {
             <SilentCircleBanner />
           </SectionWrapper>
 
-          <SectionWrapper className="py-0 md:py-2">
+          {/* <SectionWrapper className="py-0 md:py-2">
             <ActivarAppsBanner />
-          </SectionWrapper>
+          </SectionWrapper> */}
 
           <SectionWrapper className="py-0 md:py-1">
             <BannerSecureMdmNew />
