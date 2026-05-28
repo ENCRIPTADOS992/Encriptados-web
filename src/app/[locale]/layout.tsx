@@ -10,6 +10,7 @@ import MoraWarningModal from "@/shared/components/MoraWarningModal";
 import { AppMobileProvider } from "@/shared/context/AppMobileContext";
 import AppMobileLayout from "@/shared/components/AppMobileLayout";
 import HtmlLangSetter from "@/shared/components/HtmlLangSetter";
+import TelegramFloatingButton from "@/shared/components/TelegramFloatingButton/TelegramFloatingButton";
 
 export default async function LocaleLayout({
   children,
@@ -40,6 +41,7 @@ export default async function LocaleLayout({
           <MoraWarningProvider>
             <MoraWarningModal />
           </MoraWarningProvider>
+          <TelegramFloatingButton />
         </AppMobileProvider>
       </NextIntlClientProvider>
     </>
