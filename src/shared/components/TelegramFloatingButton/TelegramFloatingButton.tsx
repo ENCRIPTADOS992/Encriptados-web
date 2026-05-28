@@ -9,7 +9,7 @@ export default function TelegramFloatingButton() {
       href="https://t.me/encriptados"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-[999] flex items-center justify-center decoration-transparent"
+      className="fixed bottom-6 right-4 md:right-6 z-[999999] flex items-center justify-center decoration-transparent"
       aria-label="Telegram Support"
     >
       <button className={styles.Btn}>
