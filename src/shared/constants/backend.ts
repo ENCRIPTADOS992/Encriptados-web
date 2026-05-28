@@ -5,6 +5,10 @@ type QueryParams = Record<string, QueryValue>;
 
 const DEFAULT_WP_API_BASE = "https://admin.encriptados.io/wp-json";
 
+// URL fija del WP de administración donde se gestionan los cupones, órdenes, etc.
+// No depende de NEXT_PUBLIC_WP_API porque esa var puede apuntar a otro WP (ej. encriptados.es).
+const WP_ADMIN_BASE_URL = process.env.WP_ADMIN_API || DEFAULT_WP_API_BASE;
+
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 const normalizePath = (path: string) => (path.startsWith("/") ? path : `/${path}`);
 
@@ -72,6 +76,11 @@ export const buildWpV1Url = (path: string, query?: QueryParams) =>
 
 export const buildWpV3Url = (path: string, query?: QueryParams) =>
   withQuery(withPath(WP_V3_BASE, path), query);
+
+// Construye URL sobre el WP de admin (admin.encriptados.io) — usado para cupones
+// que siempre viven en ese WP, sin importar qué WP usa el frontend en general.
+export const buildWpAdminV3Url = (path: string, query?: QueryParams) =>
+  withQuery(withPath(`${trimTrailingSlash(WP_ADMIN_BASE_URL)}/encriptados/v3`, path), query);
 
 export const buildSimtimUrl = (path?: string, query?: QueryParams) =>
   withQuery(withPath(SIMTIM_API_BASE, path), query);

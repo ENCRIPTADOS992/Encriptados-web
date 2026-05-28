@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildWpV3Url } from "@/shared/constants/backend";
+import { buildWpAdminV3Url } from "@/shared/constants/backend";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -8,10 +8,10 @@ export async function GET(request: Request) {
     const amount = searchParams.get("amount");
 
     if (!code) {
-        return NextResponse.json({ error: true, message: "CÃ³digo requerido" }, { status: 400 });
+        return NextResponse.json({ error: true, message: "Código requerido" }, { status: 400 });
     }
 
-    const endpoint = buildWpV3Url("/coupon/validate", {
+    const endpoint = buildWpAdminV3Url("/coupon/validate", {
         code,
         product_id: productId ?? undefined,
         amount: amount ?? undefined,
@@ -30,14 +30,14 @@ export async function GET(request: Request) {
             console.error("WP API Error:", res.status, data?.message || res.statusText);
             return NextResponse.json({
                 error: true,
-                message: data?.message || "CupÃ³n no vÃ¡lido",
+                message: data?.message || "Cupón no válido",
             }, { status: data?.data?.status || res.status });
         }
 
         if (!data.valid) {
             return NextResponse.json({
                 error: true,
-                message: data?.message || "CupÃ³n no vÃ¡lido",
+                message: data?.message || "Cupón no válido",
             }, { status: 400 });
         }
 
@@ -51,7 +51,7 @@ export async function GET(request: Request) {
             original_amount: data.original_amount,
             final_amount: data.final_amount,
             applies_to_products: data.applies_to_products,
-            message: `CupÃ³n ${data.code} aplicado`,
+            message: "Cupón " + data.code + " aplicado",
         });
 
     } catch (error) {
