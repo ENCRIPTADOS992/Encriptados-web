@@ -263,9 +263,12 @@ export default function SimFormUnified({
         })();
 
         const tottoliMethod = method === "card" ? "card" : "cryptomus";
+
+        // has_esim en el payload le dice al backend que NO exija número SIM.
+        // Debe ser true siempre que hideSimField esté activo (incluyendo combos eSIM).
+        // Es INDEPENDIENTE del esimAddonFee: para combos el fee es 0 pero has_esim=true.
         const hasEsimAddon =
           hideSimField &&
-          !isEsimCombo &&
           (formType === "encrypted_data" || formType === "encrypted_minutes");
 
         const resolveSelectedVariantId = (): number | null => {
