@@ -5,6 +5,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get("code");
     const productId = searchParams.get("product_id");
+    const variantId = searchParams.get("variant_id");
     const amount = searchParams.get("amount");
 
     if (!code) {
@@ -14,6 +15,7 @@ export async function GET(request: Request) {
     const endpoint = buildWpAdminV3Url("/coupon/validate", {
         code,
         product_id: productId ?? undefined,
+        variant_id: variantId ?? undefined,
         amount: amount ?? undefined,
     });
 
@@ -50,6 +52,7 @@ export async function GET(request: Request) {
             discount_applied: data.discount_applied,
             original_amount: data.original_amount,
             final_amount: data.final_amount,
+            scope: data.scope,
             applies_to_products: data.applies_to_products,
             message: "Cupón " + data.code + " aplicado",
         });

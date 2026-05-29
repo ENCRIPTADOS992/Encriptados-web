@@ -686,7 +686,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     if (!coupon.trim()) return;
     try {
       const totalAmount = unitPrice * quantity;
-      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount);
+      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         let effectiveDiscount: number;
         if (typeof res.discount_applied === "number") {
