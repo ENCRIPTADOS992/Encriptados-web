@@ -134,7 +134,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
     if (!coupon.trim()) return;
     try {
       const totalAmount = unitPrice * quantity;
-      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount);
+      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         // Use discount_applied from API (server-calculated) if available
         let effectiveDiscount: number;
