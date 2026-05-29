@@ -880,8 +880,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         formType === "encrypted_data" ||
         (formType === "encrypted_minutes" && !isEsimDataCombo && !isEsimMinutesCombo)
       }
-      esimAddonPrice={7.5}
-      esimAddonLabel="Lleva E-SIM por 7.50 USD"
+      esimAddonPrice={esimBasePrice}
+      esimAddonLabel={`Lleva E-SIM por ${esimBasePrice?.toFixed(2) ?? "7.50"} USD`}
       onChangeEsimAddon={(checked) => setHideSimField(checked)}
       esimBasePrice={esimBasePrice}
       sourceUrl={params.sourceUrl}
@@ -922,6 +922,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         sourceUrl={params.sourceUrl}
         onSuccess={handlePaymentSuccess}
         esimBasePrice={esimBasePrice}
+        isEsimCombo={isEsimCombo}
       />
     </PurchaseScaffold >
   );

@@ -38,6 +38,12 @@ type SimFormUnifiedProps = {
   loading?: boolean;
   /** Precio base eSIM cargado desde la API de costos */
   esimBasePrice?: number;
+  /**
+   * True cuando el producto es un combo eSIM + Minutos o eSIM + Datos cuyo
+   * precio WooCommerce YA INCLUYE el costo de eSIM configurado en el módulo de
+   * costos. En este caso NO se debe sumar ningún esimAddonFee adicional.
+   */
+  isEsimCombo?: boolean;
 };
 
 type Method = "card" | "crypto";
@@ -57,6 +63,7 @@ export default function SimFormUnified({
   onSuccess,
   loading = false,
   esimBasePrice,
+  isEsimCombo = false,
 }: SimFormUnifiedProps) {
   const t = useTranslations("paymentModal");
   const locale = useLocale();
@@ -192,14 +199,26 @@ export default function SimFormUnified({
     setValue("simNumbers", next, { shouldValidate: false });
   }, [quantity, CFG.showSimNumber, setValue, watch]);
 
-  // Calcular montos
+  // ── Calcular montos ──────────────────────────────────────────────────────────
   const shippingFee = isPhysical ? 75 : 0;
   const baseAmount = Number(unitPrice) * quantity - discount;
+
+  // Para productos eSIM + Minutos / eSIM + Datos (isEsimCombo = true), el precio
+  // WooCommerce de la variante YA INCLUYE el costo de eSIM configurado en el
+  // módulo de costos del panel admin. NO se debe sumar ningún addon adicional.
+  //
+  // El addon solo aplica cuando el usuario agrega eSIM opcionalmente a una
+  // recarga de minutos/datos cuyo precio base NO incluye eSIM (isEsimCombo = false).
   const hasEsimAddonForAmount =
     hideSimField &&
+    !isEsimCombo &&
     (formType === "encrypted_data" || formType === "encrypted_minutes");
-  const esimAddonFee = hasEsimAddonForAmount ? 7.5 : 0;
+
+  // Fee de eSIM: usa el valor configurado en el módulo de costos (esimBasePrice)
+  // y no un valor hardcodeado. Fallback a 7.5 solo si el prop no llega.
+  const esimAddonFee = hasEsimAddonForAmount ? (esimBasePrice ?? 7.5) : 0;
   const amountUsd = Math.max(baseAmount + shippingFee + esimAddonFee, 0);
+  // ────────────────────────────────────────────────────────────────────────────
 
   const isLoadingPayment = isSubmitting || loading;
   const buttonLabel = React.useMemo(() => {
@@ -246,6 +265,7 @@ export default function SimFormUnified({
         const tottoliMethod = method === "card" ? "card" : "cryptomus";
         const hasEsimAddon =
           hideSimField &&
+          !isEsimCombo &&
           (formType === "encrypted_data" || formType === "encrypted_minutes");
 
         const resolveSelectedVariantId = (): number | null => {
