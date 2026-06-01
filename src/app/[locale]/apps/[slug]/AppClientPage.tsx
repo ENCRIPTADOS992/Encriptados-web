@@ -410,12 +410,15 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     }
   }
 
+  const shouldPreferGalleryImage = slug === "router-camaleon";
+
   const productImage =
+    (shouldPreferGalleryImage ? product?.images?.[0]?.src : "") ||
     dynamicImage ||
     (product as any)?.buyNowImage ||
     (product as any)?.productImage ||
     (product as any)?.image_full ||
-    product?.images?.[0]?.src ||
+    (!shouldPreferGalleryImage ? product?.images?.[0]?.src : "") ||
     config?.productImage ||
     "";
 
