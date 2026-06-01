@@ -6,6 +6,7 @@ import { protectedRoutesArray } from "./app/constants/protectedRoutes";
 import { resolveLegacyRoute } from "./shared/seo/legacyRoutes";
 import {
   getExpectedSiteAccessToken,
+  getSiteAccessCredentials,
   isSiteAccessPath,
   normalizeSiteAccessNextPath,
   SITE_ACCESS_COOKIE,
@@ -42,6 +43,19 @@ function withNoIndexHeader(request: NextRequest, response: NextResponse): NextRe
 
 async function enforceSiteAccess(request: NextRequest): Promise<NextResponse | null> {
   const pathname = request.nextUrl.pathname;
+  const configuredCredentials = getSiteAccessCredentials();
+  const shouldFailClosed = shouldNoIndexHost(request) && process.env.NODE_ENV === "production";
+
+  if (!configuredCredentials) {
+    if (!shouldFailClosed || isSiteAccessPath(pathname)) {
+      return null;
+    }
+
+    const accessUrl = new URL(SITE_ACCESS_PATH, request.url);
+    accessUrl.searchParams.set("next", normalizeSiteAccessNextPath(`${pathname}${request.nextUrl.search}`));
+    return NextResponse.redirect(accessUrl);
+  }
+
   const expectedToken = await getExpectedSiteAccessToken();
 
   if (!expectedToken) {
@@ -102,12 +116,7 @@ export async function middleware(
     const blogParts = pathname.split("/").filter(Boolean);
     if (blogParts.length > 3) {
       const legacyBlogRoute = resolveLegacyRoute(pathname);
-      if (legacyBlogRoute.type === "rewrite") {
-        const rewriteUrl = request.nextUrl.clone();
-        rewriteUrl.pathname = "/legacy-current";
-        rewriteUrl.searchParams.set("target", legacyBlogRoute.destination);
-        return withNoIndexHeader(request, NextResponse.rewrite(rewriteUrl));
-      }
+      void legacyBlogRoute;
     }
 
     return withNoIndexHeader(request, NextResponse.next());
@@ -122,16 +131,6 @@ export async function middleware(
     return withNoIndexHeader(
       request,
       NextResponse.redirect(new URL(legacyRoute.destination, request.url), legacyRoute.permanent ? 301 : 302),
-    );
-  }
-
-  if (legacyRoute.type === "rewrite") {
-    const rewriteUrl = request.nextUrl.clone();
-    rewriteUrl.pathname = "/legacy-current";
-    rewriteUrl.searchParams.set("target", legacyRoute.destination);
-    return withNoIndexHeader(
-      request,
-      NextResponse.rewrite(rewriteUrl),
     );
   }
 

@@ -17,6 +17,10 @@ export function getSiteAccessCredentials(): SiteAccessCredentials | null {
   return { username, password };
 }
 
+export function hasConfiguredSiteAccess(): boolean {
+  return getSiteAccessCredentials() !== null;
+}
+
 export function normalizeSiteAccessNextPath(nextPath?: string | null): string {
   if (!nextPath || !nextPath.startsWith("/") || nextPath.startsWith("//")) {
     return "/";
