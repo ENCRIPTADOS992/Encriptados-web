@@ -685,7 +685,7 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
       tablet: "/images/router/hero-tablet.png",
       mobile: "/images/router/hero-mobile.png",
     },
-    productImage: "/images/router/card_fondo.png",
+    productImage: "/images/router/fondo.webp",
     iconUrl: "/images/router/logo.png",
     benefitIcon: "/images/router/icono.png",
     videoUrl: "https://www.youtube.com/embed/router-video",

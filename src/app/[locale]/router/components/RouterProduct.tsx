@@ -114,7 +114,7 @@ const RouterCamaleon = () => {
         <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center relative">
           {/* Background principal */}
           <Image
-            src="/images/router/card_fondo.png"
+            src="/images/router/fondo.webp"
             alt="Router Camaleón en mochila"
             width={520}
             height={329}
@@ -122,7 +122,7 @@ const RouterCamaleon = () => {
           />
           {/* Imagen flotante del router (opcional, puedes ajustarla con absolute para overlay) */}
           <Image
-            src="/images/router/router.png"
+            src="/images/router/router.webp"
             alt="Router Camaleón"
             width={250}
             height={230}
