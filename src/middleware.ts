@@ -4,6 +4,13 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { protectedRoutesArray } from "./app/constants/protectedRoutes";
 import { resolveLegacyRoute } from "./shared/seo/legacyRoutes";
+import {
+  getExpectedSiteAccessToken,
+  isSiteAccessPath,
+  normalizeSiteAccessNextPath,
+  SITE_ACCESS_COOKIE,
+  SITE_ACCESS_PATH,
+} from "./lib/site-access";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -14,6 +21,7 @@ function shouldNoIndexHost(request: NextRequest): boolean {
 
 function shouldNoIndexPath(pathname: string): boolean {
   return [
+    /^\/site-access(?:\/|$)/,
     /^\/(en|es|fr|it|pt)?\/?dashboard(?:\/|$)/,
     /^\/(en|es|fr|it|pt)?\/?login(?:\/|$)/,
     /^\/(en|es|fr|it|pt)?\/?test(?:\/|$)/,
@@ -32,11 +40,49 @@ function withNoIndexHeader(request: NextRequest, response: NextResponse): NextRe
   return response;
 }
 
+async function enforceSiteAccess(request: NextRequest): Promise<NextResponse | null> {
+  const pathname = request.nextUrl.pathname;
+  const expectedToken = await getExpectedSiteAccessToken();
+
+  if (!expectedToken) {
+    return null;
+  }
+
+  const currentToken = request.cookies.get(SITE_ACCESS_COOKIE)?.value;
+  const hasAccess = currentToken === expectedToken;
+
+  if (isSiteAccessPath(pathname)) {
+    if (!hasAccess) {
+      return null;
+    }
+
+    const requestedNextPath = normalizeSiteAccessNextPath(request.nextUrl.searchParams.get("next"));
+    return NextResponse.redirect(new URL(requestedNextPath, request.url));
+  }
+
+  if (hasAccess) {
+    return null;
+  }
+
+  const accessUrl = new URL(SITE_ACCESS_PATH, request.url);
+  accessUrl.searchParams.set("next", normalizeSiteAccessNextPath(`${pathname}${request.nextUrl.search}`));
+  return NextResponse.redirect(accessUrl);
+}
+
 export async function middleware(
   request: NextRequest
 ): Promise<NextResponse | undefined> {
   // Protección contra rutas inválidas con "/null" o "/undefined"
   const pathname = request.nextUrl.pathname;
+
+  const siteAccessResponse = await enforceSiteAccess(request);
+  if (siteAccessResponse) {
+    return withNoIndexHeader(request, siteAccessResponse);
+  }
+
+  if (isSiteAccessPath(pathname)) {
+    return withNoIndexHeader(request, NextResponse.next());
+  }
 
   if (pathname === "/es" || pathname === "/es/") {
     return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url), 308));
@@ -52,7 +98,18 @@ export async function middleware(
     return withNoIndexHeader(request, NextResponse.redirect(new URL("/", request.url)));
   }
 
-  if (pathname.startsWith("/blogs/")) {
+  if (pathname.startsWith("/blogs/") && !pathname.startsWith("/blogs/category/")) {
+    const blogParts = pathname.split("/").filter(Boolean);
+    if (blogParts.length > 3) {
+      const legacyBlogRoute = resolveLegacyRoute(pathname);
+      if (legacyBlogRoute.type === "rewrite") {
+        const rewriteUrl = request.nextUrl.clone();
+        rewriteUrl.pathname = "/legacy-current";
+        rewriteUrl.searchParams.set("target", legacyBlogRoute.destination);
+        return withNoIndexHeader(request, NextResponse.rewrite(rewriteUrl));
+      }
+    }
+
     return withNoIndexHeader(request, NextResponse.next());
   }
 
@@ -65,6 +122,16 @@ export async function middleware(
     return withNoIndexHeader(
       request,
       NextResponse.redirect(new URL(legacyRoute.destination, request.url), legacyRoute.permanent ? 301 : 302),
+    );
+  }
+
+  if (legacyRoute.type === "rewrite") {
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = "/legacy-current";
+    rewriteUrl.searchParams.set("target", legacyRoute.destination);
+    return withNoIndexHeader(
+      request,
+      NextResponse.rewrite(rewriteUrl),
     );
   }
 

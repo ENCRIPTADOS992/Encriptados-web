@@ -10,6 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           "/api/",
           "/_next/",
+          "/site-access",
           "/dashboard/",
           "/*/dashboard/",
           "/login",
@@ -22,6 +23,34 @@ export default function robots(): MetadataRoute.Robots {
           "/*/security-test",
           "/*/checkout",
         ],
+      },
+      {
+        userAgent: "GPTBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "ChatGPT-User",
+        disallow: "/",
+      },
+      {
+        userAgent: "Google-Extended",
+        disallow: "/",
+      },
+      {
+        userAgent: "CCBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "anthropic-ai",
+        disallow: "/",
+      },
+      {
+        userAgent: "Claude-Web",
+        disallow: "/",
+      },
+      {
+        userAgent: "PerplexityBot",
+        disallow: "/",
       },
     ],
     sitemap: buildAbsoluteUrl("/sitemap.xml"),
