@@ -213,10 +213,13 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
       content: <DownloadApkSvg className="w-full h-auto" />,
     },
   ] as const;
-  const orderedStoreItems = [
-    ...storeItems.filter((s) => s.enabled),
-    ...storeItems.filter((s) => !s.enabled),
-  ];
+  const visibleStoreItems = storeItems.filter((s) => s.enabled);
+  const storeGridClassName =
+    visibleStoreItems.length <= 1
+      ? "grid-cols-1 max-w-[180px]"
+      : visibleStoreItems.length === 2
+        ? "grid-cols-2 max-w-[340px]"
+        : "grid-cols-2 sm:grid-cols-3";
 
   return (
     <section className="w-full bg-white py-8 sm:py-12 lg:py-16 overflow-hidden">
@@ -246,26 +249,15 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
               />
             </div>
 
-            {/* Store buttons - Ocultos en móvil, visibles en desktop */}
-            {showStoreIcons && (
+            {/* Store buttons - visibles en todas las vistas con layout responsive */}
+            {showStoreIcons && visibleStoreItems.length > 0 && (
               <motion.div
-                className="hidden lg:grid grid-cols-3 gap-3 w-full"
+                className={`grid ${storeGridClassName} gap-3 w-full mx-auto lg:mx-0`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
               >
-                {orderedStoreItems.map((s) => {
-                  if (!s.enabled) {
-                    return (
-                      <div
-                        key={s.key}
-                        className="flex items-center justify-center opacity-0 pointer-events-none select-none"
-                      >
-                        {s.content}
-                      </div>
-                    );
-                  }
-
+                {visibleStoreItems.map((s) => {
                   if (s.url) {
                     return (
                       <motion.a
@@ -274,7 +266,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={s.ariaLabel}
-                        className="flex items-center justify-center"
+                        className="flex items-center justify-center w-full"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                       >
@@ -286,7 +278,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                   return (
                     <motion.div
                       key={s.key}
-                      className="flex items-center justify-center"
+                        className="flex items-center justify-center w-full"
                       whileHover={{ scale: 1.03 }}
                     >
                       {s.content}
