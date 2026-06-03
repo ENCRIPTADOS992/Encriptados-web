@@ -118,6 +118,7 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
   return (
     <div
       ref={bannerRef}
+      id="sticky-price-banner"
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-[1320px]"
     >
       <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-[#1b1b1b] to-[#0f0f0f] shadow-[0_24px_60px_rgba(0,0,0,0.55)] px-4 py-4 sm:px-6 sm:py-5">
