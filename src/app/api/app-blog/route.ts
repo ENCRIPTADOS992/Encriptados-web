@@ -95,6 +95,19 @@ function stripHtml(html: string): string {
     .trim();
 }
 
+function parseSpintax(text: string): string {
+  if (!text) return "";
+  let cleaned = text.replace(/\[\/?spintax\]/gi, "");
+  const regex = /\{([^{|}]+\|[^{}]*)\}/g;
+  while (cleaned.match(regex)) {
+    cleaned = cleaned.replace(regex, (match, choicesStr) => {
+      const choices = choicesStr.split("|");
+      return choices[0] ? choices[0].trim() : "";
+    });
+  }
+  return cleaned;
+}
+
 function getImageFromEmbed(item: WordPressContentItem): string {
   const media = item._embedded?.["wp:featuredmedia"]?.[0];
   return media?.media_details?.sizes?.medium?.source_url ?? media?.source_url ?? "";
@@ -140,8 +153,8 @@ function mapWpItemToCard(item: WordPressContentItem, idPrefix = "wp"): BlogPostC
     legacyPath,
     categorySlug: getCategorySlugFromLegacyPath(legacyPath),
     source: "wordpress",
-    title: item.title.rendered,
-    description: getDescriptionFromWpItem(item),
+    title: parseSpintax(item.title.rendered),
+    description: parseSpintax(getDescriptionFromWpItem(item)),
     image: getImageFromEmbed(item),
     imageFull: getImageFullFromEmbed(item),
     author: getAuthorFromEmbed(item),
