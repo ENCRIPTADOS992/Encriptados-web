@@ -117,6 +117,20 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, "").replace(/&hellip;/g, "…").replace(/\n/g, " ").trim();
 }
 
+/** Parses spintax like [spintax]{A|B|C}[/spintax] or {A|B} in text, selecting the first option */
+export function parseSpintax(text: string): string {
+  if (!text) return "";
+  let cleaned = text.replace(/\[\/?spintax\]/gi, "");
+  const regex = /\{([^{|}]+\|[^{}]*)\}/g;
+  while (cleaned.match(regex)) {
+    cleaned = cleaned.replace(regex, (match, choicesStr) => {
+      const choices = choicesStr.split("|");
+      return choices[0] ? choices[0].trim() : "";
+    });
+  }
+  return cleaned;
+}
+
 function getImageFromEmbed(item: WordPressBlogItem): string {
   const media = item._embedded?.["wp:featuredmedia"]?.[0];
   return media?.media_details?.sizes?.medium?.source_url
@@ -178,8 +192,8 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
     legacyPath,
     categorySlug: getCategorySlugFromLegacyPath(legacyPath),
     source: "wordpress",
-    title: item.title.rendered,
-    description: stripHtml(item.excerpt.rendered),
+    title: parseSpintax(item.title.rendered),
+    description: parseSpintax(stripHtml(item.excerpt.rendered)),
     image: toWpAbsoluteUrl(imageRaw),
     imageFull: toWpAbsoluteUrl(imageFullRaw || imageRaw),
     author: getAuthorFromEmbed(item),
@@ -188,9 +202,10 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
 }
 
 function mapWpItemToPost(item: WordPressBlogItem): BlogPost {
+  const card = mapWpItemToCard(item);
   return {
-    ...mapWpItemToCard(item),
-    content: sanitizeBlogHtml(item.content.rendered),
+    ...card,
+    content: parseSpintax(sanitizeBlogHtml(item.content.rendered)),
   };
 }
 

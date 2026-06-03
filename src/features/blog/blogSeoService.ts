@@ -1,4 +1,5 @@
 import type { BlogPost, WordPressBlogItem } from "./types";
+import { parseSpintax } from "./blogService";
 import fs from "fs";
 import path from "path";
 import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
@@ -83,13 +84,13 @@ export async function fetchBlogPostSeo(slug: string, locale: string): Promise<Bl
       wpId: item.id,
       legacyPath: getPathFromUrl(item.link),
       source: "wordpress",
-      title: stripHtml(item.title.rendered),
-      description: stripHtml(item.excerpt.rendered),
+      title: parseSpintax(stripHtml(item.title.rendered)),
+      description: parseSpintax(stripHtml(item.excerpt.rendered)),
       image,
       imageFull: image,
       author: getAuthorFromEmbed(item),
       date: item.date,
-      content: item.content.rendered,
+      content: parseSpintax(item.content.rendered),
     };
   } catch {
     return null;
