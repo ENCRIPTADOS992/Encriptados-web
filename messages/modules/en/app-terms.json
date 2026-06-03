@@ -289,5 +289,96 @@
         "p1": "This Personal Data Processing Policy was created on January 27, 2020, and starts to apply from the moment of its publication; therefore, it can be modified without prior notice in accordance with changes in Colombian legislation."
       }
     }
+  },
+  "CookiesPolicy": {
+    "title": "Cookies Policy",
+    "lastUpdated": "Last updated: May 12, 2026",
+    "intro": {
+      "p1": "SAFESOLF INTERNACIONAL S.A.S. Inc. (“SAFESOLF”, “we”, “us” or “the Company”), with registered address at 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, United States, uses cookies and similar tracking technologies on our website www.encriptados.io and all related services (hereinafter, the “Site”).",
+      "p2": "This Cookies Policy explains what cookies are, what types we use, what we use them for, and how you can manage or reject them.",
+      "p3": "By continuing to browse the Site, you accept the use of cookies as described in this policy. If you do not agree, you can configure or reject cookies through your browser or the cookie banner that appears when you enter."
+    },
+    "sections": {
+      "whatAre": {
+        "title": "1. WHAT ARE COOKIES?",
+        "p1": "Cookies are small text files that a website places on your device (computer, tablet, mobile) when you visit it. They allow the site to remember your actions and preferences over time, so you do not have to reconfigure them each time you return.",
+        "p2": "We also use similar technologies such as pixels, web beacons, and local storage."
+      },
+      "types": {
+        "title": "2. TYPES OF COOKIES WE USE",
+        "table": {
+          "headers": [
+            "Cookie Type",
+            "Purpose",
+            "Duration",
+            "Mandatory?"
+          ],
+          "rows": [
+            {
+              "type": "Essential",
+              "purpose": "Allow basic site operation (navigation, cart, login, security)",
+              "duration": "Session or 1 year",
+              "mandatory": "Yes"
+            },
+            {
+              "type": "Performance",
+              "purpose": "Analyze how users use the site (pages visited, time, errors)",
+              "duration": "Up to 2 years",
+              "mandatory": "No"
+            },
+            {
+              "type": "Functional",
+              "purpose": "Remember your preferences (language, currency, region)",
+              "duration": "Up to 2 years",
+              "mandatory": "No"
+            },
+            {
+              "type": "Advertising / Marketing",
+              "purpose": "Show relevant ads and measure campaign effectiveness",
+              "duration": "Up to 1 year",
+              "mandatory": "No"
+            },
+            {
+              "type": "Third-Party",
+              "purpose": "Cookies placed by Google Analytics, Meta, payment processors, etc.",
+              "duration": "Varies",
+              "mandatory": "No"
+            }
+          ]
+        },
+        "footer": "We do not use cookies to track your activity invasively or to create detailed behavioral profiles."
+      },
+      "thirdParty": {
+        "title": "3. THIRD-PARTY COOKIES",
+        "p1": "Some of our service providers may place cookies on your device when you visit the Site:",
+        "list": [
+          "Google Analytics (traffic analysis)",
+          "Payment platforms (Stripe, crypto processors)",
+          "Social networks (for sharing content)",
+          "Email marketing tools"
+        ],
+        "p2": "These cookies are controlled by third parties and are subject to their own privacy policies."
+      },
+      "manage": {
+        "title": "4. HOW TO MANAGE OR REJECT COOKIES",
+        "p1": "You can control cookies in the following ways:",
+        "list": [
+          "Cookie banner → Upon entering the Site, you can accept or reject non-essential cookie categories.",
+          "Browser configuration:\n• Google Chrome → Settings → Privacy and security → Cookies and other site data\n• Mozilla Firefox → Options → Privacy and Security\n• Safari → Preferences → Privacy\n• Microsoft Edge → Settings → Cookies and site permissions",
+          "Opt-out tools:\n• Google Analytics Opt-out: Google Analytics Opt-out\n• Your Online Choices (Europe): www.youronlinechoices.com"
+        ],
+        "note": "Important note: If you reject essential cookies, some parts of the Site may not function correctly (for example, you will not be able to complete a purchase)."
+      },
+      "updates": {
+        "title": "5. UPDATES TO THIS POLICY",
+        "p1": "We may modify this Cookies Policy at any time. The updated version will be published here with the \"Last updated\" date. We recommend that you review it periodically. Continued use of the Site after any changes implies acceptance of the new version."
+      },
+      "contact": {
+        "title": "6. CONTACT",
+        "p1": "For any questions about this Cookies Policy, contact us at:",
+        "email": "Email: contacto@encriptados.io",
+        "address": "SAFESOLF INTERNACIONAL S.A.S. Inc.\n2055 Limestone Rd STE 200-C Wilmington, DE 19808 United States"
+      }
+    }
   }
 }

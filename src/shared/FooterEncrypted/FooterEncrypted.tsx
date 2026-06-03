@@ -249,6 +249,7 @@ export default function FooterEncrypted() {
             <div className="py-8 flex flex-wrap items-center justify-center gap-4 text-[#787878] text-sm">
               <Link href={TERMS_URL} className="hover:text-white transition-colors">{t("termsAndConditions")}</Link>
               <Link href="/pages/politica-de-tratamiento-de-datos" className="hover:text-white transition-colors">{t("dataProcesing")}</Link>
+              <Link href="/pages/politica-de-cookies" className="hover:text-white transition-colors">{t("cookiesPolicy")}</Link>
             </div>
           </div>
 

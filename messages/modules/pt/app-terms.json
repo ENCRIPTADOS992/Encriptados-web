@@ -289,5 +289,96 @@
         "p1": "Esta Política de tratamento de dados pessoais foi criada em 27 de janeiro de 2020 e entra em vigor a partir do momento da sua publicação; portanto, pode ser modificada sem aviso prévio em conformidade com as alterações na legislação colombiana."
       }
     }
+  },
+  "CookiesPolicy": {
+    "title": "Política de Cookies",
+    "lastUpdated": "Última atualização: 12 de maio de 2026",
+    "intro": {
+      "p1": "SAFESOLF INTERNACIONAL S.A.S. Inc. (“SAFESOLF”, “nós” ou “a Empresa”), com sede em 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, Estados Unidos, utiliza cookies e tecnologias de rastreamento semelhantes em nosso site www.encriptados.io e em todos os serviços relacionados (doravante, o “Site”).",
+      "p2": "Esta Política de Cookies explica o que são cookies, quais tipos utilizamos, para que os usamos e como você pode gerenciá-los ou rejeitá-los.",
+      "p3": "Ao continuar a navegar no Site, você aceita o uso de cookies conforme descrito nesta política. Se não concordar, você pode configurar ou rejeitar os cookies através do seu navegador ou do banner de cookies que aparece ao entrar."
+    },
+    "sections": {
+      "whatAre": {
+        "title": "1. O QUE SÃO COOKIES?",
+        "p1": "Cookies são pequenos arquivos de texto que um site coloca no seu dispositivo (computador, tablet, celular) quando você o visita. Eles permitem que o site se lembre das suas ações e preferências por um tempo, para que você não precise configurá-los novamente toda vez que retornar.",
+        "p2": "Também utilizamos tecnologias semelhantes, como pixels, web beacons e armazenamento local."
+      },
+      "types": {
+        "title": "2. TIPOS DE COOKIES QUE UTILIZAMOS",
+        "table": {
+          "headers": [
+            "Tipo de Cookie",
+            "Finalidade",
+            "Duração",
+            "Obrigatório?"
+          ],
+          "rows": [
+            {
+              "type": "Essenciais",
+              "purpose": "Permitir o funcionamento básico do site (navegação, carrinho, login, segurança)",
+              "duration": "Sessão ou 1 ano",
+              "mandatory": "Sim"
+            },
+            {
+              "type": "De desempenho",
+              "purpose": "Analisar como os usuários usam o site (páginas visitadas, tempo, erros)",
+              "duration": "Até 2 anos",
+              "mandatory": "Não"
+            },
+            {
+              "type": "Funcionais",
+              "purpose": "Recordar suas preferências (idioma, moeda, região)",
+              "duration": "Até 2 anos",
+              "mandatory": "Não"
+            },
+            {
+              "type": "Publicitários / Marketing",
+              "purpose": "Mostrar anúncios relevantes e medir a eficácia das campanhas",
+              "duration": "Até 1 ano",
+              "mandatory": "Não"
+            },
+            {
+              "type": "De terceiros",
+              "purpose": "Cookies colocados pelo Google Analytics, Meta, processadores de pagamento, etc.",
+              "duration": "Varia",
+              "mandatory": "Não"
+            }
+          ]
+        },
+        "footer": "Não utilizamos cookies para rastrear sua atividade de forma invasiva ou para criar perfis detalhados de comportamento."
+      },
+      "thirdParty": {
+        "title": "3. COOKIES DE TERCEIROS",
+        "p1": "Alguns de nossos provedores de serviços podem colocar cookies no seu dispositivo quando você visita o Site:",
+        "list": [
+          "Google Analytics (análise de tráfego)",
+          "Plataformas de pagamento (Stripe, processadores de cripto)",
+          "Redes sociais (para compartilhar conteúdo)",
+          "Ferramentas de e-mail marketing"
+        ],
+        "p2": "Esses cookies são controlados por terceiros e estão sujeitos às suas próprias políticas de privacidade."
+      },
+      "manage": {
+        "title": "4. COMO GERENCIAR OU REJEITAR OS COOKIES",
+        "p1": "Você pode controlar os cookies das seguintes formas:",
+        "list": [
+          "Banner de cookies → Ao entrar no Site, você pode aceitar ou rejeitar as categorias de cookies não essenciais.",
+          "Configuração do seu navegador:\n• Google Chrome → Configurações → Privacidade e segurança → Cookies e outros dados do site\n• Mozilla Firefox → Opções → Privacidade e segurança\n• Safari → Preferências → Privacidade\n• Microsoft Edge → Configurações → Cookies e permissões do site",
+          "Ferramentas de rejeição:\n• Desativação do Google Analytics: Google Analytics Opt-out\n• Your Online Choices (Europa): www.youronlinechoices.com"
+        ],
+        "note": "Nota importante: Se você rejeitar os cookies essenciais, algumas partes do Site podem não funcionar corretamente (por exemplo, você não poderá concluir uma compra)."
+      },
+      "updates": {
+        "title": "5. ATUALIZAÇÕES A ESTA POLÍTICA",
+        "p1": "Podemos modificar esta Política de Cookies a qualquer momento. La versão atualizada será publicada aqui com a data de “Última atualização”. Recomendamos que você a revise periodicamente. O uso continuado do Site após qualquer alteração implica a aceitação da nova versão."
+      },
+      "contact": {
+        "title": "6. CONTATO",
+        "p1": "Para qualquer dúvida sobre esta Política de Cookies, entre em contato conosco em:",
+        "email": "E-mail: contacto@encriptados.io",
+        "address": "SAFESOLF INTERNACIONAL S.A.S. Inc.\n2055 Limestone Rd STE 200-C Wilmington, DE 19808 Estados Unidos"
+      }
+    }
   }
 }
