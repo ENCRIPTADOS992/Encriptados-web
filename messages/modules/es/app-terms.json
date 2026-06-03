@@ -380,5 +380,106 @@
         "address": "SAFESOLF INTERNACIONAL S.A.S. Inc.\n2055 Limestone Rd STE 200-C Wilmington, DE 19808 Estados Unidos"
       }
     }
+  },
+  "PrivacyPolicy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización: 12 de mayo de 2026",
+    "intro": {
+      "p1": "SAFESOLF INTERNACIONAL S.A.S. Inc. (“SAFESOLF”, “nosotros”, “nuestro” o “la Compañía”), una sociedad constituida bajo las leyes del Estado de Delaware, Estados Unidos de América, con domicilio registrado en 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, es el responsable del tratamiento de los datos personales que recopilamos a través del sitio web www.encriptados.io, sus subdominios, aplicaciones móviles y cualquier otro canal digital relacionado (en conjunto, los “Servicios”).",
+      "p2": "Esta Política de Privacidad explica cómo recopilamos, usamos, compartimos y protegemos su información personal cuando usted visita o utiliza nuestros Servicios. Al acceder o utilizar los Servicios, usted acepta las prácticas descritas en esta Política. Si no está de acuerdo, por favor no utilice los Servicios."
+    },
+    "sections": {
+      "info": {
+        "title": "1. INFORMACIÓN QUE RECOPILAMOS",
+        "p1": "Recopilamos la siguiente información:",
+        "sub1Title": "Información que usted nos proporciona directamente:",
+        "sub1List": [
+          "Datos de identificación y contacto (nombre, correo electrónico, número de teléfono, dirección de envío, país).",
+          "Información de cuenta y compras (datos de pago, historial de pedidos, preferencias de productos).",
+          "Contenido que usted publica o envía (reseñas, mensajes en chat, correos electrónicos, solicitudes de soporte).",
+          "Información de verificación de identidad (KYC) cuando sea requerida por nuestros procesadores de pago o por regulaciones de prevención de fraude o control de exportaciones."
+        ],
+        "sub2Title": "Información recopilada automáticamente:",
+        "sub2List": [
+          "Datos de uso y dispositivo (dirección IP, tipo de navegador, sistema operativo, dispositivo, páginas visitadas, tiempo de permanencia).",
+          "Cookies, píxeles, balizas web y tecnologías de seguimiento similares.",
+          "Información de ubicación aproximada derivada de la dirección IP."
+        ],
+        "sub3Title": "Información de terceros:",
+        "sub3List": [
+          "Datos recibidos de proveedores de pago, procesadores de criptoactivos, plataformas publicitarias y servicios de análisis."
+        ],
+        "footer": "No recopilamos intencionalmente categorías sensibles de datos (origen racial, creencias religiosas, datos biométricos o de salud) salvo cuando sea estrictamente necesario para cumplir con obligaciones legales o procesar transacciones."
+      },
+      "use": {
+        "title": "2. CÓMO USAMOS SU INFORMACIÓN",
+        "p1": "Utilizamos su información personal para:",
+        "list": [
+          "Procesar sus pedidos, transacciones y entregas.",
+          "Gestionar su cuenta y proporcionarle soporte al cliente.",
+          "Mejorar y personalizar nuestros Servicios y productos.",
+          "Enviarle comunicaciones comerciales (boletines, ofertas, actualizaciones) solo con su consentimiento o cuando lo permita la ley.",
+          "Cumplir con obligaciones legales, prevenir fraude, lavado de dinero y violaciones a nuestros Términos de Uso.",
+          "Realizar análisis internos y mejorar la seguridad de nuestros Servicios."
+        ]
+      },
+      "share": {
+        "title": "3. CÓMO COMPARTIMOS SU INFORMACIÓN",
+        "p1": "No vendemos su información personal a terceros.",
+        "p2": "Compartimos información solo en los siguientes casos:",
+        "list": [
+          "Con proveedores de servicios que nos ayudan a operar los Servicios (procesadores de pago, transportistas, hosting, email marketing, analítica).",
+          "Con afiliadas o subsidiarias de SAFESOLF.",
+          "En caso de fusión, adquisición o venta de activos (la información puede transferirse como parte del negocio).",
+          "Cuando lo exija la ley, orden judicial o autoridad gubernamental (incluyendo solicitudes de agencias de los EE.UU. como OFAC, BIS u otras autoridades de control de exportaciones).",
+          "Para proteger nuestros derechos, propiedad o seguridad, o la de nuestros usuarios."
+        ]
+      },
+      "cookies": {
+        "title": "4. COOKIES Y TECNOLOGÍAS DE SEGUIMIENTO",
+        "p1": "Utilizamos cookies esenciales (para el funcionamiento del sitio), de rendimiento, funcionales y publicitarias. Puede gestionar sus preferencias de cookies a través del banner que aparece al ingresar al sitio o configurando su navegador.",
+        "p2": "Para más detalles sobre las cookies que usamos, consulte nuestra Política de Cookies."
+      },
+      "rights": {
+        "title": "5. SUS DERECHOS DE PRIVACIDAD",
+        "p1": "Dependiendo de su lugar de residencia, usted puede tener los siguientes derechos:",
+        "list": [
+          "Acceder a sus datos personales.",
+          "Corregir datos inexactos.",
+          "Solicitar la eliminación de sus datos (sujeto a ciertas excepciones legales).",
+          "Optar por no recibir comunicaciones de marketing.",
+          "Limitar el uso de sus datos para ciertos fines.",
+          "No ser sujeto de decisiones automatizadas que produzcan efectos legales significativos."
+        ],
+        "p2": "Para ejercer estos derechos, envíe un correo electrónico a contacto@encriptados.io con su solicitud. Responderemos en un plazo máximo de 30 días (o el plazo que exija la ley aplicable)."
+      },
+      "security": {
+        "title": "6. SEGURIDAD DE LA INFORMACIÓN",
+        "p1": "Implementamos medidas técnicas, administrativas y físicas razonables para proteger su información contra acceso no autorizado, pérdida o divulgación. Sin embargo, ninguna medida de seguridad es infalible. Usted es responsable de mantener la confidencialidad de su contraseña y credenciales de cuenta."
+      },
+      "retention": {
+        "title": "7. RETENCIÓN DE DATOS",
+        "p1": "Conservamos su información personal solo durante el tiempo necesario para cumplir con las finalidades descritas, cumplir obligaciones legales o resolver disputas."
+      },
+      "transfers": {
+        "title": "8. TRANSFERENCIAS INTERNACIONALES",
+        "p1": "Como empresa con sede en Estados Unidos, su información puede ser transferida y procesada en los EE.UU. y en otros países donde operen nuestros proveedores de servicios. Al utilizar nuestros Servicios, usted consiente estas transferencias."
+      },
+      "minors": {
+        "title": "9. PRIVACIDAD DE MENORES",
+        "p1": "Nuestros Servicios no están dirigidos a personas menores de 18 años. No recopilamos intencionalmente información de menores. Si descubrimos que hemos recopilado datos de un menor sin consentimiento parental, los eliminaremos inmediatamente."
+      },
+      "changes": {
+        "title": "10. CAMBIOS A ESTA POLÍTICA",
+        "p1": "Podemos actualizar esta Política de Privacidad en cualquier momento. La versión actualizada se publicará en el sitio con la fecha de “Última actualización”. Le recomendamos revisarla periódicamente. El uso continuado de los Servicios después de cambios constituye aceptación de la nueva Política."
+      },
+      "contact": {
+        "title": "11. CONTACTO",
+        "p1": "Para cualquier pregunta o solicitud relacionada con esta Política de Privacidad, contáctenos en:",
+        "email": "Correo electrónico: contacto@encriptados.io",
+        "address": "Dirección: 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, Estados Unidos",
+        "footer": "Esta Política de Privacidad se rige por las leyes del Estado de Delaware y las leyes federales de los Estados Unidos de América.\n\nSAFESOLF INTERNACIONAL S.A.S. Inc. Wilmington, Delaware, Estados Unidos"
+      }
+    }
   }
 }
