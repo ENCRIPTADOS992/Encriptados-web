@@ -19,8 +19,12 @@ export default function TelegramFloatingButton() {
   const [hasFloatingMenu, setHasFloatingMenu] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Ocultar si viene de la app móvil o estamos en la página de términos de la app
-  const shouldHide = isFromAppMobile || pathname?.includes("terms-app");
+  // Ocultar si viene de la app móvil o estamos en las páginas de la app
+  const shouldHide =
+    isFromAppMobile ||
+    pathname?.includes("terms-app") ||
+    pathname?.includes("privacy-app") ||
+    pathname?.includes("cookies-app");
 
   // Siempre inicia expandido al cargar la página
   useEffect(() => {

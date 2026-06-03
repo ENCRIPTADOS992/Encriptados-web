@@ -116,6 +116,8 @@ const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
   "sim-encriptada",
   "sobre-nos",
   "terms-app",
+  "privacy-app",
+  "cookies-app",
   "test",
   "test-de-securite",
   "test-chiffré",
