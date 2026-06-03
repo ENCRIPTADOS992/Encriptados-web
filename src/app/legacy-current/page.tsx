@@ -23,7 +23,8 @@ import FastDeliveryPage from "@/app/[locale]/fast-delivery/page";
 import IdentityVerificationPage from "@/app/[locale]/identity-verification/page";
 import NewsPage from "@/app/[locale]/news/page";
 import OffersPage from "@/app/[locale]/offers/page";
-import PrivacyPolicyPage from "@/app/[locale]/pages/politica-de-tratamiento-de-datos/page";
+import PrivacyPolicyPage from "@/app/[locale]/pages/politica-de-privacidad/page";
+import CookiesPolicyPage from "@/app/[locale]/pages/politica-de-cookies/page";
 import TermsPage from "@/app/[locale]/pages/terminos-y-condiciones/page";
 import ProductPage from "@/app/[locale]/apps/[slug]/page";
 import SecurityTestPage from "@/app/[locale]/security-test/page";
@@ -97,6 +98,14 @@ async function renderTarget(locale: SeoLocale, segments: string[]): Promise<Reac
 
   if (segments[0] === "pages" && segments[1] === "terminos-y-condiciones") {
     return <TermsPage />;
+  }
+
+  if (segments[0] === "pages" && segments[1] === "politica-de-privacidad") {
+    return <PrivacyPolicyPage />;
+  }
+
+  if (segments[0] === "pages" && segments[1] === "politica-de-cookies") {
+    return <CookiesPolicyPage />;
   }
 
   if (segments[0] === "pages" && segments[1] === "politica-de-tratamiento-de-datos") {
