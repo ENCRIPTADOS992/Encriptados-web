@@ -212,7 +212,7 @@ export default function FilterProductsBar({
     const modalRef = useRef<HTMLDivElement>(null);
 
     const navItems: {
-      key: "sims" | "apps" | "systems" | "routers" | "offers";
+      key: "sims" | "apps" | "systems" | "routers";
       label: string;
       catId?: number;
     }[] = [
@@ -220,15 +220,9 @@ export default function FilterProductsBar({
         { key: "apps", label: t("filterProducts.floating.apps"), catId: PRODUCT_CATEGORY_IDS.APPS },
         { key: "systems", label: t("filterProducts.floating.systems"), catId: PRODUCT_CATEGORY_IDS.SOFTWARE },
         { key: "routers", label: t("filterProducts.floating.routers"), catId: PRODUCT_CATEGORY_IDS.ROUTERS },
-        { key: "offers", label: t("filterProducts.floating.offers") },
       ];
 
     const handleNavClick = (item: (typeof navItems)[number]) => {
-      if (item.key === "offers") {
-        router.push("/offers");
-        return;
-      }
-
       // In user mode (from=user), send native navigation events
       if (appMode === "user") {
         const eventMap: Record<string, string> = {
