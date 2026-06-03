@@ -1,0 +1,42 @@
+[1mdiff --git a/src/shared/hooks/useRegionCountryFilter.ts b/src/shared/hooks/useRegionCountryFilter.ts[m
+[1mindex e816867..3b7fb9b 100644[m
+[1m--- a/src/shared/hooks/useRegionCountryFilter.ts[m
+[1m+++ b/src/shared/hooks/useRegionCountryFilter.ts[m
+[36m@@ -11,19 +11,7 @@[m [mimport {[m
+   Country,[m
+ } from "@/services/simtimService";[m
+ [m
+[31m-const SIM_REGION_VALUES = [[m
+[31m-  "norteamerica",[m
+[31m-  "centro-sur-america",[m
+[31m-  "europa",[m
+[31m-  "africa",[m
+[31m-  "asia",[m
+[31m-  "oceania",[m
+[31m-  "global",[m
+[31m-] as const;[m
+[31m-[m
+[31m-type SimRegion = (typeof SIM_REGION_VALUES)[number];[m
+[31m-[m
+[31m-const REGION_CODE_TO_SIM_REGION: Record<string, SimRegion> = {[m
+[32m+[m[32mconst REGION_CODE_TO_SIM_REGION: Record<string, string> = {[m
+   norteamerica: "norteamerica",[m
+   "centro-sur-america": "centro-sur-america",[m
+   europa: "europa",[m
+[36m@@ -38,10 +26,13 @@[m [mconst REGION_CODE_TO_SIM_REGION: Record<string, SimRegion> = {[m
+   worldwide: "global",[m
+ };[m
+ [m
+[31m-function mapRegionCodeToSimRegion(code?: string): SimRegion | undefined {[m
+[32m+[m[32mfunction mapRegionCodeToSimRegion(code?: string): string | undefined {[m
+   if (!code) return undefined;[m
+[31m-  const key = code.trim().toLowerCase();[m
+[31m-  return REGION_CODE_TO_SIM_REGION[key];[m
+[32m+[m[32m  const normalizedCode = code.trim();[m
+[32m+[m[32m  const key = normalizedCode.toLowerCase();[m
+[32m+[m
+[32m+[m[32m  // Prefer legacy aliases when present, otherwise forward the API region code.[m
+[32m+[m[32m  return REGION_CODE_TO_SIM_REGION[key] ?? normalizedCode;[m
+ }[m
+ [m
+ export function normalizeAlpha2(raw?: string): string | undefined {[m
