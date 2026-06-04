@@ -16,9 +16,20 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   const { slug, locale } = await params;
   const sp = await searchParams;
   const staticConfig = getSimProductConfig(slug);
-  const productId = firstParam(sp.productId) || (staticConfig?.productId ? String(staticConfig.productId) : undefined);
   const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
+
+  // Siempre cargar el producto base del slug (staticConfig.productId) para obtener iconUrl de WordPress
+  // Si hay un productId en query params (variante), usarlo como secundario
+  const baseProductId = staticConfig?.productId ? String(staticConfig.productId) : undefined;
+  const queryProductId = firstParam(sp.productId);
+  const productId = queryProductId || baseProductId;
+
   const product = await getCachedSimProduct(productId, locale, simRegion);
+
+  // Si el producto de la query no tiene iconUrl, cargar el producto base para obtenerlo
+  const baseProduct = (queryProductId && !product?.iconUrl && baseProductId)
+    ? await getCachedSimProduct(baseProductId, locale)
+    : null;
 
   const fallbackTitle = slug === "esim-encriptada"
     ? "eSIM Encriptada"
@@ -29,7 +40,16 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
         : "SIM Encriptada";
 
   const title = product?.name || fallbackTitle;
-  const imageUrl = product?.iconUrl || staticConfig?.iconUrl || product?.productImage || product?.image_full || product?.images?.[0]?.src || staticConfig?.productImage || "/images/logo-encriptados.png";
+
+  // Prioridad: iconUrl de WordPress > imagen estática de config > imagen del producto
+  const imageUrl =
+    product?.iconUrl ||
+    baseProduct?.iconUrl ||
+    product?.productImage ||
+    product?.image_full ||
+    product?.images?.[0]?.src ||
+    staticConfig?.productImage ||
+    "/images/logo-encriptados.png";
 
   return buildSeoMetadata({
     title,
@@ -38,8 +58,8 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
     locale,
     image: {
       url: imageUrl,
-      width: 1200,
-      height: 630,
+      width: 400,
+      height: 400,
       alt: title,
     },
     keywords: [title, "SIM encriptada", "eSIM", "Encriptados"],
