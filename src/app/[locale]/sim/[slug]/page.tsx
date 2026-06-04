@@ -12,24 +12,25 @@ interface PageProps {
 const firstParam = (value: string | string[] | undefined): string | undefined =>
   Array.isArray(value) ? value[0] : value;
 
+/** Fetch iconUrl directly from admin WordPress (admin.encriptados.io) */
+async function fetchSimIconUrl(productId: number, locale: string): Promise<string | null> {
+  try {
+    const res = await fetch(
+      `https://admin.encriptados.io/wp-json/encriptados/v3/store/product/${productId}?lang=${locale}`,
+      { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.iconUrl || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function generateMetadata({ params, searchParams }: PageProps) {
   const { slug, locale } = await params;
   const sp = await searchParams;
   const staticConfig = getSimProductConfig(slug);
-  const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
-
-  // Siempre cargar el producto base del slug (staticConfig.productId) para obtener iconUrl de WordPress
-  // Si hay un productId en query params (variante), usarlo como secundario
-  const baseProductId = staticConfig?.productId ? String(staticConfig.productId) : undefined;
-  const queryProductId = firstParam(sp.productId);
-  const productId = queryProductId || baseProductId;
-
-  const product = await getCachedSimProduct(productId, locale, simRegion);
-
-  // Si el producto de la query no tiene iconUrl, cargar el producto base para obtenerlo
-  const baseProduct = (queryProductId && !product?.iconUrl && baseProductId)
-    ? await getCachedSimProduct(baseProductId, locale)
-    : null;
 
   const fallbackTitle = slug === "esim-encriptada"
     ? "eSIM Encriptada"
@@ -39,12 +40,21 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
         ? "TIM eSIM"
         : "SIM Encriptada";
 
+  // Obtener nombre del producto desde la query si viene una variante
+  const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
+  const queryProductId = firstParam(sp.productId);
+  const baseProductId = staticConfig?.productId ? String(staticConfig.productId) : undefined;
+  const product = await getCachedSimProduct(queryProductId || baseProductId, locale, simRegion);
+
   const title = product?.name || fallbackTitle;
 
-  // Prioridad: iconUrl de WordPress > imagen estática de config > imagen del producto
+  // Obtener iconUrl directamente desde admin.encriptados.io (fuente de verdad)
+  const iconUrl = staticConfig?.productId
+    ? await fetchSimIconUrl(staticConfig.productId, locale)
+    : null;
+
   const imageUrl =
-    product?.iconUrl ||
-    baseProduct?.iconUrl ||
+    iconUrl ||
     product?.productImage ||
     product?.image_full ||
     product?.images?.[0]?.src ||
