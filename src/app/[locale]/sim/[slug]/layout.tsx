@@ -24,33 +24,40 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       };
     }
 
+    const config = getSimProductConfig(slug);
+
     // Título corto basado en el slug
     let shortTitle = "SIM Encriptada";
-    let metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
+    let staticMetaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
 
-    // Mapeo de slugs a títulos e imágenes
     if (slug === "esim-encriptada") {
       shortTitle = "eSIM Encriptada";
-      metaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
+      staticMetaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
     } else if (slug === "sim-encriptada") {
       shortTitle = "SIM Encriptada";
-      metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
+      staticMetaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
     } else if (slug === "tim-sim") {
       shortTitle = "TIM SIM";
-      metaImage = "/meta-image/sim-tim/tim-fisica.png";
+      staticMetaImage = "/meta-image/sim-tim/tim-fisica.png";
     } else if (slug === "esim-tim") {
       shortTitle = "TIM eSIM";
-      metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
+      staticMetaImage = "/meta-image/sim-tim/tim-esim-datos.png";
     }
 
-    // Descripción corta - llamado a la acción
-    const shortDescription = "¡Compra ahora!";
+    // Obtener producto desde la API para usar iconUrl dinámico
+    const product = config?.productId
+      ? await getCachedSimProduct(String(config.productId), locale || "es")
+      : null;
+
+    // Usar iconUrl de WordPress si está disponible, si no el estático
+    let metaImage = product?.iconUrl || staticMetaImage;
 
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
       metaImage = `${baseUrl}${metaImage}`;
     }
 
+    const shortDescription = "¡Compra ahora!";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
     return {
@@ -64,17 +71,16 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
         images: [
           {
             url: metaImage,
-            width: 1200,
-            height: 630,
+            width: 400,
+            height: 400,
             alt: shortTitle,
-            type: "image/png",
           },
         ],
         locale: locale || "es",
         type: "website",
       },
       twitter: {
-        card: "summary_large_image",
+        card: "summary",
         title: shortTitle,
         description: shortDescription,
         images: [metaImage],
