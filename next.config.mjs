@@ -28,6 +28,17 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Redirección temporal (307) de activar-apps → home
+      {
+        source: "/:locale/apps/activar-apps",
+        destination: "/:locale",
+        permanent: false,
+      },
+      {
+        source: "/apps/activar-apps",
+        destination: "/",
+        permanent: false,
+      },
       // Redirecciones de URLs legacy a nuevas URLs basadas en nombre
       {
         source: "/:locale/apps/silent-circle",
