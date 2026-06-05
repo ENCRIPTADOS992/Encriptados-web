@@ -37,7 +37,7 @@ const rawWpBlogApi = process.env.NEXT_PUBLIC_WP_BLOG_API || DEFAULT_WP_API_BASE;
 
 export const WP_API_BASE = trimTrailingSlash(
   isServer
-    ? rawWpApi
+    ? (rawWpApi.includes("encriptados.es") ? DEFAULT_WP_API_BASE : rawWpApi)
     : "/api/wp-json"
 );
 
