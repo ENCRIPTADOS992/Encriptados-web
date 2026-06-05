@@ -75,6 +75,9 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
 
     // Obtener imagen de metadatos
     let metaImage = metaImageMap[slug];
+    if (!metaImage && product.iconUrl) {
+      metaImage = product.iconUrl;
+    }
     if (!metaImage && product.images?.[0]?.src) {
       metaImage = product.images[0].src;
     }
