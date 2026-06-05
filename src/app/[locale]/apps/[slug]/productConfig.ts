@@ -366,6 +366,26 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
     relatedProducts: { simProductId: "508", esimProductId: "454" },
   },
 
+  // Name: "Galaxia MDM Iphone" -> slug: "galaxia-mdm-iphone"
+  "galaxia-mdm-iphone": {
+    slug: "galaxia-mdm-iphone",
+    productId: 60996,
+    categoryId: 35,
+    templateType: "software",
+    heroBanners: {
+      desktop: "/images/apps/secure-mdm-iphone/hero-desktop.png",
+      tablet: "/images/apps/secure-mdm-iphone/hero-tablet.png",
+      mobile: "/images/apps/secure-mdm-iphone/hero-mobile.jpg",
+    },
+    productImage: "/images/mega-menu/sistemas/galaxia.webp",
+    iconUrl: "/images/mega-menu/sistemas/galaxia.webp",
+    benefitIcon: "/images/apps/secure-mdm-iphone/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
   // Name: "Secure MDM iPhone" -> slug: "secure-mdm-iphone"
   "secure-mdm-iphone": {
     slug: "secure-mdm-iphone",
