@@ -371,7 +371,10 @@ export default function UnifiedPurchaseForm({
           willUseRenewal: form.licenseType === "renew" && (hasRenewIds || isZi0nRenewal),
         });
 
-        if (form.licenseType === "renew" && (hasRenewIds || isZi0nRenewal)) {
+        if (form.licenseType === "renew") {
+          if (!isZi0nRenewal && !hasRenewIds) {
+            throw new Error(t("renewIdsRequired") || "License IDs are required for renewal");
+          }
           // === RENEWAL: use dedicated /orders/renewal endpoint ===
           // Must be checked FIRST — renewal always goes to /orders/renewal regardless of orderType
           // Zi0n renewals don't require license IDs — codes come from inventory
@@ -932,9 +935,9 @@ export default function UnifiedPurchaseForm({
           <button
             type="button"
             onClick={handlePay}
-            disabled={isLoadingPayment}
-            aria-disabled={isLoadingPayment}
-            className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${isLoadingPayment
+            disabled={!canPay || isLoadingPayment}
+            aria-disabled={!canPay || isLoadingPayment}
+            className={`w-full h-[54px] rounded-[8px] text-[16px] font-bold transition-all ${(!canPay || isLoadingPayment)
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-[#010C0F] text-white hover:bg-[#1a1a1a]"
               }`}

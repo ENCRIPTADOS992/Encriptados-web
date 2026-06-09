@@ -269,13 +269,24 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
           selectedOption: (params as any)?.selectedOption,
         }}
         onPayCrypto={async (formData: FormData) => {
+          const isZi0nProduct = /zi0n|zion/i.test(product?.name || "");
+          const isZi0nRenewal = formData.licenseType === "renew" && isZi0nProduct;
+          const hasRenewIds = formData.renewIds && formData.renewIds.length > 0;
+
           // === RENEWAL via crypto: use dedicated /orders/renewal endpoint ===
-          if (formData.licenseType === "renew" && formData.renewIds && formData.renewIds.length > 0) {
+          if (formData.licenseType === "renew") {
+            if (!isZi0nRenewal && !hasRenewIds) {
+              throw new Error(t("renewIdsRequired") || "License IDs are required for renewal");
+            }
             const lt = selectedVariant?.licensetime ?? product?.licensetime;
             const months = typeof lt === 'string' ? parseInt(lt as string) || 12 : (typeof lt === 'number' ? lt : 12);
+            const effectiveLicenseIds: string[] = isZi0nRenewal && !hasRenewIds
+              ? Array.from({ length: quantity }, () => "zi0n-auto")
+              : (formData.renewIds ?? []);
+
             await payRenewal({
               productId: productIdNum,
-              licenseIds: formData.renewIds,
+              licenseIds: effectiveLicenseIds,
               email: formData.email,
               provider: "kriptomus",
               amount,
