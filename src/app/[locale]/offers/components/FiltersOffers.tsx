@@ -28,7 +28,7 @@ export default function FiltersOffers({
   ];
 
   return (
-    <nav className="w-full max-w-[720px] min-w-[320px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-2 sm:px-3 h-14 sm:h-16 overflow-hidden mx-auto" aria-label={t("filtersAriaLabel")}>
+    <nav className="w-full max-w-[720px] min-w-[280px] sm:min-w-[560px] bg-[#1A1A1A] rounded-full px-1.5 sm:px-3 h-12 sm:h-16 overflow-hidden mx-auto" aria-label={t("filtersAriaLabel")}>
       <div className="flex items-center h-full gap-1">
         {filterItems.map((item, index) => (
           <Controller
@@ -42,7 +42,7 @@ export default function FiltersOffers({
                 onClick={() => onChange(item.value)}
                 aria-label={t("filterBy", { category: item.label })}
                 aria-pressed={selectedItem === item.value}
-                className={`basis-1/3 grow-0 shrink-0 h-10 sm:h-12 text-center px-0 text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1A1A1A]
+                className={`basis-1/3 grow-0 shrink-0 h-9 sm:h-12 text-center px-1 text-[11px] min-[360px]:text-xs min-[400px]:text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1A1A1A]
                   ${
                     selectedItem === item.value
                       ? "bg-[#2A2A2A] text-white"
