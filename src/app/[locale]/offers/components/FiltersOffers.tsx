@@ -42,7 +42,7 @@ export default function FiltersOffers({
                 onClick={() => onChange(item.value)}
                 aria-label={t("filterBy", { category: item.label })}
                 aria-pressed={selectedItem === item.value}
-                className={`basis-1/3 grow-0 shrink-0 h-9 sm:h-12 text-center px-1 text-[11px] min-[360px]:text-xs min-[400px]:text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1A1A1A]
+                className={`flex-1 h-9 sm:h-12 text-center px-1 text-[11px] min-[360px]:text-xs min-[400px]:text-sm sm:text-base md:text-lg font-medium rounded-full transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1A1A1A]
                   ${
                     selectedItem === item.value
                       ? "bg-[#2A2A2A] text-white"
