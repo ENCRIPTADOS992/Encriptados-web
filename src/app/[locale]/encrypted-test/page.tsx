@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EncryptedTestPage from "./components/EncryptedTestPage";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
+import GlobalFloatingMenu from "@/shared/components/GlobalFloatingMenu";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -64,6 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 const page = () => {
   return (
     <div className="bg-black">
+      <GlobalFloatingMenu />
       <EncryptedTestPage />
     </div>
   );
