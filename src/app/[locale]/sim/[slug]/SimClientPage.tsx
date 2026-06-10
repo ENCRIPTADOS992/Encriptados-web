@@ -371,6 +371,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
 
   // Precio efectivo: usar sale_price cuando hay oferta válida (sale_price > 0 y < regular price)
   // API: variant.price = get_regular_price(), variant.sale_price = get_sale_price()
+  // Si el producto es variable (padre sin precio propio) y no hay variante seleccionada en URL,
+  // se calcula el precio mínimo entre las variantes para evitar mostrar "Consultar".
   const effectivePrice = useMemo(() => {
     if (selectedVariant) {
       const v = selectedVariant as any;
@@ -389,6 +391,27 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       : Number(product?.price ?? 0);
 
     if (prodSale > 0 && prodSale < prodPrice) return prodSale;
+
+    // Si el precio base es inválido (producto variable sin precio propio en WooCommerce),
+    // calcular el precio mínimo de las variantes disponibles para mostrar "Desde $X USD"
+    // en lugar del texto "Consultar" cuando no hay parámetros en la URL (WebView, enlace directo).
+    if (isNaN(prodPrice) || prodPrice === 0) {
+      const variants = product?.variants as any[] | undefined;
+      if (Array.isArray(variants) && variants.length > 0) {
+        const validPrices = variants
+          .map((v: any) => {
+            const vp = Number(v.price ?? v.cost ?? 0);
+            const vs = v.sale_price != null && v.sale_price !== '' ? Number(v.sale_price) : 0;
+            // Usar sale_price si es válido y menor que el precio regular
+            return (vs > 0 && vs < vp) ? vs : vp;
+          })
+          .filter((p: number) => p > 0);
+        if (validPrices.length > 0) {
+          return Math.min(...validPrices);
+        }
+      }
+    }
+
     return prodPrice;
   }, [selectedVariant, product]);
 
