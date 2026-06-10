@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import EncryptedTestPage from "./components/EncryptedTestPage";
 import { buildAbsoluteUrl } from "@/shared/seo/url";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
+import OurProductsPage from "../our-products/OurProductsPage";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -65,6 +66,8 @@ const page = () => {
   return (
     <div className="bg-black">
       <EncryptedTestPage />
+      {/* Menú de productos con categorías (SIMs, Apps, Sistemas, Routers) — igual que en el Home */}
+      <OurProductsPage />
     </div>
   );
 };
