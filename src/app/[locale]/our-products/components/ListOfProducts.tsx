@@ -807,8 +807,20 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
         if (Number.isFinite(ma) && Number.isFinite(mb)) return ma - mb;
         return String(a.licensetime).localeCompare(String(b.licensetime));
       });
-      for (let i = 0; i < orderedVariants.length; i++) {
-        const variant = orderedVariants[i];
+
+      // Si hay un filtro de licencia activo, solo mostrar la variante que coincide
+      const variantsToExpand =
+        filters.license && filters.license !== "all"
+          ? orderedVariants.filter(
+              (v: any) => String(v.licensetime) === String(filters.license)
+            )
+          : orderedVariants;
+
+      // Si el filtro de licencia está activo pero no hay variante que coincida, omitir
+      if (variantsToExpand.length === 0) continue;
+
+      for (let i = 0; i < variantsToExpand.length; i++) {
+        const variant = variantsToExpand[i];
         expandedByLicense.push({
           ...product,
           _selectedVariant: variant,
@@ -820,9 +832,11 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     productsToRender = expandedByLicense;
     console.log("🔄 [Expansión Licencias] Resultado:", {
       productosAntes: filteredProducts.length,
-      tarjetasExpandidas: expandedByLicense.length
+      tarjetasExpandidas: expandedByLicense.length,
+      filtroLicencia: filters.license,
     });
   }
+
 
   const productCount = productsToRender.length;
   console.log("✅ [ListOfProducts] total a renderizar:", productCount);
