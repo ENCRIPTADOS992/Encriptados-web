@@ -5,8 +5,8 @@ type QueryParams = Record<string, QueryValue>;
 
 const DEFAULT_WP_API_BASE = "https://admin.encriptados.io/wp-json";
 
-const isServer = typeof window === "undefined";
-const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
+export const isServer = typeof window === "undefined";
+export const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
 
 // URL del WP de administración donde se gestionan los cupones, órdenes, etc.
 // En producción se fuerza admin.encriptados.io; en staging/desarrollo usa la de pruebas.
