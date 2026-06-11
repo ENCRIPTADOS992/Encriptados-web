@@ -16,9 +16,9 @@ const PRODUCT_CATEGORY_API_PARAM_BY_ID: Record<number, string> = {
   [PRODUCT_CATEGORY_IDS.SOFTWARE]: "software",
   [PRODUCT_CATEGORY_IDS.APPS]: "apps",
   [PRODUCT_CATEGORY_IDS.ROUTERS]: "routers",
-  [PRODUCT_CATEGORY_IDS.SIMS]: "sims",
-  [PRODUCT_CATEGORY_IDS.ACTIVATE_APPS]: "activar-apps",
   [PRODUCT_CATEGORY_IDS.RECHARGES]: "recargas",
+  [PRODUCT_CATEGORY_IDS.SIMS]: "sims", // SIMs takes precedence if both point to the same ID (e.g., 40 in staging)
+  [PRODUCT_CATEGORY_IDS.ACTIVATE_APPS]: "activar-apps",
 };
 
 export const PRODUCT_LIST_CATEGORY_IDS = [
