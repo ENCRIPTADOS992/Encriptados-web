@@ -121,24 +121,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   const isFetching = prefetchedProducts ? Boolean(isFetchingProducts) : query.isFetching;
   const isError = prefetchedProducts ? Boolean(isProductsError) : query.isError;
 
-  console.error("🕵️ [DEBUG ListOfProducts]", {
-    PRODUCT_CATEGORY_IDS,
-    selectedOption,
-    filters,
-    prefetchedProductsLength: prefetchedProducts?.length,
-    productsLength: products?.length,
-    productsList: products?.map(p => ({
-      id: p.id,
-      name: p.name,
-      provider: p.provider,
-      brand: p.brand,
-      type_product: p.type_product
-    })),
-    isFetching,
-    isError,
-  });
-  console.error("🕵️ [DEBUG Products Names]:", products?.map(p => `${p.id}:${p.name}:${p.provider}`).join(", "));
-
   if (isFetching) {
     return (
       <div className="flex justify-center items-center mt-6">
