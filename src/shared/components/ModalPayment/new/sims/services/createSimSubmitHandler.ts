@@ -25,6 +25,7 @@ type Params = {
   isPhysical: boolean;
   unitPrice: number;
   quantity: number;
+  couponCode?: string;
   discount: number;
   productid?: string;
   product: ModalProduct | undefined;
@@ -46,6 +47,7 @@ export function createSimSubmitHandler({
   isPhysical,
   unitPrice,
   quantity,
+  couponCode,
   discount,
   productid,
   product,
@@ -60,6 +62,7 @@ export function createSimSubmitHandler({
       data,
       unitPrice,
       quantity,
+      couponCode,
       discount,
       isPhysical,
       productid,
@@ -113,6 +116,8 @@ export function createSimSubmitHandler({
         method: tottoliMethod,
         amount: amountUsd,
         currency: "USD",
+        coupon_code: couponCode,
+        discount,
       } as const;
 
       let payload: TottoliCheckoutPayload;
@@ -284,6 +289,8 @@ export function createSimSubmitHandler({
         currency: "USD",
         metadata: {
           type: formType,
+          couponCode,
+          discount,
           productFamily,
           productFormat,
           slug,

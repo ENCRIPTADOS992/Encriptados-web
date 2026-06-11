@@ -29,6 +29,7 @@ type SimFormUnifiedProps = {
   product?: ModalProduct;
   unitPrice: number;
   quantity: number;
+  couponCode?: string;
   discount?: number;
   hideSimField?: boolean;
   selectedPlanId?: string | number | null;
@@ -55,6 +56,7 @@ export default function SimFormUnified({
   product = undefined,
   unitPrice,
   quantity,
+  couponCode = undefined,
   discount = 0,
   hideSimField = false,
   selectedPlanId = null,
@@ -321,6 +323,8 @@ export default function SimFormUnified({
           method: tottoliMethod,
           amount: amountUsd,
           currency: "USD",
+          coupon_code: couponCode,
+          discount,
           product: productName,
           product_id: resolvedProductId || undefined,
           has_esim: hasEsimAddon,
@@ -328,6 +332,7 @@ export default function SimFormUnified({
             formType,
             quantity,
             unitPrice,
+            couponCode,
             discount,
             shippingFee,
             selectedPlanId,
