@@ -9,16 +9,22 @@ import { MoraWarningProvider } from "@/providers/MoraWarningProvider";
 import MoraWarningModal from "@/shared/components/MoraWarningModal";
 import { AppMobileProvider } from "@/shared/context/AppMobileContext";
 import AppMobileLayout from "@/shared/components/AppMobileLayout";
+import HtmlLangSetter from "@/shared/components/HtmlLangSetter";
+import TelegramFloatingButton from "@/shared/components/TelegramFloatingButton/TelegramFloatingButton";
 
 export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
   const messages = await getMessages();
 
   return (
     <>
+      <HtmlLangSetter locale={locale} />
       <NextIntlClientProvider messages={messages}>
         <AppMobileProvider>
           <ModalPaymentProvider>
@@ -35,6 +41,7 @@ export default async function LocaleLayout({
           <MoraWarningProvider>
             <MoraWarningModal />
           </MoraWarningProvider>
+          <TelegramFloatingButton />
         </AppMobileProvider>
       </NextIntlClientProvider>
     </>

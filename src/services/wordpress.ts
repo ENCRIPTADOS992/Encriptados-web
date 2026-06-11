@@ -1,12 +1,11 @@
 import axios from 'axios';
+import { WP_POSTS_API_BASE } from "@/shared/constants/backend";
 
-const WP_API_URL = process.env.NEXT_PUBLIC_WP_API_URL || ''; 
-// O si tu variable no tiene NEXT_PUBLIC_:
 const WP_AUTH_TOKEN = process.env.WP_AUTH_TOKEN || ''; 
 
 export async function getPosts() {
   try {
-    const response = await axios.get(`${WP_API_URL}/posts`, {
+    const response = await axios.get(`${WP_POSTS_API_BASE}/posts`, {
       headers: {
         Authorization: `Basic ${WP_AUTH_TOKEN}`
       }
@@ -17,4 +16,3 @@ export async function getPosts() {
     throw error;
   }
 }
-

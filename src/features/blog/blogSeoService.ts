@@ -1,8 +1,10 @@
 import type { BlogPost, WordPressBlogItem } from "./types";
+import { parseSpintax } from "./blogService";
 import fs from "fs";
 import path from "path";
+import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
 
-const WP_BASE = process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
+const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
 type MarkdownSeoMeta = {
@@ -57,8 +59,9 @@ async function fetchWordPressPostById(id: string): Promise<WordPressBlogItem | n
 }
 
 async function fetchWordPressPostBySlug(slug: string, locale: string): Promise<WordPressBlogItem | null> {
+  const catId = (locale === "en" ? 97 : locale === "pt" ? 101 : locale === "it" ? 100 : locale === "fr" ? 98 : 96);
   const res = await fetch(
-    `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(locale)}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`,
+    `${WP_BASE}/wp/v2/posts?categories=${catId}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`,
     { next: { revalidate: 300 } },
   );
   if (!res.ok) return null;
@@ -81,13 +84,13 @@ export async function fetchBlogPostSeo(slug: string, locale: string): Promise<Bl
       wpId: item.id,
       legacyPath: getPathFromUrl(item.link),
       source: "wordpress",
-      title: stripHtml(item.title.rendered),
-      description: stripHtml(item.excerpt.rendered),
+      title: parseSpintax(stripHtml(item.title.rendered)),
+      description: parseSpintax(stripHtml(item.excerpt.rendered)),
       image,
       imageFull: image,
       author: getAuthorFromEmbed(item),
       date: item.date,
-      content: item.content.rendered,
+      content: parseSpintax(item.content.rendered),
     };
   } catch {
     return null;

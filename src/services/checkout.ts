@@ -1,4 +1,5 @@
 import { api } from './api';
+import { WP_V1_BASE } from "@/shared/constants/backend";
 
 export type Provider = 'stripe' | 'kriptomus';
 
@@ -65,11 +66,7 @@ export interface CheckoutRenewalInput {
   system?: 'android' | 'ios';
 }
 
-// Base público de WP (ej: https://encriptados.es/wp-json)
-const WP_BASE =
-  (process.env.NEXT_PUBLIC_WP_API || 'https://encriptados.es/wp-json').replace(/\/$/, '');
-
-const BASE = `${WP_BASE}/encriptados/v1`;
+const BASE = WP_V1_BASE;
 
 const omitUndefined = (obj: Record<string, any>) => {
   const out: Record<string, any> = {};

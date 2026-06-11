@@ -214,7 +214,9 @@
     },
     "copyRight": "Copyright © 2024 Todos os direitos reservados.",
     "termsAndConditions": "Termos e Condições",
-    "dataProcesing": "Política e tratamento de dados"
+    "dataProcesing": "Política e tratamento de dados",
+    "cookiesPolicy": "Política de cookies",
+    "privacyPolicy": "Política de privacidade"
   },
   "EncryptedSimPage": {
     "loadingProduct": "Carregando produto...",
@@ -858,7 +860,9 @@
         "sim": "SIMs",
         "app": "Aplicativos",
         "mobile": "Sistemas",
-        "routers": "Roteadores"
+        "routers": "Roteadores",
+        "activateApps": "Ativar Apps",
+        "recharges": "Recargas"
       },
       "software": "Fornecedor",
       "providerTitle": "Fornecedor",
@@ -1224,7 +1228,7 @@
       "filtersAriaLabel": "Filtros de categorias de ofertas",
       "filterBy": "Filtrar por {category}",
       "sims": "SIMS",
-      "apps": "Aplicações",
+      "apps": "Apps",
       "system": "Sistemas"
     },
     "discoverSimTitle": "Descubra a eSIM/SIM da Encriptados.io",

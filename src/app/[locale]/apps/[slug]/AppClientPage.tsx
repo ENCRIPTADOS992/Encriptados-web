@@ -22,12 +22,12 @@ import ActivarAppsModules from "../component/ActivarAppsModules";
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { getProductById, getProductBySlug } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { useProductDetail } from "@/features/products/queries/useProductDetail";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // Configuración y utilidades locales
-import { getProductConfig } from "./productConfig";
+import { getProductConfig, getProductLookupSlugs } from "./productConfig";
 import {
   transformChecksToFeatures,
   transformVariantsToPlans,
@@ -65,6 +65,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const config = useMemo(() => getProductConfig(slug), [slug]);
+  const publicSlugs = useMemo(() => getProductLookupSlugs(slug, config), [slug, config]);
 
   // Determine identifier and type for the hook
   const searchParamProductId = searchParams.get("productId");
@@ -72,15 +73,15 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const searchParamCategoryId = searchParams.get("categoryId");
   const searchParamBuy = searchParams.get("buy");
 
-  // Priority: 
-  // 1. Query Param ID (allows overriding static config via URL)
-  // 2. Static Config ID (legacy/stable behavior for known apps)
-  // 3. Slug (fallback for dynamic apps without ID in URL)
-  const identifier = searchParamProductId
-    ? searchParamProductId
-    : (config?.productId ? String(config.productId) : slug);
+  // Priority:
+  // 1. Static config ID for known public routes
+  // 2. Query param ID only for dynamic routes without static config
+  // 3. Slug fallback
+  const identifier = config?.productId
+    ? String(config.productId)
+    : (searchParamProductId || slug);
 
-  const identifierType = (searchParamProductId || config?.productId) ? "id" : "slug";
+  const identifierType = (config?.productId || searchParamProductId) ? "id" : "slug";
 
   const {
     data: productData,
@@ -89,6 +90,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   } = useProductDetail(identifier, identifierType, locale, {
     initialData: initialProduct,
     enabled: true,
+    publicSlugs,
+    categoryId: config?.categoryId ?? null,
   });
 
   const product = productData || null;
@@ -210,7 +213,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       openModal({
         productid: String(product?.id || config?.productId),
         languageCode: locale,
-        selectedOption: Number(searchParamCategoryId) || product?.category?.id || config?.categoryId || 38,
+        selectedOption:
+          Number(searchParamCategoryId) ||
+          product?.category?.id ||
+          config?.categoryId ||
+          PRODUCT_CATEGORY_IDS.APPS,
         initialPrice: numericPrice,
         iconUrl: config?.iconUrl,
         variantId: planToUse?.variantId,
@@ -230,7 +237,11 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
       openModal({
         productid: String(product?.id || config?.productId),
         languageCode: locale,
-        selectedOption: Number(searchParamCategoryId) || product?.category?.id || config?.categoryId || 38,
+        selectedOption:
+          Number(searchParamCategoryId) ||
+          product?.category?.id ||
+          config?.categoryId ||
+          PRODUCT_CATEGORY_IDS.APPS,
         initialPrice: numericPrice,
         iconUrl: config?.iconUrl,
         variantId: selectedPlan?.variantId,
@@ -252,7 +263,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     openModal({
       productid: String(product?.id || config?.productId),
       languageCode: locale,
-      selectedOption: product?.category?.id || config?.categoryId || 38,
+      selectedOption:
+        product?.category?.id || config?.categoryId || PRODUCT_CATEGORY_IDS.APPS,
       initialPrice: numericPrice,
       iconUrl: config?.iconUrl,
       variantId: selectedPlan?.variantId,
@@ -269,7 +281,12 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   };
 
   const handleMoreInfo = (slug: string) => router.push(buildSimUrl(slug));
-  const handleSimBuy = (productId: string) => openModal({ productid: productId, languageCode: locale, selectedOption: 40 });
+  const handleSimBuy = (productId: string) =>
+    openModal({
+      productid: productId,
+      languageCode: locale,
+      selectedOption: PRODUCT_CATEGORY_IDS.SIMS,
+    });
   const handleFeaturedSimInfo = (path: string) => router.push(`/${locale}${path}`);
 
   const productInfo = useMemo(() =>
@@ -393,12 +410,15 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     }
   }
 
+  const shouldPreferGalleryImage = slug === "router-camaleon";
+
   const productImage =
+    (shouldPreferGalleryImage ? product?.images?.[0]?.src : "") ||
     dynamicImage ||
     (product as any)?.buyNowImage ||
     (product as any)?.productImage ||
     (product as any)?.image_full ||
-    product?.images?.[0]?.src ||
+    (!shouldPreferGalleryImage ? product?.images?.[0]?.src : "") ||
     config?.productImage ||
     "";
 

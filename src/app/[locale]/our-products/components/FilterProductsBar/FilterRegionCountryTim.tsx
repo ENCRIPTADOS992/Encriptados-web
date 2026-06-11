@@ -297,7 +297,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                           <span className="w-5 h-5 flex items-center justify-center flex-shrink-0 self-center">
                             <span
                               className={`
-                                block w-4 h-4 rounded-full border transition-all
+                                flex items-center justify-center w-4 h-4 rounded-full border transition-all
                                 ${
                                   isActive
                                     ? "border-[#009DFF] bg-[#009DFF]"
@@ -306,7 +306,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                               `}
                             >
                               {isActive && (
-                                <span className="block m-auto w-2 h-2 rounded-full bg-white" />
+                                <span className="block w-2 h-2 rounded-full bg-white" />
                               )}
                             </span>
                           </span>
@@ -392,7 +392,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                           <span className="w-5 h-5 flex items-center justify-center flex-shrink-0 self-center">
                             <span
                               className={`
-                                block w-4 h-4 rounded-full border transition-all
+                                flex items-center justify-center w-4 h-4 rounded-full border transition-all
                                 ${
                                   isActive
                                     ? "border-[#009DFF] bg-[#009DFF]"
@@ -401,7 +401,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                               `}
                             >
                               {isActive && (
-                                <span className="block m-auto w-2 h-2 rounded-full bg-white" />
+                                <span className="block w-2 h-2 rounded-full bg-white" />
                               )}
                             </span>
                           </span>

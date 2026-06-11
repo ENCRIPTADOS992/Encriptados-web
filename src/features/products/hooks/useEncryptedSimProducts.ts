@@ -2,16 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../services";
 import { Product } from "../types/AllProductsResponse";
 import { useLocale } from "next-intl";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // IDs de productos específicos para la página de SIM Encriptada
 const ENCRYPTED_SIM_PRODUCT_IDS = {
-  DATA: 443,                    // Recarga Datos (variantes: 25, 50, 100, 150, 250, 500)
-  MINUTES: 446,                 // Recarga Minutos (variantes: 200, 500, 1000)
-  ESIM: 449,                    // eSIM (precio único: 12)
-  ESIM_DATA: 59835,             // eSIM + Recarga Datos (variantes: 32.5, 57.5, 107.5, 162.5, 207.5, 262.5, 507.5)
-  SIM_FISICA_TIM: 448,          // SIM Física TIM (precio único: 10)
-  SIM_FISICA_ENCRYPTED: 508,    // SIM Física Encrypted (precio único: 15)
-  ESIM_MINUTES: 61262            // eSIM + Minutos (variantes: 55, 105, 155, 205, 255, 505)
+  DATA: 60944,                    // Recarga Datos (variantes: 25, 50, 100, 150, 250, 500)
+  MINUTES: 60945,                 // Recarga Minutos (variantes: 200, 500, 1000)
+  ESIM: 60947,                    // eSIM (precio único: 12)
+  ESIM_DATA: 60980,             // eSIM + Recarga Datos (variantes: 32.5, 57.5, 107.5, 162.5, 207.5, 262.5, 507.5)
+  SIM_FISICA_TIM: 60946,          // SIM Física TIM (precio único: 10)
+  SIM_FISICA_ENCRYPTED: 60950,    // SIM Física Encrypted (precio único: 15)
+  ESIM_MINUTES: 61002            // eSIM + Minutos (variantes: 55, 105, 155, 205, 255, 505)
 };
 
 // Tipo para una variante de producto
@@ -55,7 +56,7 @@ export const useEncryptedSimProducts = () => {
       console.log("🔐 [useEncryptedSimProducts] Fetching encrypted SIM products...");
 
       // Obtener todos los productos de la categoría 40 (SIMs)
-      const products = await getAllProducts(40, locale);
+      const products = await getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, locale);
 
       console.log("🔐 [useEncryptedSimProducts] Products received:", products.length);
 
@@ -149,17 +150,6 @@ export const useEncryptedSimProducts = () => {
         });
 
       console.log("✅ [useEncryptedSimProducts] FINAL MAPPED PRODUCTS:", mappedProducts);
-      return mappedProducts;
-
-      console.log("🔐 [useEncryptedSimProducts] Mapped products with variants:",
-        mappedProducts.map(p => ({
-          id: p.id,
-          name: p.name,
-          priceRange: p.priceRange,
-          variantsCount: p.variants.length
-        }))
-      );
-
       return mappedProducts;
     },
     staleTime: 5 * 60 * 1000, // 5 minutos

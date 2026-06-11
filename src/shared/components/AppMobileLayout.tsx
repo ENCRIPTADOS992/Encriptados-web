@@ -17,8 +17,12 @@ export default function AppMobileLayout({
   const { isFromAppMobile } = useAppMobile();
   const pathname = usePathname();
 
-  // Ocultar header/footer si viene de la app O si estamos en la ruta de términos para app
-  const shouldHideLayout = isFromAppMobile || pathname?.includes("terms-app");
+  // Ocultar header/footer si viene de la app O si estamos en las rutas para app
+  const shouldHideLayout =
+    isFromAppMobile ||
+    pathname?.includes("terms-app") ||
+    pathname?.includes("privacy-app") ||
+    pathname?.includes("cookies-app");
 
   return (
     <>

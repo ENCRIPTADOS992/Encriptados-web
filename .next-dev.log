@@ -1,0 +1,161 @@
+
+> encriptados-web@0.1.0 dev
+> next dev --hostname 127.0.0.1 --port 3003
+
+   ▲ Next.js 15.5.18
+   - Local:        http://127.0.0.1:3003
+   - Network:      http://127.0.0.1:3003
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1271ms
+ ✓ Compiled /middleware in 246ms (317 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 3.1s (778 modules)
+ GET /es/our-products 404 in 3440ms
+ ✓ Compiled in 490ms (321 modules)
+ ○ Compiling /[locale]/apps/[slug] ...
+ ✓ Compiled /[locale]/apps/[slug] in 3.8s (2332 modules)
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET /es/apps/chat-mail 200 in 4919ms
+ ○ Compiling /[locale]/sim/[slug] ...
+ ✓ Compiled /[locale]/sim/[slug] in 758ms (2452 modules)
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET /es/sim/sim-encriptada 200 in 1684ms
+ ○ Compiling /[locale]/router ...
+ ✓ Compiled /[locale]/router in 1389ms (2460 modules)
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET /es/router 200 in 2185ms
+ ✓ Compiled /api/coupons/validate in 450ms (2476 modules)
+ GET /api/coupons/validate?code=INVALID&product_id=508&amount=15 500 in 558ms
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET /es/apps/chat-mail 200 in 432ms
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET /es/sim/sim-encriptada 200 in 216ms
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET /es/router 200 in 193ms
+   Reload env: .env.local
+   Reload env: .env.local
+ ✓ Compiled in 458ms (2793 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.1s (2753 modules)
+ GET /es/apps/chat-mail 500 in 3024ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.6s (2941 modules)
+🎛️ [ListOfProducts] filtros actuales => {
+  selectedOption: 451,
+  provider: 'encriptados',
+  os: 'all',
+  license: 'all',
+  encriptadosprovider: 'all',
+  timprovider: 'all',
+  regionOrCountryType: 'region',
+  regionOrCountry: 'global',
+  simCountry: undefined,
+  simCountryLabel: undefined,
+  simRegion: undefined,
+  isTim: false,
+  timproviderValue: 'all'
+}
+[STATE] isFetching...
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET / 200 in 4280ms
+ GET /?selectedOption=38 200 in 57ms
+ ✓ Compiled /manifest.webmanifest in 481ms (2925 modules)
+ GET /manifest.webmanifest 200 in 633ms
+ GET /?selectedOption=35 200 in 91ms
+ GET /manifest.webmanifest 200 in 24ms
+ GET /?selectedOption=36 200 in 44ms
+ GET /manifest.webmanifest 200 in 26ms
+ GET /?selectedOption=38 200 in 49ms
+ GET /manifest.webmanifest 200 in 28ms
+ GET /?selectedOption=40 200 in 51ms
+ GET /manifest.webmanifest 200 in 31ms
+ ✓ Compiled in 1181ms (2753 modules)
+ GET /?selectedOption=40 200 in 231ms
+ ✓ Compiled /manifest.webmanifest in 163ms (1554 modules)
+ GET /manifest.webmanifest 200 in 273ms
+ ✓ Compiled in 614ms (2774 modules)
+ GET /?selectedOption=40 200 in 117ms
+ GET /manifest.webmanifest 200 in 31ms
+ ✓ Compiled in 618ms (2774 modules)
+ GET /?selectedOption=40 200 in 106ms
+ GET /manifest.webmanifest 200 in 33ms
+ ✓ Compiled in 538ms (2774 modules)
+ GET /?selectedOption=40 200 in 103ms
+ GET /manifest.webmanifest 200 in 33ms
+🎛️ [ListOfProducts] filtros actuales => {
+  selectedOption: 451,
+  provider: 'encriptados',
+  os: 'all',
+  license: 'all',
+  encriptadosprovider: 'all',
+  timprovider: 'all',
+  regionOrCountryType: 'region',
+  regionOrCountry: 'global',
+  simCountry: undefined,
+  simCountryLabel: undefined,
+  simRegion: undefined,
+  isTim: false,
+  timproviderValue: 'all'
+}
+[STATE] isFetching...
+[ModalPayment] render { visible: false, theme: 'light', hasChildren: true }
+[ModalPayment] visible = false → no render
+ GET / 200 in 558ms
+ GET /?selectedOption=38 200 in 65ms
+ GET /manifest.webmanifest 200 in 35ms
+ ✓ Compiled /_not-found in 436ms (1536 modules)
+ GET /?selectedOption=40 500 in 1790ms
+ ✓ Compiled in 3.2s (2753 modules)
+ ✓ Compiled /_error in 4.1s (1149 modules)
+ ✓ Compiled in 374ms (1136 modules)
+ ✓ Compiled in 103ms (317 modules)
+ ✓ Compiled in 101ms (317 modules)
+ ✓ Compiled in 449ms (1850 modules)
+ ✓ Compiled in 565ms (1136 modules)
+ ✓ Compiled in 929ms (2753 modules)
+ ✓ Compiled in 1064ms (1136 modules)
+ ✓ Compiled in 536ms (1136 modules)
+ ✓ Compiled in 1756ms (2753 modules)
+ ✓ Compiled in 524ms (1136 modules)
+ ✓ Compiled in 782ms (2753 modules)
+ ✓ Compiled in 565ms (1136 modules)
+ ✓ Compiled in 1023ms (2753 modules)
+ ✓ Compiled in 528ms (1136 modules)
+ ✓ Compiled in 842ms (2753 modules)
+   ▲ Next.js 15.5.18
+   - Local:        http://127.0.0.1:3002
+   - Network:      http://127.0.0.1:3002
+   - Environments: .env.local
+
+ ✓ Starting...
+   ▲ Next.js 15.5.18
+   - Local:        http://127.0.0.1:3003
+   - Network:      http://127.0.0.1:3003
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1428ms
+ ✓ Ready in 1565ms
+   ▲ Next.js 15.5.18
+   - Local:        http://127.0.0.1:3002
+   - Network:      http://127.0.0.1:3002
+   - Environments: .env.local
+
+ ✓ Starting...
+   ▲ Next.js 15.5.18
+   - Local:        http://127.0.0.1:3003
+   - Network:      http://127.0.0.1:3003
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1399ms
+ ✓ Ready in 1414ms

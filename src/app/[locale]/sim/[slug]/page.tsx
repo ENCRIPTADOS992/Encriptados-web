@@ -1,8 +1,8 @@
-import { getProductById } from "@/features/products/services";
 import { getSimProductConfig } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
 import { redirect } from "next/navigation";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
+import { getCachedSimProduct } from "./getCachedSimProduct";
 
 interface PageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -12,15 +12,25 @@ interface PageProps {
 const firstParam = (value: string | string[] | undefined): string | undefined =>
   Array.isArray(value) ? value[0] : value;
 
+/** Fetch iconUrl directly from admin WordPress (admin.encriptados.io) */
+async function fetchSimIconUrl(productId: number, locale: string): Promise<string | null> {
+  try {
+    const res = await fetch(
+      `https://admin.encriptados.io/wp-json/encriptados/v3/store/product/${productId}?lang=${locale}`,
+      { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.iconUrl || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function generateMetadata({ params, searchParams }: PageProps) {
   const { slug, locale } = await params;
   const sp = await searchParams;
   const staticConfig = getSimProductConfig(slug);
-  const productId = firstParam(sp.productId) || (staticConfig?.productId ? String(staticConfig.productId) : undefined);
-  const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
-  const product = productId
-    ? await getProductById(productId, locale, { simRegion }).catch(() => null)
-    : null;
 
   const fallbackTitle = slug === "esim-encriptada"
     ? "eSIM Encriptada"
@@ -30,8 +40,26 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
         ? "TIM eSIM"
         : "SIM Encriptada";
 
+  // Obtener nombre del producto desde la query si viene una variante
+  const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
+  const queryProductId = firstParam(sp.productId);
+  const baseProductId = staticConfig?.productId ? String(staticConfig.productId) : undefined;
+  const product = await getCachedSimProduct(queryProductId || baseProductId, locale, simRegion, slug);
+
   const title = product?.name || fallbackTitle;
-  const imageUrl = product?.iconUrl || staticConfig?.iconUrl || product?.productImage || product?.image_full || product?.images?.[0]?.src || staticConfig?.productImage || "/images/logo-encriptados.png";
+
+  // Obtener iconUrl directamente desde admin.encriptados.io (fuente de verdad)
+  const iconUrl = staticConfig?.productId
+    ? await fetchSimIconUrl(staticConfig.productId, locale)
+    : null;
+
+  const imageUrl =
+    iconUrl ||
+    product?.productImage ||
+    product?.image_full ||
+    product?.images?.[0]?.src ||
+    staticConfig?.productImage ||
+    "/images/logo-encriptados.png";
 
   return buildSeoMetadata({
     title,
@@ -40,8 +68,8 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
     locale,
     image: {
       url: imageUrl,
-      width: 1200,
-      height: 630,
+      width: 400,
+      height: 400,
       alt: title,
     },
     keywords: [title, "SIM encriptada", "eSIM", "Encriptados"],
@@ -70,12 +98,12 @@ export default async function SimProductPage({ params, searchParams }: PageProps
 
   // sim_region debe ser código de país (ej: "ca"), usar regionCode como fallback
   const simRegion = (sp.regionCode as string) || (sp.sim_region as string) || null;
+  const requestedProductId =
+    firstParam(sp.productId) || (staticConfig?.productId ? String(staticConfig.productId) : null);
 
-  if (staticConfig?.productId) {
+  if (requestedProductId) {
     try {
-      initialProduct = await getProductById(String(staticConfig.productId), locale, {
-        simRegion,
-      });
+      initialProduct = await getCachedSimProduct(requestedProductId, locale, simRegion, slug);
     } catch (error) {
        console.error("Error fetching SIM product server-side:", error);
     }

@@ -15,7 +15,11 @@
  * - Router: /router?buy=1
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.encriptados.net";
+const BASE_URL = typeof window !== "undefined"
+  ? window.location.origin
+  : (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes("encriptados.net")
+      ? process.env.NEXT_PUBLIC_SITE_URL.replace(/\/+$/, "")
+      : "https://encriptados.io");
 
 export interface ShareConfig {
   productId: number;
@@ -35,7 +39,7 @@ export interface ShareConfig {
  */
 export const APPS_SHARE_CONFIG: ShareConfig[] = [
   {
-    productId: 122,
+    productId: 60924,
     slug: "silent-circle",
     name: "Silent Phone",
     metaImage: "/meta-image/apps/silent-phone.png",
@@ -45,17 +49,17 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
     category: "apps",
   },
   {
-    productId: 177,
-    slug: "armadillo",
-    name: "Armadillo",
+    productId: 60938,
+    slug: "armadillo-chat",
+    name: "Armadillo Chat",
     metaImage: "/meta-image/apps/armadillo.png",
     title: "Armadillo - Privacidad Total",
     description: "Compra aquí Armadillo.",
-    shareUrl: `${BASE_URL}/apps/armadillo?buy=1`,
+    shareUrl: `${BASE_URL}/apps/armadillo-chat?buy=1`,
     category: "apps",
   },
   {
-    productId: 135,
+    productId: 60928,
     slug: "threema-work",
     name: "Threema Work",
     metaImage: "/meta-image/apps/threemawork.png",
@@ -65,7 +69,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
     category: "apps",
   },
   {
-    productId: 136,
+    productId: 60929,
     slug: "threema",
     name: "Threema",
     metaImage: "/meta-image/apps/threema.png",
@@ -75,7 +79,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
     category: "apps",
   },
   {
-    productId: 137,
+    productId: 60930,
     slug: "nord-vpn",
     name: "NordVPN",
     metaImage: "/meta-image/apps/nordvpn.png",
@@ -85,7 +89,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
     category: "apps",
   },
   {
-    productId: 127,
+    productId: 60925,
     slug: "vault-chat",
     name: "Vault Chat",
     metaImage: "/meta-image/apps/vaultchat.png",
@@ -95,7 +99,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
     category: "apps",
   },
   {
-    productId: 133,
+    productId: 60926,
     slug: "salt",
     name: "Salt",
     metaImage: "/meta-image/apps/salt.png",
@@ -105,7 +109,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
     category: "apps",
   },
   {
-    productId: 134,
+    productId: 60927,
     slug: "vnc-lagoon",
     name: "VNC Lagoon",
     metaImage: "/meta-image/apps/vnclaggon.png",
@@ -123,7 +127,7 @@ export const APPS_SHARE_CONFIG: ShareConfig[] = [
  */
 export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
   {
-    productId: 61335,
+    productId: 61009,
     slug: "zi0n",
     name: "Zi0n",
     metaImage: "/meta-image/sistemas/zi0n.png",
@@ -133,17 +137,17 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 61085,
+    productId: 60996,
     slug: "galaxia-mdm",
     name: "Galaxia MDM Iphone",
     metaImage: "/meta-image/sistemas/galaxia-mdm.png",
     title: "Galaxia MDM Iphone - Gestión de Dispositivos",
     description: "Compra aquí Galaxia MDM Iphone.",
-    shareUrl: `${BASE_URL}/apps/galaxia-mdm?productId=61085&buy=1`,
+    shareUrl: `${BASE_URL}/apps/galaxia-mdm?productId=60996&buy=1`,
     category: "sistemas",
   },
   {
-    productId: 139,
+    productId: 60931,
     slug: "cryptcom",
     name: "CryptCom",
     metaImage: "/meta-image/sistemas/cryptcom.png",
@@ -153,7 +157,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 174,
+    productId: 60937,
     slug: "secure-crypt",
     name: "SecureCrypt",
     metaImage: "/meta-image/sistemas/securecrypt.png",
@@ -163,7 +167,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 168,
+    productId: 60935,
     slug: "secure-mdm-iphone",
     name: "Secure MDM iPhone",
     metaImage: "/meta-image/sistemas/mdm-apple.png",
@@ -173,7 +177,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 169,
+    productId: 60936,
     slug: "secure-mdm-android",
     name: "Secure MDM Android",
     metaImage: "/meta-image/sistemas/mdm-android.png",
@@ -183,7 +187,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 151,
+    productId: 60934,
     slug: "renati",
     name: "Renati",
     metaImage: "/meta-image/sistemas/renati.png",
@@ -193,7 +197,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 142,
+    productId: 60932,
     slug: "chat-mail",
     name: "Chat Mail",
     metaImage: "/meta-image/sistemas/chatmail.png",
@@ -203,7 +207,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 180,
+    productId: 60939,
     slug: "armadillo-v2",
     name: "Armadillo Software",
     metaImage: "/meta-image/sistemas/armadillo.png",
@@ -213,7 +217,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 148,
+    productId: 60933,
     slug: "vault-chat-v2",
     name: "Vault Chat Software",
     metaImage: "/meta-image/sistemas/vaultchat.png",
@@ -223,7 +227,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 182,
+    productId: 60940,
     slug: "ultra-x",
     name: "Ultra-X",
     metaImage: "/meta-image/sistemas/ultra-x.png",
@@ -233,7 +237,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 188,
+    productId: 60941,
     slug: "intact-phone",
     name: "Intact Phone",
     metaImage: "/meta-image/sistemas/intactphone.png",
@@ -243,7 +247,7 @@ export const SISTEMAS_SHARE_CONFIG: ShareConfig[] = [
     category: "sistemas",
   },
   {
-    productId: 233,
+    productId: 60942,
     slug: "dec-secure",
     name: "Dec Secure",
     metaImage: "/meta-image/sistemas/dec-secure.png",
@@ -278,13 +282,13 @@ export const SIM_TIM_SHARE_CONFIG: ShareConfig[] = [];
  */
 export const ROUTER_SHARE_CONFIG: ShareConfig[] = [
   {
-    productId: 59747,
+    productId: 60975,
     slug: "router-camaleon",
     name: "Router Camaleón",
     metaImage: "https://encriptados.es/wp-content/uploads/2025/07/router-camaleon.png",
     title: "Router Camaleón",
     description: "¡Compra ahora!",
-    shareUrl: `${BASE_URL}/apps/router-camaleon?productId=59747&categoryId=36&buy=1`,
+    shareUrl: `${BASE_URL}/apps/router-camaleon?buy=1`,
     category: "router",
   },
 ];

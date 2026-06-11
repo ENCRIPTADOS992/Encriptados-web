@@ -3,6 +3,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import ProductBannerSection from "./ProductBannerSection";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 /**
  * Silent Phone / Silent Circle banner.
@@ -19,7 +20,7 @@ const SilentCircleBanner: React.FC = () => {
       badgeBgClass="bg-[#CB0808]"
       title={t("title")}
       description={t("description")}
-      categoryId={38}
+      categoryId={PRODUCT_CATEGORY_IDS.APPS}
       productNameFilter="silent phone"
     />
   );

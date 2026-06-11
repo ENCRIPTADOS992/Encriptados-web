@@ -1,6 +1,7 @@
 import axios from "axios";
+import { WP_API_BASE } from "@/shared/constants/backend";
 
-const API_URL = process.env.NEXT_PUBLIC_WP_API || "https://encriptados.es/wp-json";
+const API_URL = WP_API_BASE;
 
 export const getToken = async () => {
   try {
@@ -21,4 +22,3 @@ export const getToken = async () => {
     throw error;
   }
 };
-

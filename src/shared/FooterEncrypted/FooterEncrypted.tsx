@@ -82,7 +82,7 @@ export default function FooterEncrypted() {
   };
 
   const SYSTEMS_LINKS: Record<string, string> = {
-    "Galaxia MDM Iphone": "/apps/galaxia-mdm?productId=61085",
+    "Galaxia MDM Iphone": "/apps/galaxia-mdm?productId=60996",
     "Secure MDM iphone": getAppUrl("Secure MDM iPhone"),
     "Secure MDM Android": getAppUrl("Secure MDM Android"),
     "Cryptcom": getAppUrl("Cryptcom"),
@@ -119,8 +119,9 @@ export default function FooterEncrypted() {
     { name: "VNClagoon", href: getAppUrl("VNC Lagoon") },
   ];
   const sistemasLinks = [
-    { name: "Zi0n", href: getAppUrl("Zi0n") },
-    { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=61085" },
+    // Zi0n oculto del footer de navegación (no del producto en sí)
+    // { name: "Zi0n", href: getAppUrl("Zi0n") },
+    { name: "Galaxia MDM Iphone", href: "/apps/galaxia-mdm?productId=60996" },
     { name: "Cryptcom", href: getAppUrl("Cryptcom") },
     { name: "SecureCrypt", href: getAppUrl("SecureCrypt") },
     { name: "Secure MDM iPhone", href: getAppUrl("Secure MDM iPhone") },
@@ -133,7 +134,7 @@ export default function FooterEncrypted() {
     { name: "Intact Phone", href: getAppUrl("Intact Phone") },
     { name: "DEC Secure", href: getAppUrl("DEC Secure") },
   ];
-  const routersLinks = [{ name: "Router Camaleón", href: `/apps/router-camaleon?productId=59747&categoryId=36` }];
+  const routersLinks = [{ name: "Router Camaleón", href: "/apps/router-camaleon" }];
 
   return (
     <footer className="bg-[#000000] text-white overflow-x-hidden">
@@ -165,7 +166,7 @@ export default function FooterEncrypted() {
               <div className="flex flex-wrap justify-center gap-3">
                 <Link href="#" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/app-store.svg" alt="App Store" width={116} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
                 <Link href="#" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/google-play.svg" alt="Google Play" width={119} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
-                <Link href="https://apk.encriptados.io/app.apk" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/apk.svg" alt="Descargar APK" width={119} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
+                <Link href="https://apk.encriptados.io/fantasma-app.apk" className="hover:opacity-80 transition-opacity"><Image src="/images/footer/apk.svg" alt="Descargar APK" width={119} height={35} className="h-8 md:h-7 lg:h-9 w-auto" /></Link>
               </div>
             </div>
 
@@ -247,7 +248,8 @@ export default function FooterEncrypted() {
             <div className="w-full h-px bg-[#2C2C2C] scale-y-[0.5] origin-top"></div>
             <div className="py-8 flex flex-wrap items-center justify-center gap-4 text-[#787878] text-sm">
               <Link href={TERMS_URL} className="hover:text-white transition-colors">{t("termsAndConditions")}</Link>
-              <Link href="/pages/politica-de-tratamiento-de-datos" className="hover:text-white transition-colors">{t("dataProcesing")}</Link>
+              <Link href="/pages/politica-de-cookies" className="hover:text-white transition-colors">{t("cookiesPolicy")}</Link>
+              <Link href="/pages/politica-de-privacidad" className="hover:text-white transition-colors">{t("privacyPolicy")}</Link>
             </div>
           </div>
 

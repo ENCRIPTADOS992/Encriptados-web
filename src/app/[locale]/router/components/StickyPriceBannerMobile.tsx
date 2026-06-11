@@ -22,6 +22,7 @@ const StickyPriceBannerMobile: React.FC<StickyPriceBannerMobileProps> = ({
 
   return (
     <div
+      id="sticky-price-banner"
       className="
         fixed bottom-0 left-0 right-0
         z-50

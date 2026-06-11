@@ -8,13 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "i18n:split": "node scripts/split-i18n-namespaces.mjs",
-    "seo:validate:blogs": "node scripts/validate-blog-legacy-urls.mjs"
+    "seo:validate:blogs": "node scripts/validate-blog-legacy-urls.mjs",
+    "catalog:audit:public-products": "node scripts/audit-product-config.mjs"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.0",
+    "@next/third-parties": "^16.2.6",
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.3.1",
     "@svgr/webpack": "^8.1.0",
@@ -80,6 +82,12 @@
     "typescript": "^5.5.4"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "sharp",
+      "unrs-resolver"
+    ],
     "overrides": {
       "@babel/plugin-transform-modules-systemjs": "7.29.4",
       "ajv": "6.14.0",

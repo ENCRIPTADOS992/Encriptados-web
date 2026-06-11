@@ -3,6 +3,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import ProductBannerSection, { BannerIcon } from "./ProductBannerSection";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 const ICONS: BannerIcon[] = [
   {
@@ -44,7 +45,7 @@ const ActivarAppsBanner: React.FC = () => {
       title={t("title")}
       description={t("description")}
       icons={ICONS}
-      categoryId={371}
+      categoryId={PRODUCT_CATEGORY_IDS.ACTIVATE_APPS}
       productNameFilter={PRODUCT_NAME_FILTERS}
     />
   );

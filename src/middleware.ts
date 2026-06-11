@@ -116,7 +116,12 @@ export async function middleware(
     const blogParts = pathname.split("/").filter(Boolean);
     if (blogParts.length > 3) {
       const legacyBlogRoute = resolveLegacyRoute(pathname);
-      void legacyBlogRoute;
+      if (legacyBlogRoute.type === "rewrite") {
+        const rewriteUrl = request.nextUrl.clone();
+        rewriteUrl.pathname = "/legacy-current";
+        rewriteUrl.searchParams.set("target", legacyBlogRoute.destination);
+        return withNoIndexHeader(request, NextResponse.rewrite(rewriteUrl));
+      }
     }
 
     return withNoIndexHeader(request, NextResponse.next());
@@ -131,6 +136,16 @@ export async function middleware(
     return withNoIndexHeader(
       request,
       NextResponse.redirect(new URL(legacyRoute.destination, request.url), legacyRoute.permanent ? 301 : 302),
+    );
+  }
+
+  if (legacyRoute.type === "rewrite") {
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = "/legacy-current";
+    rewriteUrl.searchParams.set("target", legacyRoute.destination);
+    return withNoIndexHeader(
+      request,
+      NextResponse.rewrite(rewriteUrl),
     );
   }
 
@@ -205,5 +220,3 @@ export const config = {
     "/((?!api|_next|_vercel|.*\\..*).*)", // Excluye API, rutas internas y archivos estáticos
   ],
 };
-
-

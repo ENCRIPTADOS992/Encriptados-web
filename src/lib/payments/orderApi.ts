@@ -1,6 +1,7 @@
 // src/payments/orderApi.ts
-const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-const API_BASE_URL = `${WP_API}/encriptados/v1`;
+import { WP_V1_BASE } from "@/shared/constants/backend";
+
+const API_BASE_URL = WP_V1_BASE;
 
 export type OrderType = "roaming" | "userid";
 
@@ -202,7 +203,7 @@ export async function fetchPublicStatus(orderId: number): Promise<{
   status: "pending" | "paid" | "fulfilled" | "pending_admin" | "cancelled";
   provider: string;
 }> {
-  const r = await fetch(`${WP_API}/encriptados/v1/orders/${orderId}/public-status`);
+  const r = await fetch(`${API_BASE_URL}/orders/${orderId}/public-status`);
   if (!r.ok) throw new Error(`HTTP ${r.status} consultando estado público`);
   return r.json();
 }
@@ -291,6 +292,7 @@ export interface CouponValidationResult {
   discount_applied?: number;     // calculated discount in currency
   original_amount?: number;
   final_amount?: number;
+  scope?: "general" | "product" | "variant"; // alcance del cupón
   applies_to_products?: number[];
   message?: string;
 }
@@ -299,12 +301,16 @@ export async function validateCoupon(
   code: string,
   productName?: string,
   productId?: number | string,
-  amount?: number
+  amount?: number,
+  variantId?: number | string  // ID de la variante seleccionada (para cupones de alcance 'variant')
 ): Promise<CouponValidationResult> {
   // Use local API proxy to avoid exposing credentials and handle CORS
   let url = `/api/coupons/validate?code=${encodeURIComponent(code)}`;
   if (productId) {
     url += `&product_id=${encodeURIComponent(productId)}`;
+  }
+  if (variantId) {
+    url += `&variant_id=${encodeURIComponent(variantId)}`;
   }
   if (amount != null && Number.isFinite(amount)) {
     url += `&amount=${encodeURIComponent(amount)}`;
@@ -328,6 +334,7 @@ export async function validateCoupon(
       discount_applied: data.discount_applied,
       original_amount: data.original_amount,
       final_amount: data.final_amount,
+      scope: data.scope,
       applies_to_products: data.applies_to_products,
       message: data.message || "Cupón aplicado",
     };

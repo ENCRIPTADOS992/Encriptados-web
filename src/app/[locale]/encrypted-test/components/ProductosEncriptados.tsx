@@ -10,7 +10,7 @@ export default function ProductosEncriptados() {
     const t = useTranslations("TestingProducts");
 
     return (
-        <section className="relative min-h-screen bg-black overflow-hidden py-20 px-4">
+        <section className="relative bg-black overflow-hidden py-12 md:py-16 px-4">
             {/* Background ellipses */}
             <div
                 className="absolute top-0 -left-[5px] w-[600px] h-[600px] rounded-full blur-[200px] opacity-40"

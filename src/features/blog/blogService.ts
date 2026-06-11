@@ -3,6 +3,7 @@ import type {
   BlogPostCard,
   WordPressBlogItem,
 } from "./types";
+import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
 
 const ALLOWED_TAGS = new Set([
   "a",
@@ -116,6 +117,20 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, "").replace(/&hellip;/g, "…").replace(/\n/g, " ").trim();
 }
 
+/** Parses spintax like [spintax]{A|B|C}[/spintax] or {A|B} in text, selecting the first option */
+export function parseSpintax(text: string): string {
+  if (!text) return "";
+  let cleaned = text.replace(/\[\/?spintax\]/gi, "");
+  const regex = /\{([^{|}]+\|[^{}]*)\}/g;
+  while (cleaned.match(regex)) {
+    cleaned = cleaned.replace(regex, (match, choicesStr) => {
+      const choices = choicesStr.split("|");
+      return choices[0] ? choices[0].trim() : "";
+    });
+  }
+  return cleaned;
+}
+
 function getImageFromEmbed(item: WordPressBlogItem): string {
   const media = item._embedded?.["wp:featuredmedia"]?.[0];
   return media?.media_details?.sizes?.medium?.source_url
@@ -151,8 +166,24 @@ function getCategorySlugFromLegacyPath(path: string | undefined): string | undef
   return parts[blogsIndex + 1];
 }
 
+function toWpAbsoluteUrl(value: string | undefined): string {
+  if (!value) return "";
+  const trimmed = value.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  try {
+    const wpOrigin = new URL(WP_BLOG_API_BASE).origin;
+    return `${wpOrigin}${trimmed.startsWith("/") ? trimmed : `/${trimmed}`}`;
+  } catch {
+    return trimmed;
+  }
+}
+
 function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
   const legacyPath = getPathFromUrl(item.link);
+  const imageRaw = getImageFromEmbed(item);
+  const imageFullRaw = getImageFullFromEmbed(item);
 
   return {
     id: `wp-${item.id}`,
@@ -161,19 +192,20 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
     legacyPath,
     categorySlug: getCategorySlugFromLegacyPath(legacyPath),
     source: "wordpress",
-    title: item.title.rendered,
-    description: stripHtml(item.excerpt.rendered),
-    image: getImageFromEmbed(item),
-    imageFull: getImageFullFromEmbed(item),
+    title: parseSpintax(item.title.rendered),
+    description: parseSpintax(stripHtml(item.excerpt.rendered)),
+    image: toWpAbsoluteUrl(imageRaw),
+    imageFull: toWpAbsoluteUrl(imageFullRaw || imageRaw),
     author: getAuthorFromEmbed(item),
     date: item.date,
   };
 }
 
 function mapWpItemToPost(item: WordPressBlogItem): BlogPost {
+  const card = mapWpItemToCard(item);
   return {
-    ...mapWpItemToCard(item),
-    content: sanitizeBlogHtml(item.content.rendered),
+    ...card,
+    content: parseSpintax(sanitizeBlogHtml(item.content.rendered)),
   };
 }
 

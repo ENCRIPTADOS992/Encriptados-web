@@ -1,10 +1,10 @@
 import { Metadata } from "next";
-import { getProductById } from "@/features/products/services";
 import { getProductConfig, isValidProductSlug } from "./productConfig";
 import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
 import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
+import { getResolvedAppProduct } from "./productData";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     }
 
     // Obtener datos del producto desde la API
-    const product = await getProductById(String(config.productId), locale || "es");
+    const product = await getResolvedAppProduct(slug, locale || "es");
 
     if (!product) {
       return {
@@ -75,6 +75,9 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
 
     // Obtener imagen de metadatos
     let metaImage = metaImageMap[slug];
+    if (!metaImage && product.iconUrl) {
+      metaImage = product.iconUrl;
+    }
     if (!metaImage && product.images?.[0]?.src) {
       metaImage = product.images[0].src;
     }
@@ -148,7 +151,7 @@ export default async function AppsSlugLayout({ children, params }: Props) {
   if (!config) return <>{children}</>;
 
   try {
-    const product = await getProductById(String(config.productId), locale || "es");
+    const product = await getResolvedAppProduct(slug, locale || "es");
     if (!product) return <>{children}</>;
     const productJsonLd = buildProductJsonLd({
       name: product.name || slug,

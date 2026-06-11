@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { WP_BLOG_API_BASE, WP_BLOG_CATEGORY_IDS } from "@/shared/constants/backend";
 
-const WP_BASE =
-  process.env.NEXT_PUBLIC_WP_BLOG_API ?? "https://encriptados.io/wp-json";
+const WP_BASE = WP_BLOG_API_BASE;
 
 // Simple in-memory cache for WP responses
 const cache = new Map<string, { data: unknown; ts: number }>();
@@ -27,11 +27,12 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    const catId = WP_BLOG_CATEGORY_IDS[lang] || 1;
     const url = id
       ? `${WP_BASE}/wp/v2/posts/${encodeURIComponent(id)}?_embed`
       : slug
-        ? `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`
-        : `${WP_BASE}/wp/v2/posts?lang=${encodeURIComponent(lang)}&per_page=${encodeURIComponent(perPage)}&page=${encodeURIComponent(page)}&_embed`;
+        ? `${WP_BASE}/wp/v2/posts?categories=${catId}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`
+        : `${WP_BASE}/wp/v2/posts?categories=${catId}&per_page=${encodeURIComponent(perPage)}&page=${encodeURIComponent(page)}&_embed`;
 
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {

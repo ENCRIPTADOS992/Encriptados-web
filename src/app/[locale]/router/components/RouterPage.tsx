@@ -35,6 +35,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { plans } from "../consts/plans";
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useLocale, useTranslations } from "next-intl";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 const RouterPage = () => {
   const searchParams = useSearchParams();
@@ -49,19 +50,19 @@ const RouterPage = () => {
   const { isVisible } = usePriceVisibility(priceBlockRef);
 
   const productInfo = {
-    title: "Silent Phone",
+    title: "Router Camaleón",
     price: "99$ USD",
     subtitle: t("privacySubtitle"),
-    iconUrl: "/images/apps/silent-circle/logo.png",
+    iconUrl: "/images/router/logo.png",
     ctaLabel: t("buy"),
-    categoryId: 35,
-    productId: 142,
+    categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
+    productId: 60975,
     onBuy: () => {
       openModal({
-        productid: "142",
+        productid: "60975",
         languageCode: "es",
-        selectedOption: 35,
-        iconUrl: "/images/apps/silent-circle/logo.png",
+        selectedOption: PRODUCT_CATEGORY_IDS.ROUTERS,
+        iconUrl: "/images/router/logo.png",
       });
     },
     onChat: () => {

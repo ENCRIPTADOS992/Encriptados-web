@@ -103,7 +103,8 @@ const CardProductItem: FC<CardProductItemProps> = ({
     if (!route) return;
 
     const params = new URLSearchParams();
-    if (product.id) params.set("productId", String(product.id));
+    const productIdForMoreInfo = product.id;
+    if (productIdForMoreInfo) params.set("productId", String(productIdForMoreInfo));
     const cheapestId = getCheapestVariantId(product);
     if (cheapestId != null) params.set("variantId", String(cheapestId));
     const qs = params.toString();

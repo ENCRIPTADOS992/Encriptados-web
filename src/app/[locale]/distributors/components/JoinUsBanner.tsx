@@ -11,11 +11,11 @@ const JoinUsBanner = () => {
   const BannerDistributorsImage = "/images/distributors/black-white-man.webp";
 
   return (
-    <div className="w-full bg-black relative overflow-hidden py-12 md:py-16 lg:py-20 px-2 md:px-4">
+    <div className="w-full bg-black relative overflow-hidden py-6 md:py-10 px-2 md:px-4">
       <SectionWrapper className="relative z-10">
         <div
           className="
-            p-6 mt-24 md:p-10 rounded-3xl
+            p-6 mt-6 md:mt-10 md:p-10 rounded-3xl
             w-full max-w-full
             h-[430px] md:h-[550px]
             flex flex-col gap-y-4 justify-center items-center

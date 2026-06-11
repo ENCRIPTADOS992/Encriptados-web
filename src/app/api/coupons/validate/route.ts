@@ -1,27 +1,23 @@
-
-
 import { NextResponse } from "next/server";
+import { buildWpAdminV3Url } from "@/shared/constants/backend";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get("code");
     const productId = searchParams.get("product_id");
+    const variantId = searchParams.get("variant_id");
     const amount = searchParams.get("amount");
 
     if (!code) {
         return NextResponse.json({ error: true, message: "Código requerido" }, { status: 400 });
     }
 
-    const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
-
-    // Public endpoint: GET /wp-json/encriptados/v3/coupon/validate
-    let endpoint = `${WP_API}/encriptados/v3/coupon/validate?code=${encodeURIComponent(code)}`;
-    if (productId) {
-        endpoint += `&product_id=${encodeURIComponent(productId)}`;
-    }
-    if (amount) {
-        endpoint += `&amount=${encodeURIComponent(amount)}`;
-    }
+    const endpoint = buildWpAdminV3Url("/coupon/validate", {
+        code,
+        product_id: productId ?? undefined,
+        variant_id: variantId ?? undefined,
+        amount: amount ?? undefined,
+    });
 
     try {
         const res = await fetch(endpoint, {
@@ -33,7 +29,6 @@ export async function GET(request: Request) {
         const data = await res.json();
 
         if (!res.ok) {
-            // The new endpoint returns { code, message, data: { status } } on error
             console.error("WP API Error:", res.status, data?.message || res.statusText);
             return NextResponse.json({
                 error: true,
@@ -41,8 +36,6 @@ export async function GET(request: Request) {
             }, { status: data?.data?.status || res.status });
         }
 
-        // Successful response from new endpoint:
-        // { valid, code, coupon_id, discount_type, discount_value, discount_applied, original_amount, final_amount, applies_to_products }
         if (!data.valid) {
             return NextResponse.json({
                 error: true,
@@ -54,13 +47,14 @@ export async function GET(request: Request) {
             ok: true,
             code: data.code,
             coupon_id: data.coupon_id,
-            discount_type: data.discount_type,       // "percent" | "fixed"
-            discount_value: data.discount_value,      // raw coupon value (e.g. 20 for 20%)
-            discount_applied: data.discount_applied,  // calculated discount amount in currency
+            discount_type: data.discount_type,
+            discount_value: data.discount_value,
+            discount_applied: data.discount_applied,
             original_amount: data.original_amount,
             final_amount: data.final_amount,
+            scope: data.scope,
             applies_to_products: data.applies_to_products,
-            message: `Cupón ${data.code} aplicado`,
+            message: "Cupón " + data.code + " aplicado",
         });
 
     } catch (error) {

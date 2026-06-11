@@ -23,17 +23,18 @@ import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { getProductBannerImages } from "../apps/[slug]/productUtils";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 // Configuración del router
 const ROUTER_CONFIG = {
-  productId: 59747,
-  categoryId: 36,
+  productId: 60975,
+  categoryId: PRODUCT_CATEGORY_IDS.ROUTERS,
   heroBanners: {
     desktop: "/images/router/hero-desktop.png",
     tablet: "/images/router/hero-tablet.png",
     mobile: "/images/router/hero-mobile.png",
   },
-  productImage: "/images/router/card_fondo.png",
+  productImage: "/images/router/fondo.webp",
   iconUrl: "/images/router/logo.png",
   benefitIcon: "/images/router/icono.png",
   videoUrl: "https://www.youtube.com/embed/router-video",

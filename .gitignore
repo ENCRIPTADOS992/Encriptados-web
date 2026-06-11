@@ -42,3 +42,5 @@ next-env.d.ts
 .vercel
 
 doc/
+dosc/
+.blog-cache

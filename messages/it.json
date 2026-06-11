@@ -177,7 +177,9 @@
     },
     "copyRight": "Copyright © 2024 Todos los derechos reservados.",
     "termsAndConditions": "Términos y condiciones",
-    "dataProcesing": "Política y tratamiento de datos"
+    "dataProcesing": "Política y tratamiento de datos",
+    "cookiesPolicy": "Informativa sui cookie",
+    "privacyPolicy": "Informativa sulla privacy"
   },
   "LoginPage": {
     "inputErrors": {
@@ -845,7 +847,9 @@
         "sim": "SIM",
         "app": "Applicazioni",
         "mobile": "Sistemi",
-        "routers": "Router"
+        "routers": "Router",
+        "activateApps": "Attiva App",
+        "recharges": "Ricariche"
       },
       "software": "Proveedor",
       "providerTitle": "Fornitore",
@@ -1223,7 +1227,7 @@
     "filterBy": "Filtra per {category}",
     "menu": {
       "sims": "SIMS",
-      "apps": "Aplicaciones",
+      "apps": "Apps",
       "system": "Sistemas"
     },
     "discoverSimTitle": "Descubre la eSIM/SIM de Encriptados.io",

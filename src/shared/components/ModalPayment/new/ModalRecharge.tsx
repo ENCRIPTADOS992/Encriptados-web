@@ -38,6 +38,7 @@ export default function ModalRecharge() {
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
+    staleTime: 1000 * 60 * 5,
   });
 
   const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
@@ -80,7 +81,7 @@ export default function ModalRecharge() {
     if (!coupon.trim()) return;
     try {
       const totalAmount = unitPrice * quantity;
-      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount);
+      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         let effectiveDiscount: number;
         if (typeof res.discount_applied === "number") {

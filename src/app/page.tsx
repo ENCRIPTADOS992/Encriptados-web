@@ -14,6 +14,8 @@ import AppMobileLayout from "@/shared/components/AppMobileLayout";
 import { loadMessages } from "@/i18n/messages";
 import { buildHomeLanguageAlternates, buildSeoMetadata } from "@/shared/seo/metadata";
 import HomePage from "./[locale]/page";
+import TelegramFloatingButton from "@/shared/components/TelegramFloatingButton/TelegramFloatingButton";
+
 
 export const metadata: Metadata = buildSeoMetadata({
   title: "Celulares encriptados, SIMs anonimas y apps seguras",
@@ -21,12 +23,20 @@ export const metadata: Metadata = buildSeoMetadata({
     "Compra celulares encriptados, SIMs anonimas, eSIMs, routers y aplicaciones de comunicacion privada con soporte especializado de Encriptados.",
   canonicalPath: "/",
   locale: "es",
-  image: {
-    url: "/encriptados.png",
-    width: 500,
-    height: 500,
-    alt: "Encriptados",
-  },
+  images: [
+    {
+      url: "/previsualizacion2.webp",
+      width: 960,
+      height: 960,
+      alt: "Encriptados",
+    },
+    {
+      url: "/previsualizacion.webp",
+      width: 2250,
+      height: 1264,
+      alt: "Encriptados",
+    },
+  ],
   languages: buildHomeLanguageAlternates(),
   keywords: [
     "celulares encriptados",
@@ -60,7 +70,9 @@ export default async function RootSpanishHomePage() {
           <MoraWarningProvider>
             <MoraWarningModal />
           </MoraWarningProvider>
+          <TelegramFloatingButton />
         </AppMobileProvider>
+
       </Suspense>
     </NextIntlClientProvider>
   );

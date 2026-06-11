@@ -1,11 +1,17 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import CheckSvg from "/public/images/encrypted-sim/icons/check.svg";
 import LocalMallSvgNew from "./svgs/LocalMallSvgNew";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
-import { getProductLink, isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isRouterCategoryId,
+} from "@/shared/constants/productCategories";
+import {
+  getProductLink,
+  isActivarAppsProduct,
+} from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
@@ -62,6 +68,8 @@ interface CardSimProps {
   onSale?: boolean;       // true si el producto está en oferta
   regularPrice?: number;  // precio original (price) cuando está en oferta
   iconUrl?: string;       // URL del icono del producto para el modal de éxito
+  purchaseType?: string;  // Telegram buy option
+  telegramLink?: string;  // Specific link to Telegram product/chat
 }
 
 const CardProduct: React.FC<CardSimProps> = ({
@@ -81,6 +89,8 @@ const CardProduct: React.FC<CardSimProps> = ({
   onSale,
   regularPrice,
   iconUrl,
+  purchaseType,
+  telegramLink,
 }) => {
   const { openModal } = useModalPayment();
   const locale = useLocale();
@@ -97,7 +107,14 @@ const CardProduct: React.FC<CardSimProps> = ({
 
   const handleBuy = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct });
+    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct, purchaseType, telegramLink });
+    
+    if (purchaseType === "telegram" || telegramLink) {
+      const finalUrl = telegramLink || "https://t.me/encriptados";
+      window.open(finalUrl, "_blank");
+      return;
+    }
+
     const selectedOption = Number(filters.selectedOption);
     const isActivarApps = isActivarAppsProduct(headerTitle, selectedOption, id);
     const modalSelectedOption = isActivarApps ? 371 : selectedOption;
@@ -117,7 +134,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       flagUrl: badges?.country?.flagUrl,
       iconUrl: iconUrl,
       initialActivationDetail: isActivarApps ? badges?.tag : undefined,
-      mode: modalSelectedOption === 40 ? "sim" : undefined,
+      mode: (modalSelectedOption === 40 || modalSelectedOption === 451) ? "sim" : undefined,
     });
   };
 
@@ -146,9 +163,10 @@ const CardProduct: React.FC<CardSimProps> = ({
   // Pre-calcular URL de "Más información" para usar en un Link nativo
   // Esto mejora SEO, accesibilidad y velocidad (prefetching de Next.js)
   const moreInfoUrl = (() => {
+    const selectedCategoryId = Number(filters.selectedOption);
     const url = getProductLink(
       headerTitle,
-      Number(filters.selectedOption),
+      selectedCategoryId,
       id,
       provider,
       typeProduct
@@ -157,12 +175,18 @@ const CardProduct: React.FC<CardSimProps> = ({
 
     // Build query string with all relevant params - SECURE LOGIC
     const params = new URLSearchParams();
-    params.set("productId", String(id));
+    const isRouter = isRouterCategoryId(selectedCategoryId) || (headerTitle || "").toLowerCase().includes("router");
+    const isActivarApps = isActivarAppsProduct(headerTitle, selectedCategoryId, id);
+    const productIdForMoreInfo = id;
+    params.set("productId", String(productIdForMoreInfo));
 
     // Determinar categoría correcta
-    const isRouter = (headerTitle || "").toLowerCase().includes("router");
-    const isActivarApps = isActivarAppsProduct(headerTitle, Number(filters.selectedOption), id);
-    params.set("categoryId", isActivarApps ? "371" : isRouter ? "36" : "40"); // 36=Router, 40=SIMs, 371=Activar Apps
+    const categoryIdForMoreInfo = isActivarApps
+      ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS
+      : isRouter
+        ? PRODUCT_CATEGORY_IDS.ROUTERS
+        : selectedCategoryId;
+    params.set("categoryId", String(categoryIdForMoreInfo));
 
     // Usar variantId si está disponible (prioridad para seguridad)
     if (variantId) params.set("variantId", String(variantId));
@@ -281,8 +305,8 @@ const CardProduct: React.FC<CardSimProps> = ({
                 shadow-md
                 whitespace-nowrap
                 ${
-                // SIM y SIM TIM (categoría 40) usan azul, Apps/Sistemas/Router usan gris
-                filters.selectedOption === "40"
+                // SIM y SIM TIM (categoría 40/451) usan azul, Apps/Sistemas/Router usan gris
+                filters.selectedOption === "40" || filters.selectedOption === "451"
                   ? "bg-[#1CB9EC] text-[#010101]"
                   : "bg-[#DEDEDE] text-[#010101]"
                 }
@@ -339,9 +363,26 @@ const CardProduct: React.FC<CardSimProps> = ({
                 handleBuy(e);
               }}
               type="button"
-              className="bg-black text-white text-[12px] xl:text-[14px] leading-[1.2] rounded-full px-3 xl:px-4 py-2 xl:py-2.5 flex items-center justify-center gap-1.5 xl:gap-2 hover:bg-gray-800 transition-colors z-10"
-            >{t("buy")}
-              <LocalMallSvgNew />
+              className={`${
+                purchaseType === "telegram" || telegramLink
+                  ? "bg-[#229ED9] hover:bg-[#1cb0f6]"
+                  : "bg-black hover:bg-gray-800"
+              } text-white text-[12px] xl:text-[14px] leading-[1.2] rounded-full px-3 xl:px-4 py-2 xl:py-2.5 flex items-center justify-center gap-1.5 xl:gap-2 transition-colors z-10`}
+            >
+              {purchaseType === "telegram" || telegramLink ? "Telegram" : t("buy")}
+              {purchaseType === "telegram" || telegramLink ? (
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="w-4 h-4 flex-shrink-0"
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.35-.49.97-.74 3.79-1.65 6.32-2.73 7.59-3.25 3.61-1.48 4.36-1.74 4.85-1.75.11 0 .35.03.5.16.13.12.17.29.18.42 0 .03 0 .08-.01.12z" />
+                </svg>
+              ) : (
+                <LocalMallSvgNew />
+              )}
             </button>
             <span
               className="cursor-pointer text-[11px] xl:text-[14px] leading-[1.2] text-black hover:underline font-medium text-center z-10"

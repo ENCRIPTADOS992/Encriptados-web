@@ -9,7 +9,7 @@ const EncryptedCommunication = () => {
   const t = useTranslations("DistributorsPage");
 
   return (
-<div className="w-full min-h-screen bg-black relative flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 overflow-hidden">
+<div className="w-full bg-black relative flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 overflow-hidden">
   {/* ELIPSE VERDE IZQUIERDA */}
   <div
     className="absolute pointer-events-none z-0"

@@ -1,0 +1,44 @@
+{
+  "slug": "peligros-de-las-comunicaciones",
+  "author": "Encriptados",
+  "date": "2026-06-03T12:00:00-05:00",
+  "image": "/images/blog/peligros-de-las-comunicaciones.webp",
+  "imageFull": "/images/blog/peligros-de-las-comunicaciones.webp",
+  "tags": ["cybersecurity", "privacy", "digital-security", "encryption"],
+  "title": {
+    "es": "Peligros de las comunicaciones no encriptadas en el mundo digital: casos reales de espionaje y robo de datos",
+    "en": "Dangers of unencrypted communications in the digital world: real cases of espionage and data theft",
+    "fr": "Dangers des communications non cryptées dans le monde numérique : cas réels d'espionnage et de vol de données",
+    "pt": "Perigos das comunicações não criptografadas no mundo digital: casos reais de espionagem e roubo de dados",
+    "it": "Pericoli delle comunicazioni non crittografate nel mondo digitale: casi reali di spionaggio e furto di dati"
+  },
+  "description": {
+    "es": "Descubre los riesgos de las comunicaciones no encriptadas y conoce casos reales de espionaje y robo de datos en el mundo digital actual.",
+    "en": "Discover the risks of unencrypted communications and learn about real cases of espionage and data theft in today's digital world.",
+    "fr": "Découvrez les risques des communications non cryptées et apprenez-en plus sur les cas réels d'espionnage et de vol de données dans le monde numérique d'aujourd'hui.",
+    "pt": "Descubra os riscos das comunicações não criptografadas e conheça casos reais de espionagem e roubo de dados no mundo digital de hoje.",
+    "it": "Scopri i rischi delle comunicazioni non crittografate e conosci casi reali di spionaggio e furto di dati nel mondo digitale di oggi."
+  },
+  "seo": {
+    "es": {
+      "title": "Peligros de las comunicaciones no encriptadas y robo de datos",
+      "keywords": ["comunicaciones no encriptadas", "espionaje digital", "robo de datos", "encriptación de comunicaciones", "privacidad digital", "seguridad móvil", "comunicaciones seguras"]
+    },
+    "en": {
+      "title": "Dangers of unencrypted communications and data theft",
+      "keywords": ["unencrypted communications", "digital espionage", "data theft", "encryption of communications", "digital privacy", "mobile security", "secure communications"]
+    },
+    "fr": {
+      "title": "Dangers des communications non cryptées et vol de données",
+      "keywords": ["communications non cryptées", "espionnage numérique", "vol de données", "chiffrement des communications", "confidentialité numérique", "sécurité mobile", "communications sécurisées"]
+    },
+    "pt": {
+      "title": "Perigos das comunicações não criptografadas e roubo de dados",
+      "keywords": ["comunicações não criptografadas", "espionagem digital", "roubo de dados", "criptografia de comunicações", "privacidade digital", "segurança móvel", "comunicaciones seguras"]
+    },
+    "it": {
+      "title": "Pericoli delle comunicazioni non crittografate e furto di dati",
+      "keywords": ["comunicazioni non crittografate", "spionaggio digitale", "furto di datos", "crittografia delle comunicazioni", "privacy digitale", "sicurezza mobile", "comunicazioni sicure"]
+    }
+  }
+}

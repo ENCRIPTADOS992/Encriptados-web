@@ -24,6 +24,7 @@ import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
 import { buildDataPlans } from "./sims/utils/buildDataPlans";
 import { resolveVariantPrice, isProductOnSale } from "./sims/utils/resolveVariantPrice";
 import { CODE_BY_COUNTRY_LABEL } from "@/shared/constants/countries";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params } = useModalPayment();
@@ -48,6 +49,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     queryKey: ["productById", productid],
     queryFn: () => getProductById(productid!),
     enabled: !!productid,
+    staleTime: 1000 * 60 * 5, // 5 minutos — evita doble fetch
   });
   console.log("[ModalSIM] product crudo =>", product);
 
@@ -78,13 +80,13 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
       // If Global, simple.
       if (isGlobal) {
-        return getAllProducts(40, "es", { simRegion: "global", simCountry: null });
+        return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", { simRegion: "global", simCountry: null });
       }
 
       // If Broad Region (Length > 2) OR "EU" -> Send as simRegion
       if (regionCode.length > 2 || regionCode === "EU") {
         console.log("🌍 [ModalSIM] Fetching by Region (Broad):", regionCode);
-        return getAllProducts(40, "es", { simRegion: regionCode, simCountry: null });
+        return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", { simRegion: regionCode, simCountry: null });
       }
 
       // If Specific Country (Length 2) -> Send as simCountry
@@ -92,7 +94,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       const countryParam = regionCode || initialRegion;
       console.log("🏳️ [ModalSIM] Fetching by Country:", countryParam);
 
-      return getAllProducts(40, "es", {
+      return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", {
         simRegion: null,
         simCountry: countryParam
       });
@@ -383,7 +385,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       if (paramVariantId != null) {
         const matchingVariant = variants.find((v: any) => String(v.id) === String(paramVariantId));
         if (matchingVariant) {
-          const variantPrice = Number((matchingVariant as any).price ?? (matchingVariant as any).cost ?? 0);
+          const variantPrice = resolveVariantPrice(matchingVariant, isProductOnSale(product));
           const rechargeValue = variantPrice - base;
           console.log("[ModalSIM] ✅ Setting recharge from paramVariantId:", { paramVariantId, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
@@ -419,7 +421,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       }
 
       // Fallback: usar el primer variante como monto de recarga
-      const firstVariantPrice = Number((variants[0] as any)?.price ?? (variants[0] as any)?.cost ?? 0);
+      const firstVariantPrice = resolveVariantPrice(variants[0], isProductOnSale(product));
       const defaultRecharge = Math.max(firstVariantPrice - base, 0);
       console.log("[ModalSIM] Using default recharge from first variant:", { firstVariantPrice, base, defaultRecharge });
       setSelectedPlanId(defaultRecharge);
@@ -684,7 +686,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     if (!coupon.trim()) return;
     try {
       const totalAmount = unitPrice * quantity;
-      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount);
+      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         let effectiveDiscount: number;
         if (typeof res.discount_applied === "number") {
@@ -878,8 +880,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         formType === "encrypted_data" ||
         (formType === "encrypted_minutes" && !isEsimDataCombo && !isEsimMinutesCombo)
       }
-      esimAddonPrice={7.5}
-      esimAddonLabel="Lleva E-SIM por 7.50 USD"
+      esimAddonPrice={esimBasePrice}
+      esimAddonLabel={`Lleva E-SIM por ${esimBasePrice?.toFixed(2) ?? "7.50"} USD`}
       onChangeEsimAddon={(checked) => setHideSimField(checked)}
       esimBasePrice={esimBasePrice}
       sourceUrl={params.sourceUrl}
@@ -920,6 +922,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         sourceUrl={params.sourceUrl}
         onSuccess={handlePaymentSuccess}
         esimBasePrice={esimBasePrice}
+        isEsimCombo={isEsimCombo}
       />
     </PurchaseScaffold >
   );

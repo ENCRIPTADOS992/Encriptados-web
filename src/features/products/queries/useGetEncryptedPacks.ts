@@ -2,14 +2,17 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/features/products/types/AllProductsResponse";
+import { buildWpV3Url } from "@/shared/constants/backend";
 
-const WP_API = process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json";
+const MINUTES_PACKS_URL = buildWpV3Url("/tottoli/packs", {
+  perPage: 50,
+  page: 1,
+});
 
-const MINUTES_PACKS_URL =
-  `${WP_API}/encriptados/v3/tottoli/packs?perPage=50&page=1`;
-
-const DATA_PACKS_URL =
-  `${WP_API}/encriptados/v3/tottoli/data-packs?perPage=50&page=1`;
+const DATA_PACKS_URL = buildWpV3Url("/tottoli/data-packs", {
+  perPage: 50,
+  page: 1,
+});
 
 type MinutePackApi = {
   id: number;
@@ -24,7 +27,7 @@ type DataPackApi = {
   id: number;
   name?: string;
   price?: number | string;
-  dataAmount?: number | string; 
+  dataAmount?: number | string;
   pricePerDataUnit?: number | string;
   [key: string]: any;
 };
@@ -33,7 +36,7 @@ const buildChecksFromMinutes = (pack: MinutePackApi): { name: string }[] => {
   const raw = [
     pack.minutes ? { name: `${pack.minutes} minutos` } : null,
     pack.pricePerMinute
-      ? { name: `≈ ${pack.pricePerMinute} por minuto` }
+      ? { name: `â‰ˆ ${pack.pricePerMinute} por minuto` }
       : null,
   ];
 
@@ -46,7 +49,7 @@ const buildChecksFromData = (pack: DataPackApi): { name: string }[] => {
   const raw = [
     pack.dataAmount ? { name: `Datos: ${pack.dataAmount}` } : null,
     pack.pricePerDataUnit
-      ? { name: `≈ ${pack.pricePerDataUnit} por unidad` }
+      ? { name: `â‰ˆ ${pack.pricePerDataUnit} por unidad` }
       : null,
   ];
 
@@ -68,7 +71,7 @@ const mapMinutePackToProduct = (pack: MinutePackApi): Product => ({
   sku: "",
   price: String(pack.price ?? ""),
   on_sale: false,
-  sale_price: "",                   
+  sale_price: "",
   stock_quantity: null,
   category: {
     id: 0,

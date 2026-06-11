@@ -23,6 +23,7 @@ export type SeoMetadataInput = {
   locale?: SeoLocale | string;
   keywords?: string[];
   image?: SeoImage;
+  images?: SeoImage[];
   type?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
@@ -61,10 +62,35 @@ export function buildLocalizedLanguageAlternates(pathWithoutLocale: string): Rec
 export function buildSeoMetadata(input: SeoMetadataInput): Metadata {
   const description = input.description || SEO_DEFAULT_DESCRIPTION;
   const locale = input.locale || "es";
-  const image = input.image || SEO_DEFAULT_IMAGE;
-  const imageUrl = toAbsoluteUrl(image.url, SEO_DEFAULT_IMAGE.url);
   const canonical = buildAbsoluteUrl(input.canonicalPath);
   const title = input.title;
+
+  let ogImages: Array<{ url: string; width: number; height: number; alt: string }> = [];
+  let twitterImageUrl = "";
+
+  if (input.images && input.images.length > 0) {
+    ogImages = input.images.map((img) => ({
+      url: toAbsoluteUrl(img.url, SEO_DEFAULT_IMAGE.url),
+      width: img.width || SEO_DEFAULT_IMAGE.width,
+      height: img.height || SEO_DEFAULT_IMAGE.height,
+      alt: img.alt || title,
+    }));
+    // For Twitter large card, look for a rectangular image or default to the last/first one
+    const rectangularImg = input.images.find((img) => img.width && img.height && img.width > img.height) || input.images[0];
+    twitterImageUrl = toAbsoluteUrl(rectangularImg.url, SEO_DEFAULT_IMAGE.url);
+  } else {
+    const image = input.image || SEO_DEFAULT_IMAGE;
+    const imageUrl = toAbsoluteUrl(image.url, SEO_DEFAULT_IMAGE.url);
+    ogImages = [
+      {
+        url: imageUrl,
+        width: image.width || SEO_DEFAULT_IMAGE.width,
+        height: image.height || SEO_DEFAULT_IMAGE.height,
+        alt: image.alt || title,
+      },
+    ];
+    twitterImageUrl = imageUrl;
+  }
 
   return {
     title,
@@ -81,14 +107,7 @@ export function buildSeoMetadata(input: SeoMetadataInput): Metadata {
       siteName: SEO_SITE_NAME,
       locale: OPEN_GRAPH_LOCALE[locale] || String(locale),
       type: input.type || "website",
-      images: [
-        {
-          url: imageUrl,
-          width: image.width || SEO_DEFAULT_IMAGE.width,
-          height: image.height || SEO_DEFAULT_IMAGE.height,
-          alt: image.alt || title,
-        },
-      ],
+      images: ogImages,
       ...(input.type === "article"
         ? {
             publishedTime: input.publishedTime,
@@ -101,7 +120,7 @@ export function buildSeoMetadata(input: SeoMetadataInput): Metadata {
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl],
+      images: [twitterImageUrl],
     },
     robots: input.robots ?? {
       index: true,

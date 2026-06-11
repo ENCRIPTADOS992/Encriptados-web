@@ -9,6 +9,7 @@ import AplicationsProductsBarIcon from "./icons/AplicationsProductsBarIcon";
 import PhoneProductsBarIcon from "./icons/PhoneProductsBarIcon";
 import RoutersBarIcon from "./icons/RoutersBarIcon";
 import FilterAppWithLicense from "./FilterAppWithLicense";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 import FilterRegionCountry from "./FilterRegionCountry";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import MenuDropdownProductBar from "./MenuDropdownProductBar";
@@ -24,10 +25,10 @@ const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
 
 const FILTER_OPTIONS = [
-  { key: "sim", catId: 40, Icon: SimProductsBarIcon },
-  { key: "app", catId: 38, Icon: AplicationsProductsBarIcon },
-  { key: "mobile", catId: 35, Icon: PhoneProductsBarIcon },
-  { key: "routers", catId: 36, Icon: RoutersBarIcon },
+  { key: "sim", catId: PRODUCT_CATEGORY_IDS.SIMS, Icon: SimProductsBarIcon },
+  { key: "app", catId: PRODUCT_CATEGORY_IDS.APPS, Icon: AplicationsProductsBarIcon },
+  { key: "mobile", catId: PRODUCT_CATEGORY_IDS.SOFTWARE, Icon: PhoneProductsBarIcon },
+  { key: "routers", catId: PRODUCT_CATEGORY_IDS.ROUTERS, Icon: RoutersBarIcon },
 ] as const;
 
 interface FilterProductsBarProps {
@@ -100,16 +101,8 @@ export default function FilterProductsBar({
     />
   );
 
-  const activarAppsProviderIcon = (
-    <Image
-      src="/icons/activar_apps.svg"
-      alt=""
-      width={144}
-      height={34}
-      className={providerLogoClass}
-      loading="lazy"
-    />
-  );
+  // Activar Apps oculto del selector de proveedor
+  // const activarAppsProviderIcon = ...
 
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
@@ -154,19 +147,7 @@ export default function FilterProductsBar({
         />
       </div>
     ),
-    activarapps: (
-      <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
-        <MenuDropdownProductBar
-          name="encriptadosprovider"
-          externalValue={filters.encriptadosprovider}
-          options={[{ label: t("filterProducts.allOption"), value: "all" }]}
-          onChangeExternal={() => {
-            updateFilters({ encriptadosprovider: "all" });
-          }}
-        />
-      </div>
-    ),
+    // activarapps: oculto del selector de proveedor
   };
 
   // Rendering logic for subfilters based on Flex to fill space dynamically
@@ -192,11 +173,7 @@ export default function FilterProductsBar({
                 value: "tim",
                 icon: timProviderIcon,
               },
-              {
-                label: " ",
-                value: "activarapps",
-                icon: activarAppsProviderIcon,
-              },
+              // activarapps oculto del selector
             ]}
             onChangeExternal={(value) => {
               updateFilters({
@@ -235,23 +212,17 @@ export default function FilterProductsBar({
     const modalRef = useRef<HTMLDivElement>(null);
 
     const navItems: {
-      key: "sims" | "apps" | "systems" | "routers" | "offers";
+      key: "sims" | "apps" | "systems" | "routers";
       label: string;
       catId?: number;
     }[] = [
-        { key: "sims", label: t("filterProducts.floating.sims"), catId: 40 },
-        { key: "apps", label: t("filterProducts.floating.apps"), catId: 38 },
-        { key: "systems", label: t("filterProducts.floating.systems"), catId: 35 },
-        { key: "routers", label: t("filterProducts.floating.routers"), catId: 36 },
-        { key: "offers", label: t("filterProducts.floating.offers") },
+        { key: "sims", label: t("filterProducts.floating.sims"), catId: PRODUCT_CATEGORY_IDS.SIMS },
+        { key: "apps", label: t("filterProducts.floating.apps"), catId: PRODUCT_CATEGORY_IDS.APPS },
+        { key: "systems", label: t("filterProducts.floating.systems"), catId: PRODUCT_CATEGORY_IDS.SOFTWARE },
+        { key: "routers", label: t("filterProducts.floating.routers"), catId: PRODUCT_CATEGORY_IDS.ROUTERS },
       ];
 
     const handleNavClick = (item: (typeof navItems)[number]) => {
-      if (item.key === "offers") {
-        router.push("/offers");
-        return;
-      }
-
       // In user mode (from=user), send native navigation events
       if (appMode === "user") {
         const eventMap: Record<string, string> = {
@@ -308,6 +279,7 @@ export default function FilterProductsBar({
         />
         <div
           ref={modalRef}
+          id="floating-nav-menu"
           className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl"
         >
           <div
@@ -364,9 +336,9 @@ export default function FilterProductsBar({
   // Variante estática
   return (
     <div
-      className={`w-full mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6 ${selectedCat === 36
+      className={`w-full mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6 ${selectedCat === PRODUCT_CATEGORY_IDS.ROUTERS
         ? "max-w-4xl xl:max-w-fit"
-        : (selectedCat === 38 || selectedCat === 35 || (selectedCat === 40 && !shouldShowTimRegion))
+        : (selectedCat === PRODUCT_CATEGORY_IDS.APPS || selectedCat === PRODUCT_CATEGORY_IDS.SOFTWARE || (selectedCat === PRODUCT_CATEGORY_IDS.SIMS && !shouldShowTimRegion))
           ? "max-w-4xl"
           : "max-w-screen-xl"
         }`}
@@ -378,7 +350,7 @@ export default function FilterProductsBar({
         "
       >
         {/* Categoría */}
-        <div className={`w-full xl:shrink-0 ${selectedCat === 36 ? "xl:w-auto" : "xl:w-[360px] xl:mr-6"}`}>
+        <div className={`w-full xl:shrink-0 ${selectedCat === PRODUCT_CATEGORY_IDS.ROUTERS ? "xl:w-auto" : "xl:w-[360px] xl:mr-6"}`}>
           <h2 className="text-sm text-[#7E7E7E] font-semibold mb-2">
             {t("filterProducts.categoryTitle")}
           </h2>
@@ -393,9 +365,9 @@ export default function FilterProductsBar({
 
         {/* Subfiltros */}
         <div className="flex-1 w-full">
-          {selectedCat === 40 ? (
+          {selectedCat === PRODUCT_CATEGORY_IDS.SIMS ? (
             renderSimFilters()
-          ) : (selectedCat === 38 || selectedCat === 35) ? (
+          ) : (selectedCat === PRODUCT_CATEGORY_IDS.APPS || selectedCat === PRODUCT_CATEGORY_IDS.SOFTWARE) ? (
             // Apps / Software - Keeping layout as is or adapting if they need filtering
             <div className="flex flex-wrap sm:flex-nowrap items-end gap-2 w-full">
               <div className="w-full sm:flex-auto min-w-0">

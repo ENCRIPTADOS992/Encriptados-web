@@ -39,7 +39,7 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "", chatAct
       `}
     >
       {!isUserMode && <TelegramIcon className="w-5 h-5 text-white flex-shrink-0" />}
-      <span className="hidden sm:inline">{isUserMode ? t("talkWithSupport") : t("goTelegram")}</span>
+      <span className="hidden sm:inline">{t("goTelegram")}</span>
       <span className="sm:hidden">{t("goTelegram")}</span>
     </a>
   );

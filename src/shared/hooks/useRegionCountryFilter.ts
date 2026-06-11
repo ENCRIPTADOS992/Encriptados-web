@@ -11,19 +11,7 @@ import {
   Country,
 } from "@/services/simtimService";
 
-const SIM_REGION_VALUES = [
-  "norteamerica",
-  "centro-sur-america",
-  "europa",
-  "africa",
-  "asia",
-  "oceania",
-  "global",
-] as const;
-
-type SimRegion = (typeof SIM_REGION_VALUES)[number];
-
-const REGION_CODE_TO_SIM_REGION: Record<string, SimRegion> = {
+const REGION_CODE_TO_SIM_REGION: Record<string, string> = {
   norteamerica: "norteamerica",
   "centro-sur-america": "centro-sur-america",
   europa: "europa",
@@ -38,10 +26,13 @@ const REGION_CODE_TO_SIM_REGION: Record<string, SimRegion> = {
   worldwide: "global",
 };
 
-function mapRegionCodeToSimRegion(code?: string): SimRegion | undefined {
+function mapRegionCodeToSimRegion(code?: string): string | undefined {
   if (!code) return undefined;
-  const key = code.trim().toLowerCase();
-  return REGION_CODE_TO_SIM_REGION[key];
+  const normalizedCode = code.trim();
+  const key = normalizedCode.toLowerCase();
+
+  // Prefer legacy aliases when present, otherwise forward the API region code.
+  return REGION_CODE_TO_SIM_REGION[key] ?? normalizedCode;
 }
 
 export function normalizeAlpha2(raw?: string): string | undefined {

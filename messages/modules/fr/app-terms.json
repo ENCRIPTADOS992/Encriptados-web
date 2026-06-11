@@ -1,137 +1,484 @@
 {
   "AppTerms": {
-    "backButton": "Back to App",
-    "title": "Terms and Conditions of Purchase and Data Policy",
+    "backButton": "Retour au début",
+    "title": "Conditions Générales d'Achat",
     "domain": "www.encriptados.io",
-    "intro": "We request all our visitors to carefully read the following terms and conditions of electronic sale, since it is built with the legal framework applicable to the transactions carried out in this portal, and in effect, preserving the protection in the defense of their rights as a consumer according to law 1480 of 2011 and external circular No. 2 of November 7, 2019 issued by the Superintendence of Industry and Commerce.",
+    "intro": "Nous demandons à tous nos visiteurs de lire attentivement les conditions générales de vente électronique suivantes, car elles constituent le cadre juridique applicable aux transactions que vous effectuez sur ce portail, préservant la protection et la défense de vos droits en tant que consommateur conformément aux lois applicables aux États-Unis d'Amérique.",
     "sections": {
       "info": {
-        "title": "MERCANTILE INFORMATION AND CONTACT DATA",
-        "p1": "The owner of the domain of this Web is the company SAFESOLF INTERNACIONAL SAS Identified with Nit. No. 9001.054.325-9, registered in the Mercantile Registry of the Chamber of Commerce of Medellín- Colombia, with domicile at Calle 7 # 39 215 office 1009, for which reason you can contact us preferentially through the email address contacto@encriptados.io, and we will respond to your email shortly and as soon as possible.",
-        "p2": "This document (hereinafter Terms of Use) regulates the access and use of the website www.encryptados.io (hereinafter, the website) owned by SAFESOLF INTERNACIONAL SAS INC. (hereinafter SAFESOLF); by users, as well as access to the contents that may be available on it, the provision of services and products marketed on said Web, and any responsibilities derived from non-compliance or defective compliance with the Conditions of Use.",
-        "p3": "Access, navigation and use of the Web implies the express and unreserved acceptance of all the terms of these Conditions of Use, whose validity and efficacy is that of any contract concluded in writing and signed. Its observance and compliance will be enforceable with respect to any person who accesses, navigates or uses the Web in any form. Therefore, if you do not agree with these Terms of Use or for any reason do not comply with them (for example, be under 18 years of age) you must immediately cease browsing and refrain from using the Web in any form.",
-        "p4": "By accessing and using the services of the SAFESOLF website, the user declares and warrants that he/she has not been included in any list of commercial embargoes or economic sanctions, the list of specially designated nationals maintained by OFAC or the list of denied persons or entities of the United States Department of Commerce. SAFESOLF reserves the right to choose markets and jurisdictions to conduct business, and may restrict or refuse, at its discretion, the provision of services and the sale of products in certain countries or regions."
+        "title": "INFORMATIONS COMMERCIALES ET COORDONNÉES DE CONTACT",
+        "p1": "Le propriétaire du domaine de ce site Web est SAFESOLF INTERNACIONAL S.A.S. Inc., une société constituée en vertu des lois de l'État du Delaware, États-Unis d'Amérique, ayant son siège social au 2055 Limestone Rd STE 200-C, Wilmington, DE 19808. Vous pouvez nous contacter de préférence via l'adresse e-mail marketing@encriptados.io, et nous répondrons à votre e-mail dans les plus brefs délais et dès que possible.",
+        "p2": "Le présent document (ci-après « Conditions d'utilisation ») régit l'accès et l'utilisation du site Web www.encriptados.io (ci-après, le « Site Web ») propriété de SAFESOLF INTERNACIONAL S.A.S. Inc. (ci-après « SAFESOLF ») ; par les utilisateurs, ainsi que l'accès aux contenus qui peuvent y être disponibles, la fourniture de services et de produits commercialisés sur ledit site Web, et les éventuelles responsabilités découlant du non-respect ou de la mauvaise exécution des Conditions d'utilisation.",
+        "p3": "L'accès, la navigation et l'utilisation du site Web impliquent l'acceptation expresse et sans réserve de toutes les dispositions de ces Conditions d'utilisation, dont la validité et l'efficacité sont celles de tout contrat conclu par écrit et signé. Leur respect et leur exécution seront exigibles de toute personne qui accède, navigue ou utilise le site Web sous quelque forme que ce soit. Par conséquent, si vous n'êtes pas d'accord avec ces Conditions d'utilisation ou si, pour une raison quelconque, vous ne les respectez pas (par exemple, en étant mineur de moins de 18 ans), vous devez immédiatement cesser de naviguer et vous abstenir d'utiliser le site Web sous quelque forme que ce soit.",
+        "p4": "En accédant et en utilisant les services du site Web de SAFESOLF, l'utilisateur déclare et garantit qu'il n'a pas été inclus dans une liste d'embargos commerciaux ou de sanctions économiques, la liste des ressortissants spécifiquement désignés (SDN) tenue par l'OFAC ou la liste des personnes ou entités refusées du ministère du Commerce des États-Unis. SAFESOLF se réserve le droit de choisir des marchés et des juridictions pour mener des affaires, et peut restreindre ou refuser, à sa discrétion, la fourniture de services et la vente de produits dans certains pays ou régions."
       },
       "products": {
-        "title": "PRODUCT INFORMATION.",
-        "p1": "On our website, you will find the list and characteristics of each product offered, with its technical specifications, uses, sizes, image, components, properties, quality and relevant suitability, which constitute the due attention to the right to information and knowledge of the product that corresponds to the end user.",
-        "p2": "The graphic images of the product are not determined to scale, which is why they do not adapt to the reality of the product, since presentations are offered that are not compatible with the screen resolution. According to the above, SAFESOLF certifies that the product information is conditioned to the description contained in its specifications, which is faithful to the reality of the same."
+        "title": "INFORMATIONS SUR LES PRODUITS",
+        "p1": "Sur notre site Web se trouvent la liste et les caractéristiques de chaque produit proposé, avec ses spécifications techniques, utilisations, tailles, image, composants, propriétés, qualité et adéquation correspondante, qui constituent l'attention due au droit à l'information et à la connaissance du produit revenant à l'utilisateur final.",
+        "p2": "Les illustrations graphiques du produit ne sont pas à l'échelle et ne correspondent donc pas à la réalité du produit, car des présentations non compatibles avec la résolution de l'écran sont proposées. Conformément à ce qui précède, SAFESOLF certifie que les informations sur le produit sont conditionnées à la description contenue dans ses spécifications, laquelle est fidèle à la réalité de celui-ci."
       },
       "capacity": {
-        "title": "LEGAL CAPACITY",
-        "p1": "The products and services are only available to people who have legal capacity to contract, in order to the above, people who do not have such capacity for the full exercise of their rights and attributions, such as minors, may not use the services. The acts that they perform on this site will be the responsibility of their parents, guardians, managers or curators, and therefore will be considered performed by them in the exercise of the legal representation they have. Whoever acts on behalf of a company must have the capacity to contract on behalf of such entity and to bind the same in the terms of this Agreement.",
-        "p2": "The user assumes full responsibility before third parties for all orders and transactions issued on the WEB site, as well as the resources to finance said transactions, as long as they presuppose their consent and authorization, since they are of exclusive knowledge of the user."
+        "title": "CAPACITÉ JURIDIQUE",
+        "p1": "Les produits et services ne sont disponibles que pour les personnes ayant la capacité juridique de contracter. En conséquence, les personnes ne disposant pas de cette capacité pour le plein exercice de leurs droits et attributions, comme les mineurs, ne peuvent pas utiliser les services. Les actes qu'ils effectuent sur ce site relèvent de la responsabilité de leurs parents, tuteurs, administrateurs ou curateurs, et seront donc considérés comme accomplis par ces derniers dans l'exercice de la représentation légale dont ils disposent. Quiconque agit au nom d'une société doit avoir la capacité de contracter au nom de cette entité et de l'engager selon les termes du présent Contrat.",
+        "p2": "L'utilisateur assume l'entière responsabilité vis-à-vis des tiers pour toutes les commandes et transactions qu'il effectue sur le site Web, ainsi que pour les ressources destinées à financer ces transactions, dans la mesure où elles présupposent son consentement et son autorisation, car elles sont à sa connaissance exclusive."
+      },
+      "exportControl": {
+        "title": "CONTRÔLE DES EXPORTATIONS ET CONFORMITÉ RÉGLEMENTAIRE",
+        "p1": "Les produits et services proposés par SAFESOLF (y compris, sans s'y limiter, les appareils cryptés, les cartes SIM/eSIM cryptées et les logiciels de communication sécurisés) sont soumis aux lois et réglementations de contrôle des exportations. Vous reconnaissez et acceptez que : (a) Vous n'exporterez pas, ne réexporterez pas, ne transférerez pas et ne mettrez pas à disposition directement ou indirectement un produit ou une technologie de SAFESOLF vers un pays, une personne ou une entité soumis à des sanctions ou à des restrictions d'exportation en vertu des lois des États-Unis sans obtenir préalablement toutes les licences, autorisations ou permis requis. (b) Vous n'utiliserez pas les produits à des fins interdites, y compris sans limitation le développement, la production ou l'utilisation d'armes chimiques, biologiques, nucléaires ou de missiles. (c) Vous êtes seul responsable du respect de toutes les lois d'exportation, d'importation et de douane applicables dans votre juridiction et dans la juridiction de destination. (d) SAFESOLF se réserve le droit absolu de refuser toute commande ou d'annuler toute transaction si elle soupçonne ou a des raisons de croire qu'elle pourrait enfreindre une loi de contrôle des exportations. Toute violation de cette clause constituera un motif immédiat de résiliation de votre compte et pourra donner lieu à un signalement aux autorités compétentes."
       },
       "sales": {
-        "title": "FORMALIZATION OF PRODUCT SALE CONTRACT",
-        "p1": "For all cases in which the law requires a \"Product Sales Contract\" or equivalent document, it will be understood that these Terms and Conditions, together with the price, delivery method, payment method and essential characteristics of the Product, constitute the Sales Contract between the User and SAFESOLF. For this purpose, once the transaction is approved by the corresponding banking entity, or respective platform depending on the payment method, the User will be able to see a summary containing the conditions of the transaction carried out. In turn, these Terms and Conditions will always be available on the website."
+        "title": "FORMALISATION DU CONTRAT DE VENTE DE PRODUITS",
+        "p1": "Pour tous les cas où la loi exige un « contrat de vente de Produit » ou un document équivalent, il est entendu que les présentes Conditions Générales, ainsi que le prix, le mode de livraison, le mode de paiement et les caractéristiques essentielles du Produit, constituent le Contrat de Vente entre l'Utilisateur et SAFESOLF. À cet effet, une fois la transaction approuvée par l'établissement bancaire concerné ou la plateforme correspondante selon le mode de paiement, l'Utilisateur pourra voir un récapitulatif contenant les conditions de la transaction effectuée. De plus, ces Conditions Générales seront toujours disponibles sur le site Web."
       },
       "liability": {
-        "title": "EXEMPTION FROM LIABILITY",
-        "p1": "The User and/or Client of SAFESOLF will be responsible for damages and losses that may be suffered directly or indirectly, as a consequence of the breach of any of the conditions described in the Privacy Notice, the Law and terms and conditions of use of the Web Page, described in this declaration.",
-        "p2": "SAFESOLF will make its best efforts to maintain updated information. However, it assumes no legal responsibility or of any other nature for the accuracy, opportunity, contents or uses given to said information, reminding the User and/or Client that to determine if the information provided applies to their particular case, it will be necessary to contact us through our official communication channels.",
-        "p3": "SAFESOLF as responsible for the Web Page will make its best effort to maintain the correct functionality of the Web Page. However, the User and/or Client will assume the risks, damages or losses, including but not limited to the loss of information or profits, existence of viruses, results of the use or inability to use the resources of the Web Page among others.",
-        "p4": "The User shall hold SAFESOLF and its related companies harmless, as well as those who direct, succeed, manage, represent and/or work in them, for any administrative or judicial claim initiated by other Users, third parties or by any Agency. LIKEWISE, THE INDEMNITY IS PREDICATED ON THE SOLE RESPONSIBILITY OF THE USER IN THE USE OF THE PRODUCTS AND SERVICES ACQUIRED ON THE WEB WWW.ENCRIPTADOS.IO, FOR WHICH SAFESOLF IS NOT DIRECTLY OR INDIRECTLY RESPONSIBLE FOR THE CRIMINAL TYPES THAT ARISE FROM THE USER'S QUERY AND THAT SUPERVENE WITH THE USE OR DISPOSITION OF THE PRODUCTS AND SERVICES ACQUIRED, IN SO FAR AS AT THE TIME OF PURCHASE, SUCH CONDUCTS LEAVE THE SPHERE OF RESPONSIBILITY OF SAFESOLF USING THE PRINCIPLE OF PERSONAL CRIMINAL RESPONSIBILITY."
+        "title": "EXCLUSION DE RESPONSABILITÉ",
+        "p1": "L'Utilisateur et/ou Client de SAFESOLF sera responsable des dommages et préjudices qu'il pourrait subir directement ou indirectement en raison du non-respect de l'une des conditions décrites dans la Déclaration de confidentialité, de la loi et des Conditions d'utilisation du site Web décrites dans cette déclaration.",
+        "p2": "SAFESOLF déploiera ses meilleurs efforts pour maintenir les informations à jour. Toutefois, elle n'assume aucune responsabilité juridique ou autre quant à l'exactitude, l'opportunité, le contenu ou l'utilisation qui est faite de ces informations, rappelant à l'Utilisateur et/ou au Client que pour déterminer si les informations fournies s'appliquent à son cas particulier, il est nécessaire de nous contacter via nos canaux de communication officiels.",
+        "p3": "SAFESOLF, en tant que responsable du Site Web, fera de son mieux pour maintenir le bon fonctionnement du Site Web. Cependant, l'Utilisateur et/ou le Client assumera les risques, dommages ou préjudices, y compris, mais sans s'y limiter, la perte d'informations ou de bénéfices, l'existence de virus, les résultats de l'utilisation ou de l'impossibilité d'utiliser les ressources du Site Web, entre autres.",
+        "p4": "L'Utilisateur garantira SAFESOLF et ses sociétés liées, ainsi que ceux qui les dirigent, leur succèdent, les administrent, les représentent et/ou y travaillent, contre toute réclamation administrative ou judiciaire initiée par d'autres Utilisateurs, des tiers ou tout organisme. De même, l'indemnisation repose sur l'unique responsabilité de l'utilisateur dans l'utilisation des produits et services qu'il acquiert sur le site www.encriptados.io, c'est pourquoi SAFESOLF n'est pas directement ou indirectement responsable des infractions pénales résultant de la consultation de l'utilisateur et survenant avec l'utilisation ou la disposition des produits et services acquis, dans la mesure où, au moment de l'achat, ces comportements sortent de la sphère de responsabilité de SAFESOLF conformément au principe de la responsabilité pénale personnelle."
+      },
+      "registration": {
+        "title": "INSCRIPTION LORS DE L'UTILISATION DU SITE",
+        "p1": "À toutes fins utiles, l'accès au site est conditionné par la fourniture de certaines données d'identité nécessaires à l'exécution des transactions ; par conséquent, l'Utilisateur autorisé accèdera au site Web dans le seul but de réaliser l'acquisition des produits et/ou services proposés sur ce site. SAFESOLF n'est pas responsable de l'exactitude des Données Personnelles fournies par ses Utilisateurs. Les Utilisateurs garantissent et répondent, en tout état de cause, de l'exactitude, de la véracité, de la validité et de l'authenticité des Données Personnelles saisies. Si une utilisation frauduleuse et/ou malveillante et/ou contraire aux présentes Conditions Générales et/ou contraire à la bonne foi est vérifiée ou suspectée par SAFESOLF, celle-ci aura le droit inattaquable de refuser la transaction faisant l'objet du paiement des produits et services et, si elle le juge opportun, de poursuivre judiciairement les contrevenants.",
+        "p2": "L'Utilisateur sera le seul responsable de toutes les opérations effectuées dans et depuis son Compte, ainsi que de l'utilisation qu'il fait, directement ou par personne interposée, des produits et services contractés sur le site Web et acquis par ce biais."
+      },
+      "prohibitedUses": {
+        "title": "UTILISATIONS INTERDITES ET OBLIGATION D'UTILISATION LÉGALE",
+        "p1": "SAFESOLF exige expressément que tous ses produits et services soient utilisés exclusivement à des fins légales. Vous déclarez, garantissez et acceptez que : (a) Vous n'utiliserez pas les produits pour des activités illicites, frauduleuses, diffamatoires, de harcèlement, de blanchiment d'argent, de financement du terrorisme, de violation des droits de propriété intellectuelle ou toute autre activité qui enfreint la loi applicable aux États-Unis ou dans votre juridiction. (b) Vous n'utiliserez pas les produits pour éluder la loi, masquer votre identité dans le but de commettre des infractions, ou interférer avec des enquêtes judiciaires. (c) Vous comprenez qu'aucun produit de cryptage ou de confidentialité n'offre de protection absolue ni d'immunité face à la loi. Tout usage abusif ou illégal des produits entraînera la suspension ou la résiliation immédiate de l'accès, l'annulation du compte et un éventuel signalement aux autorités compétentes. SAFESOLF coopère pleinement avec les autorités lorsque la loi l'exige.",
+        "p2": "En accédant à ou en utilisant le site Web ou tout service, vous acceptez d'être lié par ces conditions d'utilisation et de vous y conformer strictement. Si vous n'acceptez pas d'être lié par ces Conditions d'utilisation, n'accédez pas et n'utilisez pas le Site Web ni les Produits et services qu'il propose. Vous devez consulter régulièrement ces Conditions d'utilisation, car elles peuvent changer à tout moment. Si vous vous opposez aux modifications apportées, vous devez cesser d'utiliser le site Web et les services. Si vous continuez à utiliser le site Web ou tout service après modification de ces Conditions d'utilisation, vous êtes réputé accepter de vous conformer à ces Conditions d'utilisation modifiées.",
+        "p3": "En acceptant ces Conditions d'utilisation, vous déclarez être conscient de tout ce qui précède, et reconnaissez expressément que SAFESOLF ne peut pas être tenue responsable des circonstances qui pourraient survenir lors de l'utilisation des produits achetés via le site Web. SAFESOLF exige de l'utilisateur final que ses produits et services soient utilisés uniquement à des fins légales. En ce sens, vous déclarez et garantissez expressément que vous comprenez cette déclaration, et si cette déclaration n'est pas respectée, vous devez vous abstenir d'utiliser ou cesser d'utiliser les produits et Services. SAFESOLF se réserve le droit de suspendre ou d'annuler votre accès ou vos services avec ou sans préavis si cette déclaration est fausse ou inexacte, si elle constate une fraude ou une utilisation abusive des produits, et vous comprenez et acceptez que vous vous conformerez strictement à ces conditions d'utilisation et que vous prendrez toutes les mesures requises par les lois applicables pour assurer le strict respect de ces conditions."
+      },
+      "validityAndPrices": {
+        "title": "DURÉE DE VALIDITÉ DE L'OFFRE PUBLIÉE ET DÉTAILS DES PRIX",
+        "p1": "L'offre commerciale des produits et services est indéterminée et sera valable jusqu'à épuisement des stocks. Elle sera considérée comme épuisée lorsque la publication correspondante sera retirée du site Web, et son acceptation sera tacite par la volonté d'achat et l'utilisation de la plateforme à ces fins.",
+        "p2": "Il est à noter que SAFESOLF ne sera pas liée par des erreurs manifestes de transcription dans les déclarations de l'offre du site Web. Il est possible que des variations de produits surviennent en raison de la résolution de l'image ou d'autres raisons techniques, mais elle n'est pas responsable de ces variations. Il est accepté par le consommateur que les conditions de l'offre sont considérées comme acceptées en procédant à l'achat du produit, ce qui constitue un signe d'acceptation expresse de ce document de conditions générales.",
+        "p3": "Les prix sont exprimés en dollars USD, sachant que SAFESOLF se réserve le droit de modifier les prix avant qu'une commande ne soit passée. SAFESOLF se réserve également le droit de limiter ou de mettre fin aux offres et promotions à tout moment et sans préavis. Le taux représentatif du jour effectif de l'achat sera appliqué pour les besoins du change.",
+        "p4": "Pour acheminer votre commande à l'adresse souhaitée, SAFESOLF facture des frais de livraison qui peuvent varier en fonction des quantités demandées. Ces frais seront facturés, le cas échéant, séparément et seront spécifiés et ajoutés au montant total de la commande. Les délais de livraison des produits oscilleront selon la zone ou le pays de livraison."
+      },
+      "availability": {
+        "title": "DISPONIBILITÉ DES PRODUITS SUR LE PORTAIL",
+        "p1": "La disponibilité des produits est conditionnée à l'existence des stocks ; par conséquent, SAFESOLF s'abstiendra de présenter sur le marché électronique des produits qui ne sont pas en vigueur ou disponibles, signalant également que, si nécessaire pour l'utilisateur final, il est possible de créer un espace de communication à l'adresse e-mail marketing@encriptados.io afin de convenir directement avec le vendeur d'un délai d'obtention des produits requis, lesquels seront soumis aux mêmes conditions de vente, de paiement et de retour."
+      },
+      "paymentForms": {
+        "title": "MODALITÉS DE PAIEMENT",
+        "p1": "Lors de la réalisation d'achats sur le site Web https://www.encriptados.io, l'utilisateur final ACCEPTE librement et volontairement de recevoir et de payer immédiatement les factures pour l'achat d'articles proposés par ce biais, autorisant en outre l'envoi par e-mail, à compter de cette date, du justificatif de paiement détaillant les produits acquis, dispensant SAFESOLF de l'envoi physique de ces documents. Par conséquent, le client accepte qu'il est de sa responsabilité de disposer d'un service d'e-mail actif afin que les documents justifiant l'achat lui soient transmis par ce canal de communication."
+      },
+      "paymentMethods": {
+        "title": "MOYENS DE PAIEMENT POUVANT ÊTRE UTILISÉS SUR LE SITE",
+        "intro": "Les produits et services proposés sur le Site, sauf indication contraire pour des cas particuliers ou des offres de certains biens ou services, ne peuvent être payés qu'avec les moyens spécifiquement indiqués dans chaque cas. À cet effet, le site Web dispose des moyens de paiement suivants, opportuns et autorisés :",
+        "creditCard": {
+          "title": "Paiement par carte de crédit",
+          "p1": "L'utilisation de cartes de crédit est soumise aux dispositions des présentes Conditions Générales et, vis-à-vis de leur émetteur, à ce qui a été convenu dans les contrats d'ouverture et règlements d'utilisation bancaires respectifs. En cas de contradiction, les dispositions de ce dernier instrument prévaudront. En ce qui concerne les cartes bancaires acceptées sur le Site, les aspects qui s'y rapportent, tels que la date d'émission, d'expiration, le plafond, les blocages, etc., seront régis par le contrat d'ouverture et le règlement d'utilisation de la banque concernée, de sorte que SAFESOLF n'assumera aucune responsabilité quant aux aspects signalés. Le Site pourra indiquer certaines conditions d'achat selon le moyen de paiement utilisé par l'utilisateur."
+        },
+        "atm": {
+          "title": "Paiement par distributeur automatique (ATM)",
+          "p1": "Pour effectuer un paiement par distributeur ATM, l'utilisateur doit être muni d'une carte ATM ou d'une carte de débit et saisir un numéro d'identification personnel (PIN), en suivant également les instructions à l'écran nécessaires à la réalisation du service bancaire.",
+          "p2": "Par conséquent, cette authentification constitue une preuve de reconnaissance et de vérification de la sécurité du client à différents niveaux. Lors de l'incorporation des données personnelles sur le dispositif, il est clair que la transaction est soumise à la vérification de l'établissement financier, et dès lors, l'exonération de responsabilité de SAFESOLF sur les fonds objet de la transaction est immédiate dès qu'ils sortent de sa compétence civile. Ainsi, SAFESOLF est exonérée de toute responsabilité dès que la vérification bancaire de la transaction est générée, de sorte que le suivi des fonds ne peut lui être imputé, conformément aux bonnes pratiques de sécurité et de protection entre tous les intervenants de nos produits et services."
+        },
+        "crypto": {
+          "title": "Paiement par crypto-actifs et/ou Tether (TRX) via des plateformes partenaires",
+          "p1": "Pour le mode de paiement décrit, il est clair que nos politiques sont rigoureuses concernant l'identité des acheteurs et utilisateurs de nos produits et services, c'est pourquoi nos liens vers des plateformes sous forme de passerelles de paiement, en l'occurrence avec des crypto-actifs et/ou Tether (TRX), comportent une vérification de sécurité stricte via les outils de KYC habituellement reconnus par ces plateformes pour la vérification de l'utilisateur final. La vérification obligatoire de l'identité d'un utilisateur, généralement par un établissement financier ou un organisme de collecte des fonds sous quelque modalité que ce soit, comprend entre autres la vérification des informations pouvant servir à prouver l'identité de l'acheteur dans des bases de données, ainsi que la vérification de documents et de domicile, entre autres.",
+          "p2": "Sur les plateformes de paiement, le processus de KYC est obligatoire pour chacun de leurs clients ; ce n'est qu'ainsi que ces derniers peuvent avoir accès à tous les produits et services de la plateforme, en plus de permettre l'utilisation de diverses devises pour l'échange de produits et services sur notre site Web. Par conséquent, cette vérification garantit l'origine des fonds dont dispose l'utilisateur pour le paiement des produits et services proposés, ainsi que son identité. Ainsi, en accédant à notre site Web, l'utilisateur RECONNAÎT ET ACCEPTE QUE SES INFORMATIONS PERSONNELLES PEUVENT ÊTRE DIVULGUÉES À DES AGENCES DE CRÉDIT ET À DES AGENCES DE PRÉVENTION DE LA FRAUDE OU DE LA CRIMINALITÉ FINANCIÈRE, DANS LE CADRE DE L'EXONÉRATION DE RESPONSABILITÉ ET DE L'INDEMNISATION CORRESPONDANTE DE SAFESOLF. Nos politiques de prévention du blanchiment de capitaux, du financement du terrorisme et des activités illicites visent à éviter qu'il soit porté atteinte au patrimoine de l'entreprise, à ses dirigeants et à la prestation du service, en développant des relations commerciales avec des partenaires fiables et sûrs.",
+          "p3": "L'utilisateur s'engage alors, en accédant au site Web et plus encore en acquérant nos produits et services, à :",
+          "list": [
+            "Respecter les réglementations légales et autres en vigueur applicables.",
+            "Garantir les mesures de contrôle appropriées, ce qui évite la réalisation de toute opération de change et/ou de commerce extérieur pouvant servir d'instrument pour dissimuler, gérer, investir ou exploiter des biens ou des ressources issus d'activités illicites.",
+            "De même, en accédant au site Web, l'utilisateur déclare que les ressources économiques utilisées pour l'acquisition des produits et services sur le site Web ne proviennent en aucun cas d'activités illicites et n'ont aucune relation commerciale avec des tiers se livrant à des activités illicites."
+          ]
+        },
+        "bankTransfer": {
+          "title": "Paiement par virement bancaire",
+          "p1": "Pour le mode de paiement décrit, le consommateur et/ou l'utilisateur final effectue le virement à ses propres frais et risques vers les comptes désignés dans les moyens de paiement et le débit correspondant, depuis son établissement bancaire, ou un virement sur le compte bancaire, en transmettant le justificatif de dépôt aux coordonnées de SAFESOLF. Les virements seront acceptés en dollars américains comme devise préférentielle et, en cas d'impossibilité d'effectuer cette transaction, ils seront convertis au taux de change de clôture du jour ; étant entendu que les frais supplémentaires liés aux écarts de change doivent être assumés par le Consommateur et/ou l'utilisateur final. Cette valeur exacte de la conversion monétaire doit être celle indiquée sur le justificatif de paiement transmis à SAFESOLF ; à défaut, le service ou produit acquis ne sera ni débloqué ni livré tant que le paiement manquant n'aura pas été complété."
+        }
+      },
+      "purchaseContract": {
+        "title": "Formalisation du contrat d'achat",
+        "p1": "En votre qualité de consommateur et/ou d'utilisateur final, le contrat ne sera considéré comme parfait que si vous êtes majeur (plus de 18 ans) et que vous achetez les produits figurant dans l'offre commerciale disponible sur le portail Web. Les commandes que vous passez via le Site Web pour les produits proposés sur https://www.encriptados.io ne constituent qu'une offre de conclusion d'un contrat d'achat. Le contrat susmentionné ne sera effectivement conclu que lorsque SAFESOLF vous aura confirmé par e-mail la commande et les options de livraison. Avant de recevoir cette confirmation par ce biais, la commande peut être annulée. Si SAFESOLF ne confirme pas votre commande dans un délai de dix jours ouvrables, celle-ci sera considérée comme rejetée."
+      },
+      "delivery": {
+        "title": "Livraison",
+        "p1": "SAFESOLF effectuera la livraison à l'adresse fournie dans les formulaires d'enregistrement des données. Les livraisons seront effectuées les jours ouvrables. Si vous demandez à SAFESOLF de livrer la commande en plusieurs envois, cette dernière pourra vous facturer des frais de livraison supplémentaires. Chacun des envois individuels constituera un contrat indépendant. Si SAFESOLF est en retard pour la livraison d'un envoi ou si l'un des envois est incorrect, cela ne vous donnera pas le droit d'annuler les autres envois.",
+        "p2": "Les délais de livraison sont indicatifs et, par conséquent, ne sont pas considérés comme des dates limites strictes. Le simple fait d'avoir dépassé un délai de livraison ne vous donnera aucun droit à indemnisation. Pour ce faire, une mise en demeure doit être envoyée à SAFESOLF, en attendant le délai raisonnable désigné pour les livraisons selon le transporteur choisi par le client. Si la livraison n'est pas effectuée dans ces conditions, le montant payé sera remboursé au consommateur et aucune indemnisation ne sera due à ce titre."
+      },
+      "deliveryIssues": {
+        "title": "Alternatives en cas de problèmes de livraison",
+        "p1": "Si SAFESOLF, avant de conclure le contrat, constate qu'elle ne peut pas fournir les produits demandés, elle pourra vous proposer un produit équivalent en termes de qualité, de prix et de fonction. Vous ne serez pas obligé d'accepter le produit de substitution. Si vous le souhaitez, vous pourrez le retourner dans un délai de 5 jours et SAFESOLF prendra en charge les frais nécessaires et raisonnables pour son retour depuis sa destination.",
+        "p2": "Si le contrat est conclu et que SAFESOLF constate qu'elle ne peut en aucun cas fournir les produits commandés et qu'elle n'est pas responsable de cette situation, elle aura le droit de résilier le contrat, en en informant immédiatement l'utilisateur et en lui remboursant les paiements effectués."
+      },
+      "returns": {
+        "title": "RETOURS",
+        "p1": "Le client et/ou l'Utilisateur Final pourra retourner les produits reçus après avoir contacté SAFESOLF à l'adresse e-mail désignée, en exposant les motifs du retour et en renvoyant le produit dans un délai de 7 jours ouvrables suivant sa réception. Les produits doivent être renvoyés inutilisés et complets, y compris dans leur emballage d'origine. Une fois votre retour autorisé, nous vous contacterons pour coordonner son enlèvement par notre transporteur. Le retour des produits s'effectuera aux risques et périls de SAFESOLF.",
+        "p2": "En cas de retour valide, le prix d'achat vous sera remboursé dans les dix jours suivant la réception du produit et la résiliation du contrat. Cependant, le client et/ou l'utilisateur final doit être conscient que les procédures bancaires peuvent prendre jusqu'à 60 jours, c'est pourquoi une communication constante entre le client et l'établissement bancaire est requise pour le suivi du remboursement.",
+        "p3": "Si un produit est retourné et que SAFESOLF constate qu'il a été altéré par un acte ou une omission imputable au client, elle pourra déduire du montant du remboursement la dépréciation de la valeur du produit résultant de ces dommages. Vous pouvez éviter l'obligation de compenser la perte de valeur d'un produit causée par son utilisation si vous ne l'utilisez pas comme s'il s'agissait de votre propriété et si vous vous abstenez, dans la mesure du raisonnable, de toute action pouvant nuire à sa valeur.",
+        "p4": "Si vous souhaitez exprimer une réclamation verbale concernant la conclusion du contrat ou son exécution, vous pouvez envoyer votre demande à l'adresse e-mail : marketing@encriptados.io"
+      },
+      "retract": {
+        "title": "Droit de rétractation",
+        "p1": "Les rétractations mentionnées ci-dessus doivent être demandées via le site Web et sur notre canal d'origine.",
+        "p2": "Pour pouvoir exercer le droit de rétractation, l'utilisateur doit prouver que le produit n'est pas endommagé ou détérioré par des actions relevant de sa garde, qu'il dispose des étiquettes, accessoires et emballages d'origine (y compris les manuels, guides d'utilisation, certificats de garantie), que le produit ne présente aucun signe d'utilisation, de saleté ou d'usure et qu'il n'a pas été livré depuis plus de CINQ (5) jours ouvrables."
+      },
+      "warrantyExemptions": {
+        "title": "EXCLUSIONS DE GARANTIE",
+        "intro": "LA GARANTIE DES PRODUITS NE S'APPLIQUE PAS LORSQUE :",
+        "list": [
+          "L'appareil présente des signes de mauvais traitements, des dommages causés par des catastrophes naturelles ou une utilisation autre que celle indiquée dans les instructions d'utilisation.",
+          "Il présente des dommages causés par des fluctuations de tension du réseau électrique ou des décharges électriques atmosphériques.",
+          "Le dommage est causé par l'adaptation et l'installation de pièces ou d'accessoires non d'origine, non autorisés par le vendeur, par un manque de soin apporté au produit ou par des facteurs externes (oxydation, décoloration, rayures, excès de poussière, chocs).",
+          "Les scellés de garantie sont brisés."
+        ],
+        "p1": "TOUS LES PRODUITS ET SERVICES DE SAFESOLF SONT VENDUS « EN L'ÉTAT » (« AS IS ») ET « SELON LA DISPONIBILITÉ » (« AS AVAILABLE »), SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE.",
+        "p2": "SAFESOLF EXCLUT EXPRESSÉMENT TOUTE GARANTIE, Y COMPRIS SANS LIMITATION : Garantie que les produits offrent une « confidentialité totale », un « anonymat absolu » ou une protection inviolable contre les interceptions, le piratage, la surveillance gouvernementale ou tout autre risque ; Garantie que les produits sont adaptés à un usage particulier ou répondent à vos attentes en matière de sécurité ; Garantie que les produits sont exempts de défauts, de virus, de vulnérabilités ou qu'ils fonctionneront sans interruption. Aucune description, publicité, marketing ou déclaration orale ou écrite de SAFESOLF ou de ses représentants ne crée de garantie. Vous assumez tous les risques liés à la qualité, aux performances et à la sécurité des produits."
+      },
+      "ownership": {
+        "title": "PROPRIÉTÉ DES DROITS",
+        "p1": "SAFESOLF est titulaire ou, le cas échéant, dispose des licences correspondantes concernant les droits d'exploitation de la propriété intellectuelle du site Web, ainsi que de tous les produits et contenus proposés sur celui-ci, y compris les textes, photographies ou illustrations, logos, marques, graphismes, conceptions, interfaces ou toute autre information ou contenu et les services disponibles sur celui-ci.",
+        "p2": "De plus, en aucun cas, il ne sera entendu que l'accès, la navigation et/ou l'utilisation du site Web par l'Utilisateur, ni l'utilisation des produits et/ou services proposés par SAFESOLF via son site Web n'impliquent une renonciation, une transmission, une licence ou une cession totale ou partielle de ces droits par SAFESOLF.",
+        "p3": "L'Utilisateur dispose d'un droit d'utilisation non exclusif des contenus et/ou services du Site Web, dans un cadre strictement domestique, et uniquement dans le but de profiter personnellement des prestations des produits et services proposés par celui-ci, conformément aux présentes Conditions d'utilisation.",
+        "p4": "Les références à des marques ou à des noms commerciaux déposés ou à d'autres signes distinctifs, qu'ils soient la propriété de SAFESOLF ou de tiers, impliquent l'interdiction de leur utilisation sans le consentement de SAFESOLF et/ou de leurs propriétaires légitimes. À aucun moment l'accès, la navigation ou l'utilisation du Site Web et/ou de ses contenus ne confère à l'Utilisateur un droit quelconque sur les signes distinctifs qui y figurent.",
+        "p5": "Dans le cas où l'Utilisateur envoie des informations de quelque nature que ce soit à SAFESOLF par l'un des canaux activés à cet effet, il déclare, garantit et accepte qu'il a le droit de le faire librement, que ces informations ne violent aucun droit de propriété intellectuelle, industrielle, secret d'affaires ou tout autre droit de tiers, et que ces informations ne sont pas confidentielles et ne nuisent pas à des tiers.",
+        "p6": "L'Utilisateur reconnaît assumer la responsabilité, garantissant SAFESOLF contre toute communication, verbale ou écrite, qu'il fournit personnellement ou en son nom, cette responsabilité s'étendant sans restriction à tous les dommages liés à son exactitude, sa légalité, son originalité et/ou sa propriété.",
+        "p7": "De même, dans le cas où un Utilisateur ou un tiers estime que l'un des contenus du Site Web propriété de SAFESOLF viole ses droits de propriété intellectuelle et/ou industrielle, ainsi que tout autre droit, il doit envoyer une communication à marketing@encriptados.io avec la documentation nécessaire prouvant cette circonstance, et SAFESOLF fournira une réponse complète dans les plus brefs délais.",
+        "p8": "L'Utilisateur s'engage à faire un usage approprié des contenus, matériels, produits et services proposés par SAFESOLF sur le site Web et à ne pas les utiliser pour se livrer à des activités illicites ou contraires à la bonne foi et à l'ordre juridique. La réalisation de l'une des actions décrites dans le paragraphe précédent par l'Utilisateur pourra entraîner l'adoption par SAFESOLF des mesures appropriées protégées dans l'exercice de ses droits ou obligations, parmi lesquelles figurent la suppression ou le blocage de l'Utilisateur contrevenant et, en effet, le signalement potentiel des infractions pénales qu'elle constate.",
+        "p9": "L'Utilisateur reconnaît expressément que s'il réalise les actions précitées, il n'aura droit à aucune indemnisation pour les dommages causés et, au contraire, sera seul responsable des dommages pouvant être causés à SAFESOLF et/ou à des tiers. À cet effet, l'Utilisateur reconnaît et accepte expressément de garantir SAFESOLF contre tout dommage résultant d'actions telles que celles décrites dans le paragraphe précédent.",
+        "p10": "Cette garantie d'indemnisation couvre non seulement le montant de l'indemnisation et les frais d'éventuelles procédures judiciaires ou d'arbitrage, mais également les frais des professionnels (avocats, experts, etc.) que SAFESOLF devrait engager pour défendre ses droits et/ou intérêts, tant judiciairement qu'extrajudiciairement. L'Utilisateur qui enfreint ces interdictions sera responsable de toute réclamation qui en découlerait. La garantie d'indemnisation décrite dans cette clause s'applique également à ce cas, ce que l'Utilisateur reconnaît et accepte expressément, et par conséquent, ce dernier doit laisser SAFESOLF indemne dans les termes déjà mentionnés.",
+        "p11": "L'Utilisateur reconnaît et accepte expressément sa responsabilité quant aux conséquences éventuelles découlant de l'infraction aux réglementations régissant les biens corporels et incorporels, et s'engage à garantir SAFESOLF contre toute réclamation à ce titre dans les termes exprimés précédemment.",
+        "p12": "SAFESOLF se réserve le droit de modifier les Conditions d'utilisation à tout moment. En cas de modification des Conditions d'utilisation, la nouvelle version sera mise à la disposition des Utilisateurs du site Web avec un préavis suffisant, et une communication d'information sera envoyée à tous les Utilisateurs inscrits, avec la possibilité de solliciter leur acceptation expresse si nécessaire."
+      },
+      "jurisdiction": {
+        "title": "Juridiction",
+        "p1": "Les Services sont disponibles pour une utilisation dans tout pays, tant qu'elle ne contrevient pas à la législation des États-Unis d'Amérique ni à celle du pays d'utilisation et d'acquisition déclaré. En ce sens, vous acceptez expressément de vous conformer à toutes les lois des États-Unis d'Amérique et, selon le cas, aux lois étrangères relatives à votre utilisation des services. Par conséquent, vous ne fournirez pas, ne transporterez pas, n'exporterez pas, ne réexporterez pas et ne mettrez pas à disposition de quelque autre manière, directement ou indirectement et indépendamment de la forme, y compris par accès visuel, les services ou toute technologie ou données techniques utilisées pour fournir ces services ou qui en découlent d'une manière qui contredit ou pourrait contredire les déclarations et garanties que vous avez faites.",
+        "p2": "Le fait que vous puissiez accéder aux services depuis un autre endroit ne constituera pas une déclaration ou un accord stipulant que les services sont disponibles dans cet endroit. Quiconque choisit d'accéder aux services dans une juridiction autre que celle où les Services sont proposés le fait de sa propre initiative et à ses propres risques, et comprend en outre que cet accès peut être contraire aux lois applicables dans cette juridiction.",
+        "p3": "SAFESOLF se réserve le droit d'interrompre, de suspendre ou de résilier la fourniture de tout produit ou Service si : (i) l'utilisateur final ne respecte pas l'une de ces Conditions d'utilisation, la Politique de confidentialité ou les lois applicables ; (ii) utilise les produits proposés sur le site Web à des fins illicites ou à toute autre fin que les fins autorisées ; (iii) pour toute autre raison où cette interruption, suspension ou résiliation est nécessaire de l'avis de SAFESOLF."
+      },
+      "otherProvisions": {
+        "title": "AUTRES DISPOSITIONS",
+        "p1": "Dans certains cas, SAFESOLF peut collecter des informations personnelles et d'autres informations : (i) dans le cadre de la fourniture de ses Services ; et (ii) lorsque vous naviguez sur le site Web via des cookies. Dans tous les cas, SAFESOLF utilise des mesures de sécurité pour protéger la sécurité et la confidentialité de ces informations personnelles. SAFESOLF met également en œuvre diverses mesures concernant le stockage des informations personnelles, comme détaillé dans sa Politique de confidentialité. En utilisant le site Web et/ou les services, vous acceptez les dispositions de cette politique de confidentialité, qui sont incorporées dans ces conditions d'utilisation par référence."
+      },
+      "liabilityDetail": {
+        "title": "RESPONSABILITÉ",
+        "intro": "L'UTILISATEUR FINAL ET/O CONSUMMATEUR RECONNAÎT ET ACCEPTE QUE :",
+        "p1": "(A) IL ASSUME TOUS LES RISQUES LIÉS À, OU DÉCOULANT DE, L'UTILISATION, LA CONSULTATION OU L'ACCÈS AU SITE WEB. LE SITE WEB EST FOURNI « EN L'ÉTAT » ET « SELON LA DISPONIBILITÉ », SANS AUCUNE GARANTIE ;",
+        "p2": "(B) DANS LES LIMITES LÉGALES, SAFESOLF DÉCLINE EXPRESSÉMENT TOUTE GARANTIE OU RESPONSABILITÉ, EXPRESSE OU IMPLICITE, LÉGALE OU AUTRE, Y COMPRIS, MAIS SANS S'Y LIMITER : LES GARANTIES IMPLICITES DE QUALITÉ SATISFAISANTE, D'ADÉQUATION À UN USAGE PARTICULIER, D'INTERDICTION D'USAGE INDU ET CELLES HABITUELLES DANS LA PRATIQUE COMMERCIALE OU DANS LES NÉGOCIATIONS DANS CE SECTEUR ; ET",
+        "p3": "(C) SAFESOLF DÉCLINE EXPRESSÉMENT TOUTE GARANTIE CONCERNANT : (I) LE FAIT QUE LE SITE WEB ET SON CONTENU SERONT TOUJOURS EXEMPTS D'ERREURS OU DE VIRUS OU NE SUBIRONT JAMAIS D'ATTAQUES DE TIERS ; (II) LE FONCTIONNEMENT ININTERROMPU ET TOUJOURS SÉCURISÉ DU SITE WEB ; (III) LA DISPONIBILITÉ PERMANENTE DU SITE ; (IV) LE FAIT QUE LE SITE WEB RÉPONDE OU NON AUX BESOINS DE L'UTILISATEUR ; ET (V) LA FIABILITÉ, L'EXACTITUDE, L'INTÉGRITÉ, LA VALIDITÉ OU LA VÉRACITÉ DES INFORMATIONS FOURNIES PAR L'UTILISATEUR.",
+        "p4": "SAFESOLF ne sera responsable d'aucune perte, qu'elle soit indirecte ou non objectivement prévisible, telle que la perte de bénéfices, d'affaires ou d'autres opportunités résultant de tout défaut, erreur ou manquement concernant le site Web ou les services ou autrement.",
+        "p5": "L'UTILISATEUR ACCEPTE D'ASSUMER TOUS LES RISQUES ASSOCIÉS À, OU DÉCOULANT DE, L'UTILISATION DU SITE WEB OU DES INFORMATIONS FOURNIES PAR L'UTILISATEUR, Y COMPRIS, SANS S'Y LIMITER, LES RISQUES DE PERTES FINANCIÈRES, LES DOMMAGES MATÉRIELS ET LES FRAIS DE NÉGOCIATION AVEC D'AUTRES UTILISATEURS DU SITE WEB (QU'ILS SOIENT INCONNUS, MINEURS, ÉTRANGERS OU PERSONNES AGISSANT SOUS UNE FAUSSE IDENTITÉ). L'UTILISATEUR S'ENGAGE ÉGALEMENT À DÉGAGER DE TOUTE RESPONSABILITÉ SAFESOLF, SA SOCIÉTÉ MÈRE ET SES FILIALES ET AFFILIÉES, AINSI QUE LES ADMINISTRATEURS, DIRIGEANTS, COMMERCIAUX ET EMPLOYÉS DE TOUTES CELLES-CI, FACE AUX RÉCLAMATIONS, DEMANDES OU DEMANDES D'INDEMNISATION POUR DOMMAGES (DIRECTS, INDIRECTS ET ACCESSOIRES) DE TOUT TYPE, CONNUS OU INCONNUS, POUVANT ÊTRE INTRODUITES SUR LA BASE DE, OU DÉCOULANT DE L'UTILISATION DU SITE WEB, DES INFORMATIONS FOURNIES PAR L'UTILISATEUR OU DES TRANSACTIONS AYANT LIEU À LA SUITE DE L'UTILISATION DU SITE WEB PAR L'UTILISATEUR.",
+        "p6": "TOUJOURS DANS LES LIMITES LÉGALES, L'UTILISATEUR ASSUME ET ACCEPTE QU'EN AUCUN CAS SAFESOLF NI SES FILIALES ET AFFILIÉES, NI SES ADMINISTRATEURS, COMMERCIAUX, EMPLOYÉS OU FOURNISSEURS DE TOUTES CELLES-CI, N'ASSUMERONT UNE RESPONSABILITÉ QUELCONQUE POUR LES PERTES OU DOMMAGES DIRECTS, INDIRECTS OU ACCESSOIRES (Y COMPRIS, MAIS SANS S'Y LIMITER, LES DOMMAGES MATÉRIELS ET LES DOMMAGES PUREMENT ÉCONOMIQUES), NI POUR LE MANQUE À GAGNER, LA PERTE DE REVENUS OU DE DONNÉES OU POUR L'INTERRUPTION D'UTILISATION, QUELLE QU'EN SOIT LA CAUSE – RUPTURE CONTRACTUELLE, RESPONSABILITÉ DÉLICTUELLE (Y COMPRIS LA NÉGLIGENCE) OU MANQUEMENT À LA GARANTIE – MÊME SI SAFESOLF AVAIT ÉTÉ AVERTIE DE LA POSIBILITÉ DE SURVENANCE DE CES PERTES OU DOMMAGES. DANS LE CAS OÙ CERTAINES JURISDICTIONS INTERDISENT L'EXCLUSION DE CERTAINES GARANTIES, LA LIMITATION DE RESPONSABILITÉ OU L'EXCLUSION DE RESPONSABILITÉ POUR CERTAINS DOMMAGES, LA RESPONSABILITÉ CUMULÉE DE SAFESOLF POUR DOMMAGES NE DÉPASSERA PAS USD$10.00 (DIX DOLLARS DES ÉTATS-UNIS D'AMÉRIQUE), SI LA LÉGISLATION APPLICABLE LE PERMET.",
+        "p7": "Les utilisateurs finaux comprennent et acceptent que l'utilisation des services est laissée à leur entière discrétion, par conséquent ils assument les risques inhérents aux utilisateurs. SAFESOLF décline toute responsabilité concernant l'utilisation de ces services et n'est pas responsable des dommages causés par l'utilisation de ceux-ci."
+      },
+      "contact": {
+        "title": "CONTACT",
+        "p1": "Toutes les questions, commentaires ou demandes concernant ces Conditions d'utilisation ou la Politique de confidentialité doivent être adressés à SAFESOLF INTERNACIONAL S.A.S. Inc. SAFESOLF répondra aux questions et demandes dans les plus brefs délais via son canal de communication par e-mail cité dans le contact initial.",
+        "p2": "SAFESOLF se réserve le droit de modifier ces Conditions d'utilisation, ainsi les mises à jour de ces conditions seront disponibles et facilement accessibles sur le site Web. SAFESOLF recommande de consulter régulièrement ces Conditions d'utilisation afin de prendre connaissance des pratiques actuelles de SAFESOLF INTERNACIONAL S.A.S. Inc., car l'utilisation continue des Services constituera l'acceptation de toute modification de celles-ci."
+      },
+      "forceMajeure": {
+        "title": "FORCE MAJEURE",
+        "p1": "SAFESOLF ne sera pas responsable de tout retard ou manquement causé par des événements échappant à son contrôle raisonnable, y compris, sans limitation, les catastrophes naturelles, les guerres, les émeutes, les embargos, les épidémies, les pandémies, les actes des autorités gouvernementales, les pannes ou interruptions d'Internet, les cyberattaques, les pénuries de matériaux ou de main-d'œuvre, ou toute autre cause similaire."
+      },
+      "disputes": {
+        "title": "LITIGES ET ARBITRAGE",
+        "p1": "Ces Conditions d'utilisation, la Politique de confidentialité, tout accord conclu avec Vous et tout litige, réclamation, controverse ou différend découlant de ou lié à ceux-ci, à votre compte, aux produits ou services de SAFESOLF, ou à votre utilisation du site Web www.encriptados.io (y compris la formation, la validité, l'interprétation, l'exécution ou la résiliation de cet accord), seront régis et interprétés exclusivement conformément aux lois de l'État du Delaware et aux lois fédérales des États-Unis d'Amérique, sans donner effet à ses principes de conflit de lois.",
+        "p2": "Tout litige, réclamation ou controverse qui ne pourrait être résolu à l'amiable entre les parties dans un délai de trente (30) jours sera résolu de manière définitive et contraignante par arbitrage, conformément aux règles d'arbitrage commercial de l'American Arbitration Association (AAA) en vigueur à ce moment-là.",
+        "p3": "L'arbitrage sera administré par l'American Arbitration Association (AAA) et se déroulera dans la ville de Wilmington, État du Delaware, États-Unis d'Amérique, devant un arbitre neutre unique. La langue de l'arbitrage sera l'anglais. Chaque partie paiera ses propres frais, honoraires d'avocat et dépenses, à moins que l'arbitre n'en décide autrement conformément à la loi applicable. La décision de l'arbitre sera finale, contraignante et pourra être présentée comme jugement devant tout tribunal compétent.",
+        "p4": "Vous acceptez expressément que tout litige soit résolu de manière individuelle et non dans le cadre d'un recours collectif, consolidé ou représentatif. Vous renoncez irrévocablement à tout droit de participer à toute procédure collective, consolidée ou représentative contre SAFESOLF ou ses sociétés affiliées.",
+        "p5": "Nonobstant ce qui précède, SAFESOLF ou Vous pourrez demander à un tribunal compétent de l'État du Delaware des mesures conservatoires, des interdictions ou tout autre recours équitable pour protéger ses droits de propriété intellectuelle, ses informations confidentielles ou pour prévenir un dommage irréparable, sans qu'il soit nécessaire de soumettre préalablement cette demande à l'arbitrage.",
+        "p6": "Si une partie de cette clause d'arbitrage est jugée invalide ou inapplicable, le reste de la clause demeurera en vigueur et produira ses effets, et les parties se soumettront à la juridiction exclusive des tribunaux étatiques ou fédéraux situés à Wilmington, Delaware."
+      },
+      "miscellaneous": {
+        "title": "DIVERS",
+        "p1": "Ces Conditions d'utilisation, ainsi que la Politique de confidentialité et tout autre accord conclu avec Vous, constituent l'intégralité de l'accord entre Vous et SAFESOLF et remplacent tous les accords, ententes, négociations et discussions antérieurs entre les parties. Il n'existe aucune déclaration, garantie, engagement, condition ou autre condition autre que ceux expressément contenus dans ces Conditions d'utilisation, la Politique de confidentialité et tout accord de ce type. Ces Conditions d'utilisation ne peuvent être modifiées que par SAFESOLF et uniquement par écrit.",
+        "p2": "Chaque partie s'engage à préserver la confidentialité de toutes les informations relatives à l'existence du litige, sauf dans la mesure où la loi applicable exige leur divulgation."
       }
     },
     "dataPolicy": {
-      "title": "Política de Tratamiento de Datos Personales",
+      "title": "Politique de Traitement des Données Personnelles",
       "intro": {
-        "p1": "www.encriptados.io, sitio web cuyo dominio de propiedad de la sociedad SAFESOLF INTERNACIONAL S.A.S., en calidad de sociedad comercial responsable del tratamiento de datos personales obtenidos en desarrollo de su objeto societario y en cumplimiento de los deberes contenidos en la Ley 1581 de 2012, Decretos 886 de 2014, 1377 de 2013 y 886 de 2014, ha creado la presente política de tratamiento de datos personales, con el fin de garantizar la protección legal de los derechos fundamentales de los titulares de datos personales, mediante su adecuado tratamiento mediante la recopilación, uso y protección de la información que se aloja en el sitio web citado, aplicaciones móviles, landings asociadas a la página principal, chat de las páginas entre otros.",
-        "p2": "La navegación y/o uso constituirá su aceptación del presente Aviso de privacidad y Uso de Cookies, así como el consentimiento para el desarrollo de las prácticas descritas."
+        "p1": "www.encriptados.io, site Internet dont le domaine est la propriété de la société SAFESOLF INTERNACIONAL S.A.S., en sa qualité de société commerciale responsable du traitement des données personnelles obtenues dans le cadre du développement de son objet social et conformément aux obligations contenues dans la Loi 1581 de 2012, les Décrets 886 de 2014, 1377 de 2013 et 886 de 2014, a créé cette politique de traitement des données personnelles afin de garantir la protection légale des droits fondamentaux des propriétaires de données personnelles, par le biais d'un traitement approprié via la collecte, l'utilisation et la protection des informations hébergées sur le site Internet susmentionné, les applications mobiles, les pages de destination associées à la page principale, les pages de chat, entre autres.",
+        "p2": "La navigation et/ou l'utilisation constitueront votre acceptation de cette Déclaration de confidentialité et d'utilisation des cookies, ainsi que votre consentement au développement des pratiques décrites."
       },
       "responsible": {
-        "title": "RESPONSABLE Y ENCARGADO DEL TRATAMIENTO DE DATOS PERSONALES",
-        "p1": "La sociedad SAFESOLF INTERNACIONAL S.A.S., con correo electrónico contacto@encriptados.io, recopila la información que usted proporciona al realizar una compra en nuestro sitio web, crear una cuenta, ingresar sus datos en el Chat, registrarse para recibir correos electrónicos y boletines, también recibe información de datos por parte de terceros, por ello la sociedad responsable, recopila la información que usted ingresa en su computadora, tableta o dispositivo utilizado para navegar por los Sitios; información de cookies o herramientas similares de seguimiento con el fin de proporcionarle productos y servicios adecuados a su necesidad."
+        "title": "RESPONSABLE ET CHARGÉ DU TRAITEMENT DES DONNÉES PERSONNELLES",
+        "p1": "La société SAFESOLF INTERNACIONAL S.A.S., avec l'adresse e-mail contacto@encriptados.io, collecte les informations que vous fournissez lors d'un achat sur notre site Web, de la création d'un compte, de la saisie de vos données dans le Chat, de l'inscription pour recevoir des e-mails et des newsletters, et reçoit également des informations de données de la part de tiers. Par conséquent, la société responsable collecte les informations que vous saisissez sur votre ordinateur, tablette ou appareil utilisé pour naviguer sur les Sites ; les informations sur les cookies ou des outils de suivi similaires afin de vous fournir des produits et services adaptés à vos besoins."
       },
       "policy": {
-        "title": "POLÍTICA DE TRATAMIENTO DE DATOS",
-        "p1": "Teniendo en cuenta que la sociedad SAFESOLF INTERNACIONAL S.A.S. tiene por objeto social actividades de administración empresarial y actividades de consultoría de gestión y ante la necesidad de asegurar una adecuada gestión de los datos en cumplimiento de la Ley 1581 de 2012 y Decretos 886 de 2014, 1377 de 2013 y 886 de 2014, y subsiguientes, se permite establecer una política de tratamiento de datos personales, que garantiza la protección de los derechos fundamentales de los titulares de los datos personales en su tratamiento.",
-        "p2": "Sociedad cuya actividad es la inversión en sociedades colombianas o extranjeras, e inversión nacional e internacional"
+        "title": "POLITIQUE DE TRAITEMENT DES DONNÉES",
+        "p1": "Compte tenu du fait que la société SAFESOLF INTERNACIONAL S.A.S. a pour objet social des activités d'administration d'entreprises et de conseil en gestion, et face à la nécessité d'assurer une gestion adéquate des données conformément à la Loi 1581 de 2012 et aux Décrets 886 de 2014, 1377 de 2013 et 886 de 2014, et suivants, elle permet d'établir une politique de traitement des données personnelles qui garantit la protection des droits fondamentaux des propriétaires de données personnelles dans le cadre de leur traitement.",
+        "p2": "Une société dont l'activité est l'investissement dans des entreprises colombiennes ou étrangères, et l'investissement national et international."
       },
       "nature": {
-        "title": "NATURALEZA DE LOS REGISTROS Y LOS DATOS RECOGIDOS POR SAFESOLF INTERNACIONAL S.A.S.",
-        "p1": "La sociedad en desarrollo de su objeto social, recolecta información a través de todos sus canales de atención (Escrito, Telefónico, chat entre otros), durante las 8 horas hábiles del día, de lunes a viernes, garantizando la atención de conformidad con la demanda.",
-        "p2": "SAFESOLF INTERNACIONAL S.A.S. comparte información con la Controlante y con proveedores de servicios para administrar los Sitios, para efectuar los pagos por parte de los usuarios, proporcionar productos, servicios, es por ello que la sociedad no vende ni comparte Información Personal para su uso fuera de sus marcas."
+        "title": "NATURE DES ENREGISTREMENTS ET DES DONNÉES COLLECTÉES PAR SAFESOLF INTERNACIONAL S.A.S.",
+        "p1": "La société, dans le cadre du développement de son objet social, collecte des informations à travers tous ses canaux de service client (Écrit, Téléphonique, chat, entre autres), pendant les 8 heures ouvrables de la journée, du lundi au vendredi, garantissant le service conformément à la demande.",
+        "p2": "SAFESOLF INTERNACIONAL S.A.S. partage des informations avec la Société Mère et avec des prestataires de services pour gérer les Sites, pour effectuer les paiements par les utilisateurs, pour fournir des produits et des services. Par conséquent, la société ne vend ni ne partage d'Informations Personnelles pour une utilisation en dehors de ses marques."
       },
       "purpose": {
-        "title": "FINALIDAD DEL TRATAMIENTO DE INFORMACIÓN",
-        "intro": "La recolección y tratamiento de los datos personales por parte de SAFESOLF INTERNACIONAL S.A.S. tiene como finalidades:",
+        "title": "FINALITÉ DU TRAITEMENT DES INFORMATIONS",
+        "intro": "La collecte et le traitement des données personnelles par SAFESOLF INTERNACIONAL S.A.S. ont les finalités suivantes :",
         "list": [
-          "Capturar y actualizar los datos de los usuarios y/o compradores en nuestros sitios web.",
-          "Gestionar información que permita generar interacciones de interés y espacios de comunicación con los usuarios de nuestros productos y servicios.",
-          "Responder a las regulaciones del Gobierno Nacional en relación con la fuente e intercambio de información.",
-          "Promover el registro, uso adecuado, administración y veracidad de la información recolectada.",
-          "Realizar actividades comerciales como Enviarle avisos de cambios en las política, productos, ofertas, Procesar aplicaciones y transacciones; Publicar contenidos y opiniones de los consumidores en los Sitios, en nuestras redes sociales entre otros."
+          "Saisir et mettre à jour les données des utilisateurs et/ou acheteurs sur nos sites Web.",
+          "Gérer les informations permettant de générer des interactions d'intérêt et des espaces de communication avec les utilisateurs de nos produits et services.",
+          "Répondre aux réglementations du Gouvernement National concernant la source et l'échange d'informations.",
+          "Promouvoir l'enregistrement, l'utilisation appropriée, l'administration et la véracité des informations collectées.",
+          "Réaliser des activités commerciales telles que l'envoi d'avis de modifications de politiques, de produits, d'offres ; le traitement des demandes et des transactions ; la publication de contenus et d'avis de consommateurs sur les Sites, sur nos réseaux sociaux, entre autres."
         ]
       },
       "sensitive": {
-        "title": "TRATAMIENTO DATOS SENSIBLES",
-        "p1": "SAFESOLF INTERNACIONAL S.A.S. garantizará que el tratamiento de esta información se realizará sin necesidad de solicitar acceso a los datos sensibles de los usuarios, con el fin de establecer mecanismos que protejan adecuadamente los derechos sobre los datos personales, en cumplimiento de las disposiciones contenidas en la Ley 1581 de 2012 y sus Decretos especiales."
+        "title": "TRAITEMENT DES DONNÉES SENSIBLES",
+        "p1": "SAFESOLF INTERNACIONAL S.A.S. garantira que le traitement de ces informations sera effectué sans qu'il soit nécessaire de demander l'accès aux données sensibles des utilisateurs, afin d'établir des mécanismes protégeant de manière adéquate les droits sur les données personnelles, conformément aux dispositions de la Loi 1581 de 2012 et de ses Décrets spéciaux."
       },
       "recipients": {
-        "title": "PERSONAS A QUIENES SE LES PUEDE SUMINISTRAR LA INFORMACIÓN",
-        "intro": "La información que reúna las condiciones establecidas en la Ley podrá suministrarse a las siguientes personas:",
+        "title": "PERSONNES À QUI LES INFORMATIONS PEUVENT ÊTRE FOURNIES",
+        "intro": "Les informations qui remplissent les conditions établies dans la Loi peuvent être fournies aux personnes suivantes :",
         "list": [
-          "A los titulares, sus causahabientes (cuando aquellos falten) o sus representantes legales.",
-          "A las entidades públicas o administrativas en ejercicio de sus funciones legales o por orden judicial.",
-          "A los terceros autorizados expresamente por el titular o por la ley."
+          "Aux propriétaires, à leurs ayants droit (en l'absence de ceux-ci), ou à leurs représentants légaux.",
+          "Aux entités publiques ou administratives dans l'exercice de leurs fonctions légales ou sur ordonnance d'un tribunal.",
+          "À des tiers expressément autorisés par le propriétaire ou par la loi."
         ]
       },
       "authorization": {
-        "title": "AUTORIZACIÓN DEL TITULAR",
-        "p1": "El titular de los datos personales debe dar su autorización previa, expresa e informada para su tratamiento, la cual deberá ser obtenida por cualquier medio (físico o electrónico) que pueda ser objeto de consulta posterior.",
-        "p2": "La sociedad responsable del tratamiento de datos, recopila información automáticamente por los medios descritos previamente, específicamente cuando se realizan compras a través del Sitio, envía sus datos en formularios, correo electrónico, chats, fotos, videos, reseñas; dicha información se estima en datos de identificación (nombre, correo electrónico, país, número de teléfono, información de pago entre otros).",
-        "p3": "Además de la información recopilada automáticamente, se estima también la que se desprenda de las actividades con nuestros proveedores de servicios, quienes recopilan información de manera automática para ejecutar los pagos de nuestros productos y servicios, es por ello que probablemente se recopile información como su tipo de navegador, el tipo de dispositivo del cual se conecta, las páginas que visitó y sus preferencias en navegación.",
-        "p4": "En navegaciones permitidas, usamos «Cookies», los cuales se utilizan para permitir la interacción de los usuarios con las redes sociales, en caso de no aceptación de las cookies, usted puede modificar la configuración de su navegador y así elegir aceptarla o no.",
-        "p5": "Podemos recibir información de terceros proveedores de datos, tales como marketing, es por ello que la sociedad en este caso, ejercerá el tratamiento de datos como encargado, de acuerdo a las instrucciones del responsable.",
-        "p6": "Podemos compartir su información personal con otras empresas de la controlante, en caso de adquisición y/o venta de activos, Si otra sociedad adquiere nuestros activos o activos relacionados con los sitios, la información personal que hayamos podrá ser divulgada a dicha sociedad como uno de los activos transferidos.",
-        "p7": "No será necesaria la autorización para el tratamiento del titular de los datos personales en los siguientes casos:",
+        "title": "AUTORISATION DU PROPRIÉTAIRE",
+        "p1": "Le propriétaire des données personnelles doit donner son autorisation préalable, expresse et éclairée pour leur traitement, laquelle doit être obtenue par tout moyen (physique ou électronique) pouvant faire l'objet d'une consultation ultérieure.",
+        "p2": "La société responsable du traitement des données collecte des informations de manière automatique par les moyens décrits précédemment, spécifiquement lors des achats effectués sur le Site, lorsque vous envoyez vos données via des formulaires, e-mails, chats, photos, vidéos, avis ; ces informations sont estimées comme données d'identification (nom, e-mail, pays, numéro de téléphone, informations de paiement, entre autres).",
+        "p3": "Outre les informations collectées automatiquement, celles découlant des activités avec nos prestataires de services sont également estimées, ces derniers collectant des informations de manière automatique pour exécuter les paiements de nos produits et services, ce qui explique pourquoi des informations telles que le type de navigateur, le type d'appareil de connexion, les pages visitées et vos préférences de navigation sont probablement collectées.",
+        "p4": "Lors des navigations autorisées, nous utilisons des « Cookies », qui servent à permettre l'interaction des utilisateurs avec les réseaux sociaux. En cas de refus des cookies, vous pouvez modifier les paramètres de votre navigateur pour choisir de les accepter ou non.",
+        "p5": "Nous pouvons recevoir des informations de fournisseurs de données tiers, tels que le marketing, auquel cas la société traitera les données en tant que sous-traitant, conformément aux instructions du responsable du traitement.",
+        "p6": "Nous pouvons partager vos informations personnelles avec d'autres sociétés du groupe, en cas d'acquisition et/ou de vente d'actifs. Si une autre société acquiert nos actifs ou des actifs liés aux sites, les informations personnelles en notre possession pourront être divulguées à cette société au titre des actifs transférés.",
+        "p7": "L'autorisation du propriétaire des données personnelles ne sera pas nécessaire pour le traitement dans les cas suivants :",
         "list": [
-          "Información requerida por una entidad pública o administrativa en ejercicio de sus funciones legales o por orden judicial;",
-          "Datos de naturaleza pública;",
-          "Casos de urgencia médica o sanitaria;",
-          "Tratamiento de información autorizado por la ley para fines históricos, estadísticos o científicos;",
-          "Datos relacionados con el Registro Civil de las Personas."
+          "Informations requises par une entité publique ou administrative dans l'exercice de ses fonctions légales ou sur ordonnance d'un tribunal ;",
+          "Données de nature publique ;",
+          "Cas d'urgence médicale ou sanitaire ;",
+          "Traitement des informations autorisé par la loi à des fins historiques, statistiques ou scientifiques ;",
+          "Données relatives à l'état civil des personnes."
         ]
       },
       "rights": {
-        "title": "DERECHOS QUE LE ASISTEN COMO TITULAR",
-        "intro": "Los titulares de la información cuentan con los siguientes derechos:",
+        "title": "DROITS QUI VOUS ASSISTENT EN TANT QUE PROPRIÉTAIRE",
+        "intro": "Les propriétaires des informations disposent des droits suivants :",
         "list": [
-          "Conocer, actualizar, rectificar y solicitar prueba de sus datos personales frente a SAFESOLF INTERNACIONAL S.A.S.",
-          "Ser informado por SAFESOLF INTERNACIONAL S.A.S., previa solicitud, respecto del uso que le ha dado a sus datos personales.",
-          "Presentar ante la Superintendencia de Industria y Comercio quejas por infracciones a lo dispuesto en la Ley 1581 de 2012 y las demás normas que la modifiquen, adicionen o complementen.",
-          "Revocar la autorización y/o solicitar la supresión del dato personal cuando en el Tratamiento no se respeten los principios, derechos y garantías constitucionales y legales.",
-          "Acceder en forma gratuita a sus datos personales que hayan sido objeto de tratamiento."
+          "Prendre connaissance, mettre à jour, rectifier et demander la preuve de leurs données personnelles auprès de SAFESOLF INTERNACIONAL S.A.S.",
+          "Être informé par SAFESOLF INTERNACIONAL S.A.S., sur demande, concernant l'utilisation faite de leurs données personnelles.",
+          "Présenter devant la Surintendance de l'industrie et du commerce des plaintes pour violation des dispositions de la Loi 1581 de 2012 et des autres règles qui la modifient, la complètent ou la complètent.",
+          "Révoquer l'autorisation et/ou demander la suppression des données personnelles lorsque les principes, droits et garanties constitutionnels et légaux ne sont pas respectés lors du traitement.",
+          "Accéder gratuitement aux données personnelles ayant fait l'objet d'un traitement."
         ]
       },
       "attention": {
-        "title": "RESPONSABLE DE LA ATENCIÓN CONSULTAS Y RECLAMOS",
-        "p1": "El responsable para la recepción de consultas y reclamos relacionados con los datos personales del Titular, nuestro oficial de privacidad, ante la cual el Titular de la información puede ejercer sus derechos para conocer, actualizar, rectificar, suprimir y revocar la autorización. Lo anterior lo puede hacer mediante los canales de atención.",
-        "p2": "Para realizar peticiones, consultas o reclamos con el fin de ejercer los derechos a conocer, actualizar, rectificar, suprimir los datos o revocar la autorización otorgada, correo electrónico contacto@encriptados.io"
+        "title": "RESPONSABLE DE L'ATTENTION DES DEMANDES ET DES RÉCLAMATIONS",
+        "p1": "La personne responsable de la réception des demandes et des réclamations liées aux données personnelles du Propriétaire est notre délégué à la protection des données, auprès duquel le Propriétaire des informations peut exercer ses droits de consultation, mise à jour, rectification, suppression et révocation d'autorisation. Ce qui précède peut être effectué via les canaux du service client.",
+        "p2": "Pour formuler des requêtes, demandes ou réclamations afin d'exercer les droits de consultation, mise à jour, rectification, suppression des données ou révocation de l'autorisation accordée, e-mail : contacto@encriptados.io"
       },
       "procedure": {
-        "title": "PROCEDIMIENTO PARA LA ATENCIÓN DE CONSULTAS Y RECLAMOS.",
-        "intro": "Los derechos de los titulares podrán ser ejercidos ante SAFESOLF INTERNACIONAL S.A.S. por las siguientes personas:",
+        "title": "PROCÉDURE D'ATTENTION DES DEMANDES ET DES RÉCLAMATIONS",
+        "intro": "Les droits des propriétaires peuvent être exercés auprès de SAFESOLF INTERNACIONAL S.A.S. par les personnes suivantes :",
         "list": [
-          "Por el Titular, quien deberá acreditar su identidad en forma suficiente.",
-          "Por sus causahabientes, quienes deberán acreditar tal calidad.",
-          "Por el representante y/o apoderado del Titular, previa acreditación de la representación o poder debidamente otorgado."
+          "Par le Propriétaire, qui doit justifier de son identité de manière suffisante.",
+          "Par ses ayants droit, qui doivent justifier de cette qualité.",
+          "Par le représentant et/ou le mandataire du Propriétaire, après justification de la représentation ou du pouvoir dûment accordé."
         ]
       },
       "security": {
-        "title": "SEGURIDAD DE LA INFO Y MEDIDAS",
-        "p1": "En desarrollo del principio de seguridad establecido en la normatividad vigente, el adoptará las medidas técnicas, humanas y administrativas para otorgar seguridad a los registros evitando su adulteración, pérdida, consulta, uso o acceso no autorizado o fraudulento.",
-        "p2": "Conservaremos su información durante el tiempo que sea necesario para ofertarle nuestros productos y servicios. Si desea cancelar la suscripción, póngase en contacto con nosotros en el correo electrónico."
+        "title": "SÉCURITÉ DES INFORMATIONS ET MESURES",
+        "p1": "Dans le cadre du développement du principe de sécurité établi par la réglementation en vigueur, la société adoptera les mesures techniques, humaines et administratives pour assurer la sécurité des enregistrements, en évitant leur altération, perte, consultation, utilisation ou accès non autorisé ou frauduleux.",
+        "p2": "Nous conserverons vos informations aussi longtemps que nécessaire pour vous proposer nos produits et services. Si vous souhaitez vous désabonner, veuillez nous contacter par e-mail."
       },
       "copyright": {
-        "title": "DERECHOS DE AUTOR",
-        "p1": "De acuerdo con las leyes que rigen los derechos de propiedad literaria y artística u otros derechos similares, la reproducción o redistribución de los elementos que componen el sitio web de www.encriptados.io, en su totalidad o en parte, está estrictamente prohibida."
+        "title": "DROITS D'AUTEUR",
+        "p1": "Conformément aux lois régissant les droits de propriété littéraire et artistique ou autres droits similaires, la reproduction ou la redistribution des éléments composant le site Internet www.encriptados.io, en tout ou en partie, est strictement interdite."
       },
       "validity": {
-        "title": "ENTRADA EN VIGENCIA",
-        "p1": "La presente política de Tratamiento de Datos personales fue creada el día 27 de enero del año 2020, y empieza a regir desde el momento de su publicación; es por ello que puede ser modificada y sin previo aviso en orden al cambio de la Legislación Colombiana."
+        "title": "ENTRÉE EN VIGUEUR",
+        "p1": "Cette Politique de traitement des données personnelles a été créée le 27 janvier 2020 et s'applique à compter de sa publication ; elle peut donc être modifiée sans préavis conformément aux évolutions de la législation colombienne."
+      }
+    }
+  },
+  "CookiesPolicy": {
+    "title": "Politique de cookies",
+    "lastUpdated": "Dernière mise à jour : 3 juin 2026",
+    "intro": {
+      "p1": "SAFESOLF INTERNACIONAL S.A.S. Inc. (« SAFESOLF », « nous » ou « la Société »), dont le siège social est situé au 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, États-Unis, utilise des cookies et des technologies de suivi similaires sur notre site Web www.encriptados.io et sur tous les services associés (ci-après, le « Site »).",
+      "p2": "Cette politique de cookies explique ce que sont les cookies, quels types nous utilisons, dans quel but nous les utilisons et comment vous pouvez les gérer ou les refuser.",
+      "p3": "En continuant à naviguer sur le Site, vous acceptez l'utilisation de cookies conformément à la présente politique. Si vous n'êtes pas d'accord, vous pouvez configurer ou refuser les cookies via votre navigateur ou la bannière de cookies qui apparaît lors de votre visite."
+    },
+    "sections": {
+      "whatAre": {
+        "title": "1. QU'EST-CE QUE LES COOKIES ?",
+        "p1": "Les cookies sont de petits fichiers texte qu'un site Web place sur votre appareil (ordinateur, tablette, téléphone portable) lorsque vous le visitez. Ils permettent au site de se souvenir de vos actions et préférences pendant un certain temps, de sorte que vous n'ayez pas à les configurer à chaque fois que vous y retournez.",
+        "p2": "Nous utilisons également des technologies similaires telles que des pixels, des balises Web et un stockage local."
+      },
+      "types": {
+        "title": "2. TYPES DE COOKIES QUE NOUS UTILISONS",
+        "table": {
+          "headers": [
+            "Type de cookie",
+            "Finalité",
+            "Durée",
+            "Obligatoire ?"
+          ],
+          "rows": [
+            {
+              "type": "Essentiels",
+              "purpose": "Permettre le fonctionnement de base du site (navigation, panier, connexion, sécurité)",
+              "duration": "Session ou 1 an",
+              "mandatory": "Oui"
+            },
+            {
+              "type": "De performance",
+              "purpose": "Analyser la façon dont les utilisateurs utilisent le site (pages visitées, temps passé, erreurs)",
+              "duration": "Jusqu'à 2 ans",
+              "mandatory": "Non"
+            },
+            {
+              "type": "Fonctionnels",
+              "purpose": "Se souvenir de vos préférences (langue, devise, région)",
+              "duration": "Jusqu'à 2 ans",
+              "mandatory": "Non"
+            },
+            {
+              "type": "Publicitaires / Marketing",
+              "purpose": "Afficher des publicités pertinentes et mesurer l'efficacité des campagnes",
+              "duration": "Jusqu'à 1 an",
+              "mandatory": "Non"
+            },
+            {
+              "type": "De tiers",
+              "purpose": "Cookies placés par Google Analytics, Meta, processeurs de paiement, etc.",
+              "duration": "Varie",
+              "mandatory": "Non"
+            }
+          ]
+        },
+        "footer": "Nous n'utilisons pas de cookies pour suivre votre activité de manière intrusive ou pour créer des profils comportementaux détaillés."
+      },
+      "thirdParty": {
+        "title": "3. COOKIES DE TIERS",
+        "p1": "Certains de nos prestataires de services peuvent placer des cookies sur votre appareil lorsque vous visitez le Site :",
+        "list": [
+          "Google Analytics (analyse du trafic)",
+          "Plateformes de paiement (Stripe, processeurs de crypto)",
+          "Réseaux sociaux (pour partager du contenu)",
+          "Outils de marketing par e-mail"
+        ],
+        "p2": "Ces cookies sont contrôlés par des tiers et sont soumis à leurs propres politiques de confidentialité."
+      },
+      "manage": {
+        "title": "4. COMMENT GÉRER OU REFUSER LES COOKIES",
+        "p1": "Vous pouvez contrôler les cookies des manières suivantes :",
+        "list": [
+          "Bannière de cookies → Lors de votre entrée sur le Site, vous pouvez accepter ou refuser les catégories de cookies non essentiels.",
+          "Configuration de votre navigateur:\n• Google Chrome → Paramètres → Confidentialité et sécurité → Cookies et autres données des sites\n• Mozilla Firefox → Options → Vie privée et sécurité\n• Safari → Préférences → Confidentialité\n• Microsoft Edge → Paramètres → Cookies et autorisations des sites",
+          "Outils de refus:\n• Option de désactivation de Google Analytics : Google Analytics Opt-out\n• Your Online Choices (Europe) : www.youronlinechoices.com"
+        ],
+        "note": "Note importante : Si vous refusez les cookies essentiels, certaines parties du Site peuvent ne pas fonctionner correctement (par exemple, vous ne pourrez pas effectuer d'achat)."
+      },
+      "updates": {
+        "title": "5. MISES À JOUR DE CETTE POLITIQUE",
+        "p1": "Nous pouvons modifier cette politique de cookies à tout moment. La version mise à jour sera publiée ici avec la date de « Dernière mise à jour ». Nous vous recommandons de la consulter périodiquement. L'utilisation continue du Site après tout changement implique l'acceptation de la nouvelle version."
+      },
+      "contact": {
+        "title": "6. CONTACT",
+        "p1": "Pour toute question relative à cette politique de cookies, contactez-nous à :",
+        "email": "E-mail : contacto@encriptados.io",
+        "address": "SAFESOLF INTERNACIONAL S.A.S. Inc.\n2055 Limestone Rd STE 200-C Wilmington, DE 19808 États-Unis"
+      }
+    }
+  },
+  "PrivacyPolicy": {
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour : 3 juin 2026",
+    "intro": {
+      "p1": "SAFESOLF INTERNACIONAL S.A.S. Inc. (« SAFESOLF », « nous », « notre » ou « la Société »), une société constituée sous les lois de l'État du Delaware, États-Unis d'Amérique, ayant son siège social au 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, est le responsable du traitement des données personnelles que nous collectons via le site Web www.encriptados.io, ses sous-domaines, ses applications mobiles et tout autre canal numérique associé (collectivement, les « Services »).",
+      "p2": "Cette politique de confidentialité explique comment nous collectons, utilisons, partageons et protégeons vos informations personnelles lorsque vous visitez ou utilisez nos Services. En accédant ou en utilisant les Services, vous acceptez les pratiques décrites dans cette Politique. Si vous n'êtes pas d'accord, veuillez ne pas utiliser les Services."
+    },
+    "sections": {
+      "info": {
+        "title": "1. INFORMATIONS QUE NOUS COLLECTONS",
+        "p1": "Nous collectons les informations suivantes :",
+        "sub1Title": "Informations que vous nous fournissez directement :",
+        "sub1List": [
+          "Données d'identification et de contact (nom, adresse e-mail, numéro de téléphone, adresse de livraison, pays).",
+          "Informations de compte et d'achats (détails de paiement, historique des commandes, préférences de produits).",
+          "Contenu que vous publiez ou envoyez (avis, messages de chat, e-mails, demandes d'assistance).",
+          "Informations de vérification d'identité (KYC) lorsque cela est requis par nos processeurs de paiement ou par les réglementations de prévention de la fraude ou de contrôle des exportations."
+        ],
+        "sub2Title": "Informations collectées automatiquement :",
+        "sub2List": [
+          "Données d'utilisation et de l'appareil (adresse IP, type de navigateur, système d'exploitation, appareil, pages visitées, durée de la visite).",
+          "Cookies, pixels, balises Web et technologies de suivi similaires.",
+          "Informations de localisation approximative dérivées de l'adresse IP."
+        ],
+        "sub3Title": "Informations de tiers :",
+        "sub3List": [
+          "Données reçues des fournisseurs de paiement, des processeurs de crypto-actifs, des plateformes publicitaires et des services d'analyse."
+        ],
+        "footer": "Nous ne collectons pas intentionnellement de catégories sensibles de données (origine raciale, croyances religieuses, données biométriques ou de santé) sauf si cela est strictement nécessaire pour se conformer à des obligations légales ou traiter des transactions."
+      },
+      "use": {
+        "title": "2. COMMENT NOUS UTILISONS VOS INFORMATIONS",
+        "p1": "Nous utilisons vos informations personnelles pour :",
+        "list": [
+          "Traiter vos commandes, transactions et livraisons.",
+          "Gérer votre compte et vous fournir une assistance client.",
+          "Améliorer et personnaliser nos Services et produits.",
+          "Vous envoyer des communications commerciales (bulletins d'information, offres, mises à jour) uniquement avec votre consentement ou lorsque la loi le permet.",
+          "Respecter les obligations légales, prévenir la fraude, le blanchiment d'argent et les violations de nos Conditions d'utilisation.",
+          "Effectuer des analyses internes et améliorer la sécurité de nos Services."
+        ]
+      },
+      "share": {
+        "title": "3. COMMENT NOUS PARTAGEONS VOS INFORMATIONS",
+        "p1": "Nous ne vendons pas vos informations personnelles à des tiers.",
+        "p2": "Nous partageons des informations uniquement dans les cas suivants :",
+        "list": [
+          "Avec des prestataires de services qui nous aident à exploiter les Services (processeurs de paiement, transporteurs, hébergement, e-mail marketing, analyse).",
+          "Avec des sociétés affiliées ou des filiales de SAFESOLF.",
+          "En cas de fusion, d'acquisition ou de vente d'actifs (les informations peuvent être transférées dans le cadre de l'activité).",
+          "Lorsque la loi, une ordonnance d'un tribunal ou une autorité gouvernementale l'exige (y compris les demandes d'organismes américains tels que l'OFAC, le BIS ou d'autres autorités de contrôle des exportations).",
+          "Pour protéger nos droits, notre propriété ou notre sécurité, ou celle de nos utilisateurs."
+        ]
+      },
+      "cookies": {
+        "title": "4. COOKIES ET TECHNOLOGIES DE SUIVI",
+        "p1": "Nous utilisons des cookies essentiels (pour la fonctionnalité du site), de performance, fonctionnels et publicitaires. Vous pouvez gérer vos préférences en matière de cookies via la bannière qui apparaît lors de votre entrée sur le site ou en configurant votre navigateur.",
+        "p2": "Pour plus de détails sur les cookies que nous utilisons, veuillez consulter notre Politique de cookies."
+      },
+      "rights": {
+        "title": "5. VOS DROITS EN MATIÈRE DE CONFIDENTIALITÉ",
+        "p1": "Selon votre lieu de résidence, vous pouvez disposer des droits suivants :",
+        "list": [
+          "Accéder à vos données personnelles.",
+          "Corriger les données inexactes.",
+          "Demander la suppression de vos données (sous réserve de certaines exceptions légales).",
+          "Choisir de ne pas recevoir de communications marketing.",
+          "Limiter l'utilisation de vos données à certaines fins.",
+          "Ne pas faire l'objet de décisions automatisées produisant des effets juridiques significatifs."
+        ],
+        "p2": "Pour exercer ces droits, veuillez envoyer un e-mail à contacto@encriptados.io avec votre demande. Nous répondrons dans un délai maximum de 30 jours (ou dans le délai requis par la loi applicable)."
+      },
+      "security": {
+        "title": "6. SÉCURITÉ DES INFORMATIONS",
+        "p1": "Nous mettons en œuvre des mesures techniques, administratives et physiques raisonnables pour protéger vos informations contre tout accès non autorisé, perte ou divulgation. Toutefois, aucune mesure de sécurité n'est infaillible. Vous êtes responsable du maintien de la confidentialité de votre mot de passe et de vos identifiants de compte."
+      },
+      "retention": {
+        "title": "7. RÉTENTION DES DONNÉES",
+        "p1": "Nous conservons vos informations personnelles uniquement pendant la durée nécessaire pour atteindre les objectifs décrits, respecter les obligations légales ou résoudre les litiges."
+      },
+      "transfers": {
+        "title": "8. TRANSFERTS INTERNATIONAUX",
+        "p1": "En tant qu'entreprise basée aux États-Unis, vos informations peuvent être transférées et traitées aux États-Unis et dans d'autres pays où opèrent nos prestataires de services. En utilisant nos Services, vous consentez à ces transferts."
+      },
+      "minors": {
+        "title": "9. CONFIDENTIALITÉ DES MINEURS",
+        "p1": "Nos Services ne sont pas destinés aux personnes de moins de 18 ans. Nous ne collectons pas intentionnellement d'informations sur les mineurs. Si nous découvrons que nous avons collecté des données sur un mineur sans consentement parental, nous les supprimerons immédiatement."
+      },
+      "changes": {
+        "title": "10. MODIFICATIONS DE CETTE POLITIQUE",
+        "p1": "Nous pouvons mettre à jour cette politique de confidentialité à tout moment. La version mise à jour sera publiée sur le site avec la date de « Dernière mise à jour ». Nous vous recommandons de la consulter périodiquement. L'utilisation continue des Services après toute modification constitue l'acceptation de la nouvelle politique."
+      },
+      "contact": {
+        "title": "11. CONTACT",
+        "p1": "Pour toute question ou demande relative à cette politique de confidentialité, veuillez nous contacter à :",
+        "email": "E-mail : contacto@encriptados.io",
+        "address": "Adresse : 2055 Limestone Rd STE 200-C, Wilmington, DE 19808, États-Unis",
+        "footer": "Cette politique de confidentialité est régie par les lois de l'État du Delaware et les lois fédérales des États-Unis d'Amérique.\n\nSAFESOLF INTERNACIONAL S.A.S. Inc. Wilmington, Delaware, États-Unis"
       }
     }
   }

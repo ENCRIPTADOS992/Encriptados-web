@@ -13,6 +13,11 @@ import { useFormPolicy } from "./useFormPolicy";
 import { validateCoupon } from "@/lib/payments/orderApi";
 import { useToast } from "@/shared/context/ToastContext";
 import { useTranslations } from "next-intl";
+import {
+  PRODUCT_CATEGORY_IDS,
+  isActivateAppsCategoryId,
+  isRouterCategoryId,
+} from "@/shared/constants/productCategories";
 
 type Variant = {
   id: number;
@@ -56,7 +61,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
   const t = useTranslations("paymentModal");
 
   // Estado para Silent Phone: modo de tabs
-  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("roning_code");
+  const [silentPhoneMode, setSilentPhoneMode] = React.useState<SilentPhoneMode>("new_user");
 
   const { data: product, isLoading: isLoadingProduct } = useQuery<ModalProduct, Error, ModalProduct>({
     queryKey: ["productById", productid],
@@ -129,7 +134,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
     if (!coupon.trim()) return;
     try {
       const totalAmount = unitPrice * quantity;
-      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount);
+      const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         // Use discount_applied from API (server-calculated) if available
         let effectiveDiscount: number;
@@ -164,8 +169,8 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
 
   const selectedOption = Number((params as any)?.selectedOption ?? NaN);
   const isRouterCheckout =
-    selectedOption === 36 ||
-    product?.category?.id === 36 ||
+    isRouterCategoryId(selectedOption) ||
+    isRouterCategoryId(product?.category?.id) ||
     /router|mifi|hotspot|cpe/i.test(product?.name ?? "");
   const shipping = isRouterCheckout ? 80 : undefined;
 
@@ -211,8 +216,8 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
   }
 
   const isRoamingProduct =
-    product?.category?.id === 35 || // Sistemas (Secure MDM, etc.) -> Roaming
-    (product?.category?.id === 38 && !/silent/i.test(product?.name ?? "")) || // Apps (except Silent Phone) -> Roaming
+    product?.category?.id === PRODUCT_CATEGORY_IDS.SOFTWARE ||
+    (product?.category?.id === PRODUCT_CATEGORY_IDS.APPS && !/silent/i.test(product?.name ?? "")) ||
     /armadillo|threema|vault|vnc|nordvpn|salt/i.test(product?.name ?? "");
 
   const isSilentPhone = /silent/i.test(product?.name ?? "");
@@ -264,13 +269,24 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
           selectedOption: (params as any)?.selectedOption,
         }}
         onPayCrypto={async (formData: FormData) => {
+          const isZi0nProduct = /zi0n|zion/i.test(product?.name || "");
+          const isZi0nRenewal = formData.licenseType === "renew" && isZi0nProduct;
+          const hasRenewIds = formData.renewIds && formData.renewIds.length > 0;
+
           // === RENEWAL via crypto: use dedicated /orders/renewal endpoint ===
-          if (formData.licenseType === "renew" && formData.renewIds && formData.renewIds.length > 0) {
+          if (formData.licenseType === "renew") {
+            if (!isZi0nRenewal && !hasRenewIds) {
+              throw new Error(t("renewIdsRequired") || "License IDs are required for renewal");
+            }
             const lt = selectedVariant?.licensetime ?? product?.licensetime;
             const months = typeof lt === 'string' ? parseInt(lt as string) || 12 : (typeof lt === 'number' ? lt : 12);
+            const effectiveLicenseIds: string[] = isZi0nRenewal && !hasRenewIds
+              ? Array.from({ length: quantity }, () => "zi0n-auto")
+              : (formData.renewIds ?? []);
+
             await payRenewal({
               productId: productIdNum,
-              licenseIds: formData.renewIds,
+              licenseIds: effectiveLicenseIds,
               email: formData.email,
               provider: "kriptomus",
               amount,
@@ -365,11 +381,11 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
         onSuccess={(data) => {
           if (onPaymentSuccess) {
             const brandKey =
-              product?.category?.id === 38
+              product?.category?.id === PRODUCT_CATEGORY_IDS.APPS
                 ? "app" as const
-                : product?.category?.id === 35
+                : product?.category?.id === PRODUCT_CATEGORY_IDS.SOFTWARE
                   ? "system" as const
-                  : product?.category?.id === 36
+                  : isRouterCategoryId(product?.category?.id)
                     ? "router" as const
                     : undefined;
             const lt = Number(selectedVariant?.licensetime ?? product?.licensetime);
@@ -381,8 +397,8 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
             // Activar Apps: incluir detalle de activaciones del variant seleccionado.
             const selectedOption = Number((params as any)?.selectedOption ?? NaN);
             const isActivarApps =
-              product?.category?.id === 371 ||
-              selectedOption === 371 ||
+              isActivateAppsCategoryId(product?.category?.id) ||
+              isActivateAppsCategoryId(selectedOption) ||
               /activar\s*apps?/i.test(product?.name ?? "");
             const activationDetail = isActivarApps
               ? String(

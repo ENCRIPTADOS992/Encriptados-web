@@ -46,6 +46,10 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
       p.licenseVariants?.forEach((v) => {
         if (!v.licensetime || v.licensetime === "0") return;
 
+        // Excluir valores no numéricos (ej: "Pre-activación mensual")
+        const numericTime = parseInt(String(v.licensetime), 10);
+        if (!Number.isFinite(numericTime) || numericTime <= 0) return;
+
         // Si la categoría es "Sistemas" (35), filtrar solo 3, 6 y 12 meses
         if (filters.selectedOption === "35") {
           const allowedTimes = ["3", "6", "12"];

@@ -1,18 +1,38 @@
 import axios from "axios";
 import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
 import { generateSlug } from "@/shared/utils/slugUtils";
+import { WP_API_BASE } from "@/shared/constants/backend";
+import {
+  PRODUCT_CATEGORY_IDS,
+  getProductCategoryApiParam,
+  isActivateAppsCategoryId,
+  isSimCategoryId,
+} from "@/shared/constants/productCategories";
 
-const WP_API_BASE = process.env.NEXT_PUBLIC_WP_API || "";
 const api = axios.create({
   baseURL: WP_API_BASE,
-  timeout: 8000,
+  timeout: 20000,
 });
 
 type GetAllProductsOptions = {
   simCountry?: string | null;
   simRegion?: string | null;
   provider?: string | null;
+  silent?: boolean;
+  timeoutMs?: number;
 };
+
+type ResolvePublicProductOptions = {
+  preferredProductId?: string | number | null;
+  slugs: Array<string | undefined | null>;
+  lang?: string;
+  categoryId?: number | null;
+};
+
+function shouldLogProductServiceError(error: unknown): boolean {
+  if (!axios.isAxiosError(error)) return true;
+  return error.response?.status !== 404;
+}
 
 export const getAllProducts = async (
   categoryId: number,
@@ -20,33 +40,35 @@ export const getAllProducts = async (
   options?: GetAllProductsOptions
 ): Promise<Allproducts> => {
   try {
+    const categoryParam = getProductCategoryApiParam(categoryId);
+    const { timeoutMs, ...queryOptions } = options ?? {};
     const params: Record<string, string | number> = {
-      category_id: categoryId,
+      category_id: categoryParam ?? categoryId,
       lang,
     };
-    if (options?.simCountry && categoryId === 40) {
-      params.sim_country = options.simCountry;
-    }
-    if (options?.simRegion && categoryId === 40) {
-      params.sim_region = options.simRegion;
-    }
-    // Enviar provider a la API si está disponible (para categoría 40 y 371)
-    if (options?.provider && options.provider !== "all" && (categoryId === 40 || categoryId === 371)) {
-      params.provider = options.provider;
-    }
 
-    console.log("➡️ [getAllProducts] Requesting:", {
-      baseURL: api.defaults.baseURL,
-      url: "/encriptados/v3/store/products",
-      params
-    });
+    if (queryOptions.simCountry && isSimCategoryId(categoryId)) {
+      params.sim_country = queryOptions.simCountry;
+    }
+    if (queryOptions.simRegion && isSimCategoryId(categoryId)) {
+      params.sim_region = queryOptions.simRegion;
+    }
+    if (
+      queryOptions.provider &&
+      queryOptions.provider !== "all" &&
+      (isSimCategoryId(categoryId) || isActivateAppsCategoryId(categoryId))
+    ) {
+      params.provider = queryOptions.provider;
+    }
 
     const response = await api.get<{
       message: string;
       products: Record<string, Product>;
     }>("/encriptados/v3/store/products", {
       params,
+      timeout: timeoutMs,
     });
+
     const rawProducts = response.data.products;
     const products: Allproducts = Object.values(rawProducts).map((p: any) => {
       const licenseVariants =
@@ -54,7 +76,8 @@ export const getAllProducts = async (
           id: v.id,
           licensetime: String(v.licensetime),
           price: Number(v.price),
-          sale_price: v.sale_price != null && v.sale_price !== '' ? Number(v.sale_price) : null,
+          sale_price:
+            v.sale_price != null && v.sale_price !== "" ? Number(v.sale_price) : null,
           sku: v.sku,
           image: v.image,
           attributes: v.attributes ?? [],
@@ -68,7 +91,9 @@ export const getAllProducts = async (
 
     return products;
   } catch (error) {
-    console.error("Error en getAllProducts:", error);
+    if (!options?.silent && shouldLogProductServiceError(error)) {
+      console.error("Error en getAllProducts:", error);
+    }
     throw error;
   }
 };
@@ -80,26 +105,95 @@ export const getProductById = async (
     simRegion?: string | null;
     simCountry?: string | null;
     provider?: string | null;
+    silent?: boolean;
+    timeoutMs?: number;
   }
 ): Promise<ProductById> => {
   try {
+    const { timeoutMs, ...queryOptions } = options ?? {};
     const params: Record<string, string | number> = { lang };
 
-    if (options?.simRegion) params.sim_region = options.simRegion;
-    if (options?.simCountry) params.sim_country = options.simCountry;
-    if (options?.provider) params.provider = options.provider;
+    if (queryOptions.simRegion) params.sim_region = queryOptions.simRegion;
+    if (queryOptions.simCountry) params.sim_country = queryOptions.simCountry;
+    if (queryOptions.provider) params.provider = queryOptions.provider;
 
     const response = await api.get<ProductById>(
       `/encriptados/v3/store/product/${encodeURIComponent(productId)}`,
       {
         params,
+        timeout: timeoutMs,
       }
     );
     return response.data;
   } catch (error) {
-    console.error("Error en getProductById:", error);
+    if (!options?.silent && shouldLogProductServiceError(error)) {
+      console.error("Error en getProductById:", error);
+    }
     throw error;
   }
+};
+
+function normalizeSlugCandidate(value: string | undefined | null): string | null {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return generateSlug(trimmed);
+}
+
+async function getProductBySlugInCategory(
+  categoryId: number,
+  slugCandidates: string[],
+  lang: string
+): Promise<ProductById | null> {
+  const products = await getAllProducts(categoryId, lang, { silent: true });
+  if (!Array.isArray(products) || products.length === 0) return null;
+
+  const found = products.find((product) => {
+    const productSlug = generateSlug(product.name);
+    return slugCandidates.includes(productSlug);
+  });
+
+  if (!found?.id) return null;
+  return getProductById(String(found.id), lang, { silent: true });
+}
+
+export const resolvePublicProduct = async ({
+  preferredProductId,
+  slugs,
+  lang = "es",
+  categoryId,
+}: ResolvePublicProductOptions): Promise<ProductById | null> => {
+  const normalizedSlugs = Array.from(
+    new Set(slugs.map(normalizeSlugCandidate).filter((value): value is string => Boolean(value)))
+  );
+
+  if (preferredProductId !== null && preferredProductId !== undefined && preferredProductId !== "") {
+    try {
+      return await getProductById(String(preferredProductId), lang, { silent: true });
+    } catch {
+      // continue with slug-based fallbacks
+    }
+  }
+
+  if (categoryId && normalizedSlugs.length > 0) {
+    try {
+      const product = await getProductBySlugInCategory(categoryId, normalizedSlugs, lang);
+      if (product) return product;
+    } catch {
+      // continue with global slug search
+    }
+  }
+
+  for (const slug of normalizedSlugs) {
+    try {
+      const product = await getProductBySlug(slug, lang);
+      if (product) return product;
+    } catch {
+      // try next slug candidate
+    }
+  }
+
+  return null;
 };
 
 export const getProductBySlug = async (
@@ -107,27 +201,26 @@ export const getProductBySlug = async (
   lang: string = "es"
 ): Promise<ProductById | null> => {
   try {
-    // Categorías a buscar: 38 (Apps), 35 (Software), 36 (Routers)
-    const categories = [38, 35, 36];
+    const categories = [
+      PRODUCT_CATEGORY_IDS.APPS,
+      PRODUCT_CATEGORY_IDS.SOFTWARE,
+      PRODUCT_CATEGORY_IDS.ROUTERS,
+      PRODUCT_CATEGORY_IDS.ACTIVATE_APPS,
+    ];
 
-    // Ejecutar peticiones en paralelo
-    // getAllProducts retorna Allproducts (Product[]), atrapamos errores para no fallar todo
     const results = await Promise.all(
       categories.map((catId) =>
-        getAllProducts(catId, lang, { simRegion: "global" }).catch((err) => {
-          console.error(`Error fetching category ${catId} for slug search:`, err);
+        getAllProducts(catId, lang, { simRegion: "global", silent: true }).catch(() => {
           return [] as Product[];
         })
       )
     );
 
-    // Buscar en los resultados
     for (const products of results) {
       if (Array.isArray(products)) {
         const found = products.find((p) => generateSlug(p.name) === slug);
         if (found) {
-          // Una vez encontrado, obtenemos el detalle completo por ID
-          return getProductById(String(found.id), lang);
+          return getProductById(String(found.id), lang, { silent: true });
         }
       }
     }

@@ -44,12 +44,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: copy.description,
     canonicalPath: locale === "es" ? "/" : `/${locale}`,
     locale,
-    image: {
-      url: "/encriptados.png",
-      width: 500,
-      height: 500,
-      alt: "Encriptados",
-    },
+    images: [
+      {
+        url: "/previsualizacion2.webp",
+        width: 960,
+        height: 960,
+        alt: "Encriptados",
+      },
+      {
+        url: "/previsualizacion.webp",
+        width: 2250,
+        height: 1264,
+        alt: "Encriptados",
+      },
+    ],
     languages: buildHomeLanguageAlternates(),
   });
 }

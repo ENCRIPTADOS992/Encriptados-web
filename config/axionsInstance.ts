@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import { WP_API_BASE } from "@/shared/constants/backend";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_WP_API,
+  baseURL: WP_API_BASE,
   headers: {
     "Content-Type": "application/json",
   },

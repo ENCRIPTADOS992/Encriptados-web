@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import { buildWpApiUrl } from "@/shared/constants/backend";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -8,16 +9,18 @@ interface PageProps {
 export default async function ProductsTestPage({ params }: PageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "TestingProducts.testPage" });
-  const endpoint = "https://encriptados.es/wp-json/wc/v3/products";
+  const endpoint = buildWpApiUrl("/wc/v3/products");
+  const token = process.env.WP_AUTH_TOKEN;
 
-  const headers = {
-    Authorization:
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2VuY3JpcHRhZG9zLmVzIiwiaWF0IjoxNzQyMzIyNjY0LCJuYmYiOjE3NDIzMjI2NjQsImV4cCI6MTc0MjkyNzQ2NCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.OfuRHg4xTCQgbSw1ah_sYSsloqLQL5RC2Aw5oo5aodA",
-  };
+  if (!token) {
+    return <div>Falta configurar WP_AUTH_TOKEN para esta prueba.</div>;
+  }
 
   const res = await fetch(endpoint, {
-    headers,
-    next: { revalidate: 0 }, 
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    next: { revalidate: 0 },
   });
 
   if (!res.ok) {
@@ -61,5 +64,3 @@ export default async function ProductsTestPage({ params }: PageProps) {
     </div>
   );
 }
-
-

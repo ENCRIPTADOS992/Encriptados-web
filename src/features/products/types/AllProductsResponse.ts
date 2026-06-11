@@ -52,6 +52,10 @@ export type Product = {
   variants?: ProductVariant[];
   licenseVariants?: ProductLicenseVariant[];
   plan_data_amount?: number;
+  purchase_type?: string;
+  telegram_link?: string;
+  manage_stock?: string;
+  stock_status?: string;
 
   // ══════════════════════════════════════════════════════════════
   // NUEVOS CAMPOS - Estructura completa de página de producto
@@ -121,6 +125,10 @@ export interface ProductById {
   image?: string;
   /** Imagen de alta resolución del producto */
   image_full?: string;
+  purchase_type?: string;
+  telegram_link?: string;
+  manage_stock?: string;
+  stock_status?: string;
 
   // ══════════════════════════════════════════════════════════════
   // NUEVOS CAMPOS - Estructura completa de página de producto

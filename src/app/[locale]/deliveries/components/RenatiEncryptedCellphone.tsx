@@ -2,6 +2,14 @@
 
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { buildWpV3Url } from "@/shared/constants/backend";
+import { getProductCategoryApiParam } from "@/shared/constants/productCategories";
+
+const RENATI_PRICE_URL = buildWpV3Url("/store/products", {
+  category_id: getProductCategoryApiParam(35),
+  lang: "es",
+  sim_region: "global",
+});
 
 const FeaturedProductCard = () => {
   const router = useRouter();
@@ -12,9 +20,7 @@ const FeaturedProductCard = () => {
   React.useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const response = await fetch(
-          (process.env.NEXT_PUBLIC_WP_API ?? "https://encriptados.es/wp-json") + "/encriptados/v3/store/products?category_id=35&lang=es&sim_region=global"
-        );
+        const response = await fetch(RENATI_PRICE_URL);
         const data = await response.json();
         const renatiProduct = data.products.find(
           (p: any) => p.sku === "RENATI" || p.name === "Renati" // Check by SKU or Name to be safe

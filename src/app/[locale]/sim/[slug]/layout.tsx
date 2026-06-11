@@ -4,7 +4,7 @@ import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildProductJsonLd } from "@/shared/components/JsonLd/productJsonLd";
 import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
-import { getProductById } from "@/features/products/services";
+import { getCachedSimProduct } from "./getCachedSimProduct";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -24,33 +24,40 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       };
     }
 
+    const config = getSimProductConfig(slug);
+
     // Título corto basado en el slug
     let shortTitle = "SIM Encriptada";
-    let metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
+    let staticMetaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
 
-    // Mapeo de slugs a títulos e imágenes
     if (slug === "esim-encriptada") {
       shortTitle = "eSIM Encriptada";
-      metaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
+      staticMetaImage = "/meta-image/sim-encriptados/encriptados-esim.png";
     } else if (slug === "sim-encriptada") {
       shortTitle = "SIM Encriptada";
-      metaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
+      staticMetaImage = "/meta-image/sim-encriptados/encriptados-sim-fisica.png";
     } else if (slug === "tim-sim") {
       shortTitle = "TIM SIM";
-      metaImage = "/meta-image/sim-tim/tim-fisica.png";
+      staticMetaImage = "/meta-image/sim-tim/tim-fisica.png";
     } else if (slug === "esim-tim") {
       shortTitle = "TIM eSIM";
-      metaImage = "/meta-image/sim-tim/tim-esim-datos.png";
+      staticMetaImage = "/meta-image/sim-tim/tim-esim-datos.png";
     }
 
-    // Descripción corta - llamado a la acción
-    const shortDescription = "¡Compra ahora!";
+    // Obtener producto desde la API para usar iconUrl dinámico
+    const product = config?.productId
+      ? await getCachedSimProduct(String(config.productId), locale || "es")
+      : null;
+
+    // Usar iconUrl de WordPress si está disponible, si no el estático
+    let metaImage = product?.iconUrl || staticMetaImage;
 
     // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
       metaImage = `${baseUrl}${metaImage}`;
     }
 
+    const shortDescription = "¡Compra ahora!";
     const productUrl = `${baseUrl}/${locale}/sim/${slug}`;
 
     return {
@@ -64,17 +71,16 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
         images: [
           {
             url: metaImage,
-            width: 1200,
-            height: 630,
+            width: 400,
+            height: 400,
             alt: shortTitle,
-            type: "image/png",
           },
         ],
         locale: locale || "es",
         type: "website",
       },
       twitter: {
-        card: "summary_large_image",
+        card: "summary",
         title: shortTitle,
         description: shortDescription,
         images: [metaImage],
@@ -105,9 +111,10 @@ export default async function SimSlugLayout({ children, params }: Props) {
       : slug === "esim-tim"
         ? "TIM eSIM"
         : "SIM Encriptada";
-  const product = config.productId
-    ? await getProductById(String(config.productId), locale || "es").catch(() => null)
-    : null;
+  const product = await getCachedSimProduct(
+    config.productId ? String(config.productId) : null,
+    locale || "es"
+  );
   const productJsonLd = buildProductJsonLd({
     name: product?.name || productName,
     description: product?.description || "SIM y eSIM para comunicacion privada y segura con Encriptados.",

@@ -6,6 +6,7 @@ import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import CardProductItem from "./CardProductItem";
 import Typography from "@/shared/components/Typography";
 import Paragraph from "@/shared/components/Paragraph";
+import { useFetchOnView } from "@/shared/hooks/useFetchOnView";
 
 export interface BannerIcon {
   src: string;
@@ -75,7 +76,10 @@ const ProductBannerSection: React.FC<ProductBannerSectionProps> = ({
   productNameFilter,
   className = "",
 }) => {
-  const { data: allProducts, isLoading } = useGetProducts(categoryId, "all");
+  const { ref, enabled } = useFetchOnView();
+  const { data: allProducts, isLoading } = useGetProducts(categoryId, "all", undefined, undefined, {
+    enabled,
+  });
 
   const product = useMemo(() => {
     if (!allProducts) return undefined;
@@ -136,11 +140,9 @@ const ProductBannerSection: React.FC<ProductBannerSectionProps> = ({
   );
 
   return (
-    <>
+    <section ref={ref}>
       {/* ── Mobile ──────────────────────────────────────────────────────── */}
-      <div
-        className={`block sm:hidden relative overflow-hidden w-screen left-1/2 -translate-x-1/2 text-white py-8 rounded-none ${className}`}
-      >
+      <div className={`block sm:hidden relative overflow-hidden w-screen left-1/2 -translate-x-1/2 text-white py-8 rounded-none ${className}`}>
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -169,10 +171,7 @@ const ProductBannerSection: React.FC<ProductBannerSectionProps> = ({
       </div>
 
       {/* ── Desktop / Tablet ────────────────────────────────────────────── */}
-      <div
-        className={`hidden sm:block relative overflow-hidden w-full rounded-2xl sm:rounded-3xl text-white ${className}`}
-        style={{ minHeight: 220 }}
-      >
+      <div className={`hidden sm:block relative overflow-hidden w-full rounded-2xl sm:rounded-3xl text-white ${className}`} style={{ minHeight: 220 }}>
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -202,7 +201,7 @@ const ProductBannerSection: React.FC<ProductBannerSectionProps> = ({
           )}
         </div>
       </div>
-    </>
+    </section>
   );
 };
 
