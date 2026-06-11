@@ -45,7 +45,11 @@ export async function GET(
     const contentType = response.headers.get("content-type") || "";
     const responseHeaders =
       isCacheableRequest && response.ok
-        ? { "Cache-Control": `public, s-maxage=${PUBLIC_WP_CACHE_SECONDS}, stale-while-revalidate=600` }
+        ? {
+            "Cache-Control": isProductionServer
+              ? `public, s-maxage=${PUBLIC_WP_CACHE_SECONDS}, stale-while-revalidate=600`
+              : "no-store, max-age=0, must-revalidate",
+          }
         : undefined;
 
     if (contentType.includes("application/json")) {

@@ -48,6 +48,10 @@ export const getAllProducts = async (
       lang,
     };
 
+    if (!isProductionServer) {
+      params._cb = Date.now();
+    }
+
     if (queryOptions.simCountry && isSimCategoryId(categoryId)) {
       params.sim_country = queryOptions.simCountry;
     }
