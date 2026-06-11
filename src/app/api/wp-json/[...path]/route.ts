@@ -39,9 +39,7 @@ export async function GET(
     const response = await fetch(targetUrl, {
       method: "GET",
       headers,
-      ...(isCacheableRequest
-        ? { next: { revalidate: PUBLIC_WP_CACHE_SECONDS } }
-        : { cache: "no-store" as const }),
+      cache: "no-store",
     });
 
     const contentType = response.headers.get("content-type") || "";
