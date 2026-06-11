@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 
 const PUBLIC_WP_CACHE_SECONDS = 120;
 
+const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
+const wpApiBase = isProductionServer
+  ? "https://admin.encriptados.io/wp-json"
+  : (process.env.NEXT_PUBLIC_WP_API || "https://admin.encriptados.io/wp-json");
+
 function isCacheablePublicGet(pathStr: string, hasAuthHeader: boolean) {
   if (hasAuthHeader) return false;
 
@@ -20,7 +25,7 @@ export async function GET(
   const { path } = await params;
   const { searchParams } = new URL(request.url);
   const pathStr = path.join("/");
-  const targetUrl = `https://admin.encriptados.io/wp-json/${pathStr}?${searchParams.toString()}`;
+  const targetUrl = `${wpApiBase.replace(/\/$/, "")}/${pathStr}?${searchParams.toString()}`;
 
   try {
     const headers = new Headers();
@@ -74,7 +79,7 @@ export async function POST(
   const { path } = await params;
   const { searchParams } = new URL(request.url);
   const pathStr = path.join("/");
-  const targetUrl = `https://admin.encriptados.io/wp-json/${pathStr}?${searchParams.toString()}`;
+  const targetUrl = `${wpApiBase.replace(/\/$/, "")}/${pathStr}?${searchParams.toString()}`;
 
   try {
     const headers = new Headers();

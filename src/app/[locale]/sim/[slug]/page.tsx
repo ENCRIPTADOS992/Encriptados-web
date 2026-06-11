@@ -44,7 +44,7 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   const simRegion = firstParam(sp.regionCode) || firstParam(sp.sim_region) || null;
   const queryProductId = firstParam(sp.productId);
   const baseProductId = staticConfig?.productId ? String(staticConfig.productId) : undefined;
-  const product = await getCachedSimProduct(queryProductId || baseProductId, locale, simRegion);
+  const product = await getCachedSimProduct(queryProductId || baseProductId, locale, simRegion, slug);
 
   const title = product?.name || fallbackTitle;
 
@@ -103,7 +103,7 @@ export default async function SimProductPage({ params, searchParams }: PageProps
 
   if (requestedProductId) {
     try {
-      initialProduct = await getCachedSimProduct(requestedProductId, locale, simRegion);
+      initialProduct = await getCachedSimProduct(requestedProductId, locale, simRegion, slug);
     } catch (error) {
        console.error("Error fetching SIM product server-side:", error);
     }

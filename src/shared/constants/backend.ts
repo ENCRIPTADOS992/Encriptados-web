@@ -32,13 +32,14 @@ const withPath = (baseUrl: string, path?: string) =>
   path ? `${baseUrl}${normalizePath(path)}` : baseUrl;
 
 const isServer = typeof window === "undefined";
-const rawWpApi = process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE;
+const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
+const rawWpApi = isProductionServer 
+  ? DEFAULT_WP_API_BASE 
+  : (process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE);
 const rawWpBlogApi = process.env.NEXT_PUBLIC_WP_BLOG_API || DEFAULT_WP_API_BASE;
 
 export const WP_API_BASE = trimTrailingSlash(
-  isServer
-    ? (rawWpApi.includes("encriptados.es") ? DEFAULT_WP_API_BASE : rawWpApi)
-    : "/api/wp-json"
+  isServer ? rawWpApi : "/api/wp-json"
 );
 
 export const WP_V1_BASE = `${WP_API_BASE}/encriptados/v1`;

@@ -16,7 +16,8 @@ export const getResolvedAppProduct = cache(
       : explicitProductId;
 
     if (preferredProductId) {
-      return getProductById(String(preferredProductId), locale || "es", { silent: true }).catch(() => null);
+      const product = await getProductById(String(preferredProductId), locale || "es", { silent: true }).catch(() => null);
+      if (product) return product;
     }
 
     return resolvePublicProduct({
