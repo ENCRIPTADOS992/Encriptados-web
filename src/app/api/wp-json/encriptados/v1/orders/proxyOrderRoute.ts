@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const WP_ORDER_BASE = "https://admin.encriptados.io/wp-json/encriptados/v1/orders";
+const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
+const wpBase = isProductionServer
+  ? "https://admin.encriptados.io/wp-json"
+  : (process.env.NEXT_PUBLIC_WP_API || "https://admin.encriptados.io/wp-json");
+
+const WP_ORDER_BASE = `${wpBase.replace(/\/$/, "")}/encriptados/v1/orders`;
 
 export async function proxyOrderPost(request: NextRequest, orderType: "userid" | "roaming") {
   const { searchParams } = new URL(request.url);
