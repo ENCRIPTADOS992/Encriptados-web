@@ -915,6 +915,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         product={product}
         unitPrice={unitPrice}
         quantity={quantity}
+        couponCode={coupon.trim() || undefined}
         discount={discount}
         hideSimField={hideSimField || isEsimCombo}
         selectedPlanId={selectedPlanId}

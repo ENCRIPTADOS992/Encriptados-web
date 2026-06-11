@@ -10,6 +10,8 @@ export interface TottoliCheckoutPayload {
   method: TottoliMethod;
   amount: number;
   currency?: string;
+  coupon_code?: string;
+  discount?: number;
   product_id?: number;
   has_esim?: boolean;
   qty?: number;
