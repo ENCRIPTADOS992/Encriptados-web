@@ -127,6 +127,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     filters,
     prefetchedProductsLength: prefetchedProducts?.length,
     productsLength: products?.length,
+    productsList: products?.map(p => ({
+      id: p.id,
+      name: p.name,
+      provider: p.provider,
+      brand: p.brand,
+      type_product: p.type_product
+    })),
     isFetching,
     isError,
   });
