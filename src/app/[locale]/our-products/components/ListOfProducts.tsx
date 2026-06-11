@@ -121,6 +121,16 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   const isFetching = prefetchedProducts ? Boolean(isFetchingProducts) : query.isFetching;
   const isError = prefetchedProducts ? Boolean(isProductsError) : query.isError;
 
+  console.error("🕵️ [DEBUG ListOfProducts]", {
+    PRODUCT_CATEGORY_IDS,
+    selectedOption,
+    filters,
+    prefetchedProductsLength: prefetchedProducts?.length,
+    productsLength: products?.length,
+    isFetching,
+    isError,
+  });
+
   if (isFetching) {
     return (
       <div className="flex justify-center items-center mt-6">
