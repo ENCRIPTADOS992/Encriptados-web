@@ -5,9 +5,14 @@ type QueryParams = Record<string, QueryValue>;
 
 const DEFAULT_WP_API_BASE = "https://admin.encriptados.io/wp-json";
 
-// URL fija del WP de administración donde se gestionan los cupones, órdenes, etc.
-// No depende de NEXT_PUBLIC_WP_API porque esa var puede apuntar a otro WP (ej. encriptados.es).
-const WP_ADMIN_BASE_URL = process.env.WP_ADMIN_API || DEFAULT_WP_API_BASE;
+const isServer = typeof window === "undefined";
+const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
+
+// URL del WP de administración donde se gestionan los cupones, órdenes, etc.
+// En producción se fuerza admin.encriptados.io; en staging/desarrollo usa la de pruebas.
+const WP_ADMIN_BASE_URL = isProductionServer
+  ? (process.env.WP_ADMIN_API || DEFAULT_WP_API_BASE)
+  : (process.env.WP_ADMIN_API || process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE);
 
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 const normalizePath = (path: string) => (path.startsWith("/") ? path : `/${path}`);
@@ -31,8 +36,6 @@ const withQuery = (baseUrl: string, query?: QueryParams) => {
 const withPath = (baseUrl: string, path?: string) =>
   path ? `${baseUrl}${normalizePath(path)}` : baseUrl;
 
-const isServer = typeof window === "undefined";
-const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
 const rawWpApi = isProductionServer 
   ? DEFAULT_WP_API_BASE 
   : (process.env.NEXT_PUBLIC_WP_API || DEFAULT_WP_API_BASE);

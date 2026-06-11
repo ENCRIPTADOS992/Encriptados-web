@@ -2,6 +2,7 @@ import axios from "axios";
 import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
 import { generateSlug } from "@/shared/utils/slugUtils";
 import { WP_API_BASE } from "@/shared/constants/backend";
+import { getSimProductUrl } from "@/shared/utils/productRouteResolver";
 import {
   PRODUCT_CATEGORY_IDS,
   getProductCategoryApiParam,
@@ -149,6 +150,11 @@ async function getProductBySlugInCategory(
   if (!Array.isArray(products) || products.length === 0) return null;
 
   const found = products.find((product) => {
+    if (isSimCategoryId(categoryId)) {
+      const simUrl = getSimProductUrl(product.provider, product.type_product);
+      const derivedSlug = simUrl.split("/").pop();
+      return slugCandidates.includes(derivedSlug);
+    }
     const productSlug = generateSlug(product.name);
     return slugCandidates.includes(productSlug);
   });
