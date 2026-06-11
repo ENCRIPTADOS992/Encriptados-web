@@ -137,6 +137,7 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     isFetching,
     isError,
   });
+  console.error("🕵️ [DEBUG Products Names]:", products?.map(p => `${p.id}:${p.name}:${p.provider}`).join(", "));
 
   if (isFetching) {
     return (
