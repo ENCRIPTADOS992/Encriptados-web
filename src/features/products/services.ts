@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Allproducts, Product, ProductById } from "./types/AllProductsResponse";
 import { generateSlug } from "@/shared/utils/slugUtils";
-import { WP_API_BASE } from "@/shared/constants/backend";
+import { WP_API_BASE, isProductionServer } from "@/shared/constants/backend";
 import { getSimProductUrl } from "@/shared/utils/productRouteResolver";
 import {
   PRODUCT_CATEGORY_IDS,
@@ -59,7 +59,11 @@ export const getAllProducts = async (
       queryOptions.provider !== "all" &&
       (isSimCategoryId(categoryId) || isActivateAppsCategoryId(categoryId))
     ) {
-      params.provider = queryOptions.provider;
+      if (queryOptions.provider === "encriptados" && !isProductionServer) {
+        params.provider = "encrypted";
+      } else {
+        params.provider = queryOptions.provider;
+      }
     }
 
     const response = await api.get<{
@@ -116,7 +120,13 @@ export const getProductById = async (
 
     if (queryOptions.simRegion) params.sim_region = queryOptions.simRegion;
     if (queryOptions.simCountry) params.sim_country = queryOptions.simCountry;
-    if (queryOptions.provider) params.provider = queryOptions.provider;
+    if (queryOptions.provider) {
+      if (queryOptions.provider === "encriptados" && !isProductionServer) {
+        params.provider = "encrypted";
+      } else {
+        params.provider = queryOptions.provider;
+      }
+    }
 
     const response = await api.get<ProductById>(
       `/encriptados/v3/store/product/${encodeURIComponent(productId)}`,
