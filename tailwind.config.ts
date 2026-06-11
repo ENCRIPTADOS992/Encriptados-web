@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
+import scrollbar from "tailwind-scrollbar";
 
 
 const config: Config = {
@@ -79,8 +81,8 @@ const config: Config = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
-    require('tailwind-scrollbar')({ nocompatible: true }),
+    typography,
+    scrollbar({ nocompatible: true }),
   ],
 };
 
