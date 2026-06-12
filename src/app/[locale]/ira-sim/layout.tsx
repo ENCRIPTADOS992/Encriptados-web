@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ReactNode } from "react";
 import BannerMaya from "./components/BannerMaya";
 import { BenefitsForYou } from "./components/BenefitsForYou";
@@ -6,12 +7,26 @@ import BannerCoverage from "@/shared/BannerCoverage";
 import QRBanner from "../fast-delivery/components/QRBanner";
 import { useTranslations } from "next-intl";
 import FaqsBne from "../tim-sim/components/FaqsBne";
+import { buildSeoMetadata } from "@/shared/seo/metadata";
 
-interface LayoutProps {
+interface Props {
+  params: Promise<{ locale: string }>;
   children: ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
+  const { locale } = await params;
+  const safeLocale = locale || "es";
+
+  return buildSeoMetadata({
+    title: "IRA SIM",
+    description: "Descubre la IRA SIM de Encriptados para comunicaciones seguras y privadas.",
+    canonicalPath: `/${safeLocale}/ira-sim`,
+    locale: safeLocale,
+  });
+}
+
+export default function Layout({ children }: { children: ReactNode }) {
   const t = useTranslations("DeliveryPage");
   return (
     <>

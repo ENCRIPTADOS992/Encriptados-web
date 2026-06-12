@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -13,6 +14,7 @@ import { loadMessages } from "@/i18n/messages";
 import { ModalPaymentProvider } from "@/providers/ModalPaymentProvider";
 import { MoraWarningProvider } from "@/providers/MoraWarningProvider";
 import type { SeoLocale } from "@/shared/seo/constants";
+import { buildAbsoluteUrl } from "@/shared/seo/url";
 import HomePage from "@/app/[locale]/page";
 import AboutUsPage from "@/app/[locale]/about-us/page";
 import BecomeEncryptedPartnerPage from "@/app/[locale]/become-an-encrypted-partner/page";
@@ -63,6 +65,38 @@ function parseTarget(target: string): { locale: SeoLocale; segments: string[] } 
   return {
     locale: "es",
     segments,
+  };
+}
+
+function buildCanonicalFromTarget(target: string): string {
+  const parsed = parseTarget(target);
+  if (!parsed) return buildAbsoluteUrl("/");
+  const { locale, segments } = parsed;
+  if (!segments.length) {
+    return buildAbsoluteUrl(locale === "es" ? "/" : `/${locale}`);
+  }
+  const path = `/${locale}/${segments.join("/")}`;
+  return buildAbsoluteUrl(path);
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const sp = await searchParams;
+  const target = (Array.isArray(sp.target) ? sp.target[0] : sp.target) ?? "";
+  const canonical = target ? buildCanonicalFromTarget(target) : buildAbsoluteUrl("/");
+
+  return {
+    alternates: { canonical },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
   };
 }
 

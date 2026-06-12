@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       return {
         title: "SIM Encriptada",
         description: "¡Compra ahora!",
+        alternates: { canonical: `${baseUrl}/${locale}/sim/${slug}` },
       };
     }
 
@@ -94,6 +95,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     return {
       title: "SIM Encriptada",
       description: "¡Compra ahora!",
+      alternates: { canonical: `${baseUrl}/${locale}/sim/${slug}` },
     };
   }
 }

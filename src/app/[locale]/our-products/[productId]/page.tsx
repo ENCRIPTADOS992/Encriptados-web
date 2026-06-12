@@ -70,9 +70,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } catch (error) {
     console.error("Error generando metadata:", error);
+    const baseUrl = getCanonicalSiteUrl();
     return {
       title: "Producto | Encriptados",
       description: "Descubre nuestros productos de seguridad y comunicación encriptada.",
+      alternates: { canonical: `${baseUrl}/${locale}/our-products/${productId}` },
     };
   }
 }

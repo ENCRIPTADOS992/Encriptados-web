@@ -52,9 +52,6 @@ export const metadata: Metadata = {
     shortcut: [{ url: "/favicon.ico?v=2", type: "image/x-icon" }],
     apple: [{ url: "/favicon.ico?v=2", type: "image/x-icon" }],
   },
-  alternates: {
-    canonical: buildAbsoluteUrl("/"),
-  },
   openGraph: {
     title: SEO_DEFAULT_TITLE,
     description: SEO_DEFAULT_DESCRIPTION,
