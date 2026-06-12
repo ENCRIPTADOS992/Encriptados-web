@@ -131,6 +131,187 @@ function makeEntry(path: string, priority: number, changefreq: string = "weekly"
   };
 }
 
+// Legacy WordPress paths that must remain in the sitemap.
+// These are old-format URLs (no locale prefix for ES, /pages/ prefix, IT/PT
+// variants, author archives, etc.) that are still served by the legacy
+// routing system and need to stay discoverable.
+const LEGACY_SITEMAP_PATHS: string[] = [
+  // ── ES default (no locale prefix) ──────────────────────────────────
+  "/compra-con-atm-de-criptomonedas",
+  "/comunicaciones-seguras-encriptacion-y-ciberseguridad",
+  "/donde-encontrar-encriptados",
+  "/entrega-rapida",
+  "/noticias",
+  "/ofertas",
+  "/redes-sociales",
+  "/se-socio-de-encriptados",
+  "/test-de-seguridad",
+
+  // ── ES /pages/ product pages ───────────────────────────────────────
+  "/pages/armadillo-chat",
+  "/pages/armadillo-phone",
+  "/pages/celulares-encriptados-distribuidores",
+  "/pages/chatmail",
+  "/pages/cryptcom",
+  "/pages/dec-secure",
+  "/pages/Elyon",
+  "/pages/elyon",
+  "/pages/ghost-chat",
+  "/pages/intact-phone",
+  "/pages/nordvpn",
+  "/pages/nosotros",
+  "/pages/parrot",
+  "/pages/politica-de-tratamiendo-de-datos",
+  "/pages/renati",
+  "/pages/salt",
+  "/pages/securecrypt",
+  "/pages/securecrypt-app",
+  "/pages/secure-mdm-android",
+  "/pages/secure-mdm-iphone",
+  "/pages/silent-circle",
+  "/pages/sim-encriptada",
+  "/pages/t2-communicator",
+  "/pages/terminos-y-condiciones",
+  "/pages/threema-app",
+  "/pages/threema-work",
+  "/pages/totalsec",
+  "/pages/tribu-phone",
+  "/pages/ultrax",
+  "/pages/vaultchat",
+  "/pages/vaultchat-app",
+  "/pages/verificacion-de-identidad-id",
+  "/pages/vnclagoon",
+
+  // ── EN /pages/ product pages ───────────────────────────────────────
+  "/en/pages/armadillo-chat",
+  "/en/pages/armadillo-phone",
+  "/en/pages/chatmail",
+  "/en/pages/cryptcom",
+  "/en/pages/dec-secure",
+  "/en/pages/elyon",
+  "/en/pages/encrypted-sim-card",
+  "/en/pages/ghost-chat",
+  "/en/pages/intact-phone",
+  "/en/pages/nordvpn",
+  "/en/pages/parrot",
+  "/en/pages/renati",
+  "/en/pages/salt",
+  "/en/pages/securecrypt",
+  "/en/pages/securecrypt-app",
+  "/en/pages/secure-mdm-iphone",
+  "/en/pages/silent-circle",
+  "/en/pages/t2-communicator",
+  "/en/pages/threema-app",
+  "/en/pages/threema-work",
+  "/en/pages/totalsec",
+  "/en/pages/tribu-phone",
+  "/en/pages/ultrax",
+  "/en/pages/vaultchat",
+  "/en/pages/vaultchat-app",
+  "/en/pages/vnclagoon",
+
+  // ── EN utility pages ───────────────────────────────────────────────
+  "/en/secure-communications-encryption-and-cybersecurity",
+  "/en/security-test",
+
+  // ── FR /pages/ product pages ───────────────────────────────────────
+  "/fr/pages/armadillo-chat",
+  "/fr/pages/armadillo-phone",
+  "/fr/pages/carte-sim-cryptee",
+  "/fr/pages/chatmail",
+  "/fr/pages/cryptcom",
+  "/fr/pages/dec-secure",
+  "/fr/pages/ghost-chat",
+  "/fr/pages/intact-phone",
+  "/fr/pages/nordvpn",
+  "/fr/pages/parrot",
+  "/fr/pages/renati",
+  "/fr/pages/salt",
+  "/fr/pages/securecrypt",
+  "/fr/pages/securecrypt-app",
+  "/fr/pages/secure-mdm-android",
+  "/fr/pages/secure-mdm-iphone",
+  "/fr/pages/silent-circle",
+  "/fr/pages/t2-communicator",
+  "/fr/pages/threema-app",
+  "/fr/pages/threema-work",
+  "/fr/pages/totalsec",
+  "/fr/pages/tribu-phone",
+  "/fr/pages/ultrax",
+  "/fr/pages/vaultchat",
+  "/fr/pages/vaultchat-app",
+  "/fr/pages/vnclagoon",
+
+  // ── FR utility pages ───────────────────────────────────────────────
+  "/fr/id-encriptados-verification-didentite",
+  "/fr/termes-et-conditions",
+  "/fr/test-de-securite",
+
+  // ── IT legacy product pages (no /pages/ prefix) ────────────────────
+  "/it/pagina-iniziale",
+  "/it/armadillo-chat",
+  "/it/chatmail",
+  "/it/consegna-rapida",
+  "/it/cryptcom",
+  "/it/distributori",
+  "/it/elyon",
+  "/it/nord-vpn",
+  "/it/renati",
+  "/it/salt",
+  "/it/securecrypt",
+  "/it/secure-mdm-iphone",
+  "/it/silent-circle",
+  "/it/threema-work",
+  "/it/total-sec",
+  "/it/vaultchat",
+  "/it/vault-chat",
+  "/it/vnc-lagoon",
+
+  // ── PT legacy product pages (no /pages/ prefix) ────────────────────
+  "/pt/pagina-inicial",
+  "/pt/chatmail",
+  "/pt/cryptcom",
+  "/pt/distribuidores",
+  "/pt/elyon",
+  "/pt/entrega-rapida",
+  "/pt/nord-vpn",
+  "/pt/renati",
+  "/pt/salt",
+  "/pt/securecrypt",
+  "/pt/secure-mdm-android",
+  "/pt/secure-mdm-iphone",
+  "/pt/silent-circle",
+  "/pt/threema-work",
+  "/pt/vaultchat",
+  "/pt/vault-chat",
+  "/pt/vnc-lagoon",
+
+  // ── IT/PT blog posts ───────────────────────────────────────────────
+  "/it/blogs/sin-categoria-it/cina-lo-stato-che-vede-tutto-la-rete-di-videosorveglianza-piu-grande-del-mondo-che-compromette-la-privacy",
+  "/pt/blogs/sin-categoria-pt/china-o-estado-que-tudo-ve-a-maior-rede-de-vigilancia-do-mundo-que-compromete-a-privacidade",
+
+  // ── Author archives ────────────────────────────────────────────────
+  "/author/pablo",
+  "/author/pablo/page/2",
+  "/author/pablo/page/3",
+  "/author/pablo/page/4",
+  "/author/pablo/page/5",
+  "/author/webmaster",
+  "/en/author/pablo",
+  "/en/author/pablo/page/2",
+  "/en/author/pablo/page/3",
+  "/en/author/pablo/page/4",
+  "/en/author/pablo/page/5",
+  "/en/author/webmaster",
+  "/fr/author/pablo",
+  "/fr/author/pablo/page/2",
+  "/fr/author/pablo/page/4",
+  "/fr/author/pablo/page/5",
+  "/fr/author/webmaster",
+  "/it/author/webmaster",
+  "/pt/author/webmaster",
+];
+
 export async function GET() {
   const entries: SitemapUrlEntry[] = [];
 
@@ -138,6 +319,11 @@ export async function GET() {
   const staticPaths = ["/", "/en", "/fr", "/it", "/pt", ...getStaticPageSitemapPaths()];
   for (const path of staticPaths) {
     entries.push(makeEntry(path, path === "/" ? 1.0 : 0.7, path === "/" ? "daily" : "weekly"));
+  }
+
+  // Legacy WordPress paths
+  for (const path of LEGACY_SITEMAP_PATHS) {
+    entries.push(makeEntry(path, 0.6, "monthly"));
   }
 
   // App pages
