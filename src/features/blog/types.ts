@@ -2,6 +2,12 @@
 
 export type BlogSource = "wordpress" | "markdown";
 
+/** Translation reference for a single locale */
+export interface BlogTranslationRef {
+  id: number;
+  slug: string;
+}
+
 /** Card-level data shown in blog listings */
 export interface BlogPostCard {
   id: string;
@@ -16,6 +22,7 @@ export interface BlogPostCard {
   imageFull?: string;
   author: string;
   date: string; // ISO 8601
+  translations?: Record<string, BlogTranslationRef>;
 }
 
 /** Full blog post including content */
@@ -29,6 +36,8 @@ export interface WordPressBlogItem {
   date: string;
   slug: string;
   link?: string;
+  lang?: string;
+  translations?: Record<string, BlogTranslationRef>;
   title: { rendered: string };
   content: { rendered: string };
   excerpt: { rendered: string };

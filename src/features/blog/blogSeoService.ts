@@ -2,7 +2,7 @@ import type { BlogPost, WordPressBlogItem } from "./types";
 import { parseSpintax } from "./blogService";
 import fs from "fs";
 import path from "path";
-import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
+import { WP_BLOG_API_BASE, WP_BLOG_CATEGORY_IDS } from "@/shared/constants/backend";
 
 const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
@@ -59,7 +59,7 @@ async function fetchWordPressPostById(id: string): Promise<WordPressBlogItem | n
 }
 
 async function fetchWordPressPostBySlug(slug: string, locale: string): Promise<WordPressBlogItem | null> {
-  const catId = (locale === "en" ? 97 : locale === "pt" ? 101 : locale === "it" ? 100 : locale === "fr" ? 98 : 96);
+  const catId = WP_BLOG_CATEGORY_IDS[locale] || WP_BLOG_CATEGORY_IDS.es;
   const res = await fetch(
     `${WP_BASE}/wp/v2/posts?categories=${catId}&slug=${encodeURIComponent(slug)}&per_page=1&_embed`,
     { next: { revalidate: 300 } },
@@ -91,6 +91,7 @@ export async function fetchBlogPostSeo(slug: string, locale: string): Promise<Bl
       author: getAuthorFromEmbed(item),
       date: item.date,
       content: parseSpintax(item.content.rendered),
+      translations: item.translations,
     };
   } catch {
     return null;
