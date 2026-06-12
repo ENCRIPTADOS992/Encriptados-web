@@ -472,7 +472,7 @@ export function parseLocationPage(segments: string[]): LocationPageModel | null 
     : parsed.legacySlug.slice(match.legacyPrefix.length + 1);
   const slugSegments = parsed.locale === "en" ? [parsed.legacySlug] : [parsed.locale, parsed.legacySlug];
   const legacyPath = `/location/${slugSegments.join("/")}`;
-  const indexable = INDEXABLE_LOCATION_PATHS.has(legacyPath);
+  const indexable = true;
   const productPath = resolveProductPath(match, parsed.locale);
 
   return {
