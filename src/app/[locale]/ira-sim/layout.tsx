@@ -7,7 +7,7 @@ import BannerCoverage from "@/shared/BannerCoverage";
 import QRBanner from "../fast-delivery/components/QRBanner";
 import { useTranslations } from "next-intl";
 import FaqsBne from "../tim-sim/components/FaqsBne";
-import { buildSeoMetadata } from "@/shared/seo/metadata";
+import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     description: "Descubre la IRA SIM de Encriptados para comunicaciones seguras y privadas.",
     canonicalPath: `/${safeLocale}/ira-sim`,
     locale: safeLocale,
+    languages: buildLocalizedLanguageAlternates("/ira-sim"),
   });
 }
 

@@ -1,7 +1,7 @@
 import { getSimProductConfig } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
 import { redirect } from "next/navigation";
-import { buildSeoMetadata } from "@/shared/seo/metadata";
+import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 import { getCachedSimProduct } from "./getCachedSimProduct";
 
 interface PageProps {
@@ -11,6 +11,14 @@ interface PageProps {
 
 const firstParam = (value: string | string[] | undefined): string | undefined =>
   Array.isArray(value) ? value[0] : value;
+
+/** Strip HTML tags and truncate to ~155 chars for meta description */
+function cleanDescription(html: string | undefined, fallback: string): string {
+  if (!html) return fallback;
+  const text = html.replace(/<[^>]*>/g, "").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
+  if (!text || text.length < 10) return fallback;
+  return text.length > 155 ? text.slice(0, 152) + "..." : text;
+}
 
 /** Fetch iconUrl directly from admin WordPress (admin.encriptados.io) */
 async function fetchSimIconUrl(productId: number, locale: string): Promise<string | null> {
@@ -47,6 +55,7 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   const product = await getCachedSimProduct(queryProductId || baseProductId, locale, simRegion, slug);
 
   const title = product?.name || fallbackTitle;
+  const description = cleanDescription(product?.description, "SIM y eSIM encriptadas para comunicacion privada y segura con Encriptados.");
 
   // Obtener iconUrl directamente desde admin.encriptados.io (fuente de verdad)
   const iconUrl = staticConfig?.productId
@@ -63,13 +72,14 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
 
   return buildSeoMetadata({
     title,
-    description: "¡Compra ahora!",
+    description,
     canonicalPath: `/${locale}/sim/${slug}`,
     locale,
+    languages: buildLocalizedLanguageAlternates(`/sim/${slug}`),
     image: {
       url: imageUrl,
-      width: 400,
-      height: 400,
+      width: 1200,
+      height: 630,
       alt: title,
     },
     keywords: [title, "SIM encriptada", "eSIM", "Encriptados"],

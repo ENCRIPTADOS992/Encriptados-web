@@ -1,7 +1,7 @@
 import { getProductConfig } from "./productConfig";
 import ProductPageContent from "./AppClientPage";
 import { getTranslations } from "next-intl/server";
-import { buildSeoMetadata } from "@/shared/seo/metadata";
+import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 import { getResolvedAppProduct } from "./productData";
 
 
@@ -12,6 +12,14 @@ interface PageProps {
 
 const firstParam = (value: string | string[] | undefined): string | undefined =>
   Array.isArray(value) ? value[0] : value;
+
+/** Strip HTML tags and truncate to ~155 chars for meta description */
+function cleanDescription(html: string | undefined, fallback: string): string {
+  if (!html) return fallback;
+  const text = html.replace(/<[^>]*>/g, "").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
+  if (!text || text.length < 10) return fallback;
+  return text.length > 155 ? text.slice(0, 152) + "..." : text;
+}
 
 export async function generateMetadata({ params, searchParams }: PageProps) {
   const { slug, locale } = await params;
@@ -29,13 +37,14 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
     .join(" ");
   const title = product?.name || titleBase;
   const imageUrl = product?.iconUrl || config?.iconUrl || product?.productImage || product?.image_full || product?.images?.[0]?.src || config?.productImage || "/images/logo-encriptados.png";
-  const buyNowText = t("buyNow");
+  const description = cleanDescription(product?.description, t("buyNow"));
 
   return buildSeoMetadata({
     title,
-    description: buyNowText,
+    description,
     canonicalPath: `/${locale}/apps/${slug}`,
     locale,
+    languages: buildLocalizedLanguageAlternates(`/apps/${slug}`),
     image: {
       url: imageUrl,
       width: 1200,

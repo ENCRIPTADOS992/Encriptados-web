@@ -49,9 +49,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: COPY[safeLocale].description,
     canonicalPath: LOCALIZED_PATHS[safeLocale],
     locale: safeLocale,
-    languages: Object.fromEntries(
-      Object.entries(LOCALIZED_PATHS).map(([key, path]) => [key, buildAbsoluteUrl(path)]),
-    ),
+    languages: {
+      "x-default": buildAbsoluteUrl(LOCALIZED_PATHS.es),
+      ...Object.fromEntries(
+        Object.entries(LOCALIZED_PATHS).map(([key, path]) => [key, buildAbsoluteUrl(path)]),
+      ),
+    },
     image: {
       url: "/images/seo/pages/encrypted-test.png",
       width: 1200,

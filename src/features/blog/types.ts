@@ -34,6 +34,7 @@ export interface BlogPost extends BlogPostCard {
 export interface WordPressBlogItem {
   id: number;
   date: string;
+  modified?: string;
   slug: string;
   link?: string;
   lang?: string;

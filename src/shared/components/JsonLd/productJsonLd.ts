@@ -8,6 +8,9 @@ type ProductJsonLdInput = {
   image?: string;
   price?: string | number;
   currency?: string;
+  sku?: string;
+  brand?: string;
+  availability?: string;
 };
 
 export function buildProductJsonLd(input: ProductJsonLdInput) {
@@ -20,16 +23,20 @@ export function buildProductJsonLd(input: ProductJsonLdInput) {
     url: buildAbsoluteUrl(input.canonicalPath),
     brand: {
       "@type": "Brand",
-      name: SEO_SITE_NAME,
+      name: input.brand || SEO_SITE_NAME,
     },
   };
+
+  if (input.sku) {
+    product.sku = input.sku;
+  }
 
   if (input.price && Number(input.price) > 0) {
     product.offers = {
       "@type": "Offer",
       price: String(input.price),
       priceCurrency: input.currency || "USD",
-      availability: "https://schema.org/InStock",
+      availability: input.availability || "https://schema.org/InStock",
       url: buildAbsoluteUrl(input.canonicalPath),
       seller: {
         "@type": "Organization",

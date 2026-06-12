@@ -1,5 +1,5 @@
 import type { WordPressBlogItem } from "@/features/blog/types";
-import { getAllProductSlugs } from "@/app/[locale]/apps/[slug]/productConfig";
+import { getCanonicalProductSlugs } from "@/app/[locale]/apps/[slug]/productConfig";
 import { getAllSimProductSlugs } from "@/app/[locale]/sim/[slug]/simProductConfig";
 import { SEO_LOCALES } from "@/shared/seo/constants";
 import { getStaticPageSitemapPaths } from "@/shared/seo/staticPages";
@@ -49,7 +49,7 @@ async function fetchWordPressBlogPaths(locale: string): Promise<Array<{ path: st
         if (!path) return null;
         // Only include URLs that look like blog content (same filter as app-blog)
         if (!path.toLowerCase().includes("blog")) return null;
-        return { path, lastModified: item.date } as { path: string; lastModified?: string };
+        return { path, lastModified: item.modified || item.date } as { path: string; lastModified?: string };
       })
       .filter((item): item is { path: string; lastModified?: string } => item !== null);
   } catch {
@@ -127,7 +127,7 @@ function makeEntry(path: string, priority: number, changefreq: string = "weekly"
     loc: buildAbsoluteUrl(path),
     priority,
     changefreq,
-    lastmod: lastModified ? new Date(lastModified).toISOString() : new Date().toISOString(),
+    ...(lastModified ? { lastmod: new Date(lastModified).toISOString() } : {}),
   };
 }
 
@@ -328,7 +328,7 @@ export async function GET() {
 
   // App pages
   for (const locale of SEO_LOCALES) {
-    for (const slug of getAllProductSlugs()) {
+    for (const slug of getCanonicalProductSlugs()) {
       entries.push(makeEntry(`/${locale}/apps/${slug}`, 0.8));
     }
   }
@@ -338,6 +338,39 @@ export async function GET() {
     for (const slug of getAllSimProductSlugs()) {
       entries.push(makeEntry(`/${locale}/sim/${slug}`, 0.8));
     }
+  }
+
+  // Additional pages not covered by static page definitions
+  const ENCRYPTED_SIM_PATHS: Record<string, string> = {
+    es: "/es/sim-encriptada",
+    en: "/en/encrypted-sim",
+    fr: "/fr/sim-cryptee",
+    it: "/it/sim-crittografata",
+    pt: "/pt/sim-encriptada",
+  };
+  const ENCRYPTED_TEST_PATHS: Record<string, string> = {
+    es: "/es/prueba-encriptada",
+    en: "/en/encrypted-test",
+    fr: "/fr/test-chiffré",
+    it: "/it/test-crittografato",
+    pt: "/pt/teste-encriptado",
+  };
+  for (const path of Object.values(ENCRYPTED_SIM_PATHS)) {
+    entries.push(makeEntry(path, 0.8));
+  }
+  for (const path of Object.values(ENCRYPTED_TEST_PATHS)) {
+    entries.push(makeEntry(path, 0.6));
+  }
+  for (const locale of SEO_LOCALES) {
+    entries.push(makeEntry(`/${locale}/tim-sim`, 0.8));
+    entries.push(makeEntry(`/${locale}/ira-sim`, 0.8));
+    entries.push(makeEntry(`/${locale}/blog`, 0.7));
+    entries.push(makeEntry(`/${locale}/become-an-encrypted-partner`, 0.6));
+    entries.push(makeEntry(`/${locale}/activar-apps`, 0.7));
+    entries.push(makeEntry(`/${locale}/identity-verification`, 0.5));
+    entries.push(makeEntry(`/${locale}/pages/politica-de-privacidad`, 0.4, "monthly"));
+    entries.push(makeEntry(`/${locale}/pages/terminos-y-condiciones`, 0.4, "monthly"));
+    entries.push(makeEntry(`/${locale}/pages/politica-de-cookies`, 0.4, "monthly"));
   }
 
   // Store products

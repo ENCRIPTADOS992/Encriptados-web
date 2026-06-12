@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
     return buildSeoMetadata({
       title: "Blog de seguridad digital",
       description: "Articulos de Encriptados sobre privacidad, seguridad digital y comunicaciones cifradas.",
-      canonicalPath: `/blogs/noticias/${slug}/`,
+      canonicalPath: `/blogs/noticias/${slug}`,
       locale: "es",
     });
   }
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
   return buildSeoMetadata({
     title: post.title,
     description: post.description,
-    canonicalPath: post.legacyPath ?? `/blogs/noticias/${slug}/`,
+    canonicalPath: post.legacyPath ?? `/blogs/noticias/${slug}`,
     locale: "es",
     image: {
       url: post.imageFull || post.image,
@@ -45,7 +45,7 @@ export default async function SpanishBlogPostLayout({ children, params }: Layout
 
   if (!post) return <>{children}</>;
 
-  const canonicalPath = post.legacyPath ?? `/blogs/noticias/${slug}/`;
+  const canonicalPath = post.legacyPath ?? `/blogs/noticias/${slug}`;
   const data = [
     buildBreadcrumbJsonLd([
       { name: "Inicio", path: "/" },

@@ -759,6 +759,17 @@ export function getAllProductSlugs(): string[] {
 }
 
 /**
+ * Return only canonical product slugs (where key === config.slug),
+ * filtering out alias entries that point to other canonical slugs.
+ * Use this for sitemap generation to avoid duplicate URLs.
+ */
+export function getCanonicalProductSlugs(): string[] {
+  return Object.entries(productConfigs)
+    .filter(([key, config]) => key === config.slug)
+    .map(([key]) => key);
+}
+
+/**
  * Obtener productos por tipo de template
  */
 export function getProductsByTemplateType(type: TemplateType): ProductStaticConfig[] {

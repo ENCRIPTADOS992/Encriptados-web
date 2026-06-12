@@ -13,7 +13,7 @@ type LayoutProps = {
 export async function generateMetadata({ params }: Omit<LayoutProps, "children">): Promise<Metadata> {
   const { locale, category, slug } = await params;
   const post = await fetchBlogPostSeo(slug, locale);
-  const fallbackPath = `/${locale}/blogs/${category}/${slug}/`;
+  const fallbackPath = `/${locale}/blogs/${category}/${slug}`;
 
   if (!post) {
     return buildSeoMetadata({
@@ -58,7 +58,7 @@ export default async function LocalizedBlogPostLayout({ children, params }: Layo
 
   if (!post) return <>{children}</>;
 
-  const canonicalPath = post.legacyPath ?? `/${locale}/blogs/${category}/${slug}/`;
+  const canonicalPath = post.legacyPath ?? `/${locale}/blogs/${category}/${slug}`;
   const data = [
     buildBreadcrumbJsonLd([
       { name: "Home", path: locale === "es" ? "/" : `/${locale}` },

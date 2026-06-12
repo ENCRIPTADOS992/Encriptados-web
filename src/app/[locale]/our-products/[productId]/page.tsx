@@ -14,10 +14,19 @@ import { Metadata } from "next";
 import { getProductById } from "@/features/products/services";
 import ProductByIdPage from "./components/ProductByIdPage";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
+import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 
 type Props = {
   params: Promise<{ productId: string; locale: string }>;
 };
+
+/** Strip HTML tags and truncate to ~155 chars for meta description */
+function cleanDescription(html: string | undefined, fallback: string): string {
+  if (!html) return fallback;
+  const text = html.replace(/<[^>]*>/g, "").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
+  if (!text || text.length < 10) return fallback;
+  return text.length > 155 ? text.slice(0, 152) + "..." : text;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productId, locale } = await params;
@@ -35,45 +44,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       productImage = `${baseUrl}/${productImage}`;
     }
     
-    const productPrice = product?.price || "0";
-    const productDescription = `${productName} - ${productPrice} USD. Compra ahora en Encriptados.`;
-    const productUrl = `${baseUrl}/${locale}/our-products/${productId}`;
+    const description = cleanDescription(product?.description, `${productName}. Compra con envio seguro en Encriptados.`);
 
-    return {
-      title: `${productName} | Encriptados`,
-      description: productDescription,
-      openGraph: {
-        title: productName,
-        description: productDescription,
-        url: productUrl,
-        siteName: "Encriptados",
-        images: [
-          {
-            url: productImage,
-            width: 1200,
-            height: 630,
-            alt: productName,
-          },
-        ],
-        locale: locale || "es",
-        type: "website",
+    return buildSeoMetadata({
+      title: productName,
+      description,
+      canonicalPath: `/${locale}/our-products/${productId}`,
+      locale,
+      languages: buildLocalizedLanguageAlternates(`/our-products/${productId}`),
+      image: {
+        url: productImage,
+        width: 1200,
+        height: 630,
+        alt: productName,
       },
-      twitter: {
-        card: "summary_large_image",
-        title: productName,
-        description: productDescription,
-        images: [productImage],
-      },
-      alternates: {
-        canonical: productUrl,
-      },
-    };
+      keywords: [productName, "producto encriptado", "comunicacion segura", "Encriptados"],
+    });
   } catch (error) {
     console.error("Error generando metadata:", error);
     const baseUrl = getCanonicalSiteUrl();
     return {
-      title: "Producto | Encriptados",
-      description: "Descubre nuestros productos de seguridad y comunicación encriptada.",
+      title: "Producto",
+      description: "Descubre nuestros productos de seguridad y comunicacion encriptada.",
       alternates: { canonical: `${baseUrl}/${locale}/our-products/${productId}` },
     };
   }

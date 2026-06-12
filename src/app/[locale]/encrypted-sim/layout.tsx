@@ -47,9 +47,12 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     description: COPY[safeLocale].description,
     canonicalPath: LOCALIZED_PATHS[safeLocale],
     locale: safeLocale,
-    languages: Object.fromEntries(
-      Object.entries(LOCALIZED_PATHS).map(([key, path]) => [key, buildAbsoluteUrl(path)]),
-    ),
+    languages: {
+      "x-default": buildAbsoluteUrl(LOCALIZED_PATHS.es),
+      ...Object.fromEntries(
+        Object.entries(LOCALIZED_PATHS).map(([key, path]) => [key, buildAbsoluteUrl(path)]),
+      ),
+    },
     image: {
       url: "/images/seo/sim-pages/sim-encriptada.png",
       width: 1200,

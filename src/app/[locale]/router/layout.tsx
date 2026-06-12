@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getCanonicalSiteUrl } from "@/shared/seo/url";
 import { getProductById } from "@/features/products/services";
+import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 
@@ -9,61 +10,49 @@ interface Props {
   children: React.ReactNode;
 }
 
+/** Strip HTML tags and truncate to ~155 chars for meta description */
+function cleanDescription(html: string | undefined, fallback: string): string {
+  if (!html) return fallback;
+  const text = html.replace(/<[^>]*>/g, "").replace(/&[a-z]+;/gi, " ").replace(/\s+/g, " ").trim();
+  if (!text || text.length < 10) return fallback;
+  return text.length > 155 ? text.slice(0, 152) + "..." : text;
+}
+
 export async function generateMetadata({ params }: Omit<Props, "children">): Promise<Metadata> {
   const { locale } = await params;
   const baseUrl = getCanonicalSiteUrl();
 
   try {
-    const productUrl = `${baseUrl}/${locale}/router`;
     const product = await getProductById("59747", locale || "es").catch(() => null);
+
+    const title = product?.name || "Camaleon Router";
+    const description = cleanDescription(product?.description, "Router encriptado para comunicaciones privadas y seguras con Encriptados.");
 
     // Usar imagen de metadatos específica para Router
     let metaImage = product?.iconUrl || "/meta-image/router/router-camaleon.png";
-
-    // Asegurar que la imagen sea URL absoluta
     if (metaImage.startsWith("/")) {
       metaImage = `${baseUrl}${metaImage}`;
     }
 
-    // Título y descripción cortos
-    const shortTitle = product?.name || "Camaleón Router";
-    const shortDescription = "¡Compra ahora!";
-
-    return {
-      title: shortTitle,
-      description: shortDescription,
-      openGraph: {
-        title: shortTitle,
-        description: shortDescription,
-        url: productUrl,
-        siteName: "Encriptados",
-        images: [
-          {
-            url: metaImage,
-            width: 1200,
-            height: 630,
-            alt: shortTitle,
-            type: "image/png",
-          },
-        ],
-        locale: locale || "es",
-        type: "website",
+    return buildSeoMetadata({
+      title,
+      description,
+      canonicalPath: `/${locale}/router`,
+      locale,
+      languages: buildLocalizedLanguageAlternates("/router"),
+      image: {
+        url: metaImage,
+        width: 1200,
+        height: 630,
+        alt: title,
       },
-      twitter: {
-        card: "summary_large_image",
-        title: shortTitle,
-        description: shortDescription,
-        images: [metaImage],
-      },
-      alternates: {
-        canonical: productUrl,
-      },
-    };
+      keywords: [title, "router encriptado", "router VPN", "Encriptados"],
+    });
   } catch (error) {
     console.error("Error generando metadata para Router:", error);
     return {
-      title: "Camaleón Router",
-      description: "¡Compra ahora!",
+      title: "Camaleon Router",
+      description: "Router encriptado para comunicaciones privadas y seguras con Encriptados.",
       alternates: { canonical: `${baseUrl}/${locale}/router` },
     };
   }
