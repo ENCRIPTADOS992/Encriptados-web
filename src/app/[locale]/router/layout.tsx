@@ -64,6 +64,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     return {
       title: "Camaleón Router",
       description: "¡Compra ahora!",
+      alternates: { canonical: `${baseUrl}/${locale}/router` },
     };
   }
 }

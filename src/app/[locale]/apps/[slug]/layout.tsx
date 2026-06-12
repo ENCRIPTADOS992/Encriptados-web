@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       return {
         title: "Encriptados",
         description: "¡Compra ahora!",
+        alternates: { canonical: `${baseUrl}/${locale}/apps/${slug}` },
       };
     }
 
@@ -30,6 +31,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       return {
         title: "Encriptados",
         description: "¡Compra ahora!",
+        alternates: { canonical: `${baseUrl}/${locale}/apps/${slug}` },
       };
     }
 
@@ -40,6 +42,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
       return {
         title: "Encriptados",
         description: "¡Compra ahora!",
+        alternates: { canonical: `${baseUrl}/${locale}/apps/${slug}` },
       };
     }
 
@@ -140,6 +143,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     return {
       title: "Encriptados",
       description: "¡Compra ahora!",
+      alternates: { canonical: `${baseUrl}/${locale}/apps/${slug}` },
     };
   }
 }
