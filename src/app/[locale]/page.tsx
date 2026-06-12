@@ -46,15 +46,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale,
     images: [
       {
-        url: "/previsualizacion2.webp",
-        width: 960,
-        height: 960,
-        alt: "Encriptados",
-      },
-      {
         url: "/previsualizacion.webp",
         width: 2250,
         height: 1264,
+        alt: "Encriptados",
+      },
+      {
+        url: "/previsualizacion2.webp",
+        width: 960,
+        height: 960,
         alt: "Encriptados",
       },
     ],
