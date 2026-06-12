@@ -380,8 +380,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     const before = filteredProducts.length;
 
     filteredProducts = filteredProducts.filter((product) => {
-      const brandNormalized = product.brand?.toLowerCase().trim() ?? "";
-      return brandNormalized === osFilter;
+      const nameNormalized = product.name?.toLowerCase().trim() ?? "";
+      return nameNormalized === osFilter;
     });
 
     console.log("🔎 [Filtro OS]", {

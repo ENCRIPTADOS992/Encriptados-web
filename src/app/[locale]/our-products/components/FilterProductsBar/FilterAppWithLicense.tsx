@@ -27,10 +27,9 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     }
 
     const filteredByBrand = products.filter((p) => {
-      const brand = p.brand as string | undefined;
-
       if (filters.os && filters.os !== "all") {
-        return brand === filters.os;
+        const nameNormalized = p.name?.toLowerCase().trim() ?? "";
+        return nameNormalized === filters.os.toLowerCase().trim();
       }
 
       return true;
