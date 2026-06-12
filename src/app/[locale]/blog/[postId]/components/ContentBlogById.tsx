@@ -79,9 +79,9 @@ const ContentBlogById = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
       </div>
 
-      <h2 className="mb-5 text-[30px] font-bold leading-[1.18] text-white md:text-[42px]">
+      <h1 className="mb-5 text-[30px] font-bold leading-[1.18] text-white md:text-[42px]">
         {post.title}
-      </h2>
+      </h1>
 
       <div className="mb-8 flex flex-wrap items-center gap-3 text-sm text-white/55">
         <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-cyan-100">

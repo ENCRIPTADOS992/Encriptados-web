@@ -24,9 +24,9 @@ const BannerPostById = () => {
           <p className="mb-5 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium uppercase tracking-[0.22em] text-cyan-100 backdrop-blur-md">
             {t("ourBlogTitleBanner")}
           </p>
-          <h1 className="text-[32px] font-bold leading-[1.16] text-white md:text-[44px] lg:text-[52px]">
+          <p className="text-[32px] font-bold leading-[1.16] text-white md:text-[44px] lg:text-[52px]">
             {t("optimizeBanner.title")}
-          </h1>
+          </p>
         </div>
       </SectionWrapper>
     </section>

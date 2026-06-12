@@ -30,9 +30,9 @@ export default function LegacyBlogBannerClient({ title }: Props) {
           <p className="mb-5 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium uppercase tracking-[0.22em] text-cyan-100 backdrop-blur-md">
             {t("ourBlogTitleBanner")}
           </p>
-          <h1 className="text-[32px] font-bold leading-[1.16] text-white md:text-[44px] lg:text-[52px]">
+          <h2 className="text-[32px] font-bold leading-[1.16] text-white md:text-[44px] lg:text-[52px]">
             {title}
-          </h1>
+          </h2>
         </div>
       </SectionWrapper>
     </section>

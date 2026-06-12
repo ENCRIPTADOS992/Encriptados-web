@@ -79,6 +79,7 @@ export default async function LegacySeoArticlePage({ page, locale, legacyPath }:
 
                         {page.image && (
                           <div className="group relative mb-8 aspect-[1199/629] w-full overflow-hidden rounded-[22px] bg-[#101010] shadow-[0_18px_70px_rgba(0,0,0,0.32)]">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={page.image}
                               alt={page.title}
@@ -109,12 +110,21 @@ export default async function LegacySeoArticlePage({ page, locale, legacyPath }:
                           )}
                         </header>
 
-                        <article
-                          className="prose prose-invert max-w-none text-white/78 prose-headings:font-bold prose-headings:text-white prose-h2:mt-12 prose-h2:text-[30px] prose-h2:leading-[1.25] prose-h3:text-[24px] prose-h3:leading-[1.35] prose-p:text-base prose-p:leading-8 prose-a:text-cyan-200 prose-a:no-underline hover:prose-a:text-cyan-100 prose-img:rounded-[18px] prose-img:border prose-img:border-white/10 prose-img:shadow-[0_18px_60px_rgba(0,0,0,0.28)] prose-blockquote:border-cyan-300/60 prose-blockquote:bg-white/[0.04] prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:text-white/80 mt-8"
-                          dangerouslySetInnerHTML={{
-                            __html: normalizeLegacyInternalLinks(page.content),
-                          }}
-                        />
+                        {page.content.trim() ? (
+                          <article
+                            className="prose prose-invert max-w-none text-white/78 prose-headings:font-bold prose-headings:text-white prose-h2:mt-12 prose-h2:text-[30px] prose-h2:leading-[1.25] prose-h3:text-[24px] prose-h3:leading-[1.35] prose-p:text-base prose-p:leading-8 prose-a:text-cyan-200 prose-a:no-underline hover:prose-a:text-cyan-100 prose-img:rounded-[18px] prose-img:border prose-img:border-white/10 prose-img:shadow-[0_18px_60px_rgba(0,0,0,0.28)] prose-blockquote:border-cyan-300/60 prose-blockquote:bg-white/[0.04] prose-blockquote:px-5 prose-blockquote:py-3 prose-blockquote:text-white/80 mt-8"
+                            dangerouslySetInnerHTML={{
+                              __html: normalizeLegacyInternalLinks(page.content),
+                            }}
+                          />
+                        ) : (
+                          <div className="mt-8 rounded-xl border border-white/10 bg-white/[0.03] p-8 text-center text-white/50">
+                            <p>El contenido de esta pagina no esta disponible en este momento.</p>
+                            <Link href={homeHref} className="mt-4 inline-block text-cyan-300 hover:text-cyan-100">
+                              Volver a Encriptados
+                            </Link>
+                          </div>
+                        )}
 
                         <div className="mt-12 border-t border-white/10 pt-8">
                           <Link

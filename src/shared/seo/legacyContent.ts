@@ -173,7 +173,7 @@ function removeCommerceContent(html: string): string {
     .replace(/<p\b[^>]*>[\s\S]*?\b(?:Data plan|Plans data|Encrypted SIM Card Plans|Plan de datos|Planes de datos)\b[\s\S]*?<\/p>/gi, "");
 }
 
-function sanitizeHtml(html: string, previewImage?: string): string {
+function sanitizeHtml(html: string): string {
   const sanitized = removeCommerceContent(html)
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<(script|style|object|embed|form|input|button|textarea|select|option|link|meta)[\s\S]*?<\/\1>/gi, "")
@@ -182,8 +182,6 @@ function sanitizeHtml(html: string, previewImage?: string): string {
 
       if (!ALLOWED_TAGS.has(tag)) return "";
       if (match.startsWith("</")) return `</${tag}>`;
-
-      if (tag === "img" && getAttrValue(rawAttrs, "src") !== previewImage) return "";
 
       const attrs: string[] = [];
       rawAttrs.replace(/([:\w-]+)(?:\s*=\s*("[^"]*"|'[^']*'|[^\s"'>]+))?/g, (_attrMatch: string, rawName: string, rawValue = "") => {
@@ -230,7 +228,7 @@ function mapWpPage(item: WordPressPageItem, locale: SeoLocale): LegacySeoPageCon
     locale,
     title: stripHtml(item.title.rendered),
     description,
-    content: sanitizeHtml(item.content.rendered, previewImage),
+    content: sanitizeHtml(item.content.rendered),
     author: getAuthorFromEmbed(item),
     date: item.date,
     modified: item.modified,
