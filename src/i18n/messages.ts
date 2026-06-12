@@ -80,11 +80,31 @@ function deepMerge(target: MessageRecord, source: MessageRecord): MessageRecord 
   return result;
 }
 
-export async function loadMessages(locale: Locale) {
-  const modules = await Promise.all(loaders[locale].map((load) => load()));
+const FALLBACK_LOCALE: Locale = "en";
 
+async function loadLocaleMessages(locale: Locale): Promise<MessageRecord> {
+  const modules = await Promise.all(loaders[locale].map((load) => load()));
   return modules.reduce<MessageRecord>(
     (messages, module) => deepMerge(messages, module.default),
-    {}
+    {},
   );
+}
+
+export async function loadMessages(locale: Locale): Promise<MessageRecord> {
+  try {
+    return await loadLocaleMessages(locale);
+  } catch (error) {
+    console.warn(
+      `[i18n] Failed to load messages for locale "${locale}", falling back to "${FALLBACK_LOCALE}":`,
+      error,
+    );
+    if (locale !== FALLBACK_LOCALE) {
+      try {
+        return await loadLocaleMessages(FALLBACK_LOCALE);
+      } catch (fallbackError) {
+        console.error(`[i18n] Failed to load fallback messages for "${FALLBACK_LOCALE}":`, fallbackError);
+      }
+    }
+    return {};
+  }
 }

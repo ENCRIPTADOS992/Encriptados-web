@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowRight, CheckCircle2, MapPin, ShieldCheck } from "lucide-react";
 import FooterEncrypted from "@/shared/FooterEncrypted/FooterEncrypted";
 import CurrentHeader from "@/shared/CurrentHeader";
@@ -266,19 +266,59 @@ function getLocalizedHome(locale: LocationPageModel["locale"]): string {
   return locale === "es" ? "/" : `/${locale}`;
 }
 
+/** Locale fallback order: try the current locale, then en, then es. */
+const LOCALE_FALLBACK_CHAIN: LocationPageModel["locale"][] = ["en", "es"];
+
+function buildFallbackPath(slug: string[], targetLocale: LocationPageModel["locale"]): string {
+  // Strip the current locale prefix (if any) and rebuild with the target locale.
+  const cleanSegments = slug.map((s) => decodeURIComponent(s).trim().toLowerCase()).filter(Boolean);
+  const firstIsLocale = ["en", "es", "fr", "it", "pt"].includes(cleanSegments[0]);
+  const pathSegments = firstIsLocale ? cleanSegments.slice(1) : cleanSegments;
+
+  if (targetLocale === "en") {
+    return `/location/${pathSegments.join("/")}`;
+  }
+  return `/location/${targetLocale}/${pathSegments.join("/")}`;
+}
+
 export default async function LocationLegacyPage({ params }: PageProps) {
   const { slug } = await params;
   const model = parseLocationPage(slug);
 
-  if (!model) notFound();
+  if (!model) {
+    // Try redirecting to English version before returning 404.
+    const fallbackPath = buildFallbackPath(slug, "en");
+    const fallbackModel = parseLocationPage(fallbackPath.replace("/location/", "").split("/"));
+    if (fallbackModel) {
+      redirect(fallbackPath);
+    }
+    notFound();
+  }
+
+  const copy = LOCATION_COPY[model.locale] ?? LOCATION_COPY.en;
+  setRequestLocale(model.locale);
+
+  let messages: Record<string, any>;
+  try {
+    messages = await loadMessages(model.locale);
+    // If messages loaded but are essentially empty, treat as failure.
+    if (!messages || Object.keys(messages).length === 0) {
+      throw new Error(`Empty messages for locale "${model.locale}"`);
+    }
+  } catch {
+    // Redirect to a known locale that has complete translations.
+    for (const fallbackLocale of LOCALE_FALLBACK_CHAIN) {
+      if (fallbackLocale === model.locale) continue;
+      const fallbackPath = buildFallbackPath(slug, fallbackLocale);
+      redirect(fallbackPath);
+    }
+    notFound();
+  }
 
   const title = buildLocationTitle(model);
   const homeHref = getLocalizedHome(model.locale);
   const hasCurrentProductPage = model.productPath !== homeHref;
-  const copy = LOCATION_COPY[model.locale] ?? LOCATION_COPY.en;
   const productDescription = buildLocationProductDescription(model);
-  setRequestLocale(model.locale);
-  const messages = await loadMessages(model.locale);
 
   return (
     <NextIntlClientProvider locale={model.locale} messages={messages}>
