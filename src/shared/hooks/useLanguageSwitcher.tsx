@@ -3,6 +3,7 @@
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
+import { getBlogTranslations } from "@/shared/context/BlogTranslationStore";
 
 export type LocaleLanguages = "es" | "en" | "pt" | "it" | "fr";
 
@@ -89,6 +90,18 @@ const prefixPathWithLocale = (path: string, locale: LocaleLanguages) => {
   return `/${locale}${normalizedPath}`;
 };
 
+/** Detect if a path (without locale) is a blog post route and extract the slug */
+const extractBlogSlug = (pathWithoutLocale: string): string | null => {
+  // Matches /blog/{slug} or /blogs/{category}/{slug}
+  const blogMatch = pathWithoutLocale.match(/^\/blog\/([^/]+)$/);
+  if (blogMatch) return blogMatch[1];
+
+  const blogsMatch = pathWithoutLocale.match(/^\/blogs\/[^/]+\/([^/]+)$/);
+  if (blogsMatch) return blogsMatch[1];
+
+  return null;
+};
+
 const useLanguageSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -100,6 +113,21 @@ const useLanguageSwitcher = () => {
     : "es";
 
   const changeLanguage = (nextLocale: LocaleLanguages) => {
+    const pathWithoutLocale = stripLocalePrefix(pathname);
+
+    // Blog post translation: use stored translations to resolve the correct slug
+    const blogSlug = extractBlogSlug(pathWithoutLocale);
+    if (blogSlug) {
+      const translations = getBlogTranslations();
+      const translated = translations?.[nextLocale];
+      if (translated?.slug) {
+        const newPath = prefixPathWithLocale(`/blog/${translated.slug}`, nextLocale);
+        router.push(newPath);
+        return;
+      }
+      // Fallback: try the same slug in the new locale (may 404 but better than nothing)
+    }
+
     const localizedPath = getLocalizedPathWithoutLocale(pathname, currentLocale, nextLocale);
     const newPath = prefixPathWithLocale(localizedPath, nextLocale);
     const qs = searchParams?.toString() || "";

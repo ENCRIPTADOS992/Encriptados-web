@@ -6,6 +6,7 @@ import Image from "next/image";
 import SectionWrapper from "@/shared/components/SectionWrapper";
 import { fetchBlogPost } from "@/features/blog/blogService";
 import type { BlogPost } from "@/features/blog/types";
+import { setBlogTranslations, clearBlogTranslations } from "@/shared/context/BlogTranslationStore";
 import styles from "../../components/BlogTemplate.module.css";
 
 const ContentBlogById = () => {
@@ -23,15 +24,19 @@ const ContentBlogById = () => {
     setLoading(true);
     fetchBlogPost(postId, locale)
       .then((found) => {
-        if (!found) throw new Error("ArtÃ­culo no encontrado");
+        if (!found) throw new Error("Artículo no encontrado");
         setPost(found);
+        setBlogTranslations(found.translations);
         setFetchError(null);
       })
       .catch((err) => {
         setFetchError(err.message || "Error inesperado");
         setPost(null);
+        clearBlogTranslations();
       })
       .finally(() => setLoading(false));
+
+    return () => clearBlogTranslations();
   }, [postId, locale]);
 
   if (loading) {

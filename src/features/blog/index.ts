@@ -1,4 +1,4 @@
-export type { BlogPost, BlogPostCard, BlogSource } from "./types";
+export type { BlogPost, BlogPostCard, BlogSource, BlogTranslationRef } from "./types";
 export {
   fetchAllBlogCards,
   fetchBlogPost,

@@ -3,6 +3,7 @@ import JsonLd from "@/shared/components/JsonLd/JsonLd";
 import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/shared/components/JsonLd/articleJsonLd";
 import { fetchBlogPostSeo, fetchMarkdownBlogPostSeo } from "@/features/blog/blogSeoService";
 import { buildSeoMetadata } from "@/shared/seo/metadata";
+import { buildAbsoluteUrl } from "@/shared/seo/url";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -28,6 +29,16 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
   }
   const keywords = "keywords" in post && Array.isArray(post.keywords) ? post.keywords : undefined;
 
+  // Build hreflang alternates from Polylang translations
+  let languages: Record<string, string> | undefined;
+  if (post.translations && Object.keys(post.translations).length > 1) {
+    languages = {};
+    for (const [lang, ref] of Object.entries(post.translations)) {
+      languages[lang] = buildAbsoluteUrl(`/${lang}/blog/${ref.slug}`);
+    }
+    languages["x-default"] = languages.es ?? buildAbsoluteUrl(canonicalPath);
+  }
+
   return buildSeoMetadata({
     title: post.title,
     description: post.description,
@@ -42,6 +53,7 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
     modifiedTime: post.date,
     authors: [post.author],
     keywords,
+    languages,
   });
 }
 

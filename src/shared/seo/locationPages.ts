@@ -122,6 +122,14 @@ const SIM_PATTERNS: LocationPattern[] = [
     productImage: "/images/encrypted-sim/Encrypted_sim_card.webp",
   },
   {
+    legacyPrefix: "encrypted-sim",
+    productType: "sim",
+    productName: "Encrypted SIM",
+    productDescription: "anonymous SIM and eSIM options for private mobile connectivity",
+    productSlug: "sim-encriptada",
+    productImage: "/images/encrypted-sim/Encrypted_sim_card.webp",
+  },
+  {
     legacyPrefix: "encrypted-esim",
     productType: "sim",
     productName: "Encrypted eSIM",

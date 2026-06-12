@@ -198,6 +198,7 @@ function mapWpItemToCard(item: WordPressBlogItem): BlogPostCard {
     imageFull: toWpAbsoluteUrl(imageFullRaw || imageRaw),
     author: getAuthorFromEmbed(item),
     date: item.date,
+    translations: item.translations,
   };
 }
 
