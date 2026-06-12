@@ -107,7 +107,7 @@ export default function FilterProductsBar({
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
       <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.servicesTitle")}</span>
         <MenuDropdownProductBar
           name="encriptadosprovider"
           externalValue={filters.encriptadosprovider}
@@ -131,7 +131,7 @@ export default function FilterProductsBar({
     ),
     tim: (
       <div className="w-full">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.servicesTitle")}</span>
         <MenuDropdownProductBar
           name="timprovider"
           externalValue={filters.timprovider}
@@ -158,7 +158,7 @@ export default function FilterProductsBar({
       <div className={`grid grid-cols-2 ${gridColsSm} lg:flex lg:flex-row gap-3 w-full items-end`}>
         {/* 1. Proveedor */}
         <div className="flex-1 w-full min-w-0">
-          <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.providerTitle")}</h1>
+          <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.providerTitle")}</span>
           <MenuDropdownProductBar
             name="provider"
             externalValue={filters.provider}

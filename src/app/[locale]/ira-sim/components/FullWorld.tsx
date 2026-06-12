@@ -49,7 +49,7 @@ const FullWorld = () => {
           {index % 2 === 0 ? (
             <>
               <div>
-                <h1>{step.title}</h1>
+                <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </div>
               <div>
@@ -74,7 +74,7 @@ const FullWorld = () => {
                 />
               </div>
               <div>
-                <h1>{step.title}</h1>
+                <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </div>
             </>

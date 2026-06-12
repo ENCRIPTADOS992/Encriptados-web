@@ -14,13 +14,13 @@ const HowItWorks = () => {
       id: 1,
       header: (
         <div className="flex items-center justify-center md:items-start md:justify-start xl:items-start xl:justify-start md:mb-4 xl:mt-4">
-          <h1 className="text-base font-bold mb-2 bg-[#35CDFB] px-2 rounded-full inline-block">
+           <span className="text-base font-bold mb-2 bg-[#35CDFB] px-2 rounded-full inline-block">
             1
-          </h1>
+          </span>
         </div>
       ),
       title: (
-        <h1 className="text-xl font-bold mb-4">
+        <h3 className="text-xl font-bold mb-4">
           {t("howItWorks.chooseRegionTitle")}
           {""}
 
@@ -28,7 +28,7 @@ const HowItWorks = () => {
             {" "}
             {t("howItWorks.chooseRegionSpecialWord")}
           </span>
-        </h1>
+        </h3>
       ),
       description: t("howItWorks.chooseRegionDescription"),
       image: (
@@ -48,20 +48,20 @@ const HowItWorks = () => {
       id: 2,
       header: (
         <div className="flex items-center justify-center md:items-start md:justify-start xl:items-start xl:justify-start md:mt-4 xl:mt-4">
-          <h1 className="text-base font-bold mb-2 bg-[#35CDFB] px-2 rounded-full inline-block mt-4">
+          <span className="text-base font-bold mb-2 bg-[#35CDFB] px-2 rounded-full inline-block mt-4">
             2
-          </h1>
+          </span>
         </div>
       ),
       title: (
-        <h1 className="text-xl font-bold mb-4">
+        <h3 className="text-xl font-bold mb-4">
           {t("howItWorks.choosePlanTitle")}{" "}
           <span className="text-[#35CDFB]">
             {" "}
             {t("howItWorks.choosePlanSpecialWord")}
           </span>{" "}
           {t("howItWorks.choosePlanTitle2")}
-        </h1>
+        </h3>
       ),
       description: t("howItWorks.choosePlanDescription"),
       image: (
@@ -81,19 +81,19 @@ const HowItWorks = () => {
       id: 3,
       header: (
         <div className="flex items-center justify-center md:items-start md:justify-start xl:items-start xl:justify-start md:mt-4 xl:mt-4">
-          <h1 className="text-base font-bold mb-2 bg-[#35CDFB] px-2 rounded-full inline-block">
+          <span className="text-base font-bold mb-2 bg-[#35CDFB] px-2 rounded-full inline-block">
             3
-          </h1>
+          </span>
         </div>
       ),
       title: (
-        <h1 className="text-xl font-bold mb-4">
+        <h3 className="text-xl font-bold mb-4">
           {t("howItWorks.activateSimTitle")}
           <span className="text-[#35CDFB]">
             {" "}
             {t("howItWorks.activateSimSpecialWord")}
           </span>
-        </h1>
+        </h3>
       ),
       description: t("howItWorks.activateSimDescription"),
       image: (
@@ -113,9 +113,9 @@ const HowItWorks = () => {
 
   return (
     <>
-      <h1 className="text-base text-center mt-14 font-bold md:text-3xl xl:text-4xl ">
+      <h2 className="text-base text-center mt-14 font-bold md:text-3xl xl:text-4xl ">
         {t("howItWorks.title")}
-      </h1>
+      </h2>
       <div className="flex justify-center mt-16 md:mt-32">
         <div className="w-full md:w-7/12">
           {stepper.map((step, index) => (

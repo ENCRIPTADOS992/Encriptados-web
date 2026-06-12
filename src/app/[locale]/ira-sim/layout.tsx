@@ -18,12 +18,43 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   const { locale } = await params;
   const safeLocale = locale || "es";
 
+  const copy = {
+    es: {
+      title: "IRA SIM para comunicaciones seguras",
+      description: "Descubre la IRA SIM de Encriptados para comunicaciones seguras y privadas con cobertura internacional.",
+    },
+    en: {
+      title: "IRA SIM for secure communications",
+      description: "Discover Encriptados IRA SIM for secure and private communications with international coverage.",
+    },
+    fr: {
+      title: "IRA SIM pour communications securisees",
+      description: "Decouvrez la IRA SIM d'Encriptados pour des communications securisees et privees avec couverture internationale.",
+    },
+    it: {
+      title: "IRA SIM per comunicazioni sicure",
+      description: "Scopri la IRA SIM di Encriptados per comunicazioni sicure e private con copertura internazionale.",
+    },
+    pt: {
+      title: "IRA SIM para comunicacoes seguras",
+      description: "Descubra o IRA SIM da Encriptados para comunicacoes seguras e privadas com cobertura internacional.",
+    },
+  } as const;
+  const localeKey = safeLocale in copy ? (safeLocale as keyof typeof copy) : "es";
+
   return buildSeoMetadata({
-    title: "IRA SIM",
-    description: "Descubre la IRA SIM de Encriptados para comunicaciones seguras y privadas.",
+    title: copy[localeKey].title,
+    description: copy[localeKey].description,
     canonicalPath: `/${safeLocale}/ira-sim`,
     locale: safeLocale,
     languages: buildLocalizedLanguageAlternates("/ira-sim"),
+    image: {
+      url: "/images/seo/sim-pages/ira-sim.png",
+      width: 1200,
+      height: 630,
+      alt: copy[localeKey].title,
+    },
+    keywords: ["IRA SIM", "SIM segura", "comunicaciones privadas", "Encriptados"],
   });
 }
 
@@ -40,9 +71,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         <QRBanner title={t("downloadApp")} />
       </div>
       <div className="max-w-3xl mx-auto py-20 px-4 md:px-10 lg:px-20">
-        <h1 className="text-center text-2xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-500 bg-clip-text text-transparent mb-10 -mt-20">
+        <h2 className="text-center text-2xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-500 bg-clip-text text-transparent mb-10 -mt-20">
           Preguntas <span className="font-normal">frecuentes</span>
-        </h1>
+        </h2>
 
         <FaqsBne />
       </div>

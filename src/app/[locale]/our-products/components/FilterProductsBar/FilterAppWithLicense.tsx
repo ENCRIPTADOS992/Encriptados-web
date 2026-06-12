@@ -81,9 +81,9 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     <div className="flex flex-row space-x-2">
       {/* SOFTWARE */}
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2 capitalize">
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 capitalize block">
           {t("filterProducts.software")}
-        </h1>
+        </span>
         <MenuDropdownProductBar
           name="os"
           options={osOptions}
@@ -96,9 +96,9 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
 
       {/* LICENCIA */}
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2 whitespace-nowrap capitalize">
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 whitespace-nowrap capitalize block">
           {t("filterProducts.licenseTitle")}
-        </h1>
+        </span>
         <MenuDropdownProductBar
           name="license"
           options={licenseOptions}

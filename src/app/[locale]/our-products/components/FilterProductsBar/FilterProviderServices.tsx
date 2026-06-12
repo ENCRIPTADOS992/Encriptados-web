@@ -18,7 +18,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.servicesTitle")}</span>
         <MenuDropdownProductBar
           name="encriptadosprovider"
           options={[
@@ -47,7 +47,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
     ),
     tim: (
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.servicesTitle")}</h1>
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.servicesTitle")}</span>
         <MenuDropdownProductBar
           name="timprovider"
           options={[
@@ -96,7 +96,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   return (
     <div className="flex flex-row space-x-2">
       <div className="flex-1">
-        <h1 className="text-sm text-[#7E7E7E] font-semibold mb-2">{t("filterProducts.providerTitle")}</h1>
+        <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.providerTitle")}</span>
         <MenuDropdownProductBar
           name="provider"
           options={[

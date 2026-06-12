@@ -66,9 +66,9 @@ const BannerMaya = () => {
               {t("viewAllSims")}
             </Button>
           </div>
-          <h1 className=" text-center mt-4 md:text-3xl xl:text-5xl  text-[#35CDFB]">
+          <p className=" text-center mt-4 md:text-3xl xl:text-5xl  text-[#35CDFB]">
             {t("payMore")}
-          </h1>
+          </p>
         </div>
 
         <PhoneSvg width={70} height={70} />
@@ -128,9 +128,9 @@ const BannerMaya = () => {
             </Button>
           </div>
 
-          <h1 className="text-lg md:text-base text-center mt-4 w-full text-[#35CDFB]">
+          <p className="text-lg md:text-base text-center mt-4 w-full text-[#35CDFB]">
             Paga menos, consume más
-          </h1>
+          </p>
         </div>
       </div>
 

@@ -35,9 +35,21 @@ export function buildUrlSet(entries: SitemapUrlEntry[]): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
 }
 
-export function buildSitemapIndex(locations: string[]): string {
-  const sitemaps = locations
-    .map((loc) => `  <sitemap>\n    <loc>${escapeXml(loc)}</loc>\n  </sitemap>`)
+export type SitemapIndexEntry = {
+  loc: string;
+  lastmod?: string;
+};
+
+export function buildSitemapIndex(entries: SitemapIndexEntry[]): string {
+  const sitemaps = entries
+    .map((entry) => {
+      let sitemap = `  <sitemap>\n    <loc>${escapeXml(entry.loc)}</loc>\n`;
+      if (entry.lastmod) {
+        sitemap += `    <lastmod>${escapeXml(entry.lastmod)}</lastmod>\n`;
+      }
+      sitemap += "  </sitemap>";
+      return sitemap;
+    })
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemaps}\n</sitemapindex>`;

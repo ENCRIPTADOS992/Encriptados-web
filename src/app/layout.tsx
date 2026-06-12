@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
+import { headers } from "next/headers";
 import Script from "next/script";
 import "./globals.css";
 
@@ -93,11 +94,14 @@ export const viewport: Viewport = {
   themeColor: "#000000",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
+  const headersList = await headers();
+  const lang = headersList.get("x-next-intl-locale") || "es";
+
   return (
-    <html suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
         <JsonLd data={[buildOrganizationJsonLd(), buildWebSiteJsonLd()]} />
         <ClientProviders>

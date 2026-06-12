@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { buildAbsoluteUrl, getCanonicalSiteUrl } from "@/shared/seo/url";
+import { buildAbsoluteUrl } from "@/shared/seo/url";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: [
           "/api/",
-          "/_next/",
+          "/_next/data/",
           "/site-access",
           "/dashboard/",
           "/*/dashboard/",
@@ -19,8 +19,6 @@ export default function robots(): MetadataRoute.Robots {
           "/*/test-design-system",
           "/*/test-payment-modal",
           "/*/products-test",
-          "/*/encrypted-test",
-          "/*/security-test",
           "/*/checkout",
         ],
       },
@@ -54,6 +52,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: buildAbsoluteUrl("/sitemap.xml"),
-    host: getCanonicalSiteUrl(),
   };
 }
