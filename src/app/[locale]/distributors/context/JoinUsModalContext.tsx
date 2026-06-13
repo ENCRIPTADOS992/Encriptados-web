@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useCallback, useContext, useMemo, useState, ReactNode } from "react";
 
 // Definir la interfaz para el contexto
 interface JoinUsModalContextType {
@@ -23,11 +23,16 @@ export const JoinUsModalProvider: React.FC<JoinUsModalProviderProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = useCallback(() => setIsModalOpen(true), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
+
+  const value = useMemo(
+    () => ({ isModalOpen, openModal, closeModal }),
+    [isModalOpen, openModal, closeModal]
+  );
 
   return (
-    <JoinUsModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+    <JoinUsModalContext.Provider value={value}>
       {children}
     </JoinUsModalContext.Provider>
   );

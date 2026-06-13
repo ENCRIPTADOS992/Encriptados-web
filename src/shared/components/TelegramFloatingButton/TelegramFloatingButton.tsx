@@ -48,13 +48,14 @@ export default function TelegramFloatingButton() {
 
     // Listener para eventos que pueden alterar la visibilidad del menú
     window.addEventListener("scroll", checkFloatingMenu, { passive: true });
-    
-    // Intervalo de seguridad para capturar cambios reactivos de estado
-    const interval = setInterval(checkFloatingMenu, 300);
+
+    // Usar MutationObserver en vez de setInterval para detectar cambios en el DOM
+    const observer = new MutationObserver(checkFloatingMenu);
+    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.removeEventListener("scroll", checkFloatingMenu);
-      clearInterval(interval);
+      observer.disconnect();
     };
   }, [shouldHide]);
 

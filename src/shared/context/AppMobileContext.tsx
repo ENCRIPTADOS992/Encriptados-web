@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 
 interface AppMobileContextType {
@@ -17,8 +17,10 @@ export function AppMobileProvider({ children }: { children: ReactNode }) {
   const [isFromAppMobile, setIsFromAppMobile] = useState(false);
   const [appMode, setAppMode] = useState<"app_mobile" | "user" | "guest" | null>(null);
 
+  // Extraer el valor primitivo para evitar re-renders por referencia de searchParams
+  const fromParam = searchParams.get("from");
+
   useEffect(() => {
-    const fromParam = searchParams.get("from");
     if (fromParam === "app_mobile" || fromParam === "user" || fromParam === "guest") {
       setIsFromAppMobile(true);
       setAppMode(fromParam as any);
@@ -39,10 +41,13 @@ export function AppMobileProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-  }, [searchParams]);
+  }, [fromParam]);
+
+  // Memoizar el value para evitar re-renders en todos los consumidores
+  const value = useMemo(() => ({ isFromAppMobile, appMode }), [isFromAppMobile, appMode]);
 
   return (
-    <AppMobileContext.Provider value={{ isFromAppMobile, appMode }}>
+    <AppMobileContext.Provider value={value}>
       {children}
     </AppMobileContext.Provider>
   );

@@ -40,8 +40,17 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   const search = useSearchParams();
   const pathname = usePathname();
 
+  // Extract primitives from searchParams to avoid re-renders from reference changes
+  const qpBuy = search.get("buy");
   const qpProvider = (search.get("provider") || "").toLowerCase();
   const qpSelectedOption = search.get("selectedOption");
+  const qpProductId = search.get("productId");
+  const qpPrice = search.get("price");
+  const qpVariantId = search.get("variantId");
+  const qpGb = search.get("gb");
+  const qpRegion = search.get("region");
+  const qpRegionCode = search.get("regionCode");
+  const qpFlagUrl = search.get("flagUrl");
 
   const { theme = "light", mode = "new_user" } = (params || {}) as {
     theme?: "light" | "dark";
@@ -145,8 +154,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   const buyAutoOpenedRef = React.useRef(false);
 
   React.useEffect(() => {
-    const buy = search.get("buy");
-    if (buy !== "1") {
+    if (qpBuy !== "1") {
       buyAutoOpenedRef.current = false;
       return;
     }
@@ -169,34 +177,31 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     const match = pathname.match(/^\/(en|es|fr|it|pt)(\/|$)/);
     const locale = match?.[1] ?? "es";
 
-    const productIdFromUrl = search.get("productId");
-    const priceFromUrl = search.get("price");
-    const parsedPrice = priceFromUrl ? Number.parseFloat(priceFromUrl) : NaN;
-    const variantIdFromUrlRaw = search.get("variantId");
-    const parsedVariantId = variantIdFromUrlRaw ? Number.parseInt(variantIdFromUrlRaw, 10) : NaN;
+    const parsedPrice = qpPrice ? Number.parseFloat(qpPrice) : NaN;
+    const parsedVariantId = qpVariantId ? Number.parseInt(qpVariantId, 10) : NaN;
     const variantIdFromUrl = Number.isFinite(parsedVariantId) && parsedVariantId > 0
       ? parsedVariantId
       : undefined;
 
     if (isRouterPath) {
       openModal({
-        productid: productIdFromUrl || "59747",
+        productid: qpProductId || "59747",
         languageCode: locale,
         selectedOption: PRODUCT_CATEGORY_IDS.ROUTERS,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
         variantId: variantIdFromUrl,
       });
     } else {
-      if (!productIdFromUrl) return;
+      if (!qpProductId) return;
 
       // Extract additional SIM parameters from URL
-      const gbFromUrl = formatGbBadge(search.get("gb"));
-      const regionFromUrl = search.get("region");
-      const regionCodeFromUrl = search.get("regionCode");
-      const flagUrlFromUrl = search.get("flagUrl");
+      const gbFromUrl = formatGbBadge(qpGb);
+      const regionFromUrl = qpRegion;
+      const regionCodeFromUrl = qpRegionCode;
+      const flagUrlFromUrl = qpFlagUrl;
 
       openModal({
-        productid: productIdFromUrl,
+        productid: qpProductId,
         languageCode: locale,
         selectedOption: PRODUCT_CATEGORY_IDS.SIMS,
         initialPrice: Number.isFinite(parsedPrice) ? parsedPrice : undefined,
@@ -213,11 +218,14 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     const url = new URL(window.location.href);
     url.searchParams.delete("buy");
     window.history.replaceState({}, "", url.toString());
-  }, [search, pathname, isModalOpen, openModal]);
+  }, [qpBuy, pathname, isModalOpen, openModal, qpProductId, qpPrice, qpVariantId, qpGb, qpRegion, qpRegionCode, qpFlagUrl]);
 
   // Track if we've already set the initial mode for this modal session
   // Uses state (not ref) so that isReady re-renders when mode is resolved
   const [modeResolved, setModeResolved] = React.useState(false);
+  // Use ref for mode to avoid re-triggering this effect when mode changes
+  const modeRef = React.useRef(mode);
+  modeRef.current = mode;
 
   React.useEffect(() => {
     // Reset when modal closes
@@ -237,7 +245,7 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     if (!product) return;
 
     if (supportOnly) {
-      if (mode !== "new_user") setMode("new_user");
+      if (modeRef.current !== "new_user") setMode("new_user");
       setModeResolved(true);
       return;
     }
@@ -245,13 +253,13 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
     const wantSimMode = kind === "SIM";
 
     // Only auto-switch mode on initial load, not on user interaction
-    if (wantSimMode && mode !== "sim") {
+    if (wantSimMode && modeRef.current !== "sim") {
       setMode("sim");
-    } else if (!wantSimMode && mode === "sim") {
+    } else if (!wantSimMode && modeRef.current === "sim") {
       setMode("roning_code");
     }
     setModeResolved(true);
-  }, [isModalOpen, product, kind, mode, setMode, supportOnly, modeResolved, isLoadingProduct]);
+  }, [isModalOpen, product, kind, setMode, supportOnly, modeResolved, isLoadingProduct]);
 
   // The modal is "ready" once we've loaded the product and determined the correct mode,
   // or if there's no productid to fetch at all.

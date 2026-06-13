@@ -29,7 +29,6 @@ import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (data: SuccessDisplayData) => void }) {
   const { params } = useModalPayment();
   const t = useTranslations("paymentModal");
-  console.log("🐛 [ModalSIM] Entry Params:", params);
   const { productid, initialPrice, initialGb, initialRegion, initialRegionCode, provider: paramProvider, typeProduct: paramTypeProduct, variantId: paramVariantId, iconUrl: paramIconUrl } = (params || {}) as {
     productid?: string;
     initialPrice?: number;
@@ -51,7 +50,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     enabled: !!productid,
     staleTime: 1000 * 60 * 5, // 5 minutos — evita doble fetch
   });
-  console.log("[ModalSIM] product crudo =>", product);
 
   const resolvedRegionCode = React.useMemo(() => {
     if (initialRegionCode) return initialRegionCode.toUpperCase();
@@ -61,8 +59,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     }
     return null;
   }, [initialRegion, initialRegionCode]);
-
-  console.log("[ModalSIM] Resolved Region Code for API:", resolvedRegionCode);
 
   // Fetch regional products when initialRegion is provided (landing page scenario)
   const hasParamsVariants = (params as any)?.variants?.length > 0;
@@ -85,14 +81,12 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
       // If Broad Region (Length > 2) OR "EU" -> Send as simRegion
       if (regionCode.length > 2 || regionCode === "EU") {
-        console.log("🌍 [ModalSIM] Fetching by Region (Broad):", regionCode);
         return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", { simRegion: regionCode, simCountry: null });
       }
 
       // If Specific Country (Length 2) -> Send as simCountry
       // Note: We fallback to initialRegion if no code resolved, just in case inputs are raw names
       const countryParam = regionCode || initialRegion;
-      console.log("🏳️ [ModalSIM] Fetching by Country:", countryParam);
 
       return getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, "es", {
         simRegion: null,
@@ -108,37 +102,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     return regionalProducts.find((p: any) => String(p.id) === String(productid)) ?? null;
   }, [regionalProducts, productid]);
 
-  console.log("🔍 [ModalSIM] Region Resolution:", {
-    initialRegionCode,
-    initialRegion,
-    resolvedRegionCode,
-    regionalProductsQueryKey: ["regionalProducts", product?.id, resolvedRegionCode],
-    regionalProductFound: !!regionalProduct
-  });
-
-  console.log("[ModalSIM] regional pricing =>", {
-    initialRegion,
-    hasParamsVariants,
-    regionalProduct,
-    regionalProductsLength: Array.isArray(regionalProducts) ? regionalProducts.length : 'undefined/not-array',
-    regionalProductsFirst: Array.isArray(regionalProducts) ? regionalProducts[0] : null,
-    productIdToFind: productid,
-    productVariantsRaw: (product as any)?.variants
-  });
-
   // Usar valores de params con prioridad sobre los de la API
   // Esto asegura que el botón "Compartir" use los mismos valores que "Más información"
   const effectiveProvider = paramProvider || (product as any)?.provider || (product as any)?.brand;
   const effectiveTypeProduct = paramTypeProduct || (product as any)?.type_product;
-
-  console.log("[ModalSIM] effective values =>", {
-    paramProvider,
-    paramTypeProduct,
-    apiProvider: (product as any)?.provider,
-    apiTypeProduct: (product as any)?.type_product,
-    effectiveProvider,
-    effectiveTypeProduct
-  });
 
   const formType: FormType = React.useMemo(
     () => resolveSimFormType(product),
@@ -184,12 +151,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   const variants: Variant[] = React.useMemo(() => {
     // Si tenemos productos regionales cargados (porque hay initialRegion), usarlos TIENEN PRIORIDAD para el precio correcto
     if (regionalProduct && (regionalProduct as any).variants?.length > 0) {
-      console.log("[ModalSIM] Using regionalProduct.variants (Best Source)");
       return (regionalProduct as any).variants as Variant[];
     }
     // Si no, usar los que vienen de los params (tarjeta)
     if ((params as any)?.variants?.length > 0) {
-      console.log("[ModalSIM] Using params.variants");
       return (params as any).variants as Variant[];
     }
     // Fallback final
@@ -218,13 +183,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       return vCode === regionCode;
     });
 
-    console.log("🔍 [ModalSIM] Filtering Logic Debug:", {
-      regionCode,
-      variantsCount: variants.length,
-      filteredCount: filtered.length,
-      isBroadRegion: regionCode === "GLOBAL" || regionCode.length > 2 || regionCode === "EUROPA"
-    });
-
     // If we found specific matches (e.g. variants labeled "OCEANIA"), great! Use them.
     if (filtered.length > 0) {
       return filtered;
@@ -238,11 +196,9 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       const globalVariants = variants.filter(v => !v.scope?.code || v.scope.code === "GLOBAL");
 
       if (globalVariants.length > 0) {
-        console.log("⚠️ [ModalSIM] Broad Region mismatch -> Fallback to GLOBAL variants");
         return globalVariants;
       }
 
-      console.log("⚠️ [ModalSIM] Broad Region mismatch & No GLOBAL variants -> Returning ALL variants");
       return variants;
     }
 
@@ -294,16 +250,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     [formType, filteredVariants, product]
   );
 
-  console.log("🔍 [ModalSIM] Debugging Data Plans:", {
-    formType,
-    variantsLength: variants.length,
-    filteredVariantsLength: filteredVariants.length,
-    firstFilteredVariant: filteredVariants[0],
-    dataPlansLength: dataPlans.length,
-    dataPlans,
-    regionCode: resolvedRegionCode
-  });
-
   const dataAmounts = React.useMemo(() => {
     const onSale = isProductOnSale(product);
     const amounts = (variants ?? [])
@@ -318,37 +264,32 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     if (initialPrice != null && initialPrice > 0 && minutesPlans.length > 0) {
       const matchingPlan = minutesPlans.find((p) => p.value === initialPrice);
       if (matchingPlan) {
-        console.log("[ModalSIM] Seleccionando plan que coincide con initialPrice:", {
-          initialPrice,
-          matchingPlan,
-        });
         setSelectedPlanId(matchingPlan.id);
         return;
       }
     }
 
     // Si no hay match o no hay initialPrice, usar el primero
-    console.log("[ModalSIM] useEffect minutesPlans → setSelectedPlanId", {
-      minutesPlans,
-      firstId: minutesPlans[0]?.id ?? null,
-    });
     setSelectedPlanId(minutesPlans[0]?.id ?? null);
   }, [formType, minutesPlans, initialPrice]);
 
-  // Track if we've already set the initial plan based on initialPrice
-  const [initialPlanSet, setInitialPlanSet] = React.useState(false);
+  // Track if we've already set the initial plan based on initialPrice (ref to avoid extra re-render cycles)
+  const initialPlanSetRef = React.useRef(false);
+  const prevProductIdRef = React.useRef(productid);
+  const prevInitialPriceRef = React.useRef(initialPrice);
 
-  // Reset initialPlanSet when product or price changes (important when switching products)
-  React.useEffect(() => {
-    setInitialPlanSet(false);
-    console.log("[ModalSIM] Reset initialPlanSet due to productid/initialPrice change:", { productid, initialPrice });
-  }, [productid, initialPrice]);
+  // Reset when product or price changes (inline check instead of separate useEffect)
+  if (prevProductIdRef.current !== productid || prevInitialPriceRef.current !== initialPrice) {
+    initialPlanSetRef.current = false;
+    prevProductIdRef.current = productid;
+    prevInitialPriceRef.current = initialPrice;
+  }
 
   React.useEffect(() => {
     if (formType !== "encrypted_esimData" && formType !== "encrypted_data") return;
 
     // Si ya procesamos el initialPrice, no volver a hacerlo
-    if (initialPlanSet) return;
+    if (initialPlanSetRef.current) return;
 
     const titleNorm = String((product as any)?.name ?? "").toLowerCase();
     // Multi-idioma: ES datos, EN data, FR données, IT dati, PT dados
@@ -364,18 +305,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     // Necesitamos variants para calcular
     if (!variants.length) return;
 
-    console.log("[ModalSIM] Data Product Price Selection Debug:", {
-      initialPrice,
-      formType,
-      isEsimPlusDatos,
-      isRecargaDatos,
-      base,
-      paramVariantId,
-      variantsLength: variants.length,
-      variantPrices: variants.map((v: any) => ({ id: v.id, price: v.price ?? v.cost })),
-      productName: (product as any)?.name
-    });
-
     // Para eSIM + Recarga Datos, eSIM + Datos, o Recarga Datos: buscar el monto de recarga que coincida
     if (
       ((formType === "encrypted_esimData" || formType === "encrypted_data") && isEsimPlusDatos) ||
@@ -387,10 +316,9 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         if (matchingVariant) {
           const variantPrice = resolveVariantPrice(matchingVariant, isProductOnSale(product));
           const rechargeValue = variantPrice - base;
-          console.log("[ModalSIM] ✅ Setting recharge from paramVariantId:", { paramVariantId, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
           setSelectedVariant(matchingVariant as Variant);
-          setInitialPlanSet(true);
+          initialPlanSetRef.current = true;
           return;
         }
       }
@@ -403,19 +331,12 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
           return Math.abs(variantPrice - initialPrice) < 0.1;
         });
 
-        console.log("[ModalSIM] Data Product Variant Matching:", {
-          initialPrice,
-          base,
-          matchingVariant: matchingVariant ? { id: (matchingVariant as any).id, price: (matchingVariant as any).price } : null,
-        });
-
         if (matchingVariant) {
           const variantPrice = resolveVariantPrice(matchingVariant, onSale);
           const rechargeValue = variantPrice - base;
-          console.log("[ModalSIM] ✅ Setting recharge amount:", { initialPrice, variantPrice, base, rechargeValue });
           setSelectedPlanId(rechargeValue);
           setSelectedVariant(matchingVariant as Variant); // <-- FIX: Sync variant
-          setInitialPlanSet(true);
+          initialPlanSetRef.current = true;
           return;
         }
       }
@@ -423,9 +344,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       // Fallback: usar el primer variante como monto de recarga
       const firstVariantPrice = resolveVariantPrice(variants[0], isProductOnSale(product));
       const defaultRecharge = Math.max(firstVariantPrice - base, 0);
-      console.log("[ModalSIM] Using default recharge from first variant:", { firstVariantPrice, base, defaultRecharge });
       setSelectedPlanId(defaultRecharge);
-      setInitialPlanSet(true);
+      initialPlanSetRef.current = true;
       return;
     }
 
@@ -433,8 +353,8 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     if (!dataAmounts.length) return;
 
     setSelectedPlanId(dataAmounts[0]);
-    setInitialPlanSet(true);
-  }, [formType, dataAmounts, variants, product, initialPrice, initialPlanSet, paramVariantId]);
+    initialPlanSetRef.current = true;
+  }, [formType, dataAmounts, variants, product, initialPrice, paramVariantId]);
 
 
   React.useEffect(() => {
@@ -446,7 +366,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       /esim/i.test(titleNorm) && /(datos?|data|dati|donn[ée]es|dados)/i.test(titleNorm);
 
     if (formType === "encrypted_esimData" && isEsimPlusDatos) {
-      console.log("[ModalSIM] Skipping dataPlans useEffect for eSIM + Recarga Datos");
       return;
     }
 
@@ -476,14 +395,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         }
       }
 
-      console.log("🔍 [ModalSIM] Selection logic:", {
-        initialGb,
-        target,
-        dataPlansLabels: dataPlans.map(p => ({ raw: p.label, norm: normalize(p.label) })),
-        matchingByLabel
-      });
       if (matchingByLabel) {
-        console.log("[ModalSIM] Matched plan by GB label (aggressive norm):", { initialGb, matchingPlan: matchingByLabel });
         initPlanId = matchingByLabel.id;
       }
     }
@@ -509,7 +421,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         });
 
         if (matching) {
-          console.log("[ModalSIM] Priority 3 matched by price:", { initialPrice, base, plan: matching });
           initPlanId = matching.id;
           break;
         }
@@ -559,12 +470,16 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
     setUserChangedPlan(true);
   }, [variants, product]);
 
+  // Ref to track current selectedVariant id without causing re-renders in this effect
+  const selectedVariantIdRef = React.useRef<number | null>(null);
+  selectedVariantIdRef.current = selectedVariant?.id ?? null;
+
   React.useEffect(() => {
     if (selectedPlanId == null || !variants.length) return;
 
     const byId = variants.find((v) => String(v.id) === String(selectedPlanId));
     if (byId) {
-      if (selectedVariant?.id !== byId.id) setSelectedVariant(byId);
+      if (selectedVariantIdRef.current !== byId.id) setSelectedVariant(byId);
       return;
     }
 
@@ -584,10 +499,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       return Math.abs(rechargeValue - selectedRecharge) < 0.01;
     });
 
-    if (mappedByAmount && selectedVariant?.id !== mappedByAmount.id) {
+    if (mappedByAmount && selectedVariantIdRef.current !== mappedByAmount.id) {
       setSelectedVariant(mappedByAmount);
     }
-  }, [selectedPlanId, variants, product, formType, selectedVariant, esimBasePrice]);
+  }, [selectedPlanId, variants, product, formType, esimBasePrice]);
 
   const unitPrice = React.useMemo(
     () => {
@@ -624,7 +539,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       // Para productos de minutos, siempre usar el precio del plan seleccionado
       if (formType === "encrypted_minutes" && minutesPlans.length > 0) {
         const selectedPlan = minutesPlans.find((p) => p.id === selectedPlanId) ?? minutesPlans[0];
-        console.log("[ModalSIM] Usando precio del plan seleccionado:", selectedPlan.value);
         return selectedPlan.value;
       }
 
@@ -638,7 +552,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         // Si hay cupón y el producto estaba en oferta, NO usar initialPrice (contiene sale_price)
         if (!effectiveSkipSale && !userChangedPlan && initialPrice != null && initialPrice > 0 && initialGb) {
           if (selected?.label === initialGb) {
-            console.log("[ModalSIM] Using initialPrice for TIM data (matches initialGb):", { initialPrice, initialGb });
             return initialPrice;
           }
         }
@@ -664,7 +577,6 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       // Si se pasó un precio inicial desde la card y el usuario no ha cambiado nada, usarlo
       // Pero NO si hay cupón y el producto estaba en oferta (initialPrice contiene sale_price)
       if (!effectiveSkipSale && initialPrice != null && initialPrice > 0 && !userChangedPlan) {
-        console.log("[ModalSIM] Usando initialPrice del params:", initialPrice);
         return initialPrice;
       }
 
@@ -887,18 +799,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       sourceUrl={params.sourceUrl}
       gb={dataPlans.find((p) => String(p.id) === String(selectedPlanId))?.label || initialGb}
       region={initialRegion}
-      regionCode={(() => {
-        const code = initialRegionCode || resolvedRegionCode || selectedVariant?.scope?.code || variants[0]?.scope?.code;
-        console.log("🚩 [ModalSIM] Resolving regionCode:", {
-          initialRegionCode,
-          resolvedRegionCode,
-          selectedVariantScope: selectedVariant?.scope,
-          firstVariantScope: variants[0]?.scope,
-          resolvedCode: code,
-          initialRegion
-        });
-        return code;
-      })()}
+      regionCode={initialRegionCode || resolvedRegionCode || selectedVariant?.scope?.code || variants[0]?.scope?.code}
       flagUrl={
         (params.flagUrl === "/images/icons/global.svg" || params.flagUrl === "/icons/alcance-global.svg")
           ? undefined
