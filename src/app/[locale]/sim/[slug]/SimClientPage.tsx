@@ -127,7 +127,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
       }
 
       // sim_region debe ser un código de país (ej: "ca"), NO el nombre ("Canadá")
-      const simRegionCode = regionCodeFromUrl || searchParams.get("sim_region") || null;
+      const simRegionCode = regionCodeFromUrl || null;
 
       // Si ya tenemos el producto correcto con variantes, no recargar
       if (product && String(product.id) === String(productIdToLoad)) {
@@ -165,13 +165,12 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
               productData.variants = match.variants as any;
             }
           } catch (fallbackErr) {
-            console.warn("[SIM Page] Fallback getAllProducts failed:", fallbackErr);
+            // Silently fail - product will load without regional variants
           }
         }
 
         setProduct(productData);
       } catch (err) {
-        console.error("Error cargando producto SIM:", err);
         setError("Error al cargar el producto");
       } finally {
         setIsLoading(false);
@@ -179,7 +178,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     }
 
     loadProduct();
-  }, [productIdFromUrl, staticConfig, locale, regionFromUrl, regionCodeFromUrl, searchParams]);
+  // Use primitive deps instead of searchParams object to avoid re-triggers
+  }, [productIdFromUrl, staticConfig, locale, regionCodeFromUrl]);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // VALIDACIÓN: El backend es la fuente de verdad
@@ -190,24 +190,9 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
 
     const validation = validateProductMatchesSlug(product, slug, locale);
 
-    // Debug para identificar por qué redirige
-    if (!validation.isValid) {
-      console.warn(`[SIM Page] Validation mismatch for Product ${product.id}:`, {
-        provider: product.provider,
-        type: product.type_product,
-        currentSlug: slug,
-        expectedSlug: validation.expectedSlug,
-        derivedFamily: deriveProductFamily(product.provider),
-        derivedFormat: deriveProductFormat(product.type_product)
-      });
-      // Allow redirection logic to proceed if needed (existing logic)
-    }
-
     // STRICT SECURITY VALIDATION: Reject/Clean 'price' parameter
     // User Requirement: "no admitas url donde se que me el price"
-    const currentPriceParam = searchParams.get("price");
-    if (currentPriceParam) {
-      console.warn("[SIM Page] Saneamiento de seguridad: Eliminando parámetro 'price' de la URL.");
+    if (priceFromUrl) {
       const newParams = new URLSearchParams(searchParams.toString());
       newParams.delete("price");
       const newUrl = `${window.location.pathname}?${newParams.toString()}`;
@@ -221,29 +206,14 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
     if (!validation.isValid && validation.redirectUrl && validation.expectedSlug) {
       // 1. Verificar que el expectedSlug sea un slug válido conocido
       if (!isValidSimProductSlug(validation.expectedSlug)) {
-        console.error(
-          `[SIM Page] ⚠️ Slug inválido detectado, no redirigiendo:`,
-          { expectedSlug: validation.expectedSlug, product: product.id, provider: product.provider }
-        );
         return;
       }
 
       // 2. Protección contra bucles de redirección
       const isRedirected = searchParams.get("rd") === "1";
       if (isRedirected) {
-        console.warn(
-          `[SIM Page] 🛑 Bucle de redirección detectado. Se detiene la redirección automática.`,
-          { currentSlug: slug, expectedSlug: validation.expectedSlug, productId: product.id }
-        );
         return;
       }
-
-      console.warn(
-        `[SIM Page] Producto no corresponde a URL. ` +
-        `Producto ID ${product.id} (provider: "${product.provider}", type: "${product.type_product}") ` +
-        `debería estar en "${validation.expectedSlug}", no en "${slug}". ` +
-        `Redirigiendo a ${validation.redirectUrl}`
-      );
 
       // Construir URL de redirección
       const targetUrl = new URL(validation.redirectUrl, window.location.origin);
@@ -258,7 +228,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
 
       router.replace(targetUrl.pathname + targetUrl.search);
     }
-  }, [product, isLoading, slug, locale, router, validationChecked, productIdFromUrl, searchParams]);
+  }, [product, isLoading, slug, locale, router, validationChecked, productIdFromUrl, priceFromUrl]);
 
   // Obtener config basado en el producto cargado (no en la URL)
   const config = useMemo(() => {

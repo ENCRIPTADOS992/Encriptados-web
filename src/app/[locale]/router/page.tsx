@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 
 // Componentes Template Producto
 import HeroBanner from "../apps/component/templateProduct/HeroBanner";
@@ -131,28 +132,16 @@ export default function RouterPage() {
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
 
-  const [product, setProduct] = useState<ProductById | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
-  useEffect(() => {
-    async function loadProduct() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const productData = await getProductById(String(ROUTER_CONFIG.productId), locale);
-        setProduct(productData);
-      } catch (err) {
-        console.error("Error cargando router:", err);
-        setError("No se pudo cargar la información del producto.");
-      } finally {
-        setIsLoading(false);
-      }
-    }
+  // Usar React Query en vez de useEffect+useState para aprovechar caché compartida
+  const { data: product = null, isLoading, error: queryError } = useQuery<ProductById>({
+    queryKey: ["productById", String(ROUTER_CONFIG.productId), locale],
+    queryFn: () => getProductById(String(ROUTER_CONFIG.productId), locale),
+    staleTime: 5 * 60 * 1000,
+  });
 
-    loadProduct();
-  }, [locale]);
+  const error = queryError ? "No se pudo cargar la información del producto." : null;
 
   // Transformaciones de datos
   const plans = useMemo(() => {
@@ -216,7 +205,7 @@ export default function RouterPage() {
     setSelectedRadio(value);
   };
 
-  const handleBuy = () => {
+  const handleBuy = useCallback(() => {
     const selectedPlan = plans.find((p) => p.label === selectedRadio);
     const selectedVariantId = selectedPlan ? Number(selectedPlan.value) : undefined;
     const priceForCheckout = selectedPlan?.salePrice ? selectedPlan.salePrice
@@ -231,11 +220,11 @@ export default function RouterPage() {
       variantId: Number.isFinite(selectedVariantId) ? selectedVariantId : undefined,
       iconUrl: ROUTER_CONFIG.iconUrl,
     });
-  };
+  }, [plans, selectedRadio, isOnSale, product, openModal, locale]);
 
-  const handleChat = () => {
+  const handleChat = useCallback(() => {
     window.open("https://t.me/Encriptados", "_blank");
-  };
+  }, []);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // AUTO-POPUP: DEPRECATED - Logic moved to useModalPaymentController.ts
@@ -303,15 +292,6 @@ export default function RouterPage() {
     }
 
     // Normalizar targetDuration
-
-    // DEBUG: Ver que está comparando
-    console.log("DynamicImage (Router) Debug:", {
-      selectedPlanValue: selectedPlan.value,
-      originalVariant,
-      targetDuration,
-      locale,
-      buyNowVariants
-    });
 
     const normalizeDuration = (d: string | number) => String(d).toLowerCase().trim();
 

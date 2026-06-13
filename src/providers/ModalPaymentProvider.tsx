@@ -1,7 +1,7 @@
 // src/providers/ModalPaymentProvider.tsx
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import React, { createContext, useCallback, useContext, useMemo, useState, ReactNode } from "react";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
@@ -68,22 +68,7 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
   const [params, setParams] = useState<ModalPaymentParams>({});
   const { appMode } = useAppMobile();
 
-  // Debug: Generate a random ID to check for duplicate providers
-  const [providerId] = useState(() => Math.random().toString(36).substring(7));
-
-  useEffect(() => {
-    console.log(`💠 [Provider ${providerId}] Mounted`);
-    // Expose on window for easy checking
-    (window as any).__modalProviderId = providerId;
-  }, []);
-
-  useEffect(() => {
-    console.log(`💠 [Provider ${providerId}] params updated:`, params);
-  }, [params]);
-
-  const openModal = (newParams?: ModalPaymentParams) => {
-    console.log(`💠 [Provider ${providerId}] openModal called with:`, newParams);
-
+  const openModal = useCallback((newParams?: ModalPaymentParams) => {
     // Interceptar la apertura del checkout si estamos dentro de la App (WebView de React Native)
     // Solo para "user" — "guest" usa el checkout web normal
     if (appMode === "user" && typeof window !== "undefined" && (window as any).ReactNativeWebView) {
@@ -97,23 +82,27 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
     setParams(prev => ({ ...prev, ...(newParams ?? {}), sourceUrl }));
     setIsModalOpen(true);
-  };
+  }, [appMode]);
 
-  const closeModal = () => {
-    console.log(`💠 [Provider ${providerId}] closeModal() called`);
+  const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setParams({});
-  };
+  }, []);
 
-  const setMode = (mode: Mode) => {
+  const setMode = useCallback((mode: Mode) => {
     setParams(prev => {
       if (prev.mode === mode) return prev;
       return { ...prev, mode };
     });
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ isModalOpen, openModal, closeModal, setMode, params }),
+    [isModalOpen, openModal, closeModal, setMode, params]
+  );
 
   return (
-    <ModalPaymentContext.Provider value={{ isModalOpen, openModal, closeModal, setMode, params, providerId } as any}>
+    <ModalPaymentContext.Provider value={value}>
       {children}
     </ModalPaymentContext.Provider>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProductFilters } from "@/features/products/types/ProductFilters";
 import {
   getRegions,
@@ -86,8 +86,8 @@ export function useRegionCountryFilter({
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 300);
 
-  // Estado para controlar si ya se realizó la detección automática por IP
-  const [autoDetectDone, setAutoDetectDone] = useState(false);
+  // Estado para controlar si ya se realizó la detección automática por IP (ref para evitar re-renders)
+  const autoDetectDoneRef = useRef(false);
 
   const safeRegionOrCountry = filters.regionOrCountry ?? "global";
 
@@ -120,6 +120,9 @@ export function useRegionCountryFilter({
       }
     }
 
+    // Reset auto-detect when service changes
+    autoDetectDoneRef.current = false;
+
     initRegions();
     initCountries();
 
@@ -131,17 +134,15 @@ export function useRegionCountryFilter({
   // Detección automática de país por IP
   useEffect(() => {
     // Si ya detectamos, o aún cargando países, no hacer nada
-    if (autoDetectDone || loadingCountries || countries.length === 0) return;
+    if (autoDetectDoneRef.current || loadingCountries || countries.length === 0) return;
 
     // Si ya hay un país seleccionado explícitamente (incluso global), no sobrescribir
     if (filters.regionOrCountry && filters.regionOrCountry !== "global") {
-      console.log("📍 [Geo] Ya hay selección:", filters.regionOrCountry);
-      setAutoDetectDone(true);
+      autoDetectDoneRef.current = true;
       return;
     }
 
     const detectCountry = async () => {
-      console.log("📍 [Geo] Iniciando detección...");
       try {
         // Usar ipapi.co para obtener el código de país (ISO Alpha-2)
         const response = await fetch("https://ipapi.co/json/");
@@ -149,7 +150,6 @@ export function useRegionCountryFilter({
         
         const data = await response.json();
         const countryCode = data.country_code; // Ej: "CO", "US", "MX"
-        console.log("📍 [Geo] Código detectado:", countryCode);
 
         if (countryCode) {
           // Buscar si el país detectado está soportado en nuestra lista de países
@@ -160,7 +160,6 @@ export function useRegionCountryFilter({
           );
 
           if (supportedCountry) {
-            console.log("📍 [Geo] País soportado encontrado:", supportedCountry.name);
             const iso2 = normalizeAlpha2(supportedCountry.code) ?? supportedCountry.code;
             
             updateFilters({
@@ -169,19 +168,19 @@ export function useRegionCountryFilter({
               simCountry: iso2.toUpperCase(),
               simCountryLabel: supportedCountry.name,
             });
-          } else {
-            console.log("📍 [Geo] País no soportado en la lista:", countryCode);
           }
         }
       } catch (error) {
-        console.error("📍 [Geo] Error:", error);
+        // Silently fail - user can select manually
       } finally {
-        setAutoDetectDone(true);
+        autoDetectDoneRef.current = true;
       }
     };
 
     detectCountry();
-  }, [autoDetectDone, loadingCountries, countries, filters.regionOrCountry, updateFilters]);
+  // countries.length as primitive dep instead of the array reference
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingCountries, countries.length, filters.regionOrCountry, updateFilters]);
 
   // Helper para normalizar texto (quitar acentos, lowercase)
   const normalizeText = (text: string) => {
@@ -221,7 +220,9 @@ export function useRegionCountryFilter({
 
     setLoadingSearch(false);
 
-  }, [debouncedSearch, filters.regionOrCountryType, regions, countries]);
+  // Use .length as primitive deps to avoid re-triggers when array references change with same content
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, filters.regionOrCountryType, regions.length, countries.length]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -238,7 +239,11 @@ export function useRegionCountryFilter({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
+  // Set defaults only on initial mount — uses ref to run once and avoids loop
+  const defaultsSetRef = useRef(false);
   useEffect(() => {
+    if (defaultsSetRef.current) return;
+
     const next: Partial<ProductFilters> = {};
     if (!filters.regionOrCountryType) next.regionOrCountryType = "region";
     if (!filters.regionOrCountry) next.regionOrCountry = "global";
@@ -258,8 +263,13 @@ export function useRegionCountryFilter({
       }
     }
 
-    if (Object.keys(next).length > 0) updateFilters(next);
-  }, [filters.regionOrCountryType, filters.regionOrCountry, updateFilters]);
+    if (Object.keys(next).length > 0) {
+      updateFilters(next);
+    }
+    defaultsSetRef.current = true;
+  // Only run once on mount — updateFilters is stable via useCallback
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectedInfo = useMemo(() => {
     const fallback = {

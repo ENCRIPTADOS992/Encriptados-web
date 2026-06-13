@@ -23,19 +23,10 @@ const ModalPayment: React.FC<Props> = ({
   const t = useTranslations("paymentModal");
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  console.log("[ModalPayment] render", {
-    visible,
-    theme,
-    hasChildren: !!children,
-  });
-
   useEffect(() => {
     if (!visible) return;
 
-    console.log("[ModalPayment] useEffect(visible) ON");
-
     const onKey = (e: KeyboardEvent) => {
-      console.log("[ModalPayment] keydown", e.key);
       if (e.key === "Escape") onClose();
     };
 
@@ -43,57 +34,13 @@ const ModalPayment: React.FC<Props> = ({
 
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    console.log("[ModalPayment] body overflow cambiado", {
-      prev,
-      now: document.body.style.overflow,
-    });
-
     return () => {
-      console.log("[ModalPayment] cleanup visible OFF");
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
   }, [visible, onClose]);
 
-  useEffect(() => {
-    if (!visible) return;
-    if (typeof window === "undefined") return;
-
-    const logLayout = (label: string) => {
-      if (!panelRef.current) {
-        console.log(`[ModalPayment] ${label} → panelRef NULL`);
-        return;
-      }
-
-      const rect = panelRef.current.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-      const viewportW = window.innerWidth;
-      const scrollHeight = panelRef.current.scrollHeight;
-      const clientHeight = panelRef.current.clientHeight;
-
-      console.log(`[ModalPayment] layout (${label})`, {
-        viewportW,
-        viewportH,
-        rect: {
-          top: rect.top,
-          bottom: rect.bottom,
-          height: rect.height,
-        },
-        panel: {
-          scrollHeight,
-          clientHeight,
-          offsetHeight: panelRef.current.offsetHeight,
-        },
-      });
-    };
-
-    logLayout("mount");
-    const t = setTimeout(() => logLayout("after-timeout-150ms"), 150);
-    return () => clearTimeout(t);
-  }, [visible]);
-
   if (!visible) {
-    console.log("[ModalPayment] visible = false → no render");
     return null;
   }
 
@@ -147,7 +94,6 @@ const ModalPayment: React.FC<Props> = ({
       >
         <button
           onClick={() => {
-            console.log("[ModalPayment] botón cerrar clic");
             onClose();
           }}
           className="absolute top-2 right-2 w-8 h-8 grid place-items-center rounded-full hover:bg-black/10 transition-colors z-10"
