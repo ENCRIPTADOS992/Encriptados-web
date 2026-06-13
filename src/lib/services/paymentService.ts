@@ -27,7 +27,6 @@ export async function handlePaymentWebhook(providerRef:string, status:'paid'){
         meta: { ...(order.meta ?? {}), noStock: true }
       });
       await sendEmail('userid_out_of_stock', order.email, { orderId: order.id });
-      console.log('[notify-admin] order pending_admin (no stock) id=', order.id);
     }
   }
   return { ok:true };

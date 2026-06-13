@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useGetProductByIdUpdate } from "@/features/products/queries/useGetProductById";
 import { Product } from "@/features/products/types/AllProductsResponse";
 import { useParams } from "next/navigation";
@@ -38,12 +37,7 @@ export const ProductByIdProvider: React.FC<ProductByIdProviderProps> = ({
   const productId = params.productId as string;
   const selectedOption = parseInt(filters.selectedOption, 10);
 
-
-  console.log("🚀 productId desde URL:", productId);
-  console.log("🚀 selectedOption desde filtros:", selectedOption);
-
   const { data: currentProduct, isLoading, isError } = useGetProductByIdUpdate(productId, selectedOption);
-
 
   return (
     <ProductByIdContext.Provider 

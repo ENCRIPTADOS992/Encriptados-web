@@ -18,7 +18,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
 }) => {
   const t = useTranslations("OurProductsPage");
   const osOptions = useBrandsFromProducts(products);
-  console.log("[FilterAppWithLicense] products:", products);
   const allOption = useMemo(() => [{ label: t("filterProducts.allOption"), value: "all" }], [t]);
 
   const licenseOptions = useMemo(() => {
@@ -76,7 +75,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
     ];
   }, [allOption, products, filters.os, filters.selectedOption, t]);
 
-
   return (
     <div className="flex flex-row space-x-2">
       {/* SOFTWARE */}
@@ -88,7 +86,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
           name="os"
           options={osOptions}
           onChangeExternal={(value) => {
-            console.log("[FilterAppWithLicense] Cambio de OS:", value);
             updateFilters({ os: value });
           }}
         />
@@ -103,7 +100,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
           name="license"
           options={licenseOptions}
           onChangeExternal={(value) => {
-            console.log("[FilterAppWithLicense] Cambio de License:", value);
             updateFilters({ license: String(value) });
           }}
         />

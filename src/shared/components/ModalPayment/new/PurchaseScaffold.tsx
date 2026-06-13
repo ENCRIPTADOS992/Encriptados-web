@@ -38,8 +38,6 @@ export default function PurchaseScaffold({
 }: Props) {
   const t = useTranslations("paymentModal");
 
-  console.log("[Scaffold] mode:", mode);
-
   const productName = headerProps.product?.name ?? "";
   const productId = headerProps.product?.id;
   const isMdmIphone = /secure\s*mdm\s*iphone/i.test(productName) ||

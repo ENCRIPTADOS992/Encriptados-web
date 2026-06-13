@@ -23,8 +23,6 @@ const CountryList: React.FC = () => {
 
   const { getValues, watch } = useFormContext();
 
-  console.log(watch());
-
   useEffect(() => {
     const fetchCountries = async () => {
       const countryName = getValues("country") || "Colombia"; // Usa "Colombia" si no hay entrada

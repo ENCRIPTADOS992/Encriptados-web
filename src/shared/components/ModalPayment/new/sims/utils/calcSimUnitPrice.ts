@@ -53,25 +53,11 @@ export function calcSimUnitPrice({
 
     const valueNumber = Number(selected.value || 0);
 
-    console.log("[calcSimUnitPrice] MINUTES", {
-      formType,
-      selectedPlanId,
-      selected,
-      minutesPlans,
-      unitPrice: valueNumber,
-    });
-
     return valueNumber;
   }
 
   if (formType === "encrypted_data" && selectedPlanId != null) {
     const valueNumber = Number(selectedPlanId) || 0;
-
-    console.log("[calcSimUnitPrice] DATA", {
-      formType,
-      selectedPlanId,
-      unitPrice: valueNumber,
-    });
 
     return valueNumber;
   }
@@ -97,15 +83,6 @@ export function calcSimUnitPrice({
         ? selected
         : Math.max(fixedBase + selected, 0);
 
-      console.log("[calcSimUnitPrice] ESIM+RECARGA_DATOS", {
-        formType,
-        selectedPlanId,
-        fixedBase,
-        defaultTotal,
-        defaultRecharge,
-        unitPrice,
-      });
-
       return unitPrice;
     }
 
@@ -119,16 +96,6 @@ export function calcSimUnitPrice({
     if (!Number.isFinite(base) || base < 0 || base > 100) base = 7.5;
 
     const unitPrice = Math.max(base + (selectedAmount || 0), 0);
-
-    console.log("[calcSimUnitPrice] ESIM+DATA", {
-      formType,
-      selectedPlanId,
-      defaultAmount,
-      selectedAmount,
-      productPrice,
-      base,
-      unitPrice,
-    });
 
     return unitPrice;
   }
@@ -157,29 +124,12 @@ export function calcSimUnitPrice({
 
     const valueNumber = toNumber(raw);
 
-    console.log("[calcSimUnitPrice] VARIANT", {
-      formType,
-      selectedVariant,
-      fallbackVariant: variants[0],
-      productPrice: product?.price,
-      unitPrice: valueNumber,
-      productOnSale
-    });
-
     return valueNumber;
   }
 
   const prodSale = !skipSale && (product as any)?.sale_price ? parseFloat(String((product as any).sale_price)) : NaN;
   const prodPrice = Number(product?.price ?? 0);
   const valueNumber = (!isNaN(prodSale) && prodSale > 0 && prodSale < prodPrice) ? prodSale : prodPrice;
-
-  console.log("[calcSimUnitPrice] PRODUCT PRICE", {
-    formType,
-    productPrice: product?.price,
-    salePrice: (product as any)?.sale_price,
-    productOnSale,
-    unitPrice: valueNumber,
-  });
 
   return valueNumber;
 }

@@ -53,12 +53,9 @@ export const useEncryptedSimProducts = () => {
   return useQuery<EncryptedSimProduct[]>({
     queryKey: ["encrypted-sim-products", locale],
     queryFn: async () => {
-      console.log("🔐 [useEncryptedSimProducts] Fetching encrypted SIM products...");
 
       // Obtener todos los productos de la categoría 40 (SIMs)
       const products = await getAllProducts(PRODUCT_CATEGORY_IDS.SIMS, locale);
-
-      console.log("🔐 [useEncryptedSimProducts] Products received:", products.length);
 
       // Mapear productos únicos por ID (evitar duplicados de variantes)
       // Pero acumular las variantes de todos los productos con el mismo ID
@@ -71,7 +68,6 @@ export const useEncryptedSimProducts = () => {
       });
 
       const uniqueProducts = Array.from(uniqueProductsMap.values());
-      console.log("🔐 [useEncryptedSimProducts] Unique products:", uniqueProducts.map(p => ({ id: p.id, name: p.name, variants: p.variants?.length })));
 
       // Filtrar y mapear los productos específicos que necesitamos
       const mappedProducts: EncryptedSimProduct[] = uniqueProducts
@@ -149,7 +145,6 @@ export const useEncryptedSimProducts = () => {
           };
         });
 
-      console.log("✅ [useEncryptedSimProducts] FINAL MAPPED PRODUCTS:", mappedProducts);
       return mappedProducts;
     },
     staleTime: 5 * 60 * 1000, // 5 minutos

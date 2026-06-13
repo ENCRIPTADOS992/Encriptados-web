@@ -9,15 +9,8 @@ export const userAuthLogin = async (
   credentials: LoginWithTokenBody
 ): Promise<LoginWithTokenResponse> => {
   try {
-    const response = await axiosInstance.post("/loginWithToken", credentials, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const result = response.data;
-
-    return result;
+    const response = await axiosInstance.post<LoginWithTokenResponse>("/loginWithToken", credentials);
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -25,15 +18,9 @@ export const userAuthLogin = async (
 
 export const userRegisterToken = async (): Promise<RegisterTokenResponse> => {
   try {
-    const response = await axiosInstance.post("/registerToken", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const result = response.data;
-
-    return result;
+    // Second arg is request body (null = no body), third arg is config
+    const response = await axiosInstance.post<RegisterTokenResponse>("/registerToken", null);
+    return response.data;
   } catch (error) {
     throw error;
   }

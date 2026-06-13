@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getProductConfig, getCanonicalProductSlugs } from "./productConfig";
 import ProductPageContent from "./AppClientPage";
 import { getTranslations } from "next-intl/server";
@@ -5,6 +6,8 @@ import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo
 import { getResolvedAppProduct } from "./productData";
 import { SEO_LOCALES } from "@/shared/seo/constants";
 
+/** Allow up to 30 seconds for server-side rendering (WordPress API can be slow) */
+export const maxDuration = 30;
 
 interface PageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -27,10 +30,11 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   const sp = searchParams ? await searchParams : {};
   const t = await getTranslations({ locale, namespace: "appsShared.productTemplate" });
   const config = getProductConfig(slug);
-  const explicitProductId = config?.productId ? undefined : firstParam(sp.productId);
-  const product = await getResolvedAppProduct(slug, locale, explicitProductId).catch(() => null);
 
-  // Fallback for metadata if config doesn't exist
+  // Always call with (slug, locale) only — React.cache() deduplicates with layout + page
+  // The explicitProductId override is only for the client-side React Query hook
+  const product = await getResolvedAppProduct(slug, locale).catch(() => null);
+
   const titleBase = slug
     .split("-")
     .filter(Boolean)
@@ -67,5 +71,13 @@ export default async function ProductPage({ params }: PageProps) {
   const { slug, locale } = await params;
   const initialProduct = await getResolvedAppProduct(slug, locale).catch(() => null);
 
-  return <ProductPageContent slug={slug} locale={locale} initialProduct={initialProduct} />;
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-gray-400">Loading...</div>
+      </main>
+    }>
+      <ProductPageContent key={slug} slug={slug} locale={locale} initialProduct={initialProduct} />
+    </Suspense>
+  );
 }

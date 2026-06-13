@@ -21,8 +21,6 @@ import { BuyerFieldsSection } from "./components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./components/PaymentMethodSection";
 import { resolveVariantPrice, isProductOnSale } from "./utils/resolveVariantPrice";
 
-
-
 type SimFormUnifiedProps = {
   formType: FormType;
   productid?: string;
@@ -240,7 +238,6 @@ export default function SimFormUnified({
       return;
     }
     await handleSubmit(async (data: SimFormValues) => {
-      console.log("[SimFormUnified] START PAY 👉", { data, method });
       setFormData(data);
       setStripeError(null);
       setIsSubmitting(true);
@@ -312,12 +309,6 @@ export default function SimFormUnified({
           ? Number(productid)
           : (product?.id ? Number(product.id) : null);
 
-        console.log("[SimFormUnified] Product ID Resolution:", {
-          productid,
-          productDotId: product?.id,
-          resolvedProductId
-        });
-
         const payload: any = {
           email: data.email,
           method: tottoliMethod,
@@ -370,11 +361,8 @@ export default function SimFormUnified({
           };
         }
 
-        console.log("[SimFormUnified] Payload:", payload);
-
         // === 2. EXECUTE CHECKOUT (Create Order/Intent) ===
         const res = await tottoliCheckout(payload);
-        console.log("[SimFormUnified] Response:", res);
 
         const resOrderId = (res as any).order_id ?? null;
 
@@ -405,7 +393,6 @@ export default function SimFormUnified({
           postal_code: data.cardPostal || data.postalCode || undefined,
         };
 
-        console.log("[SimFormUnified] Confirming payment with Stripe...");
         const confirmRes = await confirmCardPayment(
           stripeRef.current,
           secret,

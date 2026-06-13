@@ -66,15 +66,7 @@ const FixedSimProducts: React.FC = () => {
   // Obtener productos desde la API
   const { data: apiProducts, isLoading, isError } = useEncryptedSimProducts();
 
-  console.log("🔍 [FixedSimProducts] Hook State:", {
-    isLoading,
-    isError,
-    productsCount: apiProducts?.length,
-    products: apiProducts
-  });
-
   const handleBuy = (id: number, variants?: { id: number; price: number; sku: string }[], initialPriceOverride?: number) => {
-    console.log(`🛒 Comprar clicado para ID=${id}`, { variants, initialPriceOverride });
     // Si se pasa un precio inicial específico (por variante), usarlo. Si no, usar el de la primera variante.
     const initialPrice = initialPriceOverride !== undefined
       ? initialPriceOverride
@@ -388,7 +380,6 @@ const FixedSimProducts: React.FC = () => {
   ];
 
   // DEBUG OVERLAY
-  console.log("🔍 [FixedSimProducts] Card Data:", cardData.map(c => ({ id: c.id, title: c.title, variantTag: c.variantTag })));
 
   return (
     <div className="flex flex-col gap-5">

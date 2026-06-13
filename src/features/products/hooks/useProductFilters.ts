@@ -78,7 +78,6 @@ export const useProductFilters = () => {
   };
 
   const updateFilters = (newFilters: Partial<ProductFilters>) => {
-    console.log("[useProductFilters] updateFilters llamado con:", newFilters);
     const updated = new URLSearchParams(params.toString());
 
     // Sincronizar automáticamente timprovider y timService antes de actualizar URL
@@ -124,7 +123,6 @@ export const useProductFilters = () => {
       updated.delete("timcountry");
     }
 
-    console.log("[useProductFilters] URL actualizada:", updated.toString());
     router.replace(`${pathname}?${updated.toString()}`, { scroll: false });
   };
 

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 const PUBLIC_WP_CACHE_SECONDS = 120;
+const WP_PROXY_TIMEOUT_MS = 15_000; // 15 seconds
 
 const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
 const wpApiBase = isProductionServer
@@ -16,6 +17,12 @@ function isCacheablePublicGet(pathStr: string, hasAuthHeader: boolean) {
     pathStr.startsWith("encriptados/v1/blogs") ||
     pathStr.startsWith("wp/v2/")
   );
+}
+
+function createTimeoutSignal(ms: number): AbortSignal {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
 }
 
 export async function GET(
@@ -40,6 +47,7 @@ export async function GET(
       method: "GET",
       headers,
       cache: "no-store",
+      signal: createTimeoutSignal(WP_PROXY_TIMEOUT_MS),
     });
 
     const contentType = response.headers.get("content-type") || "";
@@ -69,6 +77,10 @@ export async function GET(
       });
     }
   } catch (error: any) {
+    if (error?.name === "AbortError") {
+      console.error(`Timeout proxying GET /wp-json/${pathStr} (${WP_PROXY_TIMEOUT_MS}ms)`);
+      return NextResponse.json({ error: "Backend request timed out" }, { status: 504 });
+    }
     console.error(`Error proxying GET /wp-json/${pathStr}:`, error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -106,6 +118,7 @@ export async function POST(
       method: "POST",
       headers,
       body,
+      signal: createTimeoutSignal(WP_PROXY_TIMEOUT_MS),
     });
 
     const responseContentType = response.headers.get("content-type") || "";
@@ -120,6 +133,10 @@ export async function POST(
       });
     }
   } catch (error: any) {
+    if (error?.name === "AbortError") {
+      console.error(`Timeout proxying POST /wp-json/${pathStr} (${WP_PROXY_TIMEOUT_MS}ms)`);
+      return NextResponse.json({ error: "Backend request timed out" }, { status: 504 });
+    }
     console.error(`Error proxying POST /wp-json/${pathStr}:`, error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

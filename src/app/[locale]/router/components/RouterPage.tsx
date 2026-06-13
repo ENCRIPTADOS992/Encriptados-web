@@ -66,12 +66,10 @@ const RouterPage = () => {
       });
     },
     onChat: () => {
-      console.log("chat telegram");
     },
   };
 
   const handleRadioChange = (val: string) => {
-    console.log("Cambio radio a:", val);
     setSelectedRadio(val);
   };
 
@@ -81,7 +79,6 @@ const RouterPage = () => {
       plans.length > 0 &&
       (!selectedRadio || !plans.some((p) => p.label === selectedRadio))
     ) {
-      console.log("Inicializa selectedRadio con:", plans[0].label);
       setSelectedRadio(plans[0].label);
     }
   }, [plans]);

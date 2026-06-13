@@ -271,7 +271,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     });
   };
 
-  const handleChat = () => console.log("Chat support");
+  const handleChat = () => { /* TODO: implement chat support */ };
 
   const buildSimUrl = (slug: string) => {
     const basePath = `/${slug}`;
@@ -367,15 +367,6 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
     // Normalizar targetDuration (ej: si es "PHONE", la API espera "PHONE" o "phone"?)
     // Asumimos coincidencia de string directa o parcial.
-
-    // DEBUG: Ver que está comparando
-    console.log("DynamicImage Debug:", {
-      selectedPlanValue: selectedPlan.value,
-      originalVariant,
-      targetDuration,
-      locale,
-      buyNowVariants
-    });
 
     const normalizeDuration = (d: string | number) => String(d).toLowerCase().trim();
 

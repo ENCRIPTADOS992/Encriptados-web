@@ -27,7 +27,7 @@ export default function AmbassadorCardPromotor({
     "Acceso exclusivo a lanzamientos, noticias y contenido de Encriptados",
   ],
   buttonText = "Enviar solicitud de Promotor",
-  onSubmit = () => console.log("Form submitted"),
+  onSubmit = () => {},
 }: AmbassadorCardProps) {
   const t = useTranslations();
   const locale = useLocale();

@@ -37,7 +37,6 @@ const FeaturedProductCard = () => {
     fetchPrice();
   }, []);
 
-
   const handleBuyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -52,11 +51,6 @@ const FeaturedProductCard = () => {
         finalHref = `/${locale}${baseHref}`;
       }
     }
-
-    console.log("[FeaturedProductCard] Navegando a:", {
-      pathname,
-      finalHref,
-    });
 
     try {
       router.push(finalHref);
@@ -97,7 +91,6 @@ const FeaturedProductCard = () => {
             <span className="text-xs font-normal">Desde:</span>
             <span className="text-base font-normal">${price ? parseFloat(price).toFixed(2) : "..."}</span>
           </div>
-
 
           <button
             type="button"

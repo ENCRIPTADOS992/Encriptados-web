@@ -35,11 +35,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
               ? value[value.length - 1]
               : value;
 
-            console.log(
-              "[FilterAppWithLicense] Cambio de encriptadosprovider (normalizado):",
-              normalized
-            );
-
             updateFilters({ encriptadosprovider: normalized });
           }}
         />
@@ -57,7 +52,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             { label: t("filterProducts.services.physicalSim"), value: "physicsimtim" },
           ]}
           onChangeExternal={(value) => {
-            console.log("[FilterAppWithLicense] Cambio de timprovider:", value);
             updateFilters({ timprovider: value });
           }}
         />
@@ -113,7 +107,6 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
             // activarapps oculto del selector
           ]}
           onChangeExternal={(value) => {
-            console.log("[FilterAppWithLicense] Cambio de provider:", value);
             updateFilters({ provider: value });
           }}
         />

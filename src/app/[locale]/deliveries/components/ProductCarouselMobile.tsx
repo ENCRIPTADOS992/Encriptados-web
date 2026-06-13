@@ -78,7 +78,6 @@ const ProductCarouselMobile = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("[ProductCarouselMobile] ✅ Componente montado");
   }, []);
 
   const settings = {
@@ -111,7 +110,6 @@ const ProductCarouselMobile = () => {
 
     try {
       router.push(finalHref);
-      console.log("[ProductCarouselMobile] 🟢 router.push ejecutado");
     } catch (error) {
       console.error("[ProductCarouselMobile] 🔴 Error en router.push", error);
       if (typeof window !== "undefined") {

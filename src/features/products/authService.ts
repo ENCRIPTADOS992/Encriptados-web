@@ -1,24 +1,23 @@
-import axios from "axios";
-import { WP_API_BASE } from "@/shared/constants/backend";
-
-const API_URL = WP_API_BASE;
-
-export const getToken = async () => {
+/**
+ * Auth service — obtains JWT token via server-side API route.
+ * Credentials are kept on the server; the client only receives the token.
+ */
+export const getToken = async (): Promise<string> => {
   try {
-    console.log("Enviando credentials:", {
-      username: process.env.NEXT_PUBLIC_WP_USERNAME,
-      password: process.env.NEXT_PUBLIC_WP_PASSWORD,
+    const response = await fetch("/api/auth/wp-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
     });
 
-    const response = await axios.post(`${API_URL}/jwt-auth/v1/token`, {
-      username: process.env.NEXT_PUBLIC_WP_USERNAME,
-      password: process.env.NEXT_PUBLIC_WP_PASSWORD,
-    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Auth failed with status ${response.status}`);
+    }
 
-    const { token } = response.data;
+    const { token } = await response.json();
     return token;
   } catch (error) {
-    console.error("Error al obtener el token JWT", error);
+    console.error("Error al obtener el token JWT");
     throw error;
   }
 };

@@ -46,7 +46,6 @@ export function useStripeSplit(enabled: boolean) {
 
     // Si ya está montado, no hacer nada
     if (splitRef.current) {
-      console.log("[useStripeSplit] Ya montado, ignorando");
       return;
     }
 
@@ -56,7 +55,6 @@ export function useStripeSplit(enabled: boolean) {
     async function mount() {
       if (!mountedRef.current) return;
       if (splitRef.current) {
-        console.log("[useStripeSplit] Ya montado durante retry, saliendo");
         return;
       }
 
@@ -98,7 +96,6 @@ export function useStripeSplit(enabled: boolean) {
         splitRef.current = split;
         retryCountRef.current = 0;
         setStatus("ready");
-        console.log("[useStripeSplit] ✅ Stripe montado correctamente");
       } catch (e: any) {
         if (!mountedRef.current) return;
         

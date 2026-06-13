@@ -23,7 +23,6 @@ const OurProductsPageClient = () => {
   const { filters, updateFilters } = useProductFilters();
 
   useEffect(() => {
-    console.log("[OurProductsPage] Página montada correctamente ✅");
   }, []);
 
   return (
@@ -84,7 +83,6 @@ const OurProductsPageClient = () => {
       <div>
         <BasicFormProvider
           submit={(data) => {
-            console.log(data, "Formulario enviado con esta data");
           }}
         >
           <FormOurProducts />

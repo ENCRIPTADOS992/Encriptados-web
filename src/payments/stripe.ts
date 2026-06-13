@@ -31,9 +31,6 @@ export async function getStripe(): Promise<Stripe> {
     throw new Error("STRIPE_PUBLISHABLE_KEY inválida.");
   }
 
-  // eslint-disable-next-line no-console
-  console.log("[stripe] publishable key:", maskKey(STRIPE_PUBLISHABLE_KEY));
-
   if (!stripePromise) stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
   const stripe = await stripePromise;
   if (!stripe) throw new Error("No se pudo inicializar Stripe.");

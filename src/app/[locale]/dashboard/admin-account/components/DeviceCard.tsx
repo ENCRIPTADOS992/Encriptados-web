@@ -14,7 +14,7 @@ export default function DeviceCard({
   lastAccess = "2024-09-24 12:41:55",
   location = "Quito, Ecuador",
   icon,
-  onSignOut = () => console.log("Sign out clicked"),
+  onSignOut = () => {},
 }: DeviceStatusProps) {
   return (
     <div className="bg-white border-b rounded-xl sm:rounded-xl sm:shadow-md sm:border-none border-[#E5E7EB] last:border-b-0 p-4 sm:p-6 w-full cursor-pointer">

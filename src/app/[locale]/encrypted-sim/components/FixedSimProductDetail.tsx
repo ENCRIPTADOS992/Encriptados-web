@@ -22,20 +22,11 @@ const FixedSimProductDetail: React.FC = () => {
   const categoryId = parseInt(selectedOption, 10);
   const locale = useLocale();
 
-  console.log("🔍 ID recibido:", selectedId);
-  console.log("📦 Categoría seleccionada:", categoryId);
-
   const {
     data: product,
     isLoading,
     isError,
   } = useGetProductByIdUpdate(selectedId ?? "", categoryId);
-
-  console.log("📡 Resultado de useGetProductByIdUpdate:", {
-    isLoading,
-    isError,
-    product,
-  });
 
   React.useEffect(() => {
     if (!product?.name) return;
