@@ -105,9 +105,9 @@ const SlickCarouselProducts = () => {
         {products.map((product) => (
           <div key={product.id} className="p-4 cursor-grab">
             <div className="border rounded-2xl overflow-hidden  bg-white  shadow-lg h-[400px] ">
-              <h1 className="text-center text-xs tracking-[0.2em] mt-7 text-[#102542]">
+              <span className="block text-center text-xs tracking-[0.2em] mt-7 text-[#102542]">
                 {t("encryptedPhone")}
-              </h1>
+              </span>
 
               <h2 className="text-lg font-bold text-center text-[#102542]">
                 {product.title}

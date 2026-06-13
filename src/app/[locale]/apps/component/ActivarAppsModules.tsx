@@ -38,7 +38,7 @@ export default function ActivarAppsModules() {
         <div className="absolute inset-0 z-10 flex flex-col items-center desktop:items-start justify-start pt-10 px-6 tablet:pt-12 desktop:justify-center desktop:pt-0 desktop:px-16">
           <Image
             src="/images/activar-apps/add_task.webp"
-            alt=""
+            alt="Activate apps"
             width={56}
             height={56}
             className="hidden desktop:block mb-2"
@@ -83,7 +83,7 @@ export default function ActivarAppsModules() {
           <div className="flex flex-col items-center desktop:items-start desktop:justify-center pt-10 px-6 tablet:pt-12 desktop:pt-0 desktop:px-16 desktop:w-[45%]">
             <Image
               src="/images/activar-apps/globe_location_pin.webp"
-              alt=""
+              alt="International coverage"
               width={56}
               height={56}
               className="hidden desktop:block mb-2"

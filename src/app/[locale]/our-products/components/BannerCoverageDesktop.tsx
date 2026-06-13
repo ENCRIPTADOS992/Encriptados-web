@@ -32,6 +32,7 @@ export const BannerCoverageDesktop = () => {
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
+              aria-label={t("searchPlaceholder")}
               className="w-full h-[56px] rounded-full border border-[#D1D5DB] pl-14 pr-6 text-sm text-[#111827] placeholder:text-[#9CA3AF] outline-none focus:outline-none focus:border-[#33CDFB] transition-colors"
             />
           </div>

@@ -8,9 +8,9 @@ export const SimMoreInfoHeroDesktop = () => {
       />
 
       <div className="mx-auto max-w-[1440px] h-[284px] pl-[140px] pr-10 flex items-center justify-between overflow-hidden">
-        <h1 className="font-inter font-bold text-[34px] leading-[1.2] max-w-[418px]">
+        <h2 className="font-inter font-bold text-[34px] leading-[1.2] max-w-[418px]">
           Seguridad encriptada en tus comunicaciones
-        </h1>
+        </h2>
 
         <div className="relative w-[608px] h-[284px] flex-shrink-0">
             <div className="absolute top-[32px] -left-[80px] w-[204px] h-[220px] bg-white rounded-3xl opacity-80" />

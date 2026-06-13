@@ -52,6 +52,7 @@ const RechargeNumberInput: React.FC<RechargeNumberInputProps> = ({
         <input
           type="text"
           placeholder={placeholder}
+          aria-label={placeholder}
           {...register(name, { onChange: handleNumberChange })}
           className={`flex-1 p-2 border-none focus:outline-none ${
             iconPosition === "left" ? "pl-12" : "pl-3"

@@ -99,6 +99,7 @@ export function DataCostsByCountry({ rows = DEFAULT_ROWS }: DataCostsByCountryPr
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={t("searchPlaceholder")}
+                  aria-label={t("searchPlaceholder")}
                   className="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-4 pr-10 text-sm outline-none focus:border-[#1E8A4C] focus:ring-1 focus:ring-[#1E8A4C]"
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">

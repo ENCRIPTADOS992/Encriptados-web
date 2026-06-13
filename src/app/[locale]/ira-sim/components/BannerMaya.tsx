@@ -36,8 +36,8 @@ const BannerMaya = () => {
             src={MayaWomen}
             alt="Image"
             loading="eager"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         </div>
 
@@ -80,8 +80,8 @@ const BannerMaya = () => {
             src={MayaMan}
             alt="Image"
             loading="eager"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         </div>
 
@@ -99,8 +99,8 @@ const BannerMaya = () => {
             src={MayaMan}
             alt="Image"
             loading="eager"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         </div>
 

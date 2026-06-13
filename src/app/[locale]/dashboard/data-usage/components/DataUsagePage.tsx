@@ -104,9 +104,8 @@ const DataUsagePage: React.FC = () => {
               <Image
                 alt={t("imageAlt")}
                 src={Man}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-b-2xl absolute bottom-0 left-0 translate-y-0 md:translate-y-20" // Asegura que la imagen esté alineada en la parte inferior
+                fill
+                className="rounded-b-2xl absolute bottom-0 left-0 translate-y-0 md:translate-y-20 object-cover" // Asegura que la imagen esté alineada en la parte inferior
               />
             </div>
           </div>

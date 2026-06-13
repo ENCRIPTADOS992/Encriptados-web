@@ -8,9 +8,9 @@ const SimMoreInfoHeroMobile = () => {
           className="w-[40px] h-[40px] mb-4"
         />
 
-        <h1 className="font-inter font-bold text-[24px] leading-[1.2] mb-6">
+        <h2 className="font-inter font-bold text-[24px] leading-[1.2] mb-6">
           Seguridad encriptada en tus comunicaciones
-        </h1>
+        </h2>
 
         <div className="relative w-full h-[230px]">
           <div className="absolute top-[20px] left-[10%] w-[140px] h-[160px] bg-white rounded-3xl opacity-80" />

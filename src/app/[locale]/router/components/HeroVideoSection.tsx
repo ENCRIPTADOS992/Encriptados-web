@@ -18,9 +18,9 @@ const HeroVideoSection: React.FC<HeroVideoSectionProps> = ({
 
         {/* Título grande a la izquierda */}
         <div className="w-[540px]">
-          <h1 className="font-inter font-bold text-[44px] leading-[100%] text-[#101010]">
+          <h2 className="font-inter font-bold text-[44px] leading-[100%] text-[#101010]">
             {title}
-          </h1>
+          </h2>
         </div>
         {/* Video o imagen a la derecha */}
         <div className="flex-shrink-0 ml-auto">

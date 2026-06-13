@@ -92,6 +92,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder={t("filterProducts.searchRegionCountryPlaceholder")}
+                  aria-label={t("filterProducts.searchRegionCountryPlaceholder")}
                   className="bg-transparent outline-none w-[160px] text-[#171717] placeholder:text-[#9CA3AF] text-[14px] font-medium"
                   onClick={(e) => e.stopPropagation()}
                 />

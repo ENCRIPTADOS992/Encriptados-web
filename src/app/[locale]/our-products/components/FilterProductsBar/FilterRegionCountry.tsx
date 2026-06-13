@@ -117,6 +117,11 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                     ? t("filterProducts.searchRegionPlaceholder")
                     : t("filterProducts.searchCountryPlaceholder")
                 }
+                aria-label={
+                  filters.regionOrCountryType === "region"
+                    ? t("filterProducts.searchRegionPlaceholder")
+                    : t("filterProducts.searchCountryPlaceholder")
+                }
                 className="bg-transparent outline-none w-full text-[#CCCCCC] placeholder:text-[#7E7E7E] text-sm"
                 onClick={(e) => e.stopPropagation()}
               />

@@ -44,7 +44,7 @@ export function SecurityTestCard({
                     <div className="w-14 h-14 md:w-20 md:h-20 xl:w-[120px] xl:h-[120px] relative">
                         <Image
                             src={icon || "/placeholder.svg"}
-                            alt=""
+                            alt={title || "Security test"}
                             fill
                             className="object-contain"
                         />

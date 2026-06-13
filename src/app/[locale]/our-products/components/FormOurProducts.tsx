@@ -13,9 +13,9 @@ const FormOurProducts: React.FC = () => {
       <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Header Section */}
         <div className="max-w-3xl mx-auto text-center space-y-6 mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight max-w-[400px] m-auto">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight max-w-[400px] m-auto">
             {t("title")}
-          </h1>
+          </h2>
           <p className="text-lg text-gray-400">
             {t("subtitle")}
           </p>
@@ -26,6 +26,7 @@ const FormOurProducts: React.FC = () => {
               {...register("mail")}
               type="email"
               placeholder={t("emailPlaceholder")}
+              aria-label={t("emailPlaceholder")}
               className="w-full h-12 pl-6 pr-32 rounded-full bg-white border-0 text-black text-sm"
               required
             />

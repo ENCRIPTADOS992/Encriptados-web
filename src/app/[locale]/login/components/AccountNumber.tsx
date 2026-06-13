@@ -120,9 +120,9 @@ const AccountNumber = () => {
 
       <div className="w-full md:w-[500px] bg-[#0E0E0E] h-auto md:h-[500px] rounded-2xl flex flex-col py-10 px-8 items-center gap-y-4 md:px-10 relative">
         <OnlyKeyLoginIconSvg height={70} width={70} color="white" />
-        <h1 className="text-white text-center text-sm md:text-base">
+        <h2 className="text-white text-center text-sm md:text-base">
           {t("LoginPage.generatedSection.accountNumber.generateAccountNumber")}
-        </h1>
+        </h2>
 
         <div className="w-full space-y-3 text-center">
           <div className="bg-[#191919] py-3 rounded-xl border-0.5 border-[#414141] text-white text-lg font-mono mb-3 select-none">
@@ -173,14 +173,15 @@ const AccountNumber = () => {
           </div>
         )}
 
-        <h1
+        <button
+          type="button"
           onClick={() => {
             setValue("currentStep", "welcome");
           }}
           className="text-white text-sm cursor-pointer mt-4"
         >
           {t("LoginPage.generatedSection.accountNumber.goBack")}
-        </h1>
+        </button>
       </div>
       {isPendingLoading || isPending ? (
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-10">

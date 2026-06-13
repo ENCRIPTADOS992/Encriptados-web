@@ -25,8 +25,8 @@ const BannerConnect = () => {
           src={MenAndWomenImage}
           alt="Personas conectadas con seguridad total mediante SIM encriptada"
           loading="eager"
-          layout="fill"
-          objectFit="cover"
+          fill
+          className="object-cover"
         />
       </div>
     </div>

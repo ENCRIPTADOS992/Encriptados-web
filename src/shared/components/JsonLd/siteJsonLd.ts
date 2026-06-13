@@ -21,5 +21,13 @@ export function buildWebSiteJsonLd() {
     name: SEO_SITE_NAME,
     url: buildAbsoluteUrl("/"),
     inLanguage: ["es", "en", "fr", "it", "pt"],
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: buildAbsoluteUrl("/es/our-products?q={search_term_string}"),
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }

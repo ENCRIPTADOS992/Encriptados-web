@@ -27,9 +27,8 @@ const BannerOurProducts = () => {
           <Image
             src="/images/our-products/2f4c437915945215a21a8478b499fc508f3a35a2.png"
             alt="Dot background"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-xl opacity-20"
+            fill
+            className="rounded-xl opacity-20 object-cover"
           />
         </div>
 
@@ -82,9 +81,8 @@ const BannerOurProducts = () => {
           <Image
             src="/images/our-products/070e8ce9e05a772be2fda80c02b3733778db1afd.png"
             alt="Persona hablando"
-            layout="fill"
-            objectFit="contain"
-            className="object-bottom"
+            fill
+            className="object-bottom object-contain"
             priority
           />
         </div>

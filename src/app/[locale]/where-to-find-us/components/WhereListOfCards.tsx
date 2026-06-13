@@ -15,10 +15,9 @@ const WhereListOfCards = () => {
       <Image
         src={EncryptedBanner}
         alt="Background Banner"
-        layout="fill"
-        objectFit="cover"
+        fill
         priority
-        className="z-0"
+        className="z-0 object-cover"
       />
       {/* Capa de gradiente */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-[#031B20]"></div>

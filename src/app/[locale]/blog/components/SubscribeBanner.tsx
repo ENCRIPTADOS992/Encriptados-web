@@ -16,9 +16,8 @@ export default function SubscribeBanner() {
               <Image
                 src="/images/blog/girlandman.webp"
                 alt="Personas mirando un teléfono móvil"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-2xl shadow-lg"
+                fill
+                className="rounded-2xl shadow-lg object-cover"
                 priority
               />
             </div>

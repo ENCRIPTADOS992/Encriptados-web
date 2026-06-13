@@ -71,7 +71,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   const encriptadosProviderIcon = (
     <Image
       src="/icons/sim_encriptada.svg"
-      alt=""
+      alt="Encriptados SIM"
       width={137}
       height={34}
       className={providerLogoClass}
@@ -82,7 +82,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, up
   const timProviderIcon = (
     <Image
       src="/icons/sim_tim.svg"
-      alt=""
+      alt="TIM SIM"
       width={106}
       height={34}
       className={providerLogoClass}

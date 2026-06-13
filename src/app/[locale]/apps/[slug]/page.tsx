@@ -1,8 +1,9 @@
-import { getProductConfig } from "./productConfig";
+import { getProductConfig, getCanonicalProductSlugs } from "./productConfig";
 import ProductPageContent from "./AppClientPage";
 import { getTranslations } from "next-intl/server";
 import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 import { getResolvedAppProduct } from "./productData";
+import { SEO_LOCALES } from "@/shared/seo/constants";
 
 
 interface PageProps {
@@ -53,6 +54,13 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
     },
     keywords: [title, "app encriptada", "comunicacion segura", "Encriptados"],
   });
+}
+
+export function generateStaticParams() {
+  const slugs = getCanonicalProductSlugs();
+  return SEO_LOCALES.flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug }))
+  );
 }
 
 export default async function ProductPage({ params }: PageProps) {

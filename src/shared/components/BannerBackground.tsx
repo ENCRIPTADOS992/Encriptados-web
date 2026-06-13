@@ -13,20 +13,18 @@ const BannerBackground = ({ imageUrl, bgMobile }: BannerBackgroundProps) => {
       <Image
         src={bgMobile}
         alt="Banner Background Mobile"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={100}
-        className="absolute inset-0 block lg:hidden" // Mostrar en pantallas pequeñas
+        className="absolute inset-0 block lg:hidden object-cover" // Mostrar en pantallas pequeñas
       />
 
       {/* Imagen de fondo para escritorio */}
       <Image
         src={imageUrl}
         alt="Banner Background"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={100}
-        className="absolute inset-0 hidden lg:block" // Mostrar en pantallas grandes
+        className="absolute inset-0 hidden lg:block object-cover" // Mostrar en pantallas grandes
       />
 
       {/* Contenido superpuesto */}

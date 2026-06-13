@@ -10,9 +10,9 @@ export const SimMoreInfoHeroTablet = () => {
             className="w-[42px] h-[42px] mt-1"
           />
 
-          <h1 className="font-inter font-bold text-[24px] leading-[1.2] max-w-[300px]">
+          <h2 className="font-inter font-bold text-[24px] leading-[1.2] max-w-[300px]">
             Seguridad encriptada en tus comunicaciones
-          </h1>
+          </h2>
         </div>
 
         {/* Bloque visual derecho (MISMA LÓGICA QUE DESKTOP) */}

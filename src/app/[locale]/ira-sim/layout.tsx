@@ -6,8 +6,11 @@ import HowItWorks from "./components/HowItWorks";
 import BannerCoverage from "@/shared/BannerCoverage";
 import QRBanner from "../fast-delivery/components/QRBanner";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import FaqsBne from "../tim-sim/components/FaqsBne";
 import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
+import JsonLd from "@/shared/components/JsonLd/JsonLd";
+import { buildFaqJsonLd } from "@/shared/components/JsonLd/faqJsonLd";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -58,10 +61,26 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   });
 }
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const t = useTranslations("DeliveryPage");
+  const tFaq = await getTranslations({ locale, namespace: "BneSimPage.faqs" });
+  const faqJsonLd = buildFaqJsonLd(
+    ["q1", "q2", "q3", "q4", "q5", "q6"].map((key) => ({
+      question: tFaq(`${key}.question`),
+      answer: tFaq(`${key}.answer`),
+    }))
+  );
+
   return (
     <>
+      {faqJsonLd && <JsonLd data={faqJsonLd} />}
       <BannerMaya />
       {children}
       <BenefitsForYou />

@@ -22,7 +22,7 @@ export default function BannerSecureMdm() {
                 height={40}
               />
             </div>
-            <h1 className="text-2xl sm:text-sm md:text-3xl font-semibold text-white">{t("legacyTitle")}</h1>
+            <h2 className="text-2xl sm:text-sm md:text-3xl font-semibold text-white">{t("legacyTitle")}</h2>
             <p className="text-base sm:text-base md:text-lg text-blue-300">{t("fromPrice")} {t("legacyRegularPrice")}</p>
             <p className="text-xs sm:text-sm md:text-base text-gray-400">{t("legacySalePrice")}</p>
           </div>

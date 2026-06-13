@@ -95,9 +95,9 @@ const ProductByIdPage = () => {
             <div className="w-full sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-6/12 py-9">
               <BasicFormProvider>
                 <div className=" p-4 ">
-                  <h1 className="bg-gradient-to-r text-3xl text-center justify-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent mb-4 ">
+                  <h2 className="bg-gradient-to-r text-3xl text-center justify-center font-bold from-[#35CDFB] to-[#000000] bg-clip-text text-transparent mb-4 ">
                     {coverage("title")}
-                  </h1>
+                  </h2>
                   <div className=" flex justify-center text-center mb-4">
                     <p className="text-lg mb-4  text-[#012029]">
                       {coverage("desktopDescription")}
@@ -206,9 +206,9 @@ const ProductByIdPage = () => {
           {/* FAQs - Solo se muestra si hay datos */}
           {currentProduct.faqs && currentProduct.faqs.length > 0 && (
             <div className="px-2 2xl:px-96 xl:px-10 lg:px-0 mt-24 mb-24">
-              <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5 font-bold text-[#333333]">
+              <h2 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5 font-bold text-[#333333]">
                 Preguntas frecuentes
-              </h1>
+              </h2>
               <Accordion
                 items={currentProduct.faqs.map((faq) => ({
                   title: faq.name,

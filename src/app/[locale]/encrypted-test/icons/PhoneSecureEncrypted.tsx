@@ -78,9 +78,9 @@ const PhoneSecureEncrypted: React.FC<PhoneSecureEncryptedProps> = ({ onTestInit 
               </defs>
             </svg>
           </span>
-          <h1 className="ml-5 sm:ml-0 md:ml-5 text-white font-bold text-2xl flex-wrap md:text-4xl lg:text-5xl mb-0">
+          <h2 className="ml-5 sm:ml-0 md:ml-5 text-white font-bold text-2xl flex-wrap md:text-4xl lg:text-5xl mb-0">
             {t("tryOurPhoneSecure.title")}
-          </h1>
+          </h2>
         </div>
         {/* Subtítulo debajo */}
         <div className="ml-5 sm:ml-10">

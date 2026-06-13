@@ -14,9 +14,9 @@ const HeroVideoSectionTablet: React.FC<HeroVideoSectionProps> = ({
       <div className="w-full max-w-[713px] flex flex-row items-center justify-center gap-[28px] mx-auto">
         {/* Título a la izquierda */}
         <div className="w-[262px] h-[170px] flex items-center">
-          <h1 className="font-inter font-bold text-[28px] leading-[100%] text-black text-left">
+          <h2 className="font-inter font-bold text-[28px] leading-[100%] text-black text-left">
             {title}
-          </h1>
+          </h2>
         </div>
         {/* Video a la derecha */}
         <div className="w-[354px] h-[196px] rounded-[14px] overflow-hidden bg-black flex-shrink-0 flex items-center justify-center">

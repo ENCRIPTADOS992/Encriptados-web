@@ -32,6 +32,7 @@ const SearchInput = ({
       <input
         type="text"
         placeholder={placeholder}
+        aria-label={placeholder}
         {...register(name)}
         className={`py-4 border-1 rounded-full border-[#505050] flex-grow ${
           iconPosition === "left" ? "pl-16 pr-6" : "pl-6 pr-14"

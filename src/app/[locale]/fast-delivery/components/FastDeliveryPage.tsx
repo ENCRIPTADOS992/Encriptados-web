@@ -73,9 +73,9 @@ const FastDeliveryPage = () => {
           <QRBanner title={t("downloadApp")} />
         </div>
 
-        <h1 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5  font-bold text-[#333333]">
+        <h2 className="sm:text-xl text-center md:text-base lg:text-lg xl:text-4xl mb-5  font-bold text-[#333333]">
           {t("titleFAQS")}
-        </h1>
+        </h2>
         <div className="px-2 2xl:px-96 xl:px-10 lg:px-0 ">
           <Accordion items={items} />
         </div>

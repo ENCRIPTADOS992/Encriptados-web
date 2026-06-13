@@ -28,7 +28,7 @@ const MenuCategoryResponsive: React.FC<MenuDropdownProductBarProps> = ({
 
   return (
     <div className="flex items-center justify-between w-full px-4">
-      <h1 className="text-white text-sm font-bold w-6/12">{t("categoryLabel")}</h1>
+      <span className="text-white text-sm font-bold w-6/12">{t("categoryLabel")}</span>
       <Controller
         name={name}
         control={control}

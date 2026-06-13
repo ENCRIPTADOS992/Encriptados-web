@@ -1,8 +1,9 @@
-import { getSimProductConfig } from "./simProductConfig";
+import { getSimProductConfig, getAllSimProductSlugs } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
 import { redirect } from "next/navigation";
 import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 import { getCachedSimProduct } from "./getCachedSimProduct";
+import { SEO_LOCALES } from "@/shared/seo/constants";
 
 interface PageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -84,6 +85,13 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
     },
     keywords: [title, "SIM encriptada", "eSIM", "Encriptados"],
   });
+}
+
+export function generateStaticParams() {
+  const slugs = getAllSimProductSlugs();
+  return SEO_LOCALES.flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug }))
+  );
 }
 
 export default async function SimProductPage({ params, searchParams }: PageProps) {

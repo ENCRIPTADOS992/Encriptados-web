@@ -86,9 +86,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         <div className="flex flex-col flex-1 max-w-[540px]">
           {/* Título + Descripción */}
           <div className="flex flex-col gap-6 mb-6">
-            <h1 className="font-bold text-[38px] leading-[1.4] text-[#333333]">
+            <h2 className="font-bold text-[38px] leading-[1.4] text-[#333333]">
               {title}
-            </h1>
+            </h2>
             <p className="text-base leading-relaxed text-[#555555]">
               {description}
             </p>

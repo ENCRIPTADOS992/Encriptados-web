@@ -68,9 +68,9 @@ const Welcome = () => {
 
       <div className="w-full h-screen md:h-auto md:w-[500px] bg-[#0E0E0E] md:rounded-2xl flex flex-col justify-center items-center gap-y-6 p-6 md:p-10">
         <PassKeyLoginIconSvg height={60} width={60} color="white" />
-        <h1 className="text-white text-center text-xl md:text-2xl lg:text-3xl font-medium">
+        <h2 className="text-white text-center text-xl md:text-2xl lg:text-3xl font-medium">
           {t("LoginPage.welcomeSection.welcome")}
-        </h1>
+        </h2>
 
         <div className="w-full space-y-0 ">
           <InputFormContext
@@ -93,9 +93,9 @@ const Welcome = () => {
         </div>
 
         <div className="w-full flex justify-center cursor-pointer">
-          <h1 className="text-[#7E7E7E] text-sm md:text-base my-4">
+          <span className="text-[#7E7E7E] text-sm md:text-base my-4">
             {t("LoginPage.welcomeSection.forgotPassword")}
-          </h1>
+          </span>
         </div>
 
         <hr className="w-full border-[#373737]" />

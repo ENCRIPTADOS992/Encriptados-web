@@ -7,9 +7,9 @@ const FindOurProducts = () => {
   const t = useTranslations("DeliveryPage");
   return (
     <>
-      <h1 className="sm:text-xl md:text-base lg:text-lg xl:text-4xl font-bold text-[#333333] mt-10 mb-10 text-center">
+      <h2 className="sm:text-xl md:text-base lg:text-lg xl:text-4xl font-bold text-[#333333] mt-10 mb-10 text-center">
         {t("encriptedProductsTitle")}
-      </h1>
+      </h2>
 
       <SlickCarouselProducts />
 

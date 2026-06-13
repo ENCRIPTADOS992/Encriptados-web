@@ -24,8 +24,8 @@ const HowDoesFastDeliveryCard: React.FC<HowDoesFastDeliveryCard> = ({
             src={image}
             alt="Image"
             loading="eager"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         </div>
       )}
@@ -36,13 +36,13 @@ const HowDoesFastDeliveryCard: React.FC<HowDoesFastDeliveryCard> = ({
       {imagePosition === "bottom" && (
         <div className="w-full h-[300px] relative rounded-3xl   overflow-hidden">
           <Image
-            objectFit="cover"
             quality={100}
             title="Image"
             src={image}
             alt="Image"
             loading="eager"
-            layout="fill"
+            fill
+            className="object-cover"
           />
         </div>
       )}

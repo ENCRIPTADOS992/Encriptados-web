@@ -22,6 +22,7 @@ export const BannerCoverageTablet = () => {
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
+              aria-label={t("searchPlaceholder")}
               className="w-full h-[52px] rounded-full border border-[#D1D5DB] px-5 pr-14 text-sm text-[#111827] placeholder:text-[#9CA3AF] outline-none"
             />
             <button

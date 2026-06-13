@@ -31,9 +31,9 @@ const BannerSmsActivation = () => {
         <Image
           src="/images/our-products/Wire 2025-06-18 at 11_48.png"
           alt="Imagen mujer globe"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          fill
+          className="object-cover"
+          style={{ objectPosition: "center" }}
           priority
         />
       </div>
@@ -97,9 +97,9 @@ const BannerSmsActivation = () => {
           <Image
             src="/images/our-products/Wire 2025-06-18 at 11_48.png"
             alt="Imagen mujer globe"
-            layout="fill"
-            objectFit="contain"
-            objectPosition="bottom"
+            fill
+            className="object-contain"
+            style={{ objectPosition: "bottom" }}
             priority
           />
         </div>

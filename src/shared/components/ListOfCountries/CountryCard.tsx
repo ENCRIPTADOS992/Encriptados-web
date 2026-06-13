@@ -22,9 +22,8 @@ const CountryCard: React.FC<CountryCardProps> = ({ country }) => {
         <Image
           src={country.flags.svg}
           alt={`Flag of ${country.name.common}`}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-full"
+          fill
+          className="rounded-full object-cover"
         />
       </div>
       <h2 className="text-base font-bold text-gray-700 ">

@@ -427,6 +427,7 @@ const DeliveriesMapClient = () => {
           <input
             type="text"
             placeholder=""
+            aria-label="Search location"
             className="
               flex-1 bg-transparent outline-none
               px-4 text-gray-600 placeholder-gray-400

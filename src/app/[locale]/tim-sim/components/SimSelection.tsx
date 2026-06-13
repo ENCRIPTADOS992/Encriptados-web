@@ -46,7 +46,7 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-3 py-6 lg:p-8 bg-white shadow-lg rounded-2xl lg:rounded-[32px]">
-      <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold mb-2 lg:mb-3">{t('mainTitle')}</h1>
+      <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold mb-2 lg:mb-3">{t('mainTitle')}</h2>
       <p className="text-sm lg:text-base text-[#4B5563] mb-6 lg:mb-8">
         {t('subtitle')}
       </p>
@@ -128,6 +128,7 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
               <input 
                 type="text" 
                 placeholder={t('search')} 
+                aria-label={t('search')}
                 className="w-full h-[48px] sm:h-[56px] pl-4 pr-12 bg-[#F5F5F5] border-2 border-transparent rounded-xl sm:rounded-[24px] text-sm sm:text-base focus:outline-none focus:border-[#00A3FF] transition-all"
               />
               <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900 transition-colors">
@@ -183,7 +184,7 @@ const SimSelection = ({ locale }: SimSelectionProps) => {
       {selectedOption === 'recharge' && (
         <div>
           <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('rechargeSection.title')}</h2>
-          <input type="text" placeholder={t('rechargeSection.placeholder')} className="w-full p-3 border-2 border-gray-300 focus:border-blue-500 focus:outline-none rounded-lg mb-4 text-sm sm:text-base" />
+          <input type="text" placeholder={t('rechargeSection.placeholder')} aria-label={t('rechargeSection.placeholder')} className="w-full p-3 border-2 border-gray-300 focus:border-blue-500 focus:outline-none rounded-lg mb-4 text-sm sm:text-base" />
           <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors text-sm sm:text-base font-medium">{t('rechargeSection.payNow')}</button>
           <ul className="text-xs sm:text-sm mt-4 sm:mt-6 space-y-2">
             {[0, 1, 2, 3].map((i) => (

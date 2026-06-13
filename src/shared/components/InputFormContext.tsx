@@ -84,6 +84,7 @@ export const InputFormContext = <T extends FieldValues>({
           id={name}
           type={inputType}
           placeholder={placeholder}
+          aria-label={label || placeholder}
           className={`${inputStyles({
             intent: error
               ? "error"

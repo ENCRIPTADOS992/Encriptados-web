@@ -36,9 +36,9 @@ const HowDoesFastDelivery = () => {
         <div className="absolute inset-x-0 top-0 h-[750px] z-0">
           <div className="h-[400px] bg-cyan-black-gradient rounded-2xl">
             <div className="flex justify-center">
-              <h1 className="text-lg md:text-4xl text-center p-9 font-bold text-white">
+              <h2 className="text-lg md:text-4xl text-center p-9 font-bold text-white">
                 {t2("howDoesFastDeliveryTitle")}
-              </h1>
+              </h2>
             </div>
           </div>
         </div>

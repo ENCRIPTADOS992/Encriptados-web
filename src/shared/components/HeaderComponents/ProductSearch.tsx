@@ -228,6 +228,7 @@ export default function ProductSearch({
           onFocus={() => query.trim() && setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
+          aria-label={placeholder}
           className="w-full pl-9 pr-3 py-1.5 bg-[#2A2A2A] border border-[#3A3A3A] rounded-full text-sm text-white placeholder-gray-400 focus:outline-none focus:border-[#44D3FF] transition-colors"
         />
       </div>

@@ -31,6 +31,7 @@ const SearchProduct = ({
       <input
         type="text"
         placeholder={placeholder}
+        aria-label={placeholder}
         {...register(name)}
         className={`
           py-5 bg-[#222222] text-sm text-white rounded-[3rem] flex-grow

@@ -19,12 +19,12 @@ const PhoneBanner = () => {
               alt="Image"
             />
           </div>
-          <h1 className="text-white font-bold text-3xl">
+          <h3 className="text-white font-bold text-3xl">
             Celular Encriptado Renati
-          </h1>
+          </h3>
           <div className="flex gap-x-2 justify-center md:justify-normal lg:justify-normal">
-            <h1 className="text-white text-xl">$650.00</h1>
-            <h1 className="text-red-500 text-xl line-through">$750.00</h1>
+            <span className="text-white text-xl">$650.00</span>
+            <span className="text-red-500 text-xl line-through">$750.00</span>
           </div>
           <div className="w-full flex justify-center md:justify-normal lg:justify-normal ">
             <Button

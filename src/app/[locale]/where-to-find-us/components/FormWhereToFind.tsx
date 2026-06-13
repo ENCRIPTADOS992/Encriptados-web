@@ -23,9 +23,8 @@ const FormWhereToFind = () => {
           <Image
             alt="Man"
             src={Man}
-            layout="fill"
-            objectFit="contain"
-            className=""
+            fill
+            className="object-contain"
             style={{ objectPosition: "left center" }}
           />
         </div>
@@ -62,9 +61,8 @@ const FormWhereToFind = () => {
           <Image
             alt="Woman"
             src={Woman}
-            layout="fill"
-            objectFit="contain"
-            className=""
+            fill
+            className="object-contain"
             style={{ objectPosition: "right center" }}
           />
         </div>

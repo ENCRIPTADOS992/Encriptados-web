@@ -60,10 +60,10 @@ export default function Component() {
       <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full sm:w-3/4 md:w-1/2 ml-auto space-y-8 flex flex-col items-center sm:items-start">
           <div className="space-y-4 text-center sm:text-left">
-            <h1 className="text-xl font-light text-white sm:text-2xl lg:text-3xl">
+            <h2 className="text-xl font-light text-white sm:text-2xl lg:text-3xl">
               Activa APPs por SMS con{" "}
               <strong className="text-primary font-bold">Encriptados</strong>
-            </h1>
+            </h2>
             <p className="text-base sm:text-lg text-white">
               Regístrate en cualquier aplicación con un número de teléfono
               virtual

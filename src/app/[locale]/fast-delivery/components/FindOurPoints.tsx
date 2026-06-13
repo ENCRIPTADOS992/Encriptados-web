@@ -9,9 +9,9 @@ const FindOurPoints = () => {
     <div className="flex flex-col justify-center items-center  w-full mt-24 mb-24">
       <div className="flex flex-col justify-center items-center  w-8/12 gap-y-3">
         <Image src={IconSvg} alt="icon" />
-        <h1 className="sm:text-xl md:text-base lg:text-lg xl:text-4xl font-bold text-[#333333] text-center">
+        <h2 className="sm:text-xl md:text-base lg:text-lg xl:text-4xl font-bold text-[#333333] text-center">
           {t("deliveryPointsTitle")}
-        </h1>
+        </h2>
         <p className="text-black sm:text-xl md:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-center">
           {t("deliveryPointsDescription")}
         </p>

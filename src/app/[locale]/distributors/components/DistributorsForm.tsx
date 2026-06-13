@@ -22,9 +22,9 @@ export default function DistributorForm() {
           />
           <div className="relative z-10 space-y-4 p-6 h-full flex flex-col ">
             <ArrowDistributors />
-            <h1 className="text-3xl md:text-5xl font-bold">
+            <h2 className="text-3xl md:text-5xl font-bold">
               {t("modal.becomeDistributor")}
-            </h1>
+            </h2>
             <p className="text-lg md:text-xl text-white">
               {t("modal.descriptionDistributor")}
             </p>

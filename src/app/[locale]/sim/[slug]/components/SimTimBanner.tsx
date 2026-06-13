@@ -126,7 +126,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
               transition={{ delay: 0.3 }}
             >
-              <Image src="/images/bne-sim/svg/icono-dialogo.svg" alt="" width={28} height={24} className="h-auto w-5 sm:w-6 md:w-7" />
+              <Image src="/images/bne-sim/svg/icono-dialogo.svg" alt="Messaging" width={28} height={24} className="h-auto w-5 sm:w-6 md:w-7" />
             </motion.div>
             <motion.div 
               className="absolute right-0 top-2 sm:top-4 md:top-6"
@@ -135,7 +135,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
               transition={{ delay: 0.4 }}
             >
-              <Image src="/images/bne-sim/svg/icono-carga.svg" alt="" width={24} height={20} className="h-auto w-5 sm:w-6 md:w-7" />
+              <Image src="/images/bne-sim/svg/icono-carga.svg" alt="Cloud upload" width={24} height={20} className="h-auto w-5 sm:w-6 md:w-7" />
             </motion.div>
             <motion.div 
               className="absolute -left-3 top-[45%] rotate-[-15deg]"
@@ -144,7 +144,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
               transition={{ delay: 0.5 }}
             >
-              <Image src="/images/bne-sim/svg/icono-ubicacion.svg" alt="" width={20} height={26} className="h-auto w-4 sm:w-5 md:w-6" />
+              <Image src="/images/bne-sim/svg/icono-ubicacion.svg" alt="Location" width={20} height={26} className="h-auto w-4 sm:w-5 md:w-6" />
             </motion.div>
             <motion.div 
               className="absolute right-0 top-[32%]"
@@ -153,7 +153,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
               transition={{ delay: 0.6 }}
             >
-              <Image src="/images/bne-sim/svg/icono-engranajes.svg" alt="" width={36} height={28} className="h-auto w-8 sm:w-9 md:w-10" />
+              <Image src="/images/bne-sim/svg/icono-engranajes.svg" alt="Settings" width={36} height={28} className="h-auto w-8 sm:w-9 md:w-10" />
             </motion.div>
             <motion.div 
               className="absolute right-2 bottom-[22%]"
@@ -162,7 +162,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
               animate="visible"
               transition={{ delay: 0.7 }}
             >
-              <Image src="/images/bne-sim/svg/icono-grafica.svg" alt="" width={28} height={24} className="h-auto w-6 sm:w-7 md:w-8" />
+              <Image src="/images/bne-sim/svg/icono-grafica.svg" alt="Analytics" width={28} height={24} className="h-auto w-6 sm:w-7 md:w-8" />
             </motion.div>
 
             {/* Person Image - flush to bottom of section, scales with viewport */}
@@ -320,7 +320,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
             >
               <Image 
                 src="/images/bne-sim/svg/icono-dialogo.svg" 
-                alt="" 
+                alt="Messaging" 
                 width={44} 
                 height={38} 
                 className="h-auto w-9 lg:w-10 xl:w-11" 
@@ -337,7 +337,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
             >
               <Image 
                 src="/images/bne-sim/svg/icono-carga.svg" 
-                alt="" 
+                alt="Cloud upload" 
                 width={36} 
                 height={32} 
                 className="h-auto w-8 lg:w-9 xl:w-10" 
@@ -354,7 +354,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
             >
               <Image 
                 src="/images/bne-sim/svg/icono-ubicacion.svg" 
-                alt="" 
+                alt="Location" 
                 width={32} 
                 height={42} 
                 className="h-auto w-6 lg:w-7 xl:w-8" 
@@ -371,7 +371,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
             >
               <Image 
                 src="/images/bne-sim/svg/icono-engranajes.svg" 
-                alt="" 
+                alt="Settings" 
                 width={56} 
                 height={44} 
                 className="h-auto w-12 lg:w-14 xl:w-16" 
@@ -388,7 +388,7 @@ export default function SimTimBanner({ productName, onBuy }: SimTimBannerProps) 
             >
               <Image 
                 src="/images/bne-sim/svg/icono-grafica.svg" 
-                alt="" 
+                alt="Analytics" 
                 width={44} 
                 height={40} 
                 className="h-auto w-10 lg:w-11 xl:w-12" 
