@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -28,12 +29,6 @@ type PageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
-const SECURITY_POINTS = [
-  "Encrypted communication products",
-  "Specialized support from Encriptados",
-  "Solutions for apps, SIMs and secure devices",
-];
-
 type LocationTemplateCopy = {
   breadcrumbLocation: string;
   productReference: string;
@@ -52,6 +47,12 @@ type LocationTemplateCopy = {
   nextToHome: string;
   securityPoints: string[];
   productTypes: Record<LocationProductType, string>;
+  bannerAccent: string;
+  bannerLine1Rest: string;
+  bannerLine2: string;
+  bannerSubtitle: string;
+  buyNow: string;
+  sidebarFeatures: Record<LocationProductType, string[]>;
 };
 
 const LOCATION_COPY: Record<LocationPageModel["locale"], LocationTemplateCopy> = {
@@ -74,12 +75,27 @@ const LOCATION_COPY: Record<LocationPageModel["locale"], LocationTemplateCopy> =
     nextWithProduct: (productName) =>
       `Review the current ${productName} product page to see active details, availability, compatibility information, and purchase options from Encriptados.`,
     nextToHome: "Continue to the Encriptados catalog to review available secure communication products, SIM options, apps, and current purchase paths.",
-    securityPoints: SECURITY_POINTS,
+    securityPoints: [
+      "Encrypted communication products",
+      "Specialized support from Encriptados",
+      "Solutions for apps, SIMs and secure devices",
+    ],
     productTypes: {
       app: "App",
       sim: "SIM",
       phone: "Phone",
       generic: "Catalog",
+    },
+    bannerAccent: "Encrypted",
+    bannerLine1Rest: "security",
+    bannerLine2: "in your communications",
+    bannerSubtitle: "Connect with security and confidence now",
+    buyNow: "Buy now",
+    sidebarFeatures: {
+      app: ["End-to-end encryption", "Secure messaging", "Private calls"],
+      sim: ["No phone number", "Untraceable eSIM", "Encrypted communication"],
+      phone: ["Encrypted hardware", "Secure operating system", "Protected calls"],
+      generic: ["Encrypted communication", "Specialized support", "Secure solutions"],
     },
   },
   es: {
@@ -112,6 +128,17 @@ const LOCATION_COPY: Record<LocationPageModel["locale"], LocationTemplateCopy> =
       phone: "Telefono",
       generic: "Catalogo",
     },
+    bannerAccent: "Seguridad",
+    bannerLine1Rest: "encriptada",
+    bannerLine2: "en tus comunicaciones",
+    bannerSubtitle: "Conecta con seguridad y confianza ahora",
+    buyNow: "Comprar ahora",
+    sidebarFeatures: {
+      app: ["Cifrado de extremo a extremo", "Mensajeria segura", "Llamadas privadas"],
+      sim: ["Sin numero telefonico", "eSIM irrastreable", "Comunicacion encriptada"],
+      phone: ["Hardware encriptado", "Sistema operativo seguro", "Llamadas protegidas"],
+      generic: ["Comunicacion encriptada", "Soporte especializado", "Soluciones seguras"],
+    },
   },
   fr: {
     breadcrumbLocation: "Emplacement",
@@ -142,6 +169,17 @@ const LOCATION_COPY: Record<LocationPageModel["locale"], LocationTemplateCopy> =
       sim: "SIM",
       phone: "Telephone",
       generic: "Catalogue",
+    },
+    bannerAccent: "Securite",
+    bannerLine1Rest: "chiffree",
+    bannerLine2: "dans vos communications",
+    bannerSubtitle: "Connectez-vous en toute securite et confiance",
+    buyNow: "Acheter maintenant",
+    sidebarFeatures: {
+      app: ["Chiffrement de bout en bout", "Messagerie securisee", "Appels prives"],
+      sim: ["Sans numero de telephone", "eSIM intracable", "Communication chiffree"],
+      phone: ["Materiel chiffre", "Systeme d'exploitation securise", "Appels proteges"],
+      generic: ["Communication chiffree", "Support specialise", "Solutions securisees"],
     },
   },
   it: {
@@ -174,6 +212,17 @@ const LOCATION_COPY: Record<LocationPageModel["locale"], LocationTemplateCopy> =
       phone: "Telefono",
       generic: "Catalogo",
     },
+    bannerAccent: "Sicurezza",
+    bannerLine1Rest: "crittografata",
+    bannerLine2: "nelle tue comunicazioni",
+    bannerSubtitle: "Connettiti con sicurezza e fiducia ora",
+    buyNow: "Acquista ora",
+    sidebarFeatures: {
+      app: ["Crittografia end-to-end", "Messaggistica sicura", "Chiamate private"],
+      sim: ["Senza numero di telefono", "eSIM non tracciabile", "Comunicazione crittografata"],
+      phone: ["Hardware crittografato", "Sistema operativo sicuro", "Chiamate protette"],
+      generic: ["Comunicazione crittografata", "Supporto specializzato", "Soluzioni sicure"],
+    },
   },
   pt: {
     breadcrumbLocation: "Localizacao",
@@ -204,6 +253,17 @@ const LOCATION_COPY: Record<LocationPageModel["locale"], LocationTemplateCopy> =
       sim: "SIM",
       phone: "Telefone",
       generic: "Catalogo",
+    },
+    bannerAccent: "Seguranca",
+    bannerLine1Rest: "encriptada",
+    bannerLine2: "em suas comunicacoes",
+    bannerSubtitle: "Conecte-se com seguranca e confianca agora",
+    buyNow: "Comprar agora",
+    sidebarFeatures: {
+      app: ["Criptografia ponta a ponta", "Mensagens seguras", "Chamadas privadas"],
+      sim: ["Sem numero de telefone", "eSIM irrastreavel", "Comunicacao encriptada"],
+      phone: ["Hardware encriptado", "Sistema operacional seguro", "Chamadas protegidas"],
+      generic: ["Comunicacao encriptada", "Suporte especializado", "Solucoes seguras"],
     },
   },
 };
@@ -266,6 +326,13 @@ function getLocalizedHome(locale: LocationPageModel["locale"]): string {
   return locale === "es" ? "/" : `/${locale}`;
 }
 
+const SIDEBAR_PRODUCT_IMAGES: Record<LocationProductType, string> = {
+  sim: "/images/encrypted-sim/sim-encriptada.webp",
+  app: "/images/encrypted-sim/sim-encriptada.webp",
+  phone: "/images/our-products/two-cellphones.png",
+  generic: "/images/encrypted-sim/sim-encriptada.webp",
+};
+
 /** Locale fallback order: try the current locale, then en, then es. */
 const LOCALE_FALLBACK_CHAIN: LocationPageModel["locale"][] = ["en", "es"];
 
@@ -326,66 +393,111 @@ export default async function LocationLegacyPage({ params }: PageProps) {
         <ModalPaymentProvider>
           <StripeProvider>
             <AppMobileLayout header={<CurrentHeader />} footer={<FooterEncrypted />}>
-              <main className="min-h-screen bg-[#F5F8FA] text-[#111827]">
+              <main className="min-h-screen bg-[#161616] text-white">
                 <article className="mx-auto grid w-full max-w-7xl gap-8 px-5 py-10 md:grid-cols-[minmax(0,1fr)_360px] md:px-8 md:py-14 lg:gap-12">
-                  <div className="min-w-0 rounded-lg bg-white px-5 py-8 shadow-sm ring-1 ring-black/5 md:px-10 md:py-10">
-                    <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-[#64748B]" aria-label="Breadcrumb">
-                      <Link href={homeHref} className="hover:text-[#057C8D]">Encriptados</Link>
+                  {/* ── Content card ── */}
+                  <div
+                    className="min-w-0 rounded-2xl px-5 py-8 md:px-10 md:py-10"
+                    style={{ background: "linear-gradient(180deg, #1D1D1D 0%, #242424 100%)" }}
+                  >
+                    {/* Breadcrumbs */}
+                    <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-[#888]" aria-label="Breadcrumb">
+                      <Link href={homeHref} className="transition hover:text-[#35CDFB]">Encriptados</Link>
                       <span>/</span>
                       <span>{copy.breadcrumbLocation}</span>
                       <span>/</span>
-                      <span className="text-[#111827]">{model.locationName}</span>
+                      <span className="text-white/90">{model.locationName}</span>
                     </nav>
 
-                    <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#E6F8FC] px-4 py-2 text-sm font-medium text-[#057C8D]">
+                    {/* Location badge */}
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#35CDFB]/30 bg-[#35CDFB]/10 px-4 py-2 text-sm font-medium text-[#35CDFB]">
                       <MapPin className="h-4 w-4" aria-hidden="true" />
                       {model.locationName}
                     </div>
 
-                    <h1 className="max-w-4xl text-3xl font-semibold leading-tight text-[#111827] md:text-5xl">{title}</h1>
+                    {/* Hero banner */}
+                    <div className="relative mb-8 overflow-hidden rounded-2xl min-h-[200px] sm:min-h-[240px] md:min-h-[280px]">
+                      {/* Solid dark background (left side) */}
+                      <div className="absolute inset-0 bg-[#010101]" />
 
-                    <div className="mt-8 space-y-6 text-base leading-8 text-[#334155]">
-                      <p>
-                        {copy.intro(model.productName, model.locationName)}
-                      </p>
-                      <p>
-                        {copy.ecosystem(model.productName)}
-                      </p>
-                      <p>
-                        {copy.details}
-                      </p>
+                      {/* Image on right side with gradient overlay */}
+                      <div className="absolute top-0 right-0 bottom-0 left-0 sm:left-[35%] md:left-[40%] overflow-hidden">
+                        <Image
+                          src="/images/encrypted-sim/men-cel.webp"
+                          alt=""
+                          fill
+                          className="object-cover object-[70%_top] sm:object-top"
+                          sizes="(max-width: 768px) 100vw, 500px"
+                          priority
+                        />
+                        {/* Gradient transition from black to image */}
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{
+                            background:
+                              "linear-gradient(90deg, #010101 0%, rgba(1,1,1,0.85) 20%, rgba(1,1,1,0.4) 50%, transparent 70%)",
+                          }}
+                        />
+                      </div>
+
+                      {/* Text content */}
+                      <div className="relative z-10 flex min-h-[200px] sm:min-h-[240px] md:min-h-[280px] w-full items-center justify-center px-6 py-8 text-center">
+                        <div className="space-y-2 sm:space-y-3">
+                          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[28px] font-bold leading-[1.25] text-white">
+                            <span className="text-[#35CDFB] italic">{copy.bannerAccent}</span>{" "}
+                            {copy.bannerLine1Rest}
+                            <br />
+                            {copy.bannerLine2}
+                          </h2>
+                          <p className="text-[11px] sm:text-xs md:text-sm text-white/70">
+                            {copy.bannerSubtitle}
+                          </p>
+                        </div>
+                      </div>
                     </div>
 
-                    <section className="mt-10 border-t border-[#E2E8F0] pt-8">
-                      <h2 className="text-2xl font-semibold text-[#111827]">{copy.whatThisPageIsFor}</h2>
-                      <ul className="mt-5 grid gap-4">
+                    {/* Title */}
+                    <h1 className="max-w-4xl text-xl font-semibold leading-tight text-white md:text-2xl">{title}</h1>
+
+                    {/* Body text */}
+                    <div className="mt-6 space-y-4 text-sm leading-6 text-[#AAAAAA]">
+                      <p>{copy.intro(model.productName, model.locationName)}</p>
+                      <p>{copy.ecosystem(model.productName)}</p>
+                      <p>{copy.details}</p>
+                    </div>
+
+                    {/* What this page is for */}
+                    <section className="mt-8 border-t border-[#3E3E3E] pt-6">
+                      <h2 className="text-base font-bold text-white">{copy.whatThisPageIsFor}</h2>
+                      <ul className="mt-4 grid gap-3">
                         {copy.securityPoints.map((point) => (
-                          <li key={point} className="flex gap-3 text-[#334155]">
-                            <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#00A884]" aria-hidden="true" />
+                          <li key={point} className="flex gap-2.5 text-sm text-[#AAAAAA]">
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#35CDFB]" aria-hidden="true" />
                             <span>{point}</span>
                           </li>
                         ))}
                       </ul>
                     </section>
 
-                    <section className="mt-10 border-t border-[#E2E8F0] pt-8">
-                      <h2 className="text-2xl font-semibold text-[#111827]">{copy.recommendedNextStep}</h2>
-                      <p className="mt-4 leading-8 text-[#334155]">
+                    {/* Recommended next step */}
+                    <section className="mt-8 border-t border-[#3E3E3E] pt-6">
+                      <h2 className="text-base font-bold text-white">{copy.recommendedNextStep}</h2>
+                      <p className="mt-3 text-sm italic leading-6 text-[#AAAAAA]">
                         {hasCurrentProductPage
                           ? copy.nextWithProduct(model.productName)
                           : copy.nextToHome}
                       </p>
-                      <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                      <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
                         <Link
                           href={model.productPath}
-                          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-black px-6 py-3 font-semibold text-white transition hover:bg-[#15262A]"
+                          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-[#3E3E3E] bg-[#1A1A1A] px-5 py-2 text-sm font-semibold text-white transition hover:border-[#35CDFB] hover:bg-[#252525]"
                         >
                           {hasCurrentProductPage ? copy.viewProduct(model.productName) : copy.goToEncriptados}
-                          <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <Link
                           href={homeHref}
-                          className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#CBD5E1] px-6 py-3 font-semibold text-[#111827] transition hover:border-[#057C8D] hover:text-[#057C8D]"
+                          className="inline-flex min-h-10 items-center justify-center rounded-full border border-[#3E3E3E] px-5 py-2 text-sm font-semibold text-white transition hover:border-[#35CDFB] hover:text-[#35CDFB]"
                         >
                           {copy.backToEncriptados}
                         </Link>
@@ -393,30 +505,64 @@ export default async function LocationLegacyPage({ params }: PageProps) {
                     </section>
                   </div>
 
-                  <aside className="h-fit rounded-lg bg-white p-6 shadow-sm ring-1 ring-black/5 md:sticky md:top-24">
-                    <div>
-                      <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.12em] text-[#057C8D]">
+                  {/* ── Sidebar ── */}
+                  <aside
+                    className="relative h-fit overflow-hidden rounded-2xl p-6 md:sticky md:top-24"
+                    style={{ background: "linear-gradient(180deg, #1D1D1D 0%, #242424 100%)" }}
+                  >
+                    {/* Decorative background image */}
+                    <Image
+                      src="/images/encrypted-sim/fondo-card-lateral-derecha.webp"
+                      alt=""
+                      fill
+                      className="pointer-events-none object-cover opacity-60"
+                      sizes="360px"
+                    />
+                    {/* Dark-blue gradient overlay */}
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(0deg, rgba(0,0,0,0) 49.04%, #051222 100%)",
+                      }}
+                    />
+
+                    <div className="relative z-10">
+                      <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#35CDFB]">
                         <ShieldCheck className="h-4 w-4" aria-hidden="true" />
                         {copy.productReference}
                       </p>
-                      <h2 className="mt-3 text-2xl font-semibold text-[#111827]">{model.productName}</h2>
-                      <p className="mt-3 text-sm leading-6 text-[#475569]">{productDescription}.</p>
-                      <dl className="mt-5 space-y-3 border-t border-[#E2E8F0] pt-5 text-sm">
-                        <div className="flex justify-between gap-4">
-                          <dt className="text-[#64748B]">{copy.locationLabel}</dt>
-                          <dd className="text-right font-medium text-[#111827]">{model.locationName}</dd>
-                        </div>
-                        <div className="flex justify-between gap-4">
-                          <dt className="text-[#64748B]">{copy.typeLabel}</dt>
-                          <dd className="text-right font-medium text-[#111827]">{copy.productTypes[model.productType]}</dd>
-                        </div>
-                      </dl>
+                      <h2 className="mt-3 text-xl font-bold text-white">{model.productName}</h2>
+                      <p className="mt-2 text-xs leading-5 text-[#999]">{productDescription}.</p>
+
+                      {/* Feature points — dynamic per product type */}
+                      <ul className="mt-5 space-y-3">
+                        {(copy.sidebarFeatures[model.productType] ?? copy.sidebarFeatures.generic).map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-sm text-white">
+                            <CheckCircle2 className="h-4 w-4 shrink-0 text-[#35CDFB]" aria-hidden="true" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Product image — dynamic per product type */}
+                      <div className="relative mt-6 overflow-hidden rounded-xl">
+                        <Image
+                          src={SIDEBAR_PRODUCT_IMAGES[model.productType]}
+                          alt={model.productName}
+                          width={360}
+                          height={220}
+                          className="h-auto w-full object-contain"
+                          sizes="320px"
+                        />
+                      </div>
+
                       <Link
                         href={model.productPath}
-                        className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#35CDFB] px-5 py-3 font-semibold text-[#061014] transition hover:bg-[#7EE0FF]"
+                        className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#35CDFB] px-5 py-2.5 text-sm font-semibold text-[#061014] transition hover:bg-[#7EE0FF]"
                       >
-                        {hasCurrentProductPage ? copy.continue : copy.goToEncriptados}
-                        <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                        {copy.buyNow}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </Link>
                     </div>
                   </aside>
