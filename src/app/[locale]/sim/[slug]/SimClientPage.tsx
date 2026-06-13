@@ -171,7 +171,10 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
 
         setProduct(productData);
       } catch (err) {
-        setError("Error al cargar el producto");
+        // If we already have initialProduct from SSR, keep using it instead of showing error
+        if (!product) {
+          setError("Error al cargar el producto");
+        }
       } finally {
         setIsLoading(false);
       }

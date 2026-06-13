@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 const PUBLIC_WP_CACHE_SECONDS = 120;
 const WP_PROXY_TIMEOUT_MS = 15_000; // 15 seconds
+const MAX_429_RETRIES = 2;
+const MAX_RETRY_WAIT_MS = 10_000; // cap per-retry wait
 
 const isProductionServer = process.env.NEXT_PUBLIC_SITE_URL?.includes("encriptados.io");
 const wpApiBase = isProductionServer
@@ -25,6 +27,37 @@ function createTimeoutSignal(ms: number): AbortSignal {
   return controller.signal;
 }
 
+/** Fetch with automatic retry on HTTP 429 (rate limit). */
+async function fetchWithRetry(
+  url: string,
+  init: RequestInit,
+  retries = MAX_429_RETRIES
+): Promise<Response> {
+  const response = await fetch(url, init);
+
+  if (response.status === 429 && retries > 0) {
+    let waitMs = 2_000;
+    const retryHeader = response.headers.get("retry-after");
+    if (retryHeader && !isNaN(Number(retryHeader))) {
+      waitMs = Math.min(Number(retryHeader) * 1_000, MAX_RETRY_WAIT_MS);
+    } else {
+      // Try to parse from JSON body
+      try {
+        const clone = response.clone();
+        const body = await clone.json();
+        if (body?.retry_after) {
+          waitMs = Math.min(Number(body.retry_after) * 1_000, MAX_RETRY_WAIT_MS);
+        }
+      } catch { /* ignore parse errors */ }
+    }
+
+    await new Promise((r) => setTimeout(r, waitMs));
+    return fetchWithRetry(url, { ...init, signal: createTimeoutSignal(WP_PROXY_TIMEOUT_MS) }, retries - 1);
+  }
+
+  return response;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ path: string[] }> }
@@ -43,7 +76,7 @@ export async function GET(
     const accept = request.headers.get("accept");
     if (accept) headers.set("accept", accept);
 
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithRetry(targetUrl, {
       method: "GET",
       headers,
       cache: "no-store",
