@@ -13,13 +13,12 @@ export default function Layout({ children }: LayoutProps) {
 
   const { locale, productId } = useParams();
 
-  const skipLayoutPaths = `/${locale}/our-products/${productId}`;
+  const isProductDetail = pathname === `/${locale}/our-products/${productId}`;
+  const isSimMoreInfo = pathname.includes("/sim-more-info");
+  // Base /our-products route uses OurProductsPage which has its own full layout
+  const isBaseRoute = pathname === `/${locale}/our-products`;
 
-
-  if (
-    skipLayoutPaths === pathname ||
-    pathname.includes("/sim-more-info")
-  ) {
+  if (isProductDetail || isSimMoreInfo || isBaseRoute) {
     return children;
   }
 
