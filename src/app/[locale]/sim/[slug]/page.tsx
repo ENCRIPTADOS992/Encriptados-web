@@ -1,9 +1,13 @@
+import { Suspense } from "react";
 import { getSimProductConfig, getAllSimProductSlugs } from "./simProductConfig";
 import SimProductPageContent from "./SimClientPage";
 import { redirect } from "next/navigation";
 import { buildSeoMetadata, buildLocalizedLanguageAlternates } from "@/shared/seo/metadata";
 import { getCachedSimProduct } from "./getCachedSimProduct";
 import { SEO_LOCALES } from "@/shared/seo/constants";
+
+/** Allow up to 30 seconds for server-side rendering (WordPress API can be slow) */
+export const maxDuration = 30;
 
 interface PageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -24,9 +28,11 @@ function cleanDescription(html: string | undefined, fallback: string): string {
 /** Fetch iconUrl directly from admin WordPress (admin.encriptados.io) */
 async function fetchSimIconUrl(productId: number, locale: string): Promise<string | null> {
   try {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 5_000);
     const res = await fetch(
       `https://admin.encriptados.io/wp-json/encriptados/v3/store/product/${productId}?lang=${locale}`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 3600 }, signal: controller.signal }
     );
     if (!res.ok) return null;
     const data = await res.json();
@@ -127,5 +133,13 @@ export default async function SimProductPage({ params, searchParams }: PageProps
     }
   }
 
-  return <SimProductPageContent slug={slug} locale={locale} initialProduct={initialProduct} />;
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-gray-400">Loading...</div>
+      </main>
+    }>
+      <SimProductPageContent key={slug} slug={slug} locale={locale} initialProduct={initialProduct} />
+    </Suspense>
+  );
 }

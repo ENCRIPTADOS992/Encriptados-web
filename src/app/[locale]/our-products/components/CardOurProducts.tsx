@@ -27,15 +27,10 @@ const CardOurProducts: React.FC<CardOurProductsProps> = ({ filters }) => {
 
   const handleMoreInfo = (slug: string) => {
     const href = buildSimUrl(slug);
-    console.log("[CardOurProducts] 👉 Navegando a más info:", { slug, href });
     router.push(href);
   };
 
   const handleBuy = (productId: string) => {
-    console.log(
-      "🛒 [CardOurProducts] onBuyClick — openModal",
-      { productid: productId, languageCode: "es" }
-    );
     openModal({ productid: productId, languageCode: "es" });
   };
 

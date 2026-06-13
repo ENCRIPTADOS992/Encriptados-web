@@ -13,11 +13,9 @@ import {
   isActivarAppsProduct,
 } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
-import { useEffect } from "react";
 import { CircleFlag } from "react-circle-flags";
 import { useLocale, useTranslations } from "next-intl";
 import { Tag } from "lucide-react";
-
 
 const RegionIcon: React.FC<{ size?: number }> = ({ size = 24 }) => {
   return (
@@ -107,7 +105,6 @@ const CardProduct: React.FC<CardSimProps> = ({
 
   const handleBuy = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`🛒 [CardProduct] Comprar clicado para ID=${id}`, { numericPrice, priceRange, variantId, provider, typeProduct, purchaseType, telegramLink });
     
     if (purchaseType === "telegram" || telegramLink) {
       const finalUrl = telegramLink || "https://t.me/encriptados";
@@ -137,14 +134,6 @@ const CardProduct: React.FC<CardSimProps> = ({
       mode: (modalSelectedOption === 40 || modalSelectedOption === 451) ? "sim" : undefined,
     });
   };
-
-  useEffect(() => {
-    if (badges) {
-      if (!badges.country?.label)
-        console.log("ℹ️ [CardProduct] sin país", id, badges);
-      if (!badges.tag) console.log("ℹ️ [CardProduct] sin tag", id, badges);
-    }
-  }, [badges, id]);
 
   const normalizedProvider = provider?.toLowerCase().trim() ?? "";
   const isSimTim =
@@ -291,7 +280,6 @@ const CardProduct: React.FC<CardSimProps> = ({
           >
             {headerTitle}
           </h2>
-
 
           {badges?.tag ? (
             <div

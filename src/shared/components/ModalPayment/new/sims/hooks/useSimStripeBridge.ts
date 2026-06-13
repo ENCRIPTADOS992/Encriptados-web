@@ -29,13 +29,6 @@ export function useSimStripeBridge({
   React.useEffect(() => {
     if (!onStripeConfirmReady) return;
 
-    console.log("[useSimStripeBridge] Estado actualizado:", {
-      method,
-      status,
-      hasStripe: !!stripeRef.current,
-      hasNumber: !!splitRef.current?.number,
-    });
-
     // Si no es método card o no está listo, enviar null
     if (
       method !== "card" ||
@@ -44,7 +37,6 @@ export function useSimStripeBridge({
       !splitRef.current?.number
     ) {
       if (confirmFnRef.current !== null) {
-        console.log("[useSimStripeBridge] ❌ Stripe no listo, enviando null");
         confirmFnRef.current = null;
         onStripeConfirmReady(null);
       }
@@ -53,10 +45,6 @@ export function useSimStripeBridge({
 
     // Crear la función de confirmación
     const fn: StripeConfirmFn = async (clientSecret, billing) => {
-      console.log("[useSimStripeBridge] ✅ Confirmando pago con:", {
-        clientSecret: clientSecret?.slice(0, 20) + "...",
-        billing,
-      });
 
       if (!stripeRef.current || !splitRef.current?.number) {
         throw new Error(t("stripeNotReady"));
@@ -76,7 +64,6 @@ export function useSimStripeBridge({
 
     // Solo actualizar si la función cambió
     if (confirmFnRef.current !== fn) {
-      console.log("[useSimStripeBridge] ✅ Stripe listo, registrando confirmFn");
       confirmFnRef.current = fn;
       onStripeConfirmReady(fn);
     }

@@ -8,8 +8,6 @@ import { useRouter, usePathname } from "next/navigation";
 import { useGetProducts } from "@/features/products/queries/useGetProducts";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
-console.log("[ProductCarousel] 📦 Módulo cargado");
-
 // Productos base con imagen local y href - los precios se obtendrán de la API
 const baseProducts = [
   {
@@ -102,7 +100,6 @@ const ProductCarousel = () => {
   }, [apiProducts]);
 
   useEffect(() => {
-    console.log("[ProductCarousel] ✅ Componente montado");
   }, []);
 
   const settings = {
@@ -155,17 +152,11 @@ const ProductCarousel = () => {
       }
     }
 
-
     try {
       router.push(finalHref);
-      console.log("[ProductCarousel] 🟢 router.push ejecutado");
     } catch (error) {
       console.error("[ProductCarousel] 🔴 Error en router.push", error);
       if (typeof window !== "undefined") {
-        console.log(
-          "[ProductCarousel] 🔁 Fallback window.location.assign",
-          finalHref
-        );
         window.location.assign(finalHref);
       }
     }

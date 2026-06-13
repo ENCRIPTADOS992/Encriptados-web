@@ -82,7 +82,6 @@ const logRecargaSummary = (label: string, products: Product[]) => {
       (summary[key].byProvider[provider] ?? 0) + 1;
   }
 
-  console.log(`📊 [RecargaSummary] ${label}`, summary);
 };
 
 const normalizeProviderValue = (value: unknown): string | undefined => {
@@ -149,13 +148,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   // Debug: mostrar todos los productos TIM recibidos de la API
   const allTimProducts = uniqueProducts.filter(p => p.provider?.toLowerCase() === "tim");
   if (allTimProducts.length > 0) {
-    console.log("📦 [ListOfProducts] lista productos TIM:", allTimProducts.map(p => ({
-      id: p.id,
-      name: p.name,
-      provider: p.provider,
-      brand: p.brand,
-      type_product: p.type_product
-    })));
   }
 
   // 👉 log general de recargas ANTES de cualquier filtro
@@ -173,7 +165,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     return !isZi0n && !isActivarApps;
   });
 
-
   if (filters.provider && filters.provider !== "all" && isSelectedSimCategory) {
     const providerValues = providerMap[filters.provider] || [];
     const before = filteredProducts.length;
@@ -189,18 +180,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
       });
     });
 
-    console.log("🔎 [Filtro Provider]", {
-      providerFilter: filters.provider,
-      providerValues,
-      before,
-      after: filteredProducts.length,
-    });
     logRecargaSummary("DESPUÉS FILTRO PROVIDER", filteredProducts);
   } else {
-    console.log("[Filtro Provider] no aplica", {
-      provider: filters.provider,
-      selectedOption,
-    });
   }
 
   const getProviderServiceKey = (): string | undefined => {
@@ -220,12 +201,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   };
 
   const providerServiceKey = getProviderServiceKey();
-  console.log("🧷 [ServiceKey] =>", {
-    provider: filters.provider,
-    providerServiceKey,
-    rawEncriptados: filters.encriptadosprovider,
-    rawTim: filters.timprovider,
-  });
 
   if (providerServiceKey) {
     const before = filteredProducts.length;
@@ -293,22 +268,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
         availableKeys: Object.keys(namePatterns),
       });
     } else {
-      console.log("🔍 [DEBUG] Filtrando con patrones para:", providerServiceKey);
-      console.log("🔍 [DEBUG] Nombres disponibles:", filteredProducts.map(p => p.name).filter(Boolean));
 
       filteredProducts = filteredProducts.filter((product) => {
         const name = product.name?.trim() ?? "";
         const matches = patterns.some(pattern => pattern.test(name));
-        console.log(`${matches ? '✅' : '❌'} [DEBUG] "${name}" ${matches ? 'COINCIDE' : 'NO coincide'} con patrones de ${providerServiceKey}`);
         return matches;
       });
 
-      console.log("🔎 [Filtro Servicio]", {
-        providerServiceKey,
-        patterns: patterns.map(p => p.toString()),
-        before,
-        after: filteredProducts.length,
-      });
       logRecargaSummary("DESPUÉS FILTRO SERVICIO", filteredProducts);
     }
   }
@@ -323,11 +289,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   ) {
     const serviceNameForTim = serviceMap[filters.timprovider];
     isSimTimFisica = serviceNameForTim === "SIM Física";
-    console.log("[TIM] servicio actual:", {
-      timprovider: filters.timprovider,
-      serviceNameForTim,
-      isSimTimFisica,
-    });
   }
 
   const usingBackendCountryFilter = !!filters.simCountry;
@@ -342,13 +303,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
       regionCode !== "GLOBAL" &&
       !usingBackendCountryFilter
     ) {
-      console.log("🌎 [Filtro Región TIM] Aplicando filtro por región:", regionCode);
-      console.log("🌎 [Filtro Región TIM] Productos antes del filtro:", filteredProducts.map(p => ({
-        id: p.id,
-        name: p.name,
-        hasVariants: (p.variants ?? []).length > 0,
-        variantScopes: (p.variants ?? []).map(v => v.scope?.code)
-      })));
 
       filteredProducts = filteredProducts.filter((product) =>
         (product.variants ?? []).some(
@@ -356,19 +310,10 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
         )
       );
     } else {
-      console.log("🌎 [Filtro Región TIM] NO se aplica filtro (regionCode:", regionCode, ", usingBackendCountryFilter:", usingBackendCountryFilter, ")");
     }
 
-    console.log("🌎 [Filtro Región TIM]", {
-      regionCode,
-      simCountry: filters.simCountry,
-      usingBackendCountryFilter,
-      before,
-      after: filteredProducts.length,
-    });
     logRecargaSummary("DESPUÉS FILTRO REGIÓN TIM", filteredProducts);
   } else if (filters.provider === "tim" && isSimTimFisica) {
-    console.log("🌎 [Filtro Región TIM] omitido porque es SIM Física TIM");
   }
 
   if (
@@ -384,11 +329,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
       return nameNormalized === osFilter;
     });
 
-    console.log("🔎 [Filtro OS]", {
-      osFilter,
-      before,
-      after: filteredProducts.length,
-    });
   }
 
   // Filtro por licencia
@@ -405,11 +345,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
       )
     );
 
-    console.log("🔎 [Filtro Licencia]", {
-      license: filters.license,
-      before,
-      after: filteredProducts.length,
-    });
   }
 
   // Filtro por búsqueda de texto
@@ -500,14 +435,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
       return matchesAllWords || exactMatch;
     });
 
-    console.log("🔍 [Filtro Búsqueda]", {
-      searchQuery: filters.searchQuery,
-      searchTerm,
-      normalizedSearchTerm,
-      searchWords,
-      before,
-      after: filteredProducts.length,
-    });
   }
 
   if (isSelectedSoftwareCategory) {
@@ -601,12 +528,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     const regionCode = (filters.simCountry || filters.regionOrCountry || "").toUpperCase();
     const isCountryType = filters.regionOrCountryType === "country";
 
-    console.log("🔄 [Expansión TIM] Iniciando expansión de variantes", {
-      regionCode,
-      isCountryType,
-      productosAntes: filteredProducts.length
-    });
-
     const expanded: ExpandedProduct[] = [];
 
     for (const product of filteredProducts) {
@@ -646,17 +567,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
         }
       }
 
-      console.log(`🔄 [Expansión TIM] Producto "${product.name}" (id: ${product.id})`, {
-        totalVariantes: variants.length,
-        variantesFiltradas: matchingVariants.length,
-        variantesGB: matchingVariants.map(v => ({
-          gb: v.gb,
-          name: v.name,
-          scope: v.scope?.code,
-          cost: v.cost
-        }))
-      });
-
       if (matchingVariants.length === 0) {
         // No hay variantes que coincidan con la región, omitir producto
         continue;
@@ -674,20 +584,11 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     }
 
     productsToRender = expanded;
-    console.log("🔄 [Expansión TIM] Resultado:", {
-      productosAntes: filteredProducts.length,
-      tarjetasExpandidas: expanded.length
-    });
   }
 
   // ========== EXPANSIÓN DE VARIANTES SIM ENCRIPTADAS (categoría 40, NO TIM) ==========
   // Para productos SIM Encriptadas con variantes (minutos, datos, etc.), crear una tarjeta por cada variante
   if (isSelectedSimCategory && filters.provider !== "tim") {
-    console.log("🔄 [Expansión SIM Encriptadas] Iniciando expansión de variantes", {
-      categoría: selectedOption,
-      provider: filters.provider,
-      productosAntes: productsToRender.length
-    });
 
     const expandedBySim: ExpandedProduct[] = [];
 
@@ -701,19 +602,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
 
       // Usar variants del producto
       const variants = product.variants ?? [];
-
-      console.log(`🔄 [Expansión SIM Encriptadas] Producto "${product.name}" (id: ${product.id})`, {
-        provider: product.provider,
-        totalVariants: variants.length,
-        variantes: variants.map((v: any) => ({
-          id: v.id,
-          name: v.name,
-          gb: v.gb,
-          minutes: v.minutes,
-          cost: v.cost,
-          price: v.price
-        }))
-      });
 
       // Si no hay variantes o solo hay 1, mostrar el producto tal cual
       if (variants.length <= 1) {
@@ -741,20 +629,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     }
 
     productsToRender = expandedBySim;
-    console.log("🔄 [Expansión SIM Encriptadas] Resultado:", {
-      productosAntes: filteredProducts.length,
-      tarjetasExpandidas: expandedBySim.length
-    });
   }
 
   // ========== EXPANSIÓN DE VARIANTES DE LICENCIA (Apps, Sistemas, Router) ==========
   // Para productos con variantes de licencia (3 meses, 6 meses, etc.), crear una tarjeta por cada variante
   // SOLO si hay más de una variante con licensetime diferente
   if (isSelectedLicenseCategory) {
-    console.log("🔄 [Expansión Licencias] Iniciando expansión de variantes de licencia", {
-      categoría: selectedOption,
-      productosAntes: productsToRender.length
-    });
 
     const expandedByLicense: ExpandedProduct[] = [];
 
@@ -772,16 +652,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
       const variantsWithLicense = licenseVariants.filter((v: any) =>
         v.licensetime && v.licensetime !== "" && v.licensetime !== "0" && !isFreeTrialLicense(v.licensetime)
       );
-
-      console.log(`🔄 [Expansión Licencias] Producto "${product.name}" (id: ${product.id})`, {
-        totalLicenseVariants: licenseVariants.length,
-        variantesConLicencia: variantsWithLicense.length,
-        licencias: variantsWithLicense.map((v: any) => ({
-          id: v.id,
-          licensetime: v.licensetime,
-          price: v.price
-        }))
-      });
 
       // SOLO expandir si hay MÁS DE UNA variante con licensetime
       // Si hay 0 o 1 variante, mostrar el producto tal cual (sin duplicar)
@@ -830,16 +700,9 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     }
 
     productsToRender = expandedByLicense;
-    console.log("🔄 [Expansión Licencias] Resultado:", {
-      productosAntes: filteredProducts.length,
-      tarjetasExpandidas: expandedByLicense.length,
-      filtroLicencia: filters.license,
-    });
   }
 
-
   const productCount = productsToRender.length;
-  console.log("✅ [ListOfProducts] total a renderizar:", productCount);
   logRecargaSummary("FINAL (ANTES DE RENDER)", filteredProducts);
 
   const normalizeCountryCode = (code?: string) => {
@@ -1085,25 +948,6 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
             let effectivePlanDataAmount: number | undefined = isTimProvider && variant
               ? variant.cost
               : undefined;
-
-            console.log("💰 [ListOfProducts] price debug =>", {
-              idx: index,
-              id: product.id,
-              name: product.name,
-              provider: product.provider,
-              price: product.price,
-              selectedRegionOrCountry,
-              isCountryType,
-              variantSelected: variant ? {
-                id: variant.id,
-                scopeCode: variant.scope?.code,
-                scopeType: variant.scope?.type,
-                cost: variant.cost,
-                gb: variant.gb
-              } : null,
-              totalVariants: (product.variants ?? []).length,
-              effectivePlanDataAmount,
-            });
 
             let priceToShow = Number(product.price);
 

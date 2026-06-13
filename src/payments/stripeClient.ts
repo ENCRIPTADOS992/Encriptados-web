@@ -23,8 +23,6 @@ function maskKey(k: string) {
 export async function getStripe(): Promise<Stripe> {
   if (typeof window === "undefined") throw new Error("client only");
   if (!STRIPE_PUBLISHABLE_KEY) throw new Error("Falta NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY");
-  // eslint-disable-next-line no-console
-  console.log("[stripe] pk:", maskKey(STRIPE_PUBLISHABLE_KEY));
   if (!stripePromise) stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
   const stripe = await stripePromise;
   if (!stripe) throw new Error("No se pudo inicializar Stripe.");

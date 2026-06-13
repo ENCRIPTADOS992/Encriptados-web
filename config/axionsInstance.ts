@@ -3,6 +3,7 @@ import { WP_API_BASE } from "@/shared/constants/backend";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: WP_API_BASE,
+  timeout: 15_000, // 15 seconds
   headers: {
     "Content-Type": "application/json",
   },

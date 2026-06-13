@@ -59,7 +59,6 @@ const AccountNumber = () => {
         });
         router.push("/dashboard/data-usage");
       } catch (error) {
-        console.log(error);
         errorToast(t("LoginPage.generatedSection.accountNumber.errorMessage"));
       }
     },

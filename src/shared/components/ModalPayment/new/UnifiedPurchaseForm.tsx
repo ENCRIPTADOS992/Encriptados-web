@@ -355,21 +355,11 @@ export default function UnifiedPurchaseForm({
         let orderResult: { order_id: number; client_secret: string };
 
         const isThreema = /threema/i.test(productName || "") || productId === 136;
-        console.log("🐛 [UnifiedPurchaseForm] Threema Debug:", { productName, isThreema, originalLicenseTime: purchaseMeta?.licensetime });
         const resolvedLicenseTime = isThreema ? null : purchaseMeta?.licensetime;
-        console.log("🐛 [UnifiedPurchaseForm] resolvedLicenseTime:", resolvedLicenseTime);
 
         // DEBUG: Log routing decision
         const hasRenewIds = form.renewIds && form.renewIds.length > 0;
         const isZi0nRenewal = form.licenseType === "renew" && isZi0nProduct;
-        console.log("🔀 [UnifiedPurchaseForm] Routing decision:", {
-          orderType,
-          licenseType: form.licenseType,
-          renewIds: form.renewIds,
-          renewIdsLength: form.renewIds?.length,
-          isZi0nRenewal,
-          willUseRenewal: form.licenseType === "renew" && (hasRenewIds || isZi0nRenewal),
-        });
 
         if (form.licenseType === "renew") {
           if (!isZi0nRenewal && !hasRenewIds) {
@@ -383,15 +373,6 @@ export default function UnifiedPurchaseForm({
           const effectiveLicenseIds: string[] = isZi0nRenewal && !hasRenewIds
             ? Array.from({ length: quantity }, () => "zi0n-auto")
             : (form.renewIds ?? []);
-          console.log("🔄 [RENEWAL] Using /orders/renewal endpoint", {
-            productId,
-            licenseIds: effectiveLicenseIds,
-            email: emailVal.trim(),
-            months,
-            amountUsd,
-            licenseType: form.licenseType,
-            isZi0nRenewal,
-          });
           orderResult = await createRenewalOrder({
             productId,
             licenseIds: effectiveLicenseIds,

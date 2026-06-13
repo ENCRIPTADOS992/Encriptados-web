@@ -57,26 +57,10 @@ export function createSimSubmitHandler({
   onSuccess,
 }: Params) {
   return async function handleSubmit(data: Shipping) {
-    console.log("[createSimSubmitHandler] submit 👉", {
-      formType,
-      data,
-      unitPrice,
-      quantity,
-      couponCode,
-      discount,
-      isPhysical,
-      productid,
-    });
 
     const shippingFee = isPhysical ? 75 : 0;
     const baseAmount = Number(unitPrice) * quantity - discount;
     const amountUsd = Math.max(baseAmount + shippingFee, 0);
-
-    console.log("[createSimSubmitHandler] montos calculados", {
-      shippingFee,
-      baseAmount,
-      amountUsd,
-    });
 
     const providerName = (
       product?.provider || product?.brand || ""
@@ -97,15 +81,6 @@ export function createSimSubmitHandler({
     const isTimSim =
       isTimProvider &&
       (formType === "tim_physical" || formType === "tim_esim");
-
-    console.log("[createSimSubmitHandler] provider / flags", {
-      providerName,
-      isEncryptedProvider,
-      isTimProvider,
-      isTottoliSim,
-      isTimSim,
-      formType,
-    });
 
     if (isTottoliSim) {
       const tottoliMethod: TottoliMethod =
@@ -161,25 +136,12 @@ export function createSimSubmitHandler({
         };
       }
 
-      console.log("➡️ Tottoli checkout payload", payload);
       const res = await tottoliCheckout(payload);
-      console.log("[createSimSubmitHandler] respuesta tottoli", res);
 
       if (tottoliMethod === "card") {
         const clientSecret = (res as any).client_secret as
           | string
           | undefined;
-
-        console.log(
-          "[createSimSubmitHandler] Stripe PaymentIntent creado (Tottoli)",
-          {
-            provider: (res as any).provider,
-            provider_ref: (res as any).provider_ref,
-            client_secret: clientSecret,
-            stripeConfirmCurrent: stripeConfirm,
-            stripeConfirmType: typeof stripeConfirm,
-          }
-        );
 
         if (!clientSecret) {
           toast.error("Pedido creado, pero no se recibió client_secret para Stripe.");
@@ -205,11 +167,6 @@ export function createSimSubmitHandler({
           const confirmRes = await stripeConfirm(
             clientSecret,
             billing
-          );
-
-          console.log(
-            "[createSimSubmitHandler] resultado confirmCardPayment",
-            confirmRes
           );
 
           if (confirmRes?.status === "succeeded") {

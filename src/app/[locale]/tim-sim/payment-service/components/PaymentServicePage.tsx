@@ -19,7 +19,6 @@ const PaymentServicePage = () => {
   const t = useTranslations("PaymentServicePage");
   const { watch } = useFormContext();
 
-  console.log(watch());
   const AllWorld = "/images/maya-data/payment-service/allworld.webp";
 
   const benefits = [

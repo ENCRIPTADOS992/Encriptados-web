@@ -23,7 +23,6 @@ const WhereUseYourSim = () => {
           selectedregion: "region",
         }}
         submit={(data) => {
-          console.log(data);
         }}
       >
         <StepperBuy optionType="irasim" />

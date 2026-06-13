@@ -66,7 +66,6 @@ const ContentBlogById = () => {
   }
 
   if (!post) {
-    console.log("No se encontrÃ³ el post para mostrar.");
     return null;
   }
 

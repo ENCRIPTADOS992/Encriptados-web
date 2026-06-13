@@ -43,13 +43,6 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
   const format = deriveProductFormat(typeProductRaw);
 
   // Logs para debugging
-  console.log("[resolveSimFormType] Derivación:", {
-    id: product.id,
-    provider: providerRaw,
-    type_product: typeProductRaw,
-    derived: { family, format },
-    slug: deriveProductSlug(family, format),
-  });
 
   // Casos especiales para config_sim (recargas, datos, minutos)
   const cfgType = product.config_sim?.[0]?.type?.toLowerCase() ?? "";
@@ -61,7 +54,6 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
     nameRaw.includes("données") || nameRaw.includes("dati") || nameRaw.includes("dados")
   );
   if (family === "encrypted" && isEsimDataName) {
-    console.log("[resolveSimFormType] override => encrypted_esimData por nombre:", nameRaw);
     return "encrypted_esimData";
   }
 
@@ -71,7 +63,6 @@ export function resolveSimFormType(product?: ModalProduct | null): FormType {
     nameRaw.includes("minuti")
   );
   if (family === "encrypted" && isEsimMinutosName) {
-    console.log("[resolveSimFormType] override => encrypted_minutes por nombre:", nameRaw);
     return "encrypted_minutes";
   }
 

@@ -167,7 +167,7 @@ async function getProductBySlugInCategory(
     if (isSimCategoryId(categoryId)) {
       const simUrl = getSimProductUrl(product.provider, product.type_product);
       const derivedSlug = simUrl.split("/").pop();
-      return slugCandidates.includes(derivedSlug);
+      return derivedSlug ? slugCandidates.includes(derivedSlug) : false;
     }
     const productSlug = generateSlug(product.name);
     return slugCandidates.includes(productSlug);
@@ -187,6 +187,7 @@ export const resolvePublicProduct = async ({
     new Set(slugs.map(normalizeSlugCandidate).filter((value): value is string => Boolean(value)))
   );
 
+  // Step 1: Direct ID lookup — fastest path (1 API call)
   if (preferredProductId !== null && preferredProductId !== undefined && preferredProductId !== "") {
     try {
       return await getProductById(String(preferredProductId), lang, { silent: true });
@@ -195,7 +196,10 @@ export const resolvePublicProduct = async ({
     }
   }
 
-  if (categoryId && normalizedSlugs.length > 0) {
+  if (normalizedSlugs.length === 0) return null;
+
+  // Step 2: Search within known category first (1 getAllProducts + 1 getProductById = 2 calls)
+  if (categoryId) {
     try {
       const product = await getProductBySlugInCategory(categoryId, normalizedSlugs, lang);
       if (product) return product;
@@ -204,12 +208,28 @@ export const resolvePublicProduct = async ({
     }
   }
 
-  for (const slug of normalizedSlugs) {
-    try {
-      const product = await getProductBySlug(slug, lang);
-      if (product) return product;
-    } catch {
-      // try next slug candidate
+  // Step 3: Search ALL remaining categories in parallel (max 4 getAllProducts + 1 getProductById)
+  // Skip the category already searched in step 2 to avoid duplicate API calls
+  const categoriesToSearch = [
+    PRODUCT_CATEGORY_IDS.APPS,
+    PRODUCT_CATEGORY_IDS.SOFTWARE,
+    PRODUCT_CATEGORY_IDS.ROUTERS,
+    PRODUCT_CATEGORY_IDS.ACTIVATE_APPS,
+  ].filter(catId => catId !== categoryId);
+
+  if (categoriesToSearch.length === 0) return null;
+
+  const results = await Promise.all(
+    categoriesToSearch.map(catId =>
+      getAllProducts(catId, lang, { simRegion: "global", silent: true }).catch(() => [] as Product[])
+    )
+  );
+
+  for (const products of results) {
+    if (!Array.isArray(products)) continue;
+    const found = products.find(p => normalizedSlugs.includes(generateSlug(p.name)));
+    if (found?.id) {
+      return getProductById(String(found.id), lang, { silent: true });
     }
   }
 

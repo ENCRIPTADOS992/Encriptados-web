@@ -29,15 +29,8 @@ export function buildMinutesPlans({
   skipSale = false,
   esimBasePrice = 0,
 }: Params): MinutesPlan[] {
-  console.log("[buildMinutesPlans] start", {
-    formType,
-    variantsLength: variants?.length ?? 0,
-    variants: JSON.stringify(variants, null, 2),
-    configSim: product?.config_sim,
-  });
 
   if (formType !== "encrypted_minutes") {
-    console.log("[buildMinutesPlans] formType NO es encrypted_minutes");
     return [];
   }
 
@@ -118,27 +111,15 @@ export function buildMinutesPlans({
           minutes,
         };
 
-        console.log("[buildMinutesPlans] fromVariants item", {
-          rawVariant: v,
-          cost,
-          plan,
-        });
-
         return plan;
       })
       .filter((p) => p.value > 0);
 
-  console.log("[buildMinutesPlans] fromVariants result", fromVariants);
-
   if (fromVariants.length > 0) {
-    console.log(
-      "[buildMinutesPlans] usando fromVariants (NO config_sim)"
-    );
     return fromVariants;
   }
 
   const items = product?.config_sim ?? [];
-  console.log("[buildMinutesPlans] from config_sim fallback", items);
 
   const fromConfigSim: MinutesPlan[] = items
     .map((c, i) => {
@@ -164,19 +145,9 @@ export function buildMinutesPlans({
         minutes: numMinutes > 0 ? numMinutes : undefined,
       };
 
-      console.log("[buildMinutesPlans] fromConfigSim item", {
-        rawConfig: c,
-        plan,
-      });
-
       return plan;
     })
     .filter((p) => p.value > 0);
-
-  console.log(
-    "[buildMinutesPlans] fromConfigSim result (fallback)",
-    fromConfigSim
-  );
 
   return fromConfigSim;
 }

@@ -37,7 +37,6 @@ export interface TottoliOkResponse {
 export async function tottoliCheckout(
   payload: TottoliCheckoutPayload
 ): Promise<TottoliOkResponse> {
-  console.log("➡️ [tottoliCheckout] payload enviado:", payload);
 
   const url = buildWpV1Url("/tottoli/checkout");
   const doPost = async (body: any) =>
@@ -50,8 +49,6 @@ export async function tottoliCheckout(
   let res = await doPost(payload);
 
   const raw = await res.text();
-  console.log("⬅️ [tottoliCheckout] status:", res.status);
-  console.log("⬅️ [tottoliCheckout] raw body:", raw);
 
   if (!res.ok) {
     console.error("❌ [tottoliCheckout] error HTTP", res.status, raw);
@@ -78,6 +75,5 @@ export async function tottoliCheckout(
     throw new Error(data.error || "Respuesta inválida del checkout");
   }
 
-  console.log("✅ [tottoliCheckout] respuesta OK", data);
   return data as TottoliOkResponse;
 }

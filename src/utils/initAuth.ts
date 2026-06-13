@@ -5,13 +5,9 @@ export const initAuth = async () => {
   if (!existingToken) {
     try {
       const token = await getToken();
-      console.log("Token obtenido desde API:", token); 
       localStorage.setItem("token", token);
-      console.log("Token guardado correctamente");
-    } catch (error) {
-      console.error("Error al obtener el token", error);
+    } catch {
+      // Token retrieval failed — user will be unauthenticated
     }
-  } else {
-    console.log("Token ya existente en localStorage");
   }
 };

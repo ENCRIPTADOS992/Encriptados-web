@@ -397,15 +397,6 @@ const PurchaseHeader: React.FC<Props> = ({
                   providerLower === "encrypted");
 
                 // Debug: mostrar datos del producto para verificar derivación
-                console.log("🔗 [PurchaseHeader] Share button clicked:", {
-                  shareProductId,
-                  productId,
-                  unitPrice,
-                  provider,
-                  typeProduct,
-                  isSimProduct,
-                  productName: product?.name,
-                });
 
                 // Generar la URL de compartir
                 let shareUrl: string;
@@ -456,16 +447,6 @@ const PurchaseHeader: React.FC<Props> = ({
 
                   shareUrl = simUrl;
 
-                  console.log("🔗 [PurchaseHeader] Generated SECURE SIM share URL:", {
-                    provider,
-                    typeProduct,
-                    relativePath,
-                    slug,
-                    canonicalId,
-                    finalProductId,
-                    variantId: selectedVariantId,
-                    shareUrl
-                  });
                 } else {
                   // Para Apps/Sistemas/Router: usar getProductLink con lógica dinámica de slugs
                   const rawCategoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? NaN);
@@ -509,8 +490,6 @@ const PurchaseHeader: React.FC<Props> = ({
                     shareUrl = currentUrl.toString();
                   }
                 }
-
-                console.log("🔗 [PurchaseHeader] Final shareUrl:", shareUrl);
 
                 const shareData = {
                   title: product?.name || "Producto",
@@ -748,10 +727,6 @@ const PurchaseHeader: React.FC<Props> = ({
               </div>
             </div>
           )}
-
-
-
-
 
           {/* Fila: País o región (si existe) - Ocultar para Sim Física */}
           {(region || regionCode) && !titleNorm.includes("sim física") && !titleNorm.includes("sim fisica") && (
