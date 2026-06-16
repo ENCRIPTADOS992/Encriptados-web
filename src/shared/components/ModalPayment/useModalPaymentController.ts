@@ -262,8 +262,11 @@ export function useModalPaymentController(): UseModalPaymentControllerResult {
   }, [isModalOpen, product, kind, setMode, supportOnly, modeResolved, isLoadingProduct]);
 
   // The modal is "ready" once we've loaded the product and determined the correct mode,
-  // or if there's no productid to fetch at all.
-  const isReady = !productid || (!isLoadingProduct && modeResolved);
+  // or if there's no productid to fetch at all,
+  // or if the mode was explicitly set in openModal params (e.g., mode: "sim" from FixedSimProducts).
+  // When mode is explicit, we trust the caller and don't block on product loading.
+  const hasExplicitMode = !!(params as any)?.mode;
+  const isReady = !productid || (!isLoadingProduct && modeResolved) || hasExplicitMode;
 
   const panelClassName = getModalPanelClassName({ mode, kind });
   const contentClassName = getModalContentClassName({ mode, kind });

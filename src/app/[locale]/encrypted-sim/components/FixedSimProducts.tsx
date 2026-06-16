@@ -24,6 +24,7 @@ import IcomSimSvg from "/public/images/encrypted-sim/icons/icon-sim.svg";
 
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useEncryptedSimProducts, ENCRYPTED_SIM_PRODUCT_IDS, type EncryptedSimProduct } from "@/features/products/hooks/useEncryptedSimProducts";
+import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
 import type { StaticImageData } from "next/image";
 
@@ -77,6 +78,8 @@ const FixedSimProducts: React.FC = () => {
       languageCode: locale,
       initialPrice,
       mode: "sim",
+      selectedOption: PRODUCT_CATEGORY_IDS.SIMS,
+      provider: "Encrypted",
       // Pasar variantes completas (incluyendo scope, image, etc) para que el modal funcione correctamente
       variants: variants
     });
