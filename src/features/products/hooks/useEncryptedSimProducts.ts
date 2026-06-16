@@ -21,6 +21,18 @@ export interface ProductVariant {
   price: number;
   sku: string;
   image?: string;
+  // Campos necesarios para el dropdown de minutos/datos en el modal de compra
+  minutes?: number;
+  name?: string;
+  label?: string;
+  attributes?: { name: string; option: string }[];
+  scope?: { type: string; code: string };
+  cost?: number;
+  sale_price?: number | string | null;
+  regular_price?: number | string | null;
+  days?: number;
+  minute_price?: number;
+  currency?: string;
 }
 
 export interface EncryptedSimProduct {
@@ -100,7 +112,18 @@ export const useEncryptedSimProducts = () => {
               id: v.id ?? 0,
               price: numericPrice,
               sku: v.sku || v.label || '',
-              image: v.image
+              image: v.image,
+              // Preservar campos para el dropdown del modal (minutos, datos, etc.)
+              minutes: v.minutes,
+              name: v.name,
+              label: v.label,
+              attributes: (v as any).attributes,
+              scope: v.scope,
+              cost: v.cost,
+              sale_price: v.sale_price,
+              days: v.days,
+              minute_price: v.minute_price,
+              currency: v.currency,
             };
           });
 
