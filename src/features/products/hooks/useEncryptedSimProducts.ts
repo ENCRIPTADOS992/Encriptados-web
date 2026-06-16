@@ -144,10 +144,12 @@ export const useEncryptedSimProducts = () => {
             }
           }
 
-          // Crear string de rango de precios
-          const priceRange = minPrice === maxPrice
-            ? `$${minPrice}`
-            : `$${minPrice} - $${maxPrice}`;
+          // Crear string de rango de precios (redondear para evitar decimales como $32.5)
+          const minPriceRounded = Math.round(minPrice);
+          const maxPriceRounded = Math.round(maxPrice);
+          const priceRange = minPriceRounded === maxPriceRounded
+            ? `$${minPriceRounded}`
+            : `$${minPriceRounded} - $${maxPriceRounded}`;
 
           return {
             id: product.id,
