@@ -19,8 +19,22 @@ const ENCRYPTED_SIM_PRODUCT_IDS = {
 export interface ProductVariant {
   id: number;
   price: number;
-  sku: string;
+  cost?: number;
+  sale_price?: number | string | null;
+  regular_price?: number | string | null;
+  on_sale?: boolean;
+  sku?: string;
   image?: string;
+  name?: string;
+  label?: string;
+  gb?: string;
+  minutes?: number;
+  licensetime?: string | null;
+  scope?: {
+    type: string;
+    code: string;
+  };
+  attributes?: { name: string; option: string }[];
 }
 
 export interface EncryptedSimProduct {
@@ -99,8 +113,19 @@ export const useEncryptedSimProducts = () => {
             return {
               id: v.id ?? 0,
               price: numericPrice,
+              cost: v.cost,
+              sale_price: v.sale_price ?? null,
+              regular_price: (v as any).regular_price ?? variantPrice,
+              on_sale: v.on_sale,
               sku: v.sku || v.label || '',
-              image: v.image
+              image: v.image,
+              name: v.name,
+              label: v.label,
+              gb: v.gb,
+              minutes: v.minutes,
+              licensetime: v.licensetime ?? null,
+              scope: v.scope,
+              attributes: (v as any).attributes,
             };
           });
 

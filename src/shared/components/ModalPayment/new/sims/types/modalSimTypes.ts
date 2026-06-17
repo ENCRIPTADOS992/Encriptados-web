@@ -27,6 +27,7 @@ export type Variant = {
   scope?: { type?: string; code?: string };
   sale_price?: number | string | null;
   regular_price?: number | string | null;
+  attributes?: { name: string; option: string }[];
 };
 
 export type ConfigSim = {
