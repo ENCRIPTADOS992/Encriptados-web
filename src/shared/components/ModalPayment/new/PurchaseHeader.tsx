@@ -535,7 +535,7 @@ const PurchaseHeader: React.FC<Props> = ({
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               <span className="text-base text-[#3D3D3D]">{t("esimPrice", { defaultValue: "Precio de eSIM" })}</span>
               <span className="text-base font-bold text-[#141414] min-w-[5rem] text-right">
-                {ESIM_RECARGA_BASE_PRICE} {currency}
+                {isEsimOnlyTitle ? unitPrice : ESIM_RECARGA_BASE_PRICE} {currency}
               </span>
             </div>
           )}

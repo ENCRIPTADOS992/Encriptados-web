@@ -14,11 +14,19 @@ export interface ProductVariant {
   name?: string;
   label?: string;
   gb?: string;
+  ussd?: string;
+  image?: string;
+  days?: number;
+  minutes?: number;
+  minute_price?: number;
+  licensetime?: string | number | null;
   currency?: string;
   purchase_url?: string;
-  regular_price?: string | number;
-  sale_price?: string | number;
+  regular_price?: string | number | null;
+  sale_price?: string | number | null;
   scope?: { type?: string; code?: string };
+  on_sale?: boolean;
+  attributes?: { name: string; option: string }[];
 }
 
 interface ModalPaymentParams {

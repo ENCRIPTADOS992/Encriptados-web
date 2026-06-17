@@ -273,7 +273,7 @@
           "Sin fechas de corte"
         ],
         "priceRange": "25 - 500 USD",
-        "headerTitle": "Recarga de Datos"
+        "headerTitle": "Recarga Datos"
       },
       "minutes": {
         "title": "Compra MINUTOS para hacer llamadas anónimas e imposibles de rastrear",
@@ -286,7 +286,7 @@
           "Callback"
         ],
         "priceRange": "110 - 360 USD",
-        "headerTitle": "Recarga de minutos"
+        "headerTitle": "Recarga Minutos"
       },
       "imsi": {
         "title": "Compra cambios de IMSI el equivalente a reemplazar tu SIM por una nueva",
@@ -309,8 +309,8 @@
           "Comunicaciones encriptadas",
           "eSIM irrastreable"
         ],
-        "priceRange": "10 USD",
-        "headerTitle": "eSIM Virtual"
+        "priceRange": "12 USD",
+        "headerTitle": "eSIM"
       },
       "sim": {
         "title": "Compra tu SIM y recíbela en cualquier parte del mundo",
@@ -333,8 +333,8 @@
           "eSIM irrastreable",
           "Protegido contra IMSI CATCHER'S"
         ],
-        "priceRange": "$32.5 - $507.5",
-        "headerTitle": "eSIM + Recarga de Datos"
+        "priceRange": "$30 - $500",
+        "headerTitle": "eSIM + Datos"
       },
       "esimMinutes": {
         "title": "Compra tu eSIM con MINUTOS para hacer llamadas anónimas e imposibles de rastrear",
@@ -346,8 +346,8 @@
           "Número sustituto",
           "Callback"
         ],
-        "priceRange": "$55 - $505",
-        "headerTitle": "eSIM + Recarga de Minutos"
+        "priceRange": "$55 - $500",
+        "headerTitle": "eSIM + Minutos"
       }
     },
     "improveYourSecurity": {
