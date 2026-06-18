@@ -3,9 +3,13 @@
  * Checks variant-level sale_price directly (> 0 and < regular price).
  * The onSale flag is kept for backward compatibility but not required.
  */
-export function resolveVariantPrice(v: any, onSale: boolean): number {
+export function resolveVariantRegularPrice(v: any): number {
   const raw = v?.regular_price ?? v?.price ?? v?.cost ?? 0;
-  const regularPrice = typeof raw === "string" ? parseFloat(raw) || 0 : Number(raw) || 0;
+  return typeof raw === "string" ? parseFloat(raw) || 0 : Number(raw) || 0;
+}
+
+export function resolveVariantPrice(v: any, onSale: boolean): number {
+  const regularPrice = resolveVariantRegularPrice(v);
 
   // Check variant-level sale_price directly (no dependency on product-level flag)
   const sp = v?.sale_price;
@@ -22,12 +26,24 @@ export function resolveVariantPrice(v: any, onSale: boolean): number {
   return regularPrice;
 }
 
+export function resolveProductRegularPrice(product: any): number {
+  const raw = product?.regular_price ?? product?.price ?? product?.cost ?? 0;
+  return typeof raw === "string" ? parseFloat(raw) || 0 : Number(raw) || 0;
+}
+
+export function resolveCouponBaseUnitPrice(product: any, variant?: any | null): number {
+  if (variant) {
+    return resolveVariantRegularPrice(variant);
+  }
+
+  return resolveProductRegularPrice(product);
+}
+
 /**
  * Check if a variant has a valid sale price (sale_price > 0 and < regular price)
  */
 export function isVariantOnSale(v: any): boolean {
-  const raw = v?.regular_price ?? v?.price ?? v?.cost ?? 0;
-  const regularPrice = typeof raw === "string" ? parseFloat(raw) || 0 : Number(raw) || 0;
+  const regularPrice = resolveVariantRegularPrice(v);
   const sp = v?.sale_price;
   const salePrice =
     sp != null && sp !== ""

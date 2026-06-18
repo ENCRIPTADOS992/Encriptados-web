@@ -10,6 +10,7 @@ import UnifiedPurchaseForm, { type FormData } from "./UnifiedPurchaseForm";
 import { useCheckout } from "@/shared/hooks/useCheckout";
 import type { Provider as PayProvider } from "@/services/checkout";
 import { validateCoupon } from "@/lib/payments/orderApi";
+import { isProductOnSale, isVariantOnSale, resolveCouponBaseUnitPrice } from "./sims/utils/resolveVariantPrice";
 import { useToast } from "@/shared/context/ToastContext";
 import { useTranslations } from "next-intl";
 
@@ -107,7 +108,7 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
   const onApplyCoupon = async () => {
     if (!coupon.trim()) return;
     try {
-      const totalAmount = unitPrice * quantity;
+      const totalAmount = resolveCouponBaseUnitPrice(product, selectedVariant) * quantity;
       const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         let effectiveDiscount: number;
@@ -124,7 +125,10 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
           return;
         }
         setDiscount(Math.round(effectiveDiscount * 100) / 100);
-        if (productOnSale) {
+        const hasActiveOffer =
+          isProductOnSale(product) ||
+          isVariantOnSale((selectedVariant ?? variants[0]) as any);
+        if (hasActiveOffer) {
           toast.info(t("couponReplacesOffer"));
         } else {
           toast.success(res.message || t("couponApplied"));

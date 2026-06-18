@@ -3,7 +3,7 @@
 
 import type { FormType } from "../types/simFormTypes";
 import type { ModalProduct, Variant } from "../types/modalSimTypes";
-import { resolveVariantPrice, isProductOnSale } from "./resolveVariantPrice";
+import { resolveVariantPrice, resolveVariantRegularPrice, isProductOnSale } from "./resolveVariantPrice";
 
 export type MinutesPlan = {
   id: string | number;
@@ -83,7 +83,7 @@ export function buildMinutesPlans({
     (variants ?? [])
       .map((v, i) => {
         const onSale = !skipSale && isProductOnSale(product);
-        const cost = resolveVariantPrice(v, onSale);
+        const cost = skipSale ? resolveVariantRegularPrice(v) : resolveVariantPrice(v, onSale);
         const minutes = deriveMinutes(v, cost);
 
         // Crear label: priorizar minutes derivados > monto recarga (precio - eSIM) > label > name > precio

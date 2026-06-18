@@ -2,7 +2,7 @@
 
 import type { FormType } from "../types/simFormTypes";
 import type { ModalProduct, Variant } from "../types/modalSimTypes";
-import { resolveVariantPrice, isProductOnSale } from "./resolveVariantPrice";
+import { resolveVariantPrice, resolveVariantRegularPrice, isProductOnSale } from "./resolveVariantPrice";
 
 export type DataPlan = {
   id: string | number;
@@ -15,9 +15,10 @@ type Params = {
   formType: FormType;
   variants: Variant[];
   product: ModalProduct | undefined;
+  skipSale?: boolean;
 };
 
-export function buildDataPlans({ formType, variants, product }: Params): DataPlan[] {
+export function buildDataPlans({ formType, variants, product, skipSale = false }: Params): DataPlan[] {
   const titleNorm = String((product as any)?.name ?? "").toLowerCase();
   const isTimEsimData = formType === "tim_esim" && titleNorm.includes("esim") && (titleNorm.includes("datos") || titleNorm.includes("data"));
   
@@ -63,11 +64,11 @@ export function buildDataPlans({ formType, variants, product }: Params): DataPla
     return Number.isFinite(n) ? n : 0;
   };
 
-  const onSale = isProductOnSale(product);
+  const onSale = !skipSale && isProductOnSale(product);
 
   const fromVariants = (variants ?? [])
     .map((v, i) => {
-      const value = resolveVariantPrice(v, onSale);
+      const value = skipSale ? resolveVariantRegularPrice(v) : resolveVariantPrice(v, onSale);
       const gb = deriveGb(v);
 
       // Relaxed Logic: If GB could not be parsed but we have a label/name, still include it.

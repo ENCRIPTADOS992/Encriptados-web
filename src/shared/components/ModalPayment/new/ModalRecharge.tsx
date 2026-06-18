@@ -7,6 +7,7 @@ import { getProductById } from "@/features/products/services";
 import PurchaseScaffold from "./PurchaseScaffold";
 import type { Mode } from "./PurchaseTabs";
 import { validateCoupon } from "@/lib/payments/orderApi";
+import { resolveCouponBaseUnitPrice } from "./sims/utils/resolveVariantPrice";
 import { useToast } from "@/shared/context/ToastContext";
 import { useTranslations } from "next-intl";
 
@@ -80,7 +81,7 @@ export default function ModalRecharge() {
   const onApplyCoupon = async () => {
     if (!coupon.trim()) return;
     try {
-      const totalAmount = unitPrice * quantity;
+      const totalAmount = resolveCouponBaseUnitPrice(product, selectedVariant) * quantity;
       const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         let effectiveDiscount: number;

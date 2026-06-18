@@ -22,7 +22,7 @@ import {
 import { buildMinutesPlans } from "./sims/utils/buildMinutesPlans";
 import { calcSimUnitPrice } from "./sims/utils/calcSimUnitPrice";
 import { buildDataPlans } from "./sims/utils/buildDataPlans";
-import { resolveVariantPrice, isProductOnSale } from "./sims/utils/resolveVariantPrice";
+import { resolveVariantPrice, isProductOnSale, isVariantOnSale, resolveCouponBaseUnitPrice } from "./sims/utils/resolveVariantPrice";
 import { CODE_BY_COUNTRY_LABEL } from "@/shared/constants/countries";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
 
@@ -227,13 +227,11 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
 
   const minutesPlans = React.useMemo(
     () => {
-      const productIsOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
-      const hasCoupon = discount > 0;
       return buildMinutesPlans({
         formType,
         variants,
         product,
-        skipSale: hasCoupon && productIsOnSale,
+        skipSale: discount > 0,
         esimBasePrice,
       });
     },
@@ -246,8 +244,9 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
         formType,
         variants: filteredVariants, // Use filtered variants
         product,
+        skipSale: discount > 0,
       }),
-    [formType, filteredVariants, product]
+    [formType, filteredVariants, product, discount]
   );
 
   const dataAmounts = React.useMemo(() => {
@@ -597,7 +596,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
   const onApplyCoupon = async () => {
     if (!coupon.trim()) return;
     try {
-      const totalAmount = unitPrice * quantity;
+      const totalAmount = resolveCouponBaseUnitPrice(product, selectedVariant) * quantity;
       const res = await validateCoupon(coupon.trim(), product?.name, productid, totalAmount, selectedVariant?.id);
       if (res.ok) {
         let effectiveDiscount: number;
@@ -614,8 +613,10 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
           return;
         }
         setDiscount(Math.round(effectiveDiscount * 100) / 100);
-        const productIsOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
-        if (productIsOnSale) {
+        const hasActiveOffer =
+          isProductOnSale(product) ||
+          isVariantOnSale((selectedVariant ?? (variants ?? [])[0]) as any);
+        if (hasActiveOffer) {
           toast.info(t("couponReplacesOffer"));
         } else {
           toast.success(res.message || t("couponApplied"));
@@ -691,7 +692,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       intent: data.intent,
       orderId: data.orderId,
       product: {
-        productId: enrichedProduct?.id,
+        productId: enrichedProduct?.id != null ? Number(enrichedProduct.id) : undefined,
         name: enrichedProduct?.name ?? "SIM",
         image: enrichedProduct?.iconUrl || paramIconUrl || enrichedProduct?.images?.[0]?.src,
         brand: enrichedProduct?.brand ?? "Encriptados",
