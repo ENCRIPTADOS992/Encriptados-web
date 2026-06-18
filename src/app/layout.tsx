@@ -94,12 +94,24 @@ export const viewport: Viewport = {
   themeColor: "#000000",
 };
 
+function resolveGtmId(hostHeader: string | null, fallbackGtmId?: string) {
+  const hostname = hostHeader?.split(":")[0].toLowerCase();
+
+  if (!hostname) return fallbackGtmId;
+  if (hostname === "encriptados.io" || hostname.endsWith(".encriptados.io")) return "GTM-5J7NRKV";
+  if (hostname === "encriptados.net" || hostname.endsWith(".encriptados.net")) return "GTM-PQGGSZRK";
+
+  return fallbackGtmId;
+}
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+  const fallbackGtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
   const headersList = await headers();
   const lang = headersList.get("x-next-intl-locale") || "es";
+  const host = headersList.get("x-forwarded-host") || headersList.get("host");
+  const gtmId = resolveGtmId(host, fallbackGtmId);
 
   return (
     <html lang={lang} suppressHydrationWarning>
