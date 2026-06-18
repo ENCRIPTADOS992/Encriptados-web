@@ -20,6 +20,7 @@ import { SimTypeAlertSection } from "./components/SimTypeAlertSection";
 import { BuyerFieldsSection } from "./components/BuyerFieldsSection";
 import { PaymentMethodSection } from "./components/PaymentMethodSection";
 import { resolveVariantPrice, isProductOnSale } from "./utils/resolveVariantPrice";
+import { trackAddPaymentInfo } from "@/shared/utils/analytics";
 
 type SimFormUnifiedProps = {
   formType: FormType;
@@ -237,6 +238,17 @@ export default function SimFormUnified({
       setShowErrors(true);
       return;
     }
+
+    trackAddPaymentInfo({
+      productId: productid ? Number(productid) : Number(product?.id ?? 0),
+      paymentMethod: method,
+      amountUsd,
+      quantity,
+      orderType: formType,
+      variantId: selectedVariantId != null ? Number(selectedVariantId) : undefined,
+      couponCode,
+    });
+
     await handleSubmit(async (data: SimFormValues) => {
       setFormData(data);
       setStripeError(null);

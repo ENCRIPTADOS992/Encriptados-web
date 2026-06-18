@@ -3,6 +3,7 @@
 
 import React, { createContext, useCallback, useContext, useMemo, useState, ReactNode } from "react";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
+import { trackCheckoutStart } from "@/shared/utils/analytics";
 
 export type Mode = "new_user" | "roning_code" | "recharge" | "sim";
 
@@ -88,9 +89,25 @@ export const ModalPaymentProvider = ({ children }: { children: ReactNode }) => {
       return; // Evitar abrir el modal de la web
     }
     const sourceUrl = newParams?.sourceUrl || (typeof window !== 'undefined' ? window.location.href : '');
+
+    if (!isModalOpen) {
+      trackCheckoutStart({
+        productId: newParams?.productid,
+        variantId: newParams?.variantId,
+        mode: newParams?.mode,
+        categoryId: newParams?.categoryId,
+        categoryName: newParams?.categoryName,
+        provider: newParams?.provider,
+        brand: newParams?.brand,
+        selectedOption: newParams?.selectedOption,
+        initialPrice: newParams?.initialPrice,
+        sourceUrl,
+      });
+    }
+
     setParams(prev => ({ ...prev, ...(newParams ?? {}), sourceUrl }));
     setIsModalOpen(true);
-  }, [appMode]);
+  }, [appMode, isModalOpen]);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);

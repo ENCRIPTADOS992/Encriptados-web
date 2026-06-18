@@ -16,6 +16,7 @@ import { getModalContentClassName } from "./modalLayout";
 
 import { PurchaseKindProvider } from "./PurchaseKindContext";
 import { useModalPaymentController, type Mode } from "./useModalPaymentController";
+import { sendPurchaseToServer, trackPurchase } from "@/shared/utils/analytics";
 
 /** Data that child modals emit when payment succeeds */
 export type SuccessDisplayData = {
@@ -46,9 +47,43 @@ function ModalPaymentControllerInner() {
 
   // ── Success state lives here, OUTSIDE ModalPayment ──
   const [successDisplay, setSuccessDisplay] = useState<SuccessDisplayData | null>(null);
+  const trackedPurchaseKeysRef = React.useRef<Set<string>>(new Set());
 
   const handlePaymentSuccess = useCallback(
     (data: SuccessDisplayData) => {
+      const transactionKey = String(data.orderId ?? data.intent?.id ?? "").trim();
+
+      if (transactionKey && !trackedPurchaseKeysRef.current.has(transactionKey)) {
+        trackedPurchaseKeysRef.current.add(transactionKey);
+
+        const quantity = data.product?.quantity ?? 1;
+        const fallbackValue = Math.max(
+          (data.product?.unitPrice ?? 0) * quantity + (data.product?.shippingCost ?? 0) - (data.product?.discount ?? 0),
+          0
+        );
+        const payload = {
+          transactionId: transactionKey,
+          value: data.intent?.amount != null ? data.intent.amount / 100 : fallbackValue,
+          currency: (data.intent?.currency || "usd").toUpperCase(),
+          shipping: data.product?.shippingCost,
+          discount: data.product?.discount,
+          source: "frontend_success",
+          items: [
+            {
+              item_id: String(data.product?.productId ?? transactionKey),
+              item_name: data.product?.name,
+              item_brand: data.product?.brandKey ?? data.product?.brand,
+              item_variant: data.product?.licensePeriod,
+              price: data.product?.unitPrice,
+              quantity,
+            },
+          ],
+        };
+
+        trackPurchase(payload);
+        sendPurchaseToServer(payload);
+      }
+
       // 1. Close the purchase modal
       closeModal();
       // 2. Show the success modal independently

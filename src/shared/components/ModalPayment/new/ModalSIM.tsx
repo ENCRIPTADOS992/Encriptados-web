@@ -691,6 +691,7 @@ export default function ModalSIM({ onPaymentSuccess }: { onPaymentSuccess?: (dat
       intent: data.intent,
       orderId: data.orderId,
       product: {
+        productId: enrichedProduct?.id,
         name: enrichedProduct?.name ?? "SIM",
         image: enrichedProduct?.iconUrl || paramIconUrl || enrichedProduct?.images?.[0]?.src,
         brand: enrichedProduct?.brand ?? "Encriptados",
