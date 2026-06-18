@@ -15,6 +15,7 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "", chatAct
   const telegramUrl = "https://t.me/encriptados";
 
   const isUserMode = appMode === "user";
+  const buttonLabel = isUserMode ? t("goSupport") : t("goTelegram");
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Si estamos en la app y somos "user", enviamos el evento al ReactNativeWebView
@@ -39,8 +40,8 @@ const TelegramButton: React.FC<TelegramButtonProps> = ({ className = "", chatAct
       `}
     >
       {!isUserMode && <TelegramIcon className="w-5 h-5 text-white flex-shrink-0" />}
-      <span className="hidden sm:inline">{t("goTelegram")}</span>
-      <span className="sm:hidden">{t("goTelegram")}</span>
+      <span className="hidden sm:inline">{buttonLabel}</span>
+      <span className="sm:hidden">{buttonLabel}</span>
     </a>
   );
 };
