@@ -105,7 +105,6 @@ function resolveGtmId(hostHeader: string | null, fallbackGtmId?: string) {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const fallbackGtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
   const headersList = await headers();
@@ -142,23 +141,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`}
               strategy="afterInteractive"
             />
-          </>
-        )}
-        {gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){window.dataLayer.push(arguments);}
-                window.gtag = gtag;
-                gtag('js', new Date());
-                gtag('config', '${gaId}');
-              `}
-            </Script>
           </>
         )}
       </body>
