@@ -13,6 +13,7 @@ import { useFormPolicy } from "./useFormPolicy";
 import JellyLoader from "@/shared/components/JellyLoader";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
 import { isRouterCategoryId } from "@/shared/constants/productCategories";
+import { trackAddPaymentInfo } from "@/shared/utils/analytics";
 
 const TelegramButton = TelegramButtonOriginal as unknown as React.ComponentType<{
   className?: string;
@@ -304,6 +305,17 @@ export default function UnifiedPurchaseForm({
       setShowErrors(true);
       return;
     }
+
+    trackAddPaymentInfo({
+      productId,
+      paymentMethod: method,
+      amountUsd,
+      quantity,
+      orderType,
+      variantId: purchaseMeta?.variantId,
+      couponCode: purchaseMeta?.couponCode,
+      selectedOption: purchaseMeta?.selectedOption,
+    });
 
     setIsSubmitting(true);
     setStripeError(null);

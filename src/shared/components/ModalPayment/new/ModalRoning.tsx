@@ -250,6 +250,7 @@ export default function ModalRoning({ onPaymentSuccess }: { onPaymentSuccess?: (
             intent: data.intent,
             orderId: data.orderId,
             product: {
+              productId: product?.id,
               name: product?.name ?? "Producto",
               image: product?.iconUrl || paramIconUrl || product?.images?.[0]?.src,
               brandKey,

@@ -17,6 +17,7 @@ type PaymentIntentLike = {
 };
 
 export type ProductSuccessInfo = {
+  productId?: number;
   name: string;
   image?: string;
   brand?: string;

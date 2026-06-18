@@ -96,6 +96,7 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
   const headersList = await headers();
   const lang = headersList.get("x-next-intl-locale") || "es";
@@ -103,10 +104,34 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={lang} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         <JsonLd data={[buildOrganizationJsonLd(), buildWebSiteJsonLd()]} />
         <ClientProviders>
           {children}
         </ClientProviders>
+        {gtmId && (
+          <>
+            <Script id="google-tag-manager" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+              `}
+            </Script>
+            <Script
+              src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`}
+              strategy="afterInteractive"
+            />
+          </>
+        )}
         {gaId && (
           <>
             <Script
