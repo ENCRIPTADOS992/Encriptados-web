@@ -9,7 +9,7 @@ export function DownloadAppContainer() {
 
     return (
         <>
-            {/* <DownloadAppButton onClick={() => setIsModalOpen(true)} /> */}
+            <DownloadAppButton onClick={() => setIsModalOpen(true)} />
             <DownloadAppModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
