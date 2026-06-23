@@ -21,12 +21,6 @@ const TIM_SERVICE_OPTIONS: {
   icon: string;
 }[] = [
     {
-      id: "sim_fisica",
-      translationKey: "physicalSim",
-      timprovider: "physicsimtim",
-      icon: "/images/encrypted-sim/icons/sim_card.png",
-    },
-    {
       id: "recarga_datos",
       translationKey: "recharge",
       timprovider: "datarechargetim",
@@ -37,6 +31,12 @@ const TIM_SERVICE_OPTIONS: {
       translationKey: "esimData",
       timprovider: "esimplusdatatim",
       icon: "/images/encrypted-sim/icons/apps.png",
+    },
+    {
+      id: "sim_fisica",
+      translationKey: "physicalSim",
+      timprovider: "physicsimtim",
+      icon: "/images/encrypted-sim/icons/sim_card.png",
     },
   ];
 

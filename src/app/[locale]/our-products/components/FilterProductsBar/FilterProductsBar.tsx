@@ -20,6 +20,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
 import MobileMenuSvg from "@/shared/svgs/EncryptedLogoSvg";
+import {
+  SIM_SERVICE_OPTION_ORDER,
+  TIM_SERVICE_OPTION_ORDER,
+} from "@/shared/constants/simServiceOptions";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
@@ -111,15 +115,10 @@ export default function FilterProductsBar({
         <MenuDropdownProductBar
           name="encriptadosprovider"
           externalValue={filters.encriptadosprovider}
-          options={[
-            { label: t("filterProducts.allOption"), value: "all" },
-            { label: t("filterProducts.services.rechargeData"), value: "datarecharge" },
-            { label: t("filterProducts.services.esimData"), value: "eSimData" },
-            { label: t("filterProducts.services.rechargeMinutes"), value: "minuterecharge" },
-            { label: t("filterProducts.services.esimMinutes"), value: "eSimMinutes" },
-            { label: t("filterProducts.services.esim"), value: "esim" },
-            { label: t("filterProducts.services.physicalSim"), value: "physicsim" },
-          ]}
+          options={SIM_SERVICE_OPTION_ORDER.map((option) => ({
+            label: t(`filterProducts.${option.translationKey}` as any),
+            value: option.value,
+          }))}
           onChangeExternal={(value) => {
             const normalized = Array.isArray(value)
               ? value[value.length - 1]
@@ -135,12 +134,10 @@ export default function FilterProductsBar({
         <MenuDropdownProductBar
           name="timprovider"
           externalValue={filters.timprovider}
-          options={[
-            { label: t("filterProducts.allOption"), value: "all" },
-            { label: t("filterProducts.services.rechargeData"), value: "datarechargetim" },
-            { label: t("filterProducts.services.esimData"), value: "esimplusdatatim" },
-            { label: t("filterProducts.services.physicalSim"), value: "physicsimtim" },
-          ]}
+          options={TIM_SERVICE_OPTION_ORDER.map((option) => ({
+            label: t(`filterProducts.${option.translationKey}` as any),
+            value: option.value,
+          }))}
           onChangeExternal={(value) => {
             updateFilters({ timprovider: value });
           }}
