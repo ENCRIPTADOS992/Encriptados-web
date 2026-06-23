@@ -15,6 +15,10 @@ export type Country = {
   code: string;
   name: string;
   flag: string;
+  minFrom?: null | {
+    amount: number;
+    currency: string;
+  };
 };
 
 async function safeGet<T>(path: string): Promise<T> {
@@ -39,8 +43,10 @@ export async function getRegions(
   return safeGet<Region[]>(`/regions?service=${encodeURIComponent(service)}`);
 }
 
-export async function getCountries(): Promise<Country[]> {
-  return safeGet<Country[]>(`/countries`);
+export async function getCountries(
+  service: "esim_datos" | "recarga_datos" | "sim_fisica"
+): Promise<Country[]> {
+  return safeGet<Country[]>(`/countries?service=${encodeURIComponent(service)}`);
 }
 
 export async function searchRegions(q: string): Promise<Region[]> {

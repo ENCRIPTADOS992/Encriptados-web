@@ -5,8 +5,6 @@ import { ProductFilters } from "@/features/products/types/ProductFilters";
 import {
   getRegions,
   getCountries,
-  searchRegions,
-  searchCountries,
   Region,
   Country,
 } from "@/services/simtimService";
@@ -110,7 +108,7 @@ export function useRegionCountryFilter({
     async function initCountries() {
       setLoadingCountries(true);
       try {
-        const c = await getCountries();
+        const c = await getCountries(service);
         if (!cancelled) {
           setCountries(c);
           setVisibleCountries(c);

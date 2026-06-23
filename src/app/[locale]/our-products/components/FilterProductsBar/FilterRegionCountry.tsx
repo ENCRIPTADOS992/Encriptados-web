@@ -255,7 +255,7 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                               <span className="font-bold text-[16px] text-white">
                                 {r.name}
                               </span>
-                              <span className="text-xs text-[#CCCCCC]">
+                              <span className="text-[11px] leading-[1.2] text-[#9CA3AF]">
                                 {formatMinFrom(r.minFrom)}
                               </span>
                             </span>
@@ -341,8 +341,8 @@ const FilterRegionCountry: React.FC<FilterRegionCountryProps> = (props) => {
                               <span className="font-bold text-[14px] text-white">
                                 {c.name}
                               </span>
-                              <span className="text-xs text-[#CCCCCC]">
-                                {t("filterProducts.mobileCoverage")}
+                              <span className="text-[11px] leading-[1.2] text-[#9CA3AF]">
+                                {formatMinFrom(c.minFrom ?? null)}
                               </span>
                             </span>
                           </span>

@@ -289,7 +289,7 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                                     </span>
                                   )}
                               </span>
-                              <span className="text-[13px] text-[#6B7280]">
+                              <span className="text-[11px] leading-[1.2] text-[#6B7280]">
                                 {formatMinFrom(r.minFrom)}
                               </span>
                             </span>
@@ -384,8 +384,8 @@ const FilterRegionCountryTim: React.FC<FilterRegionCountryTimProps> = (
                               <span className="text-[16px] font-semibold text-[#171717]">
                                 {c.name}
                               </span>
-                              <span className="text-[13px] text-[#6B7280]">
-                                {t("filterProducts.mobileCoverage")}
+                              <span className="text-[11px] leading-[1.2] text-[#6B7280]">
+                                {formatMinFrom(c.minFrom ?? null)}
                               </span>
                             </span>
                           </span>
