@@ -42,7 +42,7 @@ export function GooglePlayButton() {
 export function ApkButton() {
     return (
         <Link
-            href="https://encriptados.io/apk"
+            href="https://apk.encriptados.io/Encriptados.apk"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block hover:opacity-90 transition-opacity"
