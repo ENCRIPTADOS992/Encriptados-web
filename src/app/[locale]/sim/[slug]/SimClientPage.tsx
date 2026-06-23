@@ -525,8 +525,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
             onSale={isOnSale}
             regularPrice={regularPrice != null ? formatPrice(regularPrice) : undefined}
             onBuy={() => handleBuy()}
-            appStoreUrl="https://apps.apple.com/app/encriptados"
-            googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
+            appStoreUrl="https://apps.apple.com/co/app/encriptados/id6661017242"
+            googlePlayUrl="https://play.google.com/store/apps/details?id=io.encriptados.app&hl=es_CO"
             apkUrl="https://encriptados.io/apk"
             gbBadge={gbBadgeLabel}
             regionBadge={regionFromUrl || undefined}
@@ -547,8 +547,8 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           onSale={isOnSale}
           regularPrice={regularPrice != null ? formatPrice(regularPrice) : undefined}
           onBuy={() => handleBuy()}
-          appStoreUrl="https://apps.apple.com/app/encriptados"
-          googlePlayUrl="https://play.google.com/store/apps/details?id=com.encriptados"
+          appStoreUrl="https://apps.apple.com/co/app/encriptados/id6661017242"
+          googlePlayUrl="https://play.google.com/store/apps/details?id=io.encriptados.app&hl=es_CO"
           apkUrl="https://encriptados.io/apk"
           priceBlockRef={priceBlockRef}
           translations={heroTranslations}

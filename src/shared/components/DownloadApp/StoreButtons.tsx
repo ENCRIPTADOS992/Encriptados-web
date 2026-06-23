@@ -4,7 +4,7 @@ import Image from "next/image"
 export function AppStoreButton() {
     return (
         <Link
-            href="https://apps.apple.com/app/encriptados"
+            href="https://apps.apple.com/co/app/encriptados/id6661017242"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block hover:opacity-90 transition-opacity"
@@ -23,7 +23,7 @@ export function AppStoreButton() {
 export function GooglePlayButton() {
     return (
         <Link
-            href="https://play.google.com/store/apps/details?id=com.encriptados"
+            href="https://play.google.com/store/apps/details?id=io.encriptados.app&hl=es_CO"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block hover:opacity-90 transition-opacity"

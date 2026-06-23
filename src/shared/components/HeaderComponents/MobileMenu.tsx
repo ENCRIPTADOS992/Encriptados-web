@@ -176,7 +176,7 @@ export default function MobileMenu() {
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2">
                           <a
-                            href="https://apps.apple.com/app/encriptados"
+                            href="https://apps.apple.com/co/app/encriptados/id6661017242"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="transition-opacity hover:opacity-80"
@@ -190,7 +190,7 @@ export default function MobileMenu() {
                             />
                           </a>
                           <a
-                            href="https://play.google.com/store/apps/details?id=com.encriptados"
+                            href="https://play.google.com/store/apps/details?id=io.encriptados.app&hl=es_CO"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="transition-opacity hover:opacity-80"
@@ -237,7 +237,7 @@ export default function MobileMenu() {
                 {/* Botones de descarga - solo móvil */}
                 <div className="flex items-center gap-2 mt-4 sm:hidden">
                   <a
-                    href="https://apps.apple.com/app/encriptados"
+                    href="https://apps.apple.com/co/app/encriptados/id6661017242"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition-opacity hover:opacity-80"
@@ -251,7 +251,7 @@ export default function MobileMenu() {
                     />
                   </a>
                   <a
-                    href="https://play.google.com/store/apps/details?id=com.encriptados"
+                    href="https://play.google.com/store/apps/details?id=io.encriptados.app&hl=es_CO"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition-opacity hover:opacity-80"
