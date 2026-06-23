@@ -38,9 +38,9 @@ const BannerOurProductsMobile = () => {
       </div>
 
       {/* Contenido */}
-      <div className="relative z-10 flex flex-col items-start px-6 py-16 space-y-4">
+      <div className="relative z-10 flex flex-col items-start px-6 py-12 space-y-3">
         {/* Badge */}
-        <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 py-1 rounded-full text-xs font-semibold">
+        <div className="inline-block border border-[#7EE0FF] text-[#0AB4E9] px-4 py-1 rounded-full text-[11px] font-semibold leading-none">
           {t("banner.securityFromStartToEnd")}
         </div>
 
@@ -48,7 +48,7 @@ const BannerOurProductsMobile = () => {
         <Typography
           variant="h1"
           as="h1"
-          className="text-xl leading-snug"
+          className="text-[34px] leading-[1.08] tracking-[-0.02em] max-w-[300px]"
         >
           <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}
           <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>
@@ -58,7 +58,7 @@ const BannerOurProductsMobile = () => {
         <Paragraph
           variant="body"
           color="secondary"
-          className="text-sm leading-relaxed"
+          className="text-[16px] leading-[1.45] max-w-[290px] text-white/88"
         >
           {t("banner.descriptionNew")}
         </Paragraph>
@@ -74,7 +74,7 @@ const BannerOurProductsMobile = () => {
               scrollToSection("buysimappsection");
               setValue("selectedOption", "sim");
             }}
-            className="text-white hover:bg-white/10"
+            className="text-white hover:bg-white/10 !px-0 !py-0 text-[16px] font-semibold"
           >
             {t("banner.goToStore")}
           </Button>

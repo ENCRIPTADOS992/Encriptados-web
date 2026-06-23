@@ -36,8 +36,8 @@ const OurProductsPageClient = () => {
           <BannerOurProducts />
         </div>
 
-        <div className="p-8 bg-[#F4F8FA]">
-          <h2 className="bg-gradient-to-r text-3xl justify-center font-bold mt-[75px] flex items-center from-[#000000] to-[#35CDFB] bg-clip-text text-transparent mb-7 text-center">
+        <div className="px-4 py-8 md:p-8 bg-[#F4F8FA]">
+          <h2 className="bg-gradient-to-r text-[38px] leading-[1.05] md:text-3xl justify-center font-bold mt-6 md:mt-[75px] flex items-center from-[#000000] to-[#35CDFB] bg-clip-text text-transparent mb-6 md:mb-7 text-center tracking-[-0.03em]">
             {t("filterProducts.title")}
           </h2>
            
