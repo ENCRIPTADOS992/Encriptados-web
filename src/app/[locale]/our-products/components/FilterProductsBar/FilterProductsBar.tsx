@@ -105,8 +105,16 @@ export default function FilterProductsBar({
     />
   );
 
-  // Activar Apps oculto del selector de proveedor
-  // const activarAppsProviderIcon = ...
+  const activarAppsProviderIcon = (
+    <Image
+      src="/icons/activar_apps.svg"
+      alt="Activar Apps"
+      width={134}
+      height={34}
+      className={providerLogoClass}
+      loading="lazy"
+    />
+  );
 
   const optionByProvider: Record<any, JSX.Element | undefined> = {
     encriptados: (
@@ -146,7 +154,6 @@ export default function FilterProductsBar({
         />
       </div>
     ),
-    // activarapps: oculto del selector de proveedor
   };
 
   // Rendering logic for subfilters based on Flex to fill space dynamically
@@ -173,7 +180,11 @@ export default function FilterProductsBar({
                 value: "tim",
                 icon: timProviderIcon,
               },
-              // activarapps oculto del selector
+              {
+                label: " ",
+                value: "activarapps",
+                icon: activarAppsProviderIcon,
+              },
             ]}
             onChangeExternal={(value) => {
               updateFilters({

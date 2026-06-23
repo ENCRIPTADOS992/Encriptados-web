@@ -155,14 +155,12 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
 
   let filteredProducts: Product[] = uniqueProducts;
 
-  // ========== OCULTAR Zi0n Y Activar Apps DEL LISTADO ==========
-  // Zi0n y Activar Apps se ocultan del home; sus páginas directas siguen activas
+  // ========== OCULTAR Zi0n DEL LISTADO ==========
+  // Zi0n permanece oculto del home; Activar Apps vuelve a mostrarse.
   filteredProducts = filteredProducts.filter((product) => {
     const name = (product.name ?? "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
     const isZi0n = name.includes("zi0n") || name.includes("zion");
-    const isActivarApps = name.includes("activarapps") || name.includes("activarapp") ||
-      /activar[\s_-]?apps?/i.test(product.name ?? "");
-    return !isZi0n && !isActivarApps;
+    return !isZi0n;
   });
 
   if (filters.provider && filters.provider !== "all" && isSelectedSimCategory) {
