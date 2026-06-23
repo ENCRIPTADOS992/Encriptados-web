@@ -84,6 +84,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
         </span>
         <MenuDropdownProductBar
           name="os"
+          dropdownClassName="w-[calc(100vw-5rem)] max-w-[calc(100vw-5rem)] left-0 md:w-full md:max-w-none"
           options={osOptions}
           onChangeExternal={(value) => {
             updateFilters({ os: value });
@@ -98,6 +99,7 @@ const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({
         </span>
         <MenuDropdownProductBar
           name="license"
+          dropdownClassName="w-[calc(100vw-5rem)] max-w-[calc(100vw-5rem)] right-0 left-auto md:w-full md:max-w-none md:left-0 md:right-auto"
           options={licenseOptions}
           onChangeExternal={(value) => {
             updateFilters({ license: String(value) });

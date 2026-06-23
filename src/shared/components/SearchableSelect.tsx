@@ -168,6 +168,9 @@ export default function SearchableSelect({
   const listRef = useRef<HTMLUListElement>(null);
 
   const v = VARIANTS[variant];
+  const hasCustomDropdownSizing = /(?:^|\s)(?:w-|min-w-|max-w-|left-|right-)/.test(
+    dropdownClassName
+  );
 
   const selectedOption = useMemo(
     () => options.find((o) => o.value === value),
@@ -335,7 +338,7 @@ export default function SearchableSelect({
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.15 }}
             className={`
-              absolute z-50 mt-2 w-full
+              absolute z-50 mt-2 ${hasCustomDropdownSizing ? "" : "w-full"}
               rounded-xl shadow-xl border
               overflow-hidden
               ${v.dropdown}

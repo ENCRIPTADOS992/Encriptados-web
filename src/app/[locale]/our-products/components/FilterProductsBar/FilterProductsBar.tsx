@@ -115,7 +115,7 @@ export default function FilterProductsBar({
         <MenuDropdownProductBar
           name="encriptadosprovider"
           externalValue={filters.encriptadosprovider}
-          dropdownClassName="w-[calc(200%+0.75rem)] max-w-none right-0 left-auto md:w-full md:left-0 md:right-auto"
+          dropdownClassName="w-[calc(100vw-5rem)] max-w-[calc(100vw-5rem)] right-0 left-auto md:w-full md:max-w-none md:left-0 md:right-auto"
           options={SIM_SERVICE_OPTION_ORDER.map((option) => ({
             label: t(`filterProducts.${option.translationKey}` as any),
             value: option.value,
@@ -135,7 +135,7 @@ export default function FilterProductsBar({
         <MenuDropdownProductBar
           name="timprovider"
           externalValue={filters.timprovider}
-          dropdownClassName="w-[calc(200%+0.75rem)] max-w-none right-0 left-auto md:w-full md:left-0 md:right-auto"
+          dropdownClassName="w-[calc(100vw-5rem)] max-w-[calc(100vw-5rem)] right-0 left-auto md:w-full md:max-w-none md:left-0 md:right-auto"
           options={TIM_SERVICE_OPTION_ORDER.map((option) => ({
             label: t(`filterProducts.${option.translationKey}` as any),
             value: option.value,
@@ -161,7 +161,7 @@ export default function FilterProductsBar({
           <MenuDropdownProductBar
             name="provider"
             externalValue={filters.provider}
-            dropdownClassName="w-[calc(200%+0.75rem)] max-w-none left-0 md:w-full"
+            dropdownClassName="w-[calc(100vw-5rem)] max-w-[calc(100vw-5rem)] left-0 md:w-full md:max-w-none"
             options={[
               {
                 label: " ",
