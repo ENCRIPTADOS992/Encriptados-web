@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import PurchaseHeader from "./PurchaseHeader";
 import TelegramButtonOriginal from "@/shared/components/TelegramButton";
+import { isActivarAppsProduct } from "@/shared/utils/productRouteResolver";
 
 type UIMode = "new_user" | "roning_code" | "recharge" | "sim";
 
@@ -40,12 +41,13 @@ export default function PurchaseScaffold({
 
   const productName = headerProps.product?.name ?? "";
   const productId = headerProps.product?.id;
+  const productCategoryId = Number(headerProps.product?.category?.id ?? headerProps.product?.categoryId ?? NaN);
   const isMdmIphone = /secure\s*mdm\s*iphone/i.test(productName) ||
     /galaxia\s*mdm/i.test(productName);
   const isRouter = /camal[eé]on|router/i.test(productName);
   const isPhysicalSim =
     mode === "sim" && headerProps.shipping != null && headerProps.shipping > 0;
-  const isProduct61588 = productId === 61588;
+  const isActivarApps = isActivarAppsProduct(productName, productCategoryId, productId);
 
   const AlertBox = ({ lines }: { lines: string[] }) => (
     <div className="flex gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
@@ -85,8 +87,8 @@ export default function PurchaseScaffold({
         ]} />
       )}
 
-      {/* Alert for product 61588 */}
-      {isProduct61588 && (
+      {/* Alert for Activar Apps */}
+      {isActivarApps && (
         <AlertBox lines={[
           t("downloadAppWarning"),
         ]} />
