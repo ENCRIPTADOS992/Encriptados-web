@@ -14,6 +14,8 @@ interface MenuDropdownProductBarProps {
   name: string;
   onChangeExternal?: (value: string) => void;
   externalValue?: string;
+  className?: string;
+  dropdownClassName?: string;
 }
 
 const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
@@ -21,6 +23,8 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
   name,
   onChangeExternal,
   externalValue,
+  className,
+  dropdownClassName,
 }) => {
   const t = useTranslations("OurProductsPage");
 
@@ -29,6 +33,8 @@ const MenuDropdownProductBar: React.FC<MenuDropdownProductBarProps> = ({
       name={name}
       externalValue={externalValue}
       onChangeExternal={onChangeExternal}
+      className={className}
+      dropdownClassName={dropdownClassName}
       placeholder={t("filterProducts.selectPlacerholder")}
       searchPlaceholder={t("filterProducts.searchSelectPlaceholder")}
       variant="dark"
