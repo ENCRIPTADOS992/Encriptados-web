@@ -11,7 +11,8 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { AppStoreButton, GooglePlayButton, ApkButton } from "./StoreButtons"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { getDownloadAppCopy } from "./downloadAppCopy"
 
 interface DownloadAppModalProps {
     isOpen: boolean
@@ -19,19 +20,21 @@ interface DownloadAppModalProps {
 }
 
 export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
+    const locale = useLocale()
     const t = useTranslations("SharedUi.downloadApp")
     if (!isOpen) return null
+    const copy = getDownloadAppCopy(locale, t)
 
     const featureIconContainerClass = "flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[linear-gradient(180deg,#003240_0%,#001B24_100%)] text-[#35CDFB]"
     const featureIconClass = "h-4 w-4"
 
     const features = [
-        { icon: CircleUser, label: t("features.anonymousSignup") },
-        { icon: Store, label: t("features.fastPurchases") },
-        { icon: Key, label: t("features.instantLicenses") },
-        { icon: Wallet, label: t("features.balanceAndSims") },
-        { icon: MessageCircleMore, label: t("features.appActivations") },
-        { icon: Languages, label: t("features.multilingualSupport") }
+        { icon: CircleUser, label: copy.features.anonymousSignup },
+        { icon: Store, label: copy.features.fastPurchases },
+        { icon: Key, label: copy.features.instantLicenses },
+        { icon: Wallet, label: copy.features.balanceAndSims },
+        { icon: MessageCircleMore, label: copy.features.appActivations },
+        { icon: Languages, label: copy.features.multilingualSupport }
     ]
 
     return (
@@ -56,7 +59,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                 <button
                     onClick={onClose}
                     className="absolute right-4 top-4 z-20 text-white/60 transition-colors hover:text-white sm:right-5 sm:top-5 lg:right-6 lg:top-6"
-                    aria-label={t("closeModal")}
+                    aria-label={copy.closeModal}
                 >
                     <X className="w-6 h-6" />
                 </button>
@@ -65,8 +68,8 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                     <div className="flex h-full items-center px-14 pb-9 pt-10">
                         <div className="flex flex-col justify-center py-2">
                             <h2 className="max-w-[282px] text-[25px] font-bold leading-[1.08] tracking-[0] text-white">
-                                <span className="block">{t("titleLine1")}</span>
-                                <span className="block">{t("titleLine2")}</span>
+                                <span className="block">{copy.titleLine1}</span>
+                                <span className="block">{copy.titleLine2}</span>
                             </h2>
 
                             <ul className="mt-5 max-w-[282px] space-y-3.5">
@@ -85,7 +88,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                     <div className="pointer-events-none absolute bottom-0 right-0 z-0 w-[468px]">
                         <Image
                             src="/images/modal-home/celulares.webp"
-                            alt={t("appAlt")}
+                            alt={copy.appAlt}
                             width={1080}
                             height={1040}
                             sizes="468px"
@@ -93,21 +96,31 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                         />
                     </div>
 
-                    <div className="absolute bottom-6 right-4 z-10 w-[332px] rounded-[24px] bg-[linear-gradient(180deg,#2E2E2E_0%,#212121_100%)] p-[2px] shadow-[0_18px_42px_rgba(0,0,0,0.38)]">
-                        <div className="rounded-[22px] bg-[#00000066] p-4 backdrop-blur-[74px]">
-                            <div className="flex items-center gap-3">
+                    <div className="absolute bottom-6 right-4 z-10 w-[332px] rounded-[24px] shadow-[0_18px_42px_rgba(0,0,0,0.38)]">
+                        <div className="rounded-[24px] bg-[#00000066] p-4 backdrop-blur-[74px]">
+                            <div
+                                className="pointer-events-none absolute inset-0 rounded-[24px] p-[2px]"
+                                style={{
+                                    background: "linear-gradient(180deg, #2E2E2E 0%, #212121 100%)",
+                                    WebkitMask:
+                                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                    WebkitMaskComposite: "xor",
+                                    maskComposite: "exclude"
+                                }}
+                            />
+                            <div className="relative flex items-center gap-3">
                             <div className="shrink-0">
                                 <div className="rounded-[18px] bg-white p-3">
                                     <Image
                                         src="/images/modal-home/qr.webp"
-                                        alt={t("qrAlt")}
+                                        alt={copy.qrAlt}
                                         width={146}
                                         height={146}
                                         className="h-auto w-[120px] rounded-[10px]"
                                     />
                                 </div>
                                 <p className="mt-2 text-center text-[14px] font-normal leading-none text-white/90">
-                                    {t("qrLabel")}
+                                    {copy.qrLabel}
                                 </p>
                             </div>
 
@@ -126,7 +139,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                         <div className="absolute left-2 top-0 w-[272px] md:left-3 md:-top-1 md:w-[292px]">
                             <Image
                                 src="/images/modal-home/celulares.webp"
-                                alt={t("appAlt")}
+                                alt={copy.appAlt}
                                 width={1080}
                                 height={1040}
                                 sizes="292px"
@@ -138,21 +151,21 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                             <div className="rounded-[16px] bg-white p-2.5">
                                 <Image
                                     src="/images/modal-home/qr.webp"
-                                    alt={t("qrAlt")}
+                                    alt={copy.qrAlt}
                                     width={148}
                                     height={148}
                                     className="h-auto w-full rounded-[10px]"
                                 />
                             </div>
-                            <p className="mt-1.5 text-center text-[13px] font-normal leading-none text-white/90">{t("qrLabel")}</p>
+                            <p className="mt-1.5 text-center text-[13px] font-normal leading-none text-white/90">{copy.qrLabel}</p>
                         </div>
                     </div>
 
                     <div className="flex-1 bg-[linear-gradient(180deg,#111111_43.75%,#2A2A2A_100%)] px-6 pb-6 pt-5 md:px-7 md:pt-6">
                         <div className="mx-auto w-full max-w-[378px]">
                             <h2 className="text-center text-[22px] font-bold leading-[1.08] tracking-[0] text-white md:text-[24px]">
-                                <span className="block">{t("titleLine1")}</span>
-                                <span className="block">{t("titleLine2")}</span>
+                                <span className="block">{copy.titleLine1}</span>
+                                <span className="block">{copy.titleLine2}</span>
                             </h2>
 
                             <ul className="mt-5 space-y-2.5">
@@ -181,7 +194,7 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                             <div className="w-[292px]">
                                 <Image
                                     src="/images/modal-home/celulares.webp"
-                                    alt={t("appAlt")}
+                                    alt={copy.appAlt}
                                     width={1080}
                                     height={1040}
                                     sizes="292px"
@@ -194,8 +207,8 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                     <div className="flex-1 bg-[linear-gradient(180deg,#111111_0%,#2A2A2A_100%)] px-5 pb-5 pt-5">
                         <div className="mx-auto w-full max-w-[300px]">
                             <h2 className="text-center text-[18px] font-bold leading-[1.06] tracking-[0] text-white">
-                                <span className="block">{t("titleLine1")}</span>
-                                <span className="block">{t("titleLine2")}</span>
+                                <span className="block">{copy.titleLine1}</span>
+                                <span className="block">{copy.titleLine2}</span>
                             </h2>
 
                             <ul className="mt-5 space-y-3">
@@ -215,13 +228,13 @@ export function DownloadAppModal({ isOpen, onClose }: DownloadAppModalProps) {
                                         <div className="rounded-[16px] bg-white p-2.5">
                                             <Image
                                                 src="/images/modal-home/qr.webp"
-                                                alt={t("qrAlt")}
+                                                alt={copy.qrAlt}
                                                 width={120}
                                                 height={120}
                                                 className="h-auto w-[100px] rounded-[10px]"
                                             />
                                         </div>
-                                        <p className="mt-2 text-center text-[13px] font-normal leading-none text-white/90">{t("qrLabel")}</p>
+                                        <p className="mt-2 text-center text-[13px] font-normal leading-none text-white/90">{copy.qrLabel}</p>
                                     </div>
 
                                     <div className="flex min-w-0 flex-1 flex-col gap-2">
