@@ -7,6 +7,17 @@
       "scanQr": "Escaneie este QR e",
       "download": "baixe",
       "appName": "o App Encriptados",
+      "titleLine1": "Mais privacidade. Mais",
+      "titleLine2": "controle. Mais fácil.",
+      "qrLabel": "Escanear QR",
+      "features": {
+        "anonymousSignup": "Cadastro anônimo, sem dados pessoais",
+        "fastPurchases": "Compre serviços em segundos",
+        "instantLicenses": "Receba suas licenças automaticamente",
+        "balanceAndSims": "Gerencie saldo, SIMs e eSIMs",
+        "appActivations": "Ative aplicativos de mensagens e mais",
+        "multilingualSupport": "Suporte multilíngue pelo app"
+      },
       "closeModal": "Fechar modal",
       "qrAlt": "Código QR para baixar o App Encriptados",
       "appAlt": "App Encriptados",
