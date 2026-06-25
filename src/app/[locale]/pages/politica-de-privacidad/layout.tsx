@@ -39,7 +39,6 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     canonicalPath: `/${safeLocale}/pages/politica-de-privacidad`,
     locale: safeLocale,
     languages: buildLocalizedLanguageAlternates("/pages/politica-de-privacidad"),
-    images: [{ url: "/images/terminos-condiciones/termino-condiciones.webp", width: 1200, height: 630, alt: COPY[safeLocale].title }],
   });
 }
 
