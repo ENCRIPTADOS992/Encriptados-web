@@ -79,10 +79,22 @@ function buildCanonicalFromTarget(target: string): string {
   return buildAbsoluteUrl(path);
 }
 
+const LEGAL_PAGE_SLUGS = new Set([
+  "terminos-y-condiciones",
+  "politica-de-privacidad",
+  "politica-de-cookies",
+  "politica-de-tratamiento-de-datos",
+]);
+
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const sp = await searchParams;
   const target = (Array.isArray(sp.target) ? sp.target[0] : sp.target) ?? "";
   const canonical = target ? buildCanonicalFromTarget(target) : buildAbsoluteUrl("/");
+  const parsed = target ? parseTarget(target) : null;
+  const segments = parsed?.segments ?? [];
+
+  const isLegalPage = segments[0] === "pages" && LEGAL_PAGE_SLUGS.has(segments[1] ?? "");
+  const legalImageUrl = buildAbsoluteUrl("/termino-condiciones.webp");
 
   return {
     alternates: { canonical },
@@ -97,6 +109,15 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         "max-video-preview": -1,
       },
     },
+    ...(isLegalPage && {
+      openGraph: {
+        images: [{ url: legalImageUrl, width: 1200, height: 1200, alt: "Encriptados" }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        images: [legalImageUrl],
+      },
+    }),
   };
 }
 
