@@ -25,6 +25,7 @@ import { getProductById } from "@/features/products/services";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { getProductBannerImages } from "../apps/[slug]/productUtils";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 // Configuración del router
 const ROUTER_CONFIG = {
@@ -131,6 +132,7 @@ export default function RouterPage() {
   const hasAutoOpenedRef = useRef(false);
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
+  const { isFromAppMobile } = useAppMobile();
 
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
@@ -337,7 +339,10 @@ export default function RouterPage() {
   const videoImage = String((product as any)?.videoImage || "").trim();
 
   return (
-    <main className="bg-white min-h-screen">
+    <main
+      className="bg-white min-h-screen"
+      style={isFromAppMobile ? { paddingBottom: "calc(var(--app-webview-sticky-offset, 88px) + 1.5rem)" } : undefined}
+    >
       {/* Custom Key Visual for Router Camaleón */}
       {/* Hero Banner - Usar función con fallback inteligente (heroBanners > buyNowImage > images > config) */}
       <HeroBanner

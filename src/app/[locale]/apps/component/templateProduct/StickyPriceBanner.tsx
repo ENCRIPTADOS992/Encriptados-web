@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
 import { Tag } from "lucide-react";
@@ -70,6 +70,36 @@ const StickyPriceBannerUnified: React.FC<StickyPriceBannerProps> = ({
       setIsDismissed(false);
     }
   }, [visible]);
+
+  // Publicar la altura real del banner como CSS variable para que el contenido
+  // de producto pueda reservar espacio inferior en WebView móvil.
+  // useLayoutEffect: se ejecuta síncronamente antes del paint, sin flash visual.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const isWebViewMobile = isFromAppMobile && window.innerWidth < 1024;
+
+    if (!isWebViewMobile || !visible || !bannerRef.current) {
+      root.style.removeProperty("--app-webview-sticky-offset");
+      return;
+    }
+
+    // Medición inmediata síncrona antes de que el browser pinte
+    const h = bannerRef.current.getBoundingClientRect().height || bannerRef.current.offsetHeight;
+    root.style.setProperty("--app-webview-sticky-offset", `${h}px`);
+
+    // ResizeObserver para cuando el banner cambie de tamaño
+    const ro = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const height = entry?.borderBoxSize?.[0]?.blockSize ?? entry?.contentRect.height ?? 0;
+      if (height > 0) root.style.setProperty("--app-webview-sticky-offset", `${height}px`);
+    });
+    ro.observe(bannerRef.current);
+
+    return () => {
+      ro.disconnect();
+      root.style.removeProperty("--app-webview-sticky-offset");
+    };
+  }, [isFromAppMobile, visible]);
 
   // Detectar clic fuera del banner para cerrarlo (SOLO DESKTOP)
   useEffect(() => {

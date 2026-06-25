@@ -22,6 +22,7 @@ import ActivarAppsModules from "../component/ActivarAppsModules";
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import { useProductDetail } from "@/features/products/queries/useProductDetail";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
@@ -55,6 +56,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = usePriceVisibility(priceBlockRef);
   const { openModal } = useModalPayment();
+  const { isFromAppMobile } = useAppMobile();
 
   // Traducciones
   const t = useTranslations("appsShared.productTemplate");
@@ -414,7 +416,10 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
     "";
 
   return (
-    <main className="bg-white text-black">
+    <main
+      className="bg-white text-black"
+      style={isFromAppMobile ? { paddingBottom: "calc(var(--app-webview-sticky-offset, 88px) + 1.5rem)" } : undefined}
+    >
       {/* Hero Banner - solo se muestra cuando hay datos del producto */}
       {product ? (
         <HeroBanner

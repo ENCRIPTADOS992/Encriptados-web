@@ -36,6 +36,7 @@ import type { ProductById } from "@/features/products/types/AllProductsResponse"
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
 import StickyPriceBanner from "@/app/[locale]/apps/component/templateProduct/StickyPriceBanner";
 import { PRODUCT_CATEGORY_IDS } from "@/shared/constants/productCategories";
+import { useAppMobile } from "@/shared/context/AppMobileContext";
 
 // Configuración y utilidades locales
 import {
@@ -274,6 +275,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   // Ref para detectar visibilidad del bloque de precio (para StickyBanner)
   const priceBlockRef = useRef<HTMLDivElement | null>(null);
   const { isVisible: isPriceVisible } = usePriceVisibility(priceBlockRef);
+  const { isFromAppMobile } = useAppMobile();
 
   // Formatear precio
   const formatPrice = (price: number | string): string => {
@@ -508,7 +510,10 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
   }
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main
+      className="min-h-screen bg-white text-black"
+      style={isFromAppMobile ? { paddingBottom: "calc(var(--app-webview-sticky-offset, 88px) + 1.5rem)" } : undefined}
+    >
       {/* Banner Hero - Dinámico según productFamily */}
       {showTimSections ? (
         <>
