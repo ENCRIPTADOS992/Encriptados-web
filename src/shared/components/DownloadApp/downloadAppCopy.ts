@@ -12,6 +12,9 @@ type DownloadAppFeatureCopy = {
 type DownloadAppCopy = {
     buttonLine1: string
     buttonLine2: string
+    newTag: string
+    benefitsTag: string
+    downloadCta: string
     titleLine1: string
     titleLine2: string
     qrLabel: string
@@ -25,6 +28,9 @@ const DOWNLOAD_APP_COPY: Record<DownloadAppLocale, DownloadAppCopy> = {
     es: {
         buttonLine1: "Descarga la",
         buttonLine2: "App Encriptados",
+        newTag: "NUEVO",
+        benefitsTag: "Beneficios:",
+        downloadCta: "Descarga la nueva App",
         titleLine1: "Más privacidad. Más",
         titleLine2: "control. Más fácil.",
         qrLabel: "Escanear QR",
@@ -43,6 +49,9 @@ const DOWNLOAD_APP_COPY: Record<DownloadAppLocale, DownloadAppCopy> = {
     en: {
         buttonLine1: "Download the",
         buttonLine2: "Encriptados App",
+        newTag: "NEW",
+        benefitsTag: "Benefits:",
+        downloadCta: "Download the new App",
         titleLine1: "More privacy. More",
         titleLine2: "control. Easier.",
         qrLabel: "Scan QR",
@@ -61,6 +70,9 @@ const DOWNLOAD_APP_COPY: Record<DownloadAppLocale, DownloadAppCopy> = {
     fr: {
         buttonLine1: "Téléchargez",
         buttonLine2: "l'app Encriptados",
+        newTag: "NOUVEAU",
+        benefitsTag: "Avantages :",
+        downloadCta: "Téléchargez la nouvelle app",
         titleLine1: "Plus de confidentialité. Plus de",
         titleLine2: "contrôle. Plus simple.",
         qrLabel: "Scanner le QR",
@@ -79,6 +91,9 @@ const DOWNLOAD_APP_COPY: Record<DownloadAppLocale, DownloadAppCopy> = {
     it: {
         buttonLine1: "Scarica",
         buttonLine2: "l'app Encriptados",
+        newTag: "NUOVO",
+        benefitsTag: "Vantaggi:",
+        downloadCta: "Scarica la nuova app",
         titleLine1: "Più privacy. Più",
         titleLine2: "controllo. Più facile.",
         qrLabel: "Scansiona QR",
@@ -97,6 +112,9 @@ const DOWNLOAD_APP_COPY: Record<DownloadAppLocale, DownloadAppCopy> = {
     pt: {
         buttonLine1: "Baixe o",
         buttonLine2: "App Encriptados",
+        newTag: "NOVO",
+        benefitsTag: "Benefícios:",
+        downloadCta: "Baixe o novo App",
         titleLine1: "Mais privacidade. Mais",
         titleLine2: "controle. Mais fácil.",
         qrLabel: "Escanear QR",
@@ -132,6 +150,9 @@ export function getDownloadAppCopy(locale: string, translate: (key: string) => s
     return {
         buttonLine1: resolveTranslatedValue(translate("buttonLine1"), fallback.buttonLine1),
         buttonLine2: resolveTranslatedValue(translate("buttonLine2"), fallback.buttonLine2),
+        newTag: resolveTranslatedValue(translate("newTag"), fallback.newTag),
+        benefitsTag: resolveTranslatedValue(translate("benefitsTag"), fallback.benefitsTag),
+        downloadCta: resolveTranslatedValue(translate("downloadCta"), fallback.downloadCta),
         titleLine1: resolveTranslatedValue(translate("titleLine1"), fallback.titleLine1),
         titleLine2: resolveTranslatedValue(translate("titleLine2"), fallback.titleLine2),
         qrLabel: resolveTranslatedValue(translate("qrLabel"), fallback.qrLabel),

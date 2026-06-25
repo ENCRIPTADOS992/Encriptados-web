@@ -4,6 +4,9 @@
     "downloadApp": {
       "buttonLine1": "Download the",
       "buttonLine2": "Encriptados App",
+      "newTag": "NEW",
+      "benefitsTag": "Benefits:",
+      "downloadCta": "Download the new App",
       "scanQr": "Scan this QR and",
       "download": "download",
       "appName": "the Encriptados App",
