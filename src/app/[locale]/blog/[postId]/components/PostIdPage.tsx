@@ -1,5 +1,6 @@
 import React from "react";
 import BannerPostById from "./BannerPostById";
+import TalkNowBanner from "./TalkNowBanner";
 import ContentBlogById from "./ContentBlogById";
 import PreviousPosts from "./PreviousPosts";
 import type { BlogPostCard } from "@/features/blog/types";
@@ -28,6 +29,17 @@ const PostIdPage: React.FC<PostIdPageProps> = ({ allPosts, currentPostSlug }) =>
           <aside className="w-full lg:sticky lg:top-24 lg:w-[360px] xl:w-[390px]">
             <PreviousPosts posts={allPosts} currentPostSlug={currentPostSlug} />
           </aside>
+        </div>
+
+        <div
+          className={`relative w-full ${MAX_WIDTH} mx-auto flex justify-center items-center overflow-hidden`}
+        >
+          <div className="pointer-events-none absolute inset-x-4 top-8 z-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-32 bg-[linear-gradient(90deg,rgba(34,158,217,0.08),rgba(255,255,255,0.025),rgba(42,255,166,0.06))] blur-2xl" />
+
+          <div className="relative z-10 w-full flex justify-center">
+            <TalkNowBanner />
+          </div>
         </div>
 
       </div>

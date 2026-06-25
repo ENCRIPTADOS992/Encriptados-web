@@ -48,15 +48,6 @@ export default function TalkNowBanner() {
                       className="h-8 w-8"
                     />
                   </div>
-
-                  <div className="w-full max-w-[260px] rounded-2xl border border-white/10 bg-[#0E0E0E]/55 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-                    <div className="mb-3 h-2 w-20 rounded-full bg-white/18" />
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="h-10 rounded-xl border border-white/10 bg-white/[0.06]" />
-                      <div className="h-10 rounded-xl border border-white/10 bg-white/[0.09]" />
-                      <div className="h-10 rounded-xl border border-white/10 bg-white/[0.05]" />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
