@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     canonicalPath: `/${safeLocale}/pages/terminos-y-condiciones`,
     locale: safeLocale,
     languages: buildLocalizedLanguageAlternates("/pages/terminos-y-condiciones"),
+    images: [{ url: "/images/terminos-condiciones/termino-condiciones.webp", width: 1200, height: 630, alt: COPY[safeLocale].title }],
   });
 }
 
