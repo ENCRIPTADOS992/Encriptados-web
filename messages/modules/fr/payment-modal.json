@@ -123,7 +123,7 @@
     "routerShippingWarning": "Taxes à la charge de l'acheteur. Livraison estimée : 5-7 jours ouvrables.",
     "simShippingWarning": "Taxes à la charge de l'acheteur. Livraison : 5-7 jours ouvrables.",
     "downloadAppWarning": "Il est necessaire d'utiliser l'application Encriptados pour saisir le code RONING.",
-    "activationsNonRefundableWarning": "En raison de la nature du service, les activations ne sont pas remboursables.",
+    "activationsNonRefundableWarning": "Les activations d'apps ne sont pas remboursables.",
     "loading": "Chargement...",
     "initializingPaymentForm": "Initialisation du formulaire de paiement...",
     "noPhoneNumberSecurity": "Ce produit ne contient pas de numéro de téléphone.",
