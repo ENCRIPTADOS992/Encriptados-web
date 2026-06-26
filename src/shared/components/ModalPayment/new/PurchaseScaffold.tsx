@@ -89,9 +89,10 @@ export default function PurchaseScaffold({
 
       {/* Alert for Activar Apps */}
       {isActivarApps && (
-        <AlertBox lines={[
-          t("downloadAppWarning"),
-        ]} />
+        <div className="space-y-2">
+          <AlertBox lines={[t("downloadAppWarning")]} />
+          <AlertBox lines={[t("activationsNonRefundableWarning")]} />
+        </div>
       )}
 
       {/* Tabs are now handled inside UnifiedPurchaseForm based on formPolicy */}
