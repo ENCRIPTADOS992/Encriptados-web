@@ -51,6 +51,7 @@ const PreviousPosts: React.FC<PreviousPostsProps> = ({ posts, currentPostSlug })
             title={post.title}
             description={post.description}
             author={post.author}
+            date={post.date}
           />
         ))}
       </div>
