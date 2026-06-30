@@ -268,12 +268,13 @@ const CardProduct: React.FC<CardSimProps> = ({
 
       {/* Contenido */}
       <div className="p-2 sm:p-3.5 lg:p-3 flex flex-col flex-grow bg-white rounded-b-xl sm:rounded-b-2xl">
-        <div className="flex items-start justify-between gap-1 sm:gap-2 mb-1 sm:mb-1.5 lg:mb-1">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-1 sm:gap-2 mb-1 sm:mb-1.5 lg:mb-1">
           <h2
             className="
               flex-1 min-w-0
+              order-2 lg:order-none
               text-[14px] sm:text-[17px] leading-[1.2] tracking-[0.005em] font-bold text-black
-              truncate whitespace-nowrap
+              lg:truncate lg:whitespace-nowrap
             "
             title={headerTitle}
             style={{ fontFamily: "var(--font-geist-sans), var(--font-inter), sans-serif" }}
@@ -285,6 +286,8 @@ const CardProduct: React.FC<CardSimProps> = ({
             <div
               className={`
                 inline-flex items-center justify-center flex-shrink-0
+                self-end lg:self-auto
+                order-1 lg:order-none
                 rounded-full
                 text-[9px] sm:text-[11px]
                 font-semibold
