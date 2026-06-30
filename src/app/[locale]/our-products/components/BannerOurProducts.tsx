@@ -42,7 +42,7 @@ const BannerOurProducts = () => {
           {/* Título Hero */}
           <Typography 
             variant="h1" 
-            as="h1" 
+            as="h2" 
             className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] leading-tight sm:leading-snug"
           >
             <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}

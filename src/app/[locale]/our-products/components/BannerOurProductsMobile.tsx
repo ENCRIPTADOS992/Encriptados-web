@@ -47,8 +47,8 @@ const BannerOurProductsMobile = () => {
         {/* Título */}
         <Typography
           variant="h1"
-          as="h1"
-          className="text-[34px] leading-[1.08] tracking-[-0.02em] max-w-[300px]"
+          as="h2"
+          className="!text-[20px] !leading-[1.2] tracking-[-0.01em] max-w-[260px] font-bold"
         >
           <span className="text-[#0AB4E9]">{t("banner.titleNewConnectWith")}</span>{" "}
           <span className="text-white">{t("banner.titleNewTotalSecurity")}</span>
@@ -58,7 +58,7 @@ const BannerOurProductsMobile = () => {
         <Paragraph
           variant="body"
           color="secondary"
-          className="text-[16px] leading-[1.45] max-w-[290px] text-white/88"
+          className="text-sm leading-[1.45] max-w-[290px] text-white/88"
         >
           {t("banner.descriptionNew")}
         </Paragraph>
