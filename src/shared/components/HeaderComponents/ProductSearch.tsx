@@ -24,6 +24,7 @@ interface Product {
   slug?: string;
   provider?: string;
   type_product?: string;
+  iconUrl?: string;
 }
 
 interface ProductSearchProps {
@@ -242,7 +243,9 @@ export default function ProductSearch({
             transition={{ duration: 0.15 }}
             className="absolute top-full left-0 right-0 mt-2 bg-[#1E1E1E] border border-[#3A3A3A] rounded-lg shadow-xl overflow-hidden z-50"
           >
-            {filteredProducts.map((product, index) => (
+            {filteredProducts.map((product, index) => {
+              const imageSrc = product.iconUrl || product.images?.[0]?.src;
+              return (
               <button
                 key={product.id}
                 onClick={() => navigateToProduct(product)}
@@ -252,10 +255,10 @@ export default function ProductSearch({
                     : "hover:bg-[#2A2A2A]"
                 }`}
               >
-                {product.images?.[0]?.src && (
+                {imageSrc && (
                   <div className="relative w-10 h-10 flex-shrink-0">
                     <Image
-                      src={product.images[0].src}
+                      src={imageSrc}
                       alt={product.name}
                       fill
                       className="object-contain rounded"
@@ -273,7 +276,8 @@ export default function ProductSearch({
                   ${typeof product.price === "number" ? product.price : product.price}
                 </span>
               </button>
-            ))}
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
