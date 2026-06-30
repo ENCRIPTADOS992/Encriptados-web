@@ -186,7 +186,7 @@ const OurProductsPage = () => {
 
           </SectionWrapper>
 
-          <SectionWrapper className="py-1 !px-0 sm:!px-0 md:!px-0">
+          <SectionWrapper className="py-1 !px-0 sm:!px-0 md:!px-0 lg:!px-8 xl:!px-10 2xl:!px-14">
             <div ref={cardSectionRef}>
               <PromoSection />
             </div>
