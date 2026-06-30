@@ -158,7 +158,7 @@ function mapWpItemToCard(item: WordPressContentItem, idPrefix = "wp"): BlogPostC
     image: getImageFromEmbed(item),
     imageFull: getImageFullFromEmbed(item),
     author: getAuthorFromEmbed(item),
-    date: item.modified ?? item.date ?? "",
+    date: item.date ?? item.modified ?? "",
   };
 }
 
