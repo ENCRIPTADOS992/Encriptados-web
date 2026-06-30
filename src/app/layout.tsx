@@ -48,11 +48,6 @@ export const metadata: Metadata = {
   creator: SEO_SITE_NAME,
   publisher: SEO_SITE_NAME,
   referrer: "origin-when-cross-origin",
-  icons: {
-    icon: [{ url: "/favicon.ico?v=2", type: "image/x-icon", sizes: "any" }],
-    shortcut: [{ url: "/favicon.ico?v=2", type: "image/x-icon" }],
-    apple: [{ url: "/favicon.ico?v=2", type: "image/x-icon" }],
-  },
   openGraph: {
     title: SEO_DEFAULT_TITLE,
     description: SEO_DEFAULT_DESCRIPTION,
