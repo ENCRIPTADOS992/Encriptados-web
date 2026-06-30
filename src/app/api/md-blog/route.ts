@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import type { MarkdownBlogMeta } from "@/features/blog/types";
+import { extractAndTransformFaqs } from "@/features/blog/faqTransform";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -53,6 +54,9 @@ async function handleSinglePost(slug: string, lang: string) {
 
     const mdContent = fs.readFileSync(contentFile, "utf-8");
     const htmlContent = await renderMarkdown(mdContent);
+    const { html: transformedHtml, faqs } = extractAndTransformFaqs(
+      String(htmlContent),
+    );
 
     return NextResponse.json({
       id: `md-${meta.slug}`,
@@ -64,7 +68,8 @@ async function handleSinglePost(slug: string, lang: string) {
       imageFull: meta.imageFull ?? meta.image,
       author: meta.author,
       date: meta.date,
-      content: htmlContent,
+      content: transformedHtml,
+      faqs,
     });
   } catch (err) {
     console.error("Error reading blog post:", err);
