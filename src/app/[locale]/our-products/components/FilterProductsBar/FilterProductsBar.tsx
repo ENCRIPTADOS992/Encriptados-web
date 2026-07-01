@@ -155,6 +155,8 @@ export default function FilterProductsBar({
     />
   );
 
+  // TEMP: Icono usado por la opción "Activar Número Fijo" (oculta actualmente).
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const activarNumeroFijoProviderIcon = (
     <span className="flex items-center gap-1.5 whitespace-nowrap">
       <Image
@@ -239,11 +241,13 @@ export default function FilterProductsBar({
                 value: "activarapps",
                 icon: activarAppsProviderIcon,
               },
-              {
-                label: " ",
-                value: "activarnumerofijo",
-                icon: activarNumeroFijoProviderIcon,
-              },
+              // TEMP: Activar Número Fijo oculto del selector de proveedor.
+              // Restaurar descomentando el bloque de abajo.
+              // {
+              //   label: " ",
+              //   value: "activarnumerofijo",
+              //   icon: activarNumeroFijoProviderIcon,
+              // },
             ]}
             onChangeExternal={(value) => {
               updateFilters({
