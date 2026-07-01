@@ -35,7 +35,11 @@ export function normalizePath(path: string): string {
   if (!path) return "/";
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
   if (cleanPath === "/") return cleanPath;
-  return cleanPath.replace(/\/+/g, "/");
+  const clean = cleanPath.replace(/\/+/g, "/");
+  // Don't add trailing slash to file paths (e.g. /sitemap.xml, /sitemaps/apps-es.xml, /robots.txt)
+  const lastSegment = clean.split("/").pop() ?? "";
+  if (lastSegment.includes(".")) return clean;
+  return clean.endsWith("/") ? clean : `${clean}/`;
 }
 
 export function buildAbsoluteUrl(path: string): string {
