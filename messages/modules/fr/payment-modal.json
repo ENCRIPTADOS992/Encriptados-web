@@ -124,6 +124,8 @@
     "simShippingWarning": "Taxes à la charge de l'acheteur. Livraison : 5-7 jours ouvrables.",
     "downloadAppWarning": "Il est necessaire d'utiliser l'application Encriptados pour saisir le code RONING.",
     "activationsNonRefundableWarning": "Les activations d'apps ne sont pas remboursables.",
+    "nonRefundableWarning": "Ce produit n'est pas remboursable.",
+    "threemaAndroidWarning": "Disponible pour Android : téléchargez l'APK et accédez en saisissant votre code d'activation.",
     "loading": "Chargement...",
     "initializingPaymentForm": "Initialisation du formulaire de paiement...",
     "noPhoneNumberSecurity": "Ce produit ne contient pas de numéro de téléphone.",
