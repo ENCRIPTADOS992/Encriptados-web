@@ -62,14 +62,26 @@ const FAQSection: React.FC<FAQSectionProps> = ({
                 </svg>
               </span>
             </button>
-            {openIndex === idx && (
-              <div
-                id={`faq-answer-${idx}`}
-                className="mt-4 text-[16px] text-[#101010] opacity-80"
-              >
-                {faq.answer}
-              </div>
-            )}
+            {(() => {
+              const isOpen = openIndex === idx;
+              return (
+                <div
+                  id={`faq-answer-${idx}`}
+                  className={`grid overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100 mt-4"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                  aria-hidden={!isOpen}
+                >
+                  <div className="min-h-0">
+                    <div className="text-[16px] text-[#101010] opacity-80">
+                      {faq.answer}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         ))}
       </div>

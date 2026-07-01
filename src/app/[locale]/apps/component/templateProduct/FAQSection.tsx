@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface FAQItem {
   question: string;
@@ -59,8 +59,8 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
 
   if (faqs.length === 0) return null;
 
-  // Limitar a máximo 3 FAQs
-  const displayedFaqs = faqs.slice(0, 3);
+  // Mostrar todas las FAQs para que coincidan con el JSON-LD FAQPage emitido por el layout server
+  const displayedFaqs = faqs;
 
   const toggleFaq = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -131,22 +131,18 @@ const FAQSectionUnified: React.FC<FAQSectionProps> = ({
                   </motion.svg>
                 </button>
 
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={`faq-answer-${idx}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-5 pb-5 lg:px-6 lg:pb-6 text-base text-gray-600 leading-relaxed">
-                        {faq.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  id={`faq-answer-${idx}`}
+                  initial={false}
+                  animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                  aria-hidden={!isOpen}
+                >
+                  <div className="px-5 pb-5 lg:px-6 lg:pb-6 text-base text-gray-600 leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </motion.div>
               </motion.div>
             );
           })}

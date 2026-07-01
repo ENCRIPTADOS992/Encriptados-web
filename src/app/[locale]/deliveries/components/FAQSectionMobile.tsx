@@ -72,20 +72,32 @@ const FAQSectionMobile: React.FC<FAQSectionMobileProps> = ({
                 </svg>
               </span>
             </button>
-            {openIndex === idx && (
-              <div
-                id={`faq-answer-mobile-${idx}`}
-                className="px-5 pb-3 pt-2 text-[14px] text-[#101010] opacity-80"
-                style={{
-                  background: "#F9F9F9",
-                  borderBottomLeftRadius: 14,
-                  borderBottomRightRadius: 14,
-                  maxWidth: 374,
-                }}
-              >
-                {faq.answer}
-              </div>
-            )}
+            {(() => {
+              const isOpen = openIndex === idx;
+              return (
+                <div
+                  id={`faq-answer-mobile-${idx}`}
+                  className={`grid overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                  style={{
+                    background: "#F9F9F9",
+                    borderBottomLeftRadius: 14,
+                    borderBottomRightRadius: 14,
+                    maxWidth: 374,
+                  }}
+                  aria-hidden={!isOpen}
+                >
+                  <div className="min-h-0">
+                    <div className="px-5 pb-3 pt-2 text-[14px] text-[#101010] opacity-80">
+                      {faq.answer}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         ))}
       </div>

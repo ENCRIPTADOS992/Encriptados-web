@@ -724,7 +724,7 @@ export default function SimProductPageContent({ slug, locale, initialProduct }: 
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <FAQSection faqs={showTimSections ? faqs.slice(0, 3) : faqs} title="Preguntas Frecuentes" />
+          <FAQSection faqs={faqs} title="Preguntas Frecuentes" />
         </motion.div>
       )}
     </main>
