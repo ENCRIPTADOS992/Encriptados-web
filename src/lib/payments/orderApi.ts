@@ -102,6 +102,9 @@ export async function createOrderAndIntent({
     source_url: sourceUrl,
     selected_option: selectedOption,
     system: osType,
+    // Número Fijo: extraer campos top-level del meta
+    country_iso2: meta?.country_iso2,
+    plan_months: meta?.plan_months,
     meta,
   });
 

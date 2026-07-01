@@ -1,6 +1,7 @@
 import {
   PRODUCT_CATEGORY_IDS,
   isActivateAppsCategoryId,
+  isActivateFixedNumberCategoryId,
   isAppCategoryId,
   isRouterCategoryId,
   isSimCategoryId,
@@ -30,6 +31,7 @@ const mapSelectedOptionToKind = (selectedOption?: number): CategoryKind | null =
       return "SOFTWARE";
     case PRODUCT_CATEGORY_IDS.APPS:
     case PRODUCT_CATEGORY_IDS.ACTIVATE_APPS:
+    case PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER:
       return "APLICACIONES";
     case PRODUCT_CATEGORY_IDS.ROUTERS:
       return "ROUTERS";
@@ -61,9 +63,15 @@ export function getProductCategoryKind(
 
   const isActivarApps =
     isActivateAppsCategoryId(catId) ||
+    isActivateFixedNumberCategoryId(catId) ||
     Number(product?.id ?? product?.productId) === 61588 ||
-    /activar\s*apps?/.test(name) ||
-    /activar[-_\s]*apps?/.test(slug);
+    Number(product?.id ?? product?.productId) === 61021 ||
+    Number(product?.id ?? product?.productId) === 62337 ||
+    Number(product?.id ?? product?.productId) === 62421 ||
+    /activar\s*apps?|activate\s*apps?|activer\s*(les\s*)?apps?|attivare\s*(le\s*)?apps?|ativar\s*apps?/.test(name) ||
+    /activar[-_\s]*apps?/.test(slug) ||
+    /(activar|activate|activer|attivare|ativar).*(n[uú]mero\s*fijo|landline|num[eé]ro\s*fixe?|numero\s*fisso|n[uú]mero\s*fixo)/.test(name) ||
+    /(recarga[r]?|top[\s\-]?up|recharge|recharger|ricaricar[ei]|recarregar).*(n[uú]mero\s*fijo|landline|num[eé]ro\s*fixe?|numero\s*fisso|n[uú]mero\s*fixo)/.test(name);
 
   if (isActivarApps) {
     return { kind: "APLICACIONES", reason: "Activar Apps usa plantilla de aplicaciones" };

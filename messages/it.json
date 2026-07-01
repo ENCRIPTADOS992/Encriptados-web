@@ -917,6 +917,12 @@
       "title": "Attivare App",
       "description": "Ottieni numeri di telefono temporanei all'istante e ricevi codici SMS per attivare le tue App preferite come WhatsApp, Telegram e Signal senza compromettere la tua privacy."
     },
+    "activarNumeroFijo": {
+      "title": "Attivare Numero Fisso"
+    },
+    "recargaNumeroFijo": {
+      "title": "Ricarica Numero Fisso"
+    },
     "smsBanner": {
       "title": "Activa APPs por SMS con Encriptados",
       "subtitle": "Regístrate en cualquier aplicación con un número de teléfono virtual",
@@ -1556,7 +1562,11 @@
       "activarAppsTitle": "Attiva le tue app istantaneamente",
       "activarAppsDescription": "Usa un numero temporaneo e accedi a <bold>più di 30 applicazioni</bold> in modo rapido e sicuro dal tuo dispositivo.",
       "activarAppsCountriesTitle": "Più di 20 paesi disponibili",
-      "activarAppsCountriesDescription": "Attiva le tue app con numeri temporanei di vari paesi senza usare il tuo numero personale."
+      "activarAppsCountriesDescription": "Attiva le tue app con numeri temporanei di vari paesi senza usare il tuo numero personale.",
+      "activarNumeroFijoCountriesTitle": "Numeri disponibili in più paesi",
+      "activarNumeroFijoCountriesDescription": "Scegli tra diversi paesi disponibili e ottieni un numero esclusivo per ricevere SMS e codici di verifica secondo le tue esigenze.",
+      "activarNumeroFijoServicesTitle": "Un solo numero per più servizi",
+      "activarNumeroFijoServicesDescription": "Usa il tuo numero esclusivo per ricevere codici SMS e completare verifiche su app e piattaforme compatibili da un'unica linea privata."
     }
   },
   "silentCircle": {

@@ -236,14 +236,92 @@ const PurchaseHeader: React.FC<Props> = ({
 
   const providerNorm = ((product?.provider || product?.brand) ?? "").toLowerCase();
   const titleNorm = (product?.name || product?.headerTitle || "").toLowerCase();
+  const productId = Number((product as any)?.id ?? (product as any)?.productId ?? 0);
+  const productCategoryId = Number((product as any)?.category?.id ?? (product as any)?.categoryId ?? 0);
 
-  // ACTIVAR APPS: Detección y lógica específica (no afecta otros productos)
-  const isActivarAppsProduct = /activar\s*apps?/i.test(titleNorm);
-  const activarAppsVariants = isActivarAppsProduct
+  // ACTIVAR APPS: Detección multi-idioma usando funciones del resolver
+  const isActivarAppsProductFlag = isActivarAppsRouteProduct(product?.name || "", productCategoryId, productId);
+  const isActivarNumeroFijo = (() => {
+    // en: "activate landline number", fr: "activer le numéro fixe", it: "attivare il numero fisso", pt: "ativar número fixo"
+    const re_activate = /activar|activate|activer|attivare|ativar/i;
+    const re_fixed = /n[uú]mero\s*fijo|landline|fixed\s*number|num[eé]ro\s*fixe?|numero\s*fisso|n[uú]mero\s*fixo/i;
+    if (productId === 62337) return true;
+    return re_activate.test(titleNorm) && re_fixed.test(titleNorm);
+  })();
+  const isRecargaNumeroFijo = (() => {
+    // en: "top up landline number", fr: "recharger le numéro fixe", it: "ricaricare il numero fisso", pt: "recarregar número fixo"
+    const re_recharge = /recarga[r]?|top[\s\-]?up|recharge|recharger|ricaricar[ei]|recarregar/i;
+    const re_fixed = /n[uú]mero\s*fijo|landline|fixed\s*number|num[eé]ro\s*fixe?|numero\s*fisso|n[uú]mero\s*fixo/i;
+    if (productId === 62421) return true;
+    return re_recharge.test(titleNorm) && re_fixed.test(titleNorm);
+  })();
+  const isNumeroFijo = isActivarNumeroFijo || isRecargaNumeroFijo;
+  const isActivarProduct = isActivarAppsProductFlag || isNumeroFijo;
+  const activarAppsVariants = isActivarProduct
     ? variants.filter((v) => v.id != null)
     : [];
+
+  // === País selector para Número Fijo ===
+  const countryDisplayNames = React.useMemo(
+    () => new Intl.DisplayNames([locale], { type: "region" }),
+    [locale]
+  );
+  const getCountryName = (code: string) => {
+    try { return countryDisplayNames.of(code.toUpperCase()) || code; }
+    catch { return code; }
+  };
+
+  // Extraer países únicos de los atributos de variantes (el atributo con código ISO de 2 letras)
+  const numeroFijoCountries = React.useMemo(() => {
+    if (!isNumeroFijo) return [];
+    const countries = new Set<string>();
+    for (const v of activarAppsVariants) {
+      const attrs = (v as any).attributes ?? [];
+      for (const attr of attrs) {
+        const val = String(attr.option || "").trim().toUpperCase();
+        if (/^[A-Z]{2}$/.test(val)) {
+          countries.add(val);
+        }
+      }
+    }
+    return Array.from(countries).sort();
+  }, [isNumeroFijo, activarAppsVariants]);
+
+  const [selectedCountry, setSelectedCountry] = React.useState<string>("");
+
+  // Auto-seleccionar país: si viene regionCode (desde la tarjeta), usarlo; sino primer país disponible
+  React.useEffect(() => {
+    if (isNumeroFijo) {
+      if (regionCode && /^[A-Z]{2}$/i.test(regionCode)) {
+        setSelectedCountry(regionCode.toUpperCase());
+      } else if (numeroFijoCountries.length > 0 && !selectedCountry) {
+        setSelectedCountry(numeroFijoCountries[0]);
+      }
+    }
+  }, [isNumeroFijo, regionCode, numeroFijoCountries, selectedCountry]);
+
+  // Filtrar variantes por país seleccionado
+  const countryFilteredVariants = React.useMemo(() => {
+    if (!isNumeroFijo || !selectedCountry) return activarAppsVariants;
+    return activarAppsVariants.filter((v) => {
+      const attrs = (v as any).attributes ?? [];
+      return attrs.some((a: any) => String(a.option || "").trim().toUpperCase() === selectedCountry);
+    });
+  }, [isNumeroFijo, selectedCountry, activarAppsVariants]);
+
   const getActivarAppsVariantLabel = (variant?: Variant) => {
     if (!variant) return t("details", { defaultValue: "Detalle" });
+    // Para Activar/Recarga Número Fijo: mostrar "X meses"
+    if (isNumeroFijo) {
+      const attrs = (variant as any).attributes ?? [];
+      // Buscar el atributo numérico (meses), no el de país
+      for (const attr of attrs) {
+        const val = String(attr.option || "").trim();
+        if (/^\d+$/.test(val)) {
+          return `${val} ${t("months")}`;
+        }
+      }
+    }
     // Usar atributo WooCommerce de la variante (ej: "1 Nro. temporal", "5 Nro. temporales")
     const attrOption = (variant as any).attributes?.[0]?.option;
     if (attrOption && String(attrOption).trim()) return String(attrOption).trim();
@@ -728,8 +806,8 @@ const PurchaseHeader: React.FC<Props> = ({
             </div>
           )}
 
-          {/* Fila: País o región (si existe) - Ocultar para Sim Física */}
-          {(region || regionCode) && !titleNorm.includes("sim física") && !titleNorm.includes("sim fisica") && (
+          {/* Fila: País o región (si existe) - Ocultar para Sim Física y Número Fijo (tiene su propia fila) */}
+          {(region || regionCode) && !isNumeroFijo && !titleNorm.includes("sim física") && !titleNorm.includes("sim fisica") && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
               {/* @ts-ignore */}
               <span className="text-base text-[#3D3D3D]">{t("countryOrRegion", { defaultValue: "País o región" })}</span>
@@ -786,12 +864,25 @@ const PurchaseHeader: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Fila: Licencia (ocultable) */}
-          {(shouldShowLicense || (isActivarAppsProduct && activarAppsVariants.length > 0)) && (
+          {/* Fila: País (solo para Número Fijo) - solo lectura */}
+          {isNumeroFijo && selectedCountry && (
             <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-              <span className="text-base text-[#3D3D3D]">{isActivarAppsProduct ? t("details", { defaultValue: "Detalle" }) : t("license")}</span>
+              <span className="text-base text-[#3D3D3D]">{t("country")}</span>
+              <div className="flex items-center gap-2">
+                <CircleFlag countryCode={selectedCountry.toLowerCase()} height={20} width={20} className="w-5 h-5 shadow-sm" />
+                <span className="text-base text-[#141414] font-medium">
+                  {getCountryName(selectedCountry)}
+                </span>
+              </div>
+            </div>
+          )}
 
-              {(isActivarAppsProduct ? activarAppsVariants.length > 1 : showSelect) ? (
+          {/* Fila: Licencia (ocultable) */}
+          {(shouldShowLicense || (isActivarProduct && activarAppsVariants.length > 0)) && (
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <span className="text-base text-[#3D3D3D]">{isRecargaNumeroFijo ? t("rechargeDuration") : isActivarNumeroFijo ? t("activationDuration") : isActivarAppsProductFlag ? t("details", { defaultValue: "Detalle" }) : t("license")}</span>
+
+              {(isActivarProduct ? (isNumeroFijo ? countryFilteredVariants : activarAppsVariants).length > 1 : showSelect) ? (
                 <div ref={licenseRef} className="relative z-[1000]">
                   <button
                     type="button"
@@ -801,9 +892,9 @@ const PurchaseHeader: React.FC<Props> = ({
                     className="relative min-w-[8rem] w-auto h-8 rounded-lg bg-[#EBEBEB] px-3 text-xs text-black outline-none focus:ring-2 focus:ring-black/10 flex items-center justify-between gap-2"
                   >
                     <span className="truncate">
-                      {isActivarAppsProduct
+                      {isActivarProduct
                         ? getActivarAppsVariantLabel(
-                            activarAppsVariants.find((v) => v.id === selectedVariantId) ?? activarAppsVariants[0]
+                            (isNumeroFijo ? countryFilteredVariants : activarAppsVariants).find((v) => v.id === selectedVariantId) ?? (isNumeroFijo ? countryFilteredVariants : activarAppsVariants)[0]
                           )
                         : (() => {
                         const lt = variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths;
@@ -819,8 +910,8 @@ const PurchaseHeader: React.FC<Props> = ({
                       tabIndex={-1}
                       className="absolute top-full right-0 mt-2 z-50 min-w-full w-fit rounded-lg bg-white shadow-lg ring-1 ring-black/10 max-h-60 overflow-auto"
                     >
-                      {(isActivarAppsProduct ? activarAppsVariants : selectableVariants).map((v) => {
-                        const isActive = (selectedVariantId ?? (isActivarAppsProduct ? activarAppsVariants[0]?.id : selectableVariants[0]?.id)) === v.id;
+                      {(isActivarProduct ? (isNumeroFijo ? countryFilteredVariants : activarAppsVariants) : selectableVariants).map((v) => {
+                        const isActive = (selectedVariantId ?? (isActivarProduct ? (isNumeroFijo ? countryFilteredVariants : activarAppsVariants)[0]?.id : selectableVariants[0]?.id)) === v.id;
                         return (
                           <button
                             key={v.id}
@@ -832,7 +923,7 @@ const PurchaseHeader: React.FC<Props> = ({
                             }}
                             className={`w-full px-3 py-2 text-left text-sm whitespace-nowrap ${isActive ? "bg-black text-white" : "hover:bg-gray-100 text-[#141414]"}`}
                           >
-                            {isActivarAppsProduct
+                            {isActivarProduct
                               ? getActivarAppsVariantLabel(v)
                               : (v as Variant & { months: number }).months === 0
                                 ? t("freeTrial")
@@ -845,8 +936,8 @@ const PurchaseHeader: React.FC<Props> = ({
                 </div>
               ) : (
                 <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
-                  {isActivarAppsProduct
-                    ? getActivarAppsVariantLabel(activarAppsVariants[0])
+                  {isActivarProduct
+                    ? getActivarAppsVariantLabel((isNumeroFijo ? countryFilteredVariants : activarAppsVariants)[0])
                     : currentMonths === 0
                       ? t("freeTrial")
                       : `${currentMonths} ${t("months")}`}

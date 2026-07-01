@@ -11,6 +11,7 @@ import TelegramButton from "@/shared/components/TelegramButton";
 import ShoppingCart from "@/shared/svgs/ShoppingCart";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { useAppMobile } from "@/shared/context/AppMobileContext";
+import { CircleFlag } from "react-circle-flags";
 
 interface ProductSectionTranslations {
   priceFrom: string;
@@ -47,6 +48,8 @@ interface ProductSectionProps {
   onSale?: boolean;       // true si el producto está en oferta
   regularPrice?: string;  // precio original formateado cuando está en oferta
   iconUrl?: string;
+  regionCode?: string;    // código de país (ej: "BE") para badge en imagen
+  region?: string;        // nombre del país (ej: "Bélgica") para badge en imagen
 }
 
 /**
@@ -145,6 +148,8 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
   onSale,
   regularPrice,
   iconUrl,
+  regionCode,
+  region,
 }) => {
   const { openModal } = useModalPayment();
   const { isFromAppMobile } = useAppMobile();
@@ -238,7 +243,7 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
             variants={imageVariants}
           >
             {/* Product Image */}
-            <div className="rounded-2xl overflow-hidden">
+            <div className="relative rounded-2xl overflow-hidden">
               <motion.img
                 src={productImage}
                 alt={`${title} screenshot`}
@@ -247,6 +252,19 @@ const ProductSectionUnified: React.FC<ProductSectionProps> = ({
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               />
+              {regionCode && (
+                <div className="absolute left-3 bottom-3 flex items-center bg-white/90 rounded-full px-2.5 py-1.5 shadow-md z-10">
+                  <CircleFlag
+                    countryCode={regionCode.toLowerCase()}
+                    className="w-5 h-5"
+                  />
+                  {region && (
+                    <span className="ml-1.5 text-xs font-bold text-black leading-none">
+                      {region}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Store buttons - visibles en todas las vistas con layout responsive */}

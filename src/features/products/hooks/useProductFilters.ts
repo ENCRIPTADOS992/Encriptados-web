@@ -75,6 +75,8 @@ export const useProductFilters = () => {
     simCountry: params.get("simCountry") || undefined,
     simCountryLabel: params.get("simCountryLabel") || undefined,
     simRegion: params.get("simRegion") || undefined,
+    numeroFijoCountry: params.get("numeroFijoCountry") || undefined,
+    numeroFijoCountryLabel: params.get("numeroFijoCountryLabel") || undefined,
   };
 
   const updateFilters = (newFilters: Partial<ProductFilters>) => {

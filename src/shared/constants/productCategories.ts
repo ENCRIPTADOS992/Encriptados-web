@@ -5,6 +5,7 @@ export const PRODUCT_CATEGORY_IDS = {
   SIMS: Number(process.env.NEXT_PUBLIC_CATEGORY_SIMS) || 451,
   ACTIVATE_APPS: Number(process.env.NEXT_PUBLIC_CATEGORY_ACTIVATE_APPS) || 465,
   RECHARGES: Number(process.env.NEXT_PUBLIC_CATEGORY_RECHARGES) || 464,
+  ACTIVATE_FIXED_NUMBER: Number(process.env.NEXT_PUBLIC_CATEGORY_ACTIVATE_FIXED_NUMBER) || 372,
 } as const;
 
 const PRODUCT_CATEGORY_API_PARAM_BY_ID: Record<number, string> = {
@@ -19,6 +20,7 @@ const PRODUCT_CATEGORY_API_PARAM_BY_ID: Record<number, string> = {
   [PRODUCT_CATEGORY_IDS.RECHARGES]: "recargas",
   [PRODUCT_CATEGORY_IDS.SIMS]: "sims", // SIMs takes precedence if both point to the same ID (e.g., 40 in staging)
   [PRODUCT_CATEGORY_IDS.ACTIVATE_APPS]: "activar-apps",
+  [PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER]: "activar-numero-fijo",
 };
 
 export const PRODUCT_LIST_CATEGORY_IDS = [
@@ -44,11 +46,15 @@ export const isAppCategoryId = (categoryId?: number | string | null) =>
 export const isActivateAppsCategoryId = (categoryId?: number | string | null) =>
   Number(categoryId) === PRODUCT_CATEGORY_IDS.ACTIVATE_APPS;
 
+export const isActivateFixedNumberCategoryId = (categoryId?: number | string | null) =>
+  Number(categoryId) === PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER;
+
 export const isLicenseCategoryId = (categoryId?: number | string | null) =>
   isSoftwareCategoryId(categoryId) ||
   isAppCategoryId(categoryId) ||
   isRouterCategoryId(categoryId) ||
-  isActivateAppsCategoryId(categoryId);
+  isActivateAppsCategoryId(categoryId) ||
+  isActivateFixedNumberCategoryId(categoryId);
 
 export const getProductCategoryApiParam = (
   categoryId?: number | string | null

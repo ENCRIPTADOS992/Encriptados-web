@@ -34,6 +34,9 @@ const OurProductsPage = () => {
   if (filters.provider === "activarapps") {
     selectedOption = PRODUCT_CATEGORY_IDS.ACTIVATE_APPS;
   }
+  if (filters.provider === "activarnumerofijo") {
+    selectedOption = PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER;
+  }
   
   const { data: products, isFetching, isError } = useGetProducts(
     selectedOption,
