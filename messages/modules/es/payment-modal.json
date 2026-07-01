@@ -125,6 +125,8 @@
     "simShippingWarning": "Impuestos a cargo del comprador. Entrega: 5-7 días hábiles.",
     "downloadAppWarning": "Es necesario utilizar la App de Encriptados para ingresar el código RONING.",
     "activationsNonRefundableWarning": "Las activaciones de Apps no son reembolsables.",
+    "nonRefundableWarning": "Este producto no es reembolsable.",
+    "threemaAndroidWarning": "Disponible para Android: descarga el APK y accede ingresando tu código de activación.",
     "loading": "Cargando...",
     "initializingPaymentForm": "Inicializando formulario de pago...",
     "noPhoneNumberSecurity": "Este producto no contiene un número de teléfono.",

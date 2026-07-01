@@ -1,0 +1,44 @@
+{
+  "slug": "que-es-silent-phone",
+  "author": "Encriptados",
+  "date": "2026-06-30T12:00:00-05:00",
+  "image": "/images/blog/que-es-silent-phone.webp",
+  "imageFull": "/images/blog/que-es-silent-phone.webp",
+  "tags": ["silent-phone", "secure-communications", "encryption", "privacy", "digital-security"],
+  "title": {
+    "es": "¿Qué es Silent Phone y cómo protege tus comunicaciones?",
+    "en": "What is Silent Phone and how does it protect your communications?",
+    "fr": "Qu'est-ce que Silent Phone et comment protège-t-il vos communications ?",
+    "pt": "O que é o Silent Phone e como ele protege as suas comunicações?",
+    "it": "Cos'è Silent Phone e come protegge le tue comunicazioni?"
+  },
+  "description": {
+    "es": "Descubre qué es Silent Phone, cómo funciona y por qué es una de las aplicaciones más seguras para proteger llamadas y mensajes privados.",
+    "en": "Discover what Silent Phone is, how it works, and why it is one of the most secure applications for protecting private calls, messages, and video calls.",
+    "fr": "Découvrez ce qu'est Silent Phone, comment il fonctionne et pourquoi il s'agit de l'une des applications les plus sûres pour protéger les appels et les messages privés.",
+    "pt": "Descubra o que é o Silent Phone, como funciona e por que é uma das aplicações mais seguras para proteger chamadas e mensagens privadas.",
+    "it": "Scopri cos'è Silent Phone, come funziona e perché è una delle applicazioni più sicure per proteggere chiamate e messaggi privati."
+  },
+  "seo": {
+    "es": {
+      "title": "¿Qué es Silent Phone y cómo protege tus llamadas?",
+      "keywords": ["qué es Silent Phone", "llamadas cifradas", "comunicación segura", "privacidad digital", "mensajería encriptada", "aplicación de llamadas seguras"]
+    },
+    "en": {
+      "title": "What Is Silent Phone and How Does It Protect Your Communications?",
+      "keywords": ["what is Silent Phone", "encrypted calls", "secure communications", "digital privacy", "encrypted messaging", "secure calling app"]
+    },
+    "fr": {
+      "title": "Qu'est-ce que Silent Phone et comment protège-t-il vos appels ?",
+      "keywords": ["qu'est-ce que Silent Phone", "appels chiffrés", "communication sécurisée", "confidentialité numérique", "messagerie chiffrée", "application d'appels sécurisés"]
+    },
+    "pt": {
+      "title": "O que é o Silent Phone e como protege as suas chamadas?",
+      "keywords": ["o que é o Silent Phone", "chamadas criptografadas", "comunicação segura", "privacidade digital", "mensagens criptografadas", "aplicação de chamadas seguras"]
+    },
+    "it": {
+      "title": "Cos'è Silent Phone e come protegge le tue chiamate?",
+      "keywords": ["cos'è Silent Phone", "chiamate crittografate", "comunicazione sicura", "privacy digitale", "messaggistica crittografata", "app di chiamate sicure"]
+    }
+  }
+}

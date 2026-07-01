@@ -48,6 +48,10 @@ export default function PurchaseScaffold({
   const isPhysicalSim =
     mode === "sim" && headerProps.shipping != null && headerProps.shipping > 0;
   const isActivarApps = isActivarAppsProduct(productName, productCategoryId, productId);
+  const isNonRefundableProduct =
+    /silent[\s_-]*phone|armadillo[\s_-]*chat|threema|nord[\s_-]*vpn|vault[\s_-]*chat|vaultchat|salt[\s_-]*app|\bsalt\b|vnc[\s_-]*lagoon|vnclagoon/i.test(productName);
+  const isThreemaOnly =
+    /\bthreema\b/i.test(productName) && !/\bwork\b/i.test(productName);
 
   const AlertBox = ({ lines }: { lines: string[] }) => (
     <div className="flex gap-[6px] rounded-[8px] bg-[#FFF7E4] px-[8px] py-[10px]">
@@ -57,7 +61,7 @@ export default function PurchaseScaffold({
       <div className="flex flex-col gap-[2px]">
         {lines.map((line, i) => (
           <span key={i} className="text-[14px] leading-[20px] text-[#C98A00]">
-            {line}
+            {lines.length > 1 ? `• ${line}` : line}
           </span>
         ))}
       </div>
@@ -92,6 +96,19 @@ export default function PurchaseScaffold({
         <AlertBox lines={[
           t("downloadAppWarning"),
           t("activationsNonRefundableWarning"),
+        ]} />
+      )}
+
+      {/* Alert for non-refundable app products (Silent Phone, Armadillo Chat, Threema Work, Nord VPN, VaultChat, Salt, VNClagoon) */}
+      {isNonRefundableProduct && !isActivarApps && !isThreemaOnly && (
+        <AlertBox lines={[t("nonRefundableWarning")]} />
+      )}
+
+      {/* Alert for Threema (shows APK download notice + non-refundable) */}
+      {isThreemaOnly && (
+        <AlertBox lines={[
+          t("threemaAndroidWarning"),
+          t("nonRefundableWarning"),
         ]} />
       )}
 

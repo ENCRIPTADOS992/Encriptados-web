@@ -155,7 +155,7 @@ const OurProductsPage = () => {
             <Typography
               variant="h2"
               as="h1"
-              className="bg-gradient-to-r text-2xl sm:text-3xl md:text-[38px] justify-center font-bold mt-2 sm:mt-4 flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-6 sm:mb-7 text-center"
+              className="bg-gradient-to-r !text-[20px] sm:!text-3xl md:!text-[38px] justify-center font-bold mt-8 sm:mt-10 flex items-center from-[#FFFF] to-[#35CDFB] bg-clip-text text-transparent mb-6 sm:mb-7 text-center"
             >
               {t("filterProducts.title")}
             </Typography>
@@ -189,7 +189,7 @@ const OurProductsPage = () => {
 
           </SectionWrapper>
 
-          <SectionWrapper className="py-1">
+          <SectionWrapper className="py-1 !px-0 sm:!px-0 md:!px-0 lg:!px-8 xl:!px-10 2xl:!px-14">
             <div ref={cardSectionRef}>
               <PromoSection />
             </div>

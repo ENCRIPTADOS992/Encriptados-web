@@ -100,6 +100,7 @@ const ListOfPosts = ({ posts, loading }: ListOfPostsProps) => {
               title={post.title}
               description={post.description}
               author={post.author}
+              date={post.date}
             />
           ))}
         </div>

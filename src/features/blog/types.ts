@@ -28,6 +28,7 @@ export interface BlogPostCard {
 /** Full blog post including content */
 export interface BlogPost extends BlogPostCard {
   content: string; // HTML (WP raw or MD converted)
+  faqs?: Array<{ question: string; answer: string }>;
 }
 
 /** Standard WordPress REST API post (/wp/v2/posts?_embed) */

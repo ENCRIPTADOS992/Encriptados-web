@@ -898,7 +898,11 @@ const PurchaseHeader: React.FC<Props> = ({
                           )
                         : (() => {
                         const lt = variants.find((v) => v.id === (selectedVariantId ?? -1))?.licensetime ?? variants[0]?.licensetime ?? currentMonths;
-                        return isFreeTrialValue(lt) ? (t("freeTrial") || "Prueba gratis") : `${lt} ${t("months")}`;
+                        if (isFreeTrialValue(lt)) return t("freeTrial") || "Prueba gratis";
+                        const s = String(lt).trim();
+                        const m = s.match(/^(\d+)\s*\+\s*phone$/i);
+                        if (m) return `${m[1]}M + Phone`;
+                        return `${s} ${t("months")}`;
                       })()}
                     </span>
                     <span className="ml-1 text-[#3D3D3D]">▾</span>
@@ -925,9 +929,14 @@ const PurchaseHeader: React.FC<Props> = ({
                           >
                             {isActivarProduct
                               ? getActivarAppsVariantLabel(v)
-                              : (v as Variant & { months: number }).months === 0
-                                ? t("freeTrial")
-                                : `${(v as Variant & { months: number }).months} ${t("months")}`}
+                              : (() => {
+                                  const months = (v as Variant & { months: number }).months;
+                                  if (months === 0) return t("freeTrial");
+                                  const raw = String((v as Variant).licensetime ?? "").trim();
+                                  const m = raw.match(/^(\d+)\s*\+\s*phone$/i);
+                                  if (m) return `${m[1]}M + Phone`;
+                                  return `${months} ${t("months")}`;
+                                })()}
                           </button>
                         );
                       })}
@@ -938,9 +947,13 @@ const PurchaseHeader: React.FC<Props> = ({
                 <div className="min-w-[9rem] w-auto h-9 bg-[#EBEBEB] rounded-lg px-3 flex items-center text-sm text-black select-none whitespace-nowrap">
                   {isActivarProduct
                     ? getActivarAppsVariantLabel((isNumeroFijo ? countryFilteredVariants : activarAppsVariants)[0])
-                    : currentMonths === 0
-                      ? t("freeTrial")
-                      : `${currentMonths} ${t("months")}`}
+                    : (() => {
+                        if (currentMonths === 0) return t("freeTrial");
+                        const raw = String(selectableVariants[0]?.licensetime ?? product?.licensetime ?? currentMonths).trim();
+                        const m = raw.match(/^(\d+)\s*\+\s*phone$/i);
+                        if (m) return `${m[1]}M + Phone`;
+                        return `${currentMonths} ${t("months")}`;
+                      })()}
                 </div>
               )}
             </div>
