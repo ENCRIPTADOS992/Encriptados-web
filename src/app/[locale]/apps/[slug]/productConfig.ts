@@ -325,8 +325,48 @@ export const productConfigs: Record<string, ProductStaticConfig> = {
   // Nota: Este producto usa ruta especial /activar-apps (no /apps/activar-apps)
   "activar-apps": {
     slug: "activar-apps",
-    productId: 61021,
+    productId: 61588,
     categoryId: 371,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/activar-apps/hero-desktop.png",
+      tablet: "/images/activar-apps/hero-tablet.png",
+      mobile: "/images/activar-apps/hero-mobile.jpg",
+    },
+    productImage: "/images/activar-apps/banner.png",
+    iconUrl: "/images/activar-apps/logo.png",
+    benefitIcon: "/images/activar-apps/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // Name: "Activar Número Fijo" -> slug: "activar-numero-fijo"
+  "activar-numero-fijo": {
+    slug: "activar-numero-fijo",
+    productId: 62337,
+    categoryId: 372,
+    templateType: "app",
+    heroBanners: {
+      desktop: "/images/activar-apps/hero-desktop.png",
+      tablet: "/images/activar-apps/hero-tablet.png",
+      mobile: "/images/activar-apps/hero-mobile.jpg",
+    },
+    productImage: "/images/activar-apps/banner.png",
+    iconUrl: "/images/activar-apps/logo.png",
+    benefitIcon: "/images/activar-apps/icono.png",
+    videoUrl: "",
+    appStoreUrl: "",
+    googlePlayUrl: "",
+    relatedProducts: { simProductId: "508", esimProductId: "454" },
+  },
+
+  // Name: "Recargar Número Fijo" -> slug: "recarga-numero-fijo"
+  "recarga-numero-fijo": {
+    slug: "recarga-numero-fijo",
+    productId: 62421,
+    categoryId: 372,
     templateType: "app",
     heroBanners: {
       desktop: "/images/activar-apps/hero-desktop.png",

@@ -71,7 +71,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
-  const [selectedVariant, setSelectedVariant] = React.useState<Variant | null>(null);
+  const [manualVariant, setManualVariant] = React.useState<Variant | null>(null);
   const [quantity, setQuantity] = React.useState(1);
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
@@ -81,31 +81,39 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
   // Track si el usuario ha cambiado manualmente la variante
   const [userChangedVariant, setUserChangedVariant] = React.useState(false);
 
-  React.useEffect(() => {
+  // Computar la variante seleccionada de forma SÍNCRONA (no en useEffect)
+  // para evitar un render intermedio con selectedVariantId = null
+  const isFreeTrialLt = (lt: unknown) => {
+    const s = String(lt ?? "").trim().toLowerCase();
+    return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || s === "0" || /^pre[\-\s]?activ/i.test(s);
+  };
+
+  // Computar variante SIN memoización para evitar cualquier issue de stale cache
+  const computeVariant = (): Variant | null => {
+    if (variants.length === 0) return null;
     // Prioridad 1: Si hay variantId, usarlo directamente
-    if (variantId != null && variants.length > 0) {
-      const matchingVariant = variants.find((v) => v.id === variantId);
-      if (matchingVariant) {
-        setSelectedVariant(matchingVariant);
-        return;
-      }
+    if (variantId != null) {
+      const match = variants.find((v) => v.id === variantId);
+      if (match) return match;
     }
-    // Prioridad 2: Si hay un initialPrice, buscar la variante que coincida con ese precio
-    if (initialPrice != null && initialPrice > 0 && variants.length > 0) {
-      const matchingVariant = variants.find((v) => v.price === initialPrice);
-      if (matchingVariant) {
-        setSelectedVariant(matchingVariant);
-        return;
-      }
+    // Prioridad 2: Si hay un initialPrice, buscar la variante que coincida
+    if (initialPrice != null && initialPrice > 0) {
+      const match = variants.find((v) => Number(v.price) === initialPrice);
+      if (match) return match;
     }
-    // Si no hay match o no hay initialPrice, usar la primera variante que no sea prueba gratuita
-    const isFreeTrialLt = (lt: unknown) => {
-      const s = String(lt ?? "").trim().toLowerCase();
-      return s === "gratis" || s === "free" || s === "prueba" || s === "prueba gratuita" || s === "0" || /^pre[\-\s]?activ/i.test(s);
-    };
+    // Fallback: primera variante que no sea prueba gratuita
     const firstPaid = variants.find((v) => !isFreeTrialLt(v.licensetime));
-    setSelectedVariant(firstPaid ?? variants[0] ?? null);
-  }, [product, initialPrice, variantId]);
+    return firstPaid ?? variants[0] ?? null;
+  };
+
+  const computedVariant = computeVariant();
+
+  // Si el usuario cambió manualmente la variante, usar esa; sino usar la computada
+  const selectedVariant = userChangedVariant ? manualVariant : computedVariant;
+  const setSelectedVariant = (v: Variant | null) => {
+    setManualVariant(v);
+    setUserChangedVariant(true);
+  };
 
   // Detectar oferta — se desactiva si hay cupón aplicado (no dos descuentos a la vez)
   const productOnSale = product?.on_sale === true || (product as any)?.on_sale === "true";
@@ -221,6 +229,7 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
 
   const isRoamingProduct =
     product?.category?.id === PRODUCT_CATEGORY_IDS.SOFTWARE ||
+    product?.category?.id === PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER ||
     (product?.category?.id === PRODUCT_CATEGORY_IDS.APPS && !/silent/i.test(product?.name ?? "")) ||
     /armadillo|threema|vault|vnc|nordvpn|salt/i.test(product?.name ?? "");
 
@@ -238,8 +247,11 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
       showRechargeCTA={false}
       product={product}
       selectedVariantId={selectedVariant?.id ?? null}
+      region={(params as any).initialRegion}
+      regionCode={(params as any).initialRegionCode}
+      flagUrl={(params as any).flagUrl}
       onChangeVariant={(id) => {
-        setSelectedVariant(variants.find((v) => v.id === id) ?? null);
+        setManualVariant(variants.find((v) => v.id === id) ?? null);
         setUserChangedVariant(true);
       }}
       quantity={quantity}
@@ -263,15 +275,38 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
         orderType={resolvedOrderType}
         silentPhoneMode={silentPhoneMode}
         onSilentPhoneModeChange={setSilentPhoneMode}
-        purchaseMeta={{
-          variantId: selectedVariant?.id ?? undefined,
-          sku: selectedVariant?.sku,
-          licensetime: selectedVariant?.licensetime ?? product?.licensetime,
-          couponCode: coupon.trim() || undefined,
-          discount,
-          sourceUrl: params.sourceUrl,
-          selectedOption: (params as any)?.selectedOption,
-        }}
+        purchaseMeta={(() => {
+          const base = {
+            variantId: selectedVariant?.id ?? undefined,
+            sku: selectedVariant?.sku,
+            licensetime: selectedVariant?.licensetime ?? product?.licensetime,
+            couponCode: coupon.trim() || undefined,
+            discount,
+            sourceUrl: params.sourceUrl,
+            selectedOption: (params as any)?.selectedOption,
+          };
+          // Número Fijo: añadir country_iso2, plan_months y meta de tipo
+          const isNumFijo = product?.category?.id === PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER;
+          if (isNumFijo && selectedVariant) {
+            const attrs = (selectedVariant as any).attributes ?? [];
+            let countryIso2: string | undefined;
+            let planMonths: number | undefined;
+            for (const attr of attrs) {
+              const val = String(attr.option || "").trim();
+              if (/^[A-Z]{2}$/i.test(val)) countryIso2 = val.toUpperCase();
+              else if (/^\d+$/.test(val)) planMonths = Number(val);
+            }
+            const isRecarga = /recarga/i.test(product?.name || "");
+            return {
+              ...base,
+              country_iso2: countryIso2,
+              plan_months: planMonths,
+              formType: "vox_fixed_number",
+              roningType: isRecarga ? "renewal" : "new_number",
+            };
+          }
+          return base;
+        })()}
         onPayCrypto={async (formData: FormData) => {
           const isZi0nProduct = /zi0n|zion/i.test(product?.name || "");
           const isZi0nRenewal = formData.licenseType === "renew" && isZi0nProduct;
@@ -315,20 +350,34 @@ export default function ModalNewUser({ onPaymentSuccess }: { onPaymentSuccess?: 
               sourceUrl: params.sourceUrl,
               selectedOption: (params as any)?.selectedOption,
               osType: formData.osType,
-              meta: {
-                formType,
-                productId: productIdNum,
-                quantity,
-                unitPrice,
-                shipping,
-                variantId: selectedVariant?.id ?? undefined,
-                sku: selectedVariant?.sku,
-                licensetime: selectedVariant?.licensetime ?? product?.licensetime,
-                couponCode: coupon.trim() || undefined,
-                discount,
-                sourceUrl: params.sourceUrl,
-                selectedOption: (params as any)?.selectedOption,
-              },
+              meta: (() => {
+                const baseMeta: Record<string, any> = {
+                  formType,
+                  productId: productIdNum,
+                  quantity,
+                  unitPrice,
+                  shipping,
+                  variantId: selectedVariant?.id ?? undefined,
+                  sku: selectedVariant?.sku,
+                  licensetime: selectedVariant?.licensetime ?? product?.licensetime,
+                  couponCode: coupon.trim() || undefined,
+                  discount,
+                  sourceUrl: params.sourceUrl,
+                  selectedOption: (params as any)?.selectedOption,
+                };
+                // Número Fijo: agregar campos específicos
+                if (product?.category?.id === PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER && selectedVariant) {
+                  const attrs = (selectedVariant as any).attributes ?? [];
+                  for (const attr of attrs) {
+                    const val = String(attr.option || "").trim();
+                    if (/^[A-Z]{2}$/i.test(val)) baseMeta.country_iso2 = val.toUpperCase();
+                    else if (/^\d+$/.test(val)) baseMeta.plan_months = Number(val);
+                  }
+                  baseMeta.formType = "vox_fixed_number";
+                  baseMeta.roningType = /recarga/i.test(product?.name || "") ? "renewal" : "new_number";
+                }
+                return baseMeta;
+              })(),
             });
           } else {
             // Quiero mi Usuario: va a /orders/userid con usernames

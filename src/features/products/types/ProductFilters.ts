@@ -12,4 +12,6 @@ export interface ProductFilters {
   simCountryLabel?: string;
   simRegion?: string;
   searchQuery?: string;
+  numeroFijoCountry?: string;
+  numeroFijoCountryLabel?: string;
 }

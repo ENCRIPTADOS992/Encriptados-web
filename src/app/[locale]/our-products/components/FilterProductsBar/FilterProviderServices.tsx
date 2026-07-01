@@ -11,7 +11,7 @@ interface FilterAppWithLicenseProps {
 
 const FilterAppWithLicense: React.FC<FilterAppWithLicenseProps> = ({ filters, updateFilters }) => {
   const t = useTranslations("OurProductsPage");
-  type ProviderType = "encriptados" | "tim" | "activarapps" | undefined;
+  type ProviderType = "encriptados" | "tim" | "activarapps" | "activarnumerofijo" | undefined;
 
   const currentProvider = filters.provider as ProviderType;
 

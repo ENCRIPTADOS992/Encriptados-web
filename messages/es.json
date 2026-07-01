@@ -894,6 +894,12 @@
       "title": "Activar Apps",
       "description": "Obtén números telefónicos temporales al instante y recibe códigos SMS para activar tus Apps favoritas como WhatsApp, Telegram y Signal sin comprometer tu privacidad."
     },
+    "activarNumeroFijo": {
+      "title": "Activar Número Fijo"
+    },
+    "recargaNumeroFijo": {
+      "title": "Recarga Número Fijo"
+    },
     "smsBanner": {
       "title": "Activa APPs por SMS con Encriptados",
       "subtitle": "Regístrate en cualquier aplicación con un número de teléfono virtual",
@@ -1520,7 +1526,11 @@
       "activarAppsTitle": "Activa tus apps al instante",
       "activarAppsDescription": "Utiliza un número temporal y accede a <bold>más de 30 aplicaciones</bold> de forma rápida y segura desde tu dispositivo.",
       "activarAppsCountriesTitle": "Más de 20 países disponibles",
-      "activarAppsCountriesDescription": "Activa tus apps con números temporales de diversos países sin usar tu número personal."
+      "activarAppsCountriesDescription": "Activa tus apps con números temporales de diversos países sin usar tu número personal.",
+      "activarNumeroFijoCountriesTitle": "Números disponibles en múltiples países",
+      "activarNumeroFijoCountriesDescription": "Elige entre diferentes países disponibles y obtén un número exclusivo para recibir SMS y códigos de verificación según tus necesidades.",
+      "activarNumeroFijoServicesTitle": "Un solo número para múltiples servicios",
+      "activarNumeroFijoServicesDescription": "Utiliza tu número exclusivo para recibir códigos SMS y completar verificaciones en aplicaciones y plataformas compatibles desde una única línea privada."
     }
   },
   "silentCircle": {

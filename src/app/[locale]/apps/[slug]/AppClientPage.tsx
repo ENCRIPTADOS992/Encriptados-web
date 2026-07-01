@@ -18,6 +18,7 @@ import PrivateAppStore from "../component/PrivateAppStore";
 import ManageYourApps from "../component/ManageYourApps";
 import CustomizeAppCatalog from "../component/CustomizeAppCatalog";
 import ActivarAppsModules from "../component/ActivarAppsModules";
+import ActivarNumeroFijoModules from "../component/ActivarNumeroFijoModules";
 
 // Hooks y servicios
 import { usePriceVisibility } from "@/shared/hooks/usePriceVisibility";
@@ -74,6 +75,7 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const searchParamVariantId = searchParams.get("variantId");
   const searchParamCategoryId = searchParams.get("categoryId");
   const searchParamBuy = searchParams.get("buy");
+  const searchParamRegionCode = searchParams.get("regionCode");
 
   // Priority:
   // 1. Static config ID for known public routes
@@ -119,8 +121,15 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
   const plans = useMemo(() => {
     if (!product) return [];
     const variants = (product as any).variants || [];
-    return transformVariantsToPlans(variants, product, licenseTranslations);
-  }, [product, licenseTranslations]);
+    const allPlans = transformVariantsToPlans(variants, product, licenseTranslations);
+    // Filter by regionCode if present (e.g. ?regionCode=BE)
+    if (searchParamRegionCode) {
+      const rc = searchParamRegionCode.toUpperCase();
+      const filtered = allPlans.filter(p => p.countryCode === rc);
+      if (filtered.length > 0) return filtered;
+    }
+    return allPlans;
+  }, [product, licenseTranslations, searchParamRegionCode]);
 
   const radioOptions = useMemo(() => getRadioOptionsFromPlans(plans), [plans]);
   const features = useMemo(() => transformChecksToFeatures(product), [product]);
@@ -462,6 +471,8 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
             translations={productSectionTranslations}
             onSale={selectedPlan ? !!selectedPlan.salePrice : isOnSale}
             regularPrice={originalPrice}
+            regionCode={searchParamRegionCode || undefined}
+            region={searchParams.get("region") || undefined}
           />
 
           <StickyPriceBanner visible={!isVisible} productInfo={productInfo} />
@@ -489,6 +500,10 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
 
           {slug === "activar-apps" && <ActivarAppsModules />}
 
+          {slug === "activar-numero-fijo" && <ActivarNumeroFijoModules />}
+
+          {slug === "recarga-numero-fijo" && <ActivarNumeroFijoModules />}
+
           {(videoUrl || videoImage) && (
             <HeroVideoSection
               title={videoText}
@@ -498,10 +513,10 @@ export default function ProductPageContent({ slug, locale, initialProduct }: Pag
             />
           )}
 
-          {!videoUrl && !videoImage && product?.id === 61588 && (
+          {!videoUrl && !videoImage && (product as any)?.video_text && (
             <HeroVideoSection
               title={videoText}
-              imageUrl="https://encriptados.es/wp-content/uploads/2026/05/Activar-app-logo.webp"
+              imageUrl={productImage}
             />
           )}
 

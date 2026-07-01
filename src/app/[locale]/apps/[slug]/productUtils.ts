@@ -4,6 +4,7 @@
 
 import type { ProductById } from "@/features/products/types/AllProductsResponse";
 import type { ProductStaticConfig } from "./productConfig";
+import { isActivateFixedNumberCategoryId } from "@/shared/constants/productCategories";
 
 export interface LicensePlan {
   label: string;
@@ -12,6 +13,7 @@ export interface LicensePlan {
   salePrice?: number;
   variantId: number;
   sku: string;
+  countryCode?: string;
 }
 
 export interface FeatureGridItem {
@@ -91,7 +93,14 @@ export function transformVariantsToPlans(
       // Para variantes con licensetime null/inválido (ej: Activar Apps), usar attributes[0].option
       if (!variant.licensetime || variant.licensetime === "null") {
         if (variant.attributes?.[0]?.option) {
-          const attrLabel = String(variant.attributes[0].option).trim();
+          let attrLabel = String(variant.attributes[0].option).trim();
+          // Para "Activar Número Fijo": el atributo es numérico (meses), agregar sufijo
+          const productCategoryId = (product as any)?.category?.id;
+          if (isActivateFixedNumberCategoryId(productCategoryId) && /^\d+$/.test(attrLabel)) {
+            const count = Number(attrLabel);
+            attrLabel = `${attrLabel} ${count === 1 ? t.month : t.months}`;
+          }
+          const countryAttr = variant.attributes?.find((a: any) => a.name?.toLowerCase() === 'pais');
           const variantSale = variant.sale_price ? Number(variant.sale_price) : 0;
           const variantPrice = Number(variant.price);
           return {
@@ -101,6 +110,7 @@ export function transformVariantsToPlans(
             salePrice: (variantSale > 0 && variantSale < variantPrice) ? variantSale : undefined,
             variantId: variant.id,
             sku: variant.sku || '',
+            countryCode: countryAttr?.option?.toUpperCase(),
           };
         }
       }
@@ -170,7 +180,9 @@ export function transformVariantsToPlans(
 }
 
 export function getRadioOptionsFromPlans(plans: LicensePlan[]): string[] {
-  return plans.map(plan => plan.label);
+  // Deduplicate labels so country variants with the same duration
+  // (e.g. "3 Meses" for BE, GB, CA) appear only once
+  return [...new Set(plans.map(plan => plan.label))];
 }
 
 export function transformAdvantagesToFeaturesGrid(

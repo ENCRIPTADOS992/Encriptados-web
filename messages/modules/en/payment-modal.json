@@ -11,6 +11,7 @@
     "simPrice": "SIM price",
     "chooseGigas": "Choose your Gigas (GB)",
     "countryOrRegion": "Country or region",
+    "country": "Country",
     "totalToPay": "Total to pay",
     "enterPromoCode": "Enter promo code",
     "apply": "Apply",
@@ -136,6 +137,8 @@
     "roningCodeBtn": "RONING Code",
     "rechargeBtn": "Recharge",
     "details": "Detail",
-    "activationDetail": "Activations"
+    "activationDetail": "Activations",
+    "activationDuration": "Activation Duration",
+    "rechargeDuration": "Recharge Duration"
   }
 }

@@ -62,4 +62,16 @@ export const PRODUCT_ROUTES: ProductRouteItem[] = [
     categoryId: PRODUCT_CATEGORY_IDS.ACTIVATE_APPS,
     displayNames: ["Activar App"],
   },
+  {
+    name: "Activar Número Fijo",
+    link: "/activar-numero-fijo",
+    categoryId: PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER,
+    displayNames: ["Activar numero fijo"],
+  },
+  {
+    name: "Recarga Número Fijo",
+    link: "/recarga-numero-fijo",
+    categoryId: PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER,
+    displayNames: ["Recarga numero fijo"],
+  },
 ];

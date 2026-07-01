@@ -930,6 +930,12 @@
       "title": "Activer les Apps",
       "description": "Obtenez des numéros de téléphone temporaires instantanément et recevez des codes SMS pour activer vos Apps préférées comme WhatsApp, Telegram et Signal sans compromettre votre vie privée."
     },
+    "activarNumeroFijo": {
+      "title": "Activer Numéro Fixe"
+    },
+    "recargaNumeroFijo": {
+      "title": "Recharge Numéro Fixe"
+    },
     "smsBanner": {
       "title": "Activez des Apps par SMS avec Encriptados",
       "subtitle": "Inscrivez-vous à n'importe quelle application avec un numéro de téléphone virtuel",
@@ -1568,7 +1574,11 @@
       "activarAppsTitle": "Activez vos apps instantanément",
       "activarAppsDescription": "Utilisez un numéro temporaire et accédez à <bold>plus de 30 applications</bold> rapidement et en toute sécurité depuis votre appareil.",
       "activarAppsCountriesTitle": "Plus de 20 pays disponibles",
-      "activarAppsCountriesDescription": "Activez vos apps avec des numéros temporaires de divers pays sans utiliser votre numéro personnel."
+      "activarAppsCountriesDescription": "Activez vos apps avec des numéros temporaires de divers pays sans utiliser votre numéro personnel.",
+      "activarNumeroFijoCountriesTitle": "Numéros disponibles dans plusieurs pays",
+      "activarNumeroFijoCountriesDescription": "Choisissez parmi différents pays disponibles et obtenez un numéro exclusif pour recevoir des SMS et des codes de vérification selon vos besoins.",
+      "activarNumeroFijoServicesTitle": "Un seul numéro pour plusieurs services",
+      "activarNumeroFijoServicesDescription": "Utilisez votre numéro exclusif pour recevoir des codes SMS et compléter des vérifications sur des applications et plateformes compatibles depuis une seule ligne privée."
     }
   },
   "ThreemaPage": {

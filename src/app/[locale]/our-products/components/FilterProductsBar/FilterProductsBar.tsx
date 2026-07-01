@@ -24,6 +24,8 @@ import {
   SIM_SERVICE_OPTION_ORDER,
   TIM_SERVICE_OPTION_ORDER,
 } from "@/shared/constants/simServiceOptions";
+import { CircleFlag } from "react-circle-flags";
+import { useLocale } from "next-intl";
 
 const ICON_COLOR_SELECTED = "#CCCCCC";
 const ICON_COLOR_UNSELECTED = "#7E7E7E";
@@ -53,6 +55,16 @@ export default function FilterProductsBar({
   const t = useTranslations("OurProductsPage");
   const router = useRouter();
   const { appMode } = useAppMobile();
+  const locale = useLocale();
+
+  const countryDisplayNames = React.useMemo(
+    () => new Intl.DisplayNames([locale], { type: "region" }),
+    [locale]
+  );
+  const getCountryName = (code: string) => {
+    try { return countryDisplayNames.of(code.toUpperCase()) || code; }
+    catch { return code; }
+  };
 
   const selectedCat = parseInt(filters.selectedOption, 10);
 
@@ -76,9 +88,36 @@ export default function FilterProductsBar({
   const isTim = filters.provider === "tim";
   const isTimSimFisica = isTim && activeTimService === "sim_fisica";
   const shouldShowTimRegion = isTim && !isTimSimFisica;
+  const isNumeroFijo = filters.provider === "activarnumerofijo";
+  const shouldShowNumeroFijoCountry = isNumeroFijo;
+
+  // Países disponibles para Número Fijo (obtenidos de las variantes reales del API)
+  const NUMERO_FIJO_AVAILABLE_COUNTRIES = ["BE", "CA", "GB"] as const;
+
+  const numeroFijoCountries = React.useMemo(() => {
+    if (!isNumeroFijo) return [];
+    return [...NUMERO_FIJO_AVAILABLE_COUNTRIES].sort((a, b) => {
+      const nameA = getCountryName(a);
+      const nameB = getCountryName(b);
+      return nameA.localeCompare(nameB);
+    });
+  }, [isNumeroFijo]);
+
+  // Auto-seleccionar primer país disponible cuando se activa el filtro de número fijo
+  const defaultNumeroFijoCountry = numeroFijoCountries[0] || "";
+  const activeNumeroFijoCountry = filters.numeroFijoCountry || defaultNumeroFijoCountry;
+
+  useEffect(() => {
+    if (isNumeroFijo && defaultNumeroFijoCountry && !filters.numeroFijoCountry) {
+      updateFilters({
+        numeroFijoCountry: defaultNumeroFijoCountry,
+        numeroFijoCountryLabel: getCountryName(defaultNumeroFijoCountry),
+      });
+    }
+  }, [isNumeroFijo, defaultNumeroFijoCountry, filters.numeroFijoCountry]);
 
   // Logic for SIM Provider/Services (Inline)
-  type ProviderType = "encriptados" | "tim" | "activarapps" | undefined;
+  type ProviderType = "encriptados" | "tim" | "activarapps" | "activarnumerofijo" | undefined;
   const currentProvider = filters.provider as ProviderType;
 
   const providerLogoClass = "h-[25px] w-auto max-w-[144px] object-contain";
@@ -114,6 +153,20 @@ export default function FilterProductsBar({
       className={providerLogoClass}
       loading="lazy"
     />
+  );
+
+  const activarNumeroFijoProviderIcon = (
+    <span className="flex items-center gap-1.5 whitespace-nowrap">
+      <Image
+        src="/icons/activar_numero_fijo.svg"
+        alt="Activar Número Fijo"
+        width={25}
+        height={25}
+        className="h-[25px] w-[25px] rounded-md object-contain flex-shrink-0"
+        loading="lazy"
+      />
+      <span className="text-xs font-semibold text-white leading-tight">Activar Número Fijo</span>
+    </span>
   );
 
   const optionByProvider: Record<any, JSX.Element | undefined> = {
@@ -158,7 +211,8 @@ export default function FilterProductsBar({
 
   // Rendering logic for subfilters based on Flex to fill space dynamically
   const renderSimFilters = () => {
-    const gridColsSm = shouldShowTimRegion ? "sm:grid-cols-3" : "sm:grid-cols-2";
+    const hasServiceFilter = !!(currentProvider && optionByProvider[currentProvider]);
+    const gridColsSm = (shouldShowTimRegion || (shouldShowNumeroFijoCountry && hasServiceFilter)) ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
     return (
       <div className={`grid grid-cols-2 ${gridColsSm} lg:flex lg:flex-row gap-3 w-full items-end`}>
@@ -185,6 +239,11 @@ export default function FilterProductsBar({
                 value: "activarapps",
                 icon: activarAppsProviderIcon,
               },
+              {
+                label: " ",
+                value: "activarnumerofijo",
+                icon: activarNumeroFijoProviderIcon,
+              },
             ]}
             onChangeExternal={(value) => {
               updateFilters({
@@ -197,10 +256,12 @@ export default function FilterProductsBar({
           />
         </div>
 
-        {/* 2. Servicios */}
-        <div className="flex-1 w-full min-w-0">
-          {currentProvider && optionByProvider[currentProvider]}
-        </div>
+        {/* 2. Servicios (ocultar si no hay opciones para este proveedor) */}
+        {currentProvider && optionByProvider[currentProvider] && (
+          <div className="flex-1 w-full min-w-0">
+            {optionByProvider[currentProvider]}
+          </div>
+        )}
 
         {/* 3. Región */}
         {shouldShowTimRegion && (
@@ -209,6 +270,30 @@ export default function FilterProductsBar({
               filters={filters}
               updateFilters={updateFilters}
               service={activeTimService}
+            />
+          </div>
+        )}
+
+        {/* 3b. País (Número Fijo) */}
+        {shouldShowNumeroFijoCountry && (
+          <div className="col-span-2 sm:col-span-1 flex-1 w-full min-w-0">
+            <span className="text-sm text-[#7E7E7E] font-semibold mb-2 block">{t("filterProducts.countryTitle", { defaultValue: "País" })}</span>
+            <MenuDropdownProductBar
+              name="numerofijocountry"
+              externalValue={activeNumeroFijoCountry}
+              dropdownClassName="w-[calc(100vw-5rem)] max-w-[calc(100vw-5rem)] right-0 left-auto md:w-full md:max-w-none md:left-0 md:right-auto"
+              options={numeroFijoCountries.map((code) => ({
+                label: getCountryName(code),
+                value: code,
+                icon: <CircleFlag countryCode={code.toLowerCase()} height={20} width={20} />,
+              }))}
+              onChangeExternal={(value) => {
+                const code = Array.isArray(value) ? value[value.length - 1] : value;
+                updateFilters({
+                  numeroFijoCountry: code,
+                  numeroFijoCountryLabel: getCountryName(code),
+                });
+              }}
             />
           </div>
         )}
@@ -349,7 +434,7 @@ export default function FilterProductsBar({
     <div
       className={`w-full mx-auto bg-[#161616] rounded-xl px-4 lg:px-8 py-6 ${selectedCat === PRODUCT_CATEGORY_IDS.ROUTERS
         ? "max-w-4xl xl:max-w-fit"
-        : (selectedCat === PRODUCT_CATEGORY_IDS.APPS || selectedCat === PRODUCT_CATEGORY_IDS.SOFTWARE || (selectedCat === PRODUCT_CATEGORY_IDS.SIMS && !shouldShowTimRegion))
+        : (selectedCat === PRODUCT_CATEGORY_IDS.APPS || selectedCat === PRODUCT_CATEGORY_IDS.SOFTWARE || (selectedCat === PRODUCT_CATEGORY_IDS.SIMS && !shouldShowTimRegion && !shouldShowNumeroFijoCountry))
           ? "max-w-4xl"
           : "max-w-screen-xl"
         }`}

@@ -1,6 +1,7 @@
 import { SIM_PRODUCT_ROUTES } from "@/shared/constants/productRoutes";
 import {
   isActivateAppsCategoryId,
+  isActivateFixedNumberCategoryId,
   isRouterCategoryId,
   isSimCategoryId,
 } from "@/shared/constants/productCategories";
@@ -10,7 +11,45 @@ type ProductFamily = "encrypted" | "tim";
 type ProductFormat = "physical" | "digital";
 type SimSlug = "sim-encriptada" | "esim-encriptada" | "tim-sim" | "esim-tim";
 
-const ACTIVAR_APPS_PRODUCT_IDS = new Set([61588]);
+// Known product IDs (language-independent, primary detection)
+const ACTIVAR_APPS_PRODUCT_IDS = new Set([61588, 61021]);
+const ACTIVAR_NUMERO_FIJO_PRODUCT_ID = 62337;
+const RECARGA_NUMERO_FIJO_PRODUCT_ID = 62421;
+
+// Multi-language regex patterns
+// es: recarga/recargar, en: top up/recharge, fr: recharger, it: ricaricare, pt: recarregar
+const RE_RECHARGE = /recarga[r]?|top[\s\-]?up|recharge|recharger|ricaricar[ei]|recarregar/i;
+// es: número fijo, en: landline/fixed number, fr: numéro fixe, it: numero fisso, pt: número fixo
+const RE_FIXED_NUMBER = /n[uú]mero\s*fijo|landline|fixed\s*number|num[eé]ro\s*fixe?|numero\s*fisso|n[uú]mero\s*fixo/i;
+// es: activar, en: activate, fr: activer, it: attivare, pt: ativar
+const RE_ACTIVATE = /activar|activate|activer|attivare|ativar/i;
+
+export function isRecargaNumeroFijoProduct(
+  productName?: string,
+  categoryId?: number,
+  productId?: number,
+): boolean {
+  if (productId === RECARGA_NUMERO_FIJO_PRODUCT_ID) return true;
+  const name = productName || "";
+  return Boolean(
+    (RE_RECHARGE.test(name) && RE_FIXED_NUMBER.test(name)) ||
+    (RE_RECHARGE.test(name) && isActivateFixedNumberCategoryId(categoryId))
+  );
+}
+
+export function isActivarNumeroFijoProduct(
+  productName?: string,
+  categoryId?: number,
+  productId?: number,
+): boolean {
+  if (productId === ACTIVAR_NUMERO_FIJO_PRODUCT_ID) return true;
+  if (isRecargaNumeroFijoProduct(productName, categoryId, productId)) return false;
+  const name = productName || "";
+  return Boolean(
+    (isActivateFixedNumberCategoryId(categoryId)) ||
+    (RE_ACTIVATE.test(name) && RE_FIXED_NUMBER.test(name))
+  );
+}
 
 export function isActivarAppsProduct(
   productName?: string,
@@ -19,8 +58,13 @@ export function isActivarAppsProduct(
 ): boolean {
   return Boolean(
     isActivateAppsCategoryId(categoryId) ||
+      isActivateFixedNumberCategoryId(categoryId) ||
       (productId && ACTIVAR_APPS_PRODUCT_IDS.has(productId)) ||
-      /activar\s*apps?/i.test(productName || "")
+      productId === ACTIVAR_NUMERO_FIJO_PRODUCT_ID ||
+      productId === RECARGA_NUMERO_FIJO_PRODUCT_ID ||
+      (RE_ACTIVATE.test(productName || "") && /apps?/i.test(productName || "")) ||
+      (RE_ACTIVATE.test(productName || "") && RE_FIXED_NUMBER.test(productName || "")) ||
+      (RE_RECHARGE.test(productName || "") && RE_FIXED_NUMBER.test(productName || ""))
   );
 }
 
@@ -86,6 +130,14 @@ export const getProductLink = (
   provider?: string,
   typeProduct?: string
 ): string | null => {
+  if (isRecargaNumeroFijoProduct(productName, categoryId, productId)) {
+    return "/recarga-numero-fijo";
+  }
+
+  if (isActivarNumeroFijoProduct(productName, categoryId, productId)) {
+    return "/activar-numero-fijo";
+  }
+
   if (isActivarAppsProduct(productName, categoryId, productId)) {
     return "/activar-apps";
   }

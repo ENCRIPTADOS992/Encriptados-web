@@ -899,6 +899,12 @@
       "title": "Activate Apps",
       "description": "Get temporary phone numbers instantly and receive SMS codes to activate your favourite Apps like WhatsApp, Telegram and Signal without compromising your privacy."
     },
+    "activarNumeroFijo": {
+      "title": "Activate Fixed Number"
+    },
+    "recargaNumeroFijo": {
+      "title": "Fixed Number Recharge"
+    },
     "smsBanner": {
       "title": "Activate Apps via SMS with Encriptados",
       "subtitle": "Register for any app with a virtual phone number",
@@ -1521,7 +1527,11 @@
       "activarAppsTitle": "Activate your apps instantly",
       "activarAppsDescription": "Use a temporary number and access <bold>more than 30 applications</bold> quickly and securely from your device.",
       "activarAppsCountriesTitle": "More than 20 countries available",
-      "activarAppsCountriesDescription": "Activate your apps with temporary numbers from various countries without using your personal number."
+      "activarAppsCountriesDescription": "Activate your apps with temporary numbers from various countries without using your personal number.",
+      "activarNumeroFijoCountriesTitle": "Numbers available in multiple countries",
+      "activarNumeroFijoCountriesDescription": "Choose from different available countries and get an exclusive number to receive SMS and verification codes according to your needs.",
+      "activarNumeroFijoServicesTitle": "One number for multiple services",
+      "activarNumeroFijoServicesDescription": "Use your exclusive number to receive SMS codes and complete verifications on compatible apps and platforms from a single private line."
     }
   },
   "silentCircle": {

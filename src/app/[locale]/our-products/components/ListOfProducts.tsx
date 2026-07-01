@@ -10,6 +10,7 @@ import { ProductFilters } from "@/features/products/types/ProductFilters";
 import {
   PRODUCT_CATEGORY_IDS,
   isActivateAppsCategoryId,
+  isActivateFixedNumberCategoryId,
   isAppCategoryId,
   isLicenseCategoryId,
   isSimCategoryId,
@@ -27,6 +28,7 @@ const providerMap: Record<string, string[]> = {
   encriptados: ["Sim Encriptados", "encrypted", "encriptados"],
   tim: ["Sim TIM", "tim"],
   activarapps: ["activar app", "activar apps", "activar_app", "activar-app"],
+  activarnumerofijo: ["activar numero fijo", "activar_numero_fijo", "activar-numero-fijo"],
 };
 
 const serviceMap: Record<string, string> = {
@@ -103,11 +105,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   // Si el provider es "activarapps", consultar la categoría 371 directamente
   const selectedOption = filters.provider === "activarapps"
     ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS
-    : parseInt(filters.selectedOption, 10);
+    : filters.provider === "activarnumerofijo"
+      ? PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER
+      : parseInt(filters.selectedOption, 10);
   const isSelectedSimCategory = isSimCategoryId(selectedOption);
   const isSelectedSoftwareCategory = isSoftwareCategoryId(selectedOption);
   const isSelectedAppCategory = isAppCategoryId(selectedOption);
-  const isSelectedActivateAppsCategory = isActivateAppsCategoryId(selectedOption);
+  const isSelectedActivateAppsCategory = isActivateAppsCategoryId(selectedOption) || isActivateFixedNumberCategoryId(selectedOption);
   const isSelectedLicenseCategory = isLicenseCategoryId(selectedOption);
   const query = useGetProducts(
     selectedOption,
@@ -584,6 +588,53 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
     productsToRender = expanded;
   }
 
+  // ========== EXPANSIÓN DE VARIANTES NÚMERO FIJO (categoría 372) ==========
+  // Para productos Activar/Recarga Número Fijo: expandir por país (atributo ISO2 de variante)
+  if (filters.provider === "activarnumerofijo") {
+    const selectedCountryCode = (filters.numeroFijoCountry || "BE").toUpperCase();
+    const expanded: ExpandedProduct[] = [];
+
+    for (const product of productsToRender) {
+      const variants = product.variants ?? [];
+      if (variants.length === 0) {
+        expanded.push(product);
+        continue;
+      }
+
+      // Agrupar variantes por país (código ISO2 en atributos)
+      const variantsByCountry = new Map<string, typeof variants>();
+      for (const v of variants) {
+        const attrs = (v as any).attributes ?? [];
+        for (const attr of attrs) {
+          const val = String(attr.option || "").trim().toUpperCase();
+          if (/^[A-Z]{2}$/.test(val)) {
+            if (!variantsByCountry.has(val)) variantsByCountry.set(val, []);
+            variantsByCountry.get(val)!.push(v);
+          }
+        }
+      }
+
+      if (variantsByCountry.size === 0) {
+        expanded.push(product);
+        continue;
+      }
+
+      // Filtrar por país seleccionado y expandir TODAS las variantes de ese país
+      const countryVariants = variantsByCountry.get(selectedCountryCode);
+      if (countryVariants && countryVariants.length > 0) {
+        for (let i = 0; i < countryVariants.length; i++) {
+          expanded.push({
+            ...product,
+            _selectedVariant: countryVariants[i],
+            _variantIndex: i,
+          });
+        }
+      }
+    }
+
+    productsToRender = expanded;
+  }
+
   // ========== EXPANSIÓN DE VARIANTES SIM ENCRIPTADAS (categoría 40, NO TIM) ==========
   // Para productos SIM Encriptadas con variantes (minutos, datos, etc.), crear una tarjeta por cada variante
   if (isSelectedSimCategory && filters.provider !== "tim") {
@@ -632,7 +683,8 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
   // ========== EXPANSIÓN DE VARIANTES DE LICENCIA (Apps, Sistemas, Router) ==========
   // Para productos con variantes de licencia (3 meses, 6 meses, etc.), crear una tarjeta por cada variante
   // SOLO si hay más de una variante con licensetime diferente
-  if (isSelectedLicenseCategory) {
+  // Excluir Número Fijo (ya se expandió por país arriba)
+  if (isSelectedLicenseCategory && filters.provider !== "activarnumerofijo") {
 
     const expandedByLicense: ExpandedProduct[] = [];
 
@@ -1016,6 +1068,39 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
             let badges: TimBadges | undefined;
             if (showTimBadges) {
               badges = buildTimBadges(product);
+            } else if (filters.provider === "activarnumerofijo" && product._selectedVariant) {
+              // Número Fijo: badge de país desde atributo ISO2 de la variante
+              const varAttrs = (product._selectedVariant as any).attributes ?? [];
+              let countryCode: string | undefined;
+              let monthsVal: string | undefined;
+              for (const attr of varAttrs) {
+                const val = String(attr.option || "").trim();
+                if (/^[A-Z]{2}$/i.test(val)) {
+                  countryCode = val.toUpperCase();
+                } else if (/^\d+$/.test(val)) {
+                  monthsVal = val;
+                }
+              }
+              const COUNTRY_LABELS: Record<string, string> = {
+                CA: "Canadá", BE: "Bélgica", GB: "Reino Unido", US: "Estados Unidos",
+                DE: "Alemania", FR: "Francia", ES: "España", IT: "Italia", PT: "Portugal",
+                NL: "Países Bajos", BR: "Brasil", MX: "México", AR: "Argentina",
+                CL: "Chile", CO: "Colombia", PE: "Perú", AU: "Australia", JP: "Japón",
+                KR: "Corea del Sur", CN: "China", IN: "India", SE: "Suecia", NO: "Noruega",
+                DK: "Dinamarca", FI: "Finlandia", PL: "Polonia", AT: "Austria",
+                CH: "Suiza", IE: "Irlanda", NZ: "Nueva Zelanda", SG: "Singapur",
+                HK: "Hong Kong", IL: "Israel", ZA: "Sudáfrica", RU: "Rusia",
+                TR: "Turquía", EG: "Egipto", NG: "Nigeria", KE: "Kenia",
+              };
+              if (countryCode) {
+                badges = {
+                  country: {
+                    label: COUNTRY_LABELS[countryCode] || countryCode,
+                    code: countryCode,
+                  },
+                  tag: monthsVal ? `${monthsVal} ${t("monthsLabel")}` : undefined,
+                };
+              }
             } else if (isSelectedSimCategory && !isTimProvider && product._selectedVariant) {
               // SIM Encriptadas expandidas: usar el tag de la variante
               const selectedVar = product._selectedVariant as any;
@@ -1090,13 +1175,20 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
               // Para Apps, Sistemas, Router y Activar Apps: mostrar licencia en meses
               // Si el producto fue expandido, usar la variante seleccionada
               const getLicenseTag = (): string | undefined => {
-                // Cat 371 (Activar Apps): no usa licensetime — usar atributo de variante WooCommerce
+                // Cat 371 (Activar Apps) / Cat 372 (Activar Número Fijo): no usa licensetime — usar atributo de variante WooCommerce
                 if (isSelectedActivateAppsCategory) {
                   if (product._selectedVariant) {
                     const vid = (product._selectedVariant as any)?.id;
                     const fullVariant = ((product as any).variants ?? []).find((v: any) => v.id === vid);
                     const attrOption = fullVariant?.attributes?.[0]?.option;
-                    if (attrOption && String(attrOption).trim()) return String(attrOption).trim();
+                    if (attrOption && String(attrOption).trim()) {
+                      const trimmed = String(attrOption).trim();
+                      // Para Activar Número Fijo: el atributo es numérico (meses)
+                      if (isActivateFixedNumberCategoryId(product.category?.id) && /^\d+$/.test(trimmed)) {
+                        return `${trimmed} ${t("monthsLabel")}`;
+                      }
+                      return trimmed;
+                    }
                   }
                   return undefined;
                 }
@@ -1191,7 +1283,13 @@ const ListOfProducts: React.FC<ListOfProductsProps> = ({
                 typeProduct={product.type_product}
                 planDataAmount={effectivePlanDataAmount}
                 variantId={variantId}
-                variants={isSelectedSimCategory ? (product.variants ?? []) : undefined}
+                variants={
+                  isSelectedSimCategory
+                    ? (product.variants ?? [])
+                    : (filters.provider === "activarnumerofijo")
+                      ? (product.variants ?? [])
+                      : undefined
+                }
                 onSale={currentIsOnSale}
                 regularPrice={regularPrice}
                 iconUrl={product.iconUrl}

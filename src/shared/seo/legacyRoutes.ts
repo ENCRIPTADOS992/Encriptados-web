@@ -48,6 +48,8 @@ const LEGACY_SECTION_PREFIXES = new Set([
 const CURRENT_SITE_TOP_LEVEL_ROUTES = new Set([
   "about-us",
   "activar-apps",
+  "activar-numero-fijo",
+  "recarga-numero-fijo",
   "ambassadors",
   "ambassadeurs",
   "ambasciatori",

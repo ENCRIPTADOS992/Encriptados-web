@@ -11,6 +11,8 @@ import {
 import {
   getProductLink,
   isActivarAppsProduct,
+  isActivarNumeroFijoProduct,
+  isRecargaNumeroFijoProduct,
 } from "@/shared/utils/productRouteResolver";
 import { useModalPayment } from "@/providers/ModalPaymentProvider";
 import { CircleFlag } from "react-circle-flags";
@@ -114,7 +116,7 @@ const CardProduct: React.FC<CardSimProps> = ({
 
     const selectedOption = Number(filters.selectedOption);
     const isActivarApps = isActivarAppsProduct(headerTitle, selectedOption, id);
-    const modalSelectedOption = isActivarApps ? 371 : selectedOption;
+    const modalSelectedOption = isActivarApps ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS : selectedOption;
     openModal({
       productid: id.toString(),
       languageCode: "es",
@@ -131,7 +133,7 @@ const CardProduct: React.FC<CardSimProps> = ({
       flagUrl: badges?.country?.flagUrl,
       iconUrl: iconUrl,
       initialActivationDetail: isActivarApps ? badges?.tag : undefined,
-      mode: (modalSelectedOption === 40 || modalSelectedOption === 451) ? "sim" : undefined,
+      mode: (!isActivarApps && (modalSelectedOption === PRODUCT_CATEGORY_IDS.SIMS)) ? "sim" : undefined,
     });
   };
 
@@ -170,11 +172,13 @@ const CardProduct: React.FC<CardSimProps> = ({
     params.set("productId", String(productIdForMoreInfo));
 
     // Determinar categoría correcta
-    const categoryIdForMoreInfo = isActivarApps
-      ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS
-      : isRouter
-        ? PRODUCT_CATEGORY_IDS.ROUTERS
-        : selectedCategoryId;
+    const categoryIdForMoreInfo = isActivarNumeroFijoProduct(headerTitle, selectedCategoryId, id) || isRecargaNumeroFijoProduct(headerTitle, selectedCategoryId, id)
+      ? PRODUCT_CATEGORY_IDS.ACTIVATE_FIXED_NUMBER
+      : isActivarApps
+        ? PRODUCT_CATEGORY_IDS.ACTIVATE_APPS
+        : isRouter
+          ? PRODUCT_CATEGORY_IDS.ROUTERS
+          : selectedCategoryId;
     params.set("categoryId", String(categoryIdForMoreInfo));
 
     // Usar variantId si está disponible (prioridad para seguridad)
@@ -224,7 +228,7 @@ const CardProduct: React.FC<CardSimProps> = ({
         {badges?.country?.label && !(headerTitle || "").toLowerCase().includes("sim física") && !(headerTitle || "").toLowerCase().includes("sim fisica") ? (
           <div className="absolute left-2 sm:left-3 bottom-2 sm:bottom-3 flex items-center bg-white/90 rounded-full px-1.5 sm:px-2.5 py-1 sm:py-1.5 shadow-md z-10">
             <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full overflow-hidden flex items-center justify-center">
-              {filters.regionOrCountryType === "country" ? (
+              {(filters.regionOrCountryType === "country" || badges.country.code) ? (
                 badges.country.flagUrl ? (
                   <Image
                     src={badges.country.flagUrl}
