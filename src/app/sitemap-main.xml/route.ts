@@ -315,10 +315,16 @@ const LEGACY_SITEMAP_PATHS: string[] = [
 export async function GET() {
   const entries: SitemapUrlEntry[] = [];
 
+  // Fresh lastmod stamp for destination URLs (apps/sim/site pages) so Google
+  // sees them as recently updated on every sitemap revalidation (revalidate=3600).
+  // Legacy /pages/* URLs are intentionally left without lastmod: we want Google
+  // to keep crawling them but not treat them as "fresher" than the destinations.
+  const NOW_ISO = new Date().toISOString();
+
   // Static pages
   const staticPaths = ["/", "/en", "/fr", "/it", "/pt", ...getStaticPageSitemapPaths()];
   for (const path of staticPaths) {
-    entries.push(makeEntry(path, path === "/" ? 1.0 : 0.7, path === "/" ? "daily" : "weekly"));
+    entries.push(makeEntry(path, path === "/" ? 1.0 : 0.7, path === "/" ? "daily" : "weekly", NOW_ISO));
   }
 
   // Legacy WordPress paths
@@ -329,14 +335,14 @@ export async function GET() {
   // App pages
   for (const locale of SEO_LOCALES) {
     for (const slug of getCanonicalProductSlugs()) {
-      entries.push(makeEntry(`/${locale}/apps/${slug}`, 0.8));
+      entries.push(makeEntry(`/${locale}/apps/${slug}`, 0.8, "weekly", NOW_ISO));
     }
   }
 
   // SIM pages
   for (const locale of SEO_LOCALES) {
     for (const slug of getAllSimProductSlugs()) {
-      entries.push(makeEntry(`/${locale}/sim/${slug}`, 0.8));
+      entries.push(makeEntry(`/${locale}/sim/${slug}`, 0.8, "weekly", NOW_ISO));
     }
   }
 
@@ -356,18 +362,18 @@ export async function GET() {
     pt: "/pt/teste-encriptado",
   };
   for (const path of Object.values(ENCRYPTED_SIM_PATHS)) {
-    entries.push(makeEntry(path, 0.8));
+    entries.push(makeEntry(path, 0.8, "weekly", NOW_ISO));
   }
   for (const path of Object.values(ENCRYPTED_TEST_PATHS)) {
-    entries.push(makeEntry(path, 0.6));
+    entries.push(makeEntry(path, 0.6, "weekly", NOW_ISO));
   }
   for (const locale of SEO_LOCALES) {
-    entries.push(makeEntry(`/${locale}/tim-sim`, 0.8));
-    entries.push(makeEntry(`/${locale}/ira-sim`, 0.8));
-    entries.push(makeEntry(`/${locale}/blog`, 0.7));
-    entries.push(makeEntry(`/${locale}/become-an-encrypted-partner`, 0.6));
-    entries.push(makeEntry(`/${locale}/activar-apps`, 0.7));
-    entries.push(makeEntry(`/${locale}/identity-verification`, 0.5));
+    entries.push(makeEntry(`/${locale}/tim-sim`, 0.8, "weekly", NOW_ISO));
+    entries.push(makeEntry(`/${locale}/ira-sim`, 0.8, "weekly", NOW_ISO));
+    entries.push(makeEntry(`/${locale}/blog`, 0.7, "weekly", NOW_ISO));
+    entries.push(makeEntry(`/${locale}/become-an-encrypted-partner`, 0.6, "weekly", NOW_ISO));
+    entries.push(makeEntry(`/${locale}/activar-apps`, 0.7, "weekly", NOW_ISO));
+    entries.push(makeEntry(`/${locale}/identity-verification`, 0.5, "weekly", NOW_ISO));
     entries.push(makeEntry(`/${locale}/pages/politica-de-privacidad`, 0.4, "monthly"));
     entries.push(makeEntry(`/${locale}/pages/terminos-y-condiciones`, 0.4, "monthly"));
     entries.push(makeEntry(`/${locale}/pages/politica-de-cookies`, 0.4, "monthly"));
