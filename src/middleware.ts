@@ -5,11 +5,14 @@ import { routing } from "./i18n/routing";
 import { protectedRoutesArray } from "./app/constants/protectedRoutes";
 import { resolveLegacyRoute } from "./shared/seo/legacyRoutes";
 import {
+  APP_ACCESS_QUERY_PARAM,
+  getAppAccessToken,
   getExpectedSiteAccessToken,
   getSiteAccessCredentials,
   isSiteAccessPath,
   normalizeSiteAccessNextPath,
   SITE_ACCESS_COOKIE,
+  SITE_ACCESS_COOKIE_MAX_AGE_SECONDS,
   SITE_ACCESS_PATH,
 } from "./lib/site-access";
 
@@ -45,6 +48,33 @@ async function enforceSiteAccess(request: NextRequest): Promise<NextResponse | n
   const pathname = request.nextUrl.pathname;
   const configuredCredentials = getSiteAccessCredentials();
   const shouldFailClosed = shouldNoIndexHost(request) && process.env.NODE_ENV === "production";
+
+  // Bypass para WebView de la app movil:
+  // si la URL trae ?appAccess=<APP_ACCESS_TOKEN> valido, setea la cookie de
+  // site-access y redirige a la URL limpia. Navegaciones internas posteriores
+  // pasan solas gracias a la cookie.
+  const appAccessToken = getAppAccessToken();
+  if (appAccessToken) {
+    const providedAppAccess = request.nextUrl.searchParams.get(APP_ACCESS_QUERY_PARAM);
+    if (providedAppAccess && providedAppAccess === appAccessToken) {
+      const expectedToken = await getExpectedSiteAccessToken();
+      if (expectedToken) {
+        const cleanUrl = request.nextUrl.clone();
+        cleanUrl.searchParams.delete(APP_ACCESS_QUERY_PARAM);
+        const response = NextResponse.redirect(cleanUrl, 302);
+        response.cookies.set({
+          name: SITE_ACCESS_COOKIE,
+          value: expectedToken,
+          httpOnly: true,
+          sameSite: "lax",
+          secure: request.nextUrl.protocol === "https:",
+          path: "/",
+          maxAge: SITE_ACCESS_COOKIE_MAX_AGE_SECONDS,
+        });
+        return response;
+      }
+    }
+  }
 
   if (!configuredCredentials) {
     if (!shouldFailClosed || isSiteAccessPath(pathname)) {
