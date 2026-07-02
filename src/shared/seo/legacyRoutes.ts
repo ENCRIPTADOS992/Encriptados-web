@@ -235,6 +235,9 @@ const PRODUCT_ROUTES: Record<string, string> = {
   "carte-prepayee-mobile": "/sim/sim-encriptada",
   "carte-prepayee-internationale": "/sim/sim-encriptada",
   "sim-internationale": "/sim/sim-encriptada",
+  // Aliases para 404s del GSC (typos / truncados con destino inferible)
+  intact: "/apps/intact-phone",
+  "pages-sim-encriptada": "/sim/sim-encriptada",
 };
 
 const RETIRED_PRODUCT_SLUGS = new Set([
@@ -245,11 +248,24 @@ const RETIRED_PRODUCT_SLUGS = new Set([
   "total-sec",
   "t2-communicator",
   "celular-t2-communicator",
+  "ghost",
   "ghost-chat",
   "tribu-phone",
   "wickr",
   "wickr-pro",
   "apps-encriptadas-wickr-pro",
+  // Productos retirados / duplicados detectados en 404s del GSC
+  "exclu",
+  "diomerc",
+  "diomerc-mdm",
+  "sikur",
+  "xecretia",
+  "armadillo-copia",
+  "vaultchat-2",
+  "intact-phone-2",
+  "celular-ultrax",
+  "celular-pixel-4a-xl",
+  "celular-pixel",
 ]);
 
 function getHome(locale: SeoLocale): string {
@@ -309,7 +325,8 @@ function getCollectionSlug(parts: string[]): string | null {
 
   const normalized = parts[1]
     .replace(/^celulares-encriptados-/, "")
-    .replace(/^encrypted-phones-/, "");
+    .replace(/^encrypted-phones-/, "")
+    .replace(/^apps-encriptadas-/, "");
 
   return normalized || null;
 }
@@ -359,6 +376,68 @@ export function resolveLegacyRoute(pathname: string): LegacyRouteResolution {
 
   if (!parts.length) return { type: "none" };
 
+  // Blog date archives: /2020/03/12/slug -> /blog (WordPress residual)
+  if (/^\d{4}$/.test(parts[0])) {
+    return {
+      type: "redirect",
+      destination: localizePath(locale, "/blog"),
+      permanent: true,
+    };
+  }
+
+  // Bare /blogs y /blogs/author/* -> /blog
+  if (parts[0] === "blogs" && (!parts[1] || parts[1] === "author")) {
+    return {
+      type: "redirect",
+      destination: localizePath(locale, "/blog"),
+      permanent: true,
+    };
+  }
+
+  // Vestigios WP: /page/N o /page/page/N -> /blog
+  if (parts[0] === "page") {
+    return {
+      type: "redirect",
+      destination: localizePath(locale, "/blog"),
+      permanent: true,
+    };
+  }
+
+  // Legacy tienda / carrito / contacto (no existen ya) -> /offers
+  if (parts[0] === "tienda" || parts[0] === "cart") {
+    return {
+      type: "redirect",
+      destination: localizePath(locale, "/offers"),
+      permanent: true,
+    };
+  }
+  if (parts[0] === "contact") {
+    return {
+      type: "redirect",
+      destination: localizePath(locale, "/about-us"),
+      permanent: true,
+    };
+  }
+
+  // /pages/sim-encriptada/{sub} anidados (nunca migrado)
+  if (parts[0] === "pages" && parts[1] === "sim-encriptada" && parts[2]) {
+    const dest = /tim/i.test(parts[2]) ? "/tim-sim" : "/sim/sim-encriptada";
+    return {
+      type: "redirect",
+      destination: localizePath(locale, dest),
+      permanent: true,
+    };
+  }
+
+  // /pages/{slug-truncado-con-guion-final} -> /offers (backlinks rotos)
+  if (parts[0] === "pages" && parts[1] && /-$/.test(parts[1])) {
+    return {
+      type: "redirect",
+      destination: localizePath(locale, "/offers"),
+      permanent: true,
+    };
+  }
+
   if (parts[0] === "blogs" && parts[1] === "category" && parts[2]) {
     return {
       type: "rewrite",
@@ -407,10 +486,11 @@ export function resolveLegacyRoute(pathname: string): LegacyRouteResolution {
   }
 
   if (parts[0] === "producto" && parts[1]) {
-    const productResolution = resolveKnownSlug(locale, parts[1], "rewrite");
+    const productResolution = resolveKnownSlug(locale, parts[1], "redirect");
     return productResolution ?? {
-      type: "rewrite",
+      type: "redirect",
       destination: localizePath(locale, "/offers"),
+      permanent: true,
     };
   }
 
