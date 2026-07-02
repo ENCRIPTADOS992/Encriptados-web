@@ -45,24 +45,46 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     });
   }
 
+  const rm = data.page.rankMath;
+  const title = rm?.title || data.page.title;
+  const description = rm?.description || data.page.description;
+  const imageUrl = rm?.openGraph.image || data.page.image;
+
   return buildSeoMetadata({
-    title: data.page.title,
-    description: data.page.description,
-    canonicalPath: data.legacyPath,
+    title,
+    description,
+    canonicalPath: rm?.canonicalPath || data.legacyPath,
     locale: data.locale,
     type: "article",
     publishedTime: data.page.date,
     modifiedTime: data.page.modified,
     authors: [data.page.author],
-    image: data.page.image
+    image: imageUrl
       ? {
-          url: data.page.image,
-          alt: data.page.title,
+          url: imageUrl,
+          alt: title,
           width: 1200,
           height: 630,
         }
       : undefined,
-    keywords: [data.page.title, "seguridad digital", "comunicacion segura", "Encriptados"],
+    keywords: rm?.focusKeyword
+      ? [rm.focusKeyword, "seguridad digital", "Encriptados"]
+      : [title, "seguridad digital", "comunicacion segura", "Encriptados"],
+    openGraph: rm
+      ? {
+          title: rm.openGraph.title,
+          description: rm.openGraph.description,
+          image: rm.openGraph.image ? { url: rm.openGraph.image, alt: title } : undefined,
+        }
+      : undefined,
+    twitter: rm
+      ? {
+          title: rm.twitter.title,
+          description: rm.twitter.description,
+          image: rm.twitter.image,
+          card: rm.twitter.card === "summary" ? "summary" : "summary_large_image",
+        }
+      : undefined,
   });
 }
 

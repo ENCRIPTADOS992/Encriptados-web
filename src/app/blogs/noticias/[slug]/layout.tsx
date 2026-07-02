@@ -22,20 +22,42 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
     });
   }
 
+  const rm = post.rankMath;
+  const title = rm?.title || post.title;
+  const description = rm?.description || post.description;
+  const imageUrl = rm?.openGraph.image || post.imageFull || post.image;
+
   return buildSeoMetadata({
-    title: post.title,
-    description: post.description,
-    canonicalPath: post.legacyPath ?? `/blogs/noticias/${slug}`,
+    title,
+    description,
+    canonicalPath: rm?.canonicalPath || post.legacyPath || `/blogs/noticias/${slug}`,
     locale: "es",
     image: {
-      url: post.imageFull || post.image,
-      alt: post.title,
+      url: imageUrl,
+      alt: title,
     },
     type: "article",
     publishedTime: post.date,
     modifiedTime: post.date,
     authors: [post.author],
-    keywords: ["seguridad digital", "privacidad", "comunicacion cifrada", "Encriptados"],
+    keywords: rm?.focusKeyword
+      ? [rm.focusKeyword, "seguridad digital", "Encriptados"]
+      : ["seguridad digital", "privacidad", "comunicacion cifrada", "Encriptados"],
+    openGraph: rm
+      ? {
+          title: rm.openGraph.title,
+          description: rm.openGraph.description,
+          image: rm.openGraph.image ? { url: rm.openGraph.image, alt: title } : undefined,
+        }
+      : undefined,
+    twitter: rm
+      ? {
+          title: rm.twitter.title,
+          description: rm.twitter.description,
+          image: rm.twitter.image,
+          card: rm.twitter.card === "summary" ? "summary" : "summary_large_image",
+        }
+      : undefined,
   });
 }
 

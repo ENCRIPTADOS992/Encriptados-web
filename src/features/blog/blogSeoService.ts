@@ -3,6 +3,7 @@ import { parseSpintax } from "./blogService";
 import fs from "fs";
 import path from "path";
 import { WP_BLOG_API_BASE, WP_BLOG_CATEGORY_IDS } from "@/shared/constants/backend";
+import { parseRankMathPayload } from "@/shared/seo/rankMath";
 
 const WP_BASE = WP_BLOG_API_BASE;
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
@@ -92,6 +93,7 @@ export async function fetchBlogPostSeo(slug: string, locale: string): Promise<Bl
       date: item.date,
       content: parseSpintax(item.content.rendered),
       translations: item.translations,
+      rankMath: parseRankMathPayload(item.rank_math),
     };
   } catch {
     return null;

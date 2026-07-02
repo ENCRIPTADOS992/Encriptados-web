@@ -34,21 +34,43 @@ export async function generateMetadata({ params }: Omit<LayoutProps, "children">
     languages["x-default"] = languages.es ?? buildAbsoluteUrl(fallbackPath);
   }
 
+  const rm = post.rankMath;
+  const title = rm?.title || post.title;
+  const description = rm?.description || post.description;
+  const imageUrl = rm?.openGraph.image || post.imageFull || post.image;
+
   return buildSeoMetadata({
-    title: post.title,
-    description: post.description,
-    canonicalPath: post.legacyPath ?? fallbackPath,
+    title,
+    description,
+    canonicalPath: rm?.canonicalPath || post.legacyPath || fallbackPath,
     locale,
     image: {
-      url: post.imageFull || post.image,
-      alt: post.title,
+      url: imageUrl,
+      alt: title,
     },
     type: "article",
     publishedTime: post.date,
     modifiedTime: post.date,
     authors: [post.author],
-    keywords: ["digital security", "privacy", "encrypted communication", "Encriptados"],
+    keywords: rm?.focusKeyword
+      ? [rm.focusKeyword, "digital security", "Encriptados"]
+      : ["digital security", "privacy", "encrypted communication", "Encriptados"],
     languages,
+    openGraph: rm
+      ? {
+          title: rm.openGraph.title,
+          description: rm.openGraph.description,
+          image: rm.openGraph.image ? { url: rm.openGraph.image, alt: title } : undefined,
+        }
+      : undefined,
+    twitter: rm
+      ? {
+          title: rm.twitter.title,
+          description: rm.twitter.description,
+          image: rm.twitter.image,
+          card: rm.twitter.card === "summary" ? "summary" : "summary_large_image",
+        }
+      : undefined,
   });
 }
 

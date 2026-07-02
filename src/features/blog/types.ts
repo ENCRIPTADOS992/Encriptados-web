@@ -1,5 +1,7 @@
 // Unified blog types for hybrid WordPress + Markdown blog system
 
+import type { RankMathRawPayload, RankMathSeo } from "@/shared/seo/rankMath";
+
 export type BlogSource = "wordpress" | "markdown";
 
 /** Translation reference for a single locale */
@@ -29,6 +31,7 @@ export interface BlogPostCard {
 export interface BlogPost extends BlogPostCard {
   content: string; // HTML (WP raw or MD converted)
   faqs?: Array<{ question: string; answer: string }>;
+  rankMath?: RankMathSeo | null;
 }
 
 /** Standard WordPress REST API post (/wp/v2/posts?_embed) */
@@ -45,6 +48,7 @@ export interface WordPressBlogItem {
   excerpt: { rendered: string };
   author: number;
   featured_media: number;
+  rank_math?: RankMathRawPayload | null;
   _embedded?: {
     author?: Array<{ name: string }>;
     "wp:featuredmedia"?: Array<{

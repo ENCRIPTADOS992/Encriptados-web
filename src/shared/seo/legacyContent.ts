@@ -1,5 +1,6 @@
 import type { SeoLocale } from "./constants";
 import { WP_BLOG_API_BASE } from "@/shared/constants/backend";
+import { parseRankMathPayload, type RankMathRawPayload, type RankMathSeo } from "./rankMath";
 
 const WP_BASE = WP_BLOG_API_BASE;
 
@@ -78,6 +79,7 @@ type WordPressPageItem = {
   title: WordPressRendered;
   content: WordPressRendered;
   excerpt?: WordPressRendered;
+  rank_math?: RankMathRawPayload | null;
   _embedded?: {
     author?: Array<{ name: string }>;
     "wp:featuredmedia"?: Array<{
@@ -104,6 +106,7 @@ export type LegacySeoPageContent = {
   date?: string;
   modified?: string;
   image?: string;
+  rankMath: RankMathSeo | null;
 };
 
 function decodeHtmlEntities(value: string): string {
@@ -233,6 +236,7 @@ function mapWpPage(item: WordPressPageItem, locale: SeoLocale): LegacySeoPageCon
     date: item.date,
     modified: item.modified,
     image: previewImage,
+    rankMath: parseRankMathPayload(item.rank_math),
   };
 }
 

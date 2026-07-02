@@ -30,6 +30,19 @@ export type SeoMetadataInput = {
   authors?: string[];
   languages?: Record<string, string>;
   robots?: Metadata["robots"];
+  /** Overrides for Open Graph specific fields (e.g. Rank Math Facebook tab). */
+  openGraph?: {
+    title?: string;
+    description?: string;
+    image?: SeoImage;
+  };
+  /** Overrides for Twitter card specific fields (e.g. Rank Math Twitter tab). */
+  twitter?: {
+    title?: string;
+    description?: string;
+    image?: string;
+    card?: "summary" | "summary_large_image" | "app" | "player";
+  };
 };
 
 const OPEN_GRAPH_LOCALE: Record<string, string> = {
@@ -101,13 +114,22 @@ export function buildSeoMetadata(input: SeoMetadataInput): Metadata {
       languages: input.languages,
     },
     openGraph: {
-      title,
-      description,
+      title: input.openGraph?.title || title,
+      description: input.openGraph?.description || description,
       url: canonical,
       siteName: SEO_SITE_NAME,
       locale: OPEN_GRAPH_LOCALE[locale] || String(locale),
       type: input.type || "website",
-      images: ogImages,
+      images: input.openGraph?.image?.url
+        ? [
+            {
+              url: toAbsoluteUrl(input.openGraph.image.url, SEO_DEFAULT_IMAGE.url),
+              width: input.openGraph.image.width || SEO_DEFAULT_IMAGE.width,
+              height: input.openGraph.image.height || SEO_DEFAULT_IMAGE.height,
+              alt: input.openGraph.image.alt || input.openGraph.title || title,
+            },
+          ]
+        : ogImages,
       ...(input.type === "article"
         ? {
             publishedTime: input.publishedTime,
@@ -117,10 +139,10 @@ export function buildSeoMetadata(input: SeoMetadataInput): Metadata {
         : {}),
     },
     twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [twitterImageUrl],
+      card: input.twitter?.card || "summary_large_image",
+      title: input.twitter?.title || input.openGraph?.title || title,
+      description: input.twitter?.description || input.openGraph?.description || description,
+      images: [input.twitter?.image ? toAbsoluteUrl(input.twitter.image, SEO_DEFAULT_IMAGE.url) : twitterImageUrl],
     },
     robots: input.robots ?? {
       index: true,
