@@ -106,6 +106,13 @@ export async function middleware(
     return withNoIndexHeader(request, NextResponse.next());
   }
 
+  // Colapsa dobles slashes (p.ej. /it//pages/chatmail/) con 301 al pathname limpio.
+  if (/\/{2,}/.test(pathname)) {
+    const collapsedUrl = request.nextUrl.clone();
+    collapsedUrl.pathname = pathname.replace(/\/{2,}/g, "/");
+    return withNoIndexHeader(request, NextResponse.redirect(collapsedUrl, 301));
+  }
+
   if (pathname.endsWith("/null") || pathname.endsWith("/undefined") ||
       pathname.includes("/null/") || pathname.includes("/undefined/")) {
     console.warn(`[Middleware] ⚠️ Ruta inválida detectada: ${pathname}, redirigiendo a home`);
@@ -128,6 +135,24 @@ export async function middleware(
   }
 
   if (pathname.startsWith("/location/")) {
+    // Sanitiza variantes sucias (con .html, espacios sin encodear, mayúsculas):
+    // 301 al slug normalizado. Si la URL ya viene limpia, cae al render normal.
+    const decoded = decodeURIComponent(pathname);
+    const needsSanitize =
+      /\.html?$/i.test(decoded) || /\s/.test(decoded) || /[A-Z]/.test(decoded);
+    if (needsSanitize) {
+      const sanitized = decoded
+        .toLowerCase()
+        .replace(/\.html?$/i, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/-\/|\/-/g, "/");
+      if (sanitized !== pathname) {
+        const cleanUrl = request.nextUrl.clone();
+        cleanUrl.pathname = sanitized;
+        return withNoIndexHeader(request, NextResponse.redirect(cleanUrl, 301));
+      }
+    }
     return withNoIndexHeader(request, NextResponse.next());
   }
 
